@@ -12,7 +12,7 @@ input {
   box-sizing: unset
 }
 
-/*居中   */
+/*居中new   */
 
 .tex_center {
   text-align: center;
