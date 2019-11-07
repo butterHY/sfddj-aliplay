@@ -1,0 +1,70 @@
+<!--搜索商品列表模板-->
+<import-sjs name="filters" from="../wxsFile/public.sjs"/>
+<template name="itemGoodSpikeList">
+  <navigator url="/pages/shopping/goodsDetail/goodsDetail?goodsSn={{goodsSn}}" hover-class style="width:100%;height:250rpx;padding:30rpx 0;display:flex;flex-direction:row;border-bottom: solid #eeeeee 2rpx;box-sizing:border-box;position:relative" hover-class="none">
+    <image src="{{baseImageUrl}}{{goodsDefaultImage}}" style="width:190rpx;height:100%;"></image>
+
+    <!--小图标 全赔  -->
+    <image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff1.png" class="allCompensation posi_ab" style="width: 56rpx; height: 56rpx; top: 40rpx; left: 130rpx;" a:if="{{filters.strIndexOf(afterSaleGuee,'1')}}"></image> 
+    <image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff2.png" class="allCompensation posi_ab" style="width: 56rpx; height: 56rpx; top: 40rpx; left: 130rpx;" a:elif="{{filters.strIndexOf(afterSaleGuee,'2')}}"></image> 
+    <image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff3.png" class="allCompensation posi_ab" style="width: 56rpx; height: 56rpx; top: 40rpx; left: 130rpx;" a:elif="{{filters.strIndexOf(afterSaleGuee,'3')}}"></image> 
+    <image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff4.png?version=2.0" class="allCompensation posi_ab" style="width: 56rpx; height: 56rpx; top: 40rpx; left: 130rpx;" a:elif="{{filters.strIndexOf(afterSaleGuee,'4')}}"></image>
+
+    <view style="display:flex; flex-direction:column;justify-content:space-between;position:absolute;top:30rpx;left:210rpx;bottom:30rpx;right:30rpx;">
+      <!-- 商品标题 -->
+      <view class="single-line flex_view_col">
+        <view class="font-26 color-323232 single-line">{{goodsName}}</view>
+        <view style="display:block;margin-top:10rpx;" class="font-24 color-bbbbbb single-line">{{goodsTitle}}</view>
+      </view>
+      <!-- 进度条 -->
+      <view class="progress" >
+         <!-- <progress percent="80" color="#10AEFF" active show-info stroke-width="10" background-color="#fff" active-color="#FF0000"/> -->
+         <view class="progress_line posi_re">
+            <label class="progress_fill" style="width: {{((totalSalesVolume/totalStock) * 100).toFixed(0)}}%"></label>
+            <view  class="flex_view_row posi_ab justi_around align_cen progress_line progress_message">
+                <view a:if='{{ totalSalesVolume != totalStock }}' class="progress_soldNow inline_block" >已抢{{totalSalesVolume}}件</view>
+                <view a:if='{{ totalSalesVolume == totalStock }}' class="progress_soldSoon inline_block font_italic">已售罄</view>
+                <!-- ((totalSalesVolume/totalStock) * 100).toFixed(0) -->
+                <view a:if='{{ totalSalesVolume != totalStock }}' class="progress_percentage  inline_block" >{{((totalSalesVolume/totalStock) * 100).toFixed(0)}}%</view>
+            </view>
+          </view>
+         <view a:if='{{ totalSalesVolume == totalStock }}' class="font-24 color-bbbbbb overHid sold_out">已抢光{{totalStock}}件</view>
+      </view>
+      <!-- 价格 -->
+      <view style="max-width:350rpx;" class="relative font-30 font-weight-500 single-line color-bbbbbb flex_view_row algin_end">
+        <view class="height_35 line_height35 color-ff5353  flex_view_row algin_end">
+          <view class="price_symbol line_height25">¥</view>
+          <view class="sale_price">{{activitysPrice}}</view>
+          <view class="line_through color-bbbbbb line_height22 margin_left10" ><text class="font-24">¥ {{salePrice}}</text></view>
+        </view>
+        <!-- <view style="margin-left:10rpx; height: 100%;" class="font-24 color-bbbbbb flex_view_col justi_end  overHid">
+          <view class="single-line width_100 line_through" style=" line-height: 22rpx;">¥ {{salePrice}}</view>
+        </view> -->
+      </view>
+
+    </view>
+    <!-- <progress percent="{{80}}" show-info active stroke-width="{{30}}" background-color="{{red}}" active-color="{{red}}" background-color="black"> -->
+
+ 
+    <text a:if='{{activityStatus == "抢购中" || activityStatus == "已开抢"}}' style="width:160rpx;height:60rpx;position:absolute;right:30rpx;bottom:30rpx" data-pid="{{productId}}" class="alipay_catch_img flex_view_row align_cen justi_cen">
+      <!-- <image class="all_100" src="{{baseLocImgUrl}}miniappImg/icon/icon_redCart.png"/> -->
+      <text>立即购买</text>
+    </text>
+
+    <text a:elif='{{activityStatus == "即将开抢"}}' style="width:160rpx;height:60rpx;position:absolute;right:30rpx;bottom:30rpx" data-pid="{{productId}}" class="alipay_catch_img flex_view_row align_cen justi_cen">
+      <!-- <image class="all_100" src="{{baseLocImgUrl}}miniappImg/icon/icon_redCart.png"/> -->
+      <text>即将开抢</text>
+    </text>
+
+    <text a:elif='{{totalSalesVolume == totalStock }}' style="width:160rpx;height:60rpx;position:absolute;right:30rpx;bottom:30rpx;background: #999" data-pid="{{productId}}" class="alipay_catch_img flex_view_row align_cen justi_cen">
+      <!-- <image class="all_100" src="{{baseLocImgUrl}}miniappImg/icon/icon_redCart.png"/> -->
+      <text>已售罄</text>
+    </text>
+
+    <text a:elif='{{activityStatus == "已结束"}}' style="width:160rpx;height:60rpx;position:absolute;right:30rpx;bottom:30rpx;background: #999" data-pid="{{productId}}" class="alipay_catch_img flex_view_row align_cen justi_cen">
+      <!-- <image class="all_100" src="{{baseLocImgUrl}}miniappImg/icon/icon_redCart.png"/> -->
+      <text>已结束</text>
+    </text>
+
+  </navigator>
+</template>

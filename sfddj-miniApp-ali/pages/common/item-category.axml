@@ -1,0 +1,8 @@
+<template name="itemCategory">
+  <navigator url="/pages/category/secondCategory/secondCategory?categoryId={{id}}" open-type="navigate" hover-class="none">
+    <view class="item-category-container font-24">
+      <image src="{{url}}" style="width:156rpx;height:156rpx;margin-top:30rpx"></image>
+      <text style="margin-top:20rpx">{{name}}</text>
+    </view>
+  </navigator>
+</template>

@@ -1,0 +1,126 @@
+<import src="../../common/comment-reply"/>
+<!-- 加载中 -->
+<view a:if="{{!loadComplete}}">
+	<loading-now></loading-now>
+</view>
+<!-- 加载失败 -->
+<view a:elif="{{loadFail && wifiAvailable}}">
+	<load-fail></load-fail>
+</view>
+<!-- 没有网络提示这个 -->
+<!--<view a:elif="{{!wifiAvailable}}"><no-wifi></no-wifi></view> -->
+<view a:else class="all_100vh flex_view_col">
+	<!-- 旧版 -->
+	<!--<view class="goods-comment-title"><view>评分:{{goodScore}}</view><view>评价({{goodsCommentTotal}})</view></view> -->
+	<!-- 旧版 -->
+	<!--<block a:for="{{result}}"><view class="goods-comment-area"><view class="comment-user-area"><view class="flex_view_row"><view class="comment-user-image"><image src="{{item.headPortraitPath ? item.headPortraitPath : baseLocImgUrl + 'miniappImg/icon/icon_default_head.jpeg'}}" class="commentUser_img"></image></view><view class="flex_view_col marLeft_10 justi_cen"><view class="font-20 color-414141">{{item.nickNameResult}}</view><view class="flex_view_row marTop_10"><image src="{{baseLocImgUrl}}miniappImg/icon/icon_star_selected.png" class="starIcon" a:for="{{item.star}}"></image><image src="{{baseLocImgUrl}}miniappImg/icon/icon_star_normal.png" class="starIcon" a:for="{{5 - item.star}}"></image></view></view></view><view class="font-20 color-bdbdbd">{{item.createDate}}</view></view><view class="commentText font-24 color-414141">{{item.comment}}</view><view class="commentText blockView"><image src="{{baseImageUrl}}{{item2}}" class="commentTextImg" data-current="{{item2}}" data-urls="{{item.imagePath}}" a:for="{{item.imagePath}}" a:for-item="item2" onTap="commentViewTap"></image></view></view></block> -->
+	<!-- 新版 -->
+	<view class="estimateNav whiteBack">
+		<view class="padLR_20">
+			<!-- 评分 -->
+			<view class="estimateHead font-26">
+				<view>好评度
+					<text class="color-ff5353 font-28">{{commentScore}}%</text>
+				</view>
+			</view>
+			<!-- 筛选有图没图 -->
+			<view class="estimateNavList flex_view_row width_100">
+				<!-- 全部 -->
+				<view>
+					<view class="estimateNavListCon {{commentType == 1 ? 'active' : ''}}" data-type="1" onTap="filterCommentList">全部(
+						<text>{{countData.allCount}}</text>)</view>
+				</view>
+				<!-- 有图 -->
+				<view>
+					<view class="estimateNavListCon {{commentType == 2 ? 'active' : ''}}" data-type="2" onTap="filterCommentList">有图(
+						<text>{{countData.youTuCount}}</text>)</view>
+				</view>
+			</view>
+		</view>
+		<!-- 间隙 -->
+		<!--<view class="estimateNavSquare"></view> -->
+	</view>
+	<!-- 评论列表 -->
+	<scroll-view scroll-y="{{true}}" class="estimateList flex_1" onScrollToLower="loadMoreList">
+		<block a:if="{{commentList && commentList.length > 0}}">
+			<view a:for="{{commentList}}">
+				<view class="{{index == (commentList.length -1) ? '' : 'borBot_e6'}} whiteBack">
+					<view class="goods-comment-area">
+						<!-- 第一次评论 -->
+						<view class="first-comment">
+							<view class="comment-user-area">
+								<view class="flex_view_row">
+									<view class="comment-user-image">
+										<image src="{{item.headPortraitPath ? item.headPortraitPath : baseLocImgUrl + 'miniappImg/icon/icon_default_head.jpeg'}}" class="commentUser_img"></image>
+									</view>
+									<view class="flex_view_col marLeft_10 justi_cen">
+										<view class="font-20 color-414141">{{item.nickNameResult}}</view>
+										<view class="flex_view_row marTop_10">
+											<image src="{{baseLocImgUrl}}miniappImg/icon/icon_star_selected.png" class="starIcon" a:for="{{item.star}}"></image>
+											<image src="{{baseLocImgUrl}}miniappImg/icon/icon_star_normal.png" class="starIcon" a:for="{{5 - item.star}}"></image>
+										</view>
+									</view>
+								</view>
+								<view class="font-20 color-bdbdbd">{{item.createDate}}</view>
+							</view>
+							<view class="commentText font-24 color-414141">{{item.comment}}</view>
+							<view class="commentText blockView">
+								<image src="{{baseImageUrl}}{{item2}}" class="commentTextImg" data-current="{{index}}" data-urls="{{item.imagePath}}" a:for="{{item.imagePath}}" a:for-item="item2" onTap="commentViewTap"></image>
+							</view>
+						</view>
+						<!-- 商家第一次回复 -->
+						<block a:if="{{item.supplierReply}}">
+							<template is="commentReply" data="{{replyTitle: supplierTit, replyText: item.supplierReply}}"></template>
+						</block>
+						<!-- 平台第一次回复 -->
+						<block a:if="{{item.platformReply}}">
+							<template is="commentReply" data="{{replyTitle: platformTit, replyText: item.platformReply}}"></template>
+						</block>
+						<!--追评 -->
+						<view a:if="{{item.appendComment || item.appendDateStr || item.appendImagePath}}" class="append-comment-area marTop_15">
+							<view class="append-comment-date">{{item.appendDateStr}}</view>
+							<view class="commentText font-24 color-414141">{{item.appendComment}}</view>
+							<view class="commentText blockView">
+								<block a:for="{{item.appendImagePath}}" a:for-item="appendItem">
+									<image src="{{baseImageUrl}}{{appendItem}}" class="commentTextImg" data-current="{{index}}" data-urls="{{item.appendImagePath}}" onTap="commentViewTap"></image>
+								</block>
+							</view>
+						</view>
+						<!-- 商家追加回复 -->
+						<block a:if="{{item.appendSupplierReply}}">
+							<template is="commentReply" data="{{replyTitle: supplierTit, replyText: item.appendSupplierReply}}"></template>
+						</block>
+						<!-- 平台追加回复 -->
+						<block a:if="{{item.appendPlatformReply}}">
+							<template is="commentReply" data="{{replyTitle: platformTit, replyText: item.appendPlatformReply}}"></template>
+						</block>
+					</view>
+				</view>
+			</view>
+		</block>
+		<!-- 如果没有列表数据时 -->
+		<view a:elif="{{(!commentList || commentList.length == 0) && !isLoadMore}}" class="non_commentList all_100 whiteBack">
+			<!-- 上图部分 -->
+			<view class="height_60 posi_re">
+				<image mode="widthFix" src="{{baseLocImgUrl}}miniappImg/loading/search_none.png" class="posi_ab errImgBox"/>
+			</view>
+			<!-- 提示语部分 -->
+			<view class="flex_1">
+				<view class="errTxt">暂时没有评论~</view>
+			</view>
+		</view>
+		<!--加载数据进度条-->
+		<view class="loading_view" a:if="{{isLoadMore || hasMore}}">
+			<image src="{{baseLocImgUrl}}miniappImg/loading/loading.gif" class="loading_gif"></image>
+		</view>
+		<!--没有更多-->
+		<view class="loading_view font-24 color-b1b6bb" a:if="{{!hasMore && !isLoadMore && commentList.length > 0}}">
+			<!-- 没有更多了 -->
+			<view class="autoEstimateBox flex_view_col justi_cen align_cen">
+				<image mode="widthFix" src="{{baseLocImgUrl}}miniappImg/loading/autoEstimate.png" class="autoEstimateImg"/>
+				<view class="autoEstimateTip flex_view_row align_cen">
+					<text>{{automaticCount ? automaticCount : 0}}</text>个用户默认评价了该商品</view>
+			</view>
+		</view>
+	</scroll-view>
+</view>

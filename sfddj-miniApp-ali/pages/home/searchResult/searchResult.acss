@@ -1,0 +1,109 @@
+/* pages/home/searchResult/searchResult.wxss  */
+.all_100v {
+  width: 100%;
+  height: 100vh;
+}
+
+text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.padTop_78 {
+  padding-top: 78rpx;
+}
+/*推荐商品右侧线 */
+.ver_line {
+  border-right: solid #e6e6e6 2rpx;
+}
+/*推荐商品下方线 */
+.hor_line {
+  border-bottom: solid #e6e6e6 2rpx;
+}
+/*搜索框部分   */
+.searchFrame {
+  width: 100%;
+  height: 120rpx;
+  padding: 20rpx 30rpx;
+  background-color: #252630;
+  box-sizing: border-box;
+  position: relative;
+}
+.searchFrame_input {
+  padding: 10rpx 30rpx 10rpx 70rpx;
+  background-color: white;
+  border-radius: 5px;
+}
+.searchFrame_viewImg {
+  position: absolute;
+  left: 0rpx;
+  width: 70rpx;
+  height: 100%;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.searchFrame_img {
+  width: 30rpx;
+  height: 30rpx;
+}
+/*搜索结果排序   */
+.resultSort {
+  width: 100%;
+  height: 78rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  background-color: white;
+  z-index: 1000;
+  position: relative;
+  /* top: 120rpx;
+  left: 0; */
+}
+.resultSort.scrollTop {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 1000;
+}
+.resultSort_price {
+  display: inline-block;
+  padding-top: 3rpx;
+}
+.resultSort_priceIcon {
+  width: 12rpx;
+  height: 12rpx;
+  display: block;
+}
+.resultSort_priceIcon_up {
+  margin-bottom: 3rpx;
+}
+/*搜索结果列表   */
+.resultList {
+  width: 100%;
+  margin-top: 30rpx;
+  background: white;
+  padding-left: 30rpx;
+  box-sizing: border-box;
+}
+/*大当家推荐   */
+.dangRecommend {
+  background-color: white;
+  padding: 0 15rpx;
+}
+.dangRecommend_text {
+  padding: 20rpx 5rpx;
+}
+.dangRecommend_nav {
+  width: 240rpx;
+  display: inline-block;
+  padding: 10rpx 10rpx 20rpx;
+  box-sizing: border-box;
+}
+.dangRecommend_navImg {
+  width: 220rpx;
+  height: 220rpx;
+  border-radius: 3px;
+}

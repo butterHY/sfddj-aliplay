@@ -1,0 +1,37 @@
+<import src="/pages/common/item-address"/>
+
+<!-- 加载中 -->
+<view a:if="{{!loadComplete}}">
+  <loading-now></loading-now>  
+</view>
+<!-- 加载失败 -->
+<view a:elif="{{loadFail}}">
+  <load-fail></load-fail>
+</view>
+<!-- 没有网络提示这个 -->
+<!-- <view a:elif="{{!wifiAvailable}}">
+  <no-wifi></no-wifi>
+</view> -->
+
+<view a:else class="all_100v flex_view_col">
+  <scroll-view scroll-y class="addressList">
+    <!--地址列表-->
+    <view a:if="{{addressList.length > 0}}">
+      <view a:for="{{addressList}}" a:for-item="address" a:key="itemIndex">
+        <template data="{{...address,index,baseLocImgUrl:baseImgLocUrl}}" is="itemAddress"></template>
+      </view>
+    </view>
+    <!--没有地址时展示-->
+    <view class="noAddress" a:if="{{!isLoadMore && addressList.length == 0}}">
+      <image src="{{baseImgLocUrl}}miniappImg/icon/icon_empty_addr.png" class="noAddress_img"></image>
+    </view>
+    <!--加载数据进度条-->
+    <view class="loading_view" a:if="{{isLoadMore}}">
+      <image src="{{baseImgLocUrl}}miniappImg/loading/loading.gif" class="loading_gif"></image>
+    </view>
+  </scroll-view>
+  <view class="useWechatAdd justi_cen">
+    <navigator url="./addAddress/addAddress" open-type="{{needRedirect ? 'redirect' : 'navigate'}}" class="useWechatAdd_nav font-24 color-323232" hover-class="none">新建地址</navigator>
+    <view class="useWechatAdd_go font-24 color-323232 marLeft_20" onTap="chooseAddr">使用支付宝地址</view>
+  </view>
+</view>

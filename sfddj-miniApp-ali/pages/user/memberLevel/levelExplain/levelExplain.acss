@@ -1,0 +1,123 @@
+page {
+  background-color: #fff;
+}
+.pad_26 {
+  padding: 26rpx;
+}
+.fontW_26 {
+  font-weight: 600;
+}
+.memberLevel {
+  padding: 26rpx 0 0 26rpx;
+}
+.sheetTit {
+  min-height: 78rpx;
+  line-height: 78rpx;
+  box-sizing: border-box;
+  border-left: 1px solid #dfdfdf;
+  background-color: #f9f9f9;
+}
+.sheetTit_one {
+  width: 33.33%;
+  font-weight: 600;
+  box-sizing: border-box;
+  border: 1px solid #dfdfdf;
+  border-left: none;
+  border-bottom: none;
+}
+.sheetCon_one {
+  height: 90rpx;
+  /* line-height: 66rpx; */
+  box-sizing: border-box;
+  border-left: 1px solid #dfdfdf;
+}
+.keepMember .sheetCon_one {
+  height: 120rpx;
+  /* line-height: 66rpx; */
+  box-sizing: border-box;
+  border-left: 1px solid #dfdfdf;
+}
+.growthCome .sheetTit_one {
+  width: 50%;
+  font-weight: 600;
+  box-sizing: border-box;
+  border: 1px solid #dfdfdf;
+  border-left: none;
+  border-bottom: none;
+}
+.sheetCon_two {
+  width: 33.33%;
+  box-sizing: border-box;
+  border: 1px solid #dfdfdf;
+  border-left: none;
+  border-bottom: none;
+}
+.growthCome .sheetCon_two {
+  width: 50%;
+  box-sizing: border-box;
+  border: 1px solid #dfdfdf;
+  border-left: none;
+  border-bottom: none;
+}
+.padLeft_13 {
+  padding-left: 13rpx;
+}
+.sheetCon_three {
+  width: 33.33%;
+  box-sizing: border-box;
+  border: 1px solid #dfdfdf;
+  border-left: none;
+}
+.growthCome .sheetCon_three {
+  width: 50%;
+  box-sizing: border-box;
+  border: 1px solid #dfdfdf;
+  border-left: none;
+}
+.sheetCon_four {
+  width: 30%;
+  font-weight: 600;
+  box-sizing: border-box;
+  border: 1px solid #dfdfdf;
+  border-left: none;
+  border-bottom: none;
+}
+.sheetCon_five {
+  width: 20%;
+  font-weight: 600;
+  box-sizing: border-box;
+  border: 1px solid #dfdfdf;
+  border-left: none;
+  border-bottom: none;
+}
+.sheetCon_six {
+  height: 78rpx;
+  box-sizing: border-box;
+  border-left: 1px solid #dfdfdf;
+}
+.sheetCon_seven {
+  width: 30%;
+  box-sizing: border-box;
+  border: 1px solid #dfdfdf;
+  border-left: none;
+  border-bottom: none;
+}
+.sheetCon_eight {
+  width: 20%;
+  box-sizing: border-box;
+  border: 1px solid #dfdfdf;
+  border-left: none;
+  border-bottom: none;
+}
+.sheetCon_night {
+  width: 30%;
+  box-sizing: border-box;
+  border: 1px solid #dfdfdf;
+  border-left: none;
+}
+.sheetCon_ten {
+  width: 20%;
+  box-sizing: border-box;
+  border: 1px solid #dfdfdf;
+  border-left: none;
+}

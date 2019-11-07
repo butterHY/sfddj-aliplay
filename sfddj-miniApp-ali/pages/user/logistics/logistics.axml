@@ -1,0 +1,28 @@
+<!--查看物流页面--><view class="logisHead">
+  <image class="goodsImg" src="{{baseImageUrl}}{{goodsImg}}"></image>
+  <view class="logisHeadCon">
+    <view class="font-26 color-323232">物流状态:
+      <text class="color-ff5353">已发送</text> </view>
+    <view class="font-24 color-838383">承担来源：顺丰快递</view>
+    <view class="font-24 color-838383">运单编号：{{deliveryNo}}</view>
+    <view class="font-24 color-838383">官方号码：95338</view>
+  </view>
+</view>
+<!--物流详情-->
+<view class="logisDet">
+  <view class="expressDetail" a:for="{{expressDetail}}" a:key="expressDetailP">
+    <view class="expressDetailTop">
+      <view class="expressDetailLineT" a:if="{{index == 0}}"></view>
+      <view class="expressDetailLineL" a:elif="{{index == expressDetail.length - 1}}"></view>
+      <view class="expressDetailLineLBT" a:else></view>
+      <view class="expressDetailStarView">
+        <image src="{{baseImgLocUrl}}miniappImg/icon/icon_logistic_car.png" class="icon_car" a:if="{{index == 0}}"></image>
+         <image src="{{baseImgLocUrl}}miniappImg/icon/icon_logistic_circle.png" class="icon_circle" a:else></image> 
+      </view>
+    </view>
+    <view class="expressDetailBot">
+      <view class="font-26 color-323232">{{item.context}}</view>
+      <view class="marTop_20 font-24 color-838383">{{item.time}}</view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,90 @@
+/**index.wxss* */
+
+@import '../../css-public/adverts.acss';
+/* 秒杀价格 */
+
+.secondkill-price {
+  box-sizing: border-box;
+  padding-left: 30rpx;
+  padding-right: 30rpx;
+  height: 100rpx;
+  width: 100%;
+}
+
+.color_fff {
+  color: #fff;
+}
+
+.padding_left_6 {
+  padding-left: 6rpx;
+}
+
+.padding_left_10 {
+  padding-left: 10rpx;
+  
+}
+
+
+.font_45 {
+  font-size: 55rpx;
+}
+
+
+/* 进度条 */
+/* 添加了兼容写法 */
+.flex-1 {
+  flex: 1;
+  box-flex: 1;
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  -webkit-flex: 1;
+}
+
+/* .price {
+  line-height:  95rpx;
+
+} */
+
+.progress_line {
+  background:  #ffa9a5;
+  display: inline-block;
+  width: 275rpx;
+  height: 45rpx;
+  border-radius: 35rpx;
+  overflow: hidden;
+  font-size: 20rpx;
+  color: #fff;
+}
+
+.progress_fill {
+    display: inline-block;
+    height: 100%;
+    width: 60%;
+    border-radius: 30rpx;
+    line-height: 20rpx;
+    vertical-align: top;
+    background: #ff7832;
+}
+/* 做了兼容处理 */
+.progress_message {
+  left: 0;
+  top: 0;
+  display: flex;
+  display:-webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  background: transparent;
+}
+
+.inline_block {
+   display: inline-block;
+}
+
+.font_italic {
+  font-style: italic;
+}
+
+.backgroiund_orange {
+  background: #FF4500;
+}

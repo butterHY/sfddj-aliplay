@@ -1,0 +1,7 @@
+<!-- 没有网络 -->
+<view class="noWifi">
+  <image src="{{baseImageLocUrl}}/miniappImg/loading/loadingpage_nowifi.png" class="noWifi_image" mode="widthFix">
+  </image>
+  <text class="noWifi_text">哦哦，好像连不上网络哦~
+  </text>
+</view>

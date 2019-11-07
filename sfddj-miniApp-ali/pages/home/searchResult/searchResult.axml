@@ -1,0 +1,95 @@
+<import src="../../common/item-goods-list"/>
+<import src="../../common/hotWords"/>
+<!-- 加载中 -->
+<view a:if="{{!loadComplete}}">
+  <loading-now>
+  </loading-now>
+</view>
+<!-- 加载失败 -->
+<view a:elif="{{loadFail}}">
+  <load-fail>
+  </load-fail>
+</view>
+<!-- 没有网络提示这个 -->
+<!-- <view a:elif="{{!wifiAvailable}}">
+  <no-wifi>
+  </no-wifi>
+</view> -->
+<scroll-view a:else scroll-y class="flex_view_col flex_1 all_100v" onScrollToLower="scrollToLower" onScrollToUpper="scrollToUpper" onScroll="scrollPage">
+  <!--搜索框部分-->
+  <view class="searchFrame">
+    <view class="posi_re">
+      <input class="searchFrame_input font-24 color-323232" value="{{inputVal}}" onConfirm="handleConfirm" onInput="handleInput" onFocus="handleFocus"/>
+      <view class="searchFrame_viewImg">
+        <image src="{{baseLocImgUrl}}miniappImg/icon/icon_search.png" class="searchFrame_img">
+        </image>
+      </view>
+    </view>
+  </view>
+  <!--搜索结果排序条件-->
+  <view class="resultSort font-30 color-323232 {{scrollTop ? 'scrollTop':''}}">
+    <text data-sort-type="0" class="{{sortIndex == 0 ? 'color-ff5353' : ''}}" onTap="chooseSort">综合排序
+    </text>
+    <text data-sort-type="1" class="{{sortIndex == 1 ? 'color-ff5353' : ''}}" onTap="chooseSort">销量优先
+    </text>
+    <view data-sort-type="2" class="{{sortIndex == 2 ? 'color-ff5353' : ''}}" onTap="chooseSort">      价格      
+      <view class="resultSort_price">
+        <image src="{{priceHigher ? baseLocImgUrl+'miniappImg/icon/up_sel.png' : baseLocImgUrl+'miniappImg/icon/up_unsel.png'}}" class="resultSort_priceIcon resultSort_priceIcon_up">
+        </image>
+        <image src="{{priceHigher ? baseLocImgUrl+'miniappImg/icon/down_unsel.png' : baseLocImgUrl+'miniappImg/icon/down_sel.png'}}" class="resultSort_priceIcon">
+        </image>
+      </view>
+    </view>
+  </view>
+  <!--下面的内容  -->
+  <view class="{{scrollTop ? 'padTop_78' : ''}} flex_view_col flex_1">
+    <!-- <view class='flex_view_col flex_1' style='padding-top:78rpx'> -->
+    <!-- <scroll-view scroll-y style=''>  -->
+    <!--搜索结果列表-->
+    <view class="resultList">
+      <template is="itemGoodsList" data="{{...goodsItem,baseImageUrl,baseLocImgUrl,index,clickTap: true}}" a:for="{{goodsList}}" a:for-item="goodsItem">
+      </template>
+    </view>
+    <!--没有更多-->
+    <view a:if="{{!hasMore}}">
+      <view class="loading_view font-24 color-b1b6bb">          没有更多了        
+      </view>
+      <view class="dangRecommend" a:if="{{groupList}}" >
+        <view class="dangRecommend_text font-24 color-232323">            大当家推荐          
+        </view>
+        <view class="division-line">
+        </view>
+        <view class="marTop_20">
+          <navigator open-type="redirect" url="/pages/shopping/goodsDetail/goodsDetail?goodsSn={{item.goodsSn}}" class="dangRecommend_nav {{index % 3 != 2 ? 'ver_line':''}} {{index/3 == groupList.length/3 ? '':'hor_line'}}" hover-class="none" a:for="{{groupList}}" a:key="recommendList">
+            <image src="{{baseImageUrl}}{{item.showImage}}" class="dangRecommend_navImg">
+            </image>
+            <view class="font-24 color-232323 single-line">{{item.name}}
+            </view>
+            <view class="single-line font-22 color-a1a0a0">
+              <text class="color-ff5353">¥{{item.salePrice}}
+              </text>
+              <text>/{{item.productName}}
+              </text>
+            </view>
+          </navigator>
+        </view>
+      </view>
+    </view>
+    <!-- </scroll-view> -->
+  </view>
+  <!--加载数据进度条-->
+  <view class="loading_view" a:if="{{isLoadMore}}">
+    <image src="{{baseLocImgUrl}}miniappImg/loading/loading.gif" class="loading_gif">
+    </image>
+  </view>
+</scroll-view>
+<!--搜索热词-->
+<template is="hotWords" data="{{show:show,baseLocImgUrl,top:'120rpx',hotWords:hotWords,searchWords:searchWords}}">
+</template>
+<!--toast弹窗-->
+<view class="mark flex_view_col align_cen justi_cen" a:if="{{showToast}}">
+  <view class="toastView_wb" catchtouchmove="move">
+    <view class="toastView_wb_con font-26 color-232323">      {{showToastMes}}    
+    </view>
+  </view>
+</view>

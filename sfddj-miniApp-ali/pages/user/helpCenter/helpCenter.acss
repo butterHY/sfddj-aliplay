@@ -1,0 +1,47 @@
+/* pages/user/helpCenter/helpCenter.wxss  */
+.selected {
+  color: #ff5353;
+  border-bottom: solid #ff5353 5rpx;
+}
+/*新加   */
+.eachBlock {
+  margin-top: 10rpx;
+  background-color: white;
+  padding: 0 20rpx;
+}
+.eachBlock_view {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: solid #e6e6e6 2rpx;
+}
+.eachBlock_open {
+  background-color: white;
+  padding: 32rpx 0 38rpx 0;
+  border-bottom: solid #e6e6e6 2rpx;
+}
+.normalQue {
+  width: 100%;
+  background-color: white;
+  height: 80rpx;
+  color: #8f8f8f;
+  display: flex;
+}
+.eachQue {
+  flex: 1;
+  text-align: center;
+  line-height: 80rpx;
+}
+.icon_arrUp {
+  width: 20rpx;
+  height: 11rpx;
+}
+.icon_arrDown {
+  width: 29rpx;
+  height: 20rpx;
+}
+.returnImg_7day {
+  width: 697rpx;
+  height: 560rpx;
+}

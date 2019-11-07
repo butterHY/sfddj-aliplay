@@ -1,0 +1,53 @@
+/* pages/user/addressManage/addressManage.wxss  */
+
+.all_100v {
+  width: 100%;
+  height: 100vh;
+}
+
+/*地址列表   */
+.addressList {
+  padding-bottom: 100rpx;
+  height: 100%;
+  box-sizing: border-box;
+}
+/*没有地址时   */
+.noAddress {
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  text-align: center;
+}
+.noAddress_img {
+  width: 328rpx;
+  height: 331rpx;
+  margin-top: 352rpx;
+}
+.useWechatAdd {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100rpx;
+  background-color: white;
+  display: flex;
+  padding: 20rpx;
+  box-sizing: border-box;
+}
+.useWechatAdd_nav {
+  flex: 1;
+  border: solid #e3e3e3 2rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* border-radius: 8rpx; */
+  /* margin-right: 30rpx; */
+}
+.useWechatAdd_go {
+  flex: 1;
+  border: solid #e3e3e3 2rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* border-radius: 8rpx; */
+}

@@ -1,0 +1,19 @@
+<!--送礼商品模板--><template name="itemGiftGoods">
+  <view style="position:relative;width:100%;height:540rpx;box-sizing:border-box;border-bottom:solid #bbbbbb 2rpx;{{left ? 'padding:26rpx 20rpx 26rpx 0;border-right:solid #bbbbbb 2rpx':'padding:26rpx 0 26rpx 20rpx'}}" data-goodssn="{{item.goodsSn}}" data-goodsid="{{item.id}}" catchTap="goToGdsDetail">
+    <view>
+      <image style="width:100%;height:250rpx;" src="{{baseImageUrl}}{{item.showImage}}" mode="widthFix">
+      </image>
+    </view>
+    <view style="width:100%;box-sizing:border-box;margin-top:12rpx">
+      <view style="width:100%;">
+        <text style="display:block" class="font-28 color-323232 single-line">{{item.name}}</text>
+        <text style="margin-top:10rpx;display:block;" class="font-24 color-bbbbbb single-line">{{item.title ? item.title : ''}}</text>
+      </view>
+      <view style="width:100%;margin-top:10rpx;display:flex;justify-content:space-between;align-items:center">
+        <text class="font-30 color-ff5353">¥{{item.salePrice}}</text>
+        
+      </view>
+    </view>
+    <text style="height:50rpx;width:150rpx;position:absolute;right:20rpx;bottom:26rpx;" data-product-id="{{item.productId}}" data-goods-id="{{item.id}}" class="alipay_catch_img" data-goodssn="{{item.goodsSn}}" data-showtype="{{item.showType}}" catchTap="gotoPay"><image src="{{baseImgLocUrl}}miniappImg/gift/gift_red.png"/></text>
+  </view>
+</template>

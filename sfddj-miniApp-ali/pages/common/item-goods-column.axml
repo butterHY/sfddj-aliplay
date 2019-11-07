@@ -1,0 +1,29 @@
+<import-sjs name="filters" from="../wxsFile/public.sjs"/>
+<template name="itemGoodsColumn">
+  <navigator url="/pages/shopping/goodsDetail/goodsDetail?goodsSn={{goodsSn}}" class="whiteBack {{!isLoaded ? 'js_goodsList_' + index : ''}}" hover-class="none">
+    <view class="posi_re" style="width:100%;height:{{!height ? '530rpx' : height}};box-sizing:border-box;border-bottom:solid #e6e6e6 2rpx;{{left ? 'padding:26rpx 20rpx 15rpx 0;border-right:solid #e6e6e6 2rpx':'padding:26rpx 0 15rpx 20rpx'}}">
+      <view class="" style='width:100%;height:330rpx;'>
+        <image class="all_100" lazy-load='true' src="{{baseImageUrl}}{{showImage}}{{smallImgArg}}" mode="widthFix">
+        </image>
+      </view>
+      
+ 
+      <!--小图标 全赔  -->
+      <image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff1.png" class="allCompensation posi_ab" style="width: 65rpx; height: 65rpx; top: 35rpx; {{left ? 'right: 30rpx;' : 'right: 10rpx;'}}" a:if="{{filters.strIndexOf(afterSaleGuee,'1')}}"></image> 
+      <image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff2.png" class="allCompensation posi_ab" style="width: 65rpx; height: 65rpx; top: 35rpx; {{left ? 'right: 30rpx;' : 'right: 10rpx;'}}" a:elif="{{filters.strIndexOf(afterSaleGuee,'2')}}"></image> 
+      <image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff3.png" class="allCompensation posi_ab" style="width: 65rpx; height: 65rpx; top: 35rpx; {{left ? 'right: 30rpx;' : 'right: 10rpx;'}}" a:elif="{{filters.strIndexOf(afterSaleGuee,'3')}}"></image> 
+      <image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff4.png?version=2.0" class="allCompensation posi_ab" style="width: 65rpx; height: 65rpx; top: 35rpx; {{left ? 'right: 30rpx;' : 'right: 10rpx;'}}" a:elif="{{filters.strIndexOf(afterSaleGuee,'4')}}"></image>
+
+      <view style="width:100%;box-sizing:border-box;margin-top:12rpx">
+        <view class="single-line2">
+          <text class="font-28 color-323232 single-line-text">{{name}}</text>
+          <text style="margin-top:10rpx" class="font-24 color-bbbbbb single-line-text">{{productName}}</text>
+        </view>
+        <view style="width:100%;margin-top:10rpx;display:flex;justify-content:space-between;align-items:center">
+          <text class="font-30 color-ff5353">¥{{salePrice}}</text>
+          <text style="height:45rpx;width:45rpx;" data-pid="{{productId}}" class="alipay_catch_img" a:if="{{!hiddenCart}}" catchTap="{{!cannotAdd ? 'addCart' : ''}}"><image src="{{baseLocImgUrl}}miniappImg/icon/icon_redCart.png" class="all_100"/></text>
+        </view>
+      </view>
+    </view>
+  </navigator>
+</template>

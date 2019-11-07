@@ -1,0 +1,43 @@
+.height_35 {
+  height: 35%;
+}
+.height_65 {
+  height: 65%;
+}
+.width_30 {
+  width: 30%;
+}
+.width_70 {
+  width: 70%;
+}
+.comRuleTit {
+  height: 88rpx;
+  line-height: 88rpx;
+  border-bottom: 1px solid #e6e6e6;
+}
+.overY_auto {
+  overflow-y: auto;
+}
+.theRuleCon {
+  padding: 32rpx 30rpx;
+}
+.theRuleCon_one {
+  padding: 0 26rpx;
+  margin-bottom: 47rpx;
+}
+.table_one {
+  border: 1px solid #ccc;
+  border-bottom: none;
+  box-sizing: border-box;
+}
+.table_oneNone {
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+.borderRig_ccc {
+  border-right: 1px solid #ccc;
+}
+.confirmBtn {
+  line-height: 78rpx;
+  background-color: #ff5353;
+}

@@ -1,0 +1,27 @@
+<view class="mainCon font-30 color-666">
+  <!--第一条  -->
+  <view class="mainCon_each flex_view_row">
+     <text>1、</text> 
+     <text>Da会员在当家商城上购买符合活动范围的商品，将购物获得的2倍积分倍数，每1元等于2分;</text>
+  </view>
+  <!--第二条  -->
+  <view class="mainCon_each flex_view_row">
+     <text>2、</text> 
+     <text>所获得积分可进行积分抽奖，积分兑换，以及积分抵现;</text>
+  </view>
+  <!--第三条  -->
+  <view class="mainCon_each flex_view_row">
+     <text>3、</text> 
+     <text>当账户中的积分数量大于或等于200分（积分与现金的抵扣比例为100:1;）时，可以在结算商品时勾选进行抵现，每款商品积分抵扣限50元内;</text>
+  </view>
+  <!--第四条  -->
+  <view class="mainCon_each flex_view_row">
+     <text>4、</text> 
+     <text>查看积分可在当家商城中“我的积分”显示;</text>
+  </view>
+  <!--第五条  -->
+  <view class="mainCon_each flex_view_row">
+     <text>5、</text> 
+     <text>订单交易成功或者订单关闭后会赠送积分;</text>
+  </view>
+</view>

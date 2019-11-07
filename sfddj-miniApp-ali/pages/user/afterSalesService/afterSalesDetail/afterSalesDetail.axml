@@ -1,0 +1,440 @@
+<!-- 加载中 -->
+<view a:if="{{!loadComplete && !loadFail}}">
+  <loading-now>
+  </loading-now>
+</view>
+<!-- 加载失败 -->
+<view a:elif="{{loadFail && wifiAvailable}}">
+  <load-fail>
+  </load-fail>
+</view>
+<!-- 没有网络提示这个 -->
+<!-- <view a:elif="{{!wifiAvailable}}">
+  <no-wifi>
+  </no-wifi>
+</view> -->
+<view a:else>
+  <!-- 等待商家处理 -->
+  <view class="title-view" a:if="{{result.workOrder.woStatus == 'AFTER_SALES_AUDIT'}}">
+    <image src="{{baseImgLocUrl}}miniappImg/icon/icon_serivce_files.png" class="pageHead_img">
+    </image>
+    <view class="title-text-view">
+      <text class="font-28 color-white">等待商家处理退款申请    
+      </text>
+      <text class="font-22 color-febab3">商家将在24小时内处理您的申请    
+      </text>
+      <text class="font-22 color-febab3">申请退款金额为：{{result.workOrder.refundAmount}}元    
+      </text>
+    </view>
+  </view>
+  <!-- 商家已处理 -->
+  <view class="title-view" a:elif="{{result.workOrder.woStatus == 'SELLER_HANDLED'}}">
+    <image src="{{baseImgLocUrl}}miniappImg/icon/icon_serivce_letter.png" class="pageHead_img">
+    </image>
+    <view class="title-text-view">
+      <text class="font-28 color-white" a:if="{{result.order.orderStatus == 'PAYFINISH'}}">等待商家处理退款申请    
+      </text>
+      <text class="font-28 color-white" a:elif="{{result.order.orderStatus == 'SHIPPED'}}">商家已处理您的退款申请    
+      </text>
+      <text class="font-22 color-febab3" a:if="{{result.workOrder.closeCause == 'NO_REFUND'}}">处理结果：驳回申请，不退款    
+      </text>
+      <text class="font-22 color-febab3" a:elif="{{result.workOrder.closeCause == 'PARTIAL_REFUND'}}">处理结果：商家同意部分退款    
+      </text>
+      <text class="font-22 color-febab3" a:elif="{{result.workOrder.closeCause == 'FULL_REFUND'}}">处理结果：商家同意全部退款    
+      </text>
+      <text class="font-22 color-febab3" a:elif="{{result.workOrder.closeCause == 'RESEND'}}">处理结果：再寄一份    
+      </text>
+      <text class="font-22 color-febab3" a:elif="{{result.workOrder.closeCause == 'SPECIAL_HANDLE'}}">处理结果：特殊处理    
+      </text>
+      <text class="font-22 color-febab3" a:elif="{{result.workOrder.closeCause == 'OTHER_HANDLE'}}">处理结果：其他处理    
+      </text>
+      <text class="font-22 color-febab3" a:elif="{{result.workOrder.closeCause == 'PLATFORM_HANDLE'}}">处理结果：平台介入    
+      </text>
+      <text class="font-22 color-febab3" a:elif="{{result.workOrder.closeCause == 'SELLER_UNAGREED_REFUND_MONEY'}}">处理结果：商家不同意退款金额    
+      </text>
+      <text class="font-22 color-febab3" a:else>处理结果：{{result.workOrder.closeCause}}    
+      </text>
+      <text class="font-22 color-febab3" a:if="{{result.order.isAppealOutTime}}">已超过申请客服介入时间，无法进行申请客服介入    
+      </text>
+      <text class="font-22 color-febab3" a:else>如不满意商家处理结果，可申请客服介入    
+      </text>
+    </view>
+  </view>
+  <!-- 等待用户确认 -->
+  <view class="title-view" a:elif="{{result.workOrder.woStatus == 'WAIT_USER_CONFIRM'}}">
+    <image src="{{baseImgLocUrl}}miniappImg/icon/icon_serivce_files.png" class="pageHead_img">
+    </image>
+    <view class="title-text-view">
+      <text class="font-28 color-white" a:if="{{result.order.orderStatus == 'PAYFINISH'}}">等待商家处理退款申请    
+      </text>
+      <text class="font-28 color-white" a:elif="{{result.order.orderStatus == 'SHIPPED'}}">商家已处理您的退款申请    
+      </text>
+      <text class="font-22 color-febab3">处理结果：商家不同意您的退款金额    
+      </text>
+      <text class="font-22 color-febab3" a:if="{{result.workOrder.refundAmount}}">商家修改退款金额为:{{result.workOrder.refundAmount}}元,请确认!    
+      </text>
+      <text class="font-22 color-febab3" a:if="{{result.order.isAppealOutTime}}">已超过申请客服介入时间，无法进行申请客服介入    
+      </text>
+      <text class="font-22 color-febab3" a:else>如不满意商家处理结果，可申请客服介入    
+      </text>
+    </view>
+  </view>
+  <!-- 商家同意 -->
+  <view class="title-view" a:elif="{{result.workOrder.woStatus == 'SELLER_AGREED_REFUND'}}">
+    <image src="{{baseImgLocUrl}}miniappImg/icon/icon_serivce_letter.png" class="pageHead_img">
+    </image>
+    <view class="title-text-view">
+      <text class="font-28 color-white" a:if="{{result.order.orderStatus == 'PAYFINISH'}}">商家已处理您的退款申请    
+      </text>
+      <text class="font-28 color-white" a:elif="{{result.order.orderStatus == 'SHIPPED'}}">商家已处理您的售后申请    
+      </text>
+      <text class="font-22 color-febab3">处理结果：商家同意退款    
+      </text>
+      <text class="font-22 color-febab3">退款将在3个工作日内按照原支付路径退回    
+      </text>
+    </view>
+  </view>
+  <!-- 用户主动撤销 -->
+  <view class="title-view" a:elif="{{result.workOrder.woStatus == 'USER_REVOKE'}}">
+    <image src="{{baseImgLocUrl}}miniappImg/icon/icon_serivce_files.png" class="pageHead_img">
+    </image>
+    <view class="title-text-view">
+      <block a:if="{{result.workOrder.isAppeal}}">
+        <text class="font-28 color-white">您的客服介入申请已取消      
+        </text>
+        <text class="font-22 color-febab3">如有需要，您可重新发起客服介入申请      
+        </text>
+      </block>
+      <block a:else>
+        <text class="font-28 color-white" a:if="{{result.order.orderStatus == 'PAYFINISH'}}">您已撤销退款申请！      
+        </text>
+        <text class="font-28 color-white" a:else>您已撤销售后申请！      
+        </text>
+        <text class="font-22 color-febab3">如有需要，您可重新发起申请      
+        </text>
+      </block>
+    </view>
+  </view>
+  <!-- 申诉审核中 -->
+  <view class="title-view" a:elif="{{result.workOrder.woStatus == 'APPEAL_AUDIT'}}">
+    <image src="{{baseImgLocUrl}}miniappImg/icon/icon_serivce_staff.png" class="pageHead_img">
+    </image>
+    <view class="title-text-view">
+      <text class="font-28 color-white">等待平台处理售后申诉    
+      </text>
+      <text class="font-22 color-febab3">平台客服将在48小时内处理您的申诉    
+      </text>
+    </view>
+  </view>
+  <!-- 平台介入 -->
+  <view class="title-view" a:elif="{{result.workOrder.woStatus == 'PLATFORM_HANDLED'}}">
+    <image src="{{baseImgLocUrl}}miniappImg/icon/icon_serivce_staff.png" class="pageHead_img">
+    </image>
+    <view class="title-text-view">
+      <text class="font-28 color-white" a:if="{{result.order.orderStatus == 'PAYFINISH'}}">平台已处理您的退款申请    
+      </text>
+      <text class="font-28 color-white" a:elif="{{result.order.orderStatus == 'SHIPPED'}}">平台已处理您的售后申请    
+      </text>
+      <text class="font-22 color-febab3">处理结果:平台介入中    
+      </text>
+    </view>
+  </view>
+  <!-- 退款成功 -->
+  <view class="title-view" a:elif="{{result.workOrder.woStatus == 'REFUND_SUCCESS'}}">
+    <image src="{{baseImgLocUrl}}miniappImg/icon/icon_serivce_letter.png" class="pageHead_img">
+    </image>
+    <view class="title-text-view">
+      <block a:if="{{result.workOrder.isAppeal}}">
+        <text class="font-28 color-white">平台客服已处理您的申请      
+        </text>
+        <text class="font-22 color-febab3" a:if="{{result.workOrder.appealCloseCause == 'NO_REFUND'}}">处理结果:不退款      
+        </text>
+        <text class="font-22 color-febab3" a:elif="{{result.workOrder.appealCloseCause == 'FULL_REFUND'}}">处理结果:同意全部退款      
+        </text>
+        <text class="font-22 color-febab3" a:elif="{{result.workOrder.appealCloseCause == 'PARTIAL_REFUND'}}">处理结果:同意部分退款      
+        </text>
+        <text class="font-22 color-febab3" a:elif="{{result.workOrder.appealCloseCause == 'RESEND'}}">处理结果:再寄一份      
+        </text>
+        <text class="font-22 color-febab3" a:elif="{{result.workOrder.appealCloseCause == 'SPECIAL_HANDLE'}}">处理结果:特殊处理      
+        </text>
+        <text class="font-22 color-febab3" a:elif="{{result.workOrder.appealCloseCause == 'OTHER_HANDLE'}}">处理结果:其他处理      
+        </text>
+        <text class="font-22 color-febab3" a:elif="{{result.workOrder.appealCloseCause == 'PLATFORM_HANDLE'}}">处理结果:平台介入      
+        </text>
+        <text class="font-22 color-febab3" a:elif="{{result.workOrder.appealCloseCause == 'SELLER_UNAGREED_REFUND_MONEY'}}">处理结果:商家不同意退款金额      
+        </text>
+        <text class="font-22 color-febab3" a:else>处理结果:{{result.workOrder.appealCloseCause}}      
+        </text>
+        <text class="font-22 color-febab3" a:if="{{result.refund.refundStatus == 'SUCCESS'}}">退款成功      
+        </text>
+        <text class="font-22 color-febab3" a:else>退款将在3个工作日内按照原支付路径退回      
+        </text>
+      </block>
+      <block a:else>
+        <text class="font-28 color-white" a:if="{{result.workOrder.closeCause == 'PLATFORM_HANDLE'}}">平台已处理您的售后申请      
+        </text>
+        <text class="font-28 color-white" a:else>商家已处理您的售后申请      
+        </text>
+        <text class="font-22 color-febab3" a:if="{{result.workOrder.closeCause == 'NO_REFUND'}}">处理结果:不退款      
+        </text>
+        <text class="font-22 color-febab3" a:elif="{{result.workOrder.closeCause == 'FULL_REFUND'}}">处理结果:同意全部退款      
+        </text>
+        <text class="font-22 color-febab3" a:elif="{{result.workOrder.closeCause == 'PARTIAL_REFUND'}}">处理结果:同意部分退款      
+        </text>
+        <text class="font-22 color-febab3" a:elif="{{result.workOrder.closeCause == 'RESEND'}}">处理结果:再寄一份      
+        </text>
+        <text class="font-22 color-febab3" a:elif="{{result.workOrder.closeCause == 'SPECIAL_HANDLE'}}">处理结果:特殊处理      
+        </text>
+        <text class="font-22 color-febab3" a:elif="{{result.workOrder.closeCause == 'OTHER_HANDLE'}}">处理结果:其他处理      
+        </text>
+        <text class="font-22 color-febab3" a:elif="{{result.workOrder.closeCause == 'PLATFORM_HANDLE'}}">处理结果:平台介入      
+        </text>
+        <text class="font-22 color-febab3" a:elif="{{result.workOrder.closeCause == 'SELLER_UNAGREED_REFUND_MONEY'}}">处理结果:商家不同意退款金额      
+        </text>
+        <text class="font-22 color-febab3" a:else>处理结果:{{result.workOrder.closeCause}}      
+        </text>
+        <text class="font-22 color-febab3" a:if="{{result.deposit || result.refund.refundStatus == 'SUCCESS'}}">退款成功      
+        </text>
+        <text class="font-22 color-febab3" a:else>退款将在3个工作日内按照原支付路径退回      
+        </text>
+      </block>
+    </view>
+  </view>
+  <!-- 售后关闭 -->
+  <view class="title-view" a:elif="{{result.workOrder.woStatus == 'AFTER_SALES_CLOSURE'}}">
+    <image src="{{baseImgLocUrl}}miniappImg/icon/icon_serivce_staff.png" class="pageHead_img">
+    </image>
+    <view class="title-text-view">
+      <block a:if="{{result.workOrder.isAppeal}}">
+        <text class="font-28 color-white" a:if="{{result.order.orderStatus == 'PAYFINISH'}}">平台已处理您的退款申请      
+        </text>
+        <text class="font-28 color-white" a:else>平台已处理您的售后申请      
+        </text>
+        <text class="font-22 color-febab3" a:if="{{result.workOrder.appealCloseCause == 'NO_REFUND'}}">处理结果:不退款      
+        </text>
+        <text class="font-22 color-febab3" a:elif="{{result.workOrder.appealCloseCause == 'FULL_REFUND'}}">处理结果:同意全部退款      
+        </text>
+        <text class="font-22 color-febab3" a:elif="{{result.workOrder.appealCloseCause == 'PARTIAL_REFUND'}}">处理结果:同意部分退款      
+        </text>
+        <text class="font-22 color-febab3" a:elif="{{result.workOrder.appealCloseCause == 'RESEND'}}">处理结果:再寄一份      
+        </text>
+        <text class="font-22 color-febab3" a:elif="{{result.workOrder.appealCloseCause == 'SPECIAL_HANDLE'}}">处理结果:特殊处理      
+        </text>
+        <text class="font-22 color-febab3" a:elif="{{result.workOrder.appealCloseCause == 'OTHER_HANDLE'}}">处理结果:其他处理      
+        </text>
+        <text class="font-22 color-febab3" a:elif="{{result.workOrder.appealCloseCause == 'PLATFORM_HANDLE'}}">处理结果:平台介入      
+        </text>
+        <text class="font-22 color-febab3" a:elif="{{result.workOrder.appealCloseCause == 'SELLER_UNAGREED_REFUND_MONEY'}}">处理结果:商家不同意退款金额      
+        </text>
+        <text class="font-22 color-febab3" a:else>处理结果:{{result.workOrder.appealCloseCause}}      
+        </text>
+      </block>
+      <block a:else>
+        <text class="font-28 color-white" a:if="{{result.order.orderStatus == 'PAYFINISH'}}">商家已处理您的退款申请      
+        </text>
+        <text class="font-28 color-white" a:else>商家已处理您的售后申请      
+        </text>
+        <text class="font-22 color-febab3" a:if="{{result.workOrder.closeCause == 'NO_REFUND'}}">处理结果:不退款      
+        </text>
+        <text class="font-22 color-febab3" a:elif="{{result.workOrder.closeCause == 'FULL_REFUND'}}">处理结果:同意全部退款      
+        </text>
+        <text class="font-22 color-febab3" a:elif="{{result.workOrder.closeCause == 'PARTIAL_REFUND'}}">处理结果:同意部分退款      
+        </text>
+        <text class="font-22 color-febab3" a:elif="{{result.workOrder.closeCause == 'RESEND'}}">处理结果:再寄一份      
+        </text>
+        <text class="font-22 color-febab3" a:elif="{{result.workOrder.closeCause == 'SPECIAL_HANDLE'}}">处理结果:特殊处理      
+        </text>
+        <text class="font-22 color-febab3" a:elif="{{result.workOrder.closeCause == 'OTHER_HANDLE'}}">处理结果:其他处理      
+        </text>
+        <text class="font-22 color-febab3" a:elif="{{result.workOrder.closeCause == 'PLATFORM_HANDLE'}}">处理结果:平台介入      
+        </text>
+        <text class="font-22 color-febab3" a:elif="{{result.workOrder.closeCause == 'SELLER_UNAGREED_REFUND_MONEY'}}">处理结果:商家不同意退款金额      
+        </text>
+        <text class="font-22 color-febab3" a:else>处理结果:{{result.workOrder.closeCause}}      
+        </text>
+      </block>
+    </view>
+  </view>
+  <view class="division-area">
+  </view>
+  <block a:if="{{result.workOrder.woStatus == 'REFUND_SUCCESS'}}">
+    <view class="refound_success">
+      <view class="single-line font-24">
+        <text class="color-414141" a:if="{{result.workOrder.isAppeal || result.workOrder.closeCause == 'PLATFORM_HANDLE'}}">平台客服已完成退款      
+        </text>
+        <text class="color-414141" a:else>商家已完成退款      
+        </text>
+        <text class="color-b1b6bb">(款项退回到原支付账号)      
+        </text>
+      </view>
+    </view>
+    <view class="single-line font-24 mT_26">
+      <text class="color-b1b6bb">退款流水号：    
+      </text>
+      <text class="color-414141">{{result.refund.refundSn}}    
+      </text>
+    </view>
+    <view class="single-line font-24 mTL_20">
+      <text class="color-b1b6bb">退款时间：    
+      </text>
+      <text class="color-414141">{{result.refund.refundDate}}    
+      </text>
+    </view>
+    <view class="single-line font-24 mB_26">
+      <text class="color-b1b6bb">退款金额：    
+      </text>
+      <text class="color-fa4444">{{result.refund.refundAmount}}元    
+      </text>
+    </view>
+    <view class="division-area">
+    </view>
+  </block>
+  <block a:if="{{result.workOrder.isAppeal}}">
+    <view class="applyDetail font-28 color-232323">客服介入申请详情  
+    </view>
+    <view class="single-line font-24 mT_26">
+      <text class="color-b1b6bb">商家姓名：    
+      </text>
+      <text class="color-414141">{{result.supplier.nickName}}    
+      </text>
+    </view>
+    <view class="single-line font-24 mTL_20">
+      <text class="color-b1b6bb">收货状态：    
+      </text>
+      <text class="color-414141">{{result.workOrder.goodsStatus}}    
+      </text>
+    </view>
+    <view class="single-line font-24 mTL_20">
+      <text class="color-b1b6bb">联系电话：    
+      </text>
+      <text class="color-414141">{{result.workOrder.contactNumber}}    
+      </text>
+    </view>
+    <view class="single-line font-24 mTL_20">
+      <text class="color-b1b6bb">问题说明：    
+      </text>
+      <text class="color-414141">{{result.workOrder.appealDesc}}    
+      </text>
+    </view>
+    <view class="single-line font-24 mTL_20">
+      <text class="color-b1b6bb">申请编号：    
+      </text>
+      <text class="color-414141">{{result.workOrder.woSn}}    
+      </text>
+    </view>
+    <view class="single-line font-24 mTL_20">
+      <text class="color-b1b6bb">申请时间：    
+      </text>
+      <text class="color-414141">{{result.workOrder.createDate}}    
+      </text>
+    </view>
+    <view class="single-line font-24 mTL_20" a:if="{{result.workOrder.processDate}}">
+      <text class="color-b1b6bb">处理时间：    
+      </text>
+      <text class="color-414141">{{result.workOrder.processDate}}    
+      </text>
+    </view>
+    <view class="single-line font-24 mTL_20" a:if="{{result.workOrder.closeOtherCause}}">
+      <text class="color-b1b6bb">商家备注：    
+      </text>
+      <text class="color-414141">{{result.workOrder.closeOtherCause}}    
+      </text>
+    </view>
+    <view class="single-line font-24 mTL_20" a:if="{{result.workOrder.appealCloseExplain}}">
+      <text class="color-b1b6bb">平台备注：    
+      </text>
+      <text class="color-414141">{{result.workOrder.appealCloseExplain}}    
+      </text>
+    </view>
+    <view class="font-24 mB_26 flex_view_row" a:if="{{result.workOrder.appealVoucherList}}">
+      <text class="color-b1b6bb">售后凭证：    
+      </text>
+      <image src="{{item}}" class="voucherList" data-current="{{item}}" data-urls="{{result.workOrder.appealVoucherList}}" a:for="{{result.workOrder.appealVoucherList}}" a:key="voucherList" onTap="imageViewTap">
+      </image>
+    </view>
+  </block>
+  <block a:else>
+    <view class="applyDetail font-28 color-232323 ">售后申请详情  
+    </view>
+    <view class="single-line font-24 mT_26">
+      <text class="color-b1b6bb ">商家姓名：    
+      </text>
+      <text class="color-414141 ">{{result.supplier.nickName}}    
+      </text>
+    </view>
+    <view class="single-line font-24 mTL_20">
+      <text class="color-b1b6bb ">收货状态：    
+      </text>
+      <text class="color-414141 ">{{result.workOrder.goodsStatus ? result.workOrder.goodsStatus : ''}}    
+      </text>
+    </view>
+    <view class="single-line font-24 mTL_20">
+      <text class="color-b1b6bb ">售后原因：    
+      </text>
+      <text class="color-414141 ">{{result.workOrder.applyCause}}    
+      </text>
+    </view>
+    <view class="flex_view_row font-24 mTL_20">
+      <text class="color-b1b6bb ">售后说明：    
+      </text>
+      <text class="color-414141 flex_1">{{result.workOrder.description}}    
+      </text>
+    </view>
+    <view class="single-line font-24 mTL_20">
+      <text class="color-b1b6bb ">申请编号：    
+      </text>
+      <text class="color-414141 ">{{result.workOrder.woSn}}    
+      </text>
+    </view>
+    <view class="single-line font-24 mTL_20">
+      <text class="color-b1b6bb ">申请时间：    
+      </text>
+      <text class="color-414141 ">{{result.workOrder.createDate}}    
+      </text>
+    </view>
+    <view class="single-line font-24 mTL_20" a:if="{{result.workOrder.processDate}}">
+      <text class="color-b1b6bb">处理时间：    
+      </text>
+      <text class="color-414141">{{result.workOrder.processDate}}    
+      </text>
+    </view>
+    <view class="font-24 flex_view_row mB_26" a:if="{{result.workOrder.voucherList}}">
+      <text class="color-b1b6bb ">售后凭证：    
+      </text>
+      <image src="{{item}} " class="voucherList" data-current="{{item}} " data-urls="{{result.workOrder.voucherList}} " a:for="{{result.workOrder.voucherList}}" a:key="voucherList " onTap="imageViewTap">
+      </image>
+    </view>
+  </block>
+  <view class="bottom-view">
+    <view class="bottom-button" catchTap="goToWebCall">联系客服  
+    </view>
+    <view class="flex_view_row" a:if="{{!result.order.isAppealOutTime}}">
+      <block a:if="{{result.workOrder.woStatus == 'WAIT_USER_CONFIRM' || result.workOrder.woStatus == 'SELLER_HANDLED'}}">
+        <view class="bottom-button" a:if="{{result.workOrder.woStatus == 'WAIT_USER_CONFIRM'}}" onTap="agreeRefound">同意金额      
+        </view>
+        <navigator url="/pages/user/afterSalesService/platfromService/platfromService?orderId={{result.orderItem.id}}&workOrderId={{result.workOrder.id}}" open-type="{{needRedirect ? 'redirect' : 'navigate'}}" class="bottom-button" hover-class="none">        申诉平台            
+        </navigator>
+      </block>
+      <block a:elif="{{result.workOrder.woStatus == 'USER_REVOKE'}}">
+        <navigator url="/pages/user/afterSalesService/platfromService/platfromService?orderId={{result.orderItem.id}}&workOrderId={{result.workOrder.id}}" open-type="{{needRedirect ? 'redirect' : 'navigate'}}" class="bottom-button" hover-class="none" a:if="{{result.workOrder.isAppeal}}">        重新申诉            
+        </navigator>
+        <navigator url="/pages/user/afterSalesService/applyForAfterSalesService/applyForAfterSalesService?isRefund={{result.order.orderStatus == 'PAYFINISH'}}&orderId={{result.orderItem.orderId}}" open-type="{{needRedirect ? 'redirect' : 'navigate'}}" class="bottom-button" hover-class="none" a:else>        重新申请            
+        </navigator>
+      </block>
+      <view class="bottom-button btn_gray" a:elif="{{result.workOrder.woStatus == 'SELLER_AGREED_REFUND'}}">售后完成    
+      </view>
+      <view class="bottom-button btn_gray" a:elif="{{result.workOrder.woStatus == 'REFUND_SUCCESS'}}">售后完成    
+      </view>
+      <view class="bottom-button" a:elif="{{result.workOrder.woStatus == 'APPEAL_AUDIT'}}" onTap="cancelPlatform">取消申诉    
+      </view>
+      <view class="bottom-button" a:elif="{{result.workOrder.woStatus == 'AFTER_SALES_AUDIT' || result.workOrder.woStatus == 'APPEAL_AUDIT'}}" onTap="cancelApply">取消售后    
+      </view>
+    </view>
+    <view class="flex_view_row" a:else>
+      <view class="bottom-button btn_gray" a:if="{{result.workOrder.woStatus == 'SELLER_AGREED_REFUND'}}">售后完成    
+      </view>
+      <view class="bottom-button btn_gray" a:if="{{result.workOrder.woStatus == 'REFUND_SUCCESS'}}">售后完成    
+      </view>
+    </view>
+  </view>
+</view>

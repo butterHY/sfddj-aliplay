@@ -1,0 +1,86 @@
+<view class="contain">
+  <view class="addCon_view bor_bot single-line">
+    <text class="font-30 color-323232">收货人姓名：</text>
+    <input class="inlineBlock font-30 color-b3b3b3" value="{{originalAddr.fullName}}" onInput="handleNameInput"/>
+  </view>
+  <view class="addCon_view bor_bot posi_re single-line">
+    <text class="font-30 color-323232">手机号码：</text>
+    <input type="number" maxlength="11" class="inlineBlock font-30 color-b3b3b3" value="{{originalAddr.mobile}}" onInput="handlePhoneInput"/>
+    <!-- <image src="{{baseImgLocUrl}}miniappImg/icon/icon_add.png" class="add_icon"></image> -->
+  </view>
+  <view class="picker" onTap="showMenu">
+    <view class="picker_son">
+        <view class="height_100 flex_view_row align_cen">
+            <text class="font-30 color-323232">省、市、区：</text> 
+        </view>
+        <view class="picker_region">
+          <text class="picker_regionTxt font-30 color-b3b3b3">{{addrInfo[0]}} {{addrInfo[1]}} {{addrInfo[2]}}</text>
+          <!-- <image src='{{baseImgLocUrl}}miniappImg/icon/icon_right_arrow.png' class='address_arrIcon'></image> -->
+          <text class="icon-href-right font-22 color-b3b3b3"></text>
+        </view>
+    </view>
+  </view>
+  <view class="single-line bor_bot addCon_view">
+    <view class="font-30 color-323232"><text>详细地址：</text></view>
+    <input class="font-28 color-b3b3b3 flex_1" placeholder="详细地址(精确到门牌号)" value="{{originalAddr.address}}" onInput="handleAddrInput"/>
+  </view>
+  <view class="addCon_view single-line" onTap="setDefault">
+    <text class="font-30 color-323232">设为默认地址</text>
+    <image src="{{setDefault ? baseImgLocUrl + 'miniappImg/icon/icon_sel.png' : baseImgLocUrl+ 'miniappImg/icon/icon_unsel.png'}}" class="address_selIcon"></image>
+  </view>
+  <view class="saveView" onTap="addAddr">
+    <text class="saveView_text color-white">保存</text>
+  </view>
+</view>
+
+<!--选地址弹窗  -->
+<view class="mark" a:if="{{addrMenuShow}}">
+  <view class="height_50" onTap="closeAddrMenu"></view>
+  <view class="width_100 whiteBack flex_view_col height_50">
+    <view class="flex_view_row width_100 justi_between addrTit">
+      <view class="font-28 color-c7c7cc addrPopBtn height_100 flex_view_col justi_cen align_cen" onTap="closeAddrMenu">取消</view>
+      <view class="font-28 color-ff5353 addrPopBtn height_100  flex_view_col justi_cen align_cen" onTap="citySure">确定</view>
+    </view>
+
+    <picker-view value="{{value}}" class="alipay_picker_view height_85" onChange="changeAddr">
+      <picker-view-column>
+        <view style class="alipay_picker_view_item" a:for="{{provinces}}" a:key="provinces">{{item.text}}</view>
+      </picker-view-column>
+      <picker-view-column>
+        <view style class="alipay_picker_view_item" a:for="{{city}}" a:key="city">{{item.text}}</view>
+      </picker-view-column>
+      <picker-view-column>
+        <view style class="alipay_picker_view_item" a:for="{{area}}" a:key="area">{{item.text}}</view>
+      </picker-view-column>
+    </picker-view>
+  </view>
+
+</view>
+
+<!--选街道弹窗  -->
+<view class="mark" a:if="{{streetMenuShow}}">
+  <view class="height_60" onTap="closeStreetMenu"></view>
+  <view class="width_100 whiteBack flex_view_col height_40">
+    <view class="flex_view_row width_100 justi_between addrTit">
+      <view class="font-28 color-c7c7cc addrPopBtn" onTap="closeStreetMenu">取消</view>
+      <view class="font-28 color-ff5353 addrPopBtn" onTap="streetSure">确定</view>
+    </view>
+
+    <picker-view value="{{valueStr}}" class="alipay_picker_view" onChange="changeStreet">
+      <picker-view-column>
+        <view style class="alipay_picker_view_item" a:for="{{street}}" a:key="street">{{item.text}}</view>
+      </picker-view-column>
+      
+    </picker-view>
+  </view>
+</view>
+
+
+<!--toast弹窗-->
+<view class="mark flex_view_col align_cen justi_cen" a:if="{{showToast}}">
+  <view class="toastView_wb" catchtouchmove="move">
+    <view class="toastView_wb_con font-26 color-232323">
+      {{showToastMes}}
+    </view>
+  </view>
+</view>

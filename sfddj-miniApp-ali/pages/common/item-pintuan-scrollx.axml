@@ -1,0 +1,17 @@
+<template name="itemPintuanScrollX">
+  <view style="display:inline-block;width:220rpx;margin-left:10rpx;margin-right:10rpx;border-right:2rpx #e6e6e6 solid; overflow: hidden">
+    <navigator url="/pages/user/pintuanOrderDetail/pintuanOrderDetail?recordId={{recordId}}&isInvited={{true}}" hover-class="none">
+      <image style="width:190rpx;height:190rpx;" src="{{baseImageUrl}}{{goodsImagePath}}" mode="widthFix">
+      </image>
+      <view style="width:200rpx;box-sizing:border-box;margin-top:12rpx">
+        <view class="font-24 color-323232 single-line-text">{{goodsName}}</view>
+        <view class="single-line">
+          <text class="font-30 color-ff5353">¥{{tuangouPrices}}</text>
+          <text style="margin-top:10rpx" class="font-22 color-c0ae8b single-line-text">/{{productName}}</text>
+        </view>
+        <text class="font-24 color-c0ae8b">还差{{devCount}}人成团</text>
+        <view style="position:absolute;top:0;background-color:#f0803c;color:white;font-size:26rpx;border-radius:5rpx;padding:5rpx 20rpx 5rpx 20rpx">{{tuangouCount}}人团</view>
+      </view>
+    </navigator>
+  </view>
+</template>

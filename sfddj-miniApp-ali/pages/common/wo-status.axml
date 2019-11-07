@@ -1,0 +1,11 @@
+<template name="woStatus"><view class="alipay_template_wrap">
+  <text a:if="{{woStatus == 'AFTER_SALES_AUDIT'}}">售后审核中</text>
+  <text a:elif="{{woStatus == 'SELLER_HANDLED'}}">商家已经处理</text>
+  <text a:elif="{{woStatus == 'SELLER_AGREED_REFUND'}}">商家同意退款</text>
+  <text a:elif="{{woStatus == 'USER_REVOKE'}}">用户主动撤销</text>
+  <text a:elif="{{woStatus == 'APPEAL_AUDIT'}}">申诉审核中</text>
+  <text a:elif="{{woStatus == 'REFUND_SUCCESS'}}">退款成功</text>
+  <text a:elif="{{woStatus == 'AFTER_SALES_CLOSURE'}}">售后关闭</text>
+  <text a:elif="{{woStatus == 'PLATFORM_HANDLED'}}">平台介入</text>
+  <text a:elif="{{woStatus == 'WAIT_USER_CONFIRM'}}">等待用户确认</text>
+</view></template>

@@ -1,0 +1,16 @@
+<template name="goodsTheway">
+   <view class="goodsGiftbg" catchtouchmove="move" a:if="{{show}}">
+      <view style="background:#fff;width:543rpx;margin-top:358rpx;margin:179px auto 0 auto;border-radius:9rpx;text-align:center;">
+        <view style="text-align:right;">
+          <image src="{{base64imageUrl}}/miniappImg/multiGift/icon_close.png" style="width:32rpx;height:32rpx;margin-top:20rpx;margin-right:31rpx" onTap="bombClose"></image>
+        </view>
+        <view style="margin-top:-10rpx;">
+         <image src="{{base64imageUrl}}miniappImg/multiGift/theway.png" style=" width:315rpx;height:40rpx;"></image>
+        </view>
+        <view style="font-size:30rpx;margin:30rpx 36rpx;text-align:left">
+          <view><text style="line-height:56rpx;">【只送给一个人】无论购买数量是多少，只允许1个朋友领取;</text></view>
+          <view><text style="line-height:56rpx;">【多人可抢】购买后分享到群可抢礼品人数=所购礼品数</text></view>
+       </view>
+      </view>
+  </view>
+</template>

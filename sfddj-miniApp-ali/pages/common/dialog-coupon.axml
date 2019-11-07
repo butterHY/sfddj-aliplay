@@ -1,0 +1,55 @@
+<import src="./couponItem.axml"/>
+<template name="dialogCoupon">
+  <view class="dialogCoupon" catchtouchmove="move" a:if="{{show}}">
+    <view class="dialog_height20" catchTap="colseCouponDialog"></view>
+    <view class="dialog_couponCon">
+      <view class="dialog_couponList">
+        <view class="single-line font-30 color-323232 dialog_couponTit">我的优惠券</view>
+        <scroll-view class="width_100 dialog_couponScroll " scroll-y="true" catchtouchmove="move2">
+          <block a:for="{{couponList}}" a:key="couponList">
+            <template is="couponItem" data="{{item,isExpired: false, pageFrom: 'order', iconSize}}"></template>
+          </block>
+        </scroll-view>
+      </view>
+      <view class="goods-sepc-bottom-view">
+        <view class="goods-sepc-bottom-button" catchTap="colseCouponDialog">关闭</view>
+      </view>
+    </view>
+  </view>
+</template>
+
+
+<template name="dialogCouponOld">
+  <view style="position:fixed;top:0;left:0;right:0;bottom:0;background-color:rgba(0,0,0,0.5);z-index:10000" catchtouchmove="move" a:if="{{show}}">
+    <view style="height:20%" catchTap="colseCouponDialog"></view>
+    <view style="height:80%;background:white">
+      <view style="display:flex;flex-direction: column;align-items: center">
+        <view class="single-line font-30 color-323232" style="padding:30rpx">我的优惠券</view>
+        <scroll-view style="display:flex;flex-direction: column;align-items:center;height:760rpx" scroll-y="true" catchtouchmove="move2">
+          <view style="width:704rpx;height:187rpx;position:relative;margin-bottom:20rpx" data-couponid="{{item.userCouponId}}" a:for="{{couponList}}" a:key="couponList" catchTap="couponTap">
+            <image src="{{baseImageUrlLoc}}miniappImg/bg/bg_my_coupon_blank2.png" style="position:absolute;left:0;top:0;width:704rpx;height:187rpx"></image>
+            <view style="width:180rpx;height:187rpx;position:absolute;left:0;top:0;display:flex;align-items:center;flex-direction:column;justify-content:center">
+              <view>
+                <text class="font-30 color-white">¥</text>
+                <text class="font-50 color-white">{{item.costPrice}}</text>
+              </view>
+              <view class="font-24 color-white">满{{item.needPrice}}可用</view>
+            </view>
+            <!--分割虚线-->
+            <view style="height:187rpx;border:2rpx dashed white;position:absolute;left:178rpx;top:0"></view>
+            <view style="position:absolute;left:180rpx;top:0;width:524rpx;height:187rpx;padding-left:50rpx;padding-top:30rpx;box-sizing:border-box">
+              <view class="font-28 color-white">{{item.couponName}}</view>
+              <view style="margin-top:10rpx;" class="font-26 color-white">{{item.beginDateStr}}-{{item.endDateStr}}</view>
+              <view style="border:1px dashed white;position:absolute;bottom:70rpx;left:20rpx;right:20rpx;"></view>
+              <view style="position:absolute;left:50rpx;bottom:30rpx" class="font-24 color-white">{{item.limitDescribe}}</view>
+            </view>
+            <image src="{{baseImageUrlLoc}}miniappImg/icon/icon_red_yes.png" style="width:56rpx;height:49rpx;position:absolute;right:0;top:0" a:if="{{item.taped}}"></image>
+          </view>
+        </scroll-view>
+      </view>
+      <view class="goods-sepc-bottom-view">
+        <view class="goods-sepc-bottom-button" catchTap="colseCouponDialog">关闭</view>
+      </view>
+    </view>
+  </view>
+</template>

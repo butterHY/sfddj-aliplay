@@ -1,0 +1,151 @@
+<import src="/pages/common/item-order"/>
+ <view class="loadingTop font-24 color-b1b6bb" a:if="{{!loadComplete}}">数据加载中...</view>
+<view class="loadingTop font-24 color-b1b6bb" a:elif="{{loadFail}}">加载失败：<text class="color-ff5353">{{errMsg}}</text></view> 
+ <view class="back_eee"> 
+
+ <!--头部  -->
+  <view>
+    <view class="headView flex_view_row align_cen">
+      <image class="headView_bg" src="{{baseImgLocUrl}}miniappImg/bg/bg_detail.png"></image>
+      <view class="flex_view_col justi_cen align_cen posi_re" a:if="{{remainSecond > 0 && giftRemainQty != 0}}">
+        <text class="font-30 color-323232">剩余<text>{{giftRemainQty}}</text>个未领取</text>
+        <text class="font-24 color-ff5353">距离订单结束还剩：{{leftHour}}:{{leftMin}}:{{leftSec}}</text>
+      </view>
+      <view class="flex_view_col justi_cen posi_re" a:if="{{(remainSecond < 0 || !remainSecond) && giftRemainQty != 0}}">
+         <text class="font-30 color-323232">剩余<text>{{giftRemainQty}}</text>个未领取</text>
+         <text class="font-24 color=ff5353">系统自动退款</text>
+      </view>
+       <view class="flex_view_col justi_cen align_cen posi_re" a:if="{{giftRemainQty == 0}}">
+        <text class="font-24 color=ff5353">已抢光</text>
+      </view>
+      <image src="{{baseImgLocUrl}}miniappImg/bg/bg_detail_closed.png" class="headView_closeImg"></image>
+    </view>
+  </view>
+
+
+  <!--商品图-->
+  <view class="goodsImg">
+    <view class="supplierPart">
+      <view class="flex_view_row align_cen">
+        <image class="icon_shop" src="{{baseImgLocUrl}}miniappImg/icon/icon_shop.png"></image>
+        <text class="font-24 color-323232 marLeft_10">{{supplier.nickName}}</text>
+      </view>
+    </view>
+    <navigator url="/pages/shopping/goodsDetail/goodsDetail?goodsSn={{goods.goodsItem.goodsSn}}" open-type="{{needRedirect ? 'redirect' : 'navigate'}}" hover-class="none">    
+        <template is="itemOrder" data="{{goodsImg:goodsItemL.goodsImage,baseImageUrl:base64imageUrl,goodsName:goodsItemL.goodsName,productName:goodsItemL.productName,productPrice:goodsItemL.productPrice,quantity:goodsItemL.quantity}}"></template>
+    </navigator>
+  </view>
+
+
+  <!--金额计算-->
+  <view class="priceCal">
+    <view class="flex_view_row justi_cen font-24 color-323232">
+      <text>商品总金额</text>
+      <text>¥{{totalFee}}</text>
+    </view>
+    <view class="priceCal_view font-24 color-323232">
+      <text>运费总计</text>
+      <text>¥0</text>
+    </view>
+    <view class="priceCal_view font-24 color-323232">
+      <text>活动优惠</text>
+      <text>-¥{{activityDiscountAmount ? activityDiscountAmount : 0}}</text>
+    </view>
+    <view class="priceCal_view font-24 color-323232">
+      <text>优惠券折扣</text>
+      <text>-¥{{couponDiscountAmount}}</text>
+    </view>
+    <view class="priceCal_view font-24 color-323232">
+      <text>礼品卡</text>
+      <text>-¥{{totalDepositAmount}}</text>
+    </view>
+    <!--分割线-->
+    <view class="dividedLine"></view>
+    <view class="priceCal_actPay">
+      <text class="font-26 color-323232">实付款 </text>
+      <text class="font-26 color-ff5353">¥{{totalPaidAmount}}</text>
+    </view>
+  </view>
+  <view class="downLine"></view>
+
+
+  <!--支付方式-->
+  <view class="payType">
+    <view class="font-24 color-b3b3b3">下单时间：{{orderTime}}</view>
+    <view class="marTop_20 font-24 color-b3b3b3">支付方式：{{payType}}</view>
+    <!-- <view style='margin-top:20rpx' class='font-24 color-b3b3b3'>订单编号：{{order.orderSn}}</view> -->
+    <!-- <view style='display:flex;justify-content:space-between;align-items:center'>
+    <text style='padding:10rpx 20rpx;border:solid 2rpx #b3b3b3' class='font-26 color-b3b3b3' onTap='copy'>复制</text>
+  </view> -->
+  </view>
+
+
+  <view a:if="{{orderGiftList.length != 0}}">
+    <view class="recevierDet">
+      <view>
+        <text class="shortLine">——</text>
+        <text class="font-26">收礼者订单详情</text>
+        <text class="shortLine">——</text>
+      </view>
+    </view>
+
+    <view>
+      <view class="orderList" a:for="{{orderGiftList}}" a:for-item="item" a:key="orderGiftList">
+        <view class="orderList_head">
+          <view class="flex_view_row align_cen">
+            <!-- <view wx:if="item.orderType == 'GIFT' || item.orderType == 'MULTIGIFT'" style="border:1px solid #ff5353;border-radius:5rpx;margin-right:10rpx;padding:0 8rpx;font-size:24rpx" class="color-ff5353"><text>送礼</text></view> -->
+            <image class="icon_shop" src="{{baseImgLocUrl}}miniappImg/icon/icon_shop.png"></image>
+            <text class="font-24 color-323232 marLeft_10">{{supplier.nickName}}</text>
+          </view>
+          <text class="font-24 color-ff5353" a:if="{{item.orderStatus == '1'}}">待发货</text>
+          <text class="font-24 color-ff5353" a:elif="{{item.orderStatus == 2}}">待收货</text>
+          <text class="font-24 color-ff5353" a:elif="{{item.orderStatus == 3}}">交易完成</text>
+          <text class="font-24 color-ff5353" a:elif="{{item.orderStatus == 4}}">已取消</text>
+          <text class="font-24 color-ff5353" a:elif="{{item.orderStatus == 5}}">订单超时</text>
+          <text class="font-24 color-ff5353" a:elif="{{item.orderStatus == 6}}">交易关闭</text>
+          <text class="font-24 color-ff5353" a:elif="{{item.orderStatus == 9 && item.order.orderType == 'GIFT' && item.order.showType == 3}}">待TA填地址 {{item.remainTime}}</text>
+          <view class="font-24 color-ff5353" a:if="{{item.showType == 2 && item.order.orderType == 'MULTIGIFT'}}"><text>距离订单关闭还剩:</text><text>{{item.remainTime}}</text></view>
+        </view> 
+        
+        <navigator url="../orderDetail/orderDetail?orderSn={{item.orderSn}}" open-type="{{needRedirect ? 'redirect' : 'navigate'}}" hover-class="none">
+          <template is="itemOrder" data="{{...item,baseImageUrl:base64imageUrl}}"></template>
+        </navigator>
+        <view class="recevierDetMid font-24 color-323232">
+          <view class="recevierDetMid_sta">领取者：<text class="recevierDetMid_text">{{item.giftReceiver}}</text></view>
+          <view class="recevierDetMid_tot">
+            <text>共{{item.quantity}}件商品</text>
+            <text class="marLeft_20">小计：¥{{item.productPrice}}</text>
+          </view>
+        </view>
+        <view class="downLine"></view>
+        <view class="recevierDet_remindBtn font-30 color-a1a0a0" a:if="{{item.orderStatus == 1}}">
+          <text class="recevierDet_remindBtnText" onTap="remindDelivery">提醒发货</text>
+        </view>
+        <view class="recevierDet_btn font-30 color-a1a0a0" a:if="{{item.orderStatus == 2}}">
+          <view class="flex_view_row">
+            <!-- <navigator url='/pages/user/logistics/logistics?orderId={{item.orderId}}&goodsImg={{item.order.goodsImg}}' style='border:solid 2rpx #a1a0a0; border-radius:5px;padding:10rpx 20rpx;' open-type="{{needRedirect ? 'redirect' : 'navigate'}}" >
+              查看物流
+            </navigator> -->
+            <view class="recevierDet_recBtn color-ff5353" data-index="{{index}}" onTap="orderReceive">
+              确认收货
+            </view>
+          </view>
+        </view>
+        <view class="recevierDet_btn font-30 color-a1a0a0" a:if="{{item.orderStatus == 3 || item.orderStatus == 4}}">
+          <!-- <view style='padding:10rpx 20rpx;border:solid 2rpx #a1a0a0; border-radius:5px;margin-left:10rpx' onTap='deleteOrder' data-order-id='{{item.orderId}}'>删除订单</view> -->
+          <view data-index="{{index}}" class="recevierDet_comBtn color-ff5353" a:if="{{item.orderStatus == 3}}" onTap="gotoComment">评价晒单</view>
+        </view>
+        <!-- <view wx:elif="{{item.orderType == 'GIFT' && item.orderStatus == 9}}" style='display:flex;align-items:center;justify-content:flex-end;height:100rpx' class='font-30 color-a1a0a0'>
+            <navigator url='/pages/user/sendGift/sendGift?paymentOrderId={{item.paymentId}}' open-type="{{needRedirect ? 'redirect' : 'navigate'}}" style='border:solid 2rpx #ff5353; border-radius:5px;padding:10rpx 20rpx;margin-left:30rpx' class='font-24 color-ff5353' data-payment-id='{{item.paymentId}}'>
+              分享给TA
+            </navigator>
+        </view> -->
+      </view>
+    </view>
+  </view>
+  <view class="showToastMark" catchtouchmove="move" a:if="{{showToast}}">
+    <view class="showToastMark_text font-24 color-232323">
+      提醒发货成功！请耐心等候
+    </view>
+  </view>
+</view>

@@ -1,0 +1,257 @@
+<import src="/pages/common/item-order"/>
+<!--<view class="loadingTop font-24 color-b1b6bb" a:if="{{!loadComplete}}">数据加载中...</view> -->
+<!-- 加载中 -->
+<!--<view class="loading" a:if="{{!loadComplete}}"><image src="{{baseImageLocUrl}}/miniappImg/loading/loading_new.gif" class="loading_image" mode="widthFix"/></view><view class="loadingTop font-24 color-b1b6bb" a:elif="{{loadFail}}">加载失败：<text class="color-ff5353">{{errMsg}}</text></view> -->
+<!-- 加载中 -->
+<view a:if="{{!loadComplete}}">
+	<loading-now></loading-now>
+</view>
+<!-- 加载失败 -->
+<view a:elif="{{loadFail && wifiAvailable}}">
+	<load-fail></load-fail>
+</view>
+<!-- 没有网络提示这个 -->
+<!--<view a:elif="{{!wifiAvailable}}"><no-wifi></no-wifi></view> -->
+<view a:else>
+	<view>
+		<view class="pageHead">
+			<image class="head_bg" src="{{baseImgLocUrl}}miniappImg/bg/bg_detail.png"></image>
+			<text class="orderType_text font-30 color-323232" a:if="{{workOrder && workOrder.woStatus != 'USER_REVOKE' && workOrder.woStatus != 'REFUND_SUCCESS' && workOrder.woStatus != 'AFTER_SALES_CLOSURE'}}">售后申请中</text>
+			<text class="orderType_text font-30 color-323232" a:elif="{{order.orderStatus == 'PAYFINISH'}}">等待商家发货</text>
+			<text class="orderType_text font-30 color-323232" a:elif="{{order.orderStatus == 'WAITING_FILL_ADDR'}}">待TA填地址</text>
+			<text class="orderType_text font-30 color-323232" a:elif="{{order.orderStatus == 'WAITING_SHOP_BUYING'}}">等待成团</text>
+			<text class="orderType_text font-30 color-323232" a:elif="{{order.orderStatus == 'SHIPPED'}}">待收货</text>
+			<text class="orderType_text font-30 color-323232" a:elif="{{order.orderStatus == 'FINISHED'}}">交易成功</text>
+			<text class="orderType_text font-30 color-323232" a:else>订单关闭</text>
+			<image src="{{baseImgLocUrl}}miniappImg/bg/bg_detail_box.png" class="head_fillAddImg" a:if="{{order.orderStatus == 'PAYFINISH' || order.orderStatus == 'WAITING_FILL_ADDR'}}"></image>
+			<image src="{{baseImgLocUrl}}miniappImg/bg/bg_detail_car.png" class="head_shippedImg" a:elif="{{order.orderStatus == 'SHIPPED'}}"></image>
+			<image src="{{baseImgLocUrl}}miniappImg/bg/bg_detail_box2.png" class="head_finishedImg" a:elif="{{order.orderStatus == 'FINISHED'}}"></image>
+			<image src="{{baseImgLocUrl}}miniappImg/bg/bg_detail_closed.png" class="head_closedImg" a:else></image>
+		</view>
+	</view>
+	<!--物流信息-->
+	<navigator url open-type="{{needRedirect ? 'redirect' : 'navigate'}}" class="navExpress" hover-class="none" a:if="{{(order.orderType == 'GIFT' || order.orderType == 'MULTIGIFT') && expressInfo}}">
+		<image class="navCarIcon" src="{{baseImgLocUrl}}miniappImg/icon/icon_car2.png"></image>
+		<view class="navMidCon">
+			<view class="font-26 color-ff5353">已发货包裹：1件</view>
+			<view class="navMidCon_context font-26 color-b3b3b3">{{expressInfo.context}}</view>
+			<view class="navMidCon_time font-24 color-b3b3b3">{{expressInfo.time}}</view>
+		</view>
+		<image src="{{baseImgLocUrl}}miniappImg/icon/icon_right_arrow.png" class="navIcon_arrRig"></image>
+		<!--<view class='flex_view_row'><text class='icon-href-right color-b3b3b3 font-22'></text></view> -->
+	</navigator>
+	<navigator url="/pages/user/logistics/logistics?orderId={{order.id}}&goodsImg={{order.orderItemList[0].goodsImage}}" open-type="{{needRedirect ? 'redirect' : 'navigate'}}" class="navExpress" hover-class="none" a:elif="{{expressInfo}}">
+		<image class="navCarIcon" src="{{baseImgLocUrl}}miniappImg/icon/icon_car2.png"></image>
+		<view class="navMidCon">
+			<view class="font-26 color-ff5353">已发货包裹：1件</view>
+			<view class="navMidCon_context font-26 color-b3b3b3">{{expressInfo.context}}</view>
+			<view class="navMidCon_time font-24 color-b3b3b3">{{expressInfo.time}}</view>
+		</view>
+		<image src="{{baseImgLocUrl}}miniappImg/icon/icon_right_arrow.png" class="navIcon_arrRig"></image>
+	</navigator>
+	<!--地址-->
+	<view class="addrView">
+		<view class="addrView_iconAdd">
+			<image class="addrView_iconAddImg" src="{{baseImgLocUrl}}miniappImg/icon/icon_address.png"></image>
+		</view>
+		<view class="addrView_recevied font-30 color-b3b3b3" a:if="{{order.orderType == 'GIFT' && receiverNickName || order.orderType == 'MULTIGIFT'}}">
+      您的礼品已被
+			<text class="color-ff5353">{{receiverNickName}}</text>领取
+		</view>
+		<view class="addrView_recevied font-30 color-b3b3b3" a:elif="{{order.orderType == 'GIFT' && order.orderStatus == 'WAITING_FILL_ADDR'}}">
+			<text>您的TA还没有填写地址哦！\n剩余填写时间:{{leftTime}}</text>
+		</view>
+		<view class="addrView_recevied" a:else>
+			<view class="flex_view_row justi_between">
+				<text class="font-30 color-323232">{{order.shipName}}</text>
+				<text class="font-30 color-323232">{{order.shipMobile}}</text>
+			</view>
+			<text class="addrView_arrDet font-30 color-b3b3b3">{{order.province}}{{order.city}}{{order.area}}{{order.addr}}</text>
+		</view>
+	</view>
+	<!--商品图-->
+	<view class="goodsImg">
+		<view class="supplierMes">
+			<view class="flex_view_row align_cen">
+				<image class="icon_shop" src="{{baseImgLocUrl}}miniappImg/icon/icon_shop.png"></image>
+				<text class="font-24 color-323232 marLeft_10">{{supplier.nickName}}</text>
+			</view>
+		</view>
+		<navigator url="/pages/shopping/goodsDetail/goodsDetail?goodsSn={{goods.goodsSn}}" open-type="{{needRedirect ? 'redirect' : 'navigate'}}" hover-class="none">
+			<template is="itemOrder" data="{{goodsImg:order.orderItemList[0].goodsImage,baseImageUrl:baseImageUrl,goodsName:goods.name,productName:order.orderItemList[0].productName,productPrice:order.orderItemList[0].productPrice,quantity:order.orderItemList[0].quantity,isJifen:order.orderItemList[0].isJifen,memberPoint: order.orderItemList[0].memberPoint}}"></template>
+		</navigator>
+	</view>
+	<!--金额计算-->
+	<view class="priceCal">
+		<view class="flex_view_row justi_between font-24 color-323232">
+			<text>商品总金额</text>
+			<text>¥{{totalPrice}}</text>
+		</view>
+		<view class="priceCal_view font-24 color-323232">
+			<text>运费总计</text>
+			<text>¥{{order.postFee ? order.postFee : 0}}</text>
+		</view>
+		<view class="priceCal_view font-24 color-323232">
+			<text>活动优惠</text>
+			<text>-¥{{order.discountAmount ? order.dicountAmount : 0}}</text>
+		</view>
+		<view class="priceCal_view font-24 color-323232">
+			<text>优惠券折扣</text>
+			<text>-¥{{order.platformCouponPrice + order.supplierCouponPrice}}</text>
+		</view>
+		<view class="priceCal_view font-24 color-323232" a:if="{{order.pointCostMoney > 0}}">
+			<text>积分抵扣</text>
+			<text>-¥{{order.pointCostMoney}}</text>
+		</view>
+		<view class="priceCal_view font-24 color-323232">
+			<text>礼品卡</text>
+			<text>-¥{{result.prepaiCardMoney ? result.prepaiCardMoney : 0}}</text>
+		</view>
+		<view class="priceCal_view font-24 color-323232" a:if="{{result.balance}}">
+			<text>余额抵扣</text>
+			<text>-¥{{result.balance}}</text>
+		</view>
+		<!--分割线-->
+		<view class="dividedLine"></view>
+		<view class="priceCal_actPay">
+			<text class="font-26 color-323232">实付款</text>
+			<text class="font-26 color-ff5353">¥{{order.platformAmount}}</text>
+		</view>
+	</view>
+	<!--支付方式-->
+	<view class="payType">
+		<view class="font-24 color-b3b3b3">下单时间：{{orderTime}}</view>
+		<view class="marTop_20 font-24 color-b3b3b3">支付方式：{{payType}}</view>
+		<view class="marTop_20 font-24 color-b3b3b3 posi_re">
+			<text>订单编号：{{order.orderSn}}</text>
+			<view class="copyBtn posi_ab font-24 color-b3b3b3 tex_center " onTap="clipText">复制</view>
+		</view>
+	</view>
+	<!-- 发票 -->
+	<view class="payType" a:if="{{order.orderStatus == 'FINISHED' && result.invoiceJson}}">
+		<view class="font-24 color-b3b3b3">发票类型：{{result.invoiceJson.itype}}发票</view>
+		<view class="marTop_20 font-24 color-b3b3b3">发票抬头：{{result.invoiceJson.ihead}}</view>
+		<view class="marTop_20 font-24 color-b3b3b3 posi_re">
+			<text>发票内容：{{result.invoiceJson.icontent}}</text>
+			<view class="copyBtn posi_ab font-24 color-b3b3b3 tex_center " a:if="{{result.invUrl}}" onTap="checkInvPic">查看</view>
+		</view>
+	</view>
+	<!--帮助中心-->
+	<navigator url="/pages/user/helpCenter/helpCenter" class="helpCenter" open-type="{{needRedirect ? 'redirect' : 'navigate'}}" hover-class="none">
+		<view class="helpCenter_view">
+			<image src="{{baseImgLocUrl}}miniappImg/icon/detail_phone.png" class="helpCenter_img"></image>
+			<text class="marLeft_20 font-36 color-323232">帮助中心</text>
+		</view>
+	</navigator>
+	<view class="pageBotPad"></view>
+	<!--底部菜单-->
+	<view class="botMenu {{result.invoiceShowBtn ? 'justi_between' : 'justi_end'}}">
+		<view class="">
+			<view a:if="{{result.invoiceShowBtn}}" class='bot_normalBtn font-26 color-353535' onTap="showInvoice">开票</view>
+		</view>
+		<view class="flex_1 flex_view_row justi_end align_cen">
+			<view class="bot_cancleBtn font-26 color-353535" data-order-id="{{order.id}}" onTap="deleteOrder" a:if="{{order.orderStatus == 'FINISHED' || order.orderStatus == 'CLOSEED'}}">删除订单</view>
+			<view class="bot_normalBtn font-26" catchTap="goToWebCall">联系商家</view>
+			<view class="bot_normalBtn font-26 color-353535" data-order-id="{{order.id}}" a:if="{{order.orderStatus == 'SHIPPED'}}" onTap="orderReceive">确认送达</view>
+			<navigator url="/pages/user/afterSalesService/applyForAfterSalesService/applyForAfterSalesService?isRefund={{false}}&orderId={{order.id}}" open-type="{{needRedirect ? 'redirect' : 'navigate'}}" class="bot_normalBtn font-26 color-353535" hover-class="none" a:if="{{(order.orderStatus == 'SHIPPED' || order.orderStatus == 'FINISHED') && !workOrder && !order.isAppealOutTime && !isJifen}}">申请售后</navigator>
+			<navigator url="/pages/user/afterSalesService/applyForAfterSalesService/applyForAfterSalesService?isRefund={{true}}&orderId={{order.id}}" open-type="{{needRedirect ? 'redirect' : 'navigate'}}" class="bot_normalBtn font-26 color-353535" hover-class="none" a:if="{{order.orderStatus == 'PAYFINISH' && !workOrder && !(order.orderType == 'GIFT' && receiverNickName) && !isJifen && (order.platformAmount > 0 || (order.platformAmount == 0 && result.prepaiCardMoney))}}">申请退款</navigator>
+			<navigator url="/pages/user/afterSalesService/afterSalesDetail/afterSalesDetail?orderId={{order.id}}&workOrderId={{workOrder.id}}" class="bot_normalBtn font-26 color-353535" open-type="{{needRedirect ? 'redirect' : 'navigate'}}" hover-class="none" a:if="{{workOrder}}">售后详情</navigator>
+			<view class="bot_normalBtn font-26 color-353535" a:if="{{order.orderStatus == 'FINISHED'}}" onTap="gotoComment">评价晒单</view>
+		</view>
+	</view>
+</view>
+<!--对话框-->
+<!--<view a:if="{{showDialog}}" style='position:fixed;background-color:rgba(0, 0, 0, 0.5);top:0;bottom:0;left:0;right:0;display:flex;flex-direction:column;align-items:center;justify-content:center;' catchtouchmove='move'><view style='background-color:white;border-radius:10rpx;width:500rpx;text-align:center'><view style='margin-top:30rpx' class='font-24 color-404040' onTap='showDialog'>{{dialogTitle}}</view><view style='margin-top:48rpx;display:flex;height:70rpx'><view style='flex:1;display:flex;align-items:center;justify-content:center;border-top:solid #e6e6e6 2rpx' class='font-32 color-999999' catchTap='cancel'>取消</view><view style='flex:1;display:flex;align-items:center;justify-content:center;background-color:#fb2c36;border-bottom-right-radius: 10rpx;' class='font-32 color-white' catchTap='sure'>确认</view></view></view></view> -->
+<!--toast弹窗-->
+<view class="mark_none flex_view_col align_cen justi_cen" a:if="{{showToast}}">
+	<view class="toastView_bb" catchtouchmove="move">
+		<view class="toastView_wb_con font-26 color-white">
+      {{showToastMes}}
+		</view>
+	</view>
+</view>
+<!--发票弹框  -->
+<view a:if="{{showInvoice}}" class='invoiceDialog'>
+	<view class='blackSpace' catchTap='colseCouponDialog'></view>
+	<view class='totalInvoice '>
+		<view class='invoiceScroll height_100' style='overflow:auto'>
+			<!--发票类型  -->
+			<view class='invoiceType'>
+				<view class='invoiceHead_tit'>
+					<text class='font-28 color-414141 '>发票类型</text>
+					<text a:if="{{hasGlobalGoods}}" class='font-24 color-ff5353 marLeft_20'>(全球购商品暂不支持开发票)</text>
+				</view>
+				<view class='invoiceType_con'>
+					<view a:if="{{invoiceOff == 'normal' || invoiceOff == 'multi'}}" class='invoiceType_btn marRight_30 {{ itype == 0 ? "invoiceType_btn_red color-ff5353" : "invoiceType_btn_gray color-666" }} font-26 {{invoiceOff == "normal" || invoiceOff == "multi" ? "" : "grayBtn"}}' data-index='0' catchTap='{{invoiceOff == "normal" || invoiceOff == "multi" ? "chooseInvoiceType" : ""}}'>普通发票</view>
+					<view class='invoiceType_btn {{ itype == 1 ? "invoiceType_btn_red color-ff5353" : "invoiceType_btn_gray color-666" }} font-26 {{invoiceOff}} {{invoiceOff == "electronic" || invoiceOff == "multi" ? "" : "grayBtn"}}' data-index='1' catchTap='{{invoiceOff == "electronic" || invoiceOff == "multi" ? "chooseInvoiceType" : ""}}'>电子发票</view>
+				</view>
+				<!-- 选择电子发票显示的提示语 -->
+				<view a:if="{{itype == 1}}" class="color-414141 padBot_24r">
+					<text class="font-24 color-ff5353">电子普通发票与纸质普通发票具备同等法律效力，可支持报销入账。</text>
+				</view>
+				<!--<view class='invoiceType_con'><view class='invoiceType_btn invoiceType_btn_red font-26 color-ff5353'>普通发票</view></view>  -->
+			</view>
+			<!--发票抬头  -->
+			<view class='invoiceHead'>
+				<view class='invoiceHead_tit'>
+					<text class='font-28 color-414141'>发票抬头</text>
+				</view>
+				<view class='flex_view_row invoiceType_con'>
+					<view a:for="{{invoiceHeadType}}" a:key="invoiceHeadType" class='invoiceHeadType flex_view_row align_cen' data-index="{{index}}" catchTap='invoiceTaped' data-myType='invoiceHead'>
+						<image src='{{item.taped ? baseImgLocUrl+"miniappImg/icon/icon_sel.png" : baseImgLocUrl+"miniappImg/icon/icon_unsel.png"}}' class='marRight_15 icon_sel' data-taped='{{item.taped}}'></image>
+						<text class='font-26 color-414141'>{{item.name}}</text>
+					</view>
+				</view>
+				<!--公司的发票抬头要填写的  -->
+				<view a:if="{{companyInvoice}}" class='marBot_30'>
+					<view class='flex_view_row align_cen'>
+						<text class='color-ff5353 font-28'>*</text>
+						<input type='text' class='invoiceHead_input' placeholder='公司全称' value="{{companyName}}" onInput='companyInput'></input>
+					</view>
+					<view class='flex_view_row align_cen marTop_30'>
+						<text class='color-ff5353 font-28'>*</text>
+						<input type='text' class='invoiceHead_input' placeholder='纳税人识别码' value='{{taxCode}}' onInput='taxCodeInput'></input>
+					</view>
+				</view>
+			</view>
+			<!-- 电子发票要填写的邮箱  -->
+			<view a:if='{{itype == 1 &&  (invoiceOff == "multi" || invoiceOff == "electronic")}}' class='invoiceHead'>
+				<view class='invoiceHead_tit'>
+					<text class='font-28 color-414141'>收票人信息</text>
+				</view>
+				<view class='flex_view_row align_cen marTop_20'>
+					<view class='font-28 color-ff5353 marRight_20 flex_view_row justi_cen'>
+						<text>*</text>
+						<text class='color-414141 font-26'>手机号：</text>
+					</view>
+					<input type='number' value='{{imobile}}' placeholder='收票人手机' class='flex_1 marTop_10 marBot_10 eInvoicInput font-26 {{imobile && phoneRight ? "borGreen" : "borRed"}}' placeholder-class='font-26' onInput='checkTakerMoInput' maxlength='11'></input>
+				</view>
+				<view class='flex_view_row align_cen'>
+					<view class='font-28 color-white  marRight_20 flex_view_row justi_cen'>
+						<text class='color-ff5353'>*</text>
+						<text class='color-414141 font-26'>邮
+							<text decode='true' space="true">&emsp;</text>箱：</text>
+					</view>
+					<input placeholder='用来接收电子发票的邮箱' value='{{iemail}}' class='flex_1 marTop_10 marBot_20 font-26 eInvoicInput {{mailRight ? "borGreen" : ""}} {{iemail && !mailRight ? "borRed" : ""}}' placeholder-class='font-26' onInput='checkTakerMailInput'></input>
+				</view>
+			</view>
+			<!--普通商品发票内容   -->
+			<view class='invoiceHead'>
+				<view class='invoiceHead_tit'>
+					<text class='font-28 color-414141'>普通商品发票内容</text>
+				</view>
+				<view class='invoiceType_con'>
+					<view a:for="{{invoiceConType}}" a:key="invoiceConType" catchTap='invoiceTaped' class='invoiceConType flex_view_row align_cen' data-myType='invoiceCon' data-index="{{index}}">
+						<image src='{{item.taped ? baseImgLocUrl+"miniappImg/icon/icon_sel.png" : baseImgLocUrl+"miniappImg/icon/icon_unsel.png"}}' class='marRight_15 icon_sel' data-taped='{{item.taped}}'></image>
+						<text class='font-26 color-414141'>{{item.name}}</text>
+					</view>
+				</view>
+			</view>
+		</view>
+	</view>
+	<!--下面使用与不使用按钮  -->
+	<view class='bottom_btn flex_view_row align_cen whiteBack'>
+		<!--<button class='btnStyle bot_useBtn font-28' catchTap='uselessInvoice'>不使用</button> -->
+		<button class='btnStyle bot_uselessBtn font-28' catchTap='useInvoice'>确认</button>
+	</view>
+</view>

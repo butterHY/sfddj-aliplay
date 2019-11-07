@@ -1,0 +1,53 @@
+<template name="couponItem">
+  <view class="myCoupon_couponItem posi_re {{isExpired ? 'grayCoupon' : 'orangeCoupon'}} {{index == 0 ? 'marTop_5' : 'marTop_24'}}" data-couponid="{{item.userCouponId}}" catchTap="{{pageFrom == 'order' ? 'couponTap' : ''}}">
+    <!-- 内容 -->
+    <view class="myCoupon_couponBox">
+      <view class="myCoupon_couponInfo flex_view_row align_cen">
+        <!-- 左边 -->
+        <view class="myCoupon_couponLeft flex_view_row align_cen justi_cen">
+          <!--价格部分 -->
+          <view class="myCoupon_couponPrice">
+            <text class="myCouopon_sign">￥</text>
+            <text class="myCoupon_num">{{item.costPrice}}</text>
+            <view class="myCoupon_term">
+              <text>满{{item.needPrice}}可用</text></view>
+          </view>
+        </view>
+        <!-- 中间 -->
+        <view class="myCoupon_center flex_1 height_100">
+          <view class="all_100 myCoupon_useType flex_view_col">
+            <!-- 标题 -->
+            <view class="myCoupon_itemTit width_100">{{item.couponName}}</view>
+            <!--使用说明 -->
+            <view class="myCoupon_tipUse width_100">{{item.limitDescribe}}</view>
+            <!--有效期  -->
+            <view class="myCoupon_valid font-20 flex_1">
+              <text>{{item.beginDateStr}} - {{item.endDateStr}}</text>
+            </view>
+          </view>
+        </view>
+        <!-- 右边 -->
+        <view class="myCoupon_right flex_view_row align_cen justi_cen">
+          <!-- 领取按钮 -->
+          <view a:if="{{pageFrom != 'order'}}" class="myCoupon_useBtn flex_view_row align_cen justi_cen" data-uselink="{{item.useLink}}" data-couponid="{{item.couponId}}" data-limitType="{{item.limitType}}" catchTap="{{!isExpired ? 'toUseCoupon' : ''}}">
+            <text a:if="{{!isExpired}}">去使用</text>
+            <text a:if="{{isExpired && item.couponStatus == 'USED'}}">已使用</text>
+            <text a:if="{{isExpired && item.couponStatus == 'EXPIRED'}}">已过期</text>
+          </view>
+          <!-- 选中状态 -->
+          <view a:else class="all_100 flex_view_row align_cen justi_cen">
+            <view class="dialog_couponSelBtn {{item.taped ? 'transBor' : ''}}">
+              <icon a:if="{{item.taped}}" type="success" color="#ff5353" size="{{iconSize}}"></icon>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <!-- 虚线 -->
+    <view class="myCoupon_gapBox right">
+      <view class="myCoupon_gap gap_top"></view>
+      <view class="myCoupon_gapLine"></view>
+      <view class="myCoupon_gap gap_bot"></view>
+    </view>
+  </view>
+</template>

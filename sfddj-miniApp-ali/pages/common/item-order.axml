@@ -1,0 +1,79 @@
+<!--历史订单模板-->
+<template name="itemOrder">
+  <view class="alipay_template_wrap">
+    <!-- <view style='width:100%;margin-top:20rpx;background-color:white;padding:0 20rpx 0 30rpx;box-sizing:border-box;position:relative'> -->
+    <!--普通订单-->
+    <view style="height:2rpx;background-color:#eeeeee">
+    </view>
+    <view style="height:200rpx;padding:20rpx 0;box-sizing:border-box;display:flex" a:if="{{showType == 0 || showType == '' || showType == null}}">
+      <image style='width:160rpx;height:160rpx;min-width:160rpx' a:if="{{goodsImg}}" src='{{baseImageUrl}}{{goodsImg}}'></image>
+      <image style='width:160rpx;height:160rpx;min-width:160rpx' a:if="{{!goodsImg && goodsImage}}" src='{{baseImageUrl}}{{goodsImage}}'></image>
+      <view style="margin-left:20rpx;position:relative;width:100%;" class="single-line">
+        <text class="font-28 color-323232 single-line">{{goodsName}}
+        </text>
+        <view class="font-24 color-a1a0a0 single-line" style="margin-top:10rpx">规格：已选择{{productName}}
+        </view>
+        <view style="position:absolute;left:0;bottom:0">
+          <text class="font-26 color-ff5353">¥{{productPrice}}
+          </text>
+          <text class="font-26 color-ff5353" a:if="{{isJifen}}"> + {{memberPoint ? memberPoint : "0"}}积分
+          </text>
+        </view>
+        <text style="position:absolute;right:0;bottom:0" class="font-26 color-a1a0a0">x{{quantity}}
+        </text>
+      </view>
+    </view>
+    <!--单人送礼或者多人拆分 -->
+    <view style="height:200rpx;padding:20rpx 0;box-sizing:border-box;display:flex" a:if="{{showType == 1}}">
+      <image style='width:160rpx;height:160rpx;min-width:160rpx' a:if="{{goodsImg}}" src='{{baseImageUrl}}{{goodsImg}}'></image>
+      <image style='width:160rpx;height:160rpx;min-width:160rpx' a:if="{{!goodsImg && goodsImage}}" src='{{baseImageUrl}}{{goodsImage}}'></image>
+      <view style="margin-left:20rpx;position:relative;width:100%;" class="single-line">
+        <text class="font-28 color-323232">{{goodsName}}
+        </text>
+        <view class="font-24 color-a1a0a0 single-line" style="margin-top:10rpx">规格：已选择{{productName}}
+        </view>
+        <text style="position:absolute;left:0;bottom:0" class="font-26 color-ff5353">¥{{productPrice}}
+        </text>
+        <text style="position:absolute;right:0;bottom:0" class="font-26 color-a1a0a0">x{{quantity}}
+        </text>
+      </view>
+    </view>
+    <!--多人送礼汇总 -->
+    <view style="height:200rpx;padding:20rpx 0;box-sizing:border-box;display:flex" a:if="{{ searchOrder ? showType == 2 :  showType == 2 && orderType == 'MULTIGIFT'}}">
+      <image style='width:160rpx;height:160rpx;min-width:160rpx' a:if="{{goodsImg}}" src='{{baseImageUrl}}{{goodsImg}}'></image>
+      <image style='width:160rpx;height:160rpx;min-width:160rpx' a:if="{{!goodsImg && goodsImage}}" src='{{baseImageUrl}}{{goodsImage}}'></image>
+      <view style="margin-left:20rpx;position:relative;width:100%;" class="single-line">
+        <text class="font-28 color-323232">{{goodsName}}
+        </text>
+        <view class="font-24 color-a1a0a0 single-line" style="margin-top:10rpx">剩余
+          <text>{{giftRemainQty}}
+          </text>个未领取/共
+          <text>{{giftTotalQty}}
+          </text>个
+        </view>
+        <text style="position:absolute;left:0;bottom:0" class="font-26 color-ff5353">¥{{productPrice}}
+        </text>
+        <!-- <view class="font-30 color-a1a0a0" style="display:flex;align-items:center;justify-content:flex-end;margin-left:5px;position:absolute;right:0;bottom:0;">
+          <text style="border:solid 2rpx #a1a0a0; border-radius:5px" class="orderListBtn" data-taburl="{{ !outOfTime.outOfTime ? '/pages/user/sendGift/sendGift?paymentOrderId='+ paymentId : '/pages/user/historyOrder/giftOrderDetail/giftOrderDetail?paymentOrderId='+ paymentId}}" catchTap="toHistory">{{!outOfTime.outOfTime ? '分享给Ta' : '查看详情'}}
+          </text>
+        </view> -->
+      </view>
+    </view>
+    <!-- 单人送礼或者订单支付 -->
+    <view style="height:200rpx;padding:20rpx 0;box-sizing:border-box;display:flex" a:if="{{showType == 3}}">
+      <image style="width:160rpx;height:160rpx;min-width:160rpx" src="{{baseImageUrl}}{{goodsImg}}">
+      </image>
+      <view style="margin-left:20rpx;position:relative;width:100%;" class="single-line">
+        <text class="font-28 color-323232">{{goodsName}}
+        </text>
+        <view class="font-24 color-a1a0a0 single-line" style="margin-top:10rpx">规格：已选择{{productName}}
+        </view>
+        <text style="position:absolute;left:0;bottom:0" class="font-26 color-ff5353">¥{{productPrice}}
+        </text>
+      </view>
+    </view>
+    <view style="height:2rpx;background-color:#eeeeee" a:if="{{showType != 2}}">
+    </view>
+    <!-- </view> -->
+  </view>
+</template>

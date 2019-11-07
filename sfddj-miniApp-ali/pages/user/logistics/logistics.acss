@@ -1,0 +1,86 @@
+/* pages/user/logistics/logistics.wxss  */
+/*查看物流   */
+.logisHead {
+  width: 100%;
+  height: 200rpx;
+  padding: 30rpx;
+  display: flex;
+  background-color: white;
+  box-sizing: border-box;
+}
+.goodsImg {
+  width: 140rpx;
+  height: 140rpx;
+}
+.logisHeadCon {
+  margin-left: 30rpx;
+  box-sizing: border-box;
+}
+/*物流详情   */
+.logisDet {
+  width: 100%;
+  margin-top: 20rpx;
+  background-color: white;
+}
+.expressDetail {
+  width: 100%;
+  display: flex;
+  position: relative;
+  padding-right: 30rpx;
+  box-sizing: border-box;
+}
+.expressDetailTop {
+  width: 120rpx;
+  text-align: center;
+  position: relative;
+  flex: none;
+}
+.expressDetailLineT {
+  width: 2rpx;
+  height: 50%;
+  background-color: #eee;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+}
+.expressDetailLineL {
+  width: 2rpx;
+  height: 50%;
+  background-color: #eee;
+  position: absolute;
+  left: 50%;
+  bottom: 50%;
+}
+.expressDetailLineLBT {
+  width: 2rpx;
+  background-color: #eee;
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+}
+.expressDetailStarView {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+}
+.icon_car {
+  width: 46rpx;
+  height: 32rpx;
+}
+.icon_circle {
+  width: 16rpx;
+  height: 16rpx;
+}
+.expressDetailBot {
+  padding: 30rpx 0;
+  border-bottom: solid #eee 2rpx;
+  box-sizing: border-box;
+  flex: 1;
+}

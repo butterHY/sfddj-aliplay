@@ -1,0 +1,101 @@
+<import-sjs name='publicSjs' from="../wxsFile/public.sjs"/>
+<template name="compensationRule">
+  <view class="mark flex_view_col" a:if="{{showCompensationRule}}">
+    <view class="height_35" catchTap="closeCompensationRule"></view>
+    <view class="flex_1 whiteBack height_65">
+      <view class="height_100 flex_view_col">
+        <!--说明标题  -->
+        <view class="tex_center comRuleTit">
+          <text class="font-28 color-323232">全赔说明</text>
+        </view>
+        <!--规则  -->
+        <scroll-view scroll-y='true' class="flex_1">
+          <view class="height_100 overY_auto">
+            <view class="theRuleCon">
+
+              <!--不好吃全赔  -->
+              <view class="theRuleCon_one" a:if="{{publicSjs.strIndexOf(afterSaleGuee,'1')}}">
+                <view><text class="font-28 color-414141">不好吃全赔</text></view>
+                <view><text class="font-26 color-8f8f8f">您收到的商品中，如其中一份出现不好吃的商品，您可申请该份商品全额退款。</text></view>
+              </view>
+
+
+              <!--坏果全赔  -->
+              <view class="theRuleCon_one" a:if="{{publicSjs.strIndexOf(afterSaleGuee,'2')}}">
+                <view><text class="font-28 color-414141">坏果全赔</text></view>
+                <view><text class="font-26 color-8f8f8f">您收到的商品中，如其中一份出现腐烂、发霉的果，撞伤、挤压导致果肉严重损伤的果，过熟变质的果，您可申请该份商品全额退款。</text></view>
+              </view>
+
+
+              <!--规格不符全赔  -->
+              <view class="theRuleCon_one" a:if="{{publicSjs.strIndexOf(afterSaleGuee,'3')}}">
+                <view><text class="font-28 color-414141">规格不符全赔</text></view>
+                <view>
+                  <text class="font-26 color-8f8f8f">考虑人工选果的误差和运输的自然损耗，允许商品规格存在微差，具体标准如下：</text>
+                  
+                </view>
+                <!--表格  -->
+                <view class="font-26 color-8f8f8f width_100">
+                  <!--第一项  -->
+                  <view class="flex_view_row table_one width_100">
+                    <view class="tex_left flex_view_col justi_cen width_30 borderRig_ccc"><text>小型水果(单果重≤150g)</text></view>
+                    <view class="flex_view_col tex_left width_70">
+                      <text>1、总净含量≥标示值的95%；</text>
+                      <text>2、如按个数出售，必须达到标示的个数；</text>
+                      <text>3、与单果重量、果径描述不符的比例（个数比或重量比）不能超过10%；</text>
+                    </view>
+                  </view>
+
+                  <!--第二项  -->
+                  <view class="width_100 flex_view_row table_one ">
+                    <view class="tex_left flex_view_col justi_cen width_30 borderRig_ccc"><text>中型水果(单果重150g-500g)</text></view>
+                    <view class="flex_view_col tex_left width_70">
+                      <text>1、总净含量≥标示值的95%；</text>
+                      <text>2、如按个数出售，必须达到标示的个数；</text>
+                      <text>3、与单果重量、果径描述不符的比例（个数比或重量比）不能超过15%；</text>
+                    </view>
+                  </view>
+
+                  <!--第三项  -->
+                  <view class="flex_view_row table_oneNone width_100">
+                    <view class="tex_left flex_view_col justi_cen width_30 borderRig_ccc"><text>大型水果(单果重≥500g)</text></view>
+                    <view class="flex_view_col tex_left width_70">
+                      <text>1、总净含量必须≥标示值；</text>
+                      <text>2、如按个数出售，必须达到标示的个数；</text>
+                      <text>3、单果重必须≥标示值；</text>
+                    </view>
+                  </view>
+
+                </view>
+
+                <!--  -->
+                <view><text class="font-26 color-8f8f8f">如达不到以上标准，您可申请该商品全额退款</text></view>
+
+              </view>
+
+              <!--缺一两全赔  -->
+              <view class="theRuleCon_one" a:if="{{publicSjs.strIndexOf(afterSaleGuee,'4')}}">
+                <view><text class="font-28 color-414141">缺一两全赔</text></view>
+                <view><text class="font-26 color-8f8f8f">您购买的商品中，如收到商品的实际克重与商详描述克重的负误差≧50g时，您可申请该份商品全额退款。</text></view>
+              </view>
+
+              <!--注意  -->
+              <view class="theRuleCon_one">
+                <!-- <view><text class='font-28 color-414141'>缺一两全赔</text></view> -->
+                <view><text class="font-26 color-8f8f8f">注：1、退款为实付金额  2、售后时效为签收后的48小时内（具体时效以商详页有为准）</text></view>
+              </view>
+
+
+            </view>
+          </view>
+          
+        </scroll-view>
+
+        <!--确定按钮  -->
+        <view class="confirmBtn tex_center" catchTap="closeCompensationRule">
+          <text class="color-white font-26">确定</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</template>

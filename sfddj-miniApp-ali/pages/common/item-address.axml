@@ -1,0 +1,22 @@
+<!--地址管理item模板--><template name="itemAddress">
+  <view style="width:100%;padding:20rpx 30rpx;margin-bottom:20rpx;box-sizing:border-box;background-color:white">
+    <view style="display:flex;justify-content:space-between;align-items:center;">
+      <text class="font-30 color-323232">{{fullName}}</text>
+      <text class="font-30 color-323232">{{mobile}}</text>
+    </view>
+    <text class="font-30 color-b3b3b3" style="margin-top:36rpx;">{{province}}{{city}}{{area}}{{address}}</text>
+    <view style="height:2rpx;background-color:#e3e3e3;margin-top:30rpx"></view>
+    <view style="display:flex;align-items:center;justify-content:space-between;margin-top:30rpx;">
+      <view style="flex:1;display:flex;align-items:center" data-index="{{index}}" onTap="{{isDefault ? '':'setDefault'}}">
+        <image src="{{isDefault ? baseLocImgUrl + 'miniappImg/icon/icon_sel.png': baseLocImgUrl + 'miniappImg/icon/icon_unsel.png'}}" style="width:36rpx;height:36rpx"></image>
+        <text class="font-26 color-b3b3b3" style="margin-left:10rpx">选择地址</text>
+      </view>
+      <view style="flex:1;display:flex;align-items:center;justify-content:flex-end">
+        <image src="{{baseLocImgUrl}}miniappImg/icon/icon_pen.png" style="width:33rpx;height:36rpx;margin-right:12rpx" data-index="{{index}}" onTap="modifyAddr"></image>
+        <text style="margin-right:56rpx;" class="font-26 color-b3b3b3" data-index="{{index}}" onTap="modifyAddr">编辑</text>
+        <image src="{{baseLocImgUrl}}miniappImg/icon/icon_del.png" style="width:32rpx;height:33rpx;margin-right:12rpx" data-index="{{index}}" onTap="delAddr"></image>
+        <text class="font-26 color-b3b3b3" data-index="{{index}}" onTap="delAddr">删除</text>
+      </view>
+    </view>
+  </view>
+</template>

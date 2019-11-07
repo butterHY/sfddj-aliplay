@@ -1,0 +1,53 @@
+
+
+<!-- 申请原因 -->
+<form report-submit="true" onSubmit="submitTap">
+  <view class="eachView">
+    <view class="single-line">
+      <text class="font-28 color-252525">申请原因
+      </text>
+      <image src="{{baseImgLocUrl}}miniappImg/icon/icon_star_selected.png" class="icon_star">
+      </image>
+    </view>
+  </view>
+  <view class="reasonText">
+    <view class="{{item.taped ? 'reason-item-selected' : 'reason-item'}}" data-index="{{index}}" a:for="{{wordsList}}" a:key="wordsList" onTap="resonTap">{{item.str}}
+    </view>
+  </view>
+  <view class="division-area">
+  </view>
+  <!-- 问题描述 -->
+  <view class="eachView">
+    <view class="single-line">
+      <text class="font-28 color-252525">问题描述
+      </text>
+      <image src="{{baseImgLocUrl}}miniappImg/icon/icon_star_selected.png" class="icon_star">
+      </image>
+    </view>
+  </view>
+  <textarea maxlength="200" class="problemDes font-28 color-252525" placeholder="请详细描述售后原因和您期望的解决方案（10-200字）" onBlur="descBlur" onInput="descInput">
+  </textarea>
+  <view class="division-area">
+  </view>
+  <!-- 上传照片 -->
+  <view class="eachView">
+    <text class="font-28 color-252525">上传图片
+    </text>
+  </view>
+  <view class="font-22 color-414141 mar_20">为更好的为您服务，请上传照片（最多3张，长按删除）
+  </view>
+  <view class="flex_view_row">
+    <image class="uploadImg marLeft_20" src="{{baseImageUrl}}{{item}}" onLongTap="deleteImage" data-index="{{index}}" a:for="{{imageList}}" a:key="imageList">
+    </image>
+    <view class="posi_re marLeft_20" a:if="{{imageList.length != 3}}" onTap="uploadImage">
+      <image class="uploadImg" src="{{baseImgLocUrl}}miniappImg/icon/icon_upload_image.png">
+      </image>
+      <view class="warning_5M font-22 color-8f8f8f">不超过5M
+      </view>
+    </view>
+  </view>
+  <view class="division-area">
+  </view>
+  <button class="button-area" form-type="submit">提交申请
+  </button>
+</form>

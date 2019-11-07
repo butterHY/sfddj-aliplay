@@ -1,0 +1,124 @@
+/* pages/user/addressManage/addAddress/addAddress.wxss  */
+
+/*内容   */
+
+.contain {
+  width: 100%;
+  background-color: white;
+  padding: 0 30rpx;
+  box-sizing: border-box;
+}
+
+/*   */
+
+.addCon_view {
+  height: 90rpx;
+  display: flex;
+  align-items: center;
+}
+
+.bor_bot {
+  border-bottom: solid 2rpx #e3e3e3;
+}
+
+.add_icon {
+  width: 45rpx;
+  height: 45rpx;
+  position: absolute;
+  top: 22.5rpx;
+  right: 0;
+}
+
+.picker {
+  position: relative;
+  height: 120rpx;
+  border-bottom: solid 2rpx #e3e3e3;
+}
+
+.picker_son {
+  width: 100%;
+  height: 120rpx;
+  display: flex;
+  align-items: center;
+}
+
+.picker_region {
+  height: 100%;
+  position: relative;
+  top: 0;
+  right: 0;
+  display: flex;
+  flex: 1;
+  align-items: center;
+}
+
+.picker_regionTxt {
+  /* line-height: 120rpx; */
+  flex: 1;
+}
+
+.address_arrIcon {
+  width: 16rpx;
+  height: 26rpx;
+  margin-left: 10rpx;
+}
+
+.address_selIcon {
+  width: 36rpx;
+  height: 36rpx;
+  margin-left: 20rpx;
+}
+
+.saveView {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100rpx;
+  text-align: center;
+  background-color: #ff5353;
+}
+
+.saveView_text {
+  line-height: 100rpx;
+}
+
+.height_60 {
+  height: 60%;
+}
+
+.height_40 {
+  height: 40%;
+}
+
+.height_50 {
+  height: 50%;
+}
+
+.height_85 {
+  height: 85%;
+}
+
+.addrTit {
+  box-sizing: border-box;
+  border-bottom: 1px solid #e6e6e6;
+  height: 15%;
+}
+
+.addrPopBtn {
+  padding: 0 30rpx;
+}
+
+.detailArea {
+  height: 150rpx;
+  padding: 26rpx 0 0 10rpx;
+  box-sizing: border-box;
+}
+
+.padBot_20 {
+  padding: 0 0 20rpx;
+}
+
+.padTop_20 {
+  padding-top: 20rpx;
+}

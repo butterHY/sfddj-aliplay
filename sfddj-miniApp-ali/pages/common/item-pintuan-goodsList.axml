@@ -1,0 +1,41 @@
+
+
+<template name="itemPinGoodsList">
+    <view class="eachPintuanPro">
+        <navigator class="eachPintuanProNav flex_view_row width_100 posi_re" url="/pages/home/pintuan/tuangouGoodsDetail?goodsSn={{goodsSn}}" hover-class="none">
+          <image src="{{baseImageUrl}}{{showImage}}" class="eachPintuanPro_img"></image>
+
+          <!--小图标 全赔  -->
+          <image src="{{baseImgLocUrl}}miniappImg/icon/icon_Payoff1.png" class="allCompensation posi_ab" style="width: 56rpx; height: 56rpx;left: 135rpx; top: 26rpx;" a:if="{{filters.strIndexOf(afterSaleGuee,'1')}}"></image> 
+          <image src="{{baseImgLocUrl}}miniappImg/icon/icon_Payoff2.png" class="allCompensation posi_ab" style="width: 56rpx; height: 56rpx;left: 135rpx; top: 26rpx;" a:elif="{{filters.strIndexOf(afterSaleGuee,'2')}}"></image> 
+          <image src="{{baseImgLocUrl}}miniappImg/icon/icon_Payoff3.png" class="allCompensation posi_ab" style="width: 56rpx; height: 56rpx;left: 135rpx; top: 26rpx;" a:elif="{{filters.strIndexOf(afterSaleGuee,'3')}}"></image> 
+          <image src="{{baseImgLocUrl}}miniappImg/icon/icon_Payoff4.png?version=2.0" class="allCompensation posi_ab" style="width: 56rpx; height: 56rpx;left: 135rpx; top: 26rpx;" a:elif="{{filters.strIndexOf(afterSaleGuee,'4')}}"></image>
+          
+          <view class=" flex_view_col marLeft_25 flex_1">
+            <view class="flex_view_col  flex_1">
+              <view class="font-26 color-323232"><text class="oneLineShow">{{name}}</text></view>
+              <view class="flex_view_row align_cen marTop_10">
+                <image class="tuan_waitingHead_viewImg" src="{{baseImgLocUrl}}miniappImg/icon/icon_pic.png"></image>
+                <text class="color-bbbbbb font-24 font-weight-500 marLeft_10">{{tuangouCount}}人团</text>
+                <text class="tuan_waitingHead_save font-24 color-7ace63 font-weight-500 borRa_5p">拼团立省{{lessMoney}}元</text>
+              </view>
+              <!-- <view class='marTop_10 font-24 color-b1b6bb'>{{goods.productName}}</view> -->
+              
+            </view>
+
+            <view class>
+                <text class="font-30 color-fa4444">¥</text>
+                <text class="font-44 color-fa4444">{{tuangouPrices}}</text>
+                <!-- <text class='tuan_waitingHead_text font-26 color-b1b6bb marLeft_20'>¥{{goods.salePrice}}1122</text> -->
+                <!-- <text class='tuan_waitingHead_text font-26 color-b1b6bb marLeft_8'>/{{productName}}</text> -->
+            </view>
+          </view>
+
+          <!-- <image src='{{baseImgLocUrl}}miniappImg/icon/icon_freshman.png' class='eachPintuanPro_littleImg posi_ab'></image> -->
+
+          <!--抽奖按钮  -->
+          <view class="eachPintuanPro_priBtn posi_ab font-28 color-ff5353" a:if="{{btnType == 0}}"><text>0元开奖</text></view>
+          <view class="eachPintuanPro_priBtn posi_ab font-28 color-ff5353" a:if="{{btnType == 1}}"><text>抽奖</text></view>
+        </navigator>
+      </view>
+</template>

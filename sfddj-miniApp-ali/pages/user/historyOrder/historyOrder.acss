@@ -1,0 +1,394 @@
+.all_100v {
+  width: 100%;
+  height: 100vh;
+}
+
+.selected {
+  color: #ff5353;
+  border-bottom: solid #ff5353 5rpx;
+}
+
+.order-top {
+  width: 100%;
+  background-color: white;
+  height: 80rpx;
+  color: #838383;
+  display: flex;
+  justify-content: space-around;
+}
+
+.order-top-tab {
+  flex: 1;
+  text-align: center;
+  line-height: 80rpx;
+  position: relative;
+}
+
+.order-top-tab-num {
+  width: 30rpx;
+  height: 30rpx;
+  background-color: #ff5353;
+  position: absolute;
+  right: 5rpx;
+  top: 5rpx;
+  border-radius: 15rpx;
+  text-align: center;
+  line-height: 30rpx;
+}
+
+.order-list-view {
+  width: 100%;
+  margin-bottom: 20rpx;
+  background-color: white;
+  padding: 0 20rpx 0 30rpx;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.order-list-shop-mes {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 80rpx;
+}
+
+/*新加   */
+
+/*头部固定   */
+
+.pageHeadFix {
+  width: 100%;
+  background-color: white;
+  height: 80rpx;
+  color: #838383;
+  display: flex;
+  justify-content: space-around;
+  /* position: absolute; */
+  /* top: 260rpx; */
+  top: 0;
+  left: 0;
+  z-index: 100;
+}
+
+.eachHead_view {
+  flex: 1;
+  text-align: center;
+  line-height: 80rpx;
+  position: relative;
+}
+
+/*提示有多少条   */
+
+.tip_num {
+  width: 30rpx;
+  height: 30rpx;
+  background-color: #ff5353;
+  position: absolute;
+  right: 5rpx;
+  top: 5rpx;
+  border-radius: 15rpx;
+  text-align: center;
+  line-height: 30rpx;
+}
+
+/*订单列表   */
+
+.allOrderList {
+  /* padding-top: 340rpx; */
+  /* padding-top: 80rpx; */
+  box-sizing: border-box;
+}
+
+.orderList_for {
+  width: 100%;
+  margin-bottom: 20rpx;
+  background-color: white;
+  padding: 0 20rpx 0 30rpx;
+  box-sizing: border-box;
+  position: relative;
+}
+
+/*非多人送礼下的小计   */
+
+.noMult_sum {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 20rpx 0;
+}
+
+/*未支付   */
+
+.noPayOrderHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 80rpx;
+}
+
+.noPayOrderFoot {
+  height: 100rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.noPayOrder_cancleBtn {
+  border: solid 2rpx #a1a0a0;
+  border-radius: 5px;
+}
+
+.noPayOrder_toPayBtn {
+  border: solid 2rpx #ff5353;
+  border-radius: 5px;
+  margin-left: 30rpx;
+}
+
+.payedList {
+  margin-top: 20rpx;
+  background-color: #eee;
+}
+
+.icon_giftText {
+  border: 1px solid #ff5353;
+  border-radius: 5rpx;
+  margin-right: 10rpx;
+  padding: 0 8rpx;
+  height: 29rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon_shop {
+  width: 34rpx;
+  height: 30rpx;
+}
+
+.recevierName {
+  position: absolute;
+  left: 30rpx;
+}
+
+.dividedLine {
+  height: 2rpx;
+  background-color: #eee;
+}
+
+.mindSend {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  height: 100rpx;
+  margin-left: 10rpx;
+}
+
+.mindSend_text {
+  border: solid 2rpx #a1a0a0;
+  border-radius: 5px;
+}
+
+.orderList_botView {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  height: 100rpx;
+}
+
+.checkDeli_btnRed {
+  border: solid 2rpx #ff5353;
+  border-radius: 5px;
+}
+
+/*弹出的对话框   */
+
+.dialogShowMark {
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.5);
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 110;
+}
+
+.showDialogCon {
+  background-color: white;
+  border-radius: 10rpx;
+  width: 500rpx;
+  text-align: center;
+}
+
+.showDialog_btn {
+  margin-top: 48rpx;
+  display: flex;
+  height: 70rpx;
+}
+
+.showDialog_btnCan {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top: solid #e6e6e6 2rpx;
+}
+
+.showDialog_btnSure {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fb2c36;
+  border-bottom-right-radius: 10rpx;
+}
+
+/*提醒发货   */
+
+.remind_success {
+  background-color: white;
+  padding: 30rpx 40rpx;
+  border-radius: 10rpx;
+}
+
+/*小空隙   */
+
+.dividingSpace {
+  height: 20rpx;
+  /* background: #f3f3f3; */
+}
+
+/*轮播图   */
+
+.hisSwiperView {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 260rpx;
+  z-index: 100;
+}
+
+.adSwiper {
+  width: 690rpx;
+  height: 260rpx;
+}
+
+.swiperDots {
+  bottom: 10rpx;
+}
+
+.swiperDots_con {
+  width: 30rpx;
+  height: 4rpx;
+  margin: 0 4rpx;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.swiperDots_con_active {
+  background-color: #ff5353;
+}
+
+/*不允许换行   */
+
+.white_nowrap {
+  white-space: nowrap;
+}
+
+
+/* 新增搜索框样式 */
+.am-search .am-search-input {
+	border-radius: 45px;
+}
+
+.noOrderImg {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 26rpx;
+}
+
+.width_70 {
+  width: 70%;
+}
+
+.noOrderText {
+  padding-top: 13rpx;
+  text-align: center;
+  color: rgba(50, 50, 50, 0.6);
+  font-size: 26rpx;
+}
+
+.confirmorderPop {
+  /* padding: 60rpx 60rpx; */
+  max-width: 400rpx;
+}
+
+.couponPrice {
+  width: 326rpx;
+  height: 56rpx;
+  color: red;
+  bottom: 232rpx;
+  left: 42rpx;
+}
+
+.ikonw {
+  width: 326rpx;
+  height: 56rpx;
+  bottom: 78rpx;
+  left: 42rpx;
+  animation: mymove 1s linear infinite alternate;
+  -webkit-animation: mymove 1s linear infinite alternate; /* Safari 和 Chrome */
+}
+
+@keyframes mymove
+{
+  0%  {
+          transform:scale3d(0.8, 0.8, 0.8);
+          /* -ms-transform:scale3d(0.8, 0.8, 0.8); IE 9 */
+          /* -webkit-transform:scale3d(0.8, 0.8, 0.8); Safari and Chrome */
+      }
+  25% {
+          transform:scale3d(1,1,1);
+          /* -ms-transform:scale3d(1,1,1); IE 9 */
+          /* -webkit-transform:scale3d(1,1,1); Safari and Chrome */
+      }
+  50% {
+          transform:scale3d(0.8, 0.8, 0.8);
+          /* -ms-transform:scale3d(0.8, 0.8, 0.8); IE 9 */
+          /* -webkit-transform:scale3d(0.8, 0.8, 0.8); Safari and Chrome */
+      }
+  75%  {
+          transform:scale3d(1,1,1);
+          /* -ms-transform:scale3d(1,1,1); IE 9 */
+          /* -webkit-transform:scale3d(1,1,1); Safari and Chrome */
+      }
+  100% {
+          transform:scale3d(1,1,1);
+          /* -ms-transform:scale3d(1,1,1); IE 9 */
+          /* -webkit-transform:scale3d(1,1,1); Safari and Chrome */
+      }
+}
+
+@-webkit-keyframes mymove
+{
+  0%  {
+          transform:scale3d(0.8, 0.8, 0.8);
+      }
+  25% {
+          transform:scale3d(1,1,1);
+
+      }
+  50% {
+          transform:scale3d(0.8, 0.8, 0.8);
+
+      }
+  75%  {
+          transform:scale3d(1,1,1);
+      }
+  100% {
+          transform:scale3d(1,1,1);
+      }
+}

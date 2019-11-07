@@ -1,0 +1,1075 @@
+/**app.wxss* */
+
+@import './font/font.acss';
+page {
+  width: 100%;
+  height: 100%;
+  background-color: #f9f9f9;
+}
+
+input {
+  display: block;
+  box-sizing: unset
+}
+
+/*居中   */
+
+.tex_center {
+  text-align: center;
+}
+
+.tex_right {
+  text-align: right;
+}
+
+.tex_left {
+  text-align: left;
+}
+
+.blockBox {
+  display: block;
+}
+
+.inlineBlock {
+  display: inline-block;
+}
+
+/*清除浮动   */
+
+.clearfix::after {
+  content: "";
+  height: 0;
+  line-height: 0;
+  display: block;
+  visibility: hidden;
+  clear: both;
+}
+
+.clearfix {
+  zoom: 1;
+}
+
+.fl {
+  float: left;
+}
+
+.fr {
+  float: right;
+}
+
+/*清除浮动   */
+
+/*宽高百分百   */
+
+.width_100 {
+  width: 100%;
+}
+
+.height_100 {
+  height: 100%;
+}
+
+.height_100vh {
+  height: 100vh;
+}
+
+.all_100 {
+  width: 100%;
+  height: 100%;
+}
+
+
+.height_auto {
+  height: auto;
+}
+
+/*弹性布局   */
+/* 做了兼容处理 */
+.flex_view_row {
+  display: flex;
+  display:-webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  flex-direction: row;
+  box-orient:horizontal;
+  box-direction:normal;
+  -webkit-flex-direction:row;
+}
+/* 做了兼容处理 */
+.flex_view_col {
+  display: flex;
+  display:-webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  flex-direction: column;
+  -webkit-box-orient:vertical;
+  -webkit-box-direction:normal;
+  -moz-box-orient:vertical;
+  -moz-box-direction:normal;
+  -webkit-flex-direction:column;
+}
+/* 做了兼容处理 */
+.align_cen {
+  align-items: center;
+  -webkit-align-items:center;
+  box-align:center;
+  -moz-box-align:center;
+  -webkit-box-align:center;
+}
+
+.align_end {
+  align-items: flex-end;
+}
+/* 做了兼容处理 */
+.justi_around {
+  justify-content: space-around;
+  -webkit-justify-content: space-around;
+  justify-content: space-around;
+  -moz-box-pack: space-around;
+  box-pack: space-around;
+}
+
+.justi_between {
+  justify-content: space-between;
+}
+
+.justi_start {
+  justify-content: flex-start;
+}
+
+.justi_end {
+  justify-content: flex-end;
+}
+
+.justi_cen {
+  justify-content: center;
+}
+
+.justi_end {
+  justify-content: flex-end;
+}
+
+.flex_1 {
+  flex: 1;
+}
+
+.flex_wrap {
+  flex-wrap: wrap;
+}
+
+/*定位信息   */
+
+.posi_re {
+  position: relative;
+}
+
+.posi_ab {
+  position: absolute;
+}
+
+.posi_fix {
+  position: fixed;
+}
+
+/*margin   */
+
+.mar_10 {
+  margin: 10rpx;
+}
+
+.mar_20 {
+  margin: 20rpx;
+}
+
+.marLeft_10 {
+  margin-left: 10rpx;
+}
+
+.marRight_10 {
+  margin-right: 10rpx;
+}
+
+.marBot_10 {
+  margin-bottom: 10rpx;
+}
+
+.marTop_10 {
+  margin-top: 10rpx;
+}
+
+.marLeft_5 {
+  margin-left: 10rpx;
+}
+
+.marRight_5 {
+  margin-right: 10rpx;
+}
+
+.marBot_5 {
+  margin-bottom: 10rpx;
+}
+
+.marTop_5 {
+  margin-top: 10rpx;
+}
+
+.marLeft_15 {
+  margin-left: 15rpx;
+}
+
+.marRight_15 {
+  margin-right: 15rpx;
+}
+
+.marBot_15 {
+  margin-bottom: 15rpx;
+}
+
+.marTop_15 {
+  margin-top: 15rpx;
+}
+
+
+.marLeft_20 {
+  margin-left: 20rpx;
+}
+
+.marRight_20 {
+  margin-right: 20rpx;
+}
+
+.marBot_20 {
+  margin-bottom: 20rpx;
+}
+
+.marTop_20 {
+  margin-top: 20rpx;
+}
+
+.marLeft_30 {
+  margin-left: 30rpx;
+}
+
+.marRight_30 {
+  margin-right: 30rpx;
+}
+
+.marBot_30 {
+  margin-bottom: 30rpx;
+}
+
+.marTop_30 {
+  margin-top: 30rpx;
+}
+
+.marLeft_40 {
+  margin-left: 40rpx;
+}
+
+.marRight_40 {
+  margin-right: 40rpx;
+}
+
+.marBot_40 {
+  margin-bottom: 40rpx;
+}
+
+.marTop_40 {
+  margin-top: 40rpx;
+}
+
+.marTop_50 {
+  margin-top: 50rpx;
+}
+
+/*背景   */
+
+.whiteBack {
+  background-color: #fff;
+}
+
+/** color * */
+
+.color-c7c7cc {
+  color: #c7c7cc;
+}
+.color-a1a0a0 {
+  color: #a1a0a0;
+}
+.color-666 {
+  color: #666;
+}
+
+.color-323232 {
+  color: #323232;
+}
+
+.color-232323 {
+  color: #232323;
+}
+
+.color-white {
+  color: white;
+}
+
+.color-4a4a4a {
+  color: #4a4a4a;
+}
+
+.color-ff5353 {
+  /** 红色字体 **/
+  color: #ff5353;
+}
+
+.color-bbbbbb {
+  color: #bbb;
+}
+
+.color-ccc {
+  color: #ccc;
+}
+
+.color-b1b6bb {
+  color: #b1b6bb;
+}
+
+.color-dadada {
+  color: #dadada;
+}
+
+.color-000000 {
+  /** 黑色 **/
+  color: #000;
+}
+
+.color-black {
+  color: #000;
+}
+
+.color-7ace63 {
+  /** 绿色字 **/
+  color: #7ace63;
+}
+
+.color-652400 {
+  /** 绿色字 **/
+  color: #652400;
+}
+
+.color-fefefe {
+  color: #fefefe;
+}
+
+.color-404040 {
+  color: #404040;
+}
+
+.color-414141 {
+  color: #414141;
+}
+
+.color-8f8f8f {
+  color: #8f8f8f;
+}
+
+.color-b3b3b3 {
+  color: #b3b3b3;
+}
+
+.color-838282 {
+  color: #838282;
+}
+
+.color-838383 {
+  color: #838383;
+}
+
+.color-fa4444 {
+  color: #fa4444;
+}
+
+.color-7e7e7e {
+  color: #7e7e7e;
+}
+
+.color-c0ae8b {
+  color: #c0ae8b;
+}
+
+.color-8b8b8b {
+  color: #8b8b8b;
+}
+
+.color-bdbdbd {
+  color: #bdbdbd;
+}
+
+.color-252525 {
+  color: #252525;
+}
+
+.color-508ff6 {
+  color: #508ff6;
+}
+
+.color-ff5223 {
+  color: #ff5223;
+}
+
+.color-c0c0c0 {
+  color: #c0c0c0;
+}
+
+.color-d9d9d9 {
+  color: #d9d9d9;
+}
+
+.color-999999 {
+  color: #999;
+}
+
+.color-febab3 {
+  color: #febab3;
+}
+
+.color-5d5d5d {
+  color: #5d5d5d;
+}
+
+/*橙色   */
+
+.color-fd5e2e {
+  color: #fd5e2e;
+}
+
+/*黄色   */
+
+.color-yel {
+  color: #ffe87d;
+}
+
+/** font-size * */
+
+.font-60 {
+  font-size: 60rpx;
+}
+
+.font-56 {
+  font-size: 56rpx;
+}
+
+.font-50 {
+  font-size: 50rpx;
+}
+
+.font-48 {
+  font-size: 48rpx;
+}
+
+.font-44 {
+  font-size: 44rpx;
+}
+
+.font-42 {
+  font-size: 44rpx;
+}
+
+.font-40 {
+  font-size: 40rpx;
+}
+
+.font-38 {
+  font-size: 38rpx;
+}
+
+.font-36 {
+  font-size: 36rpx;
+}
+
+.font-35 {
+  font-size: 35rpx;
+}
+
+.font-34 {
+  font-size: 34rpx;
+}
+
+.font-32 {
+  font-size: 32rpx;
+}
+
+.font-30 {
+  font-size: 30rpx;
+}
+
+.font-28 {
+  font-size: 28rpx;
+}
+
+.font-26 {
+  font-size: 26rpx;
+}
+
+.font-24 {
+  font-size: 24rpx;
+}
+
+.font-22 {
+  font-size: 22rpx;
+}
+
+.font-20 {
+  font-size: 20rpx;
+}
+
+.font-16 {
+  font-size: 16rpx;
+}
+
+.font-14 {
+  font-size: 14rpx;
+}
+
+/** common-component * */
+
+.red-btn-circle-border {
+  background-color: #ff5353;
+  color: white;
+  text-align: center;
+  border-radius: 3px;
+  padding: 10rpx 30rpx;
+}
+
+.single-line {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.single-line2 {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.single-line-text {
+  width: 100%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.single-2line-text {
+  overflow:hidden; 
+
+  text-overflow:ellipsis;
+
+  display:-webkit-box; 
+
+  -webkit-box-orient:vertical;
+
+  -webkit-line-clamp:2;
+}
+
+.scrollTop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+/** font-weight * */
+
+.font-weight-100 {
+  font-weight: 100;
+}
+
+.font-weight-200 {
+  font-weight: 200;
+}
+
+.font-weight-500 {
+  font-weight: 500;
+}
+
+.font-weight-600 {
+  font-weight: 600;
+}
+
+/** template * */
+
+/** item-pintuan * */
+
+.item-pintuan-container {
+  position: relative;
+  width: 100%;
+  padding-bottom: 30rpx;
+  background-color: white;
+  box-sizing: border-box;
+  margin-bottom: 30rpx;
+}
+
+.item-pintuan-size {
+  position: absolute;
+  top: 40rpx;
+  left: -30rpx;
+  background-color: #ff5353;
+  color: white;
+  text-align: center;
+  border-radius: 3px;
+  padding: 10rpx 30rpx;
+}
+
+.item-pintuan-goods-desc {
+  width: 100%;
+  padding: 10rpx 30rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  box-sizing: border-box;
+  /* margin-top:10rpx   */
+}
+
+.item-pintuan-bottom-area {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0 30rpx;
+  justify-content: space-between;
+  /* margin-top:20rpx */
+}
+
+.item-pintuan-origin-price {
+  text-decoration: line-through;
+  margin-left: 20rpx;
+}
+
+/** item-category * */
+
+.item-category-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 240rpx;
+}
+
+/** coupon * */
+
+.coupon-container {
+  width: 100%;
+  height: 172rpx;
+  padding: 0 26rpx;
+  box-sizing: border-box;
+}
+
+.coupon-content {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.coupon-detail {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.coupon-left-part {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.coupon-price-part {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 20rpx;
+}
+
+.coupon-right-part {
+  min-width: 160rpx;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/** item-recommend * */
+
+.item-recommend-container {
+  width: 100%;
+  background-color: white;
+  box-sizing: border-box;
+  margin-bottom: 30rpx;
+}
+
+.item-recommend-content {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  margin-top: 30rpx;
+}
+
+.item-recommend-desc-title {
+  width: 110rpx;
+  text-align: center;
+}
+
+.item-recommend-desc {
+  min-width: 100rpx;
+  max-width: 110rpx;
+  text-align: center;
+  margin-top: 10rpx;
+}
+
+.division-line {
+  background: #e6e6e6;
+  width: 100%;
+  height: 2rpx;
+}
+
+.division-area {
+  background: #f3f3f3;
+  width: 100%;
+  height: 20rpx;
+}
+
+.interlayer {
+  
+}
+
+.sticky-view {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.item-goods-scrollx-text {
+  width: 180rpx;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.goods-spec-info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.goods-spec-info-start {
+  display: flex;
+  flex-direction: row;
+  padding: 30rpx;
+  align-items: center;
+}
+
+.goods-spec-text {
+  display: flex;
+  flex-direction: column;
+  margin-left: 30rpx;
+}
+
+.goods-sepc-bottom-view {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+}
+
+.goods-sepc-bottom-button {
+  display: flex;
+  width: 100%;
+  height: 100rpx;
+  background: #ff5353;
+  color: white;
+  justify-content: center;
+  align-items: center;
+  font-size: 32rpx;
+  margin-top: 60rpx;
+}
+
+.goods-spec-bottom-num-pick {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 30rpx;
+  margin-right: 30rpx;
+  padding-top: 30rpx;
+  padding-bottom: 30rpx;
+  border-top: 2rpx #eaeaea solid;
+  border-bottom: 2rpx #eaeaea solid;
+}
+
+.number-pick-view {
+  display: flex;
+  flex-direction: row;
+  border: 2rpx #eaeaea solid;
+  border-radius: 8rpx;
+  width: 240rpx;
+  height: 60rpx;
+  align-items: center;
+  font-size: 24rpx;
+}
+
+.number-pick-view-text {
+  display: flex;
+  height: 100%;
+  width: 80rpx;
+  border-left: 2rpx #eaeaea solid;
+  border-right: 2rpx #eaeaea solid;
+  justify-content: center;
+  align-items: center;
+}
+
+.number-pick-view-symbol {
+  display: flex;
+  height: 100%;
+  width: 80rpx;
+  justify-content: center;
+  align-items: center;
+  font-size: 40rpx;
+  color: #8f8f8f;
+}
+
+.goods-spec-area {
+  display: block;
+  padding-top: 20rpx;
+  padding-bottom: 30rpx;
+}
+
+.goods-spec-area2 {
+  height: 350rpx;
+}
+
+.goods-spec-view-normal {
+  border: 2rpx #565d6f solid;
+  padding: 5rpx 10rpx;
+  border-radius: 2rpx;
+  margin-right: 20rpx;
+  max-width: 710rpx;
+  margin-top: 20rpx;
+  display: inline-block;
+  font-size: 24rpx;
+  color: #565d6f;
+}
+
+.goods-spec-view-selected {
+  border: 2rpx #ff5353 solid;
+  padding: 5rpx 10rpx;
+  border-radius: 2rpx;
+  margin-right: 20rpx;
+  max-width: 710rpx;
+  margin-top: 20rpx;
+  display: inline-block;
+  font-size: 24rpx;
+  color: #ff5353;
+}
+
+/*订单列表的按钮   */
+
+.orderListBtn {
+  width: 151rpx;
+  height: 55rpx;
+  line-height: 55rpx;
+  text-align: center;
+  font-size: 24rpx;
+}
+
+/*边框   */
+
+.border_565 {
+  border-color: #565d6f;
+  color: #565d6f;
+}
+
+.border_ff53 {
+  border-color: #ff5353;
+  color: #ff5353;
+}
+
+/*toast弹出效果   */
+
+.toastView_wb {
+  position: relative;
+  background-color: rgba(255, 255, 255, 1);
+  width: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10rpx;
+}
+
+.toastView_bb {
+  position: relative;
+  background-color: rgba(0, 0, 0, 0.8);
+  width: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10rpx;
+}
+
+.toastView_cc {
+  position: relative;
+  background-color: rgba(0, 0, 0, 0.5);
+  width: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10rpx;
+  margin-top: 45%;
+}
+
+.toastView_wb_con {
+  /* background-color: black; */
+  padding: 30rpx 40rpx;
+  max-width: 300rpx;
+  /* border-radius: 10rpx; */
+}
+
+.toastView_bb_con {
+  color: #fff;
+  padding: 30rpx 40rpx;
+  max-width: 300rpx;
+}
+
+/*遮罩层   */
+
+.mark {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9100;
+}
+
+.mark_none {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9100;
+}
+
+/*按钮样式    */
+
+button {
+  border: none;
+  line-height: inherit;
+}
+
+.btnStyle {
+  padding: 0;
+  line-height: inherit;
+  -webkeit-tap-highlight-color: transparent;
+  background-color: transparent;
+}
+
+.btnStyle::after {
+  border: none;
+}
+
+.gpnBtn {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+/*加载的样式   */
+
+.loading_view {
+  text-align: center;
+  margin: 20rpx 0;
+}
+
+.loading_gif {
+  width: 64rpx;
+  height: 64rpx;
+}
+
+/*加载中和加载错误信息部分   */
+
+.loadingTop {
+  text-align: center;
+  margin-top: 20rpx;
+}
+
+/*一行显示   */
+
+.oneLineShow {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  /* overflow: hidden; */
+}
+
+.overHid {
+  overflow: hidden;
+}
+
+/* 加载动画 */
+
+.loading { 
+  display: flex; 
+  width: 100%;
+  height: 100vh;  
+  justify-content: center;  
+  background-color: white;
+  position: relative;
+}
+.loading_image {
+  width: 300rpx;
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  margin-left: -150rpx;
+}
+.noContent { 
+  display: flex; 
+  width: 100%; 
+  height: 100vh;
+  justify-content: center;
+  background-color: white;
+  position: relative;
+}
+.noContent_text {
+  color: #e61f34;
+  font-size: 32rpx;
+  opacity: 0.5; 
+  position: absolute;
+  top: 52%;
+  text-align: center;
+}
+.noContent_image {
+  background-color: white;
+  position: absolute;
+  top: 25%;
+  width: 449rpx;
+  left: 50%;
+  margin-left: -224rpx;
+}
+
+.line_through {
+  text-decoration: line-through;
+}
+

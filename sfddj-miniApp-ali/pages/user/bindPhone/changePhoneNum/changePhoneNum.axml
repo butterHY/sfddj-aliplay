@@ -1,0 +1,17 @@
+<view class="all_100v flex_view_col align_cen">
+    <!--上面的图片与按钮  -->
+    <view class="changPhoneTop flex_view_col align_cen width_100 justi_cen">
+        <image class="changePhoneImg" src="{{baseImgUrl}}miniappImg/loading/accountBg.png" mode='widthFix'></image>
+        <view class="font-30 marTop_30 marBot_30"><text>已绑定手机号：</text><text>{{myPhone}}</text></view>
+        <view class="changePhoneNumBtn" onTap="changePhoneNum">
+            <text>更换手机号</text>
+        </view>
+    </view>
+    <view class="marTop_20 width_100">
+      <view class="myAddress_view flex_view_row justi_between align_cen" catchTap="goToAddress">
+        <text class="flex_1 font-30">我的地址</text>
+        <!-- <image class='myAddress_arrRight' src='{{baseImgUrl}}miniappImg/icon/icon_right_arrow.png'></image> -->
+        <text class="icon-href-right color-c7c7cc font-22"></text>
+      </view>
+    </view>
+</view>

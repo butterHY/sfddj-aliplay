@@ -1,0 +1,10 @@
+{
+  "defaultTitle": "商家简介",
+  "titleBarColor": "#ffffff",
+  "pullRefresh": false,
+  "usingComponents": {
+    "loading-now": "../../components/loadingNow/loadingNow",
+    "load-fail": "../../components/loadFail/loadFail"
+  }
+
+}

@@ -1,0 +1,72 @@
+<import src="../../common/coupon"/>
+<import src="/pages/common/item-goods-column"/>
+<!-- 加载中 -->
+<view a:if="{{!loadComplete}}">
+  <loading-now></loading-now>  
+</view>
+<!-- 加载失败 -->
+<view a:elif="{{loadFail}}">
+  <load-fail></load-fail>
+</view>
+<!-- 没有网络提示这个 -->
+<!-- <view a:elif="{{!wifiAvailable}}">
+  <no-wifi></no-wifi>
+</view> -->
+<view a:else>
+  <!--券的内容  -->
+  <view>
+    <view class="title">
+      <view class="font-60 font-weight-500">•天天福利•
+      </view>
+      <view class="hor_line">
+      </view>
+      <view class="font-56 font-weight-200 marTop_10">先领券、再购物
+      </view>
+    </view>
+    <!--优惠券列表-->
+    <view class="marBot_30" a:for="{{couponList}}" a:for-item="coupon" a:key="itemId">
+      <template is="coupon" data="{{...coupon, index,isBing:isBing,baseLocImgUrl,baseImageUrl}}">
+      </template>
+    </view>
+    <!-- 新版优惠券部分 -->
+    <!-- <view>
+      <coupon-list></coupon-list>
+    </view> -->
+  </view>
+  <!--猜你喜欢的商品  -->
+  <view>
+    <view class="item-tag-view font-26 color-b3b3b3" a:if="{{recommondList && recommondList.length > 0}}">- 猜你喜欢 -
+    </view>
+    <view class="guessLikePro whiteBack">
+      <view class="guessLike_oneSide">
+        <block a:for="{{recommondList}}" a:key="itemIndex11">
+          <template is="itemGoodsColumn" data="{{...item,left:true,baseImageUrl:baseImageUrl,hiddenCart:false,iconNewCart:true,baseLocImgUrl:baseLocImgUrl,smallImgArg}}" a:if="{{index % 2 == 0}}">
+          </template>
+        </block>
+      </view>
+      <view class="guessLike_oneSide">
+        <block a:for="{{recommondList}}" a:key="itemIndex12">
+          <template is="itemGoodsColumn" data="{{...item,left:false,baseImageUrl:baseImageUrl,hiddenCart:false,iconNewCart:true,baseLocImgUrl:baseLocImgUrl,smallImgArg}}" a:if="{{index % 2 != 0}}">
+          </template>
+        </block>
+      </view>
+    </view>
+  </view>
+  <!--没有更多  -->
+  <view class="noMore width_100 tex_center whiteBack" a:if="{{downPage}}">
+    <text class="font-26 color-323232">没有更多
+    </text>
+  </view>
+  <!--加载数据进度条-->
+  <view class="loading_view" a:if="{{isLoadMore}}">
+    <image src="{{baseLocImgUrl}}miniappImg/loading/loading.gif" class="loading_gif">
+    </image>
+  </view>
+</view>
+<!--toast弹窗-->
+<view class="mark_none flex_view_col align_cen justi_cen" a:if="{{showToast}}">
+  <view class="toastView_bb" catchtouchmove="move">
+    <view class="toastView_bb_con font-24 color-232323">      {{errMsg}}    
+    </view>
+  </view>
+</view>

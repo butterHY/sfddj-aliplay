@@ -1,0 +1,20 @@
+.page {
+  background-color: white;
+}
+.image-view {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-left: 56rpx;
+  margin: 64rpx 0 64rpx 0;
+}
+/*文字   */
+.licenseText {
+  margin: 38rpx 20rpx 0rpx 20rpx;
+}
+/*图片   */
+.licenseImg {
+  width: 180rpx;
+  height: 180rpx;
+  margin-right: 42rpx;
+}

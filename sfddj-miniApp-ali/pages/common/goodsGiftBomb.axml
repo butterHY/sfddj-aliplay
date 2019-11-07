@@ -1,0 +1,12 @@
+<template name="goodsGiftBomb">
+   <view class="goodsGiftbg" catchtouchmove="move" a:if="{{show}}">
+    <view>
+      <view class="goodsGiftClose"><image src="{{base64imageUrl}}/miniappImg/multiGift/icon_closeF.png" class="goodsGiftClosePng" onTap="bombClose"></image></view>    
+      <view class="goodsGiftSelect"><image src="{{base64imageUrl}}/miniappImg/multiGift/icon_goods_giftFont.png" class="goodsGiftSelectPng"></image></view>
+      <button class="goodsGiftButton goodsGiftButtonDuplex" onTap="sendOnePerson"><text>只送给一个人</text></button>
+      <button class="goodsGiftButton" onTap="sendManyPerson"><text>多人可抢</text></button>
+      <view class="goodsGiftBomb"><text onTap="theway">什么是送礼方式?</text></view>
+    </view>
+    
+  </view>
+</template>

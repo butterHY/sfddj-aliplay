@@ -1,0 +1,137 @@
+page {
+  background: #f3f3f3;
+}
+.succeed-text-area {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.succeed-button-area {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0 30rpx 28rpx 30rpx;
+}
+.succeed-button-selected {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2rpx #ff5353 solid;
+  width: 334rpx;
+  padding: 20rpx 0 20rpx 0;
+}
+.succeed-button-normal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2rpx #565d6f solid;
+  color: #565d6f;
+  width: 334rpx;
+  padding: 20rpx 0 20rpx 0;
+}
+.item-tag-view {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f3f3f3;
+  height: 80rpx;
+}
+/*恭喜语   */
+.congraText {
+  margin: 72rpx 0 60rpx 0;
+}
+.congra_img {
+  width: 135rpx;
+  height: 86rpx;
+}
+/*查看订单按钮   */
+.checkOrderBtn {
+  margin-left: 22rpx;
+}
+/*安全警告   */
+.safeWarning {
+  padding: 30rpx;
+}
+/*猜你喜欢   */
+.guessLikePro {
+  display: flex;
+  padding: 0 30rpx;
+}
+.guessLike_oneSide {
+  width: 50%;
+  box-sizing: border-box;
+}
+
+
+.confirmorderPop {
+  /* padding: 60rpx 60rpx; */
+  max-width: 400rpx;
+}
+
+.couponPrice {
+  width: 326rpx;
+  height: 56rpx;
+  color: red;
+  bottom: 232rpx;
+  left: 42rpx;
+}
+
+.ikonw {
+  width: 326rpx;
+  height: 56rpx;
+  bottom: 78rpx;
+  left: 42rpx;
+  animation: mymove 1s linear infinite alternate;
+  -webkit-animation: mymove 1s linear infinite alternate; /* Safari 和 Chrome */
+}
+
+@keyframes mymove
+{
+  0%  {
+          transform:scale3d(0.8, 0.8, 0.8);
+          /* -ms-transform:scale3d(0.8, 0.8, 0.8); IE 9 */
+          /* -webkit-transform:scale3d(0.8, 0.8, 0.8); Safari and Chrome */
+      }
+  25% {
+          transform:scale3d(1,1,1);
+          /* -ms-transform:scale3d(1,1,1); IE 9 */
+          /* -webkit-transform:scale3d(1,1,1); Safari and Chrome */
+      }
+  50% {
+          transform:scale3d(0.8, 0.8, 0.8);
+          /* -ms-transform:scale3d(0.8, 0.8, 0.8); IE 9 */
+          /* -webkit-transform:scale3d(0.8, 0.8, 0.8); Safari and Chrome */
+      }
+  75%  {
+          transform:scale3d(1,1,1);
+          /* -ms-transform:scale3d(1,1,1); IE 9 */
+          /* -webkit-transform:scale3d(1,1,1); Safari and Chrome */
+      }
+  100% {
+          transform:scale3d(1,1,1);
+          /* -ms-transform:scale3d(1,1,1); IE 9 */
+          /* -webkit-transform:scale3d(1,1,1); Safari and Chrome */
+      }
+}
+
+@-webkit-keyframes mymove
+{
+  0%  {
+          transform:scale3d(0.8, 0.8, 0.8);
+      }
+  25% {
+          transform:scale3d(1,1,1);
+
+      }
+  50% {
+          transform:scale3d(0.8, 0.8, 0.8);
+
+      }
+  75%  {
+          transform:scale3d(1,1,1);
+      }
+  100% {
+          transform:scale3d(1,1,1);
+      }
+}

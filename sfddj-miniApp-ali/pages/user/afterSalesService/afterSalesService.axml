@@ -1,0 +1,66 @@
+<import src="/pages/common/wo-status"/>
+
+<!-- 加载中 -->
+<view a:if="{{!loadComplete && !loadFail}}">
+  <loading-now></loading-now>  
+</view>
+<!-- 加载失败 -->
+<view a:elif="{{loadFail && wifiAvailable}}">
+  <load-fail></load-fail>
+</view>
+<!-- 没有网络提示这个 -->
+<!-- <view a:elif="{{!wifiAvailable}}">
+  <no-wifi></no-wifi>
+</view> -->
+
+<view a:else>
+  <block a:for="{{result}}" a:key="result">
+    <view class="order-info-view">
+      <view class="flex_view_row justi_between">
+        <view class="single-line font-24 color-414141">订单编号：{{item.orderSn}}
+        </view>
+        <view class="font-24 color-fa4444">
+          <template is="woStatus" data="{{woStatus: item.workOrderStatus}}">
+          </template>
+        </view>
+      </view>
+      <view class="createDate font-24 color-414141">下单时间：{{item.createDate}}
+      </view>
+    </view>
+    <navigator url="/pages/user/afterSalesService/afterSalesDetail/afterSalesDetail?orderId={{item.orderId}}&workOrderId={{item.workOrderId}}" hover-class="none">
+      <view class="goods-info-view">
+        <image class="goodsImg" src="{{baseImageUrl}}{{item.appOrderItemList.goodsImage}}">
+        </image>
+        <view class="flex_view_col width_100 marLeft_20">
+          <view class="font-24 color-414141">{{item.appOrderItemList.goodsName}}
+          </view>
+          <view class="font-24 color-8f8f8f marTop_20">{{item.appOrderItemList.productName}}
+          </view>
+          <view class="flex_view_row justi_between width_100 align_cen marTop_40">
+            <view class="font-30 color-fa4444">￥{{item.appOrderItemList.productPrice}}
+            </view>
+            <view class="font-24 color-8f8f8f">x{{item.appOrderItemList.quantity}}
+            </view>
+          </view>
+        </view>
+      </view>
+    </navigator>
+    <view class="action-button-area">
+      <view class="action-button" data-workid="{{item.workOrderId}}" a:if="{{item.workOrderStatus == 'AFTER_SALES_AUDIT'}}" onTap="cancelApply">取消申请
+      </view>
+      <navigator url="/pages/user/afterSalesService/afterSalesDetail/afterSalesDetail?orderId={{item.orderId}}&workOrderId={{item.workOrderId}}" hover-class="none">
+        <view class="action-button">查看申请
+        </view>
+      </navigator>
+    </view>
+  </block>
+  <!--加载数据进度条-->
+  <view class="loading_view" a:if="{{isLoadMore}}">
+    <image src="{{baseImgLocUrl}}miniappImg/loading/loading.gif" class="loading_gif">
+    </image>
+  </view>
+  <!--没有更多-->
+  <view class="loading_view font-24 color-b1b6bb" a:if="{{!hasMore && !isLoadMore}}">  没有更多了
+
+  </view>
+</view>

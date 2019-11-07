@@ -1,0 +1,28 @@
+<!--首页拼团商品列表item-->
+<template name="itemPintuan">
+  <navigator class="item-pintuan-container" url="/pages/home/pintuan/tuangouGoodsDetail?goodsSn={{goodsSn}}" hover-class="none">
+    <image src="{{baseImageUrl}}{{imagePath}}" style="width:100%;height:300rpx;" mode="widthFix"></image>
+
+    <!--小图标 全赔  -->
+    <image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff1.png" class="allCompensation posi_ab" style="width: 100rpx; height: 100rpx; top: 26rpx; right: 26rpx;" a:if="{{filters.strIndexOf(afterSaleGuee,'1')}}"></image> 
+    <image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff2.png" class="allCompensation posi_ab" style="width: 100rpx; height: 100rpx; top: 26rpx; right: 26rpx;" a:elif="{{filters.strIndexOf(afterSaleGuee,'2')}}"></image> 
+    <image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff3.png" class="allCompensation posi_ab" style="width: 100rpx; height: 100rpx; top: 26rpx; right: 26rpx;" a:elif="{{filters.strIndexOf(afterSaleGuee,'3')}}"></image> 
+    <image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff4.png?version=2.0" class="allCompensation posi_ab" style="width: 100rpx; height: 100rpx; top: 26rpx; right: 26rpx;" a:elif="{{filters.strIndexOf(afterSaleGuee,'4')}}"></image>
+
+    <view class="item-pintuan-size font-24">{{tuangouCount}}人团</view>
+    <view class="item-pintuan-goods-desc">
+      <text class="font-30 color-323232 font-weight-500 single-line" style="max-width:500rpx">{{name}}</text>
+      <text class="font-24 color-a1a0a0 font-weight-200">已团 <text style="color:#ff7b7b">{{salesCount}}</text></text>
+    </view>
+    <view class="item-pintuan-bottom-area">
+      <view style="display:flex;align-items:center">
+        <text class="font-36 color-ff5353 font-weight-500">¥{{tuangouPrices}}</text>
+        <text class="item-pintuan-origin-price font-24 color-a1a0a0">¥{{salePrice}}</text>
+      </view>
+      <!-- <view class='red-btn-circle-border font-30'>去开团</view> -->
+      <view style="width:150rpx;height:60rpx;color:white;text-align:center;background-color:#ff5353;line-height:60rpx;border-radius:5rpx" class="font-30">
+        去开团
+      </view>
+    </view>
+  </navigator>
+</template>

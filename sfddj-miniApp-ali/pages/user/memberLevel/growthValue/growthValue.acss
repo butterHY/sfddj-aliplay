@@ -1,0 +1,14 @@
+page {
+  background-color: #fff;
+}
+.padRL {
+  padding: 0 26rpx;
+}
+.growthValue {
+  height: 90rpx;
+  padding: 26rpx 0 0 0;
+  border-bottom: 1px solid #e2e2e2;
+}
+.fontW_600 {
+  font-weight: 600;
+}

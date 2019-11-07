@@ -1,0 +1,183 @@
+<import-sjs name='filters' from="../wxsFile/public.sjs"/>
+
+<!-- 加载中 -->
+<view a:if="{{!loadComplete && !loadFail}}">
+  <loading-now></loading-now>  
+</view>
+<!-- 加载失败 -->
+<view a:elif="{{loadFail}}">
+  <load-fail></load-fail>
+</view>
+<!-- 没有网络提示这个 -->
+<!-- <view a:elif="{{!wifiAvailable}}">
+  <no-wifi></no-wifi>
+</view> -->
+
+<!--个人信息-->
+<scroll-view a:else scroll-y class="user_scroll posi_re">
+
+  <!-- 头部 -->
+  <view class="posi_re flex_view_col">
+    <!-- 昵称+余额部分 -->
+    <view class="posi_ab width_100 user_header">
+      <!-- 头像，昵称 -->
+      <view class="user_header_info flex_view_row align_cen tex_center">
+        <!-- 头像 -->
+        <view class="flex_view_row posi_re">
+          <button class="btnStyle gpnBtn zIndex100" open-type="getAuthorize" onGetAuthorize="getPhoneNumber" scope='phoneNumber' onError="onAuthError" a:if="{{!isMember}}"></button>
+          <navigator url="/pages/user/member/myInfoList/myInfoList" hover-class="none">
+            <!-- 使用open-data   -->
+            <!-- <image wx:if='{{avatarUrl}}' src="{{avatarUrl}}" class='user_header_bg2'></image>   -->
+            <image class="user_avatar" src="{{avatarUrl ? avatarUrl : baseLocImgUrl + 'miniappImg/icon/icon_default_head.jpeg'}}"></image>
+          </navigator>
+          
+        </view>
+        <!--昵称  -->
+        <view class="flex_1 posi_re" style="margin-left: 24rpx;">
+          <button class="btnStyle gpnBtn zIndex100" open-type="getAuthorize" onGetAuthorize="getPhoneNumber" scope='phoneNumber' onError="onAuthError" a:if="{{!isMember}}"></button>
+          <navigator class="tex_left" url="/pages/user/member/myInfoList/myInfoList" hover-class="none">
+            <!-- <text class=''>{{userName}}</text> -->
+            <!--使用open-data  -->
+            <text class=" font-36 color-white fontW_600">{{userName ? userName : '顺丰大当家'}}</text>
+          </navigator>
+          <view hover-class="none" url="memberLevel/memberLevel" class="user_level flex_view_row font-22 color-white align_cen justi_cen">
+            <image src="{{baseLocImgUrl}}miniappImg/icon/icon_vipGold.png" class="icon_vipGold"></image>
+            <text>{{memberLevel}}</text>
+          </view>
+        </view>
+
+		<!-- 签到入口 -->
+        <view wx:if="{{isMember}}" class="signEntance posi_re">
+          <view class="all_100" onTap="goToH5SignIn">
+            <image a:if="{{myInfoData.memberSignStatus == 'true'}}" src="{{baseLocImgUrl}}miniappImg/user/alreadySignedOne.png" class="all_100"></image>
+            <image a:else src="{{baseLocImgUrl}}miniappImg/user/signIn.png" class="all_100"></image>
+          </view>
+		  <button class="btnStyle gpnBtn zIndex100" open-type="getAuthorize" onGetAuthorize="getPhoneNumber" scope='phoneNumber' onError="onAuthError" a:if="{{!isMember}}"></button>
+        </view>
+
+      </view>
+
+      <!-- 余额部分 -->
+      <view class="marTop_40 posi_re">
+        <view class="posi_re width_100 flex_view_row posi_re">
+          <view hover-class="none" url="/pages/user/member/memberBalance/memberBalance" class="user_balance flex_view_col justi_cen align_cen posi_re">
+            <text class="font-30">{{filters.toFix(balance)}}</text>
+            <text class="font-24 marTop_14">余额</text>
+            <view class="posi_ab middleLine"></view>
+          </view>
+          <view hover-class="none" url="jifenDetail/jifenDetail" class="user_balance flex_view_col justi_cen align_cen">
+            <text class="font-30">{{memberPoint}}</text>
+            <text class="font-24 marTop_14">积分</text>
+          </view>
+
+          <button class="btnStyle gpnBtn zIndex100" open-type="getAuthorize" onGetAuthorize="getPhoneNumber" scope='phoneNumber' onError="onAuthError" a:if="{{!isMember}}"></button>
+          
+        </view>
+      </view>
+    </view>
+
+
+    <!-- 背景图 -->
+    <image src="{{baseLocImgUrl}}miniappImg/bg/personBgRed.jpg" class="width_100" mode="widthFix"></image>
+  </view>
+ 
+  <!-- 底下图标 -->
+  <view class="userInfo_bottom">
+    <!-- 订单 -->
+    <view>  
+      <!-- 我的订单 -->
+      <view class="user_myOrder flex_view_row align_cen posi_re">
+        <view class><text class="font-36 color-323232 fontW_600">我的订单</text></view>
+        <view data-url="/pages/user/historyOrder/historyOrder?index=0" class="flex_1 font-24 color32_04 tex_right" onTap="goToTargetPage">
+          <text class="marRight_15">全部订单</text>
+          <text class="icon-href-right font-22 color32_04"></text>
+        </view>
+        <button class="btnStyle gpnBtn zIndex100" open-type="getAuthorize" onGetAuthorize="getPhoneNumber" scope='phoneNumber' onError="onAuthError" a:if="{{!isMember}}"></button>
+      </view>
+
+      <!-- 各个订单 -->
+      <view class="flex_view_row marBot_32">
+        <!-- 待付款 -->
+        <view data-url="/pages/user/historyOrder/historyOrder?index=1" class=" user_orderType tex_center posi_re" onTap="goToTargetPage">
+          <image src="{{baseLocImgUrl}}miniappImg/icon/icon_WaitPayment.png?version=13.0" class="height_100 width_72r"></image>
+          <!-- <text class='color32_07 font-24'>待付款</text> -->
+          <view class="font-20 posi_ab user_orderTypeNum" a:if="{{nopayCount > 0}}">{{nopayCount < 100 ? nopayCount : '...'}}</view>
+          <button class="btnStyle gpnBtn zIndex100" open-type="getAuthorize" onGetAuthorize="getPhoneNumber" scope='phoneNumber' onError="onAuthError" a:if="{{!isMember}}"></button>
+        </view>
+
+        <!-- 待发货 -->
+        <view data-url="/pages/user/historyOrder/historyOrder?index=2" class="user_orderType tex_center posi_re" onTap="goToTargetPage">
+          <image src="{{baseLocImgUrl}}miniappImg/icon/icon_WaitDelivery.png?version=13.0" class="height_100 width_72r"></image>
+          <!-- <text class='color32_07 font-24'>待发货</text> -->
+          <view class="font-20 posi_ab user_orderTypeNum" a:if="{{payfinishCount > 0}}">{{payfinishCount < 100 ? payfinishCount : '...'}}</view>
+          <button class="btnStyle gpnBtn zIndex100" open-type="getAuthorize" onGetAuthorize="getPhoneNumber" scope='phoneNumber' onError="onAuthError" a:if="{{!isMember}}"></button>
+        </view>
+
+        <!-- 待收货 -->
+        <view data-url="/pages/user/historyOrder/historyOrder?index=3" class=" user_orderType tex_center posi_re" onTap="goToTargetPage">
+          <image src="{{baseLocImgUrl}}miniappImg/icon/icon_WaitTake.png?version=13.0" class="height_100 width_72r"></image>
+          <!-- <text class='color32_07 font-24'>待收货</text> -->
+          <view class="font-20 posi_ab user_orderTypeNum" a:if="{{shippedCount > 0}}">{{shippedCount < 100 ? shippedCount : '...'}}</view>
+          <button class="btnStyle gpnBtn zIndex100" open-type="getAuthorize" onGetAuthorize="getPhoneNumber" scope='phoneNumber' onError="onAuthError" a:if="{{!isMember}}"></button>
+        </view>
+
+        <!-- 待评价 -->
+        <view data-url="/pages/user/historyOrder/historyOrder?index=4" class="user_orderType tex_center posi_re" onTap="goToTargetPage">
+          <image src="{{baseLocImgUrl}}miniappImg/icon/icon_WaitAssess.png?version=13.0" class="height_100 width_72r"></image>
+          <!-- <text class='color32_07 font-24'>待评价</text> -->
+          <view class="font-20 posi_ab user_orderTypeNum" a:if="{{noCommentCount > 0}}">{{noCommentCount < 100 ? noCommentCount : '...'}}</view>
+          <button class="btnStyle gpnBtn zIndex100" open-type="getAuthorize" onGetAuthorize="getPhoneNumber" scope='phoneNumber' onError="onAuthError" a:if="{{!isMember}}"></button>
+        </view>
+
+        <!-- 退款、售后 -->
+        <view data-url="/pages/user/afterSalesService/afterSalesService" class="user_orderType tex_center posi_re" onTap="goToTargetPage">
+          <image src="{{baseLocImgUrl}}miniappImg/icon/icon_AfterSell.png?version=13.0" class="height_100 width_104r"></image> 
+          <!-- <text class='color32_07 font-24'>退款/售后</text> -->
+          <view class="font-20 posi_ab user_orderTypeNum" a:if="{{returnQuantity > 0}}">{{returnQuantity < 100 ? returnQuantity : '...'}}</view>
+          <button class="btnStyle gpnBtn zIndex100" open-type="getAuthorize" onGetAuthorize="getPhoneNumber" scope='phoneNumber' onError="onAuthError" a:if="{{!isMember}}"></button>
+        </view>
+
+      </view>
+    </view>
+
+    <!-- 我的服务 -->
+    <view>
+      <!-- 标题 -->
+      <view class="user_myHome_tit"><text class="font-36 color-323232 fontW_600">我的服务</text></view>
+
+      <!--第一行服务图标  -->
+      <view class="flex_view_row">
+        <view data-url="/pages/user/myCoupon/myCoupon" class="user_myHome_one flex_view_col align_cen justi_cen posi_re" onTap="{{isMember? 'goToTargetPage' : ''}}">
+          <text class="iconfont icon-youhuiquan font-56 color_ff2a54_08"></text>
+          <text class="font-24 marTop_20 color-323232">优惠券</text>
+          <button class="btnStyle gpnBtn zIndex100" open-type="getAuthorize" onGetAuthorize="getPhoneNumber" scope='phoneNumber' onError="onAuthError" a:if="{{!isMember}}"></button>
+        </view>
+
+        
+
+        <view data-url="/pages/user/addressManage/addressManage" data-type="rightHere" class="user_myHome_one flex_view_col align_cen justi_cen posi_re" onTap="{{isMember ? 'goToTargetPage' : ''}}">
+          <text class="iconfont icon-dizhi font-56 color_ff2a54_08"></text>
+          <text class="font-24 marTop_20 color-323232">地址</text>
+          <button class="btnStyle gpnBtn zIndex100" open-type="getAuthorize" onGetAuthorize="getPhoneNumber" scope='phoneNumber' onError="onAuthError" a:if="{{!isMember}}"></button>
+        </view>
+
+        <view data-url="/pages/user/helpCenter/helpCenter" data-type="rightHere" class="user_myHome_one flex_view_col align_cen justi_cen posi_re" onTap="{{isMember ? 'goToTargetPage' : ''}}">
+          <text class="iconfont icon-changjianwenti font-52 color_ff2a54_08"></text>
+          <text class="font-24 marTop_20 color-323232">常见问题</text>
+          <button class="btnStyle gpnBtn zIndex100" open-type="getAuthorize" onGetAuthorize="getPhoneNumber" scope='phoneNumber' onError="onAuthError" a:if="{{!isMember}}"></button>
+        </view>
+
+
+        <view class="user_myHome_one flex_view_col align_cen justi_cen posi_re" catchTap="{{isMember ? 'goToWebCall' : ''}}">
+          <text class="iconfont icon-kefu font-56 color_ff2a54_08"></text>
+          <text class="font-24 marTop_20 color-323232">客服</text>
+          <button class="btnStyle gpnBtn zIndex100" open-type="getAuthorize" onGetAuthorize="getPhoneNumber" scope='phoneNumber' onError="onAuthError" a:if="{{!isMember}}"></button>
+        </view>
+      </view>
+
+    </view>
+
+  </view>
+
+
+</scroll-view>

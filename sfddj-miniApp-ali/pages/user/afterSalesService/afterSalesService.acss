@@ -1,0 +1,45 @@
+page {
+  background: #f3f3f3;
+}
+.order-info-view {
+  display: flex;
+  flex-direction: column;
+  padding: 30rpx 20rpx 34rpx 20rpx;
+  background: white;
+}
+.goods-info-view {
+  display: flex;
+  flex-direction: row;
+  background: #fafafa;
+  height: 218rpx;
+  border-top: 2rpx #e3e3e3 solid;
+  border-bottom: 2rpx #e3e3e3 solid;
+  padding: 0 20rpx 0 20rpx;
+  align-items: center;
+}
+.action-button-area {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  background: white;
+  padding: 16rpx 20rpx 16rpx 0;
+  border-bottom: 2rpx #e3e3e3 solid;
+  margin-bottom: 20rpx;
+}
+.action-button {
+  border: 2rpx #e3e3e3 solid;
+  border-radius: 10rpx;
+  font-size: 30rpx;
+  padding: 15rpx 30rpx 15rpx 30rpx;
+  color: #414141;
+  margin-left: 20rpx;
+}
+/*新加   */
+.createDate {
+  margin-top: 26rpx;
+}
+.goodsImg {
+  width: 158rpx;
+  height: 158rpx;
+  min-width: 158rpx;
+}

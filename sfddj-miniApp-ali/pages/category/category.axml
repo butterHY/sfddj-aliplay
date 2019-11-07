@@ -1,0 +1,62 @@
+<!--分类页面-->
+<import src="../common/item-category"/>
+<import src="../common/search"/>
+<import src="../common/hotWords"/>
+<!-- 加载中 -->
+<view a:if="{{!loadComplete && !loadFail}}">
+  <loading-now>
+  </loading-now>
+</view>
+<!-- 加载失败 -->
+<view a:elif="{{loadFail}}">
+  <load-fail showPageType="category" onRefreshPage="onRefreshPage">
+  </load-fail>
+</view>
+<!-- 没有网络提示这个 -->
+<!-- <view a:elif="{{!wifiAvailable}}">
+  <no-wifi>
+  </no-wifi>
+</view> -->
+<view a:else class="all_100 flex_view_col" style='height: 100vh'>
+  <!-- 搜索 -->
+  <template is="search">
+  </template>
+  <!-- <view style="width:100%;height:120rpx;padding:20rpx 30rpx;background-color:#252630;box-sizing:border-box"><input style="padding:10rpx 30rpx 10rpx 30rpx;background-color:white;border-radius:5px;" placeholder="今天吃什么呢" class="font-24 color-323232" value="{{inputVal}}" confirm-type="search" onConfirm="handleConfirm" onFocus="handleFocus"/></view> -->
+  <view class="category-page flex_1">
+    <!-- 竖排顶级分类 -->
+    <view class="category-tag-area height_100">
+      <scroll-view scroll-y class="height_100">
+        <block a:for="{{categoryTags}}" a:key="category_tag">
+          <view class="{{item.taped ? 'category-tag-view-selected' : 'category-tag-view-normal'}}" id="{{index}}" onTap="tagViewTap"> {{item.name}}          
+          </view>
+        </block>
+      </scroll-view>
+    </view>
+    <!-- 三列瀑布流展示二级分类 -->
+    <view class="category-tag-children-area height_100">
+      <scroll-view scroll-y='true' class="height_100 flex_view_row">
+        <view class="category-tag-children-arr">
+          <block a:for="{{childrenArr1}}" a:key="category_children1">
+            <template is="itemCategory" data="{{url:baseImageUrl+item.categoryImgPath,name:item.name,id:item.id}}">
+            </template>
+          </block>
+        </view>
+        <view class="category-tag-children-arr">
+          <block a:for="{{childrenArr2}}" a:key="category_children2">
+            <template is="itemCategory" data="{{url:baseImageUrl+item.categoryImgPath,name:item.name,id:item.id}}">
+            </template>
+          </block>
+        </view>
+        <view class="category-tag-children-arr">
+          <block a:for="{{childrenArr3}}" a:key="category_children3">
+            <template is="itemCategory" data="{{url:baseImageUrl+item.categoryImgPath,name:item.name,id:item.id}}">
+            </template>
+          </block>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+</view>
+<!-- 搜索热词和历史记录膜层 -->
+<template is="hotWords" data="{{show:show,baseLocImgUrl,hotWords:hotWords,searchWords:searchWords,top:'120rpx'}}">
+</template>

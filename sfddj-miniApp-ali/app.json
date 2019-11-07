@@ -1,0 +1,80 @@
+{
+  "pages": [
+    "pages/home/home",
+    "pages/category/category",
+    "pages/cart/cart",
+    "pages/user/user",
+    "pages/home/getCoupon/getCoupon",
+    "pages/shopping/goodsDetail/goodsDetail",
+    "pages/home/searchResult/searchResult",
+    "pages/category/secondCategory/secondCategory",
+    "pages/shopping/storeInfo/storeInfo",
+    "pages/shopping/testReport/testReport",
+    "pages/user/bindPhone/bindPhone",
+    "pages/user/bindPhone/changePhoneNum/changePhoneNum",
+    "pages/user/addressManage/addAddress/addAddress",
+    "pages/shopping/confirmOrder/confirmOrder",
+    "pages/user/addressManage/addressManage",
+    "pages/user/historyOrder/historyOrder",
+    "pages/user/logistics/logistics",
+    "pages/shopping/paySucceed/paySucceed",
+    "pages/user/historyOrder/orderDetail/orderDetail",
+    "pages/user/historyOrder/orderDetail/showInvoice/showInvoice",
+    "pages/shopping/comment/comment",
+    "pages/user/myCoupon/myCoupon",
+    "pages/user/memberLevel/levelExplain/levelExplain",
+    "pages/user/memberLevel/growthValue/growthValue",
+    "pages/user/member/myInfoList/myInfoList",
+    "pages/shopping/storeInfo/businessLicence/businessLicence",
+    "pages/user/afterSalesService/afterSalesService",
+    "pages/user/afterSalesService/applyForAfterSalesService/applyForAfterSalesService",
+    "pages/user/afterSalesService/afterSalesDetail/afterSalesDetail",
+    "pages/user/historyOrder/commentAndShare/commentAndShare",
+    "pages/user/helpCenter/helpCenter",
+    "pages/user/historyOrder/toOrderPay/toOrderPay",
+    "pages/user/afterSalesService/platfromService/platfromService",
+    "pages/user/webCallView/webCallView",
+    "pages/user/webView/webView",
+    "pages/user/login/login",
+    "pages/home/spike/spike",
+    "pages/home/grouping/grouping",
+    "pages/activities/thematicActivities/thematicActivities",
+    "pages/shopping/goodsDetailNew/goodsDetailNew"
+  ],
+  "window": {
+    "defaultTitle": "顺丰大当家",
+    "titleBarColor": "#ffffff"
+  },
+  "tabBar": {
+    "textColor": "#7A7A7A",
+    "selectedColor": "#303030",
+    "backgroundColor": "#ffffff",
+    "items": [
+      {
+        "pagePath": "pages/home/home",
+        "icon": "image/icon_home_normal.png",
+        "activeIcon": "image/icon_home_selected.png",
+        "name": "首页"
+      },
+      {
+        "pagePath": "pages/category/category",
+        "icon": "image/icon_category_normal.png",
+        "activeIcon": "image/icon_category_selected.png",
+        "name": "分类"
+      },
+      {
+        "pagePath": "pages/cart/cart",
+        "icon": "image/icon_cart_normal.png",
+        "activeIcon": "image/icon_cart_selected.png",
+        "name": "购物车"
+      },
+      {
+        "pagePath": "pages/user/user",
+        "icon": "image/icon_user_normal.png",
+        "activeIcon": "image/icon_user_selected.png",
+        "name": "我的"
+      }
+    ]
+  },
+  "debug": true
+}

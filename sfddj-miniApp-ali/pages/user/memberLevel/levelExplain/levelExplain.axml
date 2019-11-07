@@ -1,0 +1,152 @@
+<view>
+  <!--会员等级成长值  -->
+  <view class="pad_26">
+    <view class="font-28 fontW_26">
+      1.会员等级成长值如下：
+    </view>
+    <view class="memberLevel flex_view_col">
+      <!--标题  -->
+      <view class="sheetTit font-26 width_100 flex_view_row tex_center">
+        <view class="height_100 sheetTit_one ">类目</view>
+        <view class="height_100 sheetTit_one">成长值</view>
+        <view class="height_100 sheetTit_one">等级有效期</view>
+      </view>
+      <!--第一行内容  -->
+      <view class="font-26 width_100 flex_view_row tex_center sheetCon_one">
+        <view class="height_100 sheetCon_two flex_view_row align_cen justi_cen"><text>普通会员</text></view>
+        <view class="height_100 sheetCon_two flex_view_row align_cen justi_cen">0~99</view>
+        <view class="height_100 sheetCon_two flex_view_row align_cen justi_cen">终生有效</view>
+      </view>
+      <!--第二行内容  -->
+      <view class="font-26 width_100 flex_view_row tex_center sheetCon_one">
+        <view class="height_100 sheetCon_two flex_view_row align_cen justi_cen">白银会员</view>
+        <view class="height_100 sheetCon_two flex_view_row align_cen justi_cen">100~999</view>
+        <view class="height_100 sheetCon_two flex_view_row align_cen justi_cen">1年有效期。每年成长值减少300</view>
+      </view>
+      <!--第三行内容  -->
+      <view class="font-26 width_100 flex_view_row tex_center sheetCon_one">
+        <view class="height_100 sheetCon_two flex_view_row align_cen justi_cen">黄金会员</view>
+        <view class="height_100 sheetCon_two flex_view_row align_cen justi_cen">1000~4999</view>
+        <view class="height_100 sheetCon_two flex_view_row align_cen justi_cen">1年有效期。每年成长值减少500</view>
+      </view>
+      <!--第四行内容  -->
+      <view class="font-26 width_100 flex_view_row tex_center sheetCon_one">
+        <view class="height_100 sheetCon_two flex_view_row align_cen justi_cen">铂金会员</view>
+        <view class="height_100 sheetCon_two flex_view_row align_cen justi_cen">5000~9999</view>
+        <view class="height_100 sheetCon_two flex_view_row align_cen justi_cen">1年有效期。每年成长值减少2000</view>
+      </view>
+      <!--第一行内容  -->
+      <view class="font-26 width_100 flex_view_row tex_center sheetCon_one">
+        <view class="height_100 sheetCon_three flex_view_row align_cen justi_cen">钻石会员</view>
+        <view class="height_100 sheetCon_three flex_view_row align_cen justi_cen">10000及以上</view>
+        <view class="height_100 sheetCon_three flex_view_row align_cen justi_cen">1年有效期。每年成长值减少3000</view>
+      </view>
+    </view>
+  </view>
+
+
+
+  <!--会员保级  -->
+  <view class="pad_26">
+    <view class="font-28 fontW_26">
+      2.会员保级具体内容如下（或完成保级任务）：
+    </view>
+    <view class="memberLevel flex_view_col growthCome keepMember">
+      <!--标题  -->
+      <view class="sheetTit font-26 width_100 flex_view_row tex_center">
+        <view class="height_100 sheetCon_five ">会员等级</view>
+        <view class="height_100 sheetTit_one">保级措施</view>
+        <view class="height_100 sheetCon_four">保级奖励</view>
+      </view>
+      <!--第一行内容  -->
+      <view class="font-26 width_100 flex_view_row tex_center sheetCon_one">
+        <view class="height_100 sheetCon_eight flex_view_row align_cen justi_cen"><text>普通会员</text></view>
+        <view class="height_100 sheetCon_two padLeft_13 flex_view_row align_cen justi_cen">无需保级</view>
+        <view class="height_100 sheetCon_seven flex_view_row align_cen justi_cen">终生有效</view>
+      </view>
+      <!--第二行内容  -->
+      <view class="font-26 width_100 flex_view_row tex_center sheetCon_one">
+        <view class="height_100 sheetCon_eight flex_view_row align_cen justi_cen">白银会员</view>
+        <view class="height_100 sheetCon_two padLeft_13 flex_view_row align_cen justi_cen">会员有效期内消费金额在500元（含）以上或完成8（含）以上订单</view>
+        <view class="height_100 sheetCon_seven flex_view_row align_cen justi_cen">完成指标奖励500积分</view>
+      </view>
+      <!--第三行内容  -->
+      <view class="font-26 width_100 flex_view_row tex_center sheetCon_one">
+        <view class="height_100 sheetCon_eight flex_view_row align_cen justi_cen">黄金会员</view>
+        <view class="height_100 sheetCon_two padLeft_13 flex_view_row align_cen justi_cen">会员有效期内消费金额在1000元（含）以上或完成12（含）以上订单</view>
+        <view class="height_100 sheetCon_seven flex_view_row align_cen justi_cen">完成指标奖励1000积分</view>
+      </view>
+      <!--第四行内容  -->
+      <view class="font-26 width_100 flex_view_row tex_center sheetCon_one">
+        <view class="height_100 sheetCon_eight flex_view_row align_cen justi_cen">铂金会员</view>
+        <view class="height_100 sheetCon_two padLeft_13 flex_view_row align_cen justi_cen">会员有效期内消费金额在2000元（含）以上或完成15（含）以上订单</view>
+        <view class="height_100 sheetCon_seven flex_view_row align_cen justi_cen">完成指标奖励2000积分</view>
+      </view>
+      <!--第一行内容  -->
+      <view class="font-26 width_100 flex_view_row tex_center sheetCon_one">
+        <view class="height_100 sheetCon_ten flex_view_row align_cen justi_cen">钻石会员</view>
+        <view class="height_100 sheetCon_three padLeft_13 flex_view_row align_cen justi_cen">会员有效期内消费金额在3000元（含）以上或完成20（含）以上订单</view>
+        <view class="height_100 sheetCon_night flex_view_row align_cen justi_cen">完成指标奖励3000积分</view>
+      </view>
+    </view>
+  </view>
+
+
+
+  <!--会员等级成长值  -->
+  <view class="pad_26">
+    <view class="font-28 fontW_26">
+      3.会员成长值来源明细：
+    </view>
+    <view class="flex_view_col memberLevel growthCome ">
+      <!--标题  -->
+      <view class="sheetTit font-26 width_100 flex_view_row tex_center">
+        <view class="height_100 sheetCon_four">类目</view>
+        <view class="height_100 sheetCon_five">数值</view>
+        <view class="height_100 sheetTit_one">备注</view>
+      </view>
+      <!--第一行内容  -->
+      <view class="font-26 width_100 flex_view_row sheetCon_six">
+        <view class="height_100 flex_view_row align_cen justi_cen sheetCon_seven">购物</view>
+        <view class="height_100 flex_view_row align_cen justi_cen sheetCon_eight">结算金额</view>
+        <view class="height_100 flex_view_row align_cen tex_left sheetCon_two padLeft_13">若全额退款需扣除相等的成长值，部分退款不扣</view>
+      </view>
+      <!--第二行内容  -->
+      <view class="font-26 width_100 flex_view_row sheetCon_six">
+        <view class="height_100 flex_view_row align_cen justi_cen sheetCon_seven">首次购物成功</view>
+        <view class="height_100 flex_view_row align_cen justi_cen sheetCon_eight">+10</view>
+        <view class="height_100 flex_view_row align_cen tex_left sheetCon_two padLeft_13">付款即发</view>
+      </view>
+      <!--第三行内容  -->
+      <view class="font-26 width_100 flex_view_row sheetCon_six">
+        <view class="height_100 flex_view_row align_cen justi_cen sheetCon_seven">评价</view>
+        <view class="height_100 flex_view_row align_cen justi_cen sheetCon_eight">+10</view>
+        <view class="height_100 flex_view_row align_cen tex_left sheetCon_two padLeft_13">评价真实有效发放</view>
+      </view>
+      <!--第四行内容  -->
+      <view class="font-26 width_100 flex_view_row sheetCon_six">
+        <view class="height_100 flex_view_row align_cen justi_cen sheetCon_seven">自然月购物达2日</view>
+        <view class="height_100 flex_view_row align_cen justi_cen sheetCon_eight">+20</view>
+        <view class="height_100 flex_view_row align_cen tex_left sheetCon_two padLeft_13">计算交易状态完成的订单，次月15日发放</view>
+      </view>
+      <!--第五行内容  -->
+      <view class="font-26 width_100 flex_view_row sheetCon_six">
+        <view class="height_100 flex_view_row align_cen justi_cen sheetCon_seven">日常启用</view>
+        <view class="height_100 flex_view_row align_cen justi_cen sheetCon_eight">+2</view>
+        <view class="height_100 flex_view_row align_cen tex_left sheetCon_two padLeft_13">每日只有一次启用发放</view>
+      </view>
+      <!--第六行内容  -->
+      <view class="font-26 width_100 flex_view_row sheetCon_six">
+        <view class="height_100 flex_view_row align_cen justi_cen sheetCon_seven">补充资料</view>
+        <view class="height_100 flex_view_row align_cen justi_cen sheetCon_eight">+10</view>
+        <view class="height_100 flex_view_row align_cen tex_left sheetCon_two padLeft_13">每项10，修改不发放</view>
+      </view>
+      <!--第七行内容  -->
+      <view class="font-26 width_100 flex_view_row sheetCon_six">
+        <view class="height_100 flex_view_row align_cen justi_cen sheetCon_night">绑定手机号</view>
+        <view class="height_100 flex_view_row align_cen justi_cen sheetCon_ten">+50</view>
+        <view class="height_100 flex_view_row align_cen tex_left sheetCon_three padLeft_13">知渠道分别发放，修改绑定手机号不发放成长值</view>
+      </view>
+    </view>
+  </view>
+</view>

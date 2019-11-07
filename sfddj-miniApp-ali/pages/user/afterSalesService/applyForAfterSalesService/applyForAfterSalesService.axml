@@ -1,0 +1,123 @@
+<!-- 加载中 -->
+<view a:if="{{!loadComplete && !loadFail}}">
+  <loading-now></loading-now>  
+</view>
+<!-- 加载失败 -->
+<view a:elif="{{loadFail && wifiAvailable}}">
+  <load-fail></load-fail>
+</view>
+<!-- 没有网络提示这个 -->
+<!-- <view a:elif="{{!wifiAvailable}}">
+  <no-wifi></no-wifi>
+</view> -->
+
+<!-- 商品状态 -->
+<form a:else report-submit="true" onSubmit="submitTap">
+  <block a:if="{{!isRefund}}">
+    <view class="statusView">
+      <view class="single-line">
+        <text class="font-28 color-252525">商品状态
+        </text>
+        <image src="{{baseImgLocUrl}}miniappImg/icon/icon_star_selected.png" class="icon_star">
+        </image>
+      </view>
+    </view>
+    <view class="orderStatus">
+      <view class="notRecevied" data-index="0" onTap="switchStatus">
+        <image src="{{tap1 ? baseImgLocUrl + 'miniappImg/icon/icon_sel.png' : baseImgLocUrl + 'miniappImg/icon/icon_unsel.png'}}" class="icon_unsel">
+        </image>
+        <text class="font-26 color-252525 marLeft_20">未收到货
+        </text>
+      </view>
+      <view class="recevied" data-index="1" onTap="switchStatus">
+        <image src="{{tap2 ? baseImgLocUrl + 'miniappImg/icon/icon_sel.png' : baseImgLocUrl + 'miniappImg/icon/icon_unsel.png'}}" class="icon_unsel">
+        </image>
+        <text class="font-26 color-252525 marLeft_20">已收到货
+        </text>
+      </view>
+    </view>
+    <view class="division-area">
+    </view>
+  </block>
+  <!-- 申请原因 -->
+  <view class="statusView">
+    <view class="single-line">
+      <text class="font-28 color-252525">申请原因
+      </text>
+      <image src="{{baseImgLocUrl}}miniappImg/icon/icon_star_selected.png" class="icon_star">
+      </image>
+    </view>
+  </view>
+  <view class="applyReason_bot">
+    <view class="{{item.taped ? 'reason-item-selected' : 'reason-item'}}" data-index="{{index}}" a:for="{{wordsList}}" a:key="wordsList" onTap="resonTap">{{item.str}}
+    </view>
+  </view>
+  <view class="division-area">
+  </view>
+  <!-- 协商退款金额 -->
+  <view class="negoMoney">
+    <view class="single-line">
+      <text class="font-28 color-252525">协商退款金额
+      </text>
+      <image src="{{baseImgLocUrl}}miniappImg/icon/icon_star_selected.png" class="icon_star">
+      </image>
+    </view>
+    <input class="flex_1 font-28 color-252525 tex_right" placeholder="最大输入{{maxMoney}}" placeholder-style="text-align:right" type="digit" onBlur="refundBlur" disabled="true" value="{{maxMoney}}" a:if="{{isRefund || allBack}}" onInput="refundInput"/>
+    <input class="flex_1 font-28 color-252525 tex_right" placeholder="最大输入{{maxMoney}}" placeholder-style="text-align:right" type="digit" onBlur="" a:else onInput="refundInput"/>
+  </view>
+  <view class="division-area">
+  </view>
+  <!-- 联系电话 -->
+  <view class="contactPhone">
+    <view class="single-line">
+      <text class="font-28 color-252525">联系电话
+      </text>
+      <image src="{{baseImgLocUrl}}miniappImg/icon/icon_star_selected.png" class="icon_star">
+      </image>
+    </view>
+    <input class="font-28 color-252525 tex_right" placeholder="请输入手机号" placeholder-style="text-align:right" onBlur="phoneBlur" type="number" maxlength="11" onInput="phoneInput"/>
+  </view>
+  <view class="division-area">
+  </view>
+  <!-- 问题描述 -->
+  <view class="questionDes">
+    <view class="single-line">
+      <text class="font-28 color-252525">问题描述
+      </text>
+      <image src="{{baseImgLocUrl}}miniappImg/icon/icon_star_selected.png" class="icon_star">
+      </image>
+    </view>
+  </view>
+  <textarea maxlength="200" class="questionDes_textarea font-28 color-252525" placeholder="请详细描述售后原因和您期望的解决方案（10-200字）" onBlur="descBlur" onInput="descInput">
+  </textarea>
+  <view class="division-area">
+  </view>
+  <!-- 上传照片 -->
+  <view class="questionDes">
+    <text class="font-28 color-252525">上传图片
+    </text>
+  </view>
+  <view class="font-22 color-414141 mar_20">为更好的为您服务，请上传照片（最多3张，长按删除）
+  </view>
+  <view class="flex_view_row">
+    <image class="uploadImg_img" src="{{baseImageUrl}}{{item}}" onLongTap="deleteImage" data-index="{{index}}" a:for="{{imageList}}" a:key="imageList">
+    </image>
+    <view class="marLeft_20 posi_re" a:if="{{imageList.length != 3}}" onTap="uploadImage">
+      <image class="uploadImg_imgImg" src="{{baseImgLocUrl}}miniappImg/icon/icon_upload_image.png">
+      </image>
+      <view class="no5M font-22 color-8f8f8f">不超过5M
+      </view>
+    </view>
+  </view>
+  <view class="division-area">
+  </view>
+  <button class="button-area {{cannotSubmit ? 'grayBg' : 'redBg'}}" form-type="{{cannotSubmit ? '' : 'submit'}}">提交申请
+  </button>
+</form>
+<!--toast弹窗-->
+<view class="mark flex_view_col align_cen justi_cen" a:if="{{showToast}}">
+  <view class="toastView_wb" catchtouchmove="move">
+    <view class="toastView_wb_con font-26 color-232323">      {{showToastMes}}    
+    </view>
+  </view>
+</view>

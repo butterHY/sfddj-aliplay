@@ -1,0 +1,9 @@
+{
+  "defaultTitle": "收货地址",
+  "titleBarColor": "#ffffff",
+  "pullRefresh": false,
+  "usingComponents": {
+    "loading-now": "../../components/loadingNow/loadingNow",
+    "load-fail": "../../components/loadFail/loadFail"
+  }
+}

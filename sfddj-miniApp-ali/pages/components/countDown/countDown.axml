@@ -1,0 +1,30 @@
+  <!-- 秒杀价格 -->
+  <view class="backgroiund_orange secondkill-price font-weight flex_view_row color_fff">
+    <view class="flex-1 flex_view_row align_cen">
+      <view>
+        <text class="font-26 ">¥ </text>
+        <text class="font_45 padding_left_6 ">{{goodsSecondKill.secKillPrice}}</text>
+        <text class="font-24 color-bbbbbb line_through inline_block padding_left_10 ">
+          ¥ {{oldPrice}}
+        </text>
+      </view>
+    </view>
+    <!-- 进度条 -->
+    <view class="progress flex-1 flex_view_col  justi_around align_cen" >
+         <view class="tex_center width_100">
+           <text>距离结束 </text> 
+           <text class="padding_left_10"><block>{{hours}}:</block><block>{{minute}}:</block><block>{{second}}.{{mSecond}}</block></text>
+         </view>
+         <!-- 8:10:30.3 -->
+         <view class="progress_line posi_re">
+            <label class="progress_fill" style="width: {{((goodsSecondKill.totalSaleVolume/goodsSecondKill.totalStock) * 100).toFixed(0)}}%"></label>
+            <view class="flex_view_row posi_ab justi_around align_cen progress_line progress_message ">
+                <view class="progress_soldNow inline_block " a:if="{{goodsSecondKill.totalSaleVolume != goodsSecondKill.totalStock}}">已售{{goodsSecondKill.totalSaleVolume}}件</view>
+                <view class="progress_soldSoon inline_block font_italic " a:if="{{goodsSecondKill.totalSaleVolume == goodsSecondKill.totalStock}}">已售罄</view>
+                <view class="progress_percentage  inline_block " a:if="{{goodsSecondKill.totalSaleVolume != goodsSecondKill.totalStock}}">{{((goodsSecondKill.totalSaleVolume/goodsSecondKill.totalStock) * 100).toFixed(0)}}%</view>
+            </view>
+          </view>
+         <!-- <view class="font-28 color-bbbbbb overHid sold_out" >已抢光{{goodsSecondKill.totalStock}}10件</view> -->
+    </view>
+  </view>
+

@@ -1,0 +1,298 @@
+<import src="/pages/common/item-order"/>
+<!--</view> -->
+<view class="all_100v posi_re flex_view_col">
+	<!-- 搜索组件 -->
+	<view class="width_100 flex_view_row justi_cen align_cen">
+		<view class="flex_1">
+			<mp-searchbar placeholder="订单编号/商品名称" onSubmit="selectResult" cancel="{{true}}" onCancel="cancelsearch" showCancelButton="{{showCancleButton || orderSearching}}" onFocus="searchFocus"></mp-searchbar>
+		</view>
+	</view>
+	<view a:if="{{!orderSearching}}" class="pageHeadFix font-26">
+		<view class="eachHead_view {{selectItem == 0 ? 'selected' : ''}}" data-select-index="0" onTap="select">      全部
+		</view>
+		<view class="eachHead_view {{selectItem == 1 ? 'selected' : ''}}" data-select-index="1" onTap="select">待支付
+			<view class="tip_num color-white font-24" a:if="{{nopayCount > 0}}">{{nopayCount< 100 ? nopayCount : '..'}}
+			</view>
+		</view>
+		<view class="eachHead_view {{selectItem == 2 ? 'selected' : ''}}" data-select-index="2" onTap="select">待发货
+			<view class="tip_num color-white font-24" a:if="{{payfinishCount > 0}}">{{payfinishCount< 100 ? payfinishCount : '..'}}
+			</view>
+		</view>
+		<view class="eachHead_view {{selectItem == 3 ? 'selected' : ''}}" data-select-index="3" onTap="select">待收货
+			<view class="tip_num color-white font-24" a:if="{{shippedCount > 0}}">{{shippedCount< 100 ? shippedCount : '..'}}
+			</view>
+		</view>
+		<view class="eachHead_view {{selectItem == 4 ? 'selected' : ''}}" data-select-index="4" onTap="select">交易完成
+		</view>
+	</view>
+	<!--所展示的单 ————正常的订单列表 -->
+	<view a:if="{{!orderSearching}}" class="flex_1 overHid">
+		<scroll-view scroll-y='true' class="allOrderList height_100" onScrollToLower='scrollToLower'>
+			<!--未支付订单-->
+			<view class="marTop_20" a:if="{{orderType == 'nopay'}}">
+				<view class="orderList_for" a:for="{{orderList}}" a:if='{{item.paymentId}}' a:for-item="item" a:key="orderList">
+					<view class="noPayOrderHead">
+						<text class="font-24 color-323232">共{{item.orders.length}}件商品
+						</text>
+						<text class="font-24 color-ff5353">待付款
+						</text>
+					</view>
+					<navigator open-type="{{needRedirect ? 'redirect' : 'navigate'}}" url="./toOrderPay/toOrderPay?paymentId={{item.paymentId}}" hover-class="none" a:for="{{item.orders}}" a:for-item="orderItem" a:key="orderListItem">
+						<template is="itemOrder" data="{{...orderItem,baseImageUrl}}">
+						</template>
+					</navigator>
+					<view class="noPayOrderFoot">
+						<text class="font-24 color-323232">需支付:¥{{item.totalPay}}
+						</text>
+						<view class="flex_view_row marRight_10">
+							<view class="noPayOrder_cancleBtn orderListBtn font-24" data-payment-id="{{item.paymentId}}" onTap="cancelOrder">              取消订单
+							</view>
+							<view class="noPayOrder_toPayBtn orderListBtn font-24 color-ff5353" data-payment-id="{{item.paymentId}}" data-ordertype="{{item.orders[index].orderType}}" onTap="payOrder">              去支付
+							</view>
+						</view>
+					</view>
+				</view>
+			</view>
+			<!--已支付订单-->
+			<view class="payedList" a:else>
+				<!--  a:if='{{(!item.showType || item.showType == 0) && item.orderSn}}' -->
+				<view class="orderList_for" a:for="{{orderList}}" a:for-item="item" a:key="orderListPayed">
+					<view class="noPayOrderHead">
+						<view class="flex_view_row align_cen">
+							<!--  -->
+							<view class="icon_giftText font-24 color-ff5353" a:if="{{item.orderType == 'MULTIGIFT' || item.orderType == 'GIFT'}}">
+								<text>送礼
+								</text>
+							</view>
+							<image class="icon_shop" src="{{baseImgLocUrl}}miniappImg/icon/icon_shop.png">
+							</image>
+							<text class="font-24 color-323232 marLeft_10">{{item.supplierName}}
+							</text>
+						</view>
+						<view a:if="{{item.showType != 2}}">
+							<text class="font-24 color-ff5353" a:if="{{item.orderStatus == 1}}">待发货
+							</text>
+							<text class="font-24 color-ff5353" a:elif="{{item.orderStatus == 2}}">待收货
+							</text>
+							<text class="font-24 color-ff5353" a:elif="{{item.orderStatus == 3}}">交易完成
+							</text>
+							<text class="font-24 color-ff5353" a:elif="{{item.orderStatus == 4}}">已取消
+							</text>
+							<text class="font-24 color-ff5353" a:elif="{{item.orderStatus == 5}}">订单超时
+							</text>
+							<text class="font-24 color-ff5353" a:elif="{{item.orderStatus == 6}}">交易关闭
+							</text>
+							<text class="font-24 color-ff5353" a:elif="{{item.orderStatus == 9 && item.orderType == 'GIFT' && item.showType == 3}}">
+								<text a:if="{{!outOfTimeArr[index].outOfTime}}"> 待TA填地址 {{remainTimeArr[index].remainSecond}}
+								</text>
+								<text a:else>已结束
+								</text>
+							</text>
+						</view>
+						<view class="font-24 color-ff5353" a:if="{{item.showType == 2 && item.orderType == 'MULTIGIFT'}}">
+							<view a:if="{{!outOfTimeArr[index].outOfTime}}">
+								<text>距离订单关闭还剩:
+								</text>
+								<text>{{remainTimeArr[index].remainSecond}}
+								</text>
+							</view>
+							<view a:else>
+								<text>{{item.giftOrderStatusStr}}
+								</text>
+							</view>
+						</view>
+					</view>
+					<!-- 送礼的去分享/普通产品 -->
+					<view open-type="{{needRedirect ? 'redirect' : 'navigate'}}" data-ordersn="{{item.orderSn}}" data-ordertype="{{item.orderType}}" data-paymentid="{{item.paymentId}}" catchTap="toGiftOrder">
+						<template is="itemOrder" data="{{...item,baseImageUrl,outOfTime:outOfTimeArr[index]}}">
+						</template>
+					</view>
+					<!-- 非多人送礼，下边的小计 -->
+					<view class="noMult_sum font-24 color-323232" a:if="{{item.orderType != 'MULTIGIFT'}}">
+						<view class="recevierName" a:if="{{item.orderType == 'GIFT' && item.giftReceiver}}">领取者：
+							<text>{{item.giftReceiver}}
+							</text>
+						</view>
+						<text class="white_nowrap">共{{item.quantity}}件商品
+						</text>
+						<text class="marLeft_20 white_nowrap">小计：¥{{item.platformAmount}}
+						</text>
+					</view>
+					<!-- 分界线 -->
+					<view class="dividedLine" a:if="{{item.showType != 2}}">
+					</view>
+					<!--下面的按钮  -->
+					<view a:if="{{item.showType != 2}}">
+						<view class="mindSend font-30 color-a1a0a0" a:if="{{item.orderStatus == 1}}">
+							<text class="mindSend_text orderListBtn" onTap="remindDelivery">提醒发货
+							</text>
+						</view>
+						<view class="orderList_botView font-30 color-a1a0a0" a:if="{{item.orderStatus == 2}}">
+							<view class="flex_view_row">
+								<navigator url="/pages/user/logistics/logistics?orderId={{item.orderId}}&goodsImg={{item.goodsImg}}" class="orderListBtn mindSend_text" open-type="{{needRedirect ? 'redirect' : 'navigate'}}" hover-class="none" a:if="{{item.orderType != 'GIFT' && item.orderType != 'MULTIGIFT'}}">查看物流
+								</navigator>
+								<view class="color-ff5353 orderListBtn checkDeli_btnRed marLeft_30" data-index="{{index}}" data-order-id="{{item.orderId}}" onTap="orderReceive">                      确认收货
+								</view>
+							</view>
+						</view>
+						<view class="orderList_botView font-30 color-a1a0a0" a:if="{{item.orderStatus == 3 || item.orderStatus == 4 || item.orderStatus == 6}}">
+							<navigator url="/pages/user/logistics/logistics?orderId={{item.orderId}}&goodsImg={{item.goodsImg}}" class="orderListBtn mindSend_text" open-type="{{needRedirect ? 'redirect' : 'navigate'}}" hover-class="none" a:if="{{item.orderStatus != 4 && item.orderStatus != 5 && item.orderType != 'GIFT' && item.orderType != 'MULTIGIFT'}}">                        查看物流
+							</navigator>
+							<view class="orderListBtn mindSend_text marLeft_10" data-order-id="{{item.orderId}}" onTap="deleteOrder">删除订单
+							</view>
+							<view data-index="{{index}}" class="color-ff5353 orderListBtn checkDeli_btnRed marLeft_10" a:if="{{item.orderStatus == 3}}" onTap="gotoComment">评价晒单
+							</view>
+						</view>
+						<!--<view class="orderList_botView font-30 color-a1a0a0" a:if="{{item.orderType == 'GIFT' && item.orderStatus == 9}}"><navigator url="/pages/user/sendGift/sendGift?paymentOrderId={{item.paymentId}}" open-type="{{needRedirect ? 'redirect' : 'navigate'}}" class="font-24 color-ff5353 orderListBtn checkDeli_btnRed marLeft_30" data-payment-id="{{item.paymentId}}" hover-class="none">分享给TA</navigator></view> -->
+					</view>
+				</view>
+			</view>
+			<!--加载数据进度条-->
+			<view class="loading_view" a:if="{{isLoadMore}}">
+				<image src="{{baseImgLocUrl}}miniappImg/loading/loading.gif" class="loading_gif">
+				</image>
+			</view>
+			<!--没有更多-->
+			<view class="loading_view font-24 color-b1b6bb" a:if="{{!hasMore && !isLoadMore}}">没有更多了</view>
+		</scroll-view>
+	</view>
+	<!--搜索订单的结果  -->
+	<view a:if="{{orderSearching}}" class="flex_1 overHid">
+		<scroll-view scroll-y="{{true}}" class="all_100" onScrollToLower="loadMoreSearchResult">
+			<!-- 有查询数据 -->
+			<view a:if="{{searchResult && searchResult.length > 0}}" a:for="{{searchResult}}" class='marTop_20' a:for-item="item" a:key="searchOrderList">
+				<!-- 其他 -->
+				<view class="orderList_for">
+					<view class='noPayOrderHead'>
+						<view class='flex_view_row align_cen'>
+							<!--  -->
+							<view a:if="{{item.giftOrderShowType == '1' || item.giftOrderShowType == '2'}}" class="icon_giftText font-24 color-ff5353">
+								<text >送礼</text>
+							</view>
+							<image class='icon_shop' src='{{baseImgLocUrl}}miniappImg/icon/icon_shop.png'></image>
+							<text class='font-24 color-323232 marLeft_10'>{{item.supplierName}}</text>
+						</view>
+						<view a:if="{{item.giftOrderShowType != '2'}}">
+							<text a:if="{{item.orderStatus == 'PAYFINISH'}}" class='font-24 color-ff5353'>待发货</text>
+							<text a:elif="{{item.orderStatus == 'SHIPPED'}}" class='font-24 color-ff5353'>待收货</text>
+							<text a:elif="{{item.orderStatus == 'FINISHED'}}" class='font-24 color-ff5353'>交易完成</text>
+							<text a:elif="{{item.orderStatus == 'CANCEL'}}" class='font-24 color-ff5353'>已取消</text>
+							<text a:elif="{{item.orderStatus == 'OVERTIME'}}" class='font-24 color-ff5353'>订单超时</text>
+							<text a:elif="{{item.orderStatus == 'CLOSEED'}}" class='font-24 color-ff5353'>交易关闭</text>
+							<text a:elif="{{item.orderStatus == 'WAITING_FILL_ADDR' && item.giftOrderShowType=='1' && !item.giftReceiver}}" class='font-24 color-ff5353'>
+								<text a:if="{{!outOfTimeArr[index].outOfTime}}"> 待TA填地址 {{remainTimeArr[index].remainSecond}}</text>
+								<text a:else>已结束</text>
+							</text>
+						</view>
+						<view a:if="{{item.giftOrderShowType == '2'}}" class="font-24 color-ff5353">
+							<view a:if="{{!outOfTimeArr[index].outOfTime}}">
+								<text>距离订单关闭还剩:</text>
+								<text>{{remainTimeArr[index].remainSecond}}</text>
+							</view>
+							<view a:else>
+								<text>{{item.giftOrderStatusStr}}</text>
+							</view>
+						</view>
+					</view>
+					<!-- 送礼的去分享/普通产品 -->
+					<view catchTap='toGiftOrder' data-ordersn='{{item.orderSn}}' data-ordertype='{{item.orderType}}' data-paymentid='{{item.paymentOrderId}}' open-type="{{needRedirect?'redirect':'navigate'}}" data-showtype="{{item.giftOrderShowType}}">
+						<template is="itemOrder" data="{{...item.orderItemVOList[0],baseImageUrl,outOfTime:searchOutOfTimeArr[index],showType:item.giftOrderShowType, searchOrder: true, giftRemainQty: item.giftRemainQty, giftTotalQty: item.giftTotalQty, paymentId: item.paymentOrderId}}"></template>
+					</view>
+					<!-- 非多人送礼，下边的小计 -->
+					<view a:if="{{item.giftOrderShowType != '2' }}" class='noMult_sum font-24 color-323232'>
+						<view class='recevierName' a:if="{{item.giftOrderShowType == '1' && item.giftReceiver}}">领取者：
+							<text>{{item.giftReceiver}}</text>
+						</view>
+						<text class='white_nowrap'>共{{item.quantity}}件商品</text>
+						<text class='marLeft_20 white_nowrap'>小计：¥{{item.paidAmount}}</text>
+					</view>
+					<!-- 分界线 -->
+					<view a:if='{{item.giftOrderShowType != "2" && item.giftOrderShowType != "1"}}' class='dividedLine'></view>
+					<!--下面的按钮  -->
+					<view a:if="{{item.giftOrderShowType != '2'}}">
+						<view a:if="{{item.orderStatus == 'PAYFINISH'}}" class='mindSend font-30 color-a1a0a0'>
+							<text class='mindSend_text orderListBtn' onTap='remindDelivery'>提醒发货</text>
+						</view>
+						<view a:if="{{item.orderStatus == 'SHIPPED'}}"class='orderList_botView font-30 color-a1a0a0'>
+							<view class='flex_view_row'>
+								<navigator a:if="{{item.giftOrderShowType !='1' && item.giftOrderShowType !='2'}}" url='/pages/user/logistics/logistics?orderId={{item.id}}&goodsImg={{item.orderItemVOList[0].goodsImage}}' class='orderListBtn mindSend_text' open-type="{{needRedirect?'redirect':'navigate'}}" hover-class='none'>查看物流</navigator>
+								<view class='color-ff5353 orderListBtn checkDeli_btnRed marLeft_30' onTap='orderReceive' data-index='{{index}}' data-order-id='{{item.id}}'>
+                  确认收货
+								</view>
+							</view>
+						</view>
+						<view a:if="{{item.orderStatus == 'FINISHED' || item.orderStatus == 'CANCEL' ||item.orderStatus == 'CLOSEED'}}" class='orderList_botView font-30 color-a1a0a0'>
+							<navigator a:if="{{(item.orderStatus != 'CANCEL' && item.orderStatus != 'OVERTIME') && (item.giftOrderShowType !='1' && item.giftOrderShowType !='2')}}" url='/pages/user/logistics/logistics?orderId={{item.id}}&goodsImg={{item.orderItemVOList[0].goodsImage}}' class='orderListBtn mindSend_text' open-type="{{needRedirect?'redirect':'navigate'}}" hover-class='none'>
+                查看物流
+							</navigator>
+							<view onTap='deleteOrder' class='orderListBtn mindSend_text marLeft_10' data-order-id='{{item.id}}'>删除订单</view>
+							<view a:if="{{item.orderStatus == 'FINISHED'}}" onTap='gotoComment' data-index='{{index}}' class='color-ff5353 orderListBtn checkDeli_btnRed marLeft_10'>评价晒单</view>
+						</view>
+						<!-- <view a:if="{{item.giftOrderShowType=='1' && item.orderStatus == 'WAITING_FILL_ADDR'}}" class='orderList_botView font-30 color-a1a0a0'>
+							<navigator url='/pages/user/sendGift/sendGift?paymentOrderId={{item.paymentOrderId}}' open-type="{{needRedirect?'redirect':'navigate'}}" class='font-24 color-ff5353 orderListBtn checkDeli_btnRed marLeft_30' data-payment-id='{{item.paymentOrderId}}' hover-class='none'>分享给TA</navigator>
+						</view> -->
+					</view>
+				</view>
+			</view>
+			<!-- 无查询数据 -->
+			<view a:if="{{!searchResult || searchResult.length == 0 && !isSearchLoadMore}}" class="all_100 flex_view_col align_cen">
+				<view class="noOrderImg flex_view_col align_cen">
+					<image src="{{baseImgLocUrl}}miniappImg/loading/goods-null_trans.png" class="width_70" mode="widthFix"></image>
+					<view class="noOrderText">
+						<text>您还没有相关的订单</text>
+					</view>
+				</view>
+			</view>
+			<!--加载数据进度条-->
+			<view a:if="{{isSearchLoadMore}}" class='loading_view'>
+				<image src='{{baseImgLocUrl}}miniappImg/loading/loading.gif' class='loading_gif'></image>
+			</view>
+			<!--没有更多-->
+			<view a:if="{{!hasSearchMore && !isSearchLoadMore && searchResult.length > 0}}" class='loading_view font-24 color-b1b6bb'>
+        没有更多了
+			</view>
+		</scroll-view>
+	</view>
+</view>
+<!--对话框-->
+<view class="dialogShowMark" catchtouchmove="move" a:if="{{showDialog}}">
+	<view class="showDialogCon">
+		<view class="marTop_30 font-28 color-404040" onTap="showDialog">{{dialogTitle}}
+		</view>
+		<view class="showDialog_btn">
+			<view class="showDialog_btnCan font-32 color-999999" catchTap="cancel">取消
+			</view>
+			<view class="showDialog_btnSure font-32 color-white" catchTap="sure">确认
+			</view>
+		</view>
+	</view>
+</view>
+<!--加载数据进度条-->
+<!--<view class="loading_view" a:if="{{isLoadMore}}"><image src="{{baseImgLocUrl}}miniappImg/loading/loading.gif" class="loading_gif"></image></view> -->
+<view class="dialogShowMark" catchtouchmove="move" a:if="{{showToast}}">
+	<view class="remind_success font-24 color-232323">    提醒发货成功！请耐心等候
+	</view>
+</view>
+<!--没有更多-->
+<!--<view class="loading_view font-24 color-b1b6bb" a:if="{{!hasMore && !isLoadMore}}">  
+  没有更多了</view> -->
+<!--toast弹窗-->
+<view class="mark flex_view_col align_cen justi_cen" a:if="{{showToastPayFail}}">
+	<view class="toastView_wb" catchtouchmove="move">
+		<view class="toastView_wb_con font-24 color-232323">      {{showToastPayFailMes}}
+		</view>
+	</view>
+</view>
+
+<!-- 优惠券弹窗 -->
+<!-- <view class="mark flex_view_col align_cen justi_cen" a:if="{{couponShow}}">
+  <view class="toastView_wb" style="background-color:rgba(0, 0, 0, 0);">
+      <view class="font-26 confirmorderPop posi_re">
+          <image src="https://img.sfddj.com/miniappImg/couponsPop/backgroundPop.png" class="width_100 height_100" mode="widthFix"></image>
+          <view class="couponPrice posi_ab tex_center"><text>￥</text><text class="font-60 font-weight-600">100</text></view>
+          <view class="ikonw posi_ab" onTap="closeCouponShow">
+            <image src="https://img.sfddj.com/miniappImg/couponsPop/closeBtn.png" class="width_100 height_100" mode="widthFix"/></image>
+          </view>
+      </view>
+  </view>
+</view> -->

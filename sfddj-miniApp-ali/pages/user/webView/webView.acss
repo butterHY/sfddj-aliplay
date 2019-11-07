@@ -1,0 +1,6 @@
+page {
+  overflow-x: hidden;
+}
+.webView::-webkit-scrollbar {
+  width: 0;
+}

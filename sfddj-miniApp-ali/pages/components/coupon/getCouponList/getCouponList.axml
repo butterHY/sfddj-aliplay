@@ -1,0 +1,67 @@
+<view class="width_100 getCouponList_list">
+  <!-- 优惠券 -->
+  <view class="getCouponList_coupon">
+    <!-- 优惠券内容 -->
+    <view class="getCouponList_couponBox">
+      <view class="getCouponList_couponInfo flex_view_row">
+        <!-- 左边 -->
+        <view class="flex_1 flex_view_row">
+          <!-- 图片 -->
+          <view class="getCouponList_couponInfoLeft flex_view_row">
+            <view class="getCouponList_couponInfoImgBox">
+              <image src="{{baseImageLocUrl}}miniappImg/coupon/couDefaultImg.png" class="all_100"/>
+            </view>
+          </view>
+          <!-- 右边信息 -->
+          <view class="getCouponList_couponInfoCenter height_100 flex_view_row flex_1">
+            <view class="getCouponList_couponUseType">
+              <!-- 标题与时间 -->
+              <view class="getCouponList_couponTit">
+                <!-- 标题 -->
+                <view class="getCouponList_couponTitH5 width_100">商品标签限制06商品标签限制06商品标签限制06商品标签限制06</view>
+                <!-- 有效时间 -->
+                <view class="getCouponList_couponValidDate color-999999">
+                  <view class="font-20">领取成功后3天有效领取成功后3天有效领取成功后3天有效</view>
+                </view>
+              </view>
+              <!-- 价格 -->
+              <view class="getCouponList_tipUseLimit flex_view_row align_cen">
+                <view class="height_100">
+                  <text>￥</text>
+                  <text class="font-36">0.01</text></view>
+                <view class="getCouponList_couponLimit">
+                  <text>满0.02元可用</text>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+        <!-- 右边 -->
+        <view class="getCouponList_couponInfoRight flex_view_col justi_cen align_cen">
+          <!-- 进度条+按钮 -->
+          <view class="getCouponList_draw">
+            <!-- 进度条 -->
+            <view class="width_100 flex_view_row justi_cen posi_re flex_view_row" style="height: 90rpx;">
+              <!--<canvas id="{{canvasId1}}" class="posi_ab" style="width: {{progressW}}px; height: {{progressW}}px;"></canvas><canvas id="{{canvasId}}" class="posi_ab rotate_90" style="width: {{progressW}}px; height: {{progressW}}px;"></canvas> -->
+              <!-- 圆形 -->
+              <image mode="widthFix" src="{{baseImageLocUrl}}miniappImg/icon/icon_progress_bg.png" style="width: 90rpx;"/>
+              <!-- 文字 -->
+              <view class="posi_ab width_100 tex_center flex_view_col align_cen justi_cen" style="top: 50%; transform: translate(0,-50%); font-size: 20rpx; color:#ff4949 ">
+                <text>已抢</text>
+                <text>{{getPercent}}50%</text>
+              </view>
+            </view>
+            <!-- 按钮 -->
+            <navigator class="getCouponList_receiveBtn" url="/pages/home/testCanvas/testCanvas">立即领取</navigator>
+          </view>
+        </view>
+      </view>
+    </view>
+    <!-- 右边的虚线 -->
+    <view class="getCouponList_gapBox gapBox_right">
+      <view class="getCouponList_gap gap_top"></view>
+      <view class="getCouponList_gapLine"></view>
+      <view class="getCouponList_gap gap_bot"></view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,324 @@
+.myCoupon_exchangeBox {
+  padding: 30rpx 20rpx;
+  background-color: #FFFFFF;
+  position: relative;
+  margin-bottom: 20rpx;
+}
+
+.myCoupon_exchangeBtn {
+  display: block;
+  height: 75rpx;
+  width: 172rpx;
+  margin-left: 18rpx;
+  color: #FFFFFF;
+  border-radius: 4px;
+  font-size: 26rpx;
+  line-height: 75rpx;
+  text-align: center;
+}
+
+.myCoupon_exchangeBtn.greyBtn {
+  background: #D3D3D3;
+}
+
+.myCoupon_exchangeBtn.redBtn {
+  background: #ff4f2c;
+}
+
+.myCoupon_input .am-input-line {
+  height: 75rpx;
+  min-height: 75rpx;
+  border: 1px solid rgb(212, 212, 212);
+  border-radius: 4px;
+  box-sizing: border-box;
+  padding-right: 0;
+}
+
+/* .myCoupon_input .am-input-line-bottom {
+  display: none;
+} */
+
+.myCoupon_tip {
+  background-color: #fff7f9;
+  color: #ff6000;
+  font-size: 28rpx;
+  padding: 25rpx 20rpx;
+  box-sizing: border-box;
+}
+
+.myCoupon_warnBtn {
+  border: 1px solid #ff5353;
+  color: #ff5353;
+  border-radius: 50%;
+  font-size: 26rpx;
+  height: 30rpx;
+  width: 30rpx;
+  line-height: 31rpx;
+  margin-right: 13rpx;
+  vertical-align: baseline;
+  display: inline-block;
+  text-align: center;
+}
+
+.myCoupon_list {
+  padding: 0 24rpx;
+  box-sizing: border-box;
+}
+
+.myCoupon_couponItem {
+  width: 100%;
+  /* height: 182rpx; */
+  position: relative;
+  z-index: 1;
+  border-radius: 10rpx;
+  overflow: hidden;
+  box-shadow: 2px 2px 4px rgba(1, 1, 1, 0.05), -2px -2px 4px rgba(1, 1, 1, 0.05);
+  border-right: 1px solid rgba(1, 1, 1, 0.05);
+  box-sizing: border-box;
+}
+
+.marTop_24 {
+  margin-top: 24rpx;
+}
+
+.marTop_5 {
+  margin-top: 5px;
+}
+
+.myCoupon_couponBox {
+  height: 182rpx;
+  background-color: #FFFFFF;
+  -webkit-border-radius: 10rpx;
+  -moz-border-radius: 10rpx;
+  border-radius: 10rpx;
+  position: relative;
+  width: 100%;
+  z-index: 1;
+}
+
+.myCoupon_gapBox {
+  position: absolute;
+  width: 30rpx;
+  height: 100%;
+  overflow: hidden;
+  top: 0;
+  z-index: 1;
+}
+
+.myCoupon_gapBox.right {
+  right: 20%;
+}
+
+.myCoupon_gapBox.left {
+  left: 20%;
+}
+
+.myCoupon_gap {
+  position: absolute;
+  width: 30rpx;
+  height: 30rpx;
+  border-radius: 50%;
+  /* background: radial-gradient(rgba(1, 1, 1, 0.01) 5%, rgba(1, 1, 1, 0.02) 5%, rgba(1, 1, 1, 0.05) 80%); */
+  background: #f9f9f9;
+}
+
+.myCoupon_gap.gap_top {
+  top: -21rpx;
+  left: 0;
+}
+
+.myCoupon_gap.gap_bot {
+  bottom: -21rpx;
+  left: 0;
+}
+
+.myCoupon_gapLine {
+  border-left: 1px dashed #D6D6D6;
+  top: 12rpx;
+  bottom: 12rpx;
+  position: absolute;
+  left: 50%;
+  margin-left: -1px;
+}
+
+.myCoupon_couponInfo {
+  color: #323232;
+  height: 100%;
+  width: 100%;
+}
+
+.myCoupon_couponLeft {
+  width: 28.37%;
+  height: 100%;
+  background: -webkit-linear-gradient(135deg, #ff8cb4, #ff4083);
+  background: -o-linear-gradient(135deg, #ff8cb4, #ff4083);
+  background: -moz-linear-gradient(135deg, #ff8cb4, #ff4083);
+  background: linear-gradient(135deg, #ff8cb4, #ff4083);
+  padding: 0 13rpx;
+  box-sizing: border-box;
+}
+
+.myCoupon_couponPrice {
+  width: 100%;
+  color: #FFFFFF;
+  text-align: center;
+  margin-top: -7rpx;
+}
+
+.myCouopon_sign {
+  font-size: 32rpx;
+  margin-right: -5rpx;
+  color: #FFFFFF;
+}
+
+.myCoupon_num {
+  font-size: 57rpx;
+  color: #FFFFFF;
+}
+
+.myCoupon_term {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 21rpx;
+}
+
+.myCoupon_useType {
+  margin: 0;
+  padding: 36rpx 16rpx 0;
+  color: #999999;
+  box-sizing: border-box;
+}
+
+.myCoupon_itemTit {
+  font-size: 28rpx;
+  margin-bottom: 22rpx;
+  color: #323232;
+  font-weight: 400;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.myCoupon_tipUse {
+  font-size: 20rpx;
+  margin-bottom: 10rpx;
+  padding: 0;
+  opacity: 1;
+  border: none;
+  -webkit-line-clamp: 1;
+  width: 100%;
+  margin-top: -6rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
+.myCoupon_right {
+  width: 22.13%;
+  height: 100%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.myCoupon_useBtn {
+  width: 100%;
+  height: 100%;
+  font-size: 24rpx;
+  color: #ff5da0;
+  background: transparent;
+}
+
+/* 橙色系列优惠券 */
+
+.orangeCoupon .myCoupon_couponLeft {
+  background: -moz-linear-gradient(135deg, #fdc290, #ff5e55);
+  background: -ms-linear-gradient(135deg, #fdc290, #ff5e55);
+  background: -o-linear-gradient(135deg, #fdc290, #ff5e55);
+  background: -webkit-linear-gradient(135deg, #fdc290, #ff5e55);
+  background: linear-gradient(135deg, #fdc290, #ff5e55);
+}
+
+.orangeCoupon .myCoupon_useBtn {
+  color: #ff4949;
+}
+
+/* 粉色系列的优惠券 */
+
+.pinkCoupon .myCoupon_couponLeft {
+  background: -webkit-linear-gradient(135deg, #ff8cb4, #ff4083);
+  background: -o-linear-gradient(135deg, #ff8cb4, #ff4083);
+  background: -moz-linear-gradient(135deg, #ff8cb4, #ff4083);
+  background: linear-gradient(135deg, #ff8cb4, #ff4083);
+}
+
+.pinkCoupon .myCoupon_useBtn {
+  color: #ff5da0;
+}
+
+/* 灰色系列优惠券 --- 过期 */
+
+.grayCoupon .myCoupon_couponLeft {
+  background: rgba(50, 50, 50, .2);
+}
+
+.grayCoupon .myCoupon_useBtn {
+  color: rgba(50, 50, 50, .4);
+}
+
+/* 优惠券弹窗 */
+
+.dialogCoupon {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 10000
+}
+
+.dialog_height20 {
+  height: 20%
+}
+
+.dialog_couponCon {
+  height: 80%;
+  background: white
+}
+
+.dialog_couponList {
+  display: flex;
+  flex-direction: column;
+  align-items: center
+}
+
+.dialog_couponTit {
+  padding: 30rpx
+}
+
+.dialog_couponScroll {
+  /* display: flex;
+  flex-direction: column;
+  align-items: center; */
+  height: 760rpx;
+  padding: 0 24rpx;
+  box-sizing: border-box;
+}
+
+.dialog_couponSelBtn {
+  width: 34rpx;
+  height: 34rpx;
+  border: 2px solid rgba(50, 50, 50, 0.25);
+  border-radius: 50%;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.dialog_couponSelBtn.transBor {
+  /* border-color: transparent; */
+  border: none;
+}

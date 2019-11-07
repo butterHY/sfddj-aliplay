@@ -1,0 +1,8 @@
+{
+  "defaultTitle": "我的订单",
+  "titleBarColor": "#ffffff",
+  "pullRefresh": true,
+  "usingComponents": {
+    "mp-searchbar": "mini-antui/es/search-bar/index"
+  }
+}

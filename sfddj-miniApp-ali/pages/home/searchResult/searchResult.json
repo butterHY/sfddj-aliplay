@@ -1,0 +1,8 @@
+{
+  "titleBarColor": "#ffffff",
+  "pullRefresh": true,
+  "usingComponents": {
+    "loading-now": "../../components/loadingNow/loadingNow",
+    "load-fail": "../../components/loadFail/loadFail"
+  }
+}

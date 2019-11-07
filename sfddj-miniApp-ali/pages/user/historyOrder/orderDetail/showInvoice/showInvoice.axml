@@ -1,0 +1,3 @@
+<!--pages/user/historyOrder/orderDetail/showInvoice/showInvoice.wxml--><view class="all_100">
+  <image class="width_100" mode="widthFix" src="{{invUrl}}" data-urls="{{invUrl}}" onTap="checkBigImageFn"></image>
+</view>

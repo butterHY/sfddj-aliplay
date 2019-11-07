@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "echarts": "^4.2.1",
+    "mini-antui": "^0.4.28",
+    "regenerator": "^0.14.2",
+    "umtrack-alipay": "^1.0.5",
+    "underscore": "^1.9.1"
+  }
+}

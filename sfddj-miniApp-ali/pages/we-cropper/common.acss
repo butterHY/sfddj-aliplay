@@ -1,0 +1,45 @@
+.cropper-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  background-color: rgba(0,0,0,.5);
+}
+.cropper-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  justify-content: space-around;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50px;
+  /*line-height: 50px;*/
+  background: rgba(0,0,0,0.95);
+}
+.cropper-buttons .upload {
+  width: 40%;
+  text-align: center;
+  border-radius: 5px;
+  height: 70%;
+  font-size: 32rpx;
+  background: #fff;
+  color: #323232;
+}
+.cropper-buttons .getCropperImage {
+  width: 40%;
+  text-align: center;
+  border-radius: 5px;
+  height: 70%;
+  font-size: 32rpx;
+  background: #ff5353;
+  color: #fff;
+}

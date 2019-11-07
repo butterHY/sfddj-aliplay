@@ -1,0 +1,53 @@
+/*购物返现规则弹窗   */
+.cashbackToast {
+  max-width: 85%;
+  min-width: 75%;
+  border-radius: 10rpx;
+}
+.cashbackToast_topGap {
+  height: 86rpx;
+}
+.closeBtn {
+  padding: 25rpx;
+  right: 0;
+  top: 0;
+}
+.icon_cancle {
+  width: 34rpx;
+  height: 36rpx;
+  text-align: center;
+  line-height: 36rpx;
+}
+.cashbackToast_con {
+  padding: 20rpx 30rpx;
+}
+.lineH_78r {
+  line-height: 78rpx;
+}
+.fontW_600 {
+  font-weight: 600;
+}
+.marTop_26 {
+  margin-top: 26rpx;
+}
+.cashbackToast_text {
+  line-height: 40rpx;
+  margin: 0 0 13rpx 0;
+}
+.padBot_65 {
+  padding-bottom: 65rpx;
+}
+.cashbackToastInfo {
+  height: auto;
+  max-height: 650rpx;
+  overflow: auto;
+}
+/*点其他非内容部分能关闭返现规则弹窗   */
+.closeRuleRoom {
+  top: 0;
+  left: 0;
+  z-index: 9102;
+}
+.zIndex_9105 {
+  z-index: 9105;
+}

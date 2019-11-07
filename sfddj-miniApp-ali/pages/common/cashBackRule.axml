@@ -1,0 +1,42 @@
+<template name="cashBackRule">
+  <view class="mark flex_view_col align_cen justi_cen" a:if="{{cashBackRulePopup}}">
+    <view class="closeRuleRoom posi_ab all_100" catchTap="closeCashBackRule"></view>
+    <view class="cashbackToast whiteBack posi_re color-323232 zIndex_9105">
+      <!--上间隔  -->
+      <view class="cashbackToast_topGap posi_re">
+        <view class="closeBtn posi_ab" onTap="closeCashBackRule">
+          <!-- <image src='{{base64imageUrl}}/miniappImg/icon/icon_cancel.png' class='icon_cancle'></image> -->
+          <view class="icon_cancle">
+            <text class="icon-cross font-28 color-323232"></text>
+            
+          </view>
+        </view>
+      </view>
+
+      <!--规则内容  -->
+      <view class="cashbackToast_con">
+        <view class="padBot_65">
+          <view class="cashbackToastInfo">
+
+            <view class="lineH_78r font-44 color-323232 fontW_600"><text>规则说明</text></view>
+            <view class="font-32 color-666 marTop_26 flex_view_col">
+              <text class="cashbackToast_text">1.当次购买支付完成后返现金额处于预到账状态，在确认收货七天后无发生退款行为，返现即可到账使用；</text>
+              <text class="cashbackToast_text">2.返现金额以实际支付金额*返现比例为准，不同商品返现比例不同；积分商品、拼团商品，鲜花相关商品、送礼、礼品卡、提货码、礼金卡等除外；</text>
+              <text class="cashbackToast_text">3.返现的金额暂不支持提现功能，再次购物时可抵扣现金使用；</text>
+              <text class="cashbackToast_text">4.可与优惠券同时使用，暂不支持积分，礼金卡等业务；</text>
+              <text class="cashbackToast_text">5.如遇客诉时，可向商家申请全额退款；</text>
+              <text class="cashbackToast_text">6.使用余额抵扣的订单，每笔订单最低需支付0.01元；</text>
+              <text class="cashbackToast_text">7.黄金及以上会员可以参与购物返现活动；</text>
+              <text class="cashbackToast_text">8.该活动的解释权归顺丰大当家所有。</text>
+
+            </view>
+          </view>
+
+          </view>
+          
+        
+      </view>
+    </view>
+</view>
+
+</template>

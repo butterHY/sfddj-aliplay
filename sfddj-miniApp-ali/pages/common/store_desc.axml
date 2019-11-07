@@ -1,0 +1,10 @@
+<template name="storeDesc">
+  <view style="position:fixed;top:0;left:0;right:0;bottom:0;z-index:9000" onTouchMove="move" a:if="{{show}}" onTap="dismiss">
+    <view style="width:100%;height:100%;position:relative">
+      <view style="background-color:rgba(0,0,0,0.8);width:100%;height:100%;filter:blur(10px);-webkit-filter:blur(10px);-moz-filter:blur(10px);-ms-filter:blur(10px);-o-filter:blur(10px)"></view>
+      <view class="color-white font-26" style="position: absolute;top:0;padding:30rpx 20rpx 10rpx 20rpx">商家简介:</view>
+      <view class="color-white font-24" style="position: absolute;padding:20rpx;top:76rpx">{{introduction}}</view>
+      <image style="width:43rpx;height:46rpx; position: absolute;bottom:40rpx;left:350rpx" src="{{baseImgUrlLoc}}miniappImg/icon/icon_close_shop.png"></image>
+    </view>
+  </view>
+</template>

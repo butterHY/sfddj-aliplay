@@ -1,0 +1,285 @@
+/* pages/user/myCoupon/myCoupon.wxss  */
+
+@import '../../css-public/coupon.acss';    /*优惠券的样式*/
+
+.width_85 {
+  width: 85%;
+}
+
+/*我可用的优惠券   */
+
+.usefulCoupon {
+  background-color: white;
+  padding: 30rpx 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.couponList {
+  width: 704rpx;
+  height: 187rpx;
+  position: relative;
+  margin-bottom: 20rpx;
+}
+
+.couponList_bgImg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 704rpx;
+  height: 187rpx;
+}
+
+.couponList_con {
+  width: 180rpx;
+  height: 187rpx;
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/*不可用优惠券   */
+
+.unValCoupon {
+  padding: 30rpx 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/*分割线   */
+
+.dividingLine_white {
+  height: 187rpx;
+  border: 1px dashed white;
+  position: absolute;
+  left: 178rpx;
+  top: 0;
+}
+
+.dividingLine_gray {
+  border-color: #f9f9f9;
+}
+
+.couponList_right {
+  position: absolute;
+  left: 180rpx;
+  top: 0;
+  width: 524rpx;
+  height: 187rpx;
+  padding-left: 50rpx;
+  padding-top: 30rpx;
+  box-sizing: border-box;
+}
+
+.dividingLine_horizontal {
+  border: 1px dashed white;
+  position: absolute;
+  bottom: 70rpx;
+  left: 20rpx;
+  right: 20rpx;
+}
+
+.couponList_right_bot {
+  position: absolute;
+  left: 50rpx;
+  bottom: 30rpx;
+}
+
+.couponList_limitDes {
+  margin-top: 12rpx;
+}
+
+.unValCoupon_right_img {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 86rpx;
+  height: 90rpx;
+}
+
+/*使用兑换码兑换券按钮   */
+
+.exchangeCoupon {
+  margin-top: 30rpx;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 100rpx;
+}
+
+.exchangeCoupon_btn {
+  /* padding: 10rpx 50rpx; */
+  line-height: 56rpx;
+  width: 344rpx;
+  text-align: center;
+  border-radius: 40rpx;
+  border: solid #2a5da0 2rpx;
+  color: #2a5da0;
+}
+
+/*兑换对话框   */
+
+.exchanDialog {
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.5);
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.exchanDialog_con {
+  background-color: white;
+  border-radius: 10rpx;
+  width: 444rpx;
+  text-align: center;
+}
+
+.exchanDialog_inView {
+  margin-top: 38rpx;
+  padding: 0 40rpx;
+  text-align: left;
+}
+
+.exchanDialog_input {
+  border-radius: 10rpx;
+  border: solid #e6e6e6 2rpx;
+  padding-left: 10rpx;
+}
+
+.exchanDialog_btnView {
+  margin-top: 48rpx;
+  display: flex;
+  height: 70rpx;
+}
+
+.exchanDialog_cancle {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top: solid #e6e6e6 2rpx;
+}
+
+.exchanDialog_confirm {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fb2c36;
+  border-bottom-right-radius: 10rpx;
+}
+
+/*兑换失败   */
+
+.exchangeCoupon_fail {
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.5);
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.exchangeCoupon_failMes {
+  background-color: white;
+  padding: 30rpx 40rpx;
+  border-radius: 10rpx;
+}
+
+/*查看更多失效券   */
+
+.checkMore_unValCoupon {
+  display: inline-block;
+}
+
+/*小空隙   */
+
+.dividingSpace {
+  height: 20rpx;
+  /* background: #f3f3f3; */
+}
+
+/*轮播图   */
+
+.adSwiperAll {
+  width: 750rpx;
+  top: 0;
+  left: 0;
+  z-index: 9;
+}
+
+.adSwiperFather {
+  padding: 0 30rpx;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.adSwiper {
+  width: 690rpx;
+  height: 260rpx;
+}
+
+.swiperDots {
+  bottom: 10rpx;
+}
+
+.swiperDots_con {
+  width: 30rpx;
+  height: 4rpx;
+  margin: 0 4rpx;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.swiperDots_con_active {
+  background-color: #ff5353;
+}
+
+.overScrol {
+  overflow: scroll;
+}
+
+/* 新版我的优惠券样式 ---190709 start */
+
+
+.myConpon_footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  text-align: center;
+  z-index: 10;
+  width: 100%;
+  background-color: #fff;
+  color: #a1a0a0;
+  /* padding: 20rpx 0; */
+  height: 75rpx;
+  line-height: 75rpx;
+}
+
+.color-blue {
+  color: dodgerblue;
+}
+
+.myCoupon_noMore {
+  text-align: center;
+  color: #a1a0a0;
+  padding: 20rpx 0;
+  margin-bottom: 75rpx;
+}
+
+/* 新版我的优惠券样式 ---190709 end */

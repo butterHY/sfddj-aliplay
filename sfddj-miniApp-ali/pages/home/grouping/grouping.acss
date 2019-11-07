@@ -1,0 +1,132 @@
+page {
+  background: white;
+}
+
+.all_100v {
+  width: 100%;
+  height: 100vh;
+}
+
+.category-tag-area {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  font-size: 26rpx;
+  color: #DCDCDC;
+  white-space: nowrap;
+  height: 120rpx;
+  z-index: 1000;
+  overflow: auto;
+  text-align: center;
+  background: url(../../../image/spike_header.png);
+}
+
+.category-tag-view-normal {
+  /* display: inline-block; */
+  /* padding: 35rpx; */
+  color: #DCDCDC;
+  /* overflow: auto; */
+  /* border-bottom: #fff 5rpx solid; */
+}
+
+.category-tag-view-selected {
+  display: inline-block;
+  /* padding: 35rpx; */
+  /* overflow: auto; */
+  /* border-bottom: #ff5353 5rpx solid; */
+  /* font-size: 40rpx; */
+  color: #fff;
+}
+
+.activity-state {
+  display: flex;
+}
+
+.activity-state-time {
+  font-size: 35rpx;
+}
+
+.activity-state-text {
+  font-size: 25rpx;
+
+}
+
+.goodsListBox {
+  width: 100%;
+  padding-left: 30rpx;
+  box-sizing: border-box;
+}
+
+.price_symbol {
+  font-size: 23rpx;
+  line-height: 40rpx;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.sale_price {
+  font-size: 40rpx;
+  font-weight: bold;
+  padding-left: 16rpx;
+}
+
+.relative {
+  position: relative;
+}
+
+.alipay_catch_img {
+  background: #ff3c32;
+  border-radius: 10rpx;
+  text-align: center;
+  color: #fff;
+}
+
+/* 进度条 */
+.progress {
+    margin-bottom: -25rpx;
+}
+
+.progress_line {
+  background: #ffa9a5;
+  display: inline-block;
+  width: 265rpx;
+  height: 35rpx;
+  border-radius: 35rpx;
+  /* border: 1rpx solid #eee; */
+  overflow: hidden;
+  /* box-shadow: 0 0 1rpx #ccc; */
+  font-size: 20rpx;
+  color: #fff;
+}
+
+.progress_fill {
+    display: inline-block;
+    height: 100%;
+    width: 60%;
+    border-radius: 30rpx;
+    /* border: 1rpx solid transparent; */
+    line-height: 20rpx;
+    vertical-align: top;
+    /* transition: all .6s; */
+    background: #ff7832;
+}
+
+.progress_message {
+  left: 0;
+  top: 0;
+  display: flex;
+  background: transparent;
+}
+
+.inline_block {
+   display: inline-block;
+}
+
+.font_italic {
+  font-style: italic;
+}
+
+.backgroiund_orange {
+  background: #FF4500;
+}

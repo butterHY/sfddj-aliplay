@@ -1,0 +1,100 @@
+<!--index.wxml-->
+<import src="../common/item-pintuan"/>
+<import src="../common/adverts"/>
+<import-sjs name="filters" from="../wxsFile/public.sjs"/>
+<import src="../common/home-search"/>
+<import src="../common/home-hotWords"/>
+<view class="width_100 height_100vh flex_view_col posi_re" style="{{ showToast ? 'height: 100vh; overflow-y: scroll;' : '' }}">
+	<!-- <favorite type="tips" bottom="0rpx">收藏小程序，下次使用更方便</favorite> -->
+	<!-- 搜索模块 -->
+	<view class="" style="height: 120rpx;">
+		<template is="home-search" data="{{baseLocImgUrl:baseLocImgUrl}}">
+		</template>
+	</view>
+	<!-- 搜索热词和历史记录膜层 -->
+	<template is="hotWords" data="{{show:show,baseLocImgUrl,hotWords:hotWords,searchWords:searchWords,top:'120rpx'}}">
+	</template>
+	<view class="flex_1 width_100 overHid">
+		<scroll-view class="all_100" scroll-y="{{true}}">
+			<!-- 首页轮播 -->
+			<!-- class="margin_top_120" -->
+			<view a:if='{{ materialArr && materialArr.length > 0}}' class="flex_view_col width_100 js_banner">
+				<swiper class="whiteBack" indicator-dots="{{materialArr.length > 1 ? 'true' : ''}}" indicator-color='rgba(255,255,255,.8)' indicator-active-color='#ff5353' autoplay="{{materialArr.length > 1 ? 'true' : ''}}" interval="{{materialArr.length > 1 ? '3000' : ''}}" circular="{{materialArr.length > 1 ? 'true' : ''}}" acceleration='true' class="width_100" onChange="{{stopBannerSwiper || bannerNonGoods ? '' : 'bannerSwiper'}}">
+					<block a:for="{{materialArr}}">
+						<swiper-item class="width_100">
+							<!--<navigator url="{{item.url}}" open-type="navigate" hover-class="none" class="width_100 height_300r backImg {{(filters.isGoodsLink(item.url) && !item.isLoaded) ? 'js_bannerGoods_' + index : ''}}"><image src="{{baseImageUrl}}{{item.imageUrl}}" class="all_100" lazy-load="{{true}}"/></navigator> -->
+							<view data-url="{{item.url}}" data-title="{{item.title}}" data-type="banner" class="width_100 height_300r backImg {{(filters.isGoodsLink(item.url) && !item.isLoaded) ? 'js_bannerGoods_' + index : ''}}" onTap="goToPage">
+								<image src="{{baseImageUrl}}{{item.imageUrl}}" class="all_100" lazy-load="{{true}}"/>
+							</view>
+						</swiper-item>
+					</block>
+				</swiper>
+			</view>
+			<view class="{{!materialArr || materialArr.length == 0 ? 'margin_top_120' : ''}}">
+				<template a:if='{{advertsArr && advertsArr.length > 0}}' is='advertsTem' data='{{advertsArr: advertsArr,baseImageUrl: baseImageUrl,baseLocImgUrl: baseLocImgUrl,current: current,ossImgStyle, hours: hours, minute: minute, second: second, isLastActivitys: isLastActivitys, isActivitysStart: isActivitysStart,pageScrollTop,windowHeight}}' ></template>
+			</view>
+			<!--页面主要部分-->
+			<view class="home_contain whiteBack js_columGoods {{(!materialArr || materialArr.length == 0) && (!advertsArr || advertsArr.length == 0) ? 'margin_top_120' : ''}}">
+				<!--拼团商品列表-->
+				<view class="pintuan_view flex_view_row flex_wrap {{homeGoodsList.length}}">
+					<block a:for="{{homeGoodsList}}" a:for-item="item" a:key="index">
+						<navigator url="/pages/shopping/goodsDetail/goodsDetail?goodsSn={{item.goodsSn}}" class="columnGoods whiteBack {{!item.isLoaded ? 'js_goodsListGood_' + index : '' }}" hover-class="none">
+							<view class="oneGoodsList posi_re" style='{{index % 2 != 0 ? "padding: 26rpx 0 26rpx 20rpx;" : "padding: 26rpx 20rpx 26rpx 0; border-right: solid #e6e6e6 2rpx;"}}'>
+								<image class="goodsColumnImg" src="{{baseImageUrl}}{{item.showImage}}" mode="widthFix">
+								</image>
+								<!--小图标 全赔  -->
+								<image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff1.png" class="allCompensation posi_ab goodsColumn_liIcon" style="{{index % 2 == 0 ? 'right: 30rpx;' : 'right: 10rpx;'}}" a:if="{{filters.strIndexOf(item.afterSaleGuee,'1')}}">
+								</image>
+								<image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff2.png" class="allCompensation posi_ab goodsColumn_liIcon" style="{{index % 2 == 0 ? 'right: 30rpx;' : 'right: 10rpx;'}}" a:elif="{{filters.strIndexOf(item.afterSaleGuee,'2')}}">
+								</image>
+								<image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff3.png" class="allCompensation posi_ab goodsColumn_liIcon" style="{{index % 2 == 0 ? 'right: 30rpx;' : 'right: 10rpx;'}}" a:elif="{{filters.strIndexOf(item.afterSaleGuee,'3')}}">
+								</image>
+								<image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff4.png?version=2.0" class="allCompensation posi_ab goodsColumn_liIcon" style="{{index % 2 == 0 ? 'right: 30rpx;' : 'right: 10rpx;'}}" a:elif="{{filters.strIndexOf(item.afterSaleGuee,'4')}}">
+								</image>
+								<view class="goodsColumn_bot">
+									<view class="single-line2">
+										<text class="font-28 color-323232 single-line-text">{{item.name}}
+										</text>
+										<text class="marTop_10 font-24 color-bbbbbb single-line-text">{{item.productName}}
+										</text>
+									</view>
+									<view class="goodsColumn_price">
+										<text class="font-32 color-ff5353">¥{{item.salePrice}}
+										</text>
+										<text data-pid="{{item.productId}}" class="alipay_catch_img goodsColumn_cart" a:if="{{!hiddenCart}}" catchTap="{{!cannotAdd ? 'addCart' : ''}}">
+											<image class="all_100" src="{{baseLocImgUrl}}miniappImg/icon/icon_redCart.png"/>
+										</text>
+									</view>
+								</view>
+							</view>
+						</navigator>
+					</block>
+					<!--<template is="itemPintuan" data="{{...goodsItem,baseImageUrl,baseLocImgUrl}}"></template> -->
+				</view>
+				<!--加载数据进度条-->
+				<view class="loading_view" a:if="{{isLoadMore}}">
+					<image src="{{baseLocImgUrl}}miniappImg/loading/loading.gif" class="loading_gif">
+					</image>
+				</view>
+				<!--没有更多-->
+				<view class="loading_view font-24 color-b1b6bb" a:if="{{!hasMore && !isLoadMore}}">      没有更多了
+				</view>
+			</view>
+		</scroll-view>
+	</view>
+</view>
+<!--toast弹窗-->
+<view class="mark flex_view_col align_cen justi_cen" a:if="{{showToast}}">
+	<view class="toastView_wb" style="background-color:rgba(0, 0, 0, 0);">
+		<!-- catchtouchmove="move" -->
+		<view class="posi_ab" style="right: 0; top: 0;" catchTap="closePop">
+			<icon type="clear" size="25" color="rgba(255,255,255,0.3)"/>
+			<!-- color="skyblue" -->
+		</view>
+		<view class="toastView_wb_con font-26 homePop" data-url="{{popImgData.link}}" data-type="popup" data-linkType="{{popImgData.appLink}}" catchTap="goToPage">
+			<!--<navigator url="/pages/shopping/goodsDetail/goodsDetail?goodsSn={{}}" hover-class="none"> -->
+			<image src="{{baseImageUrl}}{{popImgData.popImgPath}}" mode="widthFix" class="width_100"/>
+			<!--</navigator> -->
+		</view>
+	</view>
+</view>

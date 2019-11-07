@@ -1,0 +1,112 @@
+@import "../../../we-cropper/common.acss";.cropper {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+page {
+  background-color: #f3f3f3;
+}
+.padRL_26 {
+  padding: 0 26rpx;
+}
+/*头像   */
+.headImg {
+  padding: 10rpx 0;
+  border-bottom: 1px solid #e6e6e6;
+  min-height: 65rpx;
+}
+.avatarImg {
+  width: 78rpx;
+  height: 78rpx;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 10rpx;
+}
+.icon_arrRight {
+  width: 16rpx;
+  height: 26rpx;
+}
+/*昵称   */
+.nickNameBlock {
+  padding: 10rpx 0;
+  border-bottom: 1px solid #e6e6e6;
+  min-height: 65rpx;
+}
+.nickNameText {
+  color: #b2b7bc;
+  line-height: 68rpx;
+}
+/*手机号   */
+.userPhone {
+  padding: 10rpx 0;
+  min-height: 65rpx;
+}
+/*性别生日   */
+.genderBlock {
+  padding: 10rpx 0;
+  border-bottom: 1px solid #e6e6e6;
+  min-height: 65rpx;
+}
+.birthBlock {
+  padding: 10rpx 0;
+  min-height: 65rpx;
+}
+/*改昵称   */
+.changeNickName {
+  top: 0;
+  left: 0;
+  background-color: #f3f3f3;
+}
+.changeNickNameView {
+  padding: 0 26rpx;
+  height: 74rpx;
+}
+.width_93 {
+  width: 93%;
+}
+.icon_del {
+  width: 40rpx;
+  height: 40rpx;
+  top: 50%;
+  margin-top: -20rpx;
+  right: 0;
+}
+.closeNickNameBtn {
+  width: 40%;
+  height: 78rpx;
+  line-height: 78rpx;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+.saveNickNameBtn {
+  width: 40%;
+  height: 78rpx;
+  line-height: 78rpx;
+  background-color: #ff5353;
+  border-radius: 5px;
+}
+/*修改性别   */
+.changeSexual {
+  top: 0;
+  left: 0;
+  background-color: #f3f3f3;
+}
+.manRow {
+  height: 78rpx;
+  border-bottom: 1px solid #e6e6e6;
+}
+.icon_oraRight {
+  width: 38rpx;
+  height: 26rpx;
+}
+.height_78 {
+  height: 78rpx;
+}
+.closeGenderChoose {
+  width: 50%;
+  height: 78rpx;
+  line-height: 78rpx;
+  background-color: #ff5353;
+  border-radius: 5px;
+}

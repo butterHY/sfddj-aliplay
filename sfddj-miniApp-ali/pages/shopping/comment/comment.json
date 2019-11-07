@@ -1,0 +1,10 @@
+{
+  "defaultTitle": "评价详情",
+  "titleBarColor": "#ffffff",
+  "pullRefresh": false,
+  "usingComponents": {
+    "loading-now": "../../components/loadingNow/loadingNow",
+    "load-fail": "../../components/loadFail/loadFail",
+    "calendar": "mini-antui/es/calendar/index"
+  }
+}

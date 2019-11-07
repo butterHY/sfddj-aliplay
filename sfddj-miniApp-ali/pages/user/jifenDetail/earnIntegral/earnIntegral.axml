@@ -1,0 +1,74 @@
+<view class="loadingTop font-24 color-b1b6bb" a:if="{{!loadComplete}}">数据加载中...</view> 
+
+<view class="loadingTop font-24 color-b1b6bb" a:elif="{{loadFail}}">加载失败：<text class="color-ff5353">{{errMsg}}</text></view>
+
+<view a:else>
+  <!--banner  -->
+  <view class="topBanner width_100">
+    <image src="{{baseImgLocUrl}}miniappImg/bg/bg_earn.jpg" class="topBannerImg all_100"></image>
+  </view>
+
+  <!--赚积分说明  -->
+  <view class="earnIntegralDes whiteBack pad_rl20">
+    <!--多购物  -->
+    <view class="eachDesCon">
+      <!--标题  -->
+      <view class="eachDesConTit flex_view_row justi_between align_cen" data-index="0" onTap="pickMe">
+        <view class="flex_view_row align_cen">
+          <image src="{{baseImgLocUrl}}miniappImg/more/more_shop.png" class="icon_moreShop"></image>
+          <text class="font-28 color-323232">多购物</text>
+        </view>
+        <image src="{{currentIndex == 0 && currentTaped[0] ? baseImgLocUrl + 'miniappImg/icon/icon_arrow_up_sm.png' : baseImgLocUrl + 'miniappImg/icon/icon_arrow_down_sm.png'}}" class="icon_arrowSM"></image>
+      </view>
+      <!--对应内容  -->
+      <view class="eachDesConSon" a:if="{{currentIndex == 0 && currentTaped[0]}}">
+        <text class="font-26 color-666 lineHeight40">奖励结算金额值的积分，订单交易成功或交易关闭可获得积分</text>
+      </view>
+    </view>
+    <!--多评论  -->
+    <view class="eachDesCon">
+      <!--标题  -->
+      <view class="eachDesConTit flex_view_row justi_between align_cen" data-index="1" onTap="pickMe">
+        <view class="flex_view_row align_cen">
+          <image src="{{baseImgLocUrl}}miniappImg/more/more_comment.png" class="icon_moreShop"></image>
+          <text class="font-28 color-323232">多评论</text>
+        </view>
+        <image src="{{currentIndex == 1 && currentTaped[1] ? baseImgLocUrl + 'miniappImg/icon/icon_arrow_up_sm.png' : baseImgLocUrl + 'miniappImg/icon/icon_arrow_down_sm.png'}}" class="icon_arrowSM"></image>
+      </view>
+      <!--对应内容  -->
+      <view class="eachDesConSon" a:if="{{currentIndex == 1 && currentTaped[1]}}">
+        <text class="font-26 color-666 lineHeight40">购买商品后进行评论，每条评论可获得10个积分</text>
+      </view>
+    </view>
+    <!--多签到  -->
+    <view class="eachDesCon">
+      <!--标题  -->
+      <view class="eachDesConTit flex_view_row justi_between align_cen" data-index="2" onTap="pickMe">
+        <view class="flex_view_row align_cen">
+          <image src="{{baseImgLocUrl}}miniappImg/more/more_sign.png" class="icon_moreShop"></image>
+          <text class="font-28 color-323232">多签到</text>
+        </view>
+        <image src="{{currentIndex == 2 && currentTaped[2] ? baseImgLocUrl + 'miniappImg/icon/icon_arrow_up_sm.png' : baseImgLocUrl + 'miniappImg/icon/icon_arrow_down_sm.png'}}" class="icon_arrowSM"></image>
+      </view>
+      <!--对应内容  -->
+      <view class="eachDesConSon" a:if="{{currentIndex == 2 && currentTaped[2]}}">
+        <text class="font-26 color-666 lineHeight40">每日签到获得1积分，按照连续签到天数获得积分</text>
+      </view>
+    </view>
+    <!--参与抽奖  -->
+    <view class="eachDesCon">
+      <!--标题  -->
+      <view class="eachDesConTit flex_view_row justi_between align_cen" data-index="3" onTap="pickMe">
+        <view class="flex_view_row align_cen">
+          <image src="{{baseImgLocUrl}}miniappImg/more/more_lottery.png" class="icon_moreShop"></image>
+          <text class="font-28 color-323232">参与抽奖</text>
+        </view>
+        <image src="{{currentIndex == 3 && currentTaped[3] ? baseImgLocUrl + 'miniappImg/icon/icon_arrow_up_sm.png' : baseImgLocUrl + 'miniappImg/icon/icon_arrow_down_sm.png'}}" class="icon_arrowSM"></image>
+      </view>
+      <!--对应内容  -->
+      <view class="eachDesConSon" a:if="{{currentIndex == 3 && currentTaped[3]}}">
+        <text class="font-26 color-666 lineHeight40">中奖后获得相应的积分奖励</text>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,7 @@
+<!-- 加载失败 -->
+<view class="noContent">
+  <image src="{{baseImageLocUrl}}miniappImg/loading/loadingpage_nodata.png" class="noContent_image" mode="widthFix">
+  </image> 
+  <text class="noContent_text" >页面暂无内容显示</text>
+  <view a:if="{{showPageType == 'category'}}" class="flex_view_row align_cen justi_cen handMakeRefresh" onTap="refreshPage">手动刷新</view>
+</view>

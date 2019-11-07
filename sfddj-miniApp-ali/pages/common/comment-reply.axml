@@ -1,0 +1,7 @@
+<template name="commentReply">
+	<view class="supplierReply marLeft_50r font-28">
+		<view>{{replyTitle}}</view>
+		<view>{{replyText}}</view>
+		<view class="icon_arrUp"></view>
+	</view>
+</template>

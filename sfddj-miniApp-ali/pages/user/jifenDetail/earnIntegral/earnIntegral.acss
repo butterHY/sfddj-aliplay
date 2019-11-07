@@ -1,0 +1,26 @@
+.topBanner {
+  height: 300rpx;
+}
+.pad_rl20 {
+  padding: 0 20rpx;
+}
+.eachDesConTit {
+  height: 122rpx;
+  border-bottom: 1px solid #f6f6f6;
+}
+.icon_moreShop {
+  width: 64rpx;
+  height: 64rpx;
+  margin-right: 15rpx;
+}
+.icon_arrowSM {
+  width: 29rpx;
+  height: 16rpx;
+}
+.eachDesConSon {
+  padding: 26rpx 20rpx;
+  border-bottom: 1px solid #f6f6f6;
+}
+.lineHeight40 {
+  line-height: 40rpx;
+}

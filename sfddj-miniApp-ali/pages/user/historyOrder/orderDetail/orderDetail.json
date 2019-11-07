@@ -1,0 +1,10 @@
+{
+  "defaultTitle": "订单详情",
+  "titleBarColor": "#ffffff",
+  "pullRefresh": false,
+  "usingComponents": {
+    "loading-now": "../../../components/loadingNow/loadingNow",
+    "load-fail": "../../../components/loadFail/loadFail"
+  }
+
+}

@@ -1,0 +1,153 @@
+<import src="/pages/common/dialog-coupon.axml"/>
+<import-sjs name='filters' from="../../../wxsFile/public.sjs"/>
+<!-- 加载中 -->
+<view a:if="{{!loadComplete}}">
+	<loading-now></loading-now>
+</view>
+<!-- 加载失败 -->
+<view a:elif="{{loadFail && wifiAvailable}}">
+	<load-fail></load-fail>
+</view>
+<!-- 没有网络提示这个 -->
+<!--<view a:elif="{{!wifiAvailable}}"><no-wifi></no-wifi></view> -->
+<!-- 地址信息 -->
+<form a:else report-submit="true" onSubmit="payOrder">
+	<view a:if="{{!(orderType=='GIFT'||orderType=='MULTIGIFT')}}">
+		<view class="address-view">
+			<view class="addrView_headLeft">
+				<image src="{{baseImgLocUrl}}miniappImg/icon/icon_address.png" class="addrView_headLeftImg"></image>
+			</view>
+			<view class="address-info-view addrView_headMid">
+				<view class="address-phone-number font-30 color-323232">
+					<view>{{address.shipName}}</view>
+					<view>{{address.shipMobile}}</view>
+				</view>
+				<view class="font-26 color-838282">{{address.province + address.city + address.area + address.addr}}</view>
+			</view>
+			<view class="addrView_headRig">
+				<image src="{{baseImgLocUrl}}miniappImg/icon/icon_right_arrow.png" class="addrView_headRigImg"></image>
+			</view>
+		</view>
+		<view class="addrView_headBot">
+			<image src="{{baseImgLocUrl}}miniappImg/icon/icon_address_line.png" class="addrView_headBotImg"></image>
+		</view>
+	</view>
+	<!-- 送礼信息 -->
+	<view a:else>
+		<image src="{{baseImgLocUrl}}miniappImg/bg/bg_gift_step1.jpg" class="giftOrderHead"></image>
+		<view class="giftOrderHeadCon font-24 color-b3b3b3">
+			<view class="giftOrderHead_sigh">!</view>
+			<text class="marLeft_10">若收礼者24小时内未填写地址，将自动退款</text>
+		</view>
+	</view>
+	<view class="division-area"></view>
+	<!-- 应付金额 -->
+	<view class="should-pay-area">
+		<view class="should-pay-text">
+			<view class="font-30 color-323232">应付金额：</view>
+			<view class="font-30 color-ff5353">￥{{filters.toFix(totalPrice + (result.totalPostFee ? result.totalPostFee : 0))}}</view>
+		</view>
+		<view class="should-pay-item">
+			<view>总金额</view>
+			<view class="color-ff5353 font-28">￥{{filters.toFix(totalPrice)}}</view>
+		</view>
+		<view class="should-pay-item">
+			<view>总运费</view>
+			<view class="color-ff5353 font-28">￥{{result.totalPostFee ? filters.toFix(result.totalPostFee) : '0.00'}}</view>
+		</view>
+		<view class="should-pay-item">
+			<view>优惠总额</view>
+			<view class="color-ff5353 font-28">￥{{filters.toFix(totalCouponPrice)}}</view>
+		</view>
+		<view class="should-pay-item" a:if="{{result.useBalance}}">
+			<view>余额抵扣</view>
+			<view class="color-ff5353 font-28">￥{{filters.toFix(result.useBalance)}}</view>
+		</view>
+		<!--积分商品  -->
+		<view class="choice-coupon-view borTop {{result.isDikou || result.isJifen ? '' : 'borTop'}}" a:if="{{result.isDikou && result.maxDeductPoint || result.isJifen && result.memberPoint}}">
+			<view class="font-26 color-323232">
+				<view class="font-26">
+					<text class="color-323232">积分</text>
+					<text class="color-bababa">(共{{result.myMemberPoint}}积分)</text>
+				</view>
+				<view class="flex_view_row font-24 marTop_10 align_cen color-f07e19">
+					<text a:if="{{result.isDikou}}">本次消耗{{result.maxDeductPoint}}积分</text>
+					<text a:if="{{result.isJifen}}">本次消耗{{result.memberPoint}}积分</text>
+					<text a:if="{{result.maxDeductPrice}}">抵扣{{result.maxDeductPrice}}元</text>
+					<!--<image wx:if="{{isDikou}}" src='{{baseLocImgUrl}}miniappImg/icon/icon_warning_org.png' class='icon_warning_org marLeft_10' catchtap='showUseRule'></image> -->
+				</view>
+			</view>
+			<view class="coupon-name-view">
+				<view class="jiFenUseBtn posi_re jiFenGreenBtn ">
+					<view class="jiFenUseBtn_cir jiFenGreenBtn_cir"></view>
+				</view>
+			</view>
+		</view>
+	</view>
+	<view class="division-area"></view>
+	<block a:for="{{orderSupplier}}" a:key="orderSupplier">
+		<view class="goods-info-area">
+			<view class="goods-item-title-view">
+				<view class="goods-item-title-part">
+					<image src="{{baseImgLocUrl}}miniappImg/icon/icon_shop.png" class="supplierImg"></image>
+					<view class="font-24 color-323232 marLeft_20">{{item.supplierName}}</view>
+				</view>
+				<view class="goods-item-title-part">
+					<view class="font-24 color-323232">共{{item.orderGoodsList.length}}件商品</view>
+					<view class="font-24 color-323232 marLeft_20">小计</view>
+					<view class="font-30 color-ff5353">￥{{filters.toFix(item.originalTotalPrice ? item.originalTotalPrice : item.totalPrice)}}</view>
+				</view>
+			</view>
+			<block a:for="{{item.orderGoodsList}}" a:key="orderGoodsList">
+				<view class="goods-info-view">
+					<image src="{{baseImageUrl}}{{item.goodsImg}}" class="proImg"></image>
+					<view class="goods-info-text-view">
+						<view class="font-26 color-323232">{{item.goodsName}}</view>
+						<view class="font-24 color-a1a0a0 marTop_10">{{item.productName}}</view>
+						<view class="font-26 color-a1a0a0 price-number-view proNumAprice">
+							<view>￥{{item.salePrice}}</view>
+							<view>{{item.quantity}}</view>
+						</view>
+					</view>
+				</view>
+			</block>
+			<view class="leaveMes font-24 color-a1a0a0">买家留言:{{item.orderGoodsList[0].memo || '选填'}}</view>
+		</view>
+		<view class="division-area"></view>
+	</block>
+	<!-- 填充bottomView fixed的高度 -->
+	<view class="space100"></view>
+	<!-- <view class="bottom-view">
+		<view class="font-26 sumText">合计:</view>
+		<view class="font-30 color-ff5353 sumPrice">￥{{filters.toFix(totalPrice + (result.totalPostFee ? result.totalPostFee : 0))}}</view>
+		<button form-type="submit" class="bottom-text-red-bg font-32" style="border-radius:0" data-ordertype>去付款</button>
+	</view> -->
+	<view class="bottom-view">
+		<view class="flex_view_row align_cen justi_end flex_1">
+			<block a:if="{{result.totalPostFee && result.totalPostFee != '0.00' && result.totalPostFee != 0}}">
+				<view class="totalPostFee color-a1a0a0 font-26 marRight_10">
+					<text>含运费</text>
+					<text>￥
+						<text class="font-30">{{result.totalPostFee}}</text></text>
+				</view>
+			</block>
+			<view class="flex_view_row align_cen">
+				<view class="font-26 sumText">合计:
+				</view>
+				<view class="font-30 color-ff5353 sumPrice">￥{{filters.toFix(totalPrice + (result.totalPostFee ? result.totalPostFee : 0))}}
+				</view>
+			</view>
+		</view>
+		<button form-type="submit" class="bottom-text-red-bg font-32" style="border-radius:0" data-ordertype>去付款</button>
+	</view>
+</form>
+<!-- 规格选择框 -->
+<template is="dialogCoupon" data="{{baseImageUrlLoc:baseImgLocUrl,show:showDialogCoupon,couponList:result.availableCoupon}}"/>
+<!--toast弹窗-->
+<view class="mark flex_view_col align_cen justi_cen" a:if="{{showToast}}">
+	<view class="toastView_wb" catchtouchmove="move">
+		<view class="toastView_wb_con font-24 color-232323">
+      {{showToastMes}}
+		</view>
+	</view>
+</view>

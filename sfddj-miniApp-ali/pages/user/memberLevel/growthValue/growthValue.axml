@@ -1,0 +1,18 @@
+<import-sjs name='filters' from="../../../wxsFile/public.sjs"/>
+
+<view class="padRL">
+  <block a:for="{{result}}" a:key="growthValue">
+    <view class="growthValue flex_view_row justi_between">
+      <view>
+        <text class="font-34 color-323232">{{item.operationName}}</text>
+      </view>
+      <view class="tex_right flex_view_col">
+        <text class="font-34 color-fa4444 fontW_600">{{filters.numberChange(item.detail)}}</text>
+        <text class="color-ccc font-26">{{item.newDate}}</text>
+      </view>
+    </view>
+  </block>
+  <!-- <view wx:if="{{loadDone}}" class='font-28 color-323232 flex_view_row justi_cen width_100' style='padding: 20rpx 0;'>
+    没有更多
+  </view> -->
+</view>

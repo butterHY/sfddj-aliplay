@@ -1,0 +1,183 @@
+.getCouponList_list {
+  padding: 0 24rpx;
+  box-sizing: border-box;
+  margin-bottom: 30rpx;
+}
+
+.getCouponList_coupon {
+  width: 100%;
+  margin: 24rpx 0 0;
+  position: relative;
+  z-index: 1;
+  border-radius: 10rpx;
+  overflow: hidden;
+  box-shadow: 2px 2px 4px rgba(1, 1, 1, 0.05), -2px -2px 4px rgba(1, 1, 1, 0.05);
+  border-right: 1px solid rgba(1, 1, 1, 0.05);
+  box-sizing: border-box;
+}
+
+.getCouponList_couponBox {
+  height: 190rpx;
+  background-color: #FFFFFF;
+  -webkit-border-radius: 10rpx;
+  -moz-border-radius: 10rpx;
+  border-radius: 10rpx;
+  position: relative;
+  width: 100%;
+  z-index: 1;
+}
+
+.getCouponList_couponInfo {
+  color: #323232;
+  height: 100%;
+  width: 100%;
+}
+
+.getCouponList_gapBox {
+  width: 30rpx;
+  position: absolute;
+  height: 100%;
+  overflow: hidden;
+  top: 0;
+  z-index: 1;
+}
+
+.gapBox_left {
+  left: 27%;
+}
+
+.gapBox_right {
+  right: 20%;
+}
+
+.getCouponList_gap {
+  width: 30rpx;
+  height: 30rpx;
+  border-radius: 50%;
+  position: absolute;
+  background: radial-gradient(rgba(1, 1, 1, 0.01) 5%, rgba(1, 1, 1, 0.02) 5%, rgba(1, 1, 1, 0.05) 80%);
+}
+
+.getCouponList_gapBox .gap_top {
+  top: -21rpx;
+  left: 0;
+}
+
+.getCouponList_gapBox .gap_bot {
+  bottom: -20rpx;
+  left: 0;
+}
+
+.getCouponList_gapLine {
+  border-left: 1px dashed #D6D6D6;
+  top: 12rpx;
+  bottom: 12rpx;
+  position: absolute;
+  left: 50%;
+  margin-left: -1px;
+}
+
+.getCouponList_couponInfoRight {
+  width: 22.13%;
+  height: 100%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+}
+
+.getCouponList_couponInfoLeft {
+  background: #FFFFFF;
+  padding: 30rpx;
+  box-sizing: border-box;
+  width: 182rpx;
+  height: 182rpx;
+}
+
+.getCouponList_couponInfoImgBox {
+  width: 100%;
+  color: #FFFFFF;
+  text-align: center;
+  margin-top: -6.5rpx;
+  border-radius: 5px;
+  box-shadow: 2px 2px 4px rgba(1, 1, 1, 0.05);
+  overflow: hidden;
+}
+
+.getCouponList_couponInfoImg {}
+
+.getCouponList_couponUseType {
+  margin: 0;
+  color: #999999;
+  padding: 30rpx 0;
+  box-sizing: border-box;
+}
+
+.getCouponList_couponTit {
+  width: 100%;
+  height: 84rpx;
+}
+
+.getCouponList_couponTitH5 {
+  font-size: 26rpx;
+  margin-bottom: 13rpx;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  color: #323232;
+}
+
+.getCouponList_couponValidDate {
+  font-size: 20rpx;
+  margin-bottom: 10rpx;
+  padding: 0;
+  opacity: 1;
+  border: none;
+  -webkit-line-clamp: 1;
+  width: 100%;
+  margin-top: -6rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
+.getCouponList_tipUseLimit {
+  color: #ff4949;
+  font-size: 24rpx;
+  font-weight: bold;
+}
+
+.getCouponList_couponLimit {
+  font-size: 20rpx;
+  background: #ffecec;
+  height: 28rpx;
+  line-height: 28rpx;
+  padding: 0 18rpx;
+  border-radius: 28rpx;
+  margin-left: 18rpx;
+  font-weight: normal;
+}
+
+.rotate_90 {
+  transform: rotate(-90deg)
+}
+
+.getCouponList_receiveBtn {
+  font-size: 20rpx;
+  color: #FFFFFF;
+  width: 110rpx;
+  text-align: center;
+  line-height: 32rpx;
+  margin-top: 16rpx;
+  border-radius: 45px;
+  background: -moz-linear-gradient(to right, #ff7146, #ff5151);
+  background: -ms-linear-gradient(to right, #ff7146, #ff5151);
+  background: -o-linear-gradient(to right, #ff7146, #ff5151);
+  background: -webkit-linear-gradient(to right, #ff7146, #ff5151);
+  background: linear-gradient(to right, #ff7146, #ff5151);
+}

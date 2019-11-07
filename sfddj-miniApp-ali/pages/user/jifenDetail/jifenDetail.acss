@@ -1,0 +1,115 @@
+.topBanner {
+  width: 750rpx;
+  height: 244rpx;
+}
+.topBannerImg {
+  width: 750rpx;
+  height: 244rpx;
+  top: 0;
+  left: 0;
+}
+.marTop_43 {
+  margin-top: 43rpx;
+}
+.icon_integralNum {
+  width: 29rpx;
+  height: 31rpx;
+  margin-top: 32rpx;
+}
+.memberPoint {
+  font-size: 60rpx;
+  color: #ffb172;
+}
+.icon_layerTip {
+  width: 25rpx;
+  height: 25rpx;
+  margin-top: 0;
+  margin-left: 7rpx;
+}
+.marTop_5 {
+  margin-top: 5rpx;
+}
+.icon_horn {
+  width: 30rpx;
+  height: 24rpx;
+}
+.color-ffb172 {
+  color: #ffb172;
+}
+.height_250 {
+  height: 250rpx;
+}
+.width_250 {
+  width: 250rpx;
+}
+.icon_jifenNav {
+  width: 152rpx;
+  height: 128rpx;
+  margin-top: 14rpx;
+}
+.jifenInAndExTit {
+  height: 110rpx;
+}
+.jifenInAndEx {
+  padding: 0 20rpx;
+  box-sizing: border-box;
+  padding-bottom: 30rpx;
+  overflow: hidden;
+}
+.jifenDetail {
+  height: 100%;
+  box-sizing: border-box;
+  overflow: scroll;
+}
+.sheetHead {
+  height: 79rpx;
+  background-color: #f7f6f6;
+  color: #afb2b4;
+}
+.sheetHead .sheetLeft {
+  width: 259rpx;
+}
+.sheetHead .sheetCenter {
+  width: 208rpx;
+}
+.sheetHead .sheetRight {
+  width: 245rpx;
+}
+.eachSheetRow {
+  height: 101rpx;
+  box-sizing: border-box;
+}
+.sheetCon .sheetLeft {
+  width: 260rpx;
+  height: 102rpx;
+  box-sizing: border-box;
+  border-left: 1px solid #dbdbdb;
+  border-bottom: 1px solid #dbdbdb;
+}
+.color-4f4f4f {
+  color: #4f4f4f;
+}
+.color-afb2b4 {
+  color: #afb2b4;
+}
+.sheetCon .sheetCenter {
+  width: 209rpx;
+  height: 102rpx;
+  box-sizing: border-box;
+  border-left: 1px solid #dbdbdb;
+  border-bottom: 1px solid #dbdbdb;
+}
+.color-ff791f {
+  color: #ff791f;
+}
+.sheetCon .sheetRight {
+  width: 246rpx;
+  height: 102rpx;
+  box-sizing: border-box;
+  border-left: 1px solid #dbdbdb;
+  border-bottom: 1px solid #dbdbdb;
+  border-right: 1px solid #dbdbdb;
+}
+.botLine {
+  padding: 20rpx 0 10rpx;
+}

@@ -1,0 +1,27 @@
+<!--搜索商品列表模板-->
+<import-sjs name="filters" from="../wxsFile/public.sjs"/>
+<template name="itemGroupGoodsList">
+  <navigator url="/pages/shopping/goodsDetail/goodsDetail?goodsSn={{goodsSn}}" hover-class style="width:100%;height:250rpx;padding:30rpx 0;display:flex;flex-direction:row;border-bottom: solid #eeeeee 2rpx;box-sizing:border-box;position:relative" hover-class="none">
+    <image src="{{baseImageUrl}}{{goodsDefaultImage}}" style="width:190rpx;height:100%;"></image>
+
+    <!--小图标 全赔  -->
+    <image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff1.png" class="allCompensation posi_ab" style="width: 56rpx; height: 56rpx; top: 40rpx; left: 130rpx;" a:if="{{filters.strIndexOf(afterSaleGuee,'1')}}"></image> 
+    <image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff2.png" class="allCompensation posi_ab" style="width: 56rpx; height: 56rpx; top: 40rpx; left: 130rpx;" a:elif="{{filters.strIndexOf(afterSaleGuee,'2')}}"></image> 
+    <image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff3.png" class="allCompensation posi_ab" style="width: 56rpx; height: 56rpx; top: 40rpx; left: 130rpx;" a:elif="{{filters.strIndexOf(afterSaleGuee,'3')}}"></image> 
+    <image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff4.png?version=2.0" class="allCompensation posi_ab" style="width: 56rpx; height: 56rpx; top: 40rpx; left: 130rpx;" a:elif="{{filters.strIndexOf(afterSaleGuee,'4')}}"></image>
+
+    <view style="display:flex; flex-direction:column;justify-content:space-between;position:absolute;top:30rpx;left:210rpx;bottom:30rpx;right:30rpx;">
+      <view class="single-line flex_view_col">
+        <view class="font-26 color-323232 single-line">{{goodsName}}</view>
+        <view style="display:block;margin-top:10rpx;" class="font-24 color-bbbbbb single-line">{{goodsTitle}}</view>
+      </view>
+      <view style="max-width:350rpx" class="font-30 font-weight-500 single-line color-bbbbbb flex_view_row algin_cen">
+        <view class="color-ff5353">¥{{salePrice}}</view>
+        <view style="margin-left:10rpx" class="font-24 color-bbbbbb flex_view_col align_cen justi_cen flex_1 overHid"><view class="single-line width_100">{{productName}}</view></view>
+      </view>
+    </view>
+    <text style="width:50rpx;height:50rpx;position:absolute;right:30rpx;bottom:30rpx" data-pid="{{productId}}" catchTap="addCart">
+      <image class="all_100" src="{{baseLocImgUrl}}miniappImg/icon/icon_redCart.png"/>
+    </text>
+  </navigator>
+</template>

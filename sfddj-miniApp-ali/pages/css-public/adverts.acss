@@ -1,0 +1,99 @@
+/* 间隔 */
+
+.topSpace {
+  height: 10rpx;
+  width: 100%;
+}
+
+.navigateCon {
+  padding: 0 0 10rpx;
+  margin-bottom: 20rpx;
+}
+
+.otherModeCon {
+  /* margin-bottom: 20rpx; */
+  padding: 0 30rpx 10rpx;
+}
+
+.goodsViewBox {
+  display: inline-block;
+  padding-right: 20rpx;
+  height: 384rpx;
+}
+
+.width_260r {
+  width: 260rpx;
+}
+
+.littleIcon {
+  width: 50rpx;
+  height: 50rpx;
+  top: 10rpx;
+  right: 10rpx;
+}
+
+.goodsListBox {
+  padding: 24rpx 0 0;
+}
+
+.bannerCon {
+  padding: 0 0 10rpx 30rpx;
+}
+
+.bannerNav {
+  height: 260rpx;
+  padding: 0 10rpx;
+  box-sizing: border-box;
+}
+
+.borderRa_15r {
+  border-radius: 15rpx;
+}
+
+.oneFourLeft {
+  width: 42.26%;
+  margin-right: 3rpx;
+}
+
+.marLeft_3 {
+  margin-left: 3rpx;
+}
+
+.marBot_6 {
+  margin-bottom: 6rpx;
+}
+
+.marRight_3 {
+  margin-right: 3rpx;
+}
+
+.marTop_5 {
+  margin-top: 5rpx;
+}
+
+.goodsScrollTit {
+  padding: 14rpx 0 24rpx;
+}
+
+.goodsScrollTit_txt {
+  font-weight: 400;
+  font-size: 36rpx;
+  margin-right: 21rpx;
+  height: 40rpx;
+}
+
+
+
+
+.goodsViewBox .goodsShowImgBox {
+  height: 260rpx;
+  width: 100%;
+  background-image: url('/image/loadImg.jpg');
+  /* background-image: url('https://img.sfddj.com/miniappImg/loading/loadImg.jpg'); */
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+.goodsViewBox .goodsShowImg {
+  border-radius: 10rpx;
+}

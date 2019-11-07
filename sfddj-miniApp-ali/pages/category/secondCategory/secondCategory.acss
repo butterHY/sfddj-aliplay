@@ -1,0 +1,54 @@
+page {
+	background: white;
+}
+
+.all_100v {
+	width: 100%;
+	height: 100vh;
+}
+
+.category-tag-area {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	font-size: 26rpx;
+	white-space: nowrap;
+	height: 100rpx;
+	background-color: white;
+	z-index: 1000;
+	overflow: auto;
+}
+
+.top_120r {
+	top: 120rpx;
+}
+
+.category-tag-area.fixedArea {
+	position: fixed;
+	top: 0;
+}
+
+.marTop_100r {
+	margin-top: 100rpx;
+}
+
+.category-tag-view-normal {
+	/* display: inline-block; */
+	padding: 30rpx;
+	/* overflow: auto; */
+	border-bottom: #fff 5rpx solid;
+}
+
+.category-tag-view-selected {
+	display: inline-block;
+	padding: 30rpx;
+	/* overflow: auto; */
+	border-bottom: #ff5353 5rpx solid;
+	color: #ff5353;
+}
+
+.goodsListBox {
+	width: 100%;
+	padding-left: 30rpx;
+	box-sizing: border-box;
+}

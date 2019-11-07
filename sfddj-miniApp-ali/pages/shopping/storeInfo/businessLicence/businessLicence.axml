@@ -1,0 +1,10 @@
+<view class="licenseText font-22 color-414141">根据国家工商总局《网络交易管理办法》要求，对网店营业执照信息公示如下:</view>
+
+<view class="image-view">
+  <image class="licenseImg" src="{{baseImageUrl}}{{item}}" data-current="{{item}}" data-urls="{{images}}" a:for="{{images}}" a:key="licenseImg" onTap="imageViewTap"></image>
+</view>
+
+<view class="licenseText font-22 color-8f8f8f flex_view_col">
+  <text>以上营业执照信息来源于卖家自行申报，具体以工商部门登记为准;</text>
+  <text>经营者需确保信息真实有效，平台也将定期核查。如与实际不符，为免违规，请联系当地工商部门或平台客服更新;</text> 
+</view>

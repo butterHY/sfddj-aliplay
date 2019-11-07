@@ -1,0 +1,130 @@
+.padrl_20 {
+  padding: 0 20rpx;
+}
+
+.indentTwo {
+  text-indent: 2em;
+}
+.font-bold {
+  font-weight: bold;
+}
+page {
+  background-color: white;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+.row-line {
+  display: flex;
+  flex: row;
+  padding: 30rpx 0 30rpx 0;
+  margin: 0 20rpx 0 20rpx;
+  border-bottom: 2rpx #e6e6e6 solid;
+  align-items: center;
+}
+.input-phone {
+  margin: 20rpx;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 28rpx;
+}
+.coloum-view {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 30rpx;
+}
+.bind-button {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  font-size: 30rpx;
+  margin: 20rpx;
+  padding: 25rpx 0 25rpx 0;
+  border-radius: 8rpx;
+  background: #ff5353;
+  color: white;
+}
+.disabled {
+  color: #b1b6bb;
+  border: solid #b1b6bb 2rpx;
+}
+.enalbed {
+  color: #ff5353;
+  border: solid #ff5353 2rpx;
+}
+/*发送验证码按钮   */
+.sendCodeBtn {
+  min-width: 100rpx;
+  padding: 10rpx;
+  text-align: center;
+  border-radius: 5px;
+  /* right: 30rpx;
+  position: absolute; */
+}
+/*新加   */
+.bindPhone_top {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 0 20rpx 0 20rpx;
+  border-bottom: 2rpx #e6e6e6 solid;
+}
+.icon_phone {
+  width: 19rpx;
+  height: 28rpx;
+}
+.icon_auth {
+  width: 26rpx;
+  height: 29rpx;
+}
+.oneBotLine {
+  border-bottom: 2rpx #e6e6e6 solid;
+}
+.pageBot_text {
+  margin: 0 0 0 20rpx;
+}
+/* 用户协议  */
+.agreementView {
+  max-width: 90%;
+  overflow: hidden;
+  border-radius: 4px;
+  animation-duration: 0.4s;
+  /* z-index: 9102;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50% */
+}
+.agreementTit {
+  padding: 0 0 0 10px;
+  height: 40px;
+  line-height: 40px;
+  border-bottom: 1px solid #ebebeb;
+}
+.closeBtn {
+  width: 16px;
+  height: 16px;
+  top: 50%;
+  margin-top: -8px;
+  right: 20px;
+}
+.agreementCon {
+  padding: 20px 15px;
+  overflow: hidden;
+}
+.agreementCon_son {
+  height: 364px;
+  overflow: scroll;
+}
+.lineH_78 {
+  line-height: 78rpx;
+}
+.lineH_45 {
+  line-height: 45rpx;
+}
+.sureBtn {
+  background: #ff5353;
+  line-height: 40px;
+  height: 40px;
+}

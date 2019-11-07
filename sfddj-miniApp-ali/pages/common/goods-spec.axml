@@ -1,0 +1,82 @@
+<template name="goodsSpec">
+	<view style="position:fixed;top:0;left:0;right:0;bottom:0;background-color:rgba(0,0,0,0.5);z-index:9000" catchTouchMove="move" a:if="{{show}}">
+		<view style="height:20%" catchTap="colseSpecDialog"></view>
+		<!-- onTap="tapSpec" 下面 view 的事件，但没发现该函数 -->
+		<view style="height:80%;background:white">
+			<view class="goods-spec-info">
+				<view class="goods-spec-info-start">
+					<image src="{{baseImageUrl}}{{product.imgPath}}" style="width:175rpx;height:175rpx;min-width:175rpx;min-height:175rpx"></image>
+					<!-- 从目前goodsDetail.js 的代码来看并没有 type == 1 和 type == 2 和 type == 5 的赋值 -->
+					<!-- 积分商品 type == 3，物返现商品 type == 4 -->
+					<view class="goods-spec-text">
+						<view class="font-36 color-ff5353" a:if="{{type == 1}}">
+							<text>type=1 ￥{{product.tuanPrice}}</text>
+							<text class="font-24 color-666 marLeft_15" a:if="{{SFmember}}">+{{product.costMemberScoreAll ? product.costMemberScoreAll : 0}}积分</text>
+						</view>
+						<view class="font-36 color-ff5353" a:elif="{{type == 2}}">
+							<text>￥0.00</text></view>
+						<view class="font-36 color-ff5353" a:elif="{{type == 3}}">
+							<text>￥{{product.goodsPrice}}</text>
+							<text>+ {{product.thisMemberPoint}}积分</text></view>
+						<!-- 购物返现商品 -->
+						<view class="font-36 color-ff5353 flex_view_row align_cen" a:elif="{{type == 4}}">
+							<text>￥{{product.goodsPrice}}</text>
+							<view a:if='{{product.thisReturnMoneyPrice && product.thisReturnMoneyPrice > 0}}' class="font-22 marLeft_10" style="color: #ff8f0a; border: 1px solid #ff8f0a; padding: 3rpx 18rpx; border-radius: 45rpx;">购买最高可返{{product.thisReturnMoneyPrice}}元</view>
+						</view>
+						<!-- 其他 -->
+						<view class="font-36 color-ff5353" a:else>
+							<text class="aba" a:if="{{product.activitysPrice}}">￥{{product.secondKillPrice}}</text>
+							<text class="aba" a:elif="{{!SFmember || SFmember && type == 5}}">￥{{product.goodsPrice}}</text>
+							<!-- 会员商品 -->
+							<text class="cbc" a:if="{{SFmember && type != 5}}">￥ {{product.memberPriceAll}}</text>
+							<text class="font-24 color-666 marLeft_15" a:if="{{SFmember && type != 5}}">+{{product.costMemberScoreAll ? product.costMemberScoreAll : 0}}积分</text>
+						</view>
+						<!-- 会员商品 -->
+						<view class="font-24 color-ff5353" a:if="{{SFmember && type != 5}}">奖励会员积分{{product.awardMemberScoreAll ? product.awardMemberScoreAll : 0}}</view>
+						<view class="font-24 color-a1a0a0" style="margin-top:12rpx;">库存:{{product.store< 0 ? "0" : product.store}}份</view>
+						<view class="font-24" style="margin-top:12rpx">已选择:{{product.name}}</view>
+					</view>
+				</view>
+				<text style="width:22rpx;height:24rpx;margin-top:30rpx;margin-right:30rpx;" class="alipay_catch_img" catchTap="colseSpecDialog">
+					<image class="all_100" src="{{baseLocImgUrl}}miniappImg/icon/icon_cancel.png"/></text>
+			</view>
+			<!-- 规格 -->
+			<scroll-view style="height:400rpx" scroll-y="true" catchtouchmove="move" a:if="{{goodsSpecMap}}">
+				<block a:for="{{goodsSpecMap}}" a:for-index="fatherIndex" a:key="goodsSpecMap">
+					<view class="font-24" style="margin:20rpx 0 0 30rpx">{{item.iakName}}:</view>
+					<view style="padding-left:30rpx">
+						<view class="{{item.taped ? 'goods-spec-view-selected' : 'goods-spec-view-normal'}}" data-index="{{index}}" style="{{ product.store && item.taped ? 'border:2rpx #ff5353 solid;color:#ff5353;' : 'border:2rpx #565d6f solid;color:#565d6f;'}}" data-fatherindex="{{fatherIndex}}" a:for="{{item.iakValue}}" a:key="iakValue" catchTap="specItemTap">{{item.iavValue}}</view>
+					</view>
+				</block>
+			</scroll-view>
+			<!-- 团购时的规格选择（单规格选择） -->
+			<block a:if="{{allProduct}}">
+				<view class="font-24" style="margin-left:30rpx">规格:</view>
+				<scroll-view style="height:380rpx" scroll-y="true" catchtouchmove="move">
+					<view style="padding-left:30rpx">
+						<view class="{{item.taped ? 'goods-spec-view-selected' : 'goods-spec-view-normal'}}" data-index="{{index}}" a:for="{{allProduct}}" a:key="allProduct" catchTap="specItemTap2">{{item.name}}</view>
+					</view>
+				</scroll-view>
+			</block>
+			<view class="goods-sepc-bottom-view">
+				<!-- 数量选择 -->
+				<view class="goods-spec-bottom-num-pick" a:if="{{!specTrue}}">
+					<view class="font-24">请选择数量</view>
+					<view class="number-pick-view">
+						<view class="number-pick-view-symbol" catchTap="subtractTap">-</view>
+						<!-- catchTap="quantityTap" 下面 view 的事件，但没发现该函数 -->
+						<view class="number-pick-view-text">
+							<input disabled="{{showInput ? '' : 'true'}}" class="all_100 font-28 color-323232 tex_center" type="number" value="{{quantity}}" onBlur="inputBlur" onInput="changeQuantity" style='background: transparent;'/></view>
+						<!--<view class='number-pick-view-text' catchtap='quantityTap'><input disabled='true' class='all_100 font-28 color-323232 tex_center' type='number' value='{{quantity}}' onInput='changeQuantity' onBlur='inputBlur'></input></view> -->
+						<view class="number-pick-view-symbol" catchTap="addTap">+</view>
+					</view>
+				</view>
+				<view class="width_100 goods-sepc-bottom-button posi_re">
+					<view class="all_100 flex_view_row align_cen justi_cen" catchTap="goodsSpecSubmitTap">确定</view>
+					<button class="btnStyle gpnBtn zIndex100" open-type="getAuthorize" onGetAuthorize="getPhoneNumber" scope='phoneNumber' onError="onAuthError" a:if="{{isBing}}"></button>
+				</view>
+			</view>
+		</view>
+	</view>
+	</view>
+</template>

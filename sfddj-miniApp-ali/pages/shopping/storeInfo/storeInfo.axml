@@ -1,0 +1,120 @@
+<!-- 带背景图介绍模块 -->
+<import src="/pages/common/item-goods-column"/>
+<import src="/pages/common/store_desc"/>
+
+<!-- 加载中 -->
+<view a:if="{{!loadComplete}}">
+  <loading-now></loading-now>  
+</view>
+<!-- 加载失败 -->
+<view a:elif="{{loadFail}}">
+  <load-fail></load-fail>
+</view>
+<!-- 没有网络提示这个 -->
+<!-- <view a:elif="{{!wifiAvailable}}">
+  <no-wifi></no-wifi>
+</view> -->
+
+<view a:else class="{{cantScroll ? 'height_100v' : ''}}" disable-scroll='{{cantScroll}}'>
+  <view class="info-area">
+    <image src="{{baseLocImgUrl}}miniappImg/bg/bg_store_info.jpg" class="storeInfo_bg">
+    </image>
+    <view class="info-view">
+      <view class="store-image">
+        <image src="{{baseLocImgUrl}}{{supplierDetail.headPortraitPath}}" class="storeInfo_headImg">
+        </image>
+      </view>
+      <view class="info-text-view">
+        <view class="font-28 color-white">{{supplierDetail.nickName}}        
+        </view>
+        <view class="storeInfo_detail font-22 color-white">{{supplierDetail.companyName}}        
+        </view>
+        <view class="storeInfo_detail font-20 color-fefefe">所在地：{{supplierDetail.address}}        
+        </view>
+      </view>
+    </view>
+    <view class="tested-view">
+      <image src="{{baseLocImgUrl}}miniappImg/icon/icon_tested.png" class="storeInfo_testIcon">
+      </image>
+    </view>
+  </view>
+  <view class="division-area">
+  </view>
+  <!-- 企业执照 -->
+  <navigator url="./businessLicence/businessLicence?images={{supplierDetail.companyImage}}" hover-class="none" a:if="{{supplierDetail.companyImage}}">
+    <view class="item-info-area">
+      <text class="font-24 color-414141">企业执照    
+      </text>
+      <view class="right-icon-with-arrow">
+        <image src="{{baseLocImgUrl}}miniappImg/icon/icon_company_image.png" class="storeLicense">
+        </image>
+        <!-- <image src='{{baseLocImgUrl}}miniappImg/icon/icon_right_arrow.png' class='icon_arrRight'></image> -->
+        <view class="flex_view_row">
+          <text class="icon-href-right font-22 color-c7c7cc marRight_10">
+          </text>
+        </view>
+      </view>
+    </view>
+  </navigator>
+  <!-- 行业执照 -->
+  <navigator url="./businessLicence/businessLicence?images={{supplierDetail.businesImage}}" hover-class="none" a:if="{{supplierDetail.businesImage}}">
+    <view class="item-info-area">
+      <text class="font-24 color-414141">行业执照    
+      </text>
+      <view class="right-icon-with-arrow">
+        <image src="{{baseLocImgUrl}}miniappImg/icon/icon_business_image.png" class="industryLicense">
+        </image>
+        <!-- <image src='{{baseLocImgUrl}}miniappImg/icon/icon_right_arrow.png' class='icon_arrRight'></image> -->
+        <view class="flex_view_row">
+          <text class="icon-href-right font-22 color-c7c7cc marRight_10">
+          </text>
+        </view>
+      </view>
+    </view>
+  </navigator>
+  <!-- 商家简介 -->
+  <view class="item-info-area-no-border">
+    <text class="font-24 color-414141">商家简介  
+    </text>
+    <view class="right-icon-with-arrow" catchTap="showStoreDesc">
+      <view class="font-24 color-8f8f8f marRight_10">查看更多    
+      </view>
+      <!-- <image src='{{baseLocImgUrl}}miniappImg/icon/icon_right_arrow.png' class='icon_arrRight'></image> -->
+      <view class="flex_view_row">
+        <text class="icon-href-right font-22 color-c7c7cc marRight_10">
+        </text>
+      </view>
+    </view>
+  </view>
+  <view class="division-area">
+  </view>
+  <view class="store_pro whiteBack">
+    <view a:if='{{goodsList.length > 0}}' class="store_proOneSide">
+      <block a:for="{{goodsList}}" a:key="itemIndex">
+        <template is="itemGoodsColumn" data="{{...item,left:true,baseImageUrl:baseImageUrl,baseLocImgUrl,smallImgArg}}" a:if="{{index % 2 == 0}}">
+        </template>
+      </block>
+    </view>
+    <view a:if='{{goodsList.length > 0}}' class="store_proOneSide">
+      <block a:for="{{goodsList}}" a:key="itemIndex2">
+        <template is="itemGoodsColumn" data="{{...item,left:false,baseImageUrl:baseImageUrl,baseLocImgUrl,smallImgArg}}" a:if="{{index % 2 != 0}}">
+        </template>
+      </block>
+    </view>
+  </view>
+  <view class="padHeight">
+  </view>
+  <view class="bottom-view">
+    <view class="bottom-view-button font-32 color-white" catchTap="goToWebCall">联系商家 
+    </view>
+  </view>
+</view>
+<!-- 规格选择框 -->
+<template is="storeDesc" data="{{baseImgUrlLoc: baseLocImgUrl,show:showStoreDesc,introduction:supplierDetail.introduction}}"/>
+<!--toast弹窗-->
+<view class="mark flex_view_col align_cen justi_cen" a:if="{{showToast}}">
+  <view class="toastView_wb" catchtouchmove="move">
+    <view class="toastView_wb_con font-26 color-232323">      {{showToastMes}}        
+    </view>
+  </view>
+</view>

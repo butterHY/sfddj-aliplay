@@ -1,0 +1,98 @@
+<import src="../common/item-goods-column"/>
+<import-sjs name='filters' from="../wxsFile/public.sjs"/>
+<!-- 加载中 -->
+<view a:if="{{!loadComplete && !loadFail}}">
+	<loading-now></loading-now>
+</view>
+<!-- 加载失败 -->
+<view a:elif="{{loadFail}}">
+	<load-fail></load-fail>
+</view>
+<!-- 没有网络提示这个 -->
+<!--<view a:elif="{{!wifiAvailable}}"><no-wifi></no-wifi></view> -->
+<view a:else>
+	<view a:if="{{result.length > 0}}">
+		<view class="goods-item-view" a:for="{{result}}" a:for-index="findex" a:key="result">
+			<view class="goods-item-title-view">
+				<view class="goods-item-title-name-view">
+					<!--<text data-findex="{{findex}}" class="alipay_catch_img" catchTap="shopSelectTap"><image class="icon_sel" src="{{item.taped ? baseLocImgUrl + 'miniappImg/icon/icon_sel.png' : baseLocImgUrl + 'miniappImg/icon/icon_unsel.png'}}"/></text> -->
+					<text class="icon-check icon_cirCheck marLeft_30 {{item.shelves ? (item.taped ? 'checkActive' : '') : 'checkUseless'}}" data-findex='{{findex}}' catchTap='{{item.shelves ? "shopSelectTap" : ""}}'></text>
+					<image src="{{baseLocImgUrl}}miniappImg/icon/icon_shop.png" class="icon_shop"></image>
+					<view class="font-24 color-323232 marLeft_14">{{item.nickName}}</view>
+				</view>
+				<navigator class="goToStore" url="/pages/shopping/storeInfo/storeInfo?supplierId={{item.id}}" hover-class="none" open-type="navigate">
+					<!--<image src='{{baseLocImgUrl}}miniappImg/icon/icon_right_arrow.png' class='icon_arrRig'></image> -->
+					<text class="icon-href-right font-22 color-c7c7cc"></text>
+				</navigator>
+			</view>
+			<list a:for="{{item.showCarts}}" a:key="productList">
+				<swipe-action data-findex="{{findex}}" data-cart="{{item.cartId}}" data-index="{{index}}" index="{{index}}" restore="{{true}}" right="{{slideButtons.right}}" onRightItemClick="removeItem" onSwipeStart="onSwipeStart" extra="{{item.cartId}}">
+					<list-item className="width_100 padNone" index="{{index}}" key="items-{{index}}" last="{{true}}">
+						<view class="goods-item-product-view" data-findex="{{findex}}" data-index="{{index}}" style="right:{{item.right}}rpx">
+							<!--<text data-findex="{{findex}}" data-index="{{index}}" class="alipay_catch_img" catchTap="productSelectTap"><image class="icon_sel" src="{{item.taped ? baseLocImgUrl + 'miniappImg/icon/icon_sel.png' : baseLocImgUrl + 'miniappImg/icon/icon_unsel.png'}}"/></text> -->
+							<view class="selectCircle" catchTap='{{item.shelves ? (item.sellout == 0 ? "productSelectTap" : "") : ""}}' data-findex='{{findex}}' data-index='{{index}}'>
+								<text class="icon-check icon_cirCheck icon_goodsCheck {{item.shelves ? (item.sellout == 0 ? (item.taped ? 'checkActive' : 'checkNormal') : 'checkUseless') : 'checkUseless'}} marRight_30 marLeft_30"></text>
+							</view>
+							<navigator hover-class url="/pages/shopping/goodsDetail/goodsDetail?goodsSn={{item.goodsSn}}&goodsId={{item.goodsId}}" hover-class="none">
+								<image src="{{baseImageUrl}}{{item.imgPath}}{{smallImgArg}}" class="goodsImg"></image>
+							</navigator>
+							<navigator class="goods-item-product-text-view" hover-class="none" url="/pages/shopping/goodsDetail/goodsDetail?goodsSn={{item.goodsSn}}&goodsId={{item.id}}">
+								<text class="goodsName font-28 color-323232">{{item.goodsName}}</text>
+								<text class="goodsSpecName font-24 color-a1a0a0">规格:{{item.productName}}</text>
+								<view class="price-number-view">
+									<view class="marTop_36 font-26 color-ff5353">{{item.shelves ? '￥' + filters.toFix(item.salePrice * item.quantity) : '暂无报价'}}</view>
+									<view class="number-pick-view marRight_30">
+										<view class="number-pick-view-symbol" data-cartid="{{item.cartId}}" data-quantity="{{item.quantity}}" data-findex="{{findex}}" data-index="{{index}}" catchTap="{{item.shelves ? (item.sellout == 0 ? 'subtractTap' : '') : ''}}">-</view>
+										<view class="number-pick-view-text">{{item.quantity}}</view>
+										<view class="number-pick-view-symbol" data-cartid="{{item.cartId}}" data-quantity="{{item.quantity}}" data-findex="{{findex}}" data-index="{{index}}" catchTap="{{item.shelves ? (item.sellout == 0 ? 'addTap' : '') : ''}}">+</view>
+									</view>
+								</view>
+							</navigator>
+							<!-- 商品下架icon -->
+							<view a:if="{{!item.shelves || item.sellout == 1}}" class="posi_ab goodsTypeIcon">
+								<image a:if="{{!item.shelves}}" src="{{baseLocImgUrl}}miniappImg/loading/goodsNull.png" class="goodsNullImg"></image>
+								<image a:else src="{{baseLocImgUrl}}miniappImg/loading/goodsSellOut.png" class="goodsNullImg"></image>
+							</view>
+							<!--<view class="item-remove" data-cart="{{item.cartItemId}}" catchTap="removeItem">删除</view> -->
+						</view>
+					</list-item>
+				</swipe-action>
+			</list>
+		</view>
+	</view>
+	<view class="empty-view" a:else>
+		<image src="{{baseLocImgUrl}}miniappImg/icon/icon_cart_empty.png" class="icon_empty"></image>
+		<text class="font-30 color-b3b3b3 marTop_20">购物车是空的哦~</text>
+	</view>
+	<view class="item-tag-view font-26 color-b3b3b3" a:if="{{recommondList.length > 0}}">- 猜你喜欢 -</view>
+	<view class="guessLike js_guessLike" a:if="{{recommondList.length > 0}}">
+		<view class="guessLikeView ">
+			<block a:for="{{recommondList}}" a:key="itemIndex">
+				<template is="itemGoodsColumn" data="{{...item,left:true,baseImageUrl:baseImageUrl,baseLocImgUrl,index,smallImgArg}}" a:if="{{index % 2 == 0}}"></template></block>
+		</view>
+		<view class="guessLikeView">
+			<block a:for="{{recommondList}}" a:key="itemIndex2">
+				<template is="itemGoodsColumn" data="{{...item,left:false,baseImageUrl:baseImageUrl,baseLocImgUrl,index,smallImgArg}}" a:if="{{index % 2 != 0}}"></template></block>
+		</view>
+	</view>
+	<view class="height_100R"></view>
+	<view class="bottom-view" a:if="{{result.length > 0}}">
+		<view class="selected-all-view" catchTap="allSelectedTap">
+			<image class="icon_sel" src="{{AllFlag ? baseLocImgUrl + 'miniappImg/icon/icon_sel.png' : baseLocImgUrl + 'miniappImg/icon/icon_unsel.png'}}"></image>
+			<view class="marLeft_24 font-26 color-323232">全选</view>
+		</view>
+		<view class="account-view">
+			<view class="font-30 color-323232">合计</view>
+			<view class="font-30 color-ff5353 marRight_40">￥{{totalPrice}}</view>
+			<view class="bottom-text-red-bg" catchTap="toPayTap">去结算({{count}})</view>
+		</view>
+	</view>
+</view>
+<!--toast弹窗-->
+<view class="mark flex_view_col align_cen justi_cen" a:if="{{showToast}}">
+	<view class="toastView_wb" catchtouchmove="move">
+		<view class="toastView_wb_con font-26 color-232323">
+      {{showToastMes}}
+		</view>
+	</view>
+</view>

@@ -1,0 +1,9 @@
+{
+  "titleBarColor": "#ffffff",
+  "defaultTitle": "分类",
+  "pullRefresh": false,
+  "usingComponents": {
+    "loading-now": "../components/loadingNow/loadingNow",
+    "load-fail": "../components/loadFail/loadFail"
+  }
+}
