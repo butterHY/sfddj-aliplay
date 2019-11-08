@@ -1,0 +1,34 @@
+@import '../../../css-public/coupon.acss';    /*优惠券的样式*/
+.all_100v {
+	width: 100%;
+	height: 100vh;
+}
+
+.hasGrayCoupon{
+  padding: 0 20rpx;
+}
+
+.myCoupon_noMore{
+  text-align: center;
+}
+
+.icon_noMoreImg{
+  padding: 60rpx 30rpx 10rpx;
+}
+
+.icon_empty{
+  width: 450rpx;
+  height: 275rpx;
+}
+
+.nomore_txt{
+  font-size: 26rpx;
+  color: #a1a0a0;
+  padding: 20rpx 0 40rpx;
+}
+
+.loading_gif{
+  width: 26rpx;
+  height: 26rpx;
+  margin-right: 8rpx;
+}

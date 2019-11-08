@@ -18,7 +18,7 @@
     <!--地址列表-->
     <view a:if="{{addressList.length > 0}}">
       <view a:for="{{addressList}}" a:for-item="address" a:key="itemIndex">
-        <template data="{{...address,index,baseLocImgUrl:baseImgLocUrl}}" is="itemAddress"></template>
+        <template data="{{...address,index,baseLocImgUrl:baseImgLocUrl,comeFrom}}" is="itemAddress"></template>
       </view>
     </view>
     <!--没有地址时展示-->

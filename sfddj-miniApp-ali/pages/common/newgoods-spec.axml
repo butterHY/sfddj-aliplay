@@ -1,6 +1,4 @@
 <template name="goodsSpec">  
-  <!-- a:if="{{show}}" -->
-
   <view style="position:fixed;top:0;left:0;right:0;bottom:0;background-color:rgba(0,0,0,0.5);z-index:9000" catchTouchMove="move"  a:if="{{show}}">
       <view style="height:20%" catchTap="colseSpecDialog"></view>
       <!-- onTap="tapSpec" 下面 view 的事件，但没发现该函数 -->
@@ -9,7 +7,7 @@
           <view class="goods-spec-info-start">
               <image src="{{baseImageUrl}}{{product.imgPath}}" class="showImag"></image>
               <!-- 从目前goodsDetail.js 的代码来看并没有 type == 1 和 type == 2 和 type == 5 的赋值 -->
-              <!-- 积分商品 type == 3，物返现商品 type == 4 -->
+              <!-- 只有积分商品 type == 3，物返现商品 type == 4 -->
               <view class="goods-spec-text marTop_50">
                 <view class="font-40 color-ff5353" a:if="{{type == 1}}">
                   <text>￥{{product.tuanPrice}}</text><text class="font-24 color-666 marLeft_15" a:if="{{SFmember}}">+{{product.costMemberScoreAll ? product.costMemberScoreAll : 0}}积分</text> 
@@ -25,7 +23,7 @@
 
                 <!-- 其他 -->
                 <view class="font-40 color-ff5353" a:else>
-                  <text class="aba" a:if="{{product.activitysPrice}}">￥{{product.secondKillPrice}}</text>
+                  <text class="aba" a:if="{{product.activityPrice}}">￥{{product.secondKillPrice}}</text>
                   <text class="aba" a:elif="{{!SFmember || SFmember && type == 5}}">￥{{product.goodsPrice}}</text>
                   <!-- 会员商品 -->
                   <text class="cbc" a:if="{{SFmember && type != 5}}">￥ {{product.memberPriceAll}}</text>
@@ -51,7 +49,6 @@
             <text style="width:22rpx;height:24rpx;margin-top:30rpx;margin-right:30rpx;" class="alipay_catch_img" catchTap="colseSpecDialog"><image class="all_100" src="{{baseLocImgUrl}}miniappImg/icon/icon_cancel.png"/></text>
         </view>
 
-
         <!-- 规格 -->
         <scroll-view class="marTop_50 marLeft_30" style="height:400rpx" scroll-y="true" catchtouchmove="move" a:if="{{goodsSpecMap}}">
           <block a:for="{{goodsSpecMap}}" a:for-index="fatherIndex" a:key="goodsSpecMap">
@@ -65,7 +62,7 @@
                       <text class="iavValueText">{{item.iavValue}}</text>
                     </view>
                   </view>
-                  <view class="goods-spec-view-normal"  a:else data-index="{{index}}" style="{{ item.taped ? 'color: #ff2e2e;background: #ffdcdc;' : 'color:#191616; background: #f2f2f2;'}}" data-fatherindex="{{fatherIndex}}" a:key="iakValue" catchTap="specItemTap">
+                  <view class="goods-spec-view-normal"  a:else style="{{ item.taped ? 'color: #ff2e2e;background: #ffdcdc;' : 'color:#191616; background: #f2f2f2;'}}" data-fatherindex="{{fatherIndex}}"  data-index="{{index}}" a:key="iakValue" catchTap="specItemTap">
                     <view class="flex_view_row align_cen justi_around">
                       <image class="width-40" mode="widthFix" a:if="{{item.imgPath}}" src="{{baseImageUrl}}{{item.imgPath}}"/>
                       <text class="iavValueText">{{item.iavValue}}</text>
@@ -85,7 +82,7 @@
           </block>
         </scroll-view>
 
-        <!-- 团购时的规格选择（单规格选择） -->
+        <!-- 支付宝没有团购，这一段无作用团购时的规格选择（单规格选择） -->
         <block a:if="{{allProduct}}">
           <view class="font-24" style="margin-left:30rpx">规格:</view>
           <scroll-view style="height:380rpx" scroll-y="true" catchtouchmove="move">
@@ -110,7 +107,8 @@
           <block a:if="{{specType == 'OPTIONAL'}}">
             <view class="whiteBack buttonView">
               <view class="goods-sepc-bottom-button2">
-                <view class="flex_1  shopButton" a:if="{{optionalProduct.length == xgCount && selectedSpecsBar}}" catchTap="optionalSubmitTap">立即购买</view>
+                <view class="flex_1  shopButton" a:if="{{goodsStore == 0}}">查看类似商品</view>
+                <view class="flex_1  shopButton" a:elif="{{optionalProduct.length == xgCount && selectedSpecsBar}}" catchTap="optionalSubmitTap">立即购买</view>
                 <view class="flex_1  shopButton" a:elif="{{optionalProduct.length == xgCount && !selectedSpecsBar}}" catchTap="goodsSpecSubmitTap">确定</view>
                 <view class="flex_1  shopButton gray" a:else>还需要选 {{xgCount - optionalProduct.length}} 种规格</view>
               </view>
@@ -119,7 +117,8 @@
           <block a:else>
             <view class="whiteBack buttonView">
               <view class="goods-sepc-bottom-button2">
-                <block a:if="{{selectedSpecsBar}}">  
+                <view class="flex_1  shopButton" a:if="{{goodsStore == 0}}">查看类似商品</view>
+                <block a:elif="{{selectedSpecsBar}}">  
                   <view class="flex_1  shopButton shopCart_button" data-addCart="addCart" catchTap="addCart">加入购物车</view>
                   <view class="flex_1  shopButton" data-buyNow="buyNow" catchTap="buyNow">立即购买</view>
                 </block>

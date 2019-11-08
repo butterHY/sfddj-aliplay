@@ -11,19 +11,19 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    try {
-      var link = my.getStorageSync({
-        key: 'swiperUrl', // 缓存数据的key
-      }).data;
-      console.log(link)
+    // try {
+    //   var link = my.getStorageSync({
+    //     key: 'swiperUrl', // 缓存数据的key
+    //   }).data;
+    //   console.log(link)
       this.setData({
-        link: link
+        link: options.link
       });
-      console.log(this.data.link)
-      my.removeStorageSync({
-        key: 'swiperUrl', // 缓存数据的key
-      });
-    } catch (e) {}
+    //   console.log(this.data.link)
+    //   my.removeStorageSync({
+    //     key: 'swiperUrl', // 缓存数据的key
+    //   });
+    // } catch (e) {}
   },
 
   /**

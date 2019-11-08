@@ -2,7 +2,7 @@
 <template name="itemGoodsScrollX">
 
   <view style="display:inline-block;padding-right:20rpx">
-    <navigator url="/pages/shopping/goodsDetail/goodsDetail?goodsSn={{goodsSn}}&goodsId={{id}}" open-type="redirect" hover-class="none" class="posi_re {{isLoaded ? '' : 'js_goodsList_' + index}}">
+    <navigator url="/pages/shopping/goodsDetail/goodsDetail?goodsSn={{goodsSn}}&goodsId={{id ? id : goodsId}}" open-type="redirect" hover-class="none" class="posi_re {{isLoaded ? '' : 'js_goodsList_' + index}}">
       <image a:if="{{showImage}}" src="{{baseImageUrl}}{{showImage}}" style="width:180rpx;height:180rpx"></image>
 	  <image a:if="{{goodsDefaultImage && !showImage}}" src="{{baseImageUrl}}{{goodsDefaultImage}}" style="width:180rpx;height:180rpx"></image>
 

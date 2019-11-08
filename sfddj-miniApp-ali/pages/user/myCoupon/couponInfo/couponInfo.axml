@@ -1,0 +1,20 @@
+<view class='couponInfo'>
+  <view class='couponInfoTit'>顺丰大当家平台优惠券</view>
+  <!--优惠券-->
+   <view class='couponInfoArea'>
+    <view a:for="{{platList}}" onTap='platListEvent' data-index='{{index}}' a:key='questionList' class='couponPlatList'>
+
+      <view class='eachBlock_view'>
+        <view class='font-26 '>{{item.title}}</view>
+        <view a:if="{{item.open}}" class='arrowDetail'><text class='icon-href-up font-22 color-8f8f8f'></text></view>
+        <view a:else class='arrowDetail'><text class='icon-href-down font-22 color-8f8f8f'></text></view>
+      </view>
+
+      <view a:if="{{item.open}}" class='eachBlock_open font-26'>
+        <text>{{item.content}}</text>
+      </view>
+
+    </view>
+  </view> 
+
+</view>

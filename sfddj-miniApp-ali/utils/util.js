@@ -45,8 +45,8 @@ function login(suc, fail) {
 				success: function(res) {
 					if (res.data.errorCode == '0001') {
 						my.setStorageSync({ key: constants.StorageConstants.tokenKey, data: res.data.result.loginToken });
-						my.setStorageSync({ key: 'user_memId', data: res.data.result.memberId });
 
+						my.setStorageSync({ key: 'user_memId', data: res.data.result.memberId });
 						if (suc) {
 							suc();
 						}

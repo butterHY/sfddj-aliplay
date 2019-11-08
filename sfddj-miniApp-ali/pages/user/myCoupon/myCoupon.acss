@@ -1,4 +1,5 @@
 /* pages/user/myCoupon/myCoupon.wxss  */
+@import '../../../font/font-myInfo.acss';
 
 @import '../../css-public/coupon.acss';    /*优惠券的样式*/
 
@@ -256,6 +257,60 @@
 
 /* 新版我的优惠券样式 ---190709 start */
 
+.myCoupon_exchangeBox {
+  padding: 20rpx;
+}
+
+.myCoupon_input{
+  height: 68rpx;
+  background: #f0f0f0;
+  border: none;
+  border-radius: 5px;
+  /* overflow: hidden; */
+  box-sizing: border-box;
+}
+
+.myCoupon_input .am-input-item {
+  padding: 0;
+  background:#f0f0f0;
+  height: 68rpx;
+  border-radius: 5px;
+  /* overflow: hidden; */
+}
+
+.myCoupon_input .am-input-item .am-input-line {
+  min-height: 68rpx;
+  height: 68rpx;
+  border-color: #f0f0f0;
+  box-sizing: border-box;
+}
+
+.am-input-content {
+  height: 68rpx;
+  background: #f0f0f0;
+  box-sizing: border-box;
+  padding-left: 24rpx;
+}
+
+.myCoupon_exchangeBtn{
+  font-size: 32rpx;
+  height: 68rpx;
+  width: 140rpx;
+  line-height: 68rpx;
+  margin: 0;
+}
+
+.myCoupon_exchangeBtn.greyBtn{
+  background-color:#ffffff; 
+  border-color: #ffffff;
+  color: rgba(0,0,0,0.8);
+}
+
+.myCoupon_exchangeBtn.redBtn{
+  background-color:#ffffff; 
+  border-color: #ffffff;
+  color: #ff4f2c;
+}
 
 .myConpon_footer {
   position: fixed;
@@ -271,6 +326,25 @@
   line-height: 75rpx;
 }
 
+/* 使用说明样式 ----- start */
+
+.couponUseTip{
+  text-align: right;
+  padding-bottom: 25rpx;
+}
+
+.couponUseTipArea{
+  color: #a1a0a0;
+  font-size: 26rpx;
+}
+
+.couponUseIcon{
+  margin-left: 5rpx;
+  vertical-align: -3rpx;
+}
+
+/* 使用说明样式 ----- end */
+
 .color-blue {
   color: dodgerblue;
 }
@@ -280,6 +354,166 @@
   color: #a1a0a0;
   padding: 20rpx 0;
   margin-bottom: 75rpx;
+}
+
+/* 优惠券样式修改 --- 2019-9-12 start */
+.all_100v {
+	width: 100%;
+	height: 100vh;
+}
+
+.couponLoading_view{
+  font-size: 32rpx;
+  color: #a1a0a0;
+  margin-top: 20rpx;
+  text-align: center;
+}
+
+.myCoupon_coupon{
+  padding-bottom: 74rpx;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.couponPageBg{
+  background-color: #f5f5f5;
+}
+
+.myCoupon_exchangeBox{
+  padding: 20rpx;
+}
+
+.myCoupon_input{
+  height: 68rpx;
+  background: #f0f0f0;
+  border: none;
+  border-radius: 5px;
+}
+
+.myCoupon_exchangeBtn{
+  font-size: 32rpx;
+  height: 68rpx;
+  width: 140rpx;
+  line-height: 68rpx;
+  margin: 0;
+}
+
+.myCoupon_exchangeBtn.greyBtn{
+  background-color:#ffffff; 
+  border-color: #ffffff;
+  color: rgba(0,0,0,0.8);
+}
+
+.myCoupon_exchangeBtn.redBtn{
+  background-color:#ffffff; 
+  border-color: #ffffff;
+  color: #ff4f2c;
+}
+
+.icon_noMoreImg{
+  text-align: center;
+  margin-top: 90rpx;
+}
+
+.icon_empty{
+  display: inline-block;
+  width: 315rpx;
+  height: 190rpx;
+}
+
+.nomore_txt{
+  font-size: 32rpx;
+  color: #a1a0a0;
+  margin-top: 20rpx;
+  text-align: center;
+}
+
+.guessLikeTit{
+  color: rgba(50,50,50,0.8);
+  font-size: 32rpx;
+  text-align: left;
+  margin: 26rpx 0 10rpx 20rpx;
+}
+
+.guessLike {
+  display: flex;
+  padding: 0 20rpx;
+  box-sizing: border-box;
+}
+
+.guessLikeView {
+  width: 50%;
+  box-sizing: border-box;
+  position: relative;
+  padding: 0;
+  border: none;
+  overflow: hidden;
+}
+
+.goodsArea{
+    position: relative;
+    display: block;
+    background-color: #FFFFFF;
+    box-shadow: 1px 1px 2px rgba(105,105,105,.1), -1px 1px 2px rgba(105,105,105,.1);
+    border-radius: 10px;
+    box-sizing: border-box;
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+}
+
+.goodsImg{
+    text-align: center;
+    position: relative;
+    height: 312rpx;
+    width: auto;
+    margin: 0;
+    overflow: hidden;
+    box-sizing: border-box;
+    line-height: 312rpx;
+}
+
+.goodsImg image{
+    display: inline-block;
+    width: 260rpx;
+    height: 260rpx;
+    border-radius: 2px;
+    vertical-align: middle;
+}
+
+.loading_view{
+  font-size: 26rpx;
+  color: #323232;
+  margin-bottom: 100rpx;
+}
+
+.loading_gif{
+  width: 26rpx;
+  height: 26rpx;
+  margin-right: 8rpx;
+}
+
+.contactArea{
+  position: fixed;
+  bottom: 390rpx;
+  right: 30rpx;
+  z-index: 10;
+}
+
+.contactIcon{
+  width: 122rpx;
+  height: 124rpx;
+}
+
+.guessLikeCart{
+  height:45rpx;
+  width:45rpx;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: 5;
+  margin: 20rpx;
+  user-select: none;
 }
 
 /* 新版我的优惠券样式 ---190709 end */

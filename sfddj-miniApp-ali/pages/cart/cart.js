@@ -43,6 +43,9 @@ Page({
 		floatVal: 50,
 		swipeIndex: null,
 		slideButtons: { right: [{ type: 'delete', text: '删除' }] },
+		user_memId: '默认是会员',         //是否存在memberId，判断是否绑定手机号
+    isProhibitTap: false,                                     // 当点击数量输入框获取焦点的时候，则禁止数量左右的加减事件
+    // isFocus: false,
 	},
 
 	/**
@@ -50,6 +53,7 @@ Page({
 	 */
 	onLoad: function(options) {
 		var that = this;
+
 
 		// 静态增加
 		result = that.data.result;
@@ -65,11 +69,16 @@ Page({
 	 * 每次进入页面刷新最新购物车数据
 	 */
 	onShow: function() {
+    var that = this;
 		// 初始化
 		cartIdArray = [];
 		// utils.getNetworkType(this);
+    // this.setData({
+    //   isFocus: false
+    // })
 		this.getCartData();
-		this.getGuessLike();
+
+    that.getCartNumber();
 	},
 
 	/**
@@ -218,7 +227,6 @@ Page({
 		sendRequest.send(constants.InterfaceUrl.SHOW_CART, {}, function(res) {
 			// 获取猜你喜欢
 			// that.getCartData();
-
 			result = res.data.result;
 			// 初始化每个商品的位置
 			for (var i = 0; i < result.length; i++) {
@@ -257,13 +265,31 @@ Page({
 	},
 
 
-	getCartData: function() {
+	getCartData: function(findex, index) {
 		var that = this
 		http.get(api.CART.SHOW_CART, {}, function(res) {
+
+			// 判断是否绑定了手机
+			try {
+				let user_memId = my.getStorageSync({
+					key: "user_memId",
+				}).data;
+				that.setData({
+					user_memId: user_memId == 'null' || user_memId == null || user_memId == 'undefined' || user_memId == undefined ? '默认是会员' : user_memId
+				})
+			} catch (e) {
+			}
+
+
+			that.getGuessLike();
+
 			result = res.data.data ? res.data.data : []
 
 			for (var i = 0; i < result.length; i++) {
-				result[i].shelves = !result[i].showCarts.every(item => item.shelves == false || item.sellout == 1)
+				result[i].shelves = !result[i].showCarts.every(item => item.shelves == false || item.sellout == 1);
+        result[i].showCarts.forEach(function(value) {
+          value.copyQuantity = value.quantity;
+        })
 			}
 
 			that.setData({
@@ -423,6 +449,7 @@ Page({
 			//   title: '加载中',
 			// })
 			that.getCartData(); //更新购物车
+      that.getCartNumber();
 		}, function(res) {
 			my.hideLoading();
 			// wx.showToast({
@@ -446,6 +473,10 @@ Page({
 	*/
 	subtractTap: function(e) {
 		var that = this;
+    if(that.data.isProhibitTap) {
+      return;
+    }
+
 		var findex = e.currentTarget.dataset.findex;
 		var index = e.currentTarget.dataset.index;
 		var quantity = parseInt(e.currentTarget.dataset.quantity);
@@ -464,24 +495,44 @@ Page({
 	/**
 	 * 修改购物车数量
 	 */
-	updateCart: function(cartId, quantity, findex, index) {
+	updateCart: function(cartId, quantity, findex, index, isOnnBlur) {
 		var that = this;
-		my.showLoading({
-			content: '加载中'
-		});
+		// my.showLoading({
+		// 	content: '加载中'
+		// });
 		sendRequest.send(constants.InterfaceUrl.SHOP_UPDATE_CART, { cartId: cartId, quantity: quantity }, function(res) {
 			result[findex].showCarts[index].quantity = quantity;
+      result[findex].showCarts[index].copyQuantity = quantity;
 			// result[findex].productList[index].totalPrice = (quantity * that.data.result[findex].productList[index].salePrice).toFixed(2);
-			my.hideLoading();
+			// my.hideLoading();
+      my.showToast({
+				content: '修改成功'
+			});
+
 			that.setData({
 				result: result
 			});
+
 			that.setAll();
+
+      if(isOnnBlur) {
+        that.setData({
+          isProhibitTap: false
+        })
+      }
+      that.getCartNumber();
 		}, function(res) {
-			my.hideLoading();
+			// my.hideLoading();
 			my.showToast({
 				content: res
 			});
+      if(isOnnBlur) {
+        result[findex].showCarts[index].copyQuantity = result[findex].showCarts[index].quantity;
+        that.setData({
+          isProhibitTap: false,
+          result: result
+        })
+      }
 		});
 	},
 
@@ -490,6 +541,10 @@ Page({
 	 */
 	addTap: function(e) {
 		var that = this;
+    if(that.data.isProhibitTap) {
+      return;
+    }
+
 		var findex = e.currentTarget.dataset.findex;
 		var index = e.currentTarget.dataset.index;
 		var quantity = parseInt(e.currentTarget.dataset.quantity);
@@ -511,6 +566,74 @@ Page({
 		that.updateCart(cartId, quantity, findex, index);
 	},
 
+  /**
+	* 点击数据输入数量（手动输入数量，如果数量大于最大数量，则让默认规格的各个价格和积分按照最大数量来计算，如果没有大于最大数量则还是按照输入的数量来计算）
+	* */
+	changeQuantity: function(e) {
+    var that = this;
+		var findex = e.currentTarget.dataset.findex;
+		var index = e.currentTarget.dataset.index;
+		// var quantity = parseInt(e.currentTarget.dataset.quantity);1
+    var copyQuantity = Number(e.detail.value); 
+		var cartId = e.currentTarget.dataset.cartid;
+
+    if (copyQuantity > 99) {
+			my.showToast({
+				content: '不能大于99'
+			});
+      copyQuantity = 99;
+		} 
+
+    that.data.result[findex].showCarts[index].copyQuantity = copyQuantity;
+
+    that.setData({
+      result: that.data.result
+    })
+    
+	},
+
+  	/**
+	 *输入数量失去焦点（失去焦点的时候如果数量小于最小数量或者等于 ‘’ , 那就把默认规格的各个价格和积分按照最低数量来计算）       
+	 * 
+	*/
+	inputBlur: function(e) {
+    var that = this;
+		var findex = e.currentTarget.dataset.findex;
+		var index = e.currentTarget.dataset.index;
+    var quantity = that.data.result[findex].showCarts[index].quantity;
+    var copyQuantity = Number(e.detail.value); 
+		var cartId = e.currentTarget.dataset.cartid;
+
+    // 所有 Number(e.detail.value)  == NaN 的情况在 input 组件中返回都会转化为 0；
+    if (copyQuantity == quantity) {
+      that.setData({
+        isProhibitTap: false
+      })
+      return;
+		} else if (copyQuantity < 1 || copyQuantity == '') {
+      my.showToast({
+				content: '不能少于1'
+			});
+      copyQuantity = 1;
+    } else if(!copyQuantity) {
+      my.showToast({
+				content: '请输入正确的数字'
+			});
+      that.setData({
+        isProhibitTap: false
+      })
+			return;
+    } 
+    
+    that.updateCart(cartId, copyQuantity, findex, index, 'onBlur');
+	},
+
+  prohibitTap: function() {
+    this.setData({
+      isProhibitTap: true
+    })
+  },
+
 	//---------------滑动删除逻辑开始---------------//
 	drawStart: function(e) {
 		var touch = e.touches[0];
@@ -528,6 +651,7 @@ Page({
 		}
 		key = true;
 	},
+
 	drawEnd: function(e) {
 		var dataList = [];
 		for (var i in result) {
@@ -545,6 +669,7 @@ Page({
 			result: result
 		});
 	},
+
 	drawMove: function(e) {
 		var self = this;
 		var findex = e.currentTarget.dataset.findex;
@@ -605,9 +730,11 @@ Page({
 		sendRequest.send(constants.InterfaceUrl.SHOP_REMOVE_CART + cartId, { cartId: cartId }, function(res) {
 			if (res.data.errorCode == '0001') {
 				that.getCartData();
+        that.getCartNumber();
 			}
 		}, function(res) { });
 	},
+  
 	getNetworkType() {
 		my.getNetworkType({
 			success: (res) => {
@@ -616,7 +743,83 @@ Page({
 				})
 			}
 		});
-	}
+	
+	},
+
+
 	//---------------滑动删除逻辑结束---------------//
+
+
+
+	// 获取手机号
+	getPhoneNumber: function(e) {
+		var that = this;
+
+		my.getPhoneNumber({
+			success: (res) => {
+				let response = res.response
+				sendRequest.send(constants.InterfaceUrl.USER_BINGMOBILEV4, {
+					response: response,
+				}, function(res) {
+					console.log(res)
+					if (res.data.result) {
+						try {
+							my.setStorageSync({ key: constants.StorageConstants.tokenKey, data: res.data.result.loginToken });
+							my.setStorageSync({ key: 'user_memId', data: res.data.result.memberId });
+						} catch (e) {
+							my.setStorage({ key: 'user_memId', data: res.data.result.memberId });
+						}
+					}
+					else {
+
+					}
+
+
+
+					my.showToast({
+						content: '绑定成功'
+					})
+					that.setData({
+						user_memId: res.data.result ? res.data.result.memberId : '默认会员'
+					})
+				}, function(res, resData) {
+					var resData = resData ? resData : {}
+					if (resData.errorCode == '1013') {
+						that.setData({
+							user_memId: '默认会员'
+						})
+						my.setStorage({ key: 'user_memId', data: '默认会员' });
+					}
+					else {
+						my.showToast({
+							content: res
+						})
+
+					}
+
+				});
+			},
+			fail: (res) => {
+				my.navigateTo({
+					url: '/pages/user/bindPhone/bindPhone'
+				});
+			},
+		});
+
+	},
+
+	// 获取手机号失败
+	onAuthError(res) {
+		return
+	},
+
+
+        /**
+	 * 获取购物车数量
+	 */
+	getCartNumber: function() {
+    var app = getApp();
+    app.getCartNumber();
+	},
 
 });

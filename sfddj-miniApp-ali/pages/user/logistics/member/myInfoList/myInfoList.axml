@@ -1,0 +1,166 @@
+<import src="../../../we-cropper/we-cropper"/>  
+<!-- 加载中 -->
+<view a:if="{{!loadComplete}}">
+  <loading-now></loading-now>  
+</view>
+<!-- 加载失败 -->
+<view a:elif="{{loadFail && wifiAvailable}}">
+  <load-fail></load-fail>
+</view>
+<!-- 没有网络提示这个 -->
+<!-- <view a:elif="{{!wifiAvailable}}">
+  <no-wifi></no-wifi>
+</view> -->
+<view a:else>
+  <!--头像、昵称、手机号部分  -->
+  <view class="padRL_26 whiteBack">
+    <!--头像  -->
+    <view class="headImg flex_view_row justi_between align_cen">
+      <view>
+        <text class="color-414141 font-26">头像</text>
+      </view>
+      <view class="flex_view_row align_cen">
+        <image src="{{result.avatar}}" class="avatarImg" a:if="{{result.avatar}}"></image>
+        <open-data type="userAvatarUrl" class="avatarImg overHid" a:if="{{!result.avatar}}"></open-data>
+        <image src="{{baseImgLocUrl}}miniappImg/icon/icon_right_arrow.png" class="icon_arrRight"></image>
+      </view>
+    </view>
+    <!--昵称  -->
+    <view class="nickNameBlock flex_view_row justi_between align_cen" data-showname="showChangeNickName" onTap="changeFn">
+      <view>
+        <text class="color-414141 font-26">昵称</text>
+      </view>
+      <view class="flex_view_row align_cen">
+        <text class="nickNameText font-26 marRight_10" a:if="{{userName}}">{{userName}}</text>  
+        <open-data type="userNickName" class="nickNameText font-26 marRight_10" a:if="{{!userName}}"></open-data>
+        <image src="{{baseImgLocUrl}}miniappImg/icon/icon_right_arrow.png" class="icon_arrRight"></image>
+      </view>
+    </view>
+    <!--手机号  -->
+    <navigator url="/pages/user/bindPhone/changePhoneNum/changePhoneNum" class="userPhone flex_view_row justi_between align_cen" hover-class="none">
+      <view>
+        <text class="color-414141 font-26">手机号</text>
+      </view>
+      <view class="flex_view_row align_cen">
+        <text class="nickNameText font-26 marRight_10">{{result.mobile}}</text>
+        <!-- <open-data></open-data> -->
+        <image src="{{baseImgLocUrl}}miniappImg/icon/icon_right_arrow.png" class="icon_arrRight"></image>
+      </view>
+    </navigator>
+  </view>
+
+  <!--间隙  -->
+  <view class="division-area"></view>
+
+  <!--性别、出生日期部分  -->
+  <view class="padRL_26 whiteBack">
+    <!--性别  -->
+    <view class="genderBlock flex_view_row justi_between align_cen" data-showname="showChangeSexual" onTap="changeFn">
+      <view>
+        <text class="color-414141 font-26">性别</text>
+      </view>
+      <view class="flex_view_row align_cen">
+         <text class="nickNameText font-26 marRight_10" a:if="{{gender == 'F'}}">女</text>
+         <text class="nickNameText font-26 marRight_10" a:if="{{gender == 'M'}}">男</text> 
+         <open-data type="userGender" class="nickNameText font-26 marRight_10" lang="zh_CN" a:if="{{!gender}}"></open-data>
+        <image src="{{baseImgLocUrl}}miniappImg/icon/icon_right_arrow.png" class="icon_arrRight"></image>
+      </view>
+    </view>
+
+    <!--出生日期  -->
+    <view mode="date" class="birthBlock width_100 posi_re flex_view_col  justi_cen">
+      
+      <picker mode="date" style='width: 100%; flex: 1;' value="{{birthday}}" onChange="chooseDate">
+        <view class="all_100 flex_view_row justi_between align_cen">
+          <view class="flex_1 ">
+            <text class="color-414141 font-26">出生日期</text>
+          </view>
+          <view class="flex_view_row align_cen">
+            <text class="nickNameText font-26 marRight_10">{{birthday}}</text>
+            <image src="{{baseImgLocUrl}}miniappImg/icon/icon_right_arrow.png" class="icon_arrRight"></image>
+          </view>
+        </view>
+        
+      </picker>      
+    </view>
+  </view>
+  
+  <!--间隙  -->
+  <view class="division-area"></view>
+
+  <!--地址  -->
+  <view class="padRL_26 whiteBack">
+    
+    <!--地址  -->
+    <navigator url="/pages/user/addressManage/addressManage" class="userPhone flex_view_row justi_between align_cen" hover-class="none">
+      <view>
+        <text class="color-414141 font-26">地址</text>
+      </view>
+      <view class="flex_view_row align_cen">
+        <image src="{{baseImgLocUrl}}miniappImg/icon/icon_right_arrow.png" class="icon_arrRight"></image>
+      </view>
+    </navigator>
+  </view>
+
+</view>
+
+<!--昵称修改  -->
+<view class="changeNickName all_100 posi_fix" a:if="{{showChangeNickName}}">
+  <view class="changeNickNameView whiteBack">
+    <view class="all_100 posi_re">
+      <input class="width_93 height_100 font-28" placeholder="您的昵称" placeholder-style="font-size: 26rpx;" value="{{nickName}}" onInput="changeNickNameFn"/>
+      <image src="{{baseImgLocUrl}}miniappImg/icon/delIcon.png" class="icon_del posi_ab" onTap="clearInput"></image>
+    </view>
+
+    <!--按钮  -->
+    <view class="width_100 flex_view_row justi_around marTop_40">
+      <view class="closeNickNameBtn tex_center flex_view_row align_cen justi_cen" onTap="closeNickNameChoose">
+        <text class="color-323232 font-32">取消</text>
+      </view>
+      <view class="saveNickNameBtn tex_center flex_view_row align_cen justi_cen" onTap="saveUserName">
+        <text class="color-white font-32">保存</text>
+      </view>
+    </view>
+  </view>
+</view>
+
+<!--性别修改  -->
+<view class="changeSexual all_100 posi_fix" a:if="{{showChangeSexual}}">
+  <view class="whiteBack padRL_26">
+    <view class="manRow width_100 flex_view_row justi_between align_cen" data-gender="M" onTap="changeSexual">
+      <text class="font-28 color-323232">男</text>      
+      <image src="{{baseImgLocUrl}}miniappImg/icon/icon_oraRight.png" class="icon_oraRight" a:if="{{gender == 'M'}}"></image>
+    </view>
+    <view class="height_78 width_100 flex_view_row justi_between align_cen" data-gender="F" onTap="changeSexual">
+      <text class="font-28 color-323232">女</text>      
+      <image src="{{baseImgLocUrl}}miniappImg/icon/icon_oraRight.png" class="icon_oraRight" a:if="{{gender == 'F'}}"></image>
+    </view>
+
+  </view>
+  <view class="width_100 flex_view_row justi_cen marTop_40">
+    <view class="closeGenderChoose tex_center" onTap="closeSexualChoose">
+        <text class="color-white font-32">确定</text>
+      </view>
+  </view>
+</view>
+
+<view class="cropper-wrapper" a:if="{{newCanvas}}">
+    <template is="we-cropper" data="{{...cropperOpt}}"/>
+    <view class="cropper-buttons">
+        <view class="upload flex_view_row align_cen justi_cen" onTap="uploadTap">
+            取消
+        </view>
+        <view class="getCropperImage flex_view_row align_cen justi_cen" onTap="getCropperImage">
+            确定
+        </view>
+    </view>
+</view>
+
+<!--toast弹窗-->
+<view class="mark flex_view_col align_cen justi_cen" a:if="{{showToast}}">
+  <view class="toastView_wb" catchtouchmove="move">
+    <view class="toastView_wb_con font-28 color-232323">
+      {{showToastMes}}
+    </view>
+  </view>
+</view>

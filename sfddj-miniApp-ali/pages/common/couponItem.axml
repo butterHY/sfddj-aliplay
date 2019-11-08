@@ -19,7 +19,7 @@
             <!-- 标题 -->
             <view class="myCoupon_itemTit width_100">{{item.couponName}}</view>
             <!--使用说明 -->
-            <view class="myCoupon_tipUse width_100">{{item.limitDescribe}}</view>
+            <view class="myCoupon_tipUse width_100"  a:if="{{item.limitDescribe}}">{{item.limitDescribe}}</view>
             <!--有效期  -->
             <view class="myCoupon_valid font-20 flex_1">
               <text>{{item.beginDateStr}} - {{item.endDateStr}}</text>
@@ -29,7 +29,7 @@
         <!-- 右边 -->
         <view class="myCoupon_right flex_view_row align_cen justi_cen">
           <!-- 领取按钮 -->
-          <view a:if="{{pageFrom != 'order'}}" class="myCoupon_useBtn flex_view_row align_cen justi_cen" data-uselink="{{item.useLink}}" data-couponid="{{item.couponId}}" data-limitType="{{item.limitType}}" catchTap="{{!isExpired ? 'toUseCoupon' : ''}}">
+          <view a:if="{{pageFrom != 'order'}}" class="myCoupon_useBtn flex_view_row align_cen justi_cen" data-linkType="{{item.linkType}}" data-uselink="{{item.useLink}}" data-couponid="{{item.couponId}}" data-limitType="{{item.limitType}}" catchTap="{{!isExpired ? 'toUseCoupon' : ''}}">
             <text a:if="{{!isExpired}}">去使用</text>
             <text a:if="{{isExpired && item.couponStatus == 'USED'}}">已使用</text>
             <text a:if="{{isExpired && item.couponStatus == 'EXPIRED'}}">已过期</text>

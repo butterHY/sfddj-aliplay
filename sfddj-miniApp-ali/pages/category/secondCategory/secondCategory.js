@@ -33,6 +33,7 @@ Page({
 		loadFail: false,
 		floatVal: 50,
 		cateHeight: 100,
+		user_memId: '默认是会员',         //是否存在memberId，判断是否绑定手机号
 	},
 
 	onLoad: function(options) {
@@ -114,6 +115,20 @@ Page({
 			//     that.data.goodsList = []
 			//   }
 			// }
+
+			if (type == 0) {
+				// 判断是否绑定了手机
+				try {
+					let user_memId = my.getStorageSync({
+						key: "user_memId",
+					}).data;
+					that.setData({
+						user_memId: user_memId == 'null' || user_memId == null || user_memId == 'undefined' || user_memId == undefined ? '默认是会员' : user_memId
+					})
+				} catch (e) {
+				}
+			}
+
 			var isLoadMore = false;
 			var result = res.data.result;
 			var hasMore = false;
@@ -294,6 +309,7 @@ Page({
 			my.showToast({
 				content: '添加购物车成功'
 			});
+
 		}, function(res) {
 			// wx.showToast({
 			//   title: res
@@ -359,7 +375,71 @@ Page({
 		} catch (e) {
 
 		}
-	}
+	},
 	//-------搜索相关代码结束--------//
+
+
+	// 获取手机号
+	getPhoneNumber: function(e) {
+		var that = this;
+
+		my.getPhoneNumber({
+			success: (res) => {
+				let response = res.response
+				sendRequest.send(constants.InterfaceUrl.USER_BINGMOBILEV4, {
+					response: response,
+				}, function(res) {
+					console.log(res)
+					if (res.data.result) {
+						try {
+							my.setStorageSync({ key: constants.StorageConstants.tokenKey, data: res.data.result.loginToken });
+							my.setStorageSync({ key: 'user_memId', data: res.data.result.memberId });
+						} catch (e) {
+							my.setStorage({ key: 'user_memId', data: res.data.result.memberId });
+						}
+					}
+					else {
+
+					}
+
+
+
+					my.showToast({
+						content: '绑定成功'
+					})
+					that.setData({
+						user_memId: res.data.result ? res.data.result.memberId : '默认会员'
+					})
+				}, function(res, resData) {
+					var resData = resData ? resData : {}
+					if (resData.errorCode == '1013') {
+						that.setData({
+							user_memId: '默认会员'
+						})
+						my.setStorage({ key: 'user_memId', data: '默认会员' });
+					}
+					else {
+						my.showToast({
+							content: res
+						})
+
+					}
+
+				});
+			},
+			fail: (res) => {
+				my.navigateTo({
+					url: '/pages/user/bindPhone/bindPhone'
+				});
+			},
+		});
+
+	},
+
+
+	// 获取手机号失败
+	onAuthError(res) {
+		return
+	},
 
 });

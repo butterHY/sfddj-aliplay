@@ -550,3 +550,13 @@ page {
 .borRa_5 {
 	border-radius: 5px;
 }
+
+.cartCount {
+  bottom: 0;
+  left: 50%;
+  width: 50rpx;
+  height: 50rpx;
+  border-radius: 10rpx;
+  background: red;
+  z-index: 9999999999;
+}

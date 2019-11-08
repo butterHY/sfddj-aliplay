@@ -7,6 +7,8 @@
 <view class="width_100 height_100vh flex_view_col posi_re" style="{{ showToast ? 'height: 100vh; overflow-y: scroll;' : '' }}">
 	<!-- <favorite type="tips" bottom="0rpx">收藏小程序，下次使用更方便</favorite> -->
 	<!-- 搜索模块 -->
+	<lifestyle a:if="{{canUse}}" publicId='8837e8c6f0d3412c989f0502cf7d04ff'/>
+	<life-follow checkFollow="{{checkFollow}}" sceneId="8837e8c6f0d3412c989f0502cf7d04ff" a:if="{{!show}}" onClose="closeCb" />
 	<view class="" style="height: 120rpx;">
 		<template is="home-search" data="{{baseLocImgUrl:baseLocImgUrl}}">
 		</template>

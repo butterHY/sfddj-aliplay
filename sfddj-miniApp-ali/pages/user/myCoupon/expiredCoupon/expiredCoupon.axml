@@ -1,0 +1,36 @@
+<import src="../../../common/couponItem.axml"/>
+<!-- 加载中 -->
+<view a:if="{{!loadComplete && !loadFail}}">
+	<loading-now>
+	</loading-now>
+</view>
+<!-- 加载失败 -->
+<view a:elif="{{loadFail}}">
+	<load-fail></load-fail>
+</view>
+<view a:else class="all_100v">
+  <scroll-view scroll-y="true" class="all_100v" onScrollToLower="loadMoreSearchResult" >
+    <!--有数据页面-->
+    <view class='hasGrayCoupon'>
+      <!-- 失效券 -->
+      <block a:if="{{recommondList.length > 0}}" a:for="{{recommondList}}" a:key="recommondList">
+        <template is="couponItem" data="{{item,isExpired,from: '',iconSize}}"></template>
+      </block>
+    </view>
+
+    <!--无数据页面 -->
+    <view class="myCoupon_noMore font-28">
+      <view class="icon_noMoreImg" a:if="{{isHasMore}}" >
+        <image src='{{baseLocImgUrl}}miniappImg/invite/noCoupon.png' class='icon_empty'></image>
+      </view>
+      <!--加载数据进度条-->
+      <view a:if="{{invalidLoadMore}}" class='loading_view'>
+        <image src='{{baseLocImgUrl}}miniappImg/loading/loading.gif' class='loading_gif'></image>
+        <text>加载中</text>
+      </view>
+
+      <!--没有更多-->
+      <view a:if="{{!invalidLoadMore}}" class="nomore_txt">没有更多优惠券了</view>
+    </view>
+  </scroll-view>
+</view>

@@ -1,0 +1,249 @@
+page {
+	background: white;
+}
+
+.empty-view {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	padding-top: 77rpx;
+	padding-bottom: 76rpx;
+	align-items: center;
+}
+
+.item-tag-view {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: #f3f3f3;
+	height: 80rpx;
+}
+
+.bottom-view {
+	width: 100%;
+	height: 100rpx;
+	background: white;
+	position: fixed;
+	bottom: 0;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	border-top: #e6e6e6 2rpx solid;
+	justify-content: space-between;
+	z-index: 499;
+}
+
+.selected-all-view {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.account-view {
+	height: 100%;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.bottom-text-red-bg {
+	display: flex;
+	width: 280rpx;
+	height: 100%;
+	background: #ff5353;
+	color: white;
+	justify-content: center;
+	align-items: center;
+	font-size: 30rpx;
+}
+
+.goods-item-view {
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+}
+
+.goods-item-title-view {
+	display: flex;
+	width: 100%;
+	height: 68rpx;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	background: #fafafa;
+}
+
+.goods-item-title-name-view {
+	display: flex;
+	height: 68rpx;
+	flex-direction: row;
+	align-items: center;
+}
+
+.goods-item-product-view {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	width: 100%;
+	height: 200rpx;
+	/* border-bottom: 2rpx #e6e6e6 solid; */
+	position: relative;
+	box-sizing: border-box;
+}
+
+.item-remove {
+	width: 120rpx;
+	height: 100%;
+	background-color: #ff5353;
+	position: absolute;
+	top: 0;
+	right: -120rpx;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: white;
+	font-size: 30rpx;
+}
+
+.goods-item-product-text-view {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	height: 200rpx;
+	width: 100%;
+	margin-left: 20rpx;
+	overflow: hidden;
+}
+
+.price-number-view {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: baseline;
+}
+
+/*新加   */
+
+.icon_sel {
+	margin-left: 30rpx;
+	width: 36rpx;
+	height: 36rpx;
+	min-width: 36rpx;
+}
+
+.icon_shop {
+	width: 30rpx;
+	height: 28rpx;
+	margin-left: 30rpx;
+}
+
+.marLeft_14 {
+	margin-left: 14rpx;
+}
+
+.marTop_36 {
+	margin-top: 36rpx;
+}
+
+.goToStore {
+	width: 100rpx;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.icon_arrRig {
+	width: 16rpx;
+	height: 26rpx;
+}
+
+.goodsImg {
+	width: 160rpx;
+	height: 160rpx;
+	min-width: 160rpx;
+	/* margin-left: 30rpx; */
+}
+
+.goodsName {
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.goodsSpecName {
+	margin-top: 12rpx;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.icon_empty {
+	width: 220rpx;
+	height: 220rpx;
+}
+
+.guessLike {
+	display: flex;
+	padding: 0 30rpx;
+}
+
+.guessLikeView {
+	width: 50%;
+	box-sizing: border-box;
+}
+
+.height_100R {
+	height: 100rpx;
+}
+
+.marLeft_24 {
+	margin-left: 24rpx;
+}
+
+/* 选择的圆圈 */
+
+.icon_cirCheck {
+	width: 36rpx;
+	height: 36rpx;
+	line-height: 40rpx;
+	font-size: 22rpx;
+	border: 1px solid #b1b6bb;
+	border-radius: 50%;
+	text-align: center;
+	color: #fafafa;
+	display: block;
+}
+
+.icon_cirCheck.icon_goodsCheck.checkNormal {
+	color: #fff;
+}
+
+.icon_cirCheck.checkActive {
+	background: #fa4444;
+	border-color: #fa4444;
+}
+
+.icon_cirCheck.checkUseless {
+	background: #b1b6bb;
+	border-color: #b1b6bb;
+}
+
+.padNone {
+	padding: 0;
+}
+
+.padNone .am-list-line {
+	padding-right: 0;
+}
+
+.goodsTypeIcon {
+	right: 30rpx;
+	top: 0;
+	z-index: 50;
+}
+
+.goodsTypeIcon .goodsNullImg {
+	width: 122rpx;
+	height: 82rpx;
+}

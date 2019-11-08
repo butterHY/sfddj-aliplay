@@ -198,6 +198,7 @@
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  line-height: 36rpx;
 }
 
 .myCoupon_tipUse {

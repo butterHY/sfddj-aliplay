@@ -12,7 +12,7 @@ input {
   box-sizing: unset
 }
 
-/*居中new   */
+/*居中   */
 
 .tex_center {
   text-align: center;
@@ -295,9 +295,31 @@ input {
 .color-c7c7cc {
   color: #c7c7cc;
 }
+
 .color-a1a0a0 {
   color: #a1a0a0;
 }
+
+.color-723a0d {
+  color: #723a0d
+}
+
+.color-795a1a {
+  color: #795a1a;
+}
+
+.color-ff4949 {
+  color: #ff4949;
+}
+
+.color-ff4285 {
+  color: #ff4285;
+}
+
+.color-558b29 {
+  color: #558b29;
+}
+
 .color-666 {
   color: #666;
 }
