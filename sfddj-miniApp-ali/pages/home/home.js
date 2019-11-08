@@ -60,12 +60,11 @@ Page({
 		bannerNonGoods: false,            //判断banner列表中是否没有要上报的数据
 		pageScrollTop: 0,                    //页面滚动高度
 		windowHeight: windowHeight,         //页面高度
-		isCollected: false
+		isCollected: false,
+		canUse: my.canIUse('lifestyle'),
 	},
 
 	onLoad: async function(options) {
-
-
 		// console.log(';;homeOptions', options)
 
 		// 友盟+统计--首页浏览
@@ -105,10 +104,10 @@ Page({
 			this.getTimes('isFirstTime');
 		}
 
-
 	},
 
 	onShow: function() {
+    var that = this;
 
 		// 每次页面显示判断是否是热启动，如果是就请求数据；
 		var isHotStart = my.getStorageSync({
@@ -122,7 +121,8 @@ Page({
 		// if (!this.data.isonLoad) {
 		// 	this.getTimes('isFirstTime');
 		// }
-
+      that.getCartNumber();
+      // console.log('我是 home， 我在显示了 onShow ')
 	},
 
 	onReady() {
@@ -601,6 +601,7 @@ Page({
 			my.showToast({
 				content: '添加购物车成功'
 			});
+      that.getCartNumber();
 		}, function(res) {
 			my.showToast({
 				content: res
@@ -916,7 +917,22 @@ Page({
 					// console.log(resData.data.appLink);
 					// console.log(my.canIUse('isCollected'));
 					var canUseCollected = my.canIUse('isCollected');
-					if (resData.data.appLink == 2 && canUseCollected) {
+          if(!canUseCollected) {
+            my.showToast({
+              content: '您的客户端版本过低，请升级你的客户端',
+              success: (res) => {
+                if (result) {
+                  that.setData({
+                    popImgData: result
+                  })
+                  that.judgePop();
+                }
+              },
+            });
+            return;
+          }
+
+					if (resData.data.appLink == 2) {
 						my.isCollected({
 							success: (res) => {
 								// console.log('查询收藏成功');
@@ -1584,8 +1600,15 @@ Page({
 
 		// }
 
-	}
+	},
 
+  /**
+	 * 获取购物车数量
+	 */
+	getCartNumber: function() {
+    var app = getApp();
+    app.getCartNumber();
+	},
 
 
 }); 

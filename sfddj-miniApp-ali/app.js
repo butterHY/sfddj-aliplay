@@ -1,6 +1,8 @@
 // var _myShim = require('..my.shim');
 import uma from 'umtrack-alipay';
-import {UrlConstants} from './utils/constants'
+import {UrlConstants} from './utils/constants';
+let sendRequest = require('./utils/sendRequest');
+let constants = require('./utils/constants');
 
 
 App({
@@ -16,10 +18,11 @@ App({
 				that.globalData.systemInfo = res;
 			},
 		});
+	},
+
+	onShow: function(options) {
 		
 
-	},
-	onShow: function(options) {
 		uma.resume();                      // 请务必引入
 		var that = this;
 		that.globalData.appOptions = options.referrerInfo ? options.referrerInfo.extraData : {};
@@ -33,8 +36,6 @@ App({
 			success: (res) => {
 			},
 		});
-
-
 	},
 
 	onHide: function() {
@@ -43,6 +44,7 @@ App({
 		clearTimeout(this.globalData.goodsDetail_spikeTime);
 
 	},
+
 	globalData: {
 		uma,                                // 请将uma模块绑定在gloabalData下，以便后续使用
 		userInfo: null,
@@ -56,9 +58,11 @@ App({
 			aid: ''
 		},
 		SFmember: false, //判断是否是速运+那边跳过来的
-		appOptions: {} //保存速运+跳过来带的参数
+		appOptions: {}, //保存速运+跳过来带的参数
+		NowAddrId: null,   //用于保存临时选中的地址
 
 	},
+
 	getNewUserInfoFn: function(fn) {
 		var that = this;
 
@@ -99,6 +103,19 @@ App({
 		return boff;
 	},
 
-
+  getCartNumber: function() {
+    // console.log('我在 app.js 的公共方法');
+    var that = this;
+    var canUsesetTab = my.canIUse('setTabBarBadge');
+    // console.log(canUsesetTab);
+    if(canUsesetTab) {
+      sendRequest.send(constants.InterfaceUrl.SHOP_GET_COUNT, {}, function(res) {
+        my.setTabBarBadge({
+          index: 2,
+          text: res.data.result.count
+        })
+      }, function(res) { });
+    }
+  }
 
 });

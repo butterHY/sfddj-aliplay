@@ -79,15 +79,17 @@ Page({
 	 * 生命周期函数--监听页面显示
 	 */
 	onShow: function() {
-
+    var that = this;
 		// utils.getNetworkType(this);
-		this.getMemberInfo();
+		that.getMemberInfo();
 
 		// my.getAuthCode({
 		//   scopes: 'auth_user',
 		//   success: res => {
 		//   }
 		// })
+
+      that.getCartNumber();
 	},
 
 	getMemberInfo: function() {
@@ -439,6 +441,15 @@ Page({
 	},
 
 
-	goToWebView(){}
+	// goToWebView(){},
+
+      /**
+	 * 获取购物车数量
+	 */
+	getCartNumber: function() {
+    var app = getApp();
+    app.getCartNumber();
+	},
+
 
 });

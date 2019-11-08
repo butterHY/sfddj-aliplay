@@ -34,12 +34,38 @@ page {
   margin-right: 10rpx;
 }
 
+.priceView {
+  box-sizing: border-box;
+  /* padding: 42rpx 30rpx 28rpx 30rpx; */
+  padding: 0 30rpx 28rpx 30rpx;
+}
+
+
 .detail-sale-view {
-  padding: 34rpx 30rpx 28rpx 30rpx;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-end;
+  height: 38rpx;
+}
+
+.priceTagImg {
+  height: 20rpx;
+  width: 48rpx;
+} 
+
+.priceTagArea {
+  padding: 16rpx 0 20rpx 0;
+}
+
+.defaultPrice {
+  position: absolute;
+  bottom: -10rpx;
+  width: 500rpx;
+}
+
+.line-through {
+  text-decoration: line-through;
 }
 
 .selected-view {
@@ -125,12 +151,13 @@ page {
 .notice-title {
   box-sizing: border-box;
   padding-top: 42rpx;
-  background: #fafafa;
+
+  background-color: #fafafa;
 }
 
 .notice-title .ontice-titleText {
-  box-sizing: border-box;
   padding: 0 18rpx;
+  height: 32rpx;
   color: #669e55;
 }
 
@@ -146,7 +173,7 @@ page {
   text-indent: 2em;
   /* margin: 0 30rpx 0 30rpx; */
   /* padding: 20rpx 20rpx 20rpx 150rpx; */
-  padding: 50rpx 35rpx 60rpx 35rpx;
+  padding: 40rpx 35rpx 50rpx 35rpx;
   min-height: 160rpx;
   /* display: flex; */
   /* justify-content: center; */
@@ -156,9 +183,20 @@ page {
   border-radius: 10rpx;
   color: #444444;
   background: #fafafa;
+  line-height: 44rpx;
 }
 
-
+.returnMoneyView {
+  margin-top: 13rpx;
+  height: 95rpx; 
+  padding: 0 20rpx; 
+  background: -webkit-linear-gradient(left,#ffe2a6,#ffd47b);
+  background: -o-linear-gradient(left,#ffe2a6,#ffd47b);
+  background: -moz-linear-gradient(left,#ffe2a6,#ffd47b);
+  /* background: -webkit-linear-gradient(left,#ffe2a6,#ffd47b); */
+  box-shadow: 2px 2px 2px rgba(150,150,150,0.1), -2px -2px 2px rgba(150,150,150,0.1); 
+  border-radius: 13rpx;
+}
 
 
 .test-report {
@@ -199,15 +237,16 @@ page {
 
 .goods-soldOut {
   width: 100%;
-  height: 98rpx;
-  background: orange;
+  height: 72rpx;
   position: fixed;
   bottom: 98rpx;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  text-align: center;
+  font-size: 26rpx;
+  color: #fff;
+  background: rgba(0,0,0,0.5); 
 }
 
 .bottom-icon-view {
@@ -230,30 +269,51 @@ page {
   align-items: center;
 }
 
-.isJifenViewRight .bottom-text-red-bg {
-  width: 100%;
+.guaranteeImg {
+  width: 30rpx;
+  height: 30rpx;
 }
 
-.isGoodsSecondKill .bottom-text-gray-bag {
-  width: 100%;
+.addressImag {
+  width: 25rpx;
+  height: 30rpx;
 }
 
-.isGoodsSecondKill .bottom-text-red-bg {
-  width: 100%;
+.canceImag {
+  width: 30rpx;
+  height: 30rpx;
 }
 
-.noJifen .bottom-text-white-bg {
+.shareImag {
+  width: 48rpx;
+  height: 48rpx;
+}
+
+.bottom-bg {
+  width: 90%;
   height: 80%;
+  border-radius: 50rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.noJifen .bottom-white-bg {
+  background: #fff;
   border: 1rpx solid red;
   border-radius: 60rpx 0 0 60rpx;
-  width: 175rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.noJifen .bottom-text-red-bg {
-  height: 80%;
+.noJifen .bottom-red-bg {
+  background: red;
   border: 1rpx solid red;
   border-radius: 0 60rpx 60rpx 0;
-  width: 175rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .bottom-text-red-bg {
@@ -264,6 +324,18 @@ page {
   color: white;
   justify-content: center;
   align-items: center;
+}
+
+.isJifenViewRight .bottom-text-red-bg {
+  width: 90%;
+  height: 80%;
+  border-radius: 50rpx;
+}
+
+.bottom-text-yellow-bg {
+  border: 1rpx solid yellowgreen;
+  background: #fff;
+  color: yellowgreen;
 }
 
 .goods-detail-title-view {
@@ -394,10 +466,8 @@ page {
 .goods-comment-title {
   display: flex;
   flex-direction: row;
-  /* justify-content: space-between; */
   justify-content: space-between;
   align-items: center;
-  border-bottom: 2rpx #e6e6e6 solid;
   margin: 0 30rpx 0 30rpx;
   padding: 35rpx 0;
   font-size: 26rpx;
@@ -407,7 +477,12 @@ page {
 .goods-comment-area {
   display: flex;
   flex-direction: column;
-  padding: 36rpx 30rpx 54rpx;
+  padding: 0 30rpx 54rpx 30rpx;
+}
+
+.comment-line {
+  border-top: 2rpx #e6e6e6 solid;
+  padding-bottom: 36rpx;
 }
 
 .comment-user-area {
@@ -437,7 +512,8 @@ page {
 
 .red-count-view {
   position: absolute;
-  top: 10rpx;
+  /* top: 10rpx; */
+  top: -10rpx;
   right: 10rpx;
   background: #ff5353;
   border-radius: 50%;
@@ -680,7 +756,7 @@ page {
 }
 
 .shopCart_bigView {
-  border-right: #e6e6e6 2rpx solid;
+  /* border-right: #e6e6e6 2rpx solid; */
   height: 100%;
   position: relative;
   overflow: visible;
@@ -846,26 +922,34 @@ page {
   background: #FF4500;
 }
 
-.bottom-text-gray-bag {
-  display: flex;
-  width: 235rpx;
-  height: 100%;
-  color: white;
-  justify-content: center;
-  align-items: center;
+.background_gray {
   background: #999;
+}
+
+.background_red {
+  background: #ff5353;
 }
 
 
 /* 领券弹窗 */
-
 .coupon-popup {
   width: 100%;
-  height: 750rpx;
-  padding: 0 26rpx 26rpx 26rpx;
+  height: 902rpx;
+  padding: 46rpx 28rpx;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
+  background: #fafafa;
+  border-radius: 30rpx 30rpx 0 0 ;
+}
+
+.couponPopup-btn {
+  height: 88rpx;
+  background: #fd5040;
+  border-radius: 50rpx;
+  line-height: 88rpx;
+  text-align: center;
+  margin-top: 20rpx;
 }
 
 .couponPopup-header {
@@ -892,7 +976,7 @@ page {
 }
 .coupon {
     width: 100%;
-    height: 181rpx;
+    height: 164rpx;
     margin: 23.998rpx 0 0;
     position: relative;
     z-index: 1;
@@ -906,7 +990,8 @@ page {
 
 .couponBox {
     width: 100%;
-    height: 182rpx;
+    /* height: 182rpx; */
+    height: 100%;
     background-color: #FFFFFF;
     border-radius: 9.88rpx;
     position: relative;
@@ -914,7 +999,7 @@ page {
 }
 
 .gapBox_right {
-    right: 20%;
+    right: 24.74%;
 }
 
 .gapBox {
@@ -953,15 +1038,22 @@ page {
     justify-content: center;
 }
 
-.couponInfoLeft {
-    width: 28.37%;
+.platformCouponInfoLeft {
+    width: 26.04%;
     height: 100%;
-    background: -webkit-linear-gradient(135deg,#fdc290,#ff5e55);
-    background: -o-linear-gradient(135deg,#fdc290,#ff5e55);
-    background: -moz-linear-gradient(135deg,#fdc290,#ff5e55);
-    background: linear-gradient(135deg,#fdc290,#ff5e55);
-    padding: 0 13rpx;
-    box-sizing: border-box;
+    background: -webkit-linear-gradient(135deg,#ffb473,#ff5f55);
+    background: -o-linear-gradient(135deg,#ffb473,#ff5f55);
+    background: -moz-linear-gradient(135deg,#ffb473,#ff5f55);
+    background: linear-gradient(135deg,#ffb473,#ff5f55);   
+}
+
+.businessCouponInfoLeft {
+    width: 26.04%;
+    height: 100%;
+    background: -webkit-linear-gradient(135deg,#ff8cb5,#ff4083);
+    background: -o-linear-gradient(135deg,#ff8cb5,#ff4083);
+    background: -moz-linear-gradient(135deg,#ff8cb5,#ff4083);
+    background: linear-gradient(135deg,#ff8cb5,#ff4083);   
 }
 
 .height_100 {
@@ -974,11 +1066,19 @@ page {
 }
 
 .couponInfoRight {
-    width: 22.13%;
+    width: 24.74%;
     height: 100%;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
+    position: relative;
+}
+
+.haveReceivedImg {
+  width: 92rpx;
+  height: 86rpx;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: 100;
+  background: transparent;
 }
 
 .gap_top {
@@ -1009,6 +1109,7 @@ page {
 
 .couponPrice {
     width: 100%;
+    height: 84rpx;
     color: #FFFFFF;
     text-align: center;
     margin-top: -6.5rpx;
@@ -1021,34 +1122,45 @@ page {
 }
 
  .moneyNumber {
-    font-size: 57.2rpx;
+    font-size: 58rpx;
     color: #FFFFFF;
 }
 
 .describe {
     color: rgba(255,255,255,0.6);
-    font-size: 20.8rpx;
+    font-size: 20rpx;
 }
 
 .couponUseType {
-    margin: 0;
-    padding: 35.88rpx 15.99rpx 0;
+    /* margin: 0; */
+    padding: 34rpx 16rpx 0 18rpx;
     color: #999999;
 }
 
 
 
 .singleLine {
-    font-size: 27.82rpx;
-    margin-bottom: 20.8rpx;
+    font-size: 22rpx;
+    margin-bottom: 20rpx;
     color: #323232;
-    font-weight: 400;
+    font-weight: 600;
+    line-height: 34rpx;
 
     text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 1;
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
+}
+
+.platformTicket {
+  background: #ff6458;
+  box-sizing: border-box;
+  padding: 5rpx 10rpx;
+  font-size: 18rpx;
+  color: #fff;
+  border-radius: 15rpx;
+  margin-right: 10rpx;
 }
 
 .tip_use {
@@ -1074,12 +1186,10 @@ page {
 
 
 .useThisCouponBtn {
-    color: #ff4949;
     width: 100%;
     height: 100%;
-    font-size: 23.998rpx;
-    color: #ff5da0;
-    background: transparent;
+    font-size: 24rpx;
+    font-weight: 600;
 }
 
 .moreBtnBox {
@@ -1180,6 +1290,10 @@ page {
   border-radius: 10rpx;
   background: red;
   color: #fff;
+}
+
+.goodsName {
+  line-height: 45rpx;
 }
 
 .goodsTag {

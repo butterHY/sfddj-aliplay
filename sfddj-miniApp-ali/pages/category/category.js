@@ -41,6 +41,9 @@ Page({
 		// utils.getNetworkType(that);
 		
 		// that.getCateData();
+
+      that.getCartNumber();
+      // console.log('我是 category 我在显示了 onShow ')
 	},
 
 	getCateData() {
@@ -198,6 +201,16 @@ Page({
 				data: [], // 要缓存的数据
 			});
 		} catch (e) { }
-	}
+	},
 	//-------搜索相关代码介绍--------//
+
+
+    /**
+	 * 获取购物车数量
+	 */
+	getCartNumber: function() {
+    var app = getApp();
+    app.getCartNumber();
+	},
+
 });

@@ -34,7 +34,7 @@
 	<!-- 商品列表 -->
 	<view class="{{sticky ? 'marTop_100r' : ''}}">
 		<view class="goodsListBox" a:for="{{goodsList}}" a:key="goods_list">
-			<template is="itemGoodsList" data="{{...item,baseImageUrl,baseLocImgUrl,index}}">
+			<template is="itemGoodsList" data="{{...item,baseImageUrl,baseLocImgUrl,index, isBing: user_memId == 0 || user_memId == '0'}}">
 			</template>
 		</view>
 	</view>

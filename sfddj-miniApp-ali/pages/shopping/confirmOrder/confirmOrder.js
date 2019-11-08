@@ -196,14 +196,15 @@ Page({
 	onShow: function() {
 		var that = this;
 		my.hideLoading();
+		var nowAddrId = getApp().globalData.NowAddrId;
 		// utils.getNetworkType(that);
 		if (that.data.needLoad) {
 			if (that.data.fromPage == 'cart') {
 				//从购物车进入
-				that.getCartData(that.data.cartIdArray);
+				that.getCartData(that.data.cartIdArray,nowAddrId);
 			} else {
 				//从其他方式购买进入
-				that.getNowPayData(that.data.productId, that.data.quantity);
+				that.getNowPayData(that.data.productId, that.data.quantity,nowAddrId);
 			}
 			that.data.needLoad = false;
 		}
@@ -232,17 +233,21 @@ Page({
 
 		// }
 		my.navigateTo({
-			url: '/pages/user/addressManage/addressManage'
+			url: '/pages/user/addressManage/addressManage?comeFrom=confirmOrder'
 		});
 	},
 	/**
 	 * 获取购物车订单数据
 	 */
-	getCartData: function(cartIdArray) {
+	getCartData: function(cartIdArray,nowAddrId) {
 		var that = this;
-		sendRequest.send(constants.InterfaceUrl.PAY_TO_CART_PAY, {
+		var data = {
 			cartIdArray: cartIdArray
-		}, function(res) {
+		}
+		if(nowAddrId) {
+			data.addressId = nowAddrId
+		}
+		sendRequest.send(constants.InterfaceUrl.PAY_TO_CART_PAY, data, function(res) {
 			var result = res.data.result;
 			var da_upload_data = [];   //达观上报
 
@@ -370,6 +375,12 @@ Page({
 				});
 			}
 
+
+
+      // =================================================
+
+
+
 			that.data.result = res.data.result;
 			that.data.totalPrice = 0;
 			that.data.result.supplierList.forEach(function(v1, i1, arr1) {
@@ -464,20 +475,27 @@ Page({
 	 * 
 	 * 积分商品下单的接口要加上版本2.0
 	 */
-	getNowPayData: function(productId, quantity) {
+	getNowPayData: function(productId, quantity,nowAddrId) {
 		my.showLoading({
 			content: '加载中',
 		});
 		var that = this;
-		sendRequest.send(constants.InterfaceUrl.PAY_TO_BUY_NOW, {
+		var data = {
 			productId: productId,
 			quantity: quantity,
 			isGroupBuy: that.data.isTuangou,
 			version: "2.0"
-		}, function(res) {
+		}
+		if(nowAddrId) {
+			data.addressId = nowAddrId
+		}
+		sendRequest.send(constants.InterfaceUrl.PAY_TO_BUY_NOW, data, function(res) {
 			my.hideLoading();
 			console.log(res)
 			var result = res.data.result;
+
+      // =================================================================
+      
 			that.data.result = res.data.result;
 
 			// 友盟+统计--确认订单页浏览
@@ -1160,7 +1178,7 @@ Page({
 	 */
 	chooseAddress: function(e) {
 		my.navigateTo({
-			url: '/pages/user/addressManage/addressManage'
+			url: '/pages/user/addressManage/addressManage?comeFrom=confirmOrder'
 		});
 	},
 	/**

@@ -2,11 +2,16 @@
   <view class="backgroiund_orange secondkill-price font-weight flex_view_row color_fff">
     <view class="flex-1 flex_view_row align_cen">
       <view>
-        <text class="font-26 ">¥ </text>
-        <text class="font_45 padding_left_6 ">{{goodsSecondKill.secKillPrice}}</text>
-        <text class="font-24 color-bbbbbb line_through inline_block padding_left_10 ">
-          ¥ {{oldPrice}}
-        </text>
+        <block a:if="{{viewStatus != 'SALEING'}}">
+          <view class="font-50 font-weight-600">暂无报价</view>
+        </block>
+        <block a:else>
+          <text class="font-26 ">¥ </text>
+          <text class="font_45 padding_left_6 ">{{goodsSecondKill.secKillPrice}}</text>
+          <text class="font-24 color-bbbbbb line_through inline_block padding_left_10 ">
+            ¥ {{oldPrice}}
+          </text>
+        </block>
       </view>
     </view>
     <!-- 进度条 -->

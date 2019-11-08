@@ -54,7 +54,7 @@ Page({
 		that.setData({
 			link: getApp().globalData.systemInfo.platform == 'iOS' ?  newLink + '&ddjTimestamp=' + new Date().getTime() : newLink
 		});
-
+ 
 	},
 
 	setLink(options) {

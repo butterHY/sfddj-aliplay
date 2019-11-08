@@ -1,23 +1,26 @@
 <import src="../../common/couponItem.axml"/>
+<import src="../../common/item-goods-card.axml" />
+
+<!-- 加载失败 -->
+<view a:if="{{couponFail && guessLikeFail}}">
+  <load-fail></load-fail>
+</view>
 
 <!-- 加载中 -->
-<view a:if="{{!loadComplete}}">
+<view a:elif="{{!loadComplete}}">
   <loading-now></loading-now>
-</view>
-<!-- 加载失败 -->
-<view a:elif="{{loadFail && wifiAvailable}}">
-  <load-fail></load-fail>
 </view>
 <!-- 没有网络提示这个 -->
 <!--<view a:elif="{{!wifiAvailable}}"><no-wifi></no-wifi></view> -->
-<!-- 新的优惠券样式 -->
-<view a:else>
+<!-- 新的优惠券样式 bindscrolltolower="loadMoreSearchResult"-->
+<view a:else class="all_100v">
+  <scroll-view scroll-y="true"  class="all_100v"  onScrollToLower="lowLoadMore" >
   <!-- 兑换优惠券与优惠券列表部分 -->
   <view class="myCoupon_coupon">
     <!-- 兑换优惠券部分 -->
     <view a:if="{{!isExpired}}" class="myCoupon_exchange">
       <!-- 提示 -->
-      <view a:if="{{ruleSign.length > 0 && !isRightSign}}" class="myCoupon_tip">
+      <!--<view a:if="{{ruleSign.length > 0 && !isRightSign}}" class="myCoupon_tip">
         <view class="myCoupon_tipCon flex_view_row">
           <text>
             <text class="myCoupon_warnBtn">!</text>
@@ -25,7 +28,7 @@
           <view class="font-28 color-ff5353">
             <text>优惠券编号错误，请重新输入</text></view>
         </view>
-      </view>
+      </view>-->
       <!-- 兑换码输入  -->
       <view class="myCoupon_exchangeBox flex_view_row">
         <view class="myCoupon_input flex_1">
@@ -39,105 +42,95 @@
     </view>
     <!-- 优惠券列表 -->
     <view class="myCoupon_list color-323232">
-      <!-- 券 -->
-      <block a:if="{{couponList.length > 0}}" a:for="{{couponList}}">
-        <template is="couponItem" data="{{item,isExpired,from: '',iconSize}}"></template>
-      </block>
+      <!--使用说明-->
+      <view class='couponUseTip'>
+        <text class='couponUseTipArea' onTap="useTip">
+          <text class='couponUseTxt'>使用说明</text>
+          <text class='iconfont icon-changjianwenti couponUseIcon'></text>
+        </text>
+      </view>
+
+      <!--有优惠券-->
+      <view a:if="{{isHasCoupon}}">
+        <!-- 券 -->
+        <block a:if="{{couponList.length > 0}}" a:for="{{couponList}}">
+          <template is="couponItem" data="{{item,isExpired,from: '',iconSize}}"></template>
+        </block>
+
+        <view a:if="{{loadingMore}}" class='couponLoading_view'>
+            <image src='{{baseLocImgUrl}}miniappImg/loading/loading.gif' class='loading_gif'></image>
+            <text>加载中</text>
+        </view>
+
+        <!--点击加载-->
+        <view a:if="{{loadingAddMore}}" class="nomore_txt" onTap="couponLoadMore">查看更多</view>
+
+          <!--没有更多-->
+        <view a:if="{{loadingNoMore}}" class='couponLoading_view'>
+          没有更多优惠券了
+        </view>
+        
+      </view>
+
+      <!--没有更多优惠券-->
+      <view a:if="{{!isHasCoupon}}" class="myCoupon_noMore font-28">
+        <view class="icon_noMoreImg">
+            <image src='{{baseLocImgUrl}}miniappImg/invite/noCoupon.png' class='icon_empty'></image>
+          </view>
+          <!--没有更多-->
+          <view a:if="true" class='couponLoading_view'>
+           您还没有优惠券
+          </view>
+      </view>
     </view>
 
-    <!-- 没有更多优惠券提示 -->
-    <view a:if="{{!isLoadMore}}" class="myCoupon_noMore">
-      <text>没有更多优惠券了</text>
-    </view>
   </view>
-  <!-- 底部切换优惠券按钮 -->
-  <view class="myConpon_footer">
-    <view class="width_100 tex_center font-24 color-blue" a:if="{{!isLoadMore}}">
-      <!-- <text decode="{{true}}">没有更多优惠&nbsp;</text><text class="color-a1a0a0">|</text> -->
-      <text decode="{{true}}" class="checkMore_unValCoupon" onTap="changeCouponList">{{!isExpired ? '查看失效券' : '查看我的优惠券'}} ></text>
+
+    <!--猜你喜欢-->
+    <view class='guessLikeArea' a:if="{{ bGuessLike }} ">
+        <view class='guessLikeTit'>猜你喜欢</view>
+          <view class='guessLike'>
+            <view class='guessLikeView'>
+              <template is="itemGoodsColumn" a:for="{{recommondList}}" a:if="{{index % 2 == 0}}" data="{{...item,left:true,baseImageUrl:baseImageUrl,baseLocImgUrl,smallImgArg}}" wx:key="itemIndex"></template>
+            </view>
+            <view class='guessLikeView'>
+              <template is="itemGoodsColumn" a:for="{{recommondList}}" a:if="{{index % 2 != 0}}" data="{{...item,left:false,baseImageUrl:baseImageUrl,baseLocImgUrl,smallImgArg}}" wx:key="itemIndex2"></template>
+            </view>
+          </view>
+
+            <!--加载数据进度条-->
+            <view a:if="{{guessLikeLoadMore}}" class='loading_view'>
+              <image src='{{baseLocImgUrl}}miniappImg/loading/loading.gif' class='loading_gif'></image>
+              <text>加载中</text>
+            </view>
+
+            <!--没有更多-->
+            <view a:if="{{!guessLikeLoadMore}}" class='loading_view font-26 color-323232'>
+              没有更多了
+        </view>
+        
     </view>
-  </view>
+
+    <!-- 底部切换优惠券按钮 -->
+    <view class="myConpon_footer">
+      <view class="width_100 tex_center font-24 color-blue" onTap="changeCouponList">
+        <text class="checkMore_unValCoupon">查看失效券 ></text>
+      </view>
+    </view>
+    <!--联系客服按钮-->
+    <view class='contactArea' onTap='goToWebCall'>
+      <view class='contactImg'>
+        <image src='{{baseLocImgUrl}}miniappImg/icon/couponContact.png' class='contactIcon'></image>
+      </view>
+    </view>
+  </scroll-view>
 </view>
 
-
-<view a:if="{{myCouponOld}}" class="all_100 flex_view_col">
-  <!--style='{{!isExpired && couponList.length > 0 ? "padding-top: 260rpx;" : ""}}'   -->
-  <view class="flex_1">
-    <view class="all_100 overScrol">
-      <!--我的可用优惠券列表-->
-      <view class="usefulCoupon" a:if="{{!isExpired && couponList.length > 0}}">
-        <view class="couponList" a:for="{{couponList}}">
-          <image src="{{baseLocImgUrl}}miniappImg/bg/bg_my_coupon_blank2.png" class="couponList_bgImg"></image>
-          <view class="couponList_con">
-            <view>
-              <text class="font-30 color-white">¥</text>
-              <text class="font-50 color-white">{{item.costPrice}}</text>
-            </view>
-            <view class="font-24 color-white">满{{item.needPrice}}可用</view>
-          </view>
-          <!--分割虚线-->
-          <view class="dividingLine_white"></view>
-          <view class="couponList_right">
-            <view class="font-28 color-white">{{item.couponName}}</view>
-            <view class="marTop_10 font-26 color-white">{{item.beginDateStr}}-{{item.endDateStr}}</view>
-            <view class="dividingLine_horizontal"></view>
-            <view class="couponList_right_bot font-24 color-white single-line width_85">{{item.limitDescribe}}</view>
-          </view>
-        </view>
-      </view>
-      <!--我的失效优惠券列表-->
-      <view class="unValCoupon overScrol" a:else="{{isExpired && couponList.length > 0}}">
-        <view class="couponList" a:for="{{couponList}}" a:key="unValCouponList">
-          <image src="{{baseLocImgUrl}}miniappImg/bg/bg_my_coupon_blank1.png" class="couponList_bgImg"></image>
-          <view class="couponList_con">
-            <view>
-              <text class="font-30 color-b1b6bb">¥</text>
-              <text class="font-50 color-b1b6bb">{{item.costPrice}}</text>
-            </view>
-            <view class="font-24 color-b1b6bb">满{{item.needPrice}}可用</view>
-          </view>
-          <!--分割虚线-->
-          <view class="dividingLine_white dividingLine_gray"></view>
-          <view class="couponList_right">
-            <text class="font-28 color-b1b6bb">{{item.couponName}}</text>
-            <view class="marTop_10 font-26 color-b1b6bb">{{item.beginDateStr}}-{{item.endDateStr}}</view>
-            <view class="couponList_limitDes font-24 color-b1b6bb single-line width_85">{{item.limitDescribe}}</view>
-          </view>
-          <image src="{{baseLocImgUrl}}miniappImg/icon/icon_coupon_expired.png" class="unValCoupon_right_img" a:if="{{item.couponStatus == 'EXPIRED'}}"></image>
-          <image src="{{baseLocImgUrl}}miniappImg/icon/coupon_used.png" class="unValCoupon_right_img" a:elif="{{item.couponStatus == 'USED'}}"></image>
-        </view>
-      </view>
-      <!--使用兑换码兑换优惠券-->
-      <view class="exchangeCoupon" a:if="{{!isExpired && !isLoadMore}}">
-        <view class="exchangeCoupon_btn font-24" onTap="showDialog">
-          使用兑换码兑换优惠券
-        </view>
-      </view>
-      <!--查看失效券-->
-      <view class="width_100 tex_center marBot_20 font-24 color-232323" a:if="{{!isLoadMore}}">
-        <text>没有更多优惠</text>|
-        <text class="checkMore_unValCoupon" onTap="changeCouponList">{{!isExpired ? '查看失效券' : '查看我的优惠券'}} ></text>
-      </view>
-    </view>
-  </view>
-</view>
 <!--加载数据进度条-->
 <view class="loading_view" a:if="{{isLoadMore}}">
   <image src="{{baseLocImgUrl}}miniappImg/loading/loading.gif" class="loading_gif"></image>
 </view>
-<!--兑换券对话框-->
-<view class="exchanDialog" catchtouchmove="move" a:if="{{showDialog}}">
-  <view class="exchanDialog_con">
-    <view class="marTop_30 font-24 color-404040 font-weight-500" onTap="showDialog">兑换优惠券</view>
-    <view class="exchanDialog_inView">
-      <input placeholder-class="font-22 color-d9d9d9" class="exchanDialog_input font-22 color-232323" cursor-spacing="150" onInput="handleInput"/>
-    </view>
-    <view class="exchanDialog_btnView">
-      <view class="exchanDialog_cancle font-32 color-999999" catchTap="cancel">取消</view>
-      <view class="exchanDialog_confirm font-32 color-white" catchTap="sure">确认</view>
-    </view>
-  </view>
-</view>
+
 <!--兑换失败，弹出失败原因toast-->
 <view class="exchangeCoupon_fail" catchtouchmove="move" a:if="{{showToast}}">
   <view class="exchangeCoupon_failMes font-24 color-232323">

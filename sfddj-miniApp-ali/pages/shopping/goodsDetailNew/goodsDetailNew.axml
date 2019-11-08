@@ -22,7 +22,7 @@
 
 
 <view a:else class="posi_re">
-  <!-- 商品图片轮播图      已完成新接口字段更换-->
+  <!-- 商品图片轮播图                     已完成新接口字段更换-->
   <view class="posi_re">
     <swiper indicator-dots="true" class="swiper_img" indicator-active-color="#ff5353" indicator-color='rgba(0,0,0,.3)' autoplay="true" circular="true">
       <block a:for="{{goods.goodsImages}}">
@@ -43,149 +43,324 @@
   </view>
 
   <!-- 新增的领券按钮和领券弹窗 -->
-  <popup show="{{isShowPopup}}" mask="{{true}}" position="bottom" animation="{{true}}" onClose="onPopupClose" zIndex="100" disableScroll="{{true}}">
-    <view class="coupon-popup whiteBack">
-      <!-- 我是新增的领券蒙层 -->
-      <view class="couponPopup-header flex_view_row  align_cen">
-        <view class="flex_1 flex_view_row justi_cen" data-current="0" onTap="switchSwiper">
-          <text  class="{{titleCurrent == 0 ?  'active' : 'headTitle'}}">店铺券</text>
-        </view>
-        <view class="flex_1 flex_view_row justi_cen" data-current="1" onTap="switchSwiper">
-          <text  class="{{titleCurrent == 1 ?  'active ' : 'headTitle'}}">平台券</text>
-        </view>
-      </view>
-      <swiper indicator-dots="{{false}}" class="flex_1" onChange="intervalChange" current="{{swiperCurrent}}" duration="200">
-        <block a:for="{{['#4A90E2','#F5A623']}}" >
-          <swiper-item  >
-              <view style="width:100%;height:100%" class="flex_view_col">
-                  <scroll-view scroll-y="{{true}}" class="width_100 flex_1 whiteBack" >
-                    <view class="coupon platCoupon">
-                        <view class="couponBox">
-                            <view class="couponInfo HBox">
-                                <view class="couponInfoLeft HBox BoxCenter">
-                                    <view class="couponPrice">
-                                        <text>￥</text> <text class="moneyNumber">1</text>
-                                        <view class="describe">满2元可用</view>
-                                    </view>
-                                </view>
-                                <!--中间-->
-                                <view class="couponInfoCenter Bflex1 height_100">
-                                    <view class="couponUseType">
-                                        <view class="singleLine">十大撒打算</view>
-                                        <view class="tip_use"> </view>
-                                        <view class="tip_useLimt Bflex1 termValidity">
-                                            <view>2019.08.29-2020.08.29</view>
-                                        </view>
-                                    </view>
-                                </view>
-                                <view class="couponInfoRight HBox BoxCenter">
-                                    <view class="useThisCoupon">
-                                       <view class="useThisCouponBtn HBox BoxCenter js_getNow"
-                                            data-couponid="116244"
-                                            style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-                                            立即领取
-                                        </view>
-                                        <view class="useThisCouponBtn HBox BoxCenter" data-couponid="116244">已领取</view>
-                                    </view>
-                                </view>
-                            </view>
-                        </view>
-                        <view class="gapBox gapBox_right">
-                            <text class="gap gap_top"></text>
-                            <text class="gap_line"></text>
-                            <text class="gap gap_bot"></text>
-                        </view>
-                    </view>
-
-                    <view class="coupon platCoupon">
-                      <view class="couponBox">
-                          <view class="couponInfo HBox">
-                              <view class="couponInfoLeft HBox BoxCenter">
-                                  <view class="couponPrice"> 
-                                    <text>￥</text> <text class="moneyNumber">1</text>
-                                    <view class="describe">满2元可用</view>
-                                  </view>
+  <popup show="{{isShowPopup}}" mask="{{true}}" position="bottom" animation="{{true}}" onClose="onPopupClose" zIndex="100" disableScroll="{{false}}">
+    <view class="coupon-popup">
+      <view class="flex_view_col all_100">
+        <scroll-view scroll-y="{{true}}" class="flex_1" >
+          <view class="coupon platCoupon">
+              <view class="couponBox">
+                  <view class="couponInfo HBox">
+                      <view class="{{true ? 'platformCouponInfoLeft' : 'businessCouponInfoLeft'}} HBox BoxCenter">
+                          <view class="couponPrice flex_view_col justi_between">
+                              <text><text>￥</text> <text class="moneyNumber">1</text></text>
+                              <view class="describe">满2元可用</view>
+                          </view>
+                      </view>
+                      <!--中间-->
+                      <view class="couponInfoCenter Bflex1 height_100">
+                          <view class="couponUseType">
+                              <view class="singleLine">
+                                <text class="{{true ? 'color-ff4949' : 'color-ff4285'}} platformTicket">平台券</text>
+                                  全场通用，在线支付专享全场通用，在线支付专享专享全场通用，在线支付专享
                               </view>
-                              <!--中间-->
-                              <view class="couponInfoCenter Bflex1 height_100">
-                                  <view class="couponUseType">
-                                      <view class="singleLine">十大撒打算</view>
-                                      <view class="tip_use"> </view>
-                                      <view class="tip_useLimt Bflex1 termValidity">
-                                          <view>2019.08.29-2020.08.29</view>
-                                      </view>
-                                  </view>
-                              </view>
-                              <view class="couponInfoRight HBox BoxCenter">
-                                  <view class="useThisCoupon">
-                                      <view class="useThisCouponBtn HBox BoxCenter js_getNow"
-                                          data-couponid="116244"
-                                          style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-                                          立即领取
-                                      </view>
-                                      <view class="useThisCouponBtn HBox BoxCenter" data-couponid="116244">已领取</view>
-                                  </view>
+                              <view class="tip_useLimt Bflex1 termValidity">
+                                  2019.08.29-2020.08.29
                               </view>
                           </view>
                       </view>
-                      <view class="gapBox gapBox_right">
-                          <text class="gap gap_top"></text>
-                          <text class="gap_line"></text>
-                          <text class="gap gap_bot"></text>
+                      <view class="couponInfoRight HBox BoxCenter">
+                          <view class="useThisCoupon">
+                              <view class="{{true ? 'color-ff4949' : 'color-ff4285'}} useThisCouponBtn HBox BoxCenter js_getNow"
+                                  data-couponid="116244"
+                                  style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+                                  立即领取
+                              </view>
+                          </view>
+                          <!-- <image class="haveReceivedImg" src="{{baseImageLocUrl}}/miniappImg/public/goodsDetail/haveReceived.png"/> -->
+                          <image class="haveReceivedImg" src="../../../image/haveReceived.png"/>
                       </view>
-                    </view>
-                    
-                    <view class="moreBtnBox js_moreBtnBox">
-                      <view class="loadingBtn js_loadingBtn js_loadNull" style="">
-                          <text class="information">没有更多</text>
-                      </view>
-                      <view class="loadingBtn js_loadingBtn js_loading" style="display: none;">
-                          <text class="icon_loading iconStyle icon-spinner3 myRotateRefresh"></text>
-                          <text class="information">加载中</text>
-                      </view>
-                    </view>
-                  </scroll-view>
+                  </view>
               </view>
-          </swiper-item>
-        </block>
-      </swiper>
+              <view class="gapBox gapBox_right">
+                  <text class="gap gap_top"></text>
+                  <text class="gap_line"></text>
+                  <text class="gap gap_bot"></text>
+              </view>
+          </view>
+          <view class="coupon platCoupon">
+              <view class="couponBox">
+                  <view class="couponInfo HBox">
+                      <view class="{{true ? 'platformCouponInfoLeft' : 'businessCouponInfoLeft'}} HBox BoxCenter">
+                          <view class="couponPrice flex_view_col justi_between">
+                              <text><text>￥</text> <text class="moneyNumber">1</text></text>
+                              <view class="describe">满2元可用</view>
+                          </view>
+                      </view>
+                      <!--中间-->
+                      <view class="couponInfoCenter Bflex1 height_100">
+                          <view class="couponUseType">
+                              <view class="singleLine">
+                                <text class="{{true ? 'color-ff4949' : 'color-ff4285'}} platformTicket">平台券</text>
+                                  全场通用，在线支付专享全场通用，在线支付专享专享全场通用，在线支付专享
+                              </view>
+                              <view class="tip_useLimt Bflex1 termValidity">
+                                  2019.08.29-2020.08.29
+                              </view>
+                          </view>
+                      </view>
+                      <view class="couponInfoRight HBox BoxCenter">
+                          <view class="useThisCoupon">
+                              <view class="{{true ? 'color-ff4949' : 'color-ff4285'}} useThisCouponBtn HBox BoxCenter js_getNow"
+                                  data-couponid="116244"
+                                  style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+                                  立即领取
+                              </view>
+                          </view>
+                          <!-- <image class="haveReceivedImg" src="{{baseImageLocUrl}}/miniappImg/public/goodsDetail/haveReceived.png"/> -->
+                          <image class="haveReceivedImg" src="../../../image/haveReceived.png"/>
+                      </view>
+                  </view>
+              </view>
+              <view class="gapBox gapBox_right">
+                  <text class="gap gap_top"></text>
+                  <text class="gap_line"></text>
+                  <text class="gap gap_bot"></text>
+              </view>
+          </view>
+          <view class="coupon platCoupon">
+              <view class="couponBox">
+                  <view class="couponInfo HBox">
+                      <view class="{{true ? 'platformCouponInfoLeft' : 'businessCouponInfoLeft'}} HBox BoxCenter">
+                          <view class="couponPrice flex_view_col justi_between">
+                              <text><text>￥</text> <text class="moneyNumber">1</text></text>
+                              <view class="describe">满2元可用</view>
+                          </view>
+                      </view>
+                      <!--中间-->
+                      <view class="couponInfoCenter Bflex1 height_100">
+                          <view class="couponUseType">
+                              <view class="singleLine">
+                                <text class="{{true ? 'color-ff4949' : 'color-ff4285'}} platformTicket">平台券</text>
+                                  全场通用，在线支付专享全场通用，在线支付专享专享全场通用，在线支付专享
+                              </view>
+                              <view class="tip_useLimt Bflex1 termValidity">
+                                  2019.08.29-2020.08.29
+                              </view>
+                          </view>
+                      </view>
+                      <view class="couponInfoRight HBox BoxCenter">
+                          <view class="useThisCoupon">
+                              <view class="{{true ? 'color-ff4949' : 'color-ff4285'}} useThisCouponBtn HBox BoxCenter js_getNow"
+                                  data-couponid="116244"
+                                  style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+                                  立即领取
+                              </view>
+                          </view>
+                          <!-- <image class="haveReceivedImg" src="{{baseImageLocUrl}}/miniappImg/public/goodsDetail/haveReceived.png"/> -->
+                          <image class="haveReceivedImg" src="../../../image/haveReceived.png"/>
+                      </view>
+                  </view>
+              </view>
+              <view class="gapBox gapBox_right">
+                  <text class="gap gap_top"></text>
+                  <text class="gap_line"></text>
+                  <text class="gap gap_bot"></text>
+              </view>
+          </view>
+          <view class="coupon platCoupon">
+              <view class="couponBox">
+                  <view class="couponInfo HBox">
+                      <view class="{{true ? 'platformCouponInfoLeft' : 'businessCouponInfoLeft'}} HBox BoxCenter">
+                          <view class="couponPrice flex_view_col justi_between">
+                              <text><text>￥</text> <text class="moneyNumber">1</text></text>
+                              <view class="describe">满2元可用</view>
+                          </view>
+                      </view>
+                      <!--中间-->
+                      <view class="couponInfoCenter Bflex1 height_100">
+                          <view class="couponUseType">
+                              <view class="singleLine">
+                                <text class="{{true ? 'color-ff4949' : 'color-ff4285'}} platformTicket">平台券</text>
+                                  全场通用，在线支付专享全场通用，在线支付专享专享全场通用，在线支付专享
+                              </view>
+                              <view class="tip_useLimt Bflex1 termValidity">
+                                  2019.08.29-2020.08.29
+                              </view>
+                          </view>
+                      </view>
+                      <view class="couponInfoRight HBox BoxCenter">
+                          <view class="useThisCoupon">
+                              <view class="{{true ? 'color-ff4949' : 'color-ff4285'}} useThisCouponBtn HBox BoxCenter js_getNow"
+                                  data-couponid="116244"
+                                  style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+                                  立即领取
+                              </view>
+                          </view>
+                          <!-- <image class="haveReceivedImg" src="{{baseImageLocUrl}}/miniappImg/public/goodsDetail/haveReceived.png"/> -->
+                          <image class="haveReceivedImg" src="../../../image/haveReceived.png"/>
+                      </view>
+                  </view>
+              </view>
+              <view class="gapBox gapBox_right">
+                  <text class="gap gap_top"></text>
+                  <text class="gap_line"></text>
+                  <text class="gap gap_bot"></text>
+              </view>
+          </view>
+          <view class="coupon platCoupon">
+              <view class="couponBox">
+                  <view class="couponInfo HBox">
+                      <view class="{{true ? 'platformCouponInfoLeft' : 'businessCouponInfoLeft'}} HBox BoxCenter">
+                          <view class="couponPrice flex_view_col justi_between">
+                              <text><text>￥</text> <text class="moneyNumber">1</text></text>
+                              <view class="describe">满2元可用</view>
+                          </view>
+                      </view>
+                      <!--中间-->
+                      <view class="couponInfoCenter Bflex1 height_100">
+                          <view class="couponUseType">
+                              <view class="singleLine">
+                                <text class="{{true ? 'color-ff4949' : 'color-ff4285'}} platformTicket">平台券</text>
+                                  全场通用，在线支付专享全场通用，在线支付专享专享全场通用，在线支付专享
+                              </view>
+                              <view class="tip_useLimt Bflex1 termValidity">
+                                  2019.08.29-2020.08.29
+                              </view>
+                          </view>
+                      </view>
+                      <view class="couponInfoRight HBox BoxCenter">
+                          <view class="useThisCoupon">
+                              <view class="{{true ? 'color-ff4949' : 'color-ff4285'}} useThisCouponBtn HBox BoxCenter js_getNow"
+                                  data-couponid="116244"
+                                  style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+                                  立即领取
+                              </view>
+                          </view>
+                          <!-- <image class="haveReceivedImg" src="{{baseImageLocUrl}}/miniappImg/public/goodsDetail/haveReceived.png"/> -->
+                          <image class="haveReceivedImg" src="../../../image/haveReceived.png"/>
+                      </view>
+                  </view>
+              </view>
+              <view class="gapBox gapBox_right">
+                  <text class="gap gap_top"></text>
+                  <text class="gap_line"></text>
+                  <text class="gap gap_bot"></text>
+              </view>
+          </view>
+          <view class="coupon platCoupon">
+              <view class="couponBox">
+                  <view class="couponInfo HBox">
+                      <view class="{{true ? 'platformCouponInfoLeft' : 'businessCouponInfoLeft'}} HBox BoxCenter">
+                          <view class="couponPrice flex_view_col justi_between">
+                              <text><text>￥</text> <text class="moneyNumber">1</text></text>
+                              <view class="describe">满2元可用</view>
+                          </view>
+                      </view>
+                      <!--中间-->
+                      <view class="couponInfoCenter Bflex1 height_100">
+                          <view class="couponUseType">
+                              <view class="singleLine">
+                                <text class="{{true ? 'color-ff4949' : 'color-ff4285'}} platformTicket">平台券</text>
+                                  全场通用，在线支付专享全场通用，在线支付专享专享全场通用，在线支付专享
+                              </view>
+                              <view class="tip_useLimt Bflex1 termValidity">
+                                  2019.08.29-2020.08.29
+                              </view>
+                          </view>
+                      </view>
+                      <view class="couponInfoRight HBox BoxCenter">
+                          <view class="useThisCoupon">
+                              <view class="{{true ? 'color-ff4949' : 'color-ff4285'}} useThisCouponBtn HBox BoxCenter js_getNow"
+                                  data-couponid="116244"
+                                  style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+                                  立即领取
+                              </view>
+                          </view>
+                          <!-- <image class="haveReceivedImg" src="{{baseImageLocUrl}}/miniappImg/public/goodsDetail/haveReceived.png"/> -->
+                          <image class="haveReceivedImg" src="../../../image/haveReceived.png"/>
+                      </view>
+                  </view>
+              </view>
+              <view class="gapBox gapBox_right">
+                  <text class="gap gap_top"></text>
+                  <text class="gap_line"></text>
+                  <text class="gap gap_bot"></text>
+              </view>
+          </view>
+          <!-- <view class="moreBtnBox js_moreBtnBox">
+            <view class="loadingBtn js_loadingBtn js_loadNull" style="">
+                <text class="information">没有更多</text>
+            </view>
+            <view class="loadingBtn js_loadingBtn js_loading" style="display: none;">
+                <text class="icon_loading iconStyle icon-spinner3 myRotateRefresh"></text>
+                <text class="information">加载中</text>
+            </view>
+          </view> -->
+        </scroll-view>
+        <view class="couponPopup-btn color-white">完成</view>
+      </view>
     </view>
   </popup>
 
-<!-- 秒杀商品的价格        已完成新接口字段更换-->
+<!-- 秒杀商品的价格                       已完成新接口字段更换-->
   <view>
     <!-- goodsSecondKill 应该放置一个默认价格，因为这样在改动规格的时候倒计时模块展示的价格才不会跟着规格改变，原有版本并没有这个效果 -->
     <!-- a:if="{{goodsSecondKill}}" -->
-    <!-- priceShow -->
-    <spike-price a:if="{{secKillStatus}}" goodsSecondKill="{{goodsSecondKill}}" isFirstTime="{{isFirstTime}}" onSpikeOver="onSpikeOver" oldPrice="{{goods.defaultPrice}}"></spike-price> 
+    <spike-price a:if="{{secKillStatus}}" goodsSecondKill="{{goodsSecondKill}}" goodsStore="{{goods.goodsStore}}" viewStatus="{{goods.viewStatus}}" isFirstTime="{{isFirstTime}}" onSpikeOver="onSpikeOver" oldPrice="{{goods.defaultPrice}}"></spike-price> 
   </view>
 
-    <!-- 商品价格、销量    已完成新接口字段更换-->
-  <view a:if="{{!secKillStatus}}" class="detail-sale-view font-36" >
-      <view class="color-ff5353"  a:if="{{!SFmember}}">
-          <text>¥</text>
-          <text decode="true" space="true">&nbsp;</text>
-          <!-- priceShow -->
-          <text class="font-56 font-weight-600">{{goods.defaultPrice}}</text>
-          <text a:if="{{goods.jifenStatus}}"> + {{theMemberPoint}}积分            
-          </text>
-      </view>
-      <view class="color-ff5353" a:if="{{SFmember}}">
-          <!-- priceShow -->
-          <text>¥{{goods.defaultPrice}}      
-          </text>
-          <text class="font-26 color-666"> + {{theCostMemberScore}}积分      
-          </text>
-      </view>
-      <view class="color-a1a0a0 font-26">已售：{{goods.salesCount}}份
-      </view>
+  <!-- 商品价格、销量 -->
+  <view class="priceView" a:if="{{!secKillStatus}}" >
+    <!-- 包税等图片 -->
+    <view class="priceTagArea">
+       <!-- <image class="priceTagImg" src="{{base64imageUrl}}miniappImg/public/goodsDetail/iconBg_baoshui.png"/> -->
+       <image class="priceTagImg" src="{{base64imageUrl}}miniappImg/public/goodsDetail/iconBg_vip.png"/>
+    </view>
+    <!-- 价格销量 -->
+    <view class="detail-sale-view font-36" >
+      <block a:if="{{goods.viewStatus != 'SALEING'}}">
+        <view class="font-50 font-weight-600 color-a1a0a0">暂无报价</view>
+      </block>
+      <block a:else>
+        <view class="color-ff5353 flex_view_row align_end">
+          <view class="color-a1a0a0 font-26" a:if="{{false}}">会员价 <text decode="true" space="true">&nbsp;</text></view>
+          <view class="posi_re">
+            <view class="defaultPrice">
+              <!-- 价格 -->
+              <text a:if="{{false}}">
+                <text>¥</text>
+                <text decode="true" space="true">&nbsp;</text>
+                <text class="font-56 font-weight-600">{{goods.defaultPrice}}</text>
+              </text>
+              <!-- 原价 -->
+              <text class="color-a1a0a0 font-26 line-through" a:if="{{false}}">￥100</text>
+              <!-- 积分 -->
+              <text class="font-weight-600" a:if="{{false}}"><text decode="true" space="true">&nbsp;</text>+<text decode="true" space="true">&nbsp;</text></text>
+              <text ><text class="font-56 font-weight-600 color-a1a0a0">500</text><text class="color-a1a0a0">积分</text></text>
+            </view>
+          </view>
+        </view>
+        <!-- <view class="color-ff5353"  a:if="{{!SFmember}}">
+            <text>¥</text>
+            <text decode="true" space="true">&nbsp;</text>
+            <text class="font-56 font-weight-600">{{goods.defaultPrice}}</text>
+            <text a:if="{{goods.jifenStatus}}"> + {{theMemberPoint}}积分</text>
+        </view>
+        <view class="color-ff5353" a:if="{{SFmember}}">
+            <text>¥{{goods.defaultPrice}}</text>
+            <text class="font-26 color-666"> + {{theCostMemberScore}}积分</text>
+        </view> -->
+        <view class="color-a1a0a0 font-26">已售：{{goods.salesCount}}份</view>
+      </block>
+    </view>
   </view>
+
   
-    <!-- 优惠券导航栏      这一部分的数据还没有更新 -->
-  <view class="receiveCoupon flex_view_row justi_between font-26" onTap="showPopup">
+    <!-- 优惠券导航栏                      -->
+  <view class="receiveCoupon flex_view_row justi_between font-24" onTap="showPopup">
     <view class="flex_view_row flex_1 justi_start">
       <view class="couponTitle">
-        <image src="https://img.sfddj.com/miniappImg/public/goodsDetail/icon_coupon.png" class="width_100 height_100" mode="widthFix"></image>
+        <image src="{{baseImageLocUrl}}miniappImg/public/goodsDetail/icon_coupon.png" class="width_100 height_100" mode="widthFix"></image>
       </view>
       <view class="couponName">满100减10</view>
       <view class="couponName">满20减5</view>
@@ -197,12 +372,12 @@
     </view>
   </view>
 
-  <!-- 商品名称、title、标签  已完成新接口字段更换-->
+  <!-- 商品名称、title、标签              已完成新接口字段更换-->
   <view class="detail-header-view posi_re ">
-    <view class="detail-header-name color-323232 font-36">
+    <view class="detail-header-name color-323232 font-30">
       <view class="twoLineHide">
         <text class="labelName font-22 " a:if="{{goods.goodsLabels}}">{{goods.goodsLabels}}</text>
-        <text class="font-weight-600" >{{goods.goodsName}}</text>   
+        <text class="goodsName font-weight-600">{{goods.goodsName}}</text>   
       </view> 
       <view class="flex_view_row  justi_start font-20 labelList" a:if="{{that.data.goods.goodsViceVO.labelList.length > 0 || goods.goodsTag}}">
         <view class="goodsTag label" a:for="{{that.data.goods.goodsViceVO.labelList}}" a:if="{{index == 0 || index == 1 || index == 2}}">{{item}}</view>
@@ -210,27 +385,30 @@
       </view>    
     </view>
     <button open-type="share" size="mini" plain="{{true}}" class="flex_view_col justi_between align_end shareButton posi_ab">
-      <icon type="info" size="20"/>
-      <text class="font-26  color-a1a0a0">分享</text>
+      <image class="shareImag" src="{{base64imageUrl}}miniappImg/icon/share.png"/>
+      <text class="font-22  color-a1a0a0">分享</text>
     </button>
   </view>
 
-
-
-  <!-- 已选规格           已完成新接口字段更换-->
+  <!-- 已选规格                           已完成新接口字段更换-->
   <view class="division-area">
   </view>
   <view class="specifications-view selected-view" onTap="selectedSpecs">
     <view class="selectedSpecifications single-line-text flex_view_row" >
       <view class="font-26 color-a1a0a0">已选</view>
         <view a:if="{{specType == 'MULTI'}}" class="font-26 marLeft_30 single-line">{{multiformname}} , {{quantity}}件</view>
-        <view a:else class="font-26 marLeft_30 single-line " >{{product.productName}} , {{quantity}}件</view>
+        <view a:elif="{{specType == 'OPTIONAL'}}" class="font-26 marLeft_30 single-line">
+          <text a:if="{{(optionalProduct.length == 0 && goodsSpecMap.length != 0)}}"><block a:for="{{goodsSpecMap}}">{{item.iakName}}</block></text>
+          <text a:elif="{{optionalProduct.length > 0 }}"><block a:for="{{optionalProduct}}">{{item.productName}}</block></text>
+          <text decode="true" space="true">&nbsp;</text> , {{quantity}}件
+        </view>
+        <view a:else class="font-26 marLeft_30 single-line">{{product.productName}} , {{quantity}}件</view>
     </view>
     <text class="icon-href-right font-22 color-c7c7cc padding-r15">
     </text>
   </view>
 
-  <!-- 用户默认地址或者获取当前地址 已完成新接口字段更换-->
+  <!-- 用户默认地址或者获取当前地址         已完成新接口字段更换-->
   <view class="line-view">
     <view class="one-line"></view>
   </view>
@@ -239,9 +417,9 @@
       <view class="selectedSpecifications flex_view_row single-line-text">
         <view class="font-26 color-a1a0a0">送至</view>
         <view class="marLeft_30 single-line flex_view_row">
-          <icon type="success" size="13" class="marRight_15"/>
+          <image class="addressImag marRight_15" mode="scaleToFill" src="{{base64imageUrl}}miniappImg/icon/icon_detail_address.png"/>
           <block a:if="{{addressList && addressList.length > 0}}" a:for="{{addressList}}">
-             <view class="single-line" a:if="{{item.isDefault}}">{{item.province}}{{item.city}}{{item.area}}{{item.address}}</view>
+             <view class="single-line" a:if="{{item.isDefault}}">{{item.province}}<text decode="true" space="true">&nbsp;</text>{{item.city}}<text decode="true" space="true">&nbsp;</text>{{item.area}}<text decode="true" space="true">&nbsp;</text>{{item.address}}</view>
           </block>
           <block a:if="{{address}}">
             <view class="single-line">{{address}}</view>
@@ -251,16 +429,16 @@
       <text class="icon-href-right font-22 color-c7c7cc padding-r15">
       </text>
     </view>
-    <view class="addressTips">下单后<text class="color_red">24小时以内</text>发货</view>
+    <view class="addressTips" a:if="{{goods.deliveryTime}}">下单后<text class="color_red">{{goods.deliveryTime}}小时以内</text>发货</view>
   </view>
   <popup a:if="{{addressList && addressList.length > 0}}" show="{{isShowAddressPop}}" mask="{{true}}" position="bottom" animation="{{true}}" onClose="onAddressPop" zIndex="100" disableScroll="{{false}}">
     <view class="addressPop flex_view_col">
       <view class="flex_view_row justi_end" onTap="onAddressPop">
-         <icon type="cancel" size="24" color="black"/>
+         <image class="canceImag" mode="scaleToFill" src="{{base64imageUrl}}miniappImg/icon/icon_closeBtn.png"/>
       </view>
       <scroll-view scroll-y="{{true}}"  class="addressBox font-26 flex-1">
         <view class="addressMessage posi_re" a:for="{{addressList}}" data-addressid="{{item.id}}" onTap="selectAddress">
-          <icon type="warn" size="12" color="{{item.isDefault ? 'red': 'black'}}" class="posi_ab marTop_5"/>
+          <image class="addressImag posi_ab marTop_5"  mode="scaleToFill" src="{{base64imageUrl}}miniappImg/icon/{{item.isDefault ? 'icon_address_choose.': 'icon_detail_address.'}}png"/>
           <view class="{{item.isDefault ? 'color-ff5353': 'color-black'}} address"><text class="marRight_10">{{item.province}}</text><text class="marRight_10">{{item.city}}</text><text class="marRight_10">{{item.area}}</text><text class="marRight_10">{{item.address}}</text></view>
         </view>
       </scroll-view>
@@ -271,30 +449,29 @@
   </popup>
 
   
-  <!-- 如果是顺丰会员商品会显示奖励多少积分  -->
+  <!-- 如果是顺丰会员商品会显示奖励多少积分         已完成新接口字段更换--->
   <view class="flex_view_row" style="padding: 0 30rpx 10rpx;" a:if="{{SFmember}}">
     <text class="color-ff5353 font-24">奖励会员积分{{theAwardMemberScore}}        
     </text>
   </view>
 
-  <!-- <view class="division-line"></view><view class="advantage_view"><image src="{{base64imageUrl}}miniappImg/bg/bg_advantage.jpg" class="advantage_img"></image></view> -->
   <view class="division-area">
   </view>
 
-  <!-- 店铺信息 -->
+  <!-- 店铺信息                                   已完成新接口字段更换-->
   <view>
-    <!--购物返现金额  -->
-    <view class="whiteBack" style="padding: 20rpx 30rpx 0;" a:if="{{goods.isRefundMoney}}">
-      <view class="flex_view_row justi_between align_cen" style="margin-top: 13rpx; height: 95rpx; padding: 0 20rpx; background: -webkit-linear-gradient(left,#ffe2a6,#ffd47b);background: -o-linear-gradient(left,#ffe2a6,#ffd47b);background: -moz-linear-gradient(left,#ffe2a6,#ffd47b);background: -webkit-linear-gradient(left,#ffe2a6,#ffd47b);box-shadow: 2px 2px 2px rgba(150,150,150,0.1), -2px -2px 2px rgba(150,150,150,0.1); border-radius: 13rpx;" catchTap="showCashBackRuleFn">
-        <view class="font-32 flex_view_row align_cen" style="color: #723a0d;">
+    <!--购物返现金额                              已完成新接口字段更换-->
+    <view class="whiteBack" style="padding: 20rpx 30rpx 0;" a:if="{{goods.returnMoneyStatus}}">
+      <view class="flex_view_row justi_between align_cen returnMoneyView" catchTap="showCashBackRuleFn">
+        <view class="font-32 flex_view_row align_cen color-723a0d">
           <image src="{{base64imageUrl}}/miniappImg/icon/icon_goods_detail.png" style="width: 32rpx; height: 32rpx;margin-right: 13rpx;">
           </image>
           <text>购买最高可返                        
-            <text class="color-ff5353">{{filters.toFix(goods.maxRefundMoneyPrice * minCount)}}                        
+            <text class="color-ff5353">{{filters.toFix(goods.maxReturnMoney * minCount)}}                      
             </text>元                    
           </text>
         </view>
-        <view class="tex_right font-24 flex_view_row align_cen" style="color: #795a1a;">
+        <view class="tex_right font-24 flex_view_row align_cen color-795a1a">
           <view>
             <text class>规则详情                        
             </text>
@@ -306,17 +483,15 @@
         </view>
       </view>
     </view>
-    <!--查看店铺  -->
-    <navigator url="/pages/shopping/storeInfo/storeInfo?supplierId={{goods.supplierId}}" hover-class="none">
+    <!--查看店铺                                  已完成新接口字段更换-->
+    <!-- <navigator url="/pages/shopping/storeInfo/storeInfo?supplierId={{goods.supplierInfo.supplierId}}" hover-class="none">
       <view class="specifications-view selected-view">
-        <!-- <view class="store-image"> -->
-        <image class="storeImg_head" src="{{goods.headPortraitPath }}" style='width: 64rpx; height: 64rpx;'>
+        <image class="storeImg_head" src="{{goods.supplierInfo.headImage}}" style='width: 64rpx; height: 64rpx;'>
         </image>
-        <!-- </view> -->
         <view class="store-name-area">
-          <text class="store-name-font color-323232 font-26">{{goods.nickName}}                    
+          <text class="store-name-font color-323232 font-26">{{goods.supplierInfo.nickName}}                    
           </text>
-          <text class="store-name-font color-a1a0a0 font-22">{{goods.shopIntr}}                    
+          <text class="store-name-font color-a1a0a0 font-22">{{goods.supplierInfo.introduction}}                    
           </text>
         </view>
         <view class="color-a1a0a0 font-24 flex_view_row align_cen">
@@ -325,18 +500,47 @@
           <text class="icon-href-right font-22 color-c7c7cc marLeft_20 padding-r15">
           </text>
         </view>
-        <!-- <image src='{{base64imageUrl}}miniappImg/icon/icon_right_arrow.png' class='store_checkArr'></image> -->
       </view>
-    </navigator>
-    <!-- 店铺通知 -->
-    <view class="division-area"  a:if="{{goods.notice}}"></view>
-    <view class="notice-area flex_view_col" a:if="{{goods.notice}}">
-      <view class="tex_center notice-title flex_view_row justi_cen align_cen">
+    </navigator> -->
+
+    <!--全赔说明                                  已完成新接口字段更换-->
+    <view class="division-area">
+    </view>
+    <view class="goodsCoverage" onTap="goToAfterSaleGuee">
+      <view class="flex_view_row justi_between align_cen">
+        <view class="flex_view_row">
+          <text class="font-26 color-a1a0a0">保障        
+          </text>
+          <view class="marLeft_30 flex_view_row">
+            <image class="guaranteeImg marRight_10" mode="scaleToFill" src="{{baseImageLocUrl}}miniappImg/public/goodsDetail/icon_img_safe.png"/>
+            <text class="font-26 color-558b29">全赔保障</text>
+          </view>
+        </view>
+        <view>
+          <text class="icon-href-right font-22 color-c7c7cc padding-r15">
+          </text>
+        </view>
+      </view>
+      <view class="guarantee-view single-line font-26" a:if="{{goods.afterSaleGueeList && goods.afterSaleGueeList.length > 0}}">
+        <block a:for="{{goods.afterSaleGueeList}}" class="single-line">
+          <block a:if="{{item == '1'}}">坏果全赔</block>
+          <block a:if="{{item == '2'}}">缺一两全赔</block>
+          <block a:if="{{item == '3'}}">不甜全赔</block>
+          <block a:if="{{item == '4'}}">损坏全赔</block>
+          <block a:if="{{index != goods.afterSaleGueeList.length - 1}}"><text decode="true" space="true">&nbsp;</text> • <text decode="true" space="true">&nbsp;</text></block>
+        </block>
+      </view>
+    </view>
+
+    <!-- 店铺公告                                 已完成新接口字段更换-->
+    <view class="division-area"  a:if="{{goods.supplierInfo.supplierNotice}}"></view>
+    <view class="notice-area flex_view_col" a:if="{{goods.supplierInfo.supplierNotice}}">
+      <view class="tex_center notice-title flex_view_row justi_cen align_cen" style="background: url({{baseImageLocUrl}}miniappImg/goodsDetail/noticeTitle.png); background-size: 100%;">
         <view class="notice-line"></view>
         <view class="ontice-titleText font-32">店铺公告</view>
         <view class="notice-line"></view>
       </view>
-      <view class="notice-text font-26"> {{goods.notice}}</view>
+      <view class="notice-text font-26"> {{goods.supplierInfo.supplierNotice}}</view>
       <!-- <image src="{{base64imageUrl}}miniappImg/bg/bg_notice_person.png" class="store_noticeImg notice-person-view">
       </image> -->
     </view>
@@ -345,57 +549,8 @@
   </view>
 
 
-  <!--全赔说明   -->
-  <view class="goodsCoverage" a:if="{{goods.afterSaleGueeList}}" onTap="showCompensationRuleFn">
-    <view class="flex_view_row justi_between align_cen">
-      <view class="flex_view_row">
-        <text class="font-26 color-a1a0a0">保障                
-        </text>
-        <view class="marLeft_30">
-          <text class="icon-check-cir color-323232 font-24 marRight_10">
-          </text>
-          <text class="color_green font-26">全赔保障</text>
-        </view>
-      </view>
-      <view>
-        <text class="icon-href-right font-22 color-c7c7cc padding-r15">
-        </text>
-      </view>
-    </view>
-    <view class="guarantee-view single-line font-26" a:if="{{goods.afterSaleGueeList}}">
-      <block a:for="{{goods.afterSaleGueeList}}" class="single-line">
-       {{item}}
-       <block a:if="{{index != goods.afterSaleGueeList.length - 1}}"><text decode="true" space="true">&nbsp;</text> • <text decode="true" space="true">&nbsp;</text></block>
-      </block>
-    </view>
-  </view>
-  <view class="division-area" a:if="{{goods.afterSaleGueeList}}">
-  </view>
 
-
-  <!-- 品质保障 注意下面的  division-area ，当有品质保障才显示出来否则不用显示-->
-  <view class="goodsCoverage">
-     <!-- url="/pages/shopping/qualityAssurance/qualityAssurance?goodsSn={{goodsSn}}"  -->
-    <view open-type="navigate" hover-class="none" onTap="goToH5">
-      <view class="flex_view_row justi_between align_cen">
-        <view class="flex_view_row">
-          <text class="icon-check-cir color-323232 font-24 marRight_10"></text>
-          <text class="font-26 color-a1a0a0">品质保障                
-          </text>
-        </view>
-        <view>
-          <text class="icon-href-right font-22 color-c7c7cc padding-r15">
-          </text>
-        </view>
-      </view>
-    </view>
-  </view>
-  <view class="division-area" >
-  </view>
-
-
-
-  <!-- 检验报告 -->
+  <!-- 检验报告                                   已完成新接口字段更换-->
   <navigator url="/pages/shopping/testReport/testReport?inspectReportImagePath={{goods.inspectReportImagePath}}" hover-class="none" a:if="{{goods.inspectReportImagePath}}">
     <view class="test-report">
       <view class="test-report-text">
@@ -411,16 +566,15 @@
       </text>
     </view>
   </navigator>
-
   <view class="division-area" a:if="{{goods.inspectReportImagePath}}">
   </view>
 
   <!-- 商品评价 -->
-  <!-- 评分和评价条数 -->
-  <navigator url="/pages/shopping/comment/comment?goodScore={{goodScore}}&goodsCommentTotal={{goodsCommentTotal}}&goodsId={{goods.id}}" hover-class="none" a:if="{{showComment}}">
+  <!-- 评分和评价条数                             已完成新接口字段更换但还没有验图片-->
+  <navigator url="/pages/shopping/comment/comment?goodScore={{goods.commentScore}}&goodsCommentTotal={{goods.commentTotal}}&goodsId={{goods.goodsId}}" hover-class="none" a:if="{{showComment}}">
     <view class="goods-comment-title">
       <view class="flex_view_row align_cen">
-        <view>好评率<text class="marLeft_5 color-ff5353 font-28">{{commentScore}}%</text></view>
+        <view>好评率<text class="marLeft_5 color-ff5353 font-28">{{goods.commentScore}}%</text></view>
       </view>
       <view class="flex_view_row align_cen color-a1a0a0">
         <view>评价</view> 
@@ -434,32 +588,34 @@
     </view>
   </navigator>
 <!-- 评价示例 -->
-  <view class="goods-comment-area" a:if="{{showComment}}">
+  <view class="goods-comment-area" a:if="{{showComment && comment.length > 0}}" a:for="{{comment}}">
+    <view class="comment-line"></view>
     <view class="comment-user-area">
       <view class="flex_view_row align_cen">
         <view class="comment-user-image">
-          <image src="{{comment.headPortraitPath ? comment.headPortraitPath : base64imageUrl + 'miniappImg/icon/icon_default_head.jpeg'}}" class="proComment_headPort">
+          <image src="{{item.headPortraitPath ? item.headPortraitPath : base64imageUrl + 'miniappImg/icon/icon_default_head.jpeg'}}" class="proComment_headPort">
           </image>
         </view>
-        <view class="font-24 color-323232 marLeft_20">{{comment.nickNameResult}}</view>
+        <view class="font-24 color-323232 marLeft_20">{{item.nickName}}</view>
       </view>
       <view class="flex_view_row align_cen">
-        <image src="{{base64imageUrl}}miniappImg/icon/icon_star_selected.png" class="proComment_star" a:for="{{comment.star}}"></image>
-        <image src="{{base64imageUrl}}miniappImg/icon/icon_star_normal.png" class="proComment_star" a:for="{{5 - comment.start}}"></image>
+        <image src="{{base64imageUrl}}miniappImg/icon/icon_star_selected.png" class="proComment_star" a:for="{{item.star}}"></image>
+        <image src="{{base64imageUrl}}miniappImg/icon/icon_star_normal.png" class="proComment_star" a:for="{{5 - item.star}}"></image>
       </view>
     </view>
     <view class="proComment_text overHid font-26">
-      <view class="comment-text">{{comment.comment}}</view>
+      <view class="comment-text">{{item.comment}}</view>
     </view>
-    <view class="blockBox marTop_36" a:if="{{comment && comment.imagePath.length > 0}}">
-      <image src="{{baseImageUrl}}{{item}}" class="proComment_img" data-current="{{item}}" data-urls="{{comment.imagePath}}" a:for="{{comment.imagePath}}" style="{{index == comment.imagePath.length - 1 ? 'margin-right: 0;' : '  margin-right: 6rpx;'}}" onTap="commentViewTap">
+    <view class="blockBox marTop_36" a:if="{{item && item.imagePath.length > 0}}">
+      <image class="proComment_img" a:for="{{item.imagePath}}" a:for-item="items" a:for-inex="inexs" src="{{baseImageUrl}}{{items}}" data-current="{{items}}" data-urls="{{item.imagePath}}" style="{{inexs == item.imagePath.length - 1 ? 'margin-right: 0;' : '  margin-right: 6rpx;'}}" onTap="commentViewTap">
       </image>
     </view>
     <!-- <view class="proComment_date font-22 color-a1a0a0">{{comment.createDate}}        
     </view> -->
   </view>
 
-  <!-- 猜你喜欢 -->
+
+  <!-- 猜你喜欢                                  已完成新接口字段更换-->
   <block a:if="{{guessLikeGoods.length > 0}}">
     <view class="js_guessLike">
       <view class="item-header-title-view font-26 color-b3b3b3">- 猜你喜欢 -        
@@ -471,12 +627,10 @@
       </scroll-view>
     </view>
   </block>
-
   <view class="division-area" a:if="{{showComment}}">
   </view>
 
-  <!-- 产品详情和服务售后的选择 title  scrollTop -->
-
+  <!-- 产品详情和服务售后的选择栏                 已完成新接口字段更换-->
   <view class="goods-detail-title-view js_titleView whiteBack width_100" style="{{suctionTop == 0 ? 'position: fixed; top: 0; left: 0; z-index: 1000;' : ''}}">
     <view class="goods-detail-title" id="0" onTap="switchDetailShowTap">
       <view class="height_100 flex_view_col justi_cen" style="{{!hideDetailTag ? 'border-bottom: #ff5353 5rpx solid; color: #ff5353;' : ''}}">产品详情</view>
@@ -491,12 +645,12 @@
 
 
   
-  <!-- 商品规格和商品图文详情 -->
+  <!-- 商品规格和商品图文详情                     已完成新接口字段更换-->
   <view a:if="{{!hideDetailTag}}">
     <!-- 商品出售规格 -->
-    <block a:if="{{categoryAttrKeyList.length > 0}}">
+    <block a:if="{{goods.categoryAttrKey.length > 0}}">
       <view class="category-attr-view">
-        <view class="category-attr-item" a:for="{{categoryAttrKeyList}}">
+        <view class="category-attr-item" a:for="{{goods.categoryAttrKey}}">
           <view class="category-attr-item-left font-24">{{item.cakName}}                    
           </view>
           <view class="category-attr-item-right font-24 color-a1a0a0">{{item.cakValue}}                    
@@ -510,7 +664,7 @@
     </view>
   </view>
 
-<!-- 售后服务温馨提示 -->
+<!-- 售后服务温馨提示                             已完成新接口字段更换-->
   <view class="after-sales-service font-30" a:else>
     <text class="font-30 after-sales-service-title">售后服务        
     </text>
@@ -545,8 +699,8 @@
     </scroll-view>
   </block> -->
 
-  <!-- 当家爆款 -->
-  <block a:if="{{groupNameTopList.length > 0}}">
+  <!-- 当家爆款                                   暂时不要留，后台没有返回数据-->
+  <!-- <block a:if="{{groupNameTopList.length > 0}}">
     <view class="item-header-title-view font-26 color-b3b3b3">- 当家爆款 -        
     </view>
     <scroll-view scroll-x class="goods-scrollx-view" scroll-with-animation="true">
@@ -554,18 +708,18 @@
         <template is="itemGoodsScrollX" data="{{...item,baseImageUrl:baseImageUrl,baseLocImgUrl: base64imageUrl}}"/>
       </block>
     </scroll-view>
-  </block>
+  </block> -->
   <view class="division-area">
   </view>
 
-  <!-- 商家其他商品 -->
+<!-- 商家其他商品                                  已完成新接口字段更换-->
   <block a:if="{{otherGoods.length > 0}}">
-    <navigator url="/pages/shopping/storeInfo/storeInfo?supplierId={{goods.supplierId}}" hover-class="none">
+    <navigator url="/pages/shopping/storeInfo/storeInfo?supplierId={{goods.supplierInfo.supplierId}}" hover-class="none">
       <view class="storePro_view">
         <view class="flex_view_row align_cen">
-          <image class="store-image storeImg_head" src="{{goods.headPortraitPath}}">
+          <image class="store-image storeImg_head" src="{{goods.supplierInfo.headImage}}">
           </image>
-          <text class="color-323232 font-26 marLeft_10">{{goods.nickName}}                    
+          <text class="color-323232 font-26 marLeft_10">{{goods.supplierInfo.nickName}}                    
           </text>
         </view>
         <view class="flex_view_row align_cen">
@@ -579,7 +733,7 @@
     </navigator>
     <scroll-view scroll-x class="goods-scrollx-view" scroll-with-animation="true">
       <block a:for="{{otherGoods}}">
-        <template is="itemGoodsScrollX" data="{{...item,baseImageUrl:'',baseLocImgUrl: base64imageUrl}}"/>
+        <template is="itemGoodsScrollX" data="{{...item,baseImageUrl: baseImageUrl,baseLocImgUrl: base64imageUrl}}"/>
       </block>
     </scroll-view>
   </block>
@@ -587,125 +741,123 @@
   </view>
 
 
-  <view class="goods-soldOut">非常抱歉，该商品已经售罄</view>
-  <!-- 底部购物按钮,不是顺丰会员商品 -->
+  <view class="goods-soldOut" a:if="{{goods.viewStatus != 'SALEING'}}">非常抱歉，该商品已经下架</view>
+  <view class="goods-soldOut" a:if="{{goods.viewStatus == 'SALEING' && goods.goodsStore == 0}}">非常抱歉，该商品已经售罄</view>
+
+  <!-- 底部购物按钮,不是顺丰会员商品                  还差联系商家的 webCallParam，其它都已完成新接口字段更换-->
   <block a:if="{{!SFmember}}">
-    <!--积分商品,不能显示送他按钮和加入购物车按钮  -->
-    <view class="bottom-view" a:if="{{goods.isJifen || goods.memberDeductGoods || goods.memberDayGoods}}">
+    <!--积分商品,不能显示送他按钮和加入购物车按钮 memberDeductGoods 会员积分抵扣旧字段， memberDayGoods 与原有接口字段一样-->
+    <view class="bottom-view" a:if="{{goods.jifenStatus || goods.deductStatus || goods.memberDayGoods}}">
       <view class="flex_1 flex_view_row isJifenViewLeft">
-        <navigator class="btnNoBor contactBtn bottom-icon-view font-20 color-565d6f flex_1" url="/pages/shopping/storeInfo/storeInfo?supplierId={{goods.supplierId}}" hover-class="none">
-          <image src="{{base64imageUrl}}miniappImg/icon/icon_contact_businesser.png" class="contactBtn_icon">
-          </image>
-          <text>店铺
-          </text>
+        <navigator class="btnNoBor contactBtn bottom-icon-view font-20 color-565d6f flex_1" url="/pages/shopping/storeInfo/storeInfo?supplierId={{goods.supplierInfo.supplierId}}" hover-class="none">
+          <image src="{{base64imageUrl}}miniappImg/icon/icon-business.png" class="contactBtn_icon"></image>
+          <text>店铺</text>
         </navigator>
         <view class="btnNoBor contactBtn bottom-icon-view font-20 color-565d6f" catchTap="goToWebCall">
-          <image src="{{base64imageUrl}}miniappImg/icon/icon_contact_businesser.png" class="contactBtn_icon">
-          </image>
+          <image src="{{base64imageUrl}}miniappImg/icon/icon_contact_businesser.png" class="contactBtn_icon"></image>
           <text>联系商家</text>
         </view>
-        <view class="shopCart_bigView">
+        <view class="shopCart_bigView btnNoBor contactBtn">
           <navigator url="/pages/cart/cart" class="shopCart_inView bottom-icon-view font-20 color-565d6f posi_re" open-type="switchTab">
-            <image src="{{base64imageUrl}}miniappImg/icon/icon_shop_cart.png" class="shopCart_icon">
-            </image>
-            <text>购物车                        
-            </text>
+            <image src="{{base64imageUrl}}miniappImg/icon/icon_shop_cart.png" class="shopCart_icon"></image>
+            <text>购物车</text>
             <view class="red-count-view " a:if="{{count > 0}}">
-              <text class="oneLineShow">{{count}}                            
-              </text>
+              <text class="oneLineShow">{{count}}</text>
             </view>
           </navigator>
         </view>
       </view>
-      <view class="flex_1 height_100 isJifenViewRight">
-        <view class="bottom-text-red-bg width_100 font-30" onTap="buyNow">立即购买            
-        </view>
+      <view class="flex_1 height_100 isJifenViewRight flex_view_row align_cen justi_cen font-32">
+        <block a:if="{{goods.viewStatus != 'SALEING' || (goods.viewStatus == 'SALEING' && goods.goodsStore == 0)}}">
+          <view class="bottom-text-red-bg bottom-text-yellow-bg width_100">查看类似商品</view>
+        </block>
+        <block a:else>
+          <view class="bottom-text-red-bg width_100" onTap="buyNow">立即购买</view>
+        </block>
       </view>
       <!-- <view class='bottom-text-white-bg buyNowBtn font-30' onTap='addCart'>加入购物车</view> -->
     </view>
     <!--不是送礼,不显示送他按钮  -->
     <view class="bottom-view" a:else>
-      <navigator class="btnNoBor contactBtn bottom-icon-view font-20 color-565d6f flex_1" url="/pages/shopping/storeInfo/storeInfo?supplierId={{goods.supplierId}}" hover-class="none">
-        <image src="{{base64imageUrl}}miniappImg/icon/icon_contact_businesser.png" class="contactBtn_icon">
-        </image>
-        <text>店铺
-        </text>
-      </navigator>
-      <view class="btnNoBor contactBtn bottom-icon-view font-20 color-565d6f flex_1" catchTap="goToWebCall">
-        <image src="{{base64imageUrl}}miniappImg/icon/icon_contact_businesser.png" class="contactBtn_icon">
-        </image>
-        <text>联系商家 
-        </text>
-      </view>
-      <view class="height_100 posi_re myCart flex_1">
-        <navigator open-type="switchTab" class="bottom-icon-view font-20 color-565d6f" hover-class="none" url="/pages/cart/cart">
-          <image src="{{base64imageUrl}}miniappImg/icon/icon_shop_cart.png" class="shopCart_icon">
-          </image>
-          <text>购物车                    
-          </text>
+      <view class="flex_1 flex_view_row">
+        <navigator class="btnNoBor contactBtn bottom-icon-view font-20 color-565d6f flex_1" url="/pages/shopping/storeInfo/storeInfo?supplierId={{goods.supplierInfo.supplierId}}" hover-class="none">
+          <image src="{{base64imageUrl}}miniappImg/icon/icon-business.png" class="contactBtn_icon"></image>
+          <text>店铺</text>
         </navigator>
-        <!-- 以下 view 原有的写法 style="{{secKillStatus ? 'margin-right: -20%;' : ''}}" -->
-        <view class="red-count-view " a:if="{{count > 0}}" >
-          <text class="oneLineShow">{{count}}                    
-          </text>
+        <view class="btnNoBor contactBtn bottom-icon-view font-20 color-565d6f flex_1" catchTap="goToWebCall">
+          <image src="{{base64imageUrl}}miniappImg/icon/icon_contact_businesser.png" class="contactBtn_icon"></image>
+          <text>联系商家 </text>
+        </view>
+        <view class="btnNoBor contactBtn height_100 posi_re myCart flex_1">
+          <navigator open-type="switchTab" class="bottom-icon-view font-20 color-565d6f" hover-class="none" url="/pages/cart/cart">
+            <image src="{{base64imageUrl}}miniappImg/icon/icon_shop_cart.png" class="shopCart_icon"></image>
+            <text>购物车</text>
+          </navigator>
+          <!-- 以下 view 原有的写法 style="{{secKillStatus ? 'margin-right: -20%;' : ''}}" -->
+          <view class="red-count-view " a:if="{{count > 0}}" >
+            <text class="oneLineShow">{{count}}                    
+            </text>
+          </view>
         </view>
       </view>
-
-      <view a:if="{{secKillStatus}}" class="width-400 height_100 flex_view_row isGoodsSecondKill">
-        <view a:if="{{isSpikeOver}}" class="bottom-text-gray-bag font-32">活动结束</view>
-        <view a:elif="{{secKillStatus && (goodsSecondKill.totalSaleVolume == goodsSecondKill.totalStock)}}" class="bottom-text-gray-bag  font-32">已售罄</view>
-        <view a:else class="bottom-text-red-bg font-32" onTap="buyNow">立即购买</view>
-      </view>
-      <view a:else class="width-400 height_100 flex_view_row justi_cen align_cen noJifen">
-        <view class="bottom-text-white-bg font-32" onTap="addCart">加入购物车</view>
-        <view class="bottom-text-red-bg font-32" onTap="buyNow">立即购买</view>
+      <view class="flex_1  height_100 flex_view_row align_cen justi_cen noJifen color-white font-32">
+        <block a:if="{{goods.viewStatus != 'SALEING' || (goods.viewStatus == 'SALEING' && goods.goodsStore == 0)}}">
+          <view class="bottom-bg bottom-text-yellow-bg">查看类似商品</view>
+        </block>
+        <block a:elif="{{goods.secKillStatus}}">
+          <view  class="bottom-bg background_gray" a:if="{{isSpikeOver}}">活动结束</view>
+          <view  class="bottom-bg background_gray" a:elif="{{goods.secKillStatus && (goodsSecondKill.totalSaleVolume == goodsSecondKill.totalStock)}}">已售罄</view>
+          <view  class="bottom-bg background_red" a:else onTap="buyNow">立即购买</view>
+        </block>
+        <block a:else>
+          <view class="bottom-bg font-30">
+            <view class="flex_1 height_100 bottom-white-bg color-ff5353" onTap="addCart">加入购物车</view>
+            <view class="flex_1 height_100 bottom-red-bg" onTap="buyNow">立即购买</view>
+          </view>
+        </block>
       </view>
     </view>
   </block>
 
-  <!-- 底部购物按钮，速运会员 -->
-  <block a:if='{{SFmember}}'>
+  <!-- 底部购物按钮，速运会员                         还差联系商家的 webCallParam，其它都已完成新接口字段更换-->
+  <block a:else>
     <view class='bottom-view justi_between' >
-      <navigator class="btnNoBor contactBtn bottom-icon-view font-20 color-565d6f" url="/pages/shopping/storeInfo/storeInfo?supplierId={{goods.supplierId}}" hover-class="none" style='width: 20%;'>
-        <image src="{{base64imageUrl}}miniappImg/icon/icon_contact_businesser.png" class="contactBtn_icon">
-        </image>
-        <text>店铺
-        </text>
+      <navigator class="btnNoBor contactBtn bottom-icon-view font-20 color-565d6f" url="/pages/shopping/storeInfo/storeInfo?supplierId={{goods.supplierInfo.supplierId}}" hover-class="none" style='width: 20%;'>
+        <image src="{{base64imageUrl}}miniappImg/icon/icon-business.png" class="contactBtn_icon"></image>
+        <text>店铺</text>
       </navigator>
-      <view class=' flex_view_row isJifenViewLeft' style='width: 20%;'>
+      <view class=' flex_view_row isJifenViewLeft' style='width: 20%;' catchTap="goToWebCall">
         <view catchTap='goToWebCall' class='btnNoBor contactBtn bottom-icon-view font-20 color-565d6f'>
-          <image src='{{base64imageUrl}}miniappImg/icon/icon_contact_businesser.png' class='contactBtn_icon'>
-          </image>
-          <text>联系商家
-          </text>
+          <image src='{{base64imageUrl}}miniappImg/icon/icon_contact_businesser.png' class='contactBtn_icon'></image>
+          <text>联系商家</text>
         </view>
-        <!-- <view class='shopCart_bigView'><view class='shopCart_inView bottom-icon-view font-20 color-565d6f posi_re' bindtap='cartTap'><image src='{{base64imageUrl}}miniappImg/icon/icon_shop_cart.png' class='shopCart_icon'></image><text>购物车</text><view class='red-count-view ' wx:if='{{count>0}}'><text class='oneLineShow'>{{count}}</text></view></view></view> -->
       </view>
-      <view class='flex_1 height_100 isJifenViewRight' style=''>
-        <view class='bottom-text-red-bg width_100 font-30' onTap='buyNow'>立即购买        
-        </view>
+      <view class='flex_1 height_100 isJifenViewRight flex_view_col align_cen justi_cen font-32'>
+        <block a:if="{{goods.viewStatus != 'SALEING' || (goods.viewStatus == 'SALEING' && goods.goodsStore == 0)}}">
+          <view class='bottom-text-red-bg width_100'>查看类似商品</view>
+        </block>
+        <block a:else>
+          <view class='bottom-text-red-bg width_100' onTap='buyNow'>立即购买</view>
+        </block>
       </view>
       <!-- <view class='bottom-text-white-bg buyNowBtn font-30' bindtap='addCart'>加入购物车</view> -->
     </view>
   </block>
 
     
-  <!-- 规格选择框 -->
-  <template is="goodsSpec" data="{{show:showGoodsSpec,baseLocImgUrl:base64imageUrl,baseImageUrl,product,goodsSpecMap,optionalProduct,xgCount,specType,selectedSpecsBar,multiformname,quantity,type,showInput:true,SFmember}}"/>
-  <!-- 点击确定之后数量大于2的情况下弹出 -->
+  <!-- 规格选择框                                   已完成新接口字段更换-->
+  <template is="goodsSpec" data="{{show:showGoodsSpec,baseLocImgUrl:base64imageUrl,baseImageUrl,product,goodsSpecMap,optionalProduct,xgCount,specType,selectedSpecsBar,multiformname,goodsStore: goods.goodsStore,quantity,type,showInput:true,SFmember}}"/>
+  <!-- 点击确定之后数量大于2的情况下弹出              已完成新接口字段更换-->
   <template is="goodsGiftBomb" data="{{show:showGiftBomb,base64imageUrl:base64imageUrl}}"/>
-  <!-- 点击什么是送礼方式弹出 -->
-  <!-- 点击什么是送礼方式弹出 -->
+  <!-- 点击什么是送礼方式弹出                         已完成新接口字段更换-->
   <template is="goodsTheway" data="{{show:showTheway,base64imageUrl:base64imageUrl}}"/>
-  <!--toast弹窗-->
+  <!--toast弹窗                                     已完成新接口字段更换-->
   <view class="mark flex_view_col align_cen justi_cen" a:if="{{showToast}}">
-    <view class="toastView_wb" catchtouchmove="move">
-      <view class="toastView_wb_con font-24 color-232323">      {{showToastMes}}                  
-      </view>
+    <view class="toastView_wb">
+      <view class="toastView_wb_con font-24 color-232323">{{showToastMes}}</view>
     </view>
   </view>
   <!--购物返现规则弹窗  -->
   <template is="cashBackRule" data="{{cashBackRulePopup: cashBackRulePopup}}"/>
   <!--全赔规则  -->
   <template is="compensationRule" data="{{showCompensationRule: showCompensationRule, afterSaleGuee: goods.afterSaleGuee}}"/>
-  <template></template>
