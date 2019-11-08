@@ -112,7 +112,7 @@ App({
       sendRequest.send(constants.InterfaceUrl.SHOP_GET_COUNT, {}, function(res) {
         my.setTabBarBadge({
           index: 2,
-          text: res.data.result.count
+          text: (res.data.result.count).toString()
         })
       }, function(res) { });
     }
