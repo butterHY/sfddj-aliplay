@@ -61,7 +61,9 @@ Page({
 		pageScrollTop: 0,                    //页面滚动高度
 		windowHeight: windowHeight,         //页面高度
 		isCollected: false,
-		canUse: my.canIUse('lifestyle'),
+		canUseLife: my.canIUse('lifestyle'),
+		hideLifeStyle: false,             //隐藏关注生活号组件
+		hotWordTop: (windowWidth * 120 / 750) + 56
 	},
 
 	onLoad: async function(options) {
@@ -107,7 +109,7 @@ Page({
 	},
 
 	onShow: function() {
-    var that = this;
+		var that = this;
 
 		// 每次页面显示判断是否是热启动，如果是就请求数据；
 		var isHotStart = my.getStorageSync({
@@ -121,8 +123,8 @@ Page({
 		// if (!this.data.isonLoad) {
 		// 	this.getTimes('isFirstTime');
 		// }
-      that.getCartNumber();
-      // console.log('我是 home， 我在显示了 onShow ')
+		that.getCartNumber();
+		// console.log('我是 home， 我在显示了 onShow ')
 	},
 
 	onReady() {
@@ -355,6 +357,21 @@ Page({
 				});
 			}, 'GET', true);
 	},
+
+	onPageScroll: _.debounce(function(e) {
+		let { scrollTop } = e
+		if (scrollTop > 56) {
+			this.setData({
+				hideLifeStyle: true
+			})
+		}
+		else {
+			this.setData({
+				hideLifeStyle: false
+			})
+		}
+	},300),
+
 
 
 	_onPageScroll: _.debounce(function(obj) {
@@ -601,7 +618,7 @@ Page({
 			my.showToast({
 				content: '添加购物车成功'
 			});
-      that.getCartNumber();
+			that.getCartNumber();
 		}, function(res) {
 			my.showToast({
 				content: res
@@ -917,20 +934,20 @@ Page({
 					// console.log(resData.data.appLink);
 					// console.log(my.canIUse('isCollected'));
 					var canUseCollected = my.canIUse('isCollected');
-          if(!canUseCollected) {
-            my.showToast({
-              content: '您的客户端版本过低，请升级你的客户端',
-              success: (res) => {
-                if (result) {
-                  that.setData({
-                    popImgData: result
-                  })
-                  that.judgePop();
-                }
-              },
-            });
-            return;
-          }
+					if (!canUseCollected) {
+						my.showToast({
+							content: '您的客户端版本过低，请升级你的客户端',
+							success: (res) => {
+								if (result) {
+									that.setData({
+										popImgData: result
+									})
+									that.judgePop();
+								}
+							},
+						});
+						return;
+					}
 
 					if (resData.data.appLink == 2) {
 						my.isCollected({
@@ -1095,6 +1112,11 @@ Page({
 		this.setData({
 			show: false
 		});
+	},
+
+	// 阻止默认事件
+	touchReturn() {
+		return;
 	},
 
 	handleFocus: function() {
@@ -1602,12 +1624,12 @@ Page({
 
 	},
 
-  /**
-	 * 获取购物车数量
-	 */
+	/**
+	   * 获取购物车数量
+	   */
 	getCartNumber: function() {
-    var app = getApp();
-    app.getCartNumber();
+		var app = getApp();
+		app.getCartNumber();
 	},
 
 

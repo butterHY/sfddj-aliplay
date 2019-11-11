@@ -1,6 +1,6 @@
 <!--首页搜索热词模板-->
 <template name="hotWords">
-   <view  class="scrollTop margin_top_120" style="width:100%;height:100%;background-color: rgba(0,0,0,0.5);z-index:9000;position:absolute"  a:if="{{show}}"  touchStart='handleBlur' > 
+   <view  class="flex_view_col" style="width:100%;height:100%;background-color: rgba(0,0,0,0.5);z-index:9000;position:fixed; top: {{top}}"  a:if="{{show}}"  touchStart='touchReturn'  touchMove="touchReturn" touchEnd="touchReturn" onTap="touchReturn" > 
      <!-- catchTap='handleBlur' -->
     <view style="width:100%;background-color:white;padding:24rpx 46rpx;box-sizing:border-box">
       <view class="font-26 color-323232">热门推荐</view>
@@ -15,5 +15,6 @@
         <view class="font-24" style="background-color:#eeeeee;padding:10rpx 20rpx;border-radius:5px;margin-right:20rpx;margin-bottom:20rpx;max-width:650rpx;display:inline-block" data-word="{{searchWord}}" data-type="searchHist" a:for="{{searchWords}}" a:for-item="searchWord" a:key="itemIndex" catchTap="chooseWord">{{searchWord}}</view>
       </view>
     </view>
+	<view class="flex_1" onTap="handleBlur"></view>
   </view>
 </template>
