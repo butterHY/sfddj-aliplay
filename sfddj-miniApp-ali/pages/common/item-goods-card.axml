@@ -1,7 +1,7 @@
 <import-sjs name="filters" from="../wxsFile/public.sjs"/>
 <template name='itemGoodsColumn'>
   <!---->
-  <navigator url="{{isTuangou ? '/pages/home/pintuan/tuangouGoodsDetail?goodsSn=' + goodsSn : '/pages/shopping/goodsDetail/goodsDetail?goodsSn=' + goodsSn}}" hover-class='' class='' hover-class='none' style='{{left ? "padding:10rpx 10rpx 10rpx 0":"padding:10rpx 0 10rpx 10rpx"}};box-sizing:border-box;'>
+  <navigator url="{{tuangou ? '/pages/home/pintuan/tuangouGoodsDetail?goodsSn=' + goodsSn : '/pages/shopping/goodsDetail/goodsDetail?goodsSn=' + goodsSn}}" hover-class='' class='' hover-class='none' style='{{left ? "padding:10rpx 10rpx 10rpx 0":"padding:10rpx 0 10rpx 10rpx"}};box-sizing:border-box;'>
     <view class='posi_re goodsArea'>
       <view class='goodsImg'>
         <image src='{{baseImageUrl}}{{goodsDefaultImage}}'></image>
@@ -20,7 +20,7 @@
           <text style='margin-top:4rpx;color:#a1a0a0;' class='font-26 color-bbbbbb single-line-text'>{{productName}}</text>
         </view>
         <view style='width:100%;margin-top:30rpx;display:flex;justify-content:space-between;align-items:center'>
-          <text class='font-34 color-ff5353' style='font-weight:bold;'>¥{{isTuangou ? tuangouPrices : salePrice}}</text>
+          <text class='font-34 color-ff5353' style='font-weight:bold;'>¥{{tuangou ? tuangouPrices : salePrice}}</text>
           <text style="height:45rpx;width:45rpx;" data-pid="{{productId}}" class="alipay_catch_img" a:if="{{!hiddenCart}}" catchTap="{{!cannotAdd ? 'addCart' : ''}}"><image src="{{baseLocImgUrl}}miniappImg/icon/icon_redCart.png" class="all_100"/></text>
         </view>
       </view>

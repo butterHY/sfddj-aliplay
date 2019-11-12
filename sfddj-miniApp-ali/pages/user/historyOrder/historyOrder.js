@@ -71,6 +71,8 @@ Page({
 
 		that.setIndex(index);
 
+    // 获取页面顶部轮播图数据
+    that.getOrderSwiper();
 
 		// that.getMaterialPic()  //广告位轮播
 	},
@@ -1229,4 +1231,35 @@ Page({
 	//     couponShow: false
 	//   })
 	// },
+
+  /**
+   * 获取页面顶部的轮播图
+  */
+  getOrderSwiper(){
+    let that = this;
+    sendRequest.send(constants.InterfaceUrl.HOME_BANNER_LIST, { groupName: '支付宝_小程序_我的订单' }, function(res) {
+			let result = res.data.result;
+			that.setData({
+				OrderSwiperList: result.material ? result.material : []
+			})
+		}, function(err) {}, 'GET', true)
+  },
+
+  /*
+  *轮播跳转
+  **/
+  goToPage: function(e) {
+      let that = this;
+      let url = e.currentTarget.dataset.url;
+      let chInfo = constants.UrlConstants.chInfo;
+      
+      if (url.indexOf('http') > -1) {
+        my.call('startApp', { appId: '20000067', param: { url: url, chInfo: chInfo } })
+      }
+      else {
+        my.navigateTo({
+          url: url
+        });
+      }
+    },
 });

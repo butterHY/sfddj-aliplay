@@ -324,7 +324,7 @@ Page({
    * 切换优惠券列表
    */
   changeCouponList() {
-    console.log('跳转失效优惠券页面');
+    // console.log('跳转失效优惠券页面');
     my.navigateTo({
        url: '/pages/user/myCoupon/expiredCoupon/expiredCoupon',
      })

@@ -1,6 +1,14 @@
 <import src="/pages/common/item-order"/>
+<import src="/pages/common/swiperItem"/>
 <!--</view> -->
 <view class="all_100v posi_re flex_view_col">
+  <!--轮播图组件-->
+  <view class="swipe whiteBack" a:if='{{ OrderSwiperList && OrderSwiperList.length > 0}}'>
+    <block>
+      <template is="swiperItem" data="{{swiperList: OrderSwiperList,baseImageUrl:baseImageUrl,radius:'0',height:'300rpx'}}"></template> 
+    </block>
+  </view>
+
 	<!-- 搜索组件 -->
 	<view class="width_100 flex_view_row justi_cen align_cen">
 		<view class="flex_1">

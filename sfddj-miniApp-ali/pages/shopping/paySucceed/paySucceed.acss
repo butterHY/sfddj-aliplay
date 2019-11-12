@@ -1,9 +1,11 @@
+@import '../../../font/font-myInfo.acss';
+
 page {
   background: #f3f3f3;
 }
 .succeed-text-area {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
@@ -25,8 +27,8 @@ page {
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 2rpx #565d6f solid;
-  color: #565d6f;
+  border: 2rpx #838383 solid;
+  color: #838383;
   width: 334rpx;
   padding: 20rpx 0 20rpx 0;
 }
@@ -37,54 +39,139 @@ page {
   background: #f3f3f3;
   height: 80rpx;
 }
-/*恭喜语   */
-.congraText {
-  margin: 72rpx 0 60rpx 0;
-}
-.congra_img {
-  width: 135rpx;
-  height: 86rpx;
-}
 /*查看订单按钮   */
 .checkOrderBtn {
   margin-left: 22rpx;
 }
-/*安全警告   */
+
+
+
+/******** 页面优化  start **********/
+
+/*安全警告*/
 .safeWarning {
   padding: 30rpx;
+  margin-bottom: 20rpx;
 }
-/*猜你喜欢   */
+
+.safeWarningTit{
+  margin-bottom: 13rpx;
+  font-weight: 600;
+}
+
+.safeWarningIcon{
+  color: #b3b3b3;
+  display: inline-block;
+  margin-right: 8rpx;
+}
+
+/*恭喜语   */
+.succeedArea{
+  margin-bottom: 20rpx;
+}
+.shoppingImg{
+  padding: 53rpx 0 20rpx;
+  text-align: center;
+}
+.congra_img {
+  width: 223rpx;
+  height: 159rpx;
+}
+
+.congraText {
+  margin-bottom: 60rpx;
+}
+
+
+.swipe {
+  box-sizing: border-box;
+  padding: 20rpx 30rpx;
+}
+
+
+/* 猜你喜欢 */
 .guessLikePro {
   display: flex;
-  padding: 0 30rpx;
+  padding: 7rpx 20rpx 20rpx;
 }
+
 .guessLike_oneSide {
   width: 50%;
   box-sizing: border-box;
 }
 
+/* 优惠券弹窗 */
+.toastView_wb{
+  width: 552rpx;
+  height: 624rpx;
+  background: url(https://img.sfddj.com/miniappImg/couponsPop/backgroundPopBg.png) no-repeat center;
+  background-size:100% 100%;
+  position: relative;
+  z-index: 9101;
+  font-family: '微软雅黑';
+}
 
 .confirmorderPop {
-  /* padding: 60rpx 60rpx; */
-  max-width: 400rpx;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  color: #ff3233;
 }
 
 .couponPrice {
-  width: 326rpx;
-  height: 56rpx;
-  color: red;
-  bottom: 232rpx;
-  left: 42rpx;
+  width: 100%;
+  box-sizing: border-box;
+  height: 295rpx;
+  padding: 65rpx 60rpx 110rpx;
 }
 
-.ikonw {
-  width: 326rpx;
-  height: 56rpx;
-  bottom: 78rpx;
-  left: 42rpx;
+.couponPriceName{
+  width: 35rpx;
+  font-size: 34rpx;
+  margin-right: 20rpx;
+  display: inline-block;
+  font-weight: 500;
+}
+
+.couponPriceNo{
+  font-size: 127rpx;
+}
+
+.couponPriceAfter{
+  font-size: 74rpx;
+}
+
+.couponPopBottom{
+  width: 100%;
+  box-sizing: border-box;
+  padding:20rpx 30rpx 30rpx;
+  color: #fff586;
+}
+
+.couponPopDetail{
+  font-size: 48rpx;
+  margin-bottom: 60rpx;
+}
+
+.couponPoplimit{
+  font-size: 36rpx;
+  margin-bottom: 20rpx;
+}
+
+.couponPopBtn{
+  text-align: center;
   animation: mymove 1s linear infinite alternate;
   -webkit-animation: mymove 1s linear infinite alternate; /* Safari 和 Chrome */
 }
+
+.couponPopToUse{
+  width: 431rpx;
+}
+
+
+/******** 页面优化  end **********/
 
 @keyframes mymove
 {
