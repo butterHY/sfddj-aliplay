@@ -3,7 +3,9 @@
 <!--顶部安全警告-->
 <view class="safeWarning whiteBack">
   <view class="font-30 color-323232 safeWarningTit">
-    <text class='iconfont icon-changjianwenti safeWarningIcon'></text>
+    <view class="safeWarningIcon">
+      <text class="warnIcon">!</text>
+    </view>
     <text>安全警告</text>
   </view>
   <view class="font-26 color-b3b3b3 marTop_10">付款成功后，请不要将银行卡号、支付密码和手机验证码告诉他人，否则会造成钱款损失。谨防电话诈骗！</view>
