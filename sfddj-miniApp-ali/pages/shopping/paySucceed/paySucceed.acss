@@ -124,23 +124,23 @@ page {
   width: 100%;
   box-sizing: border-box;
   height: 295rpx;
-  padding: 65rpx 60rpx 110rpx;
+  padding: 70rpx 56rpx 110rpx;
 }
 
 .couponPriceName{
   width: 35rpx;
-  font-size: 34rpx;
+  font-size: 32rpx;
   margin-right: 20rpx;
   display: inline-block;
   font-weight: 500;
 }
 
 .couponPriceNo{
-  font-size: 127rpx;
+  font-size: 80rpx;
 }
 
 .couponPriceAfter{
-  font-size: 74rpx;
+  font-size: 50rpx;
 }
 
 .couponPopBottom{

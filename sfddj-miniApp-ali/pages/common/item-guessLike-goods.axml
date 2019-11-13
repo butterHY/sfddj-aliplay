@@ -4,7 +4,7 @@
     style="{{left ? 'padding:10rpx 10rpx 10rpx 0;':'padding:10rpx 0 10rpx 10rpx;'}}width:100%;box-sizing:border-box;">
     <view class="posi_re" style="width:100%;box-sizing:border-box;position: relative;display: block;background-color: #FFFFFF;box-shadow: 1px 1px 2px rgba(105,105,105,.1), -1px 1px 2px rgba(105,105,105,.1);border-radius: 10px;height:auto;overflow:hidden;">
       <view class="" style="width:100%;height:312rpx;line-height:312rpx;text-align:center;position:relative;padding-top:26rpx;box-sizing:border-box;">
-        <image class="" style="width:260rpx;height:260rpx;display:inline-block;" lazy-load='true' src="{{baseImageUrl}}{{showImage}}{{smallImgArg}}" mode="widthFix">
+        <image class="" style="width:260rpx;height:260rpx;display:inline-block;" lazy-load='true' src="{{baseImageUrl}}{{showImage}}{{smallImgArg}}" >
         </image>
       </view>
       

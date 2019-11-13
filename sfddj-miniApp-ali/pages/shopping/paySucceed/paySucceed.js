@@ -22,7 +22,7 @@ Page({
     var orderSn = options.orderSn;
     // let orderSn = '160090017269329';
     let paymentId = options.paymentId;
-    // let paymentId = 1306;
+    // let paymentId = '1306';
 
     // 获取轮播图列表
     that.getMaterial();
