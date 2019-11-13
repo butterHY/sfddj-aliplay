@@ -28,6 +28,7 @@ Page({
 		smallImgArg: '?x-oss-process=style/goods_img_3',                   // 设置图片大小
     couponFail: false,                                                 // 优惠券获取失败
     guessLikeFail: false,                                              // 猜你喜欢数据获取失败
+    couponSwiper: [],                                                  // 轮播图数据
 
     couponList: [],                                                    // 优惠券列表
     isHasCoupon: true,                                                 // 是否有优惠券
@@ -58,8 +59,10 @@ Page({
     //   newResult: options
     // })
     // this.getCouponList();
-    // this.getMaterialPic()  //广告位轮播
-     that.getMemberWebCall();
+    //广告位轮播
+    this.getMaterial()  
+
+    that.getMemberWebCall();
     // 获取优惠券
      that.getCouponList(that.data.couponStart,that.data.couponlimit);
      that.getGuessLikeData(that.data.start, 1)   // 获取猜你喜欢的数据
@@ -192,18 +195,36 @@ Page({
       }
    },
 
-  /**
-   * 获取轮播图图片
-   * */
-  getMaterialPic: function() {
-    let that = this;
-    sendRequest.send(constants.InterfaceUrl.GET_MATERIALGROUP, { groupName: "优惠券轮播" }, function(res) {
-      that.setData({
-        material: res.data.result.material
-      });
-    }, function(err) {
-    }, 'GET');
-  },
+  /*
+  *获取轮播图
+  **/
+  getMaterial() {
+		let that = this;
+		sendRequest.send(constants.InterfaceUrl.HOME_BANNER_LIST, { groupName: '支付宝_小程序_优惠券页面' }, function(res) {
+			let result = res.data.result;
+			that.setData({
+				couponSwiper: result.material ? result.material : []
+			})
+		}, function(err) {}, 'GET', true)
+	},
+
+  /*
+  *轮播跳转
+  **/
+ goToPage: function(e) {
+		let that = this;
+		let url = e.currentTarget.dataset.url;
+		let chInfo = constants.UrlConstants.chInfo;
+
+		if (url.indexOf('http') > -1) {
+			my.call('startApp', { appId: '20000067', param: { url: url, chInfo: chInfo } })
+		}
+		else {
+      my.navigateTo({
+				url: url
+			});
+		}
+	},
 
   /**
    * 显示对话框

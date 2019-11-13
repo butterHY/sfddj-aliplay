@@ -1,5 +1,5 @@
 <import-sjs name="filters" from="../wxsFile/public.sjs"/>
-<template name='itemGoodsColumn'>
+<template name='itemGoodsCard'>
   <!---->
   <navigator url="{{tuangou ? '/pages/home/pintuan/tuangouGoodsDetail?goodsSn=' + goodsSn : '/pages/shopping/goodsDetail/goodsDetail?goodsSn=' + goodsSn}}" hover-class='' class='' hover-class='none' style='{{left ? "padding:10rpx 10rpx 10rpx 0":"padding:10rpx 0 10rpx 10rpx"}};box-sizing:border-box;'>
     <view class='posi_re goodsArea'>
