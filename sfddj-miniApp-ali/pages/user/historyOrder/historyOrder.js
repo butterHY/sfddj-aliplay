@@ -42,7 +42,6 @@ Page({
 		searchStart: 0, //订单搜索的开始位置
 		searchResult: [], //订单搜索结果数据
 		orderSearching: false, //是否正在搜索订单
-		searchStart: 0,
 		searchRemainSecondArr: [],   //
 		searchRemainTimeArr: [],
 		searchOutOfTimeArr: [],
@@ -166,11 +165,6 @@ Page({
 		// })
 	},
 
-
-	onUnload: function() {
-		var that = this;
-		clearInterval(that.data.allInterval);
-	},
 
 	/**
 	 * 获取轮播图图片
