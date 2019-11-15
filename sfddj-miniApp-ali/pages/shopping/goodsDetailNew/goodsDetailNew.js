@@ -11,6 +11,8 @@ let constants = require('../../../utils/constants');
 let utils = require('../../../utils/util');
 let baseImageUrl = constants.UrlConstants.baseImageUrl;         //  测试环境/生产环境 图片资源地址前缀
 let base64imageUrl = constants.UrlConstants.baseImageLocUrl;    //  生产环境图片资源地址前缀
+// let apis = require('../../../api/api');
+// let https = require('../../../api/http');
 let app = getApp();
 
 import http from '../../../api/http'
@@ -42,7 +44,6 @@ Page({
 		isonLoad: false,                          // 页面是否是初始化
 		isFirstTime: true,                        // 是否是第一次执行倒计时
 		spikePrice: null,                         // 秒杀价格
-		// isSuccess: null,
 		isSpikeOver: false,                       // 秒杀倒计时是否完毕
 		commentScore: 0,                          //商品好评度
 		start: 0,
@@ -51,13 +52,22 @@ Page({
 		lastShowGuessPosition: 11000,
 		floatVal: 50,
 
+    // 优惠券导航栏
+    // couponBarData: [],
+
     // 用户显示领券弹窗
     isShowPopup: false,
     swiperCurrent: 0,
     titleCurrent: 0,
     suctionTop: 1,
-    flag: true,                                 // 节流开关
+    flag: true,                                 // 监听产详和售后的节流开关
     isTitleViewClone: false,                    // 商品详情页和服务售后的导航克隆,
+    startCoupon: 0,
+		limitCoupon: 4,
+    hasMore: true,
+		isLoadMore: false,
+    loadComplete: false,
+    couponDataList: [],
 
     // 收货地址弹窗
     isShowAddressPop: false, 
@@ -69,25 +79,24 @@ Page({
     optionalProduct: [],                        // 任选规格选中子类规格数组
     multiDimension: null,                       // 多选规格的维度
     multiProduct: [],                           // 多选规格每一个子类规格可以组成的组合规格；
-    multiformname: null,                        // 多选规格的名称；
-    selectedSpecsBar: false,                    // 已选规格导航栏
+    multiformname: null,                        // 多选规格显示的名称；
+    selectedSpecsBar: false,                    // 已选规格展示导航栏
 
     // 底部导航栏数据
-    supplierId: null
+    supplierId: null,
+
+    // 返回顶部或首页的导航的节流开关
+    setComeBack: true,
 	},
 
 	onLoad: async function(query) {
-    // console.log('我只是初始化')
     var that = this;
-
 		this.setData({
 			isonLoad: true,
 		});
-
 		// 达观数据上报
 		// this.da_upload_goods(query.goodsSn)
 		// utils.setAdInfoAll(options);
-
 		if (query.goodsSn) {
 			that.data.goodsSn = query.goodsSn;
 			this.setData({
@@ -95,45 +104,27 @@ Page({
 			})
 			// that.getGoodsDetail(that.data.goodsSn);                              // 旧的商品详情数据请求------原有的写法，因调试新接口暂时注释掉
 
-			// var isSuccess = await that.getGoodsDetail(that.data.goodsSn);           // 旧的商品详情数据请求------新有的写法，因调试新接口暂时添加的    
-			// if (isSuccess.type) {
-				that.getNewGoodsDetail(that.data.goodsSn)                             // 新的获取商品详情数据，现主要是用来替换旧的商详数据；
-			// }
+			that.getNewGoodsDetail(that.data.goodsSn)                             // 新的获取商品详情数据，现主要是用来替换旧的商详数据；
 		}
 		that.getCartNumber();
-
 	},
 
 	onShow: async function() {
 		var that = this;
-    // console.log('我被刷新了')
-
     let defaultAddress = my.getStorageSync({
       key: 'defaultAddress', // 缓存数据的默认地址
     });
-
-		// utils.getNetworkType(this);
-		// 原有的写法，如果是进来的上一个路径是商品详情页，则页面重新请求数据，
-		// if(app.globalData.options.path == 'pages/shopping/goodsDetail/goodsDetail'){
-		//   this.data.goodsSn = app.globalData.options.query.goodsSn;
-		//   this.setData({
-		//     goodsSn: this.data.goodsSn
-		//   })
-		//    that.getGoodsDetail(that.data.goodsSn);
-		// }
-
 
 		// 新的写法，如果显示，只要不是页面初始化，那就重新执行倒计时，因为我得判断活动是否过期；
 		// 最新的写法，如果是从确认订单页返回再返回，应该重新请求数据以更新库存，还有如果现在还不是秒杀商品，但返回后刚好这个商品正处于秒杀活动时间内，这就得重新请求数据获取时间进行倒计时
 		if (!this.data.isonLoad) {
       // console.log('我只是显示')
 			clearTimeout(getApp().globalData.goodsDetail_spikeTime);
-			var isSuccess = await that.getGoodsDetail(that.data.goodsSn);           // 旧的商品详情数据请求    
-			if (isSuccess.type && this.data.goodsSecondKill) {
+			var isSuccess = await that.getNewGoodsDetail(that.data.goodsSn);           // 旧的商品详情数据请求    
+			if (isSuccess.type && this.data.goods.secKillStatus) {
 				this.spikePrice.getTimes(this.data.isFirstTime)
 			}
 		}
-
 	},
 
 
@@ -149,8 +140,6 @@ Page({
 	onUnload() {
 		clearTimeout(getApp().globalData.goodsDetail_spikeTime)
 	},
-
-
 
 	/**
 	 * 获取商品评价
@@ -193,6 +182,73 @@ Page({
 		}, function(res) { });
 	},
 
+  	/**
+	 * 获取优惠券数据
+	 */
+  getCoupon: function(type) {
+    let that = this;
+    let data = {
+      goodsId: that.data.goodsId,
+      start: that.data.startCoupon,
+      limit: that.data.limitCoupon
+    }
+    this.setData({
+			isLoadMore: true
+		});
+    http.post(api.GOODSDETAIL.GOODS_DETAIL_COUPON, data, function(res) {
+      let resData = res.data.data;
+      if(resData && resData.length > 0) {
+        resData.forEach(function(value) {
+          value.beginDate = utils.formatTime(new Date(value.beginDate));
+          value.endDate = utils.formatTime(new Date(value.endDate));
+        })
+      }// NO_RECEIVE   还没领  NORMAR 已经领了
+			var hasMore = false;
+			var goodsList = that.data.couponDataList;
+
+			if (resData && resData.length == that.data.limitCoupon) { // 如果返回的数据长度等于请求条数说明还有更多数据
+				hasMore = true;
+			}
+
+			if (type == '0') {
+				goodsList = resData;                    // 初始化
+			} else {
+				goodsList = goodsList.concat(resData);   // 每次加载拼接进去的数据
+			}
+
+			that.setData({
+				couponDataList: goodsList,
+				hasMore: hasMore,           // 是否还有更多
+				isLoadMore: false,          // 正在加载中的加载进度条
+			});
+    }, function(err){
+      that.setData({
+				isLoadMore: false,
+			});
+    })
+  },
+
+  // 获取 “联系商家”的参数
+  getWebCallParam: function(supplierId) {
+    let that = this;
+    http.get(api.GOODSDETAIL.GOODS_DETAIL_CONTACTSTORE, {supplierId: supplierId.toString()}, function(res) {
+      let resData = res.data.data;
+      let retData = res.data.ret;
+      let webCallParam = null;
+      if(retData.code == '0' && retData.message == 'SUCCESS') {
+        if(resData.uid) {
+          webCallParam = resData.webCallParam+"?uid="+resData.uid+"b"+"&uname="+resData.uname+"&goodsSn="+that.data.goodsSn+"&siteId="+resData.siteId+"&settingId="+resData.settingId+"&mark=sf.365webcall.com";
+        } else {
+          webCallParam = resData.webCallParam+"?goodsSn="+that.data.goodsSn+"&siteId="+resData.siteId+"&settingId="+resData.settingId+"&mark=sf.365webcall.com";
+        }
+        that.setData({
+          webCallParam: webCallParam
+        })
+      }
+    }, function(err){
+    })
+  },
+  
 	/**
 	 * 访问后台接口获取商品详情
 	 * @param goodsSn 商品sn
@@ -314,7 +370,6 @@ Page({
 				})
 			});
 		})
-
 	},
 
   getNewGoodsDetail: function(goodsSn) {
@@ -342,14 +397,18 @@ Page({
           var resRet = res.data.ret
 					if (resRet.code == '0' && resRet.message ==  'SUCCESS') {
             //当请求返回成功才请求评论和猜你喜欢的数据
-            var id = resData.goodsShowVO.goodsId;
+            that.data.goodsId = resData.goodsShowVO.goodsId;
             // 处理商品评论；
             that.getComment(resData);
             // 请求获取猜你喜欢的数据
-            that.getGuessLike(id, true);
+            that.getGuessLike(that.data.goodsId, true);
+            // 请求获取优惠券数据
+            that.getCoupon('0');
+            // 请求联系商家的 webCallParam
+            that.getWebCallParam(resData.goodsShowVO.supplierInfo.supplierId);
           
             that.data.goods = resData.goodsShowVO;
-            that.data.goods.supplierInfo.headImage = that.data.goods.supplierInfo.headImage ? that.data.goods.supplierInfo.headImage : that.data.baseImageLocUrl + 'miniappImg/icon/icon_default_head.jpeg'; // 商家头像
+            that.data.goods.supplierInfo.headImage = that.data.goods.supplierInfo.headImage ? that.data.baseImageLocUrl + that.data.goods.supplierInfo.headImage : that.data.baseImageLocUrl + 'miniappImg/icon/icon_default_head.jpeg'; // 商家头像
             var article = that.data.goods.introduction;                                           // 商详的富文本字符串
             that.data.minCount = resData.goodsShowVO.minCount ? resData.goodsShowVO.minCount : 1; //最少起售数
             that.data.specType = resData.goodsShowVO.specType;
@@ -359,6 +418,13 @@ Page({
             if(!resData.addressList || resData.addressList.length <= 0) {
                 // 调用 API 获取当前用户地址
                 that.getAddress();
+            } else if(resData.addressList.length > 0) {
+              var hasDefault = resData.addressList.find(function(value, index, arr){
+                return value.isDefault
+              })
+              if(!hasDefault) {
+                resData.addressList[0].isDefault = true;
+              }
             }
     
             // 判断是否积分商品,积分商品type==3
@@ -386,13 +452,14 @@ Page({
 
    // 测试用的，让库存为 0
             // console.log(that.data.allProduct)
-            // that.data.allProduct[1].store = 0;
+            that.data.allProduct[1].store = 0;
 
             // specType 规格类型,  MULTI 多规格, SINGLE 单规格, OPTIONAL 任选规格；
             if (that.data.specType == 'MULTI' ) {
               console.log('多选规格');
               // 如果是多规格的话，就用数据返回的 specifications 再装换为原来的数据格式 goodsSpecMap
               that.data.goodsSpecMap = [];
+              that.data.iavPath = [];
               for (var key in that.data.goods.specifications) {
                 var goodsSpecArr = { iakValue: [], iakId: null, iakName: null };
                 goodsSpecArr.iakId = that.data.goods.specifications[key].specId;
@@ -405,11 +472,9 @@ Page({
                   goodsSpecArr.iakValue.push(iakValueArr);
                 }
                 that.data.goodsSpecMap.push(goodsSpecArr);
+                that.data.iavPath.push('');
               }
-              that.data.iavPath = [];
-              that.data.goodsSpecMap.forEach(function() {
-                that.data.iavPath.push('')
-              });
+
               that.data.iavPath = that.data.iavPath.toString();
               that.multiFormName();
 
@@ -476,6 +541,7 @@ Page({
 					    theAwardMemberScore: that.data.theAwardMemberScore ? that.data.theAwardMemberScore : 0,   // 顺丰会员会员奖励积分
               addressList: resData.addressList,                                                         // 用户的收货地址
               otherGoods: resData.supplierGoodsList,                                                    // 商家的其他商品，
+              goodsId: that.data.goodsId,
             })
 
             console.log(that.data.otherGoods)
@@ -558,44 +624,20 @@ Page({
    * 找到了 allProduct 中默认的规格子类值（有可能是多个），然后再循环父类规格 goodsSpecMap ，再赋值对应子类的 taped = true;
 	 */
 	setGoodsSpecMap: function() {
-		var that = this;
+		let that = this;
     if (that.data.specType == 'OPTIONAL' || that.data.specType == 'MULTI') {
       this.setProduct('firstTime');
-      return;
+    } else {
+      let defaultValue = that.data.allProduct.find((value) => value.isDefault == true);
+      that.data.iavPath = defaultValue.iavPath;
+      let iavPathArr = that.data.iavPath.split(',');
+      that.data.goodsSpecMap.forEach(function(mapValue) {
+        mapValue.iakValue.forEach(function(value) {
+          iavPathArr.includes(value.id.toString()) ? value.taped = true : '';
+        })
+      })
+      that.setProduct();
     }
-
-		that.data.iavPath = '';
-		var goodsSpecMap = that.data.goodsSpecMap;
-		var allProduct = that.data.allProduct;
-		var iavPathArr = [];
-		for (var j = 0; j < allProduct.length; j++) {
-      // 找全部子类规格中的默认规格：isDefault，isDefault只有一条子类数据有，但子类数据的 iavPath 可以包含多个 iavPath 子类规格，以‘,’隔开，按父类规格顺序排列；
-			if (allProduct[j].isDefault) {
-				that.data.iavPath = allProduct[j].iavPath;
-				var iavPath = allProduct[j].iavPath;
-
-		  	if (iavPath.indexOf(',')) {
-					iavPathArr = iavPath.split(',');
-				}
-        // 循环每条父类规格数据
-				for (var i = 0; i < goodsSpecMap.length; i++) {
-					var iakValue = goodsSpecMap[i].iakValue;
-          // 循环每条父类规格数组里具体的子类规格数组
-					for (var key in goodsSpecMap[i].iakValue) {
-            // 对比 allProduct 中默认规格（isDefault）的 iavPath
-						for (var kk in iavPathArr) {
-              // 如果这条父类规格数组中的子类规格值的 id 等于 默认规格的 iavPath，则给这个子类规格添加属性： taped
-							if (goodsSpecMap[i].iakValue[key].id == parseInt(iavPathArr[kk])) {
-								that.data.goodsSpecMap[i].iakValue[key].taped = true;
-							}
-						}
-					}
-				}
-			}
-		}
-
-      this.setProduct();
-		
 	},
 
 	/**
@@ -605,41 +647,23 @@ Page({
 		var that = this;
 		var goodsSpec = that.data.goodsSpecMap[fatherIndex];
 		var iakValue = goodsSpec.iakValue;
-    console.log(fatherIndex);
-    console.log(index);
-    console.log(goodsSpec);
-    if (specType == 'OPTIONAL') {                     // 任选规格
+    if (specType == 'OPTIONAL' || specType == 'MULTI') {                     // 任选规格 和 多选规格
       iakValue.forEach(function(value, i, arr) {
-        // 找到当前的子类规格, 如果当前的子类规格 taped 为 false 或不存在就让它 为 true 否则让它为 false;  不是当前的子类规格该怎样就怎样
+        // 找到当前的子类规格, 如果当前的子类规格 taped 为 false 或不存在就让它 为 true 否则让它为 false; 如果是任选： 不是当前的子类规格该怎样就怎样，如果是多选：当前父类的其他子类规格则都为 false;
         if ( i == index  ) {
           if (!value.taped) {
             value.taped = true;
           } else {
             value.taped = false;
           }
-           // 注意! 这里传递的3个参数分别为： 当前父类规格的 index, 当前子类规格的 index ,规格类型 specType
-          that.setIavPath(fatherIndex, index, 'OPTIONAL');
+        } else if( specType == 'MULTI' ) {
+          value.taped = false;
         }
       });
-    } else if (specType == 'MULTI') {                 // 多选规格
-      iakValue.forEach(function(value, i, arr) {
-        // 找到当前的子类规格, 如果当前的子类规格 taped 为 false 或不存在就让它 为 true 否则让它为 false;  当前父类的其他子类规格则都为 false;
-        if ( i == index  ) {
-          if (!value.taped) {
-            value.taped = true;
-          } else {
-            value.taped = false;
-          }
-        } else {
-            value.taped = false;
-        }
-      });
-      // 不同于任选和单选，多选需要把各个父类的子规格 taped 为 true 的收集起来；
       // 注意! 这里传递的3个参数分别为： 当前父类规格的 index, 当前子类规格的 index ,规格类型 specType
-      that.setIavPath(fatherIndex, index, 'MULTI');
-
-    } else {                                          // 单选规格
-      console.log(that.data.iavPath)
+      specType == 'OPTIONAL' ? that.setIavPath(fatherIndex, index, 'OPTIONAL') : that.setIavPath(fatherIndex, index, 'MULTI');
+      
+    } else {                                                                 // 单选规格
       iakValue.forEach(function(value, i, arr) {
         if (i == index) {
           value.taped = true;
@@ -771,44 +795,32 @@ Page({
                 console.log('任选规格或多选规格的第一次默认渲染')
                 that.data.product = value;
 
-          } else if (specType != 'firstTime' && specType != 'modifyOptional') {
+          } else if (specType != 'firstTime' && specType != 'modifyOptional' && that.data.iavPath == value.iavPath) {
                 console.log('多选规格和单选规格修改规格')
             // 多选规格和单选规格，如果当前这条子类规格的 iavPath 与 全局默认子类规格的 iavPath 相等，那让全局的默认规格等于这条子类规格；
-            if (that.data.iavPath == value.iavPath) {
               that.data.product = value;
-            }
           }
         });
 
 
         // 切换规格的时候 specType == 'modifyOptional'，这时候开始往 optionalProduct 里 push 子类规格，然后合并 optionalProduct 成为 全局唯一的 product；
-        if (specType == 'modifyOptional') {
-           console.log('任选规格的修改规格')
+        if (specType == 'modifyOptional' && that.data.iavPath.length > 0) {
           // 如果 that.data.iavPath 有值，则找 that.data.allProduct 中匹配的子类规格，然后往 allOptionalProduct 拼接选中的子类规格；
-          if (that.data.iavPath.length > 0) {
             that.data.iavPath.forEach(function(value, index, arr) {
-              that.data.allProduct.forEach(function(val, i, brr) {
-                if (value == val.iavPath) {
-                  allOptionalProduct.push(val)
-                }
-              })
+              allOptionalProduct.push(that.data.allProduct.find((val) => val.iavPath == value))
             })
             console.log('that.data.iavPath 长度大于 0 ，任选规格 push 结束了，开始合并 optionalProduct， 我要调用了')
             that.data.optionalProduct = allOptionalProduct;
             console.log('optionalProduct', that.data.optionalProduct);
             that.mergeOptionalProduct();
-          } else {
+          } else if (specType == 'modifyOptional' && that.data.iavPath.length < 0) {
             // 如果 that.data.iavPath 为 []，则找 that.data.allProduct 原有的为 isDefault 的子类规格，把全局的 that.data.product 设置为改子类规格；
-            that.data.allProduct.forEach(function(val, i, arr) {
-              if (val.isDefault == true) {
-                that.data.product = val;
-              }
-            })
+            that.data.product = that.data.allProduct.find((val) => val.isDefault == true);
             console.log('that.data.iavPath 长度等于 0 ，任选规格 不push  ,不合并 optionalProduct 且为 []')
             that.data.optionalProduct = allOptionalProduct;
             console.log('optionalProduct', that.data.optionalProduct);
-          }
         }
+        
 
       console.log(that.data.iavPath);
       console.log(that.data.product);
@@ -823,33 +835,7 @@ Page({
     var product = {
         "productId": [],
         "productSn": [],
-        "isDefault": '',
-        "isMarketable": '',
-        "salePrice": '',
-        "tuangouPrices": '',
-        "provincePrice": '',
-        "iavPath": '',
-        "imgPath": '',
-        "store": '',
-        "goodsId": '',
         "productName": [],
-        "awardMemberScore": '',
-        "isReturnMoney": '',
-        "returnMoneyPercentage": '',
-        "memberPrice": '',
-        "memberDayPrice": '',
-        "memberPoint": '',
-        "returnMoney": '',
-        "productPropertyId": '',
-        "isSaleModel": '',
-        "costMemberScore": '',
-        "calGlobalFee": '',
-        "tuangouCalGlobalFee": '',
-        "consumptionRatePercentage": '',
-        "valueAddRatePercentage": '',
-        "activityPrice": '',
-        "activitysSalesVolumn": '',
-        "activityStock": '',
         "tuanPrice": 0,
         "goodsPrice": 0,
         "secondKillPrice": 0,
@@ -887,25 +873,6 @@ Page({
     product.store = s[0];
     that.data.product =  product;
   },
-
-
-
-	/**
-	 * 点击查看 swiper 图片（新接口换成使用 commentViewTap ）
-	 */
-	// imageViewTap: function(e) {
-  //   var that = this;
-  //   var urls = e.currentTarget.dataset.urls;
-  //   var newUrls = [];
-	// 	urls.forEach(function(v, i, arr) {
-	// 		v = that.data.baseImageUrl + v;
-	// 		newUrls.push(v);
-	// 	});
-	// 	my.previewImage({
-	// 		urls: newUrls,
-	// 		current: e.currentTarget.dataset.current
-	// 	});
-	// },
 
 	/**
 	* 查看图片
@@ -1013,7 +980,7 @@ Page({
   },
 
 	/**
-	 * 点击已选规格栏进入规格弹窗，并且是任选规格，再点击规格弹窗下方的 “立即购买”按钮；
+	 * 点击已选规格栏进入规格弹窗，并且是任选规格，再点击规格弹窗下方的 “立即购买”按钮时触发以下方法；
 	 */
   optionalSubmitTap: function() {
     this.data.buyType = 0;
@@ -1301,40 +1268,33 @@ Page({
 	 */
 	goodsSpecSubmitTap: function(e) {
 		var that = this;
+    var hasTrueChoose = true;
     console.log(this.data.buyType);
-    return;
-    // 如果全局的当前规格为多选规格 则 以 iavPath 作为依据，如果 iavPath 存在空的情况则提示“请正确选择”
+
+    // 如果全局的当前规格为多选规格 则 以 iavPath 作为依据，如果 iavPath 存在空的情值则提示“请正确选择”,
     if (that.data.specType == 'MULTI') {
       var iavPathArr = that.data.iavPath.split(',');
-      var hasTrueChoose = iavPathArr.every(function(value) {
+      hasTrueChoose = iavPathArr.every(function(value) {
         return value != '';
       })
-      if(!hasTrueChoose) {
-        that.setData({
-          showToast: true,
-          showToastMes: '请正确选择'
-        });
-        setTimeout(function() {
-          that.setData({
-            showToast: false
-          });
-        }, 1000);
-        return;
-      }
     }
-    // 如果当前的数量大于被选中的规格的库存，则提示“没有库存了”；
-		if (Number(that.data.quantity) > that.data.product.store) {
-			that.setData({
-				showToast: true,
-				showToastMes: '没有库存了'
-			});
-			setTimeout(function() {
-				that.setData({
-					showToast: false
-				});
-			}, 1000);
-			return;
-		}
+    console.log(hasTrueChoose);
+    // 如果是多选规格且组合的 iavPath 存在空的值则提示“请正确选择”， 如果是当前的数量大于被选中的规格的库存，则提示“没有库存了”；
+    if( !hasTrueChoose || Number(that.data.quantity) > that.data.product.store ) {
+      var showToastMes = '';
+      !hasTrueChoose ? showToastMes = '请正确选择' : showToastMes = '没有库存了';
+      that.setData({
+        showToast: true,
+        showToastMes: showToastMes
+      });
+      setTimeout(function() {
+        that.setData({
+          showToast: false
+        });
+      }, 1000);
+      return;
+    }
+
     // 规格弹窗隐藏
 		this.setData({
 			showGoodsSpec: false
@@ -1379,6 +1339,14 @@ Page({
 	 */
 	toBuyNow: function() {
 		var that = this;
+    if(that.data.specType == 'OPTIONAL') {
+      that.data.product.productId = (that.data.product.productId).toString();
+      console.log(that.data.product);
+      console.log('规格 id',(that.data.product.productId).toString(),'数量：',that.data.quantity);
+      // return;
+    }
+    console.log(that.data.product);
+    console.log(that.data.quantity);
 		my.navigateTo({
 			url: '/pages/shopping/confirmOrder/confirmOrder?&productId=' + that.data.product.productId + '&quantity=' + that.data.quantity + '&SFmember=' + that.data.SFmember
 		});
@@ -1411,6 +1379,9 @@ Page({
 	 */
 	toAddCart: function() {
 		var that = this;
+    console.log(that.data.product);
+    console.log(that.data.quantity);
+    
 		sendRequest.send(constants.InterfaceUrl.SHOP_ADD_CART, { pId: that.data.product.productId, quantity: that.data.quantity + '' }, function(res) {
 			if (res.data.errorCode == '0001') {
 				// 达观数据上报
@@ -1493,7 +1464,7 @@ Page({
 	// 跳去客服网页版     目前的没有 webCallParam 这个参数，后面会有接口专门来获取这个参数；
 	goToWebCall: function() {
 		var that = this;
-    var webCallLink = that.data.goods.webCallParam;
+    var webCallLink = that.data.webCallParam;
     console.log(webCallLink)
 		try {
 			my.setStorageSync({
@@ -1603,23 +1574,45 @@ Page({
       isShowAddressPop: false
     })
   },
-    // 点击领券弹窗头部
-  switchSwiper: function (e) {
-    var that = this;
-    if (that.data.titleCurrent != parseInt(e.currentTarget.dataset.current)) {
-      that.setData({
-        swiperCurrent: parseInt(e.currentTarget.dataset.current),
-        titleCurrent: parseInt(e.currentTarget.dataset.current),
-      })
-    }
+
+  // 领取优惠券         暂时有问题
+  collectCoupons: function (e) {
+    console.log('领取优惠券');
+    let that = this;
+    let index = e.currentTarget.dataset.index;
+    let ruleSign = e.currentTarget.dataset.ruleSign;
+    console.log(index, ruleSign);
+    console.log(that.data.couponDataList[index]);
+    http.post(api.GOODSDETAIL.GOODS_DETAIL_DRAWCOUPON, {ruleSign}, function(res) {
+      console.log(res);
+      let resData = res.data.data;
+      if(resData && resData.length > 0) {
+         resData[0].beginDate = utils.formatTime(new Date(resData[0].beginDate));
+         resData[0].endDate = utils.formatTime(new Date(resData[0].endDate));
+         
+         that.data.couponDataList[index] = resData[0];
+         that.setData({
+           couponDataList: that.data.couponDataList
+         })
+         console.log(that.data.couponDataList[index])
+      }
+    }, function(err){
+      console.log(err);
+      console.log(that.data.couponDataList[index])
+    })
   },
 
-   // 左右滑动领券弹窗本体
-  intervalChange: function (e) {
-    var that = this;
-    that.setData({
-      titleCurrent: e.detail.current
-    })
+  // 拖拽优惠券弹窗
+  lowLoadMore: function () {
+    let that = this;
+    console.log('我在拖拽', that.data.hasMore, that.data.couponDataList.length)
+    if (that.data.hasMore) {
+			that.setData({
+				startCoupon: that.data.couponDataList.length
+			});
+      console.log(that.data.startCoupon)
+			that.getCoupon('1');
+		}
   },
 
   // 监听导航栏当前处于页面什么位置
@@ -1647,13 +1640,25 @@ Page({
 
   // 监听页面滚动
   onPageScroll: function (e) {
-    var that = this;
+    var that = this;;
+    // 设置返回首页/顶部栏
+    if(e.scrollTop >= 500 && that.data.setComeBack) {
+      that.data.setComeBack = false;
+      that.setData({
+        comeBackBar: 'show'
+      })
+    } else if (e.scrollTop < 500 && !that.data.setComeBack) {
+      that.data.setComeBack = true;
+      that.setData({
+        comeBackBar: 'hide'
+      })
+    }
+    // 设置导航栏
     that.listenNavigationBar();
   },
 
-
   	// 跳转去h5的全赔页
-	goToAfterSaleGuee(){
+	goToAfterSaleGuee() {
     let that = this;
     // https://shop.fx-sf.com/h/goodspay/quality/YW02329CB9320C?qpKey=1,2,3
     let webCallLink = constants.UrlConstants.baseUrlOnly + '/h/goodspay/quality/' + that.data.goodsSn + '?qpKey=' + that.data.goods.afterSaleGuee;
@@ -1666,6 +1671,14 @@ Page({
 			url: '/pages/user/webView/webView?link=' + webCallLink + '&newMethod=new'
 		});
 	},
+
+    // 页面回滚到顶部
+  goTop() {
+    my.pageScrollTo({
+      scrollTop: 0,
+      duration: 3000,
+    });
+  },
 
    // 调用 API 获取当前用户地址
   getAddress() {
@@ -1801,8 +1814,7 @@ Page({
           }                 
         })
       }
-    });
-
+    })
   },
 
   // 重置，排查每一个子类规格的全部组合可能，如果该子类规格的全部组合可能的库存都为 0 的话，则该子类规格添加 store = 0，否则如果有 store == 0 的属性就删除掉该 store 属性；

@@ -239,6 +239,7 @@ var InterfaceUrl = {
   // ---------------------  支付成功的优惠券弹窗 ----------------
   couponPop: '/pay/sendOrderPayfinishCoupon'
 
+  
 
 	/**
 	 * 接口错误Code

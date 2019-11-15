@@ -42,8 +42,7 @@
     "pages/shopping/goodsDetailNew/goodsDetailNew",
     "pages/activities/signIn/signIn",
     "pages/user/myCoupon/expiredCoupon/expiredCoupon",
-    "pages/user/myCoupon/couponInfo/couponInfo",
-    "pages/newCart/newCart"
+    "pages/user/myCoupon/couponInfo/couponInfo"
 
   ],
   "window": {

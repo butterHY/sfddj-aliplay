@@ -92,7 +92,6 @@ function get(url, data, sucFunc, errFunc, header = {}) {
 	let token = ''
 	try {
 		token = my.getStorageSync({ key: constants.StorageConstants.tokenKey }).data ? my.getStorageSync({ key: constants.StorageConstants.tokenKey }).data : '';
-
 	} catch (e) { }
 
 	let headers = {
@@ -109,11 +108,9 @@ function get(url, data, sucFunc, errFunc, header = {}) {
 		success: function(res) {
 			if (res.status == 200) {
 				let retCode = res.data.ret ? res.data.ret.code : ''
-
 				if (retCode == ERR_CODE.SUCCESS) {
 					sucFunc(res);
 				} else if (retCode == ERR_CODE.RE_LOGIN) {
-
 					// my.showLoading({
 					//   content: '登录中',
 					//   mask: true

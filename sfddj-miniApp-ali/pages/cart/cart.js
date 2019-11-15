@@ -1,4 +1,5 @@
 // var _myShim = require('......my.shim');
+
 /**
 * 购物车tab页
 * @author 01368384
@@ -237,7 +238,6 @@ Page({
 				// 	resultItem[j].taped = false;
 				// }
 			}
-
 			that.setData({
 				result: result,
 				baseImageUrl: baseImageUrl,
@@ -291,7 +291,6 @@ Page({
           value.copyQuantity = value.quantity;
         })
 			}
-
 			that.setData({
 				result: result,
 				baseImageUrl: baseImageUrl,
@@ -715,24 +714,40 @@ Page({
 			confirmColor: '#FF5353',
 			success: function(res) {
 				if (res.confirm) {
-					that.removeCart(cartId);
-				} else if (res.cancel) {
-				}
+					var removeCartAsync = async (cartId) =>{
+            var isSuccess = await that.removeCart(cartId);
+            if(isSuccess.type == 'SUCCESS'){
+              e.done()
+            }
+          }
+          var isSuccess = removeCartAsync(cartId);
+
+				} else {}
+        
 			}
 		});
 	},
 
 	removeCart: function(cartId) {
 		var that = this;
-		my.showLoading({
-			content: '加载中'
-		});
-		sendRequest.send(constants.InterfaceUrl.SHOP_REMOVE_CART + cartId, { cartId: cartId }, function(res) {
-			if (res.data.errorCode == '0001') {
-				that.getCartData();
-        that.getCartNumber();
-			}
-		}, function(res) { });
+    return new Promise((reslove, reject) => {
+      my.showLoading({
+        content: '加载中'
+      });
+      sendRequest.send(constants.InterfaceUrl.SHOP_REMOVE_CART + cartId, { cartId: cartId }, function(res) {
+        if (res.data.errorCode == '0001') {
+          that.getCartData();
+          that.getCartNumber();
+          reslove({
+            type: 'SUCCESS'
+          })
+        }
+      }, function(res) { 
+        reject({
+          type: 'FAIL'
+        })
+      });
+    })
 	},
   
 	getNetworkType() {
@@ -761,7 +776,6 @@ Page({
 				sendRequest.send(constants.InterfaceUrl.USER_BINGMOBILEV4, {
 					response: response,
 				}, function(res) {
-					console.log(res)
 					if (res.data.result) {
 						try {
 							my.setStorageSync({ key: constants.StorageConstants.tokenKey, data: res.data.result.loginToken });

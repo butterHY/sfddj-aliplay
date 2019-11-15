@@ -23,7 +23,7 @@
 
                 <!-- 其他 -->
                 <view class="font-40 color-ff5353" a:else>
-                  <text class="aba" a:if="{{product.activityPrice}}">￥{{product.secondKillPrice}}</text>
+                  <text class="aba" a:if="{{product.secondKillPrice}}">￥{{product.secondKillPrice}}</text>
                   <text class="aba" a:elif="{{!SFmember || SFmember && type == 5}}">￥{{product.goodsPrice}}</text>
                   <!-- 会员商品 -->
                   <text class="cbc" a:if="{{SFmember && type != 5}}">￥ {{product.memberPriceAll}}</text>

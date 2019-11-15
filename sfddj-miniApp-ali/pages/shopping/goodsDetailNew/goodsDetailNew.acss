@@ -235,6 +235,48 @@ page {
   border-top: #e6e6e6 2rpx solid;
 }
 
+.comeBack {
+  position: fixed;
+  z-index: 1000;
+  bottom: 200rpx;
+  right: -93rpx;
+  background: rgba(0, 0, 0, .7);
+  border-radius: 15rpx 0 0 15rpx;
+}
+
+.goIcon {
+  height: 92rpx;
+  width: 92rpx;
+  text-align: center;
+  color: #FFFFFF;
+  line-height: 92rpx;
+  border-bottom: 1rpx solid #3D3D3D;
+  position: relative;
+  border-radius: 15rpx 0 0 15rpx;
+}
+
+.comeBackDisplay {
+  animation: comeBackMoveShow 0.3s linear;
+  right: 0 !important;
+}
+
+@keyframes comeBackMoveShow {
+  0% {right: -93rpx;}
+  50% {right: -45;}
+  100% {right: 0;}
+}
+
+.comeBackHide {
+  animation: comeBackMoveHide 0.3s linear;
+  right: -93rpx !important;
+}
+
+@keyframes comeBackMoveHide {
+  0% {right: 0;}
+  50% {right: -45;}
+  100% {right:-93rpx;}
+}
+
 .goods-soldOut {
   width: 100%;
   height: 72rpx;
@@ -285,8 +327,8 @@ page {
 }
 
 .shareImag {
-  width: 48rpx;
-  height: 48rpx;
+  width: 40rpx;
+  height: 40rpx;
 }
 
 .bottom-bg {
@@ -1077,7 +1119,7 @@ page {
   position: absolute;
   bottom: 0;
   right: 0;
-  z-index: 100;
+  z-index: -1;
   background: transparent;
 }
 
@@ -1122,7 +1164,7 @@ page {
 }
 
  .moneyNumber {
-    font-size: 58rpx;
+    font-size: 60rpx;
     color: #FFFFFF;
 }
 
@@ -1133,29 +1175,27 @@ page {
 
 .couponUseType {
     /* margin: 0; */
-    padding: 34rpx 16rpx 0 18rpx;
+    padding: 34rpx 56rpx 34rpx 18rpx;
     color: #999999;
 }
 
 
 
 .singleLine {
-    font-size: 22rpx;
-    margin-bottom: 20rpx;
-    color: #323232;
-    font-weight: 600;
-    line-height: 34rpx;
-
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+  height: 74rpx;
+  font-size: 24rpx;
+  margin-bottom: 6rpx;
+  color: #323232;
+  font-weight: 600;
+  line-height: 34rpx;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .platformTicket {
-  background: #ff6458;
-  box-sizing: border-box;
   padding: 5rpx 10rpx;
   font-size: 18rpx;
   color: #fff;
@@ -1164,23 +1204,23 @@ page {
 }
 
 .tip_use {
-    font-size: 20.02rpx;
-    margin-bottom: 10.4rpx;
-    padding: 0;
-    opacity: 1;
-    border: none;
-    -webkit-line-clamp: 1;
-    width: 100%;
-    margin-top: -5.98rpx;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
+  font-size: 20rpx;
+  margin-bottom: 10.4rpx;
+  padding: 0;
+  opacity: 1;
+  border: none;
+  -webkit-line-clamp: 1;
+  width: 100%;
+  margin-top: -6rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
 }
 
 .termValidity {
-    font-size: 20.02rpx;
+  font-size: 20rpx;
 }
 
 

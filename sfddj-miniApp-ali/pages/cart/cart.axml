@@ -28,7 +28,7 @@
 			</view>
       <!-- 商品展示栏 -->
 			<list a:for="{{item.showCarts}}" a:key="productList">
-				<swipe-action data-findex="{{findex}}" data-cart="{{item.cartId}}" data-index="{{index}}" index="{{index}}" restore="{{true}}" right="{{slideButtons.right}}" onRightItemClick="removeItem" onSwipeStart="onSwipeStart" extra="{{item.cartId}}">
+				<swipe-action data-findex="{{findex}}" data-cart="{{item.cartId}}" data-index="{{index}}" index="{{index}}" restore="{{item.restore}}" right="{{slideButtons.right}}" onRightItemClick="removeItem" onSwipeStart="onSwipeStart" extra="{{item.cartId}}">
 					<list-item className="width_100 padNone" index="{{index}}" key="items-{{index}}" last="{{true}}">
 						<view class="goods-item-product-view" data-findex="{{findex}}" data-index="{{index}}" style="right:{{item.right}}rpx">
 							<!--<text data-findex="{{findex}}" data-index="{{index}}" class="alipay_catch_img" catchTap="productSelectTap"><image class="icon_sel" src="{{item.taped ? baseLocImgUrl + 'miniappImg/icon/icon_sel.png' : baseLocImgUrl + 'miniappImg/icon/icon_unsel.png'}}"/></text> -->

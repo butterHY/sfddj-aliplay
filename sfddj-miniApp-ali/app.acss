@@ -268,6 +268,10 @@ input {
   margin-left: 40rpx;
 }
 
+.marLeft_90 {
+  margin-left: 90rpx;
+}
+
 .marRight_40 {
   margin-right: 40rpx;
 }
