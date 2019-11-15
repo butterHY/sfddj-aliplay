@@ -3,18 +3,23 @@
 <import src="../common/adverts"/>
 <import-sjs name="filters" from="../wxsFile/public.sjs"/>
 <import src="../common/home-search"/>
-<import src="../common/home-hotWords"/>
-<view class="width_100 height_100vh flex_view_col posi_re" style="{{ showToast ? 'height: 100vh; overflow-y: scroll;' : '' }}">
+<import src="../common/home-hotWords"/> 
+<view class="width_100 flex_view_col posi_re" style="{{ showToast ? 'height: 100vh; overflow-y: scroll;' : '' }}" disable-scroll="{{show || showToast ? true : false}}">
 	<!-- <favorite type="tips" bottom="0rpx">收藏小程序，下次使用更方便</favorite> -->
 	<!-- 搜索模块 -->
-	<!-- <lifestyle a:if="{{canUse}}" publicId='8837e8c6f0d3412c989f0502cf7d04ff'/> -->
-	<!-- <life-follow checkFollow="{{checkFollow}}" sceneId="8837e8c6f0d3412c989f0502cf7d04ff" a:if="{{!show}}" onClose="closeCb" /> -->
-	<view class="" style="height: 120rpx;">
-		<template is="home-search" data="{{baseLocImgUrl:baseLocImgUrl}}">
-		</template>
+
+	<!-- 关注公众号组件 和搜索的组件 -->
+	<view>
+		<lifestyle a:if="{{canUseLife}}" publicId='2016071501623328'/>
+		<view class="width_100" style="height: 120rpx;">
+			<view class="{{!canUseLife || hideLifeStyle ? 'posi_fix' : ''}} width_100" style="top: 0; left: 0; z-index: 100;">
+				<template is="home-search" data="{{baseLocImgUrl:baseLocImgUrl}}">
+				</template>
+			</view>
+		</view>
 	</view>
 	<!-- 搜索热词和历史记录膜层 -->
-	<template is="hotWords" data="{{show:show,baseLocImgUrl,hotWords:hotWords,searchWords:searchWords,top:'120rpx'}}">
+	<template is="hotWords" data="{{show:show,baseLocImgUrl,hotWords:hotWords,searchWords:searchWords,top: (canUseLife && !hideLifeStyle) ? hotWordTop-2 + 'px' : '120rpx'}}">
 	</template>
 	<view class="flex_1 width_100 overHid">
 		<scroll-view class="all_100" scroll-y="{{true}}">
