@@ -362,6 +362,10 @@
 	height: 100vh;
 }
 
+.swipe{
+  padding: 32rpx 20rpx 0;
+}
+
 .couponLoading_view{
   font-size: 32rpx;
   color: #a1a0a0;

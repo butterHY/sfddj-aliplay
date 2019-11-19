@@ -1,31 +1,48 @@
-<import src="/pages/common/item-goods-column"/>
-<view class="succeed-text-area whiteBack">
-  <view class="congraText font-30 color-323232">恭喜你，抢到心爱的宝贝</view>
-  <image src="{{baseLocImgUrl}}miniappImg/icon/icon_pay_succeed.png" class="congra_img"></image>
-</view>
-<view class="succeed-button-area whiteBack">
-  <navigator url="/pages/home/home" open-type="switchTab" hover-class="none">
-    <view class="succeed-button-selected font-30 color-ff5353">继续购物</view>
-  </navigator>
-  <navigator url="/pages/user/historyOrder/historyOrder?index=2" open-type="redirect" hover-class="none">
-    <view class="checkOrderBtn succeed-button-normal font-30">查看订单</view>
-  </navigator>
-</view>
-<view class="division-area"></view>
-
+<import src="/pages/common/item-guessLike-goods"/>
+<import src="/pages/common/swiperItem"/>
+<!--顶部安全警告-->
 <view class="safeWarning whiteBack">
-  <view class="font-30 color-323232">安全警告</view>
+  <view class="font-30 color-323232 safeWarningTit">
+    <view class="safeWarningIcon">
+      <text class="warnIcon">!</text>
+    </view>
+    <text>安全警告</text>
+  </view>
   <view class="font-26 color-b3b3b3 marTop_10">付款成功后，请不要将银行卡号、支付密码和手机验证码告诉他人，否则会造成钱款损失。谨防电话诈骗！</view>
 </view>
 
-<view class="item-tag-view font-26 color-b3b3b3" a:if="{{recommondList}}">- 猜你喜欢 -</view>
+<view class="succeedArea whiteBack">
+  <view class="succeed-text-area">
+    <view class="shoppingImg">
+      <image src="{{baseLocImgUrl}}miniappImg/icon/icon_pay_succeed.png" class="congra_img"></image>
+    </view>
+    <view class="congraText font-28 color-323232">恭喜你，抢到心爱的宝贝</view>
+  </view>
+  <view class="succeed-button-area">
+    <navigator url="/pages/home/home" open-type="switchTab" hover-class="none">
+      <view class="succeed-button-selected font-30 color-ff5353">继续购物</view>
+    </navigator>
+    <navigator url="/pages/user/historyOrder/historyOrder?index=2" open-type="redirect" hover-class="none">
+      <view class="checkOrderBtn succeed-button-normal font-30">查看订单</view>
+    </navigator>
+  </view>
+</view>
 
-<view class="guessLikePro whiteBack" a:if="{{recommondList}}">
+<view class="swipe whiteBack" a:if='{{ succeedSwiperList && succeedSwiperList.length > 0}}'>
+  <block>
+    <template is="swiperItem" data="{{swiperList: succeedSwiperList,baseImageUrl:baseImageUrl,radius:'20rpx',height:'200rpx'}}"></template> 
+  </block>
+</view>
+
+<view class="item-tag-view font-26 color-b3b3b3" a:if="{{recommondList}}">- 猜你喜欢 -</view>
+<view class="guessLikePro" a:if="{{recommondList}}">
   <view class="guessLike_oneSide">
-    <block a:for="{{recommondList}}" a:key="itemIndex"><template is="itemGoodsColumn" data="{{...item,left:true,baseImageUrl:baseImageUrl,hiddenCart:true,baseLocImgUrl,smallImgArg}}" a:if="{{index % 2 == 0}}"></template></block>
+    <block a:for="{{recommondList}}" a:key="itemIndex">
+      <template is="itemGuessLike" data="{{...item,left:true,baseImageUrl:baseImageUrl,hiddenCart:true,baseLocImgUrl,smallImgArg}}" a:if="{{index % 2 == 0}}"></template></block>
   </view>
   <view class="guessLike_oneSide">
-    <block a:for="{{recommondList}}" a:key="itemIndex2"><template is="itemGoodsColumn" data="{{...item,left:false,baseImageUrl:baseImageUrl,hiddenCart:true,baseLocImgUrl,smallImgArg}}" a:if="{{index % 2 != 0}}"></template></block>
+    <block a:for="{{recommondList}}" a:key="itemIndex2">
+      <template is="itemGuessLike" data="{{...item,left:false,baseImageUrl:baseImageUrl,hiddenCart:true,baseLocImgUrl,smallImgArg}}" a:if="{{index % 2 != 0}}"></template></block>
   </view>
 </view>
 
@@ -40,13 +57,27 @@
 
 <!-- 优惠券弹窗 -->
 <view class="mark flex_view_col align_cen justi_cen" a:if="{{couponShow}}">
-  <view class="toastView_wb" style="background-color:rgba(0, 0, 0, 0);">
-      <view class="font-26 confirmorderPop posi_re">
-          <image src="https://img.sfddj.com/miniappImg/couponsPop/backgroundPop.png" class="width_100 height_100" mode="widthFix"></image>
-          <view class="couponPrice posi_ab tex_center"><text>￥</text><text class="font-60 font-weight-600">{{couponAmount}}</text></view>
-          <view class="ikonw posi_ab" onTap="closeCouponShow">
-            <image src="https://img.sfddj.com/miniappImg/couponsPop/closeBtn.png" class="width_100 height_100" mode="widthFix"/></image>
-          </view>
+  <view class="toastView_wb" style="">
+
+		<view class="posi_ab" style="right: 0; top: 0;z-index:9102;" onTap="closePop">
+			<icon type="clear" size="25" color="rgba(255,255,255,0.3)"/>
+		</view>
+
+    <view class="font-26 confirmorderPop">
+      <view class="couponPrice tex_center">
+        <text class="couponPriceName">优惠券</text>
+        <text class="couponPriceNo font-weight-600">{{couponAmount}}</text>
+        <text class="couponPriceAfter">元</text>
       </view>
+
+      <view class="couponPopBottom tex_center">
+        <view class="couponPopDetail">恭喜获得优惠券</view>
+        <view class="couponPoplimit">限当前场商品使用</view>
+        <view class="couponPopBtn" onTap="closeCouponShow">
+          <image src="{{baseLocImgUrl}}miniappImg/couponsPop/goUseBtn.png" class="couponPopToUse height_100" mode="widthFix"/></image>
+        </view>
+      </view>
+      
+    </view>
   </view>
 </view>

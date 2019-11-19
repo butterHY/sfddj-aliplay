@@ -343,6 +343,13 @@
   -webkit-animation: mymove 1s linear infinite alternate; /* Safari 和 Chrome */
 }
 
+/** 添加轮播图 **/
+.swipe{
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 30rpx 5rpx;
+}
+
 @keyframes mymove
 {
   0%  {

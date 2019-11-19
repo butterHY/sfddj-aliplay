@@ -1,5 +1,6 @@
 <import src="../../common/couponItem.axml"/>
 <import src="../../common/item-goods-card.axml" />
+<import src="/pages/common/swiperItem"/>
 
 <!-- 加载失败 -->
 <view a:if="{{couponFail && guessLikeFail}}">
@@ -17,6 +18,12 @@
   <scroll-view scroll-y="true"  class="all_100v"  onScrollToLower="lowLoadMore" >
   <!-- 兑换优惠券与优惠券列表部分 -->
   <view class="myCoupon_coupon">
+    <!--轮播图-->
+    <view class="swipe whiteBack" a:if='{{ couponSwiper && couponSwiper.length > 0}}'>
+      <block>
+        <template is="swiperItem" data="{{swiperList: couponSwiper,baseImageUrl:baseImageUrl,radius:'13rpx',height:'145rpx'}}"></template> 
+      </block>
+    </view>
     <!-- 兑换优惠券部分 -->
     <view a:if="{{!isExpired}}" class="myCoupon_exchange">
       <!-- 提示 -->
@@ -91,10 +98,10 @@
         <view class='guessLikeTit'>猜你喜欢</view>
           <view class='guessLike'>
             <view class='guessLikeView'>
-              <template is="itemGoodsColumn" a:for="{{recommondList}}" a:if="{{index % 2 == 0}}" data="{{...item,left:true,baseImageUrl:baseImageUrl,baseLocImgUrl,smallImgArg}}" wx:key="itemIndex"></template>
+              <template is="itemGoodsCard" a:for="{{recommondList}}" a:if="{{index % 2 == 0}}" data="{{...item,left:true,baseImageUrl:baseImageUrl,baseLocImgUrl,smallImgArg}}" wx:key="itemIndex"></template>
             </view>
             <view class='guessLikeView'>
-              <template is="itemGoodsColumn" a:for="{{recommondList}}" a:if="{{index % 2 != 0}}" data="{{...item,left:false,baseImageUrl:baseImageUrl,baseLocImgUrl,smallImgArg}}" wx:key="itemIndex2"></template>
+              <template is="itemGoodsCard" a:for="{{recommondList}}" a:if="{{index % 2 != 0}}" data="{{...item,left:false,baseImageUrl:baseImageUrl,baseLocImgUrl,smallImgArg}}" wx:key="itemIndex2"></template>
             </view>
           </view>
 
