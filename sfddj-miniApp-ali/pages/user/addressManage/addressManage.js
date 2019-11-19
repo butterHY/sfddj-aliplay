@@ -181,57 +181,65 @@ Page({
 	//使用支付宝地址
 	chooseAddr: function() {
 		const that = this;
-		my.getAddress({
-			success: function(res) {
-				var payLoad = {
-					realName: res.result.fullname,
-					mobile: res.result.mobilePhone,
-					province: res.result.prov,
-					city: res.result.city,
-					area: res.result.area,
-					AccAddress: res.result.address,
-					isDefault: '1'
-				};
+		if (this.data.canUseAddr) {
 
-				// 暂不支持香港，澳门，台湾地区的配送，请重新选择地址；
-				// 用户取消操作；
-				if (res.resultStatus == '6001') {
-					return;
-				} else if (res.resultStatus == '9000' && (res.result.prov == '澳门特别行政区' || res.result.prov == '香港特别行政区')) {
-					payLoad.city = res.result.prov;
-					payLoad.area = res.result.city;
-				}
+			my.getAddress({
+				success: function(res) {
+					var payLoad = {
+						realName: res.result.fullname,
+						mobile: res.result.mobilePhone,
+						province: res.result.prov,
+						city: res.result.city,
+						area: res.result.area,
+						AccAddress: res.result.address,
+						isDefault: '1'
+					};
 
-				my.showLoading({
-					content: 'loading'
-				});
-
-				sendRequest.send(constants.InterfaceUrl.ADD_ADDRESS, payLoad, function(res) {
-					my.hideLoading();
-					sendRequest.send(constants.InterfaceUrl.SEARCH_ADDRESS, {}, function(res) {
-						my.hideLoading();
-						that.setData({
-							addressList: res.data.result,
-							isLoadMore: false,
-							loadComplete: true,
-							loadFail: false
-						});
-					}, function(err) {
-						that.setData({
-							isLoadMore: false,
-							loadFail: true
-						});
-					}, 'GET');
-
-				}, function(err) {
-					my.hideLoading();
-					if (err == '请填写完整的地址') {
-						my.alert({
-							title: '地址添加失败, 地址信息不完整',
-						});
+					// 暂不支持香港，澳门，台湾地区的配送，请重新选择地址；
+					// 用户取消操作；
+					if (res.resultStatus == '6001') {
+						return;
+					} else if (res.resultStatus == '9000' && (res.result.prov == '澳门特别行政区' || res.result.prov == '香港特别行政区')) {
+						payLoad.city = res.result.prov;
+						payLoad.area = res.result.city;
 					}
-				});
-			}
-		});
+
+					my.showLoading({
+						content: 'loading'
+					});
+
+					sendRequest.send(constants.InterfaceUrl.ADD_ADDRESS, payLoad, function(res) {
+						my.hideLoading();
+						sendRequest.send(constants.InterfaceUrl.SEARCH_ADDRESS, {}, function(res) {
+							my.hideLoading();
+							that.setData({
+								addressList: res.data.result,
+								isLoadMore: false,
+								loadComplete: true,
+								loadFail: false
+							});
+						}, function(err) {
+							that.setData({
+								isLoadMore: false,
+								loadFail: true
+							});
+						}, 'GET');
+
+					}, function(err) {
+						my.hideLoading();
+						if (err == '请填写完整的地址') {
+							my.alert({
+								title: '地址添加失败, 地址信息不完整',
+							});
+						}
+					});
+				}
+			});
+		}
+		else {
+			my.showToast({
+			  content: '您的支付宝版本过低，请升级后再使用'
+			});
+		}
 	}
 });
