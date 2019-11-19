@@ -51,21 +51,21 @@
 
         <!-- 规格 -->
         <scroll-view class="marTop_50 marLeft_30" style="height:400rpx" scroll-y="true" catchtouchmove="move" a:if="{{goodsSpecMap}}">
-          <block a:for="{{goodsSpecMap}}" a:for-index="fatherIndex" a:key="goodsSpecMap">
-            <view class="font-30 font-weight-600 goods-spec-iakName">{{item.iakName}}:</view>
+          <block a:for="{{goodsSpecMap}}" a:for-index="fatherIndex" a:for-item="fatherItem" a:key="goodsSpecMap">
+            <view class="font-30 font-weight-600 goods-spec-iakName">{{fatherItem.specName}}:</view>
             <view class="{{fatherIndex != goodsSpecMap.length -1 ? 'goods-spec-iakValue' : ''}}">
               <block a:if="{{specType == 'OPTIONAL' || specType == 'SINGLE' || 'MULTI'}}">
-                <block a:for="{{item.iakValue}}" >
+                <block a:for="{{fatherItem.values}}" >
                   <view class="goods-spec-view-normal" a:if="{{item.store == 0}}" style="color: #999;background: #f5f5f5;">
                     <view class="flex_view_row align_cen justi_around">
                       <image class="width-40" mode="widthFix" a:if="{{item.imgPath}}" src="{{baseImageUrl}}{{item.imgPath}}"/>
-                      <text class="iavValueText">{{item.iavValue}}</text>
+                      <text class="iavValueText">{{item.valueName}}</text>
                     </view>
                   </view>
-                  <view class="goods-spec-view-normal"  a:else style="{{ item.taped ? 'color: #ff2e2e;background: #ffdcdc;' : 'color:#191616; background: #f2f2f2;'}}" data-fatherindex="{{fatherIndex}}"  data-index="{{index}}" a:key="iakValue" catchTap="specItemTap">
+                  <view class="goods-spec-view-normal"  a:else style="{{ item.taped ? 'color: #ff2e2e;background: #ffdcdc;' : 'color:#191616; background: #f2f2f2;'}}" data-fatherindex="{{fatherIndex}}"  data-index="{{item.valueName}}" a:key="iakValue" catchTap="specItemTap">
                     <view class="flex_view_row align_cen justi_around">
                       <image class="width-40" mode="widthFix" a:if="{{item.imgPath}}" src="{{baseImageUrl}}{{item.imgPath}}"/>
-                      <text class="iavValueText">{{item.iavValue}}</text>
+                      <text class="iavValueText">{{item.valueName}}</text>
                     </view>
                   </view>
                 </block>
@@ -108,7 +108,7 @@
             <view class="whiteBack buttonView">
               <view class="goods-sepc-bottom-button2">
                 <view class="flex_1  shopButton" a:if="{{goodsStore == 0}}">查看类似商品</view>
-                <view class="flex_1  shopButton" a:elif="{{optionalProduct.length == xgCount && selectedSpecsBar}}" catchTap="optionalSubmitTap">立即购买</view>
+                <view class="flex_1  shopButton" a:elif="{{optionalProduct.length == xgCount && selectedSpecsBar}}" data-buyNow="buyNow" catchTap="buyNow">立即购买</view>
                 <view class="flex_1  shopButton" a:elif="{{optionalProduct.length == xgCount && !selectedSpecsBar}}" catchTap="goodsSpecSubmitTap">确定</view>
                 <view class="flex_1  shopButton gray" a:else>还需要选 {{xgCount - optionalProduct.length}} 种规格</view>
               </view>

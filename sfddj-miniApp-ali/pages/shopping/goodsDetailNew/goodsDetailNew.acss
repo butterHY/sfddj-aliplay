@@ -49,6 +49,45 @@ page {
   height: 38rpx;
 }
 
+.returnCashView {
+  box-sizing: border-box;
+  padding: 0 30rpx 36rpx;
+
+}
+
+.returnCash {
+ /* height: 46rpx; */
+ background: #fff4f4;
+ border-radius: 50rpx;
+ box-sizing: border-box;
+ padding: 22rpx 36rpx;
+
+}
+
+.returnCashrule {
+  height: 46rpx;
+  width: 136rpx;
+  line-height: 46rpx;
+  text-align: center;
+  color: #ff5d5d;
+  border: 2rpx solid #ff5d5d;
+  border-radius: 30rpx;
+}
+
+.returnCashDescribe {
+  height: 46rpx;
+  width: 458rpx;
+  line-height: 46rpx;
+  color: #772a2a;
+}
+
+.returnCashimage {
+  width: 62rpx;
+  height: 46rpx;
+  margin-right: 30rpx;
+  background-size: 100%;
+}
+
 .priceTagImg {
   height: 20rpx;
   width: 48rpx;
@@ -616,6 +655,7 @@ page {
   border-radius: 38rpx;
   font-size: 32rpx;
   letter-spacing: 4rpx;
+  line-height: 82rpx;
 }
 
 .goodsGiftButtonDuplex {

@@ -157,7 +157,6 @@
     </view>
   </view>
 
-  
     <!-- 优惠券导航栏                      -->
   <view class="receiveCoupon flex_view_row justi_between font-24" onTap="showPopup" a:if="{{couponDataList && couponDataList.length > 0}}">
     <view class="flex_view_row flex_1 justi_start">
@@ -179,7 +178,7 @@
     <view class="detail-header-name color-323232 font-30">
       <view class="twoLineHide">
         <text class="labelName font-22 " a:if="{{goods.goodsLabels}}">{{goods.goodsLabels}}</text>
-        <text class="goodsName font-weight-600">{{goods.goodsName}}</text>   
+        <text class="goodsName font-weight-600">{{goods.goodsName}}{{goods.goodsName}}{{goods.goodsName}}{{goods.goodsName}}</text>   
       </view> 
       <view class="flex_view_row  justi_start font-20 labelList" a:if="{{that.data.goods.goodsViceVO.labelList.length > 0 || goods.goodsTag}}">
         <view class="goodsTag label" a:for="{{that.data.goods.goodsViceVO.labelList}}" a:if="{{index == 0 || index == 1 || index == 2}}">{{item}}</view>
@@ -191,6 +190,17 @@
       <text class="iconfont icon-collect font-40"></text>
       <text class="font-22  color-a1a0a0">分享</text>
     </button>
+  </view>
+
+    <!--购物返现金额                      已完成新接口字段更换-->
+  <view class="returnCashView" a:if="{{goods.returnMoneyStatus}}"  catchTap="showCashBackRuleFn">
+    <view class="returnCash flex_view_row justi_between">
+      <view class="returnCashDescribe flex_view_row  font-32">
+        <image class="returnCashimage" src="{{baseImageLocUrl}}miniappImg/public/goodsDetail/cash_envelopes.png"/>
+        <view>购买最高可返{{filters.toFix(goods.maxReturnMoney * minCount)}}元</view>
+      </view>
+      <view class="returnCashrule font-26">查看详情</view>
+    </view>
   </view>
 
   <!-- 已选规格                           已完成新接口字段更换-->
@@ -262,31 +272,6 @@
 
   <!-- 店铺信息                                   已完成新接口字段更换-->
   <view>
-    <!--购物返现金额                              已完成新接口字段更换-->
-    <view class="division-area" a:if="{{goods.returnMoneyStatus}}">
-    </view>
-    <view class="whiteBack" style="padding: 20rpx 30rpx 0;" a:if="{{goods.returnMoneyStatus}}">
-      <view class="flex_view_row justi_between align_cen returnMoneyView" catchTap="showCashBackRuleFn">
-        <view class="font-32 flex_view_row align_cen color-723a0d">
-          <image src="{{base64imageUrl}}/miniappImg/icon/icon_goods_detail.png" style="width: 32rpx; height: 32rpx;margin-right: 13rpx;">
-          </image>
-          <text>购买最高可返                        
-            <text class="color-ff5353">{{filters.toFix(goods.maxReturnMoney * minCount)}}                      
-            </text>元                    
-          </text>
-        </view>
-        <view class="tex_right font-24 flex_view_row align_cen color-795a1a">
-          <view>
-            <text class>规则详情                        
-            </text>
-          </view>
-          <view>
-            <text class="icon-href-right font-22 marLeft_20 padding-r15">
-            </text>
-          </view>
-        </view>
-      </view>
-    </view>
     <!--查看店铺                                  已完成新接口字段更换-->
     <!-- <navigator url="/pages/shopping/storeInfo/storeInfo?supplierId={{goods.supplierInfo.supplierId}}" hover-class="none">
       <view class="specifications-view selected-view">
@@ -662,9 +647,9 @@
 
   <!-- 规格选择框                                   已完成新接口字段更换-->
   <template is="goodsSpec" data="{{show:showGoodsSpec,baseLocImgUrl:base64imageUrl,baseImageUrl,product,goodsSpecMap,optionalProduct,xgCount,specType,selectedSpecsBar,multiformname,goodsStore: goods.goodsStore,quantity,type,showInput:true,SFmember}}"/>
-  <!-- 点击确定之后数量大于2的情况下弹出              已完成新接口字段更换-->
+  <!-- 送礼方式选择弹窗，点击‘确定’之后数量大于2的情况下弹出              已完成新接口字段更换-->
   <template is="goodsGiftBomb" data="{{show:showGiftBomb,base64imageUrl:base64imageUrl}}"/>
-  <!-- 点击什么是送礼方式弹出                         已完成新接口字段更换-->
+  <!-- 送礼方式介绍弹窗，点击 ‘什么是送礼方式’ 弹出                         已完成新接口字段更换-->
   <template is="goodsTheway" data="{{show:showTheway,base64imageUrl:base64imageUrl}}"/>
   <!--toast弹窗                                     已完成新接口字段更换-->
   <view class="mark flex_view_col align_cen justi_cen" a:if="{{showToast}}">
