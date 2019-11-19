@@ -10,7 +10,7 @@ var baseUrl = constants.UrlConstants.baseUrl;
 var ERR_CODE = constants.errorCode;
 var version1 = "2.0"; //每一版的版本号
 function send(url, data, sucFunc, errFunc, method, preType, contentType, loginToken) {
-  baseUrl = preType ? constants.UrlConstants.baseUrlApp : constants.UrlConstants.baseUrl;
+  baseUrl = preType == true || preType == 'true' ? constants.UrlConstants.baseUrlApp : constants.UrlConstants.baseUrl;
   try {
     var token = my.getStorageSync({key: constants.StorageConstants.tokenKey}).data ? my.getStorageSync({key: constants.StorageConstants.tokenKey}).data : '';
     my.httpRequest({

@@ -79,7 +79,7 @@ Page({
 	 * 生命周期函数--监听页面显示
 	 */
 	onShow: function() {
-    var that = this;
+		var that = this;
 		// utils.getNetworkType(this);
 		that.getMemberInfo();
 
@@ -89,7 +89,7 @@ Page({
 		//   }
 		// })
 
-      that.getCartNumber();
+		that.getCartNumber();
 	},
 
 	getMemberInfo: function() {
@@ -233,6 +233,14 @@ Page({
 			}
 		}
 	},
+
+	// 跳转去h5的优惠券页
+	goToH5Coupon() {
+		let url = constants.UrlConstants.baseUrlOnly + '/coupon/couponList'
+		let chInfo = constants.UrlConstants.chInfo
+		my.call('startApp', { appId: '20000067', param: { url: url, chInfo: chInfo } })
+	},
+
 	// 获取手机号
 	getPhoneNumber: function(e) {
 		var that = this;
@@ -443,12 +451,12 @@ Page({
 
 	// goToWebView(){},
 
-      /**
-	 * 获取购物车数量
-	 */
+	/**
+   * 获取购物车数量
+   */
 	getCartNumber: function() {
-    var app = getApp();
-    app.getCartNumber();
+		var app = getApp();
+		app.getCartNumber();
 	},
 
 

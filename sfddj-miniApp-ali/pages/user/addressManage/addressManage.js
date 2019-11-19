@@ -14,7 +14,8 @@ Page({
 		needRedirect: '',
 		baseImgLocUrl: constants.UrlConstants.baseImageLocUrl,
 		loadComplete: false,
-		loadFail: false
+		loadFail: false,
+		canUseAddr: my.canIUse('getAddress')
 	},
 
 	/**

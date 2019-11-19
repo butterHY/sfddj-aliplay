@@ -32,6 +32,6 @@
   </scroll-view>
   <view class="useWechatAdd justi_cen">
     <navigator url="./addAddress/addAddress" open-type="{{needRedirect ? 'redirect' : 'navigate'}}" class="useWechatAdd_nav font-24 color-323232" hover-class="none">新建地址</navigator>
-    <view class="useWechatAdd_go font-24 color-323232 marLeft_20" onTap="chooseAddr">使用支付宝地址</view>
+    <view a:if="{{canUseAddr}}" class="useWechatAdd_go font-24 color-323232 marLeft_20" onTap="chooseAddr">使用支付宝地址</view>
   </view>
 </view>

@@ -147,7 +147,7 @@
 
       <!--第一行服务图标  -->
       <view class="flex_view_row">
-        <view data-url="/pages/user/myCoupon/myCoupon" class="user_myHome_one flex_view_col align_cen justi_cen posi_re" onTap="{{isMember? 'goToTargetPage' : ''}}">
+        <view data-url="/pages/user/myCoupon/myCoupon" class="user_myHome_one flex_view_col align_cen justi_cen posi_re" onTap="{{isMember? 'goToH5Coupon' : ''}}">
           <text class="iconfont icon-youhuiquan font-56 color_ff2a54_08"></text>
           <text class="font-24 marTop_20 color-323232">优惠券</text>
           <button class="btnStyle gpnBtn zIndex100" open-type="getAuthorize" onGetAuthorize="getPhoneNumber" scope='phoneNumber' onError="onAuthError" a:if="{{!isMember}}"></button>

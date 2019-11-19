@@ -1421,7 +1421,6 @@ Page({
 				cartArray.push(item);
 			});
 		});
-
 		var data = {
 			cartArray: cartArray,
 			token: that.data.result.token,
@@ -1736,7 +1735,7 @@ Page({
 				that.setData({
 					timeOut: timeOut
 				});
-			}, 'POST', 'application/json');
+			}, 'POST',false, 'application/json');
 		} else {
 			sendRequest.send(constants.InterfaceUrl.PAY_BUY_NOW_2, that.data.globalData, function(res) {
 				my.hideLoading();
