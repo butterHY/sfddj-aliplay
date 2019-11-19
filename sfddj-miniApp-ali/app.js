@@ -5,6 +5,7 @@ let sendRequest = require('./utils/sendRequest');
 let constants = require('./utils/constants');
 
 
+
 App({
 	// data: {
 	//     home_spikeTime: null,
@@ -21,8 +22,6 @@ App({
 	},
 
 	onShow: function(options) {
-		
-
 		uma.resume();                      // 请务必引入
 		var that = this;
 		that.globalData.appOptions = options.referrerInfo ? options.referrerInfo.extraData : {};
@@ -60,6 +59,7 @@ App({
 		SFmember: false, //判断是否是速运+那边跳过来的
 		appOptions: {}, //保存速运+跳过来带的参数
 		NowAddrId: null,   //用于保存临时选中的地址
+
 
 	},
 
@@ -107,13 +107,14 @@ App({
     // console.log('我在 app.js 的公共方法');
     var that = this;
     var canUsesetTab = my.canIUse('setTabBarBadge');
-    // console.log(canUsesetTab);
     if(canUsesetTab) {
       sendRequest.send(constants.InterfaceUrl.SHOP_GET_COUNT, {}, function(res) {
-        my.setTabBarBadge({
-          index: 2,
-          text: (res.data.result.count).toString()
-        })
+        if(res.data.result.count) {
+          my.setTabBarBadge({
+            index: 2,
+            text: (res.data.result.count).toString()
+          })
+        }
       }, function(res) { });
     }
   }

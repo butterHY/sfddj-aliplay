@@ -1,5 +1,5 @@
 <template name="goodsTheway">
-   <view class="goodsGiftbg" catchtouchmove="move" a:if="{{show}}">
+   <view class="goodsGiftbg" catchtouchmove="move" a:if="{{show}}" >
       <view style="background:#fff;width:543rpx;margin-top:358rpx;margin:179px auto 0 auto;border-radius:9rpx;text-align:center;">
         <view style="text-align:right;">
           <image src="{{base64imageUrl}}/miniappImg/multiGift/icon_close.png" style="width:32rpx;height:32rpx;margin-top:20rpx;margin-right:31rpx" onTap="bombClose"></image>
