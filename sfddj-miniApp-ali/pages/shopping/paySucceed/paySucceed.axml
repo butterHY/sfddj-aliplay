@@ -72,7 +72,7 @@
 
       <view class="couponPopBottom tex_center">
         <view class="couponPopDetail">恭喜获得优惠券</view>
-        <view class="couponPoplimit">限当前场商品使用</view>
+        <view class="couponPoplimit"></view>
         <view class="couponPopBtn" onTap="closeCouponShow">
           <image src="{{baseLocImgUrl}}miniappImg/couponsPop/goUseBtn.png" class="couponPopToUse height_100" mode="widthFix"/></image>
         </view>

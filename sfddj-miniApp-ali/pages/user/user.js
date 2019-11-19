@@ -421,14 +421,16 @@ Page({
 
 	// 跳转去h5的签到页
 	goToH5SignIn() {
+    my.navigateTo({
+			url: '/pages/activities/signIn/signIn'
+		});
+		// let signInUrl = constants.UrlConstants.baseUrlOnly + '/h/personal/signIn'
+		// let chInfo = constants.UrlConstants.chInfo;
 
-		let signInUrl = constants.UrlConstants.baseUrlOnly + '/h/personal/signIn'
-		let chInfo = constants.UrlConstants.chInfo;
+		// // 友盟+统计--签到页浏览
+		// this.umaTrackEvent('signIn')
 
-		// 友盟+统计--签到页浏览
-		this.umaTrackEvent('signIn')
-
-		my.call('startApp', { appId: '20000067', param: { url: signInUrl, chInfo: chInfo } })
+		// my.call('startApp', { appId: '20000067', param: { url: signInUrl, chInfo: chInfo } })
 
 	},
 

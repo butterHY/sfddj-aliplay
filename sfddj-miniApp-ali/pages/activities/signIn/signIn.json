@@ -1,1 +1,11 @@
-{}
+{
+  "defaultTitle": "签到",
+  "titleBarColor": "#ffffff",
+  "pullRefresh": false,
+  "usingComponents":{
+    "modal":"mini-antui/es/modal/index",
+    "input-item": "mini-antui/es/input-item/index",
+    "loading-now": "../../components/loadingNow/loadingNow",
+    "load-fail": "../../components/loadFail/loadFail"
+  }
+}
