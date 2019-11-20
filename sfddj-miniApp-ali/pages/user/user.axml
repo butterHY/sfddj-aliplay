@@ -52,7 +52,7 @@
             <image a:if="{{myInfoData.memberSignStatus == 'true'}}" src="{{baseLocImgUrl}}miniappImg/user/alreadySignedOne.png" class="all_100"></image>
             <image a:else src="{{baseLocImgUrl}}miniappImg/user/signIn.png" class="all_100"></image>
           </view>
-		  <button class="btnStyle gpnBtn zIndex100" open-type="getAuthorize" onGetAuthorize="getPhoneNumber" scope='phoneNumber' onError="onAuthError" a:if="{{!isMember}}"></button>
+		      <button class="btnStyle gpnBtn zIndex100" open-type="getAuthorize" onGetAuthorize="getPhoneNumber" scope='phoneNumber' onError="onAuthError" a:if="{{!isMember}}"></button>
         </view>
 
       </view>

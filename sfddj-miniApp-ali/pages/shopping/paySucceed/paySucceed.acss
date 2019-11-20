@@ -176,6 +176,7 @@ page {
 
 .couponPoplimit{
   font-size: 36rpx;
+  height: 36rpx;
   margin-bottom: 20rpx;
 }
 

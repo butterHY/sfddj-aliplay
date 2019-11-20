@@ -1,70 +1,63 @@
-<view>
+<import src="/pages/common/swiperItem"/>
+<import src="../../common/item-goods-card.axml" />
+<!-- 加载失败 -->
+<view a:if="{{loadSignFail && loadSwipeFail}}">
+  <load-fail></load-fail>
+</view>
+<!-- 加载中 -->
+<view a:elif="{{!loadComplete}}">
+  <loading-now></loading-now>
+</view>
+
+<view a:else class="pageArea">
+
   <view class="signInArea">
+
+    <!--顶部-->
     <view class="signInHead">
+      <!--背景图-->
       <view class="signInHeadBg">
         <image src="{{baseImageLocUrl}}miniappImg/activity/signIn/signInHead.png" class="all_100">
       </view>
-      <view class="activityIn">
+      <!--活动规则-->
+      <view class="activityIn" onTap="getRuler">
         <image src="{{baseImageLocUrl}}miniappImg/activity/signIn/activityRules.png" class="all_100 activityRules"/>
       </view>
-
       <!--弹幕-->
-      <view class="barrage">
-        <!-- <block a:for="{{doommData && doommData.length > 0}}" a:key="id">
-          <text a:if="{{item.display}}" class="barrageTip" style="animation: first {{item.time}}s linear forwards;top:{{item.top}}rpx;color:{{item.color}};">
-              {{item.text}}
+      <view class="barrage" a:if="{{barrageList && barrageList.length > 0}}">
+        <block a:for="{{barrageList}}" a:key="id">
+          <text class="barrageTip" style="animation: first {{item.time}}s linear forwards;top:{{item.top}}rpx;">
+            {{item.text}}
           </text>
-        </block> -->
-      </view>
-
-      <!-- <view class="barrage" a:if="{{barrageList && barrageList.length > 0}}" style="animation: barrageAnimation {{time}}s linear infinite">
-        <view>
-          <view class="barrageTip top">
-            <view class="barrageTxt" a:for="{{ barrageList }}" a:if="{{index%3 == 0}}" a:key="{{index}}">
-              {{item}}
-            </view>
-          </view>
-          <view class="barrageTip middle">
-            <view class="barrageTxt" a:for="{{ barrageList }}" a:if="{{index%3 == 1}}" a:key="{{index}}">
-              {{item}}
-            </view>
-          </view>
-          <view class="barrageTip bottom">
-            <view class="barrageTxt" a:for="{{ barrageList }}" a:if="{{index%3 == 2}}" a:key="{{index}}">
-              {{item}}
-            </view>
-          </view>
-        </view>
-
-      </view> -->
-    </view>
-
-    <view class="swipe" a:if='{{ signSwiperList && signSwiperList.length > 0}}'>
-      <swiper 
-        class="all_100"
-        indicator-dots="{{signSwiperList.length > 1 ? 'true' : ''}}"
-        autoplay="{{signSwiperList.length > 1 ? 'true' : ''}}"
-        interval="{{signSwiperList.length > 1 ? '3000' : ''}}"
-        circular="{{signSwiperList.length > 1 ? 'true' : ''}}"
-        acceleration="true"
-        indicator-color="rgba(255,255,255,.8)"
-        indicator-active-color="#ff5353"
-      >
-        <block a:for="{{signSwiperList}}">
-          <swiper-item class="swiperItem" key="swiper-item-{{index}}">
-            <view class="swiper-item bc_{{item}}" style="background-color:{{item}}"></view>
-            <!-- <view data-url="{{item.url}}" data-title="{{item.title}}" data-type="banner" class="width_100 height_300r backImg {{(filters.isGoodsLink(item.url) && !item.isLoaded) ? 'js_bannerGoods_' + index : ''}}" onTap="goToPage">
-							<image src="{{baseImageUrl}}{{item.imageUrl}}" class="all_100" lazy-load="{{true}}"/>
-						</view> -->
-          </swiper-item>
         </block>
-      </swiper>
+      </view>
     </view>
 
+    <!--轮播图-->
+    <view class="swipe" a:if='{{ signBanner && signBanner.length > 0}}'>
+      <block>
+        <template is="swiperItem" data="{{swiperList: signBanner,baseImageUrl:baseImageUrl,radius:'20rpx',height:'200rpx'}}"></template>
+      </block>
+    </view>
+
+    <!--日历部分-->
     <view class="calendar">
       <view class="calendarTop">
         <view class="totalAward">
-          <view class="hasNoAward">您目前还未获取签到奖励</view>
+          <view class="hasNoAward" a:if="{{!totalPrize && isShowPrize}}">您目前还未获取签到奖励</view>
+          <view class="hasAward" a:if="{{totalPrize && isShowPrize}}">
+            <block a:for="{{totalPrize}}" a:key="id">
+              <view class="signAwardTip" style="animation: first {{item.time}}s linear forwards;top:{{item.top}}rpx;">
+                <text class="signAwardNormal">本月签到{{item.text.signCount}}次累计获得</text>
+                <text class="signAwardNormal" a:if="{{item.text.totalBalance > 0}}">现金红包
+                <text class="signAwardHighLight">￥{{item.text.totalBalance}}</text></text>
+                <text class="signAwardNormal" a:if="{{item.text.couponCount > 0}}">优惠券
+                <text class="signAwardHighLight">{{item.text.couponCount}}</text>张</text>
+                <text class="signAwardNormal" a:if="{{item.text.totalPoint > 0}}">
+                <text class="signAwardHighLight">{{item.text.totalPoint}}</text>积分</text>
+              </view>
+            </block>
+          </view>
         </view>
       </view>
       <view class="calendarMain">
@@ -77,6 +70,25 @@
           <view class="dateWeek">五</view>
           <view class="dateWeek">六</view>
         </view>
+        
+        <!--日历内容  -->
+        <view class="calendarDetail" a:if="{{calendarArr && calendarArr.length>0}}" style="height:{{calendarHeight+'rpx'}};">
+          <view a:for="{{calendarArr}}" a:for-index="rowIndex" a:for-item="rowItem" class="flex_view_row everyWeekArea {{(rowIndex+1) == currentWeekNo? 'thisWeek' : 'otherWeek'}}" a:if="{{(rowIndex+1) != currentWeekNo? openCalendar : closeCalendar}}">
+            <view a:for="{{rowItem}}" a:for-item="item" class="everyDayArea">
+              <!--特殊奖励-->
+              <block a:if="{{item.specialPrize}}">
+                <text class="everySpeDayRed" dataId="{{item.day}}" a:if="{{item.status}}"></text>
+                <text class="everySpeDay" dataId="{{item.day}}" a:else></text>
+              </block>
+              <!--非特殊奖励-->
+              <block a:else>
+                <text a:if="{{item.status}}" class="everyDaySigned" dataId="{{item.day}}">{{item.day}}</text>
+                <text a:elif="{{item.day == currentDay}}" class="everyDayIconToday" dataId="{{item.day}}">{{item.day}}</text>
+                <text a:else class="everyDayIcon" dataId="{{item.day}}">{{item.day}}</text>
+              </block>
+            </view>
+          </view>
+        </view>
       </view>
       <view class="calendarBtn  flex_view_row justi_cen">
         <view class="cunfoldMergerBtn height_100" onTap="openCalendar">
@@ -84,121 +96,74 @@
         </view>
       </view>
     </view>
+
+    <!--签到按钮-->
     <view class="signBtnArea flex_view_row justi_cen">
-      <view class="signInBtn" a:if="{{signStatus}}"></view>
+      <view class="signInBtn" a:if="{{!signStatus}}" onTap="signedEvent"></view>
       <view class="signInedBtn" a:else onTap="signedAlready"></view>
     </view>
 
-    <view class="awardBg">
-      <view class="award">
-        <scroll-view scroll-x="true" class="all_100">
-          <view class="all_100 flex_view_row ">
-            <view class="awardDel flex_view_col">
-              <view class="awardIcon flex_view_row justi_cen align_end">
-                <view class="cornerMarker">1</view>
-                <image src="{{baseImageLocUrl}}miniappImg/activity/signIn/daysCou.png" class="awardIconImg"/>
+    <!--奖励-->
+    <view class="awardBg" a:if="{{signPrize && signPrize.length>0}}">
+       <view class="award">
+          <view class="all_100">
+            <scroll-view scroll-x="{{true}}" class="all_100 flex_view_row" scroll-into-view="{{views}}">
+              <view class="awardDel flex_view_col scroll-view-item" a:for="{{signPrize}}" id="{{item.day}}">
+                <view class="awardIcon flex_view_row justi_cen align_end">
+                  <view a:if="{{item.status}}" class="prizeRecived"></view>
+                  <view class="cornerMarker">{{item.day}}</view>
+                  <image a:if="{{item.prizeType == 1}}" src="{{baseImageLocUrl}}miniappImg/activity/signIn/daysCash.png" class="awardIconImg"/>
+                  <image a:if="{{item.prizeType == 2}}" src="{{baseImageLocUrl}}miniappImg/activity/signIn/daysCou.png" class="awardIconImg"/>
+                  <image a:if="{{item.prizeType == 3}}" src="{{baseImageLocUrl}}miniappImg/activity/signIn/daysPoint.png" class="awardIconImg"/>
+                </view>
+                <view class="awardText flex_1 font-24 flex_view_col justi_between">
+                  <view class="tex_center single-line awardTextDay">
+                    <text a:if="{{item.signType == 1}}">累计</text>
+                    <text a:if="{{item.signType == 2}}">连续</text>签到{{item.day}}天
+                  </view>
+                  <view class="tex_center single-line">
+                    <text a:if="{{item.prizeType == 1}}">最高{{item.value}}元现金领到手</text>
+                    <text a:if="{{item.prizeType == 2}}">{{item.prize}}优惠券领到手</text>
+                    <text a:if="{{item.prizeType == 3}}">{{item.prize}}积分领到手</text>
+                  </view>
+                </view>
               </view>
-              <view class="awardText flex_1 font-24 flex_view_col justi_between">
-                <view class="tex_center single-line awardTextDay">连续签到3天</view>
-                <view class="tex_center single-line">5元现金领到手</view>
-              </view>
-            </view>
-            <view class="awardDel flex_view_col">
-              <view class="awardIcon flex_view_row justi_cen align_end">
-                <view class="cornerMarker">5</view>
-                <image src="{{baseImageLocUrl}}miniappImg/activity/signIn/daysPoint.png" class="awardIconImg"/>
-              </view>
-              <view class="awardText flex_1 font-24 flex_view_col justi_between">
-                <view class="tex_center single-line awardTextDay">连续签到3天</view>
-                <view class="tex_center single-line">5元现金领到手</view>
-              </view>
-            </view>
-            <view class="awardDel flex_view_col">
-              <view class="awardIcon flex_view_row justi_cen align_end">
-                <view class="cornerMarker">10</view>
-                <image src="{{baseImageLocUrl}}miniappImg/activity/signIn/daysCash.png" class="awardIconImg"/>
-              </view>
-              <view class="awardText flex_1 font-24 flex_view_col justi_between">
-                <view class="tex_center single-line awardTextDay">连续签到3天</view>
-                <view class="tex_center single-line">5元现金领到手</view>
-              </view>
-            </view>
-            <view class="awardDel flex_view_col">
-              <view class="awardIcon flex_view_row justi_cen align_end">
-                <view class="cornerMarker">25</view>
-                <image src="{{baseImageLocUrl}}miniappImg/activity/signIn/daysCou.png" class="awardIconImg"/>
-              </view>
-              <view class="awardText flex_1 font-24 flex_view_col justi_between">
-                <view class="tex_center single-line awardTextDay">连续签到3天</view>
-                <view class="tex_center single-line">5元现金领到手</view>
-              </view>
-            </view>
-            
-            
+            </scroll-view>
           </view>
-        </scroll-view>
       </view>
     </view>
-
   </view>
 
-  <view class="goodsList ">
-    <view class="alsoCanTit flex_view_row justi_cen">
-      <view class="alsoCanTitText"></view>
+  <!--热卖推荐-->
+  <view class="hotSaleArea" a:if="{{goodsList && goodsList.length > 0}}">
+    <view class="hotSaleTit">
+       <text class="hotSaleDel">热卖推荐</text>
     </view>
-    <view class="alsoCanArea clearfix">
-      <view class="hotGoodsItem">
-        <view class="hotGoodsBox all_100 flex_view_col">
-          <view class="hotGoodsImag">
-            <view class="all_100" style="background: orange;"></view>
-          </view>
-          <view class="hotGoodsDview flex_1 font-24">
-            <view class="hotGoodNameMessage single-line">精选南非西柚,健康家庭早餐必备</view>
-            <view class="hotGoodNameMessage single-line">健康家庭早餐必备,健康家庭早餐必备</view>
-            <view class="hotGoodNamePrice font-28 flex_view_row justi_between">
-              <view class="color-ff5353">￥400</view>
-              <view class="color-a1a0a0 line_through">￥1000</view>
-            </view>
-          </view>
-        </view>
+    <view class='guessLike'>
+      <view class='guessLikeView'>
+        <template is="itemGoodsCard" a:for="{{goodsList}}" a:if="{{index % 2 == 0}}" data="{{...item,left:true,baseImageUrl:baseImageUrl,baseLocImgUrl,smallImgArg}}" a:key="itemIndex"></template>
       </view>
-      <view class="hotGoodsItem">
-        <view class="hotGoodsBox all_100 flex_view_col">
-          <view class="hotGoodsImag">
-            <view class="all_100" style="background: orange;"></view>
-          </view>
-          <view class="hotGoodsDview flex_1 font-24">
-            <view class="hotGoodNameMessage single-line">精选南非西柚,健康家庭早餐必备</view>
-            <view class="hotGoodNameMessage single-line">健康家庭早餐必备,健康家庭早餐必备</view>
-            <view class="hotGoodNamePrice font-28 flex_view_row justi_between">
-              <view class="color-ff5353">￥400</view>
-              <view class="color-a1a0a0 line_through">￥1000</view>
-            </view>
-          </view>
-        </view>
-      </view>
-      <view class="hotGoodsItem">
-        <view class="hotGoodsBox all_100 flex_view_col">
-          <view class="hotGoodsImag">
-            <view class="all_100" style="background: orange;"></view>
-          </view>
-          <view class="hotGoodsDview flex_1 font-24">
-            <view class="hotGoodNameMessage single-line">精选南非西柚,健康家庭早餐必备</view>
-            <view class="hotGoodNameMessage single-line">健康家庭早餐必备,健康家庭早餐必备</view>
-            <view class="hotGoodNamePrice font-28 flex_view_row justi_between">
-              <view class="color-ff5353">￥400</view>
-              <view class="color-a1a0a0 line_through">￥1000</view>
-            </view>
-          </view>
-        </view>
+      <view class='guessLikeView'>
+        <template is="itemGoodsCard" a:for="{{goodsList}}" a:if="{{index % 2 != 0}}" data="{{...item,left:false,baseImageUrl:baseImageUrl,baseLocImgUrl,smallImgArg}}" a:key="itemIndex2"></template>
       </view>
     </view>
   </view>
 
   <!--兑换失败，弹出失败原因toast-->
-<view class="exchangeCoupon_fail" catchtouchmove="move" a:if="{{showToast}}">
-  <view class="exchangeCoupon_failMes font-24 color-232323">
-    {{errMsg}}
+  <view class="exchangeCoupon_fail" catchtouchmove="move" a:if="{{showToast}}" onTap="showPoup">
+    <view class="exchangeCoupon_failMes font-24 color-232323">
+      {{errMsg}}
+    </view>
   </view>
-</view>
+
+  <!--活动规则弹窗-->
+  <modal show="{{isRulerShow}}" onModalClose="onCloseRuler" advice="{{true}}" disableScroll="{{false}}">
+    <view class="rulerPop">
+      <view class="rulerTit">签到活动规则</view>
+      <view a:if="{{signRuler}}" class="rulerCon">
+        <view a:for="{{signRuler}}" class="rulerDetail">{{item}}</view>
+      </view>
+    </view>
+  </modal>
+
 </view>

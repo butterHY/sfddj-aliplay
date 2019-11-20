@@ -1,5 +1,11 @@
+.pageArea {
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
 .signInArea {
-  background: linear-gradient(-60deg,#ff4242,#ea223e);
+  background: linear-gradient(-60deg, #ff4242, #ea223e);
 }
 
 .signInHead {
@@ -26,67 +32,106 @@
   border-radius: 20rpx 0 0 20rpx;
 }
 
+.am-modal-show {
+  z-index: 50;
+}
+
+.am-modal {
+  border-radius: 15rpx;
+}
+
+.rulerPop {
+  width: 620rpx;
+  height: 780rpx;
+  box-sizing: border-box;
+  padding: 0 40rpx 40rpx;
+}
+
+.rulerTit {
+  color: #323232;
+  font-size: 46rpx;
+  text-align: center;
+  padding-top: 35rpx;
+  padding-bottom: 20rpx;
+  font-weight: 600;
+}
+
+.rulerCon {
+  width: 100%;
+  height: 655rpx;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  text-align: left;
+}
+
+.rulerDetail {
+  color: #666666;
+  line-height: 1.6;
+  font-size: 30rpx;
+}
+
 /******弹幕样式  start*******/
 
-.barrage{
+.barrage {
   position: absolute;
   z-index: 10;
   width: 100%;
-  top: 50rpx;
+  top: 100rpx;
   left: 0;
 }
 
-.barrageTip{
+.barrageTip {
   position: absolute;
-  white-space:nowrap;/* 防止向下换行*/
+  white-space: nowrap;
+  /* 防止向下换行*/
   animation-timing-function: linear;
   animation-fill-mode: none;
   z-index: 11;
-  /* position: absolute; 
-  top:0; 
-  left: 100%; 
-  z-index: 10; 
-  animation-timing-function: linear; 
-  animation-fill-mode: none; 
-  transform: translateZ(0);  
-  white-space: nowrap; 
-  height: 60rpx;
-  min-width: 100%; */
+  color: #ffffff;
+  font-size: 24rpx;
+  background: rgba(0, 0, 0, 0.3);
+  box-sizing: border-box;
+  padding: 4rpx 10rpx;
+  border-radius: 20rpx;
 }
 
-.barrageTip.top{
+.barrageTip.top {
   height: 60rpx;
 }
 
-.barrageTip.middle{
+.barrageTip.middle {
   height: 60rpx;
   top: 60rpx;
 }
 
-.barrageTip.bottom{
+.barrageTip.bottom {
   height: 60rpx;
   top: 120rpx;
 }
 
-.barrageTxt{
+.barrageTxt {
   color: #ffffff;
   font-size: 24rpx;
   padding: 4rpx 10rpx;
   box-sizing: border-box;
   border-radius: 40rpx;
-  background: rgba(0,0,0,.3);
-  display: inline-flex; 
-  margin-right: 60rpx; 
+  background: rgba(0, 0, 0, .3);
+  display: inline-flex;
+  margin-right: 60rpx;
   white-space: nowrap;
 }
 
-@keyframes barrageAnimation{ 
-  0% { transform: translateX(0); } 
-  100% { transform: translateX(-100%); } 
+@keyframes barrageAnimation {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
 }
 
 /******弹幕样式  end*******/
-
 
 .swipe {
   box-sizing: border-box;
@@ -97,66 +142,177 @@
   border-radius: 20rpx;
 }
 
-.swiper-item{
+.swiper-item {
   display: block;
   height: 50px;
-  background-color:#e0ffff;
+  background-color: #e0ffff;
 }
+
 .margin-t {
   margin-top: 24px;
 }
 
 .max-height200 {
-   max-height: 200rpx;
+  max-height: 200rpx;
 }
 
 .calendar {
-    box-sizing: border-box;
-    padding: 0 30rpx 50rpx 30rpx;
+  box-sizing: border-box;
+  padding: 0 30rpx 50rpx 30rpx;
 }
 
 .calendarTop {
-    height: 102rpx;
-    width: 100%;
-    box-sizing: border-box;
-    padding: 0 30rpx;
-    background: url(https://img.sfddj.com/miniappImg/activity/signIn/calenderTop.png) no-repeat;
-    background-size: 100%;
+  height: 102rpx;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 30rpx;
+  background: url(https://img.sfddj.com/miniappImg/activity/signIn/calenderTop.png) no-repeat;
+  background-size: 100%;
 }
 
-.totalAward{
-    width: 100%;
-    height: 84rpx;
-    overflow-y: hidden;
-    overflow-x: scroll;
-    -webkit-overflow-scrolling: touch;
-    text-align: center;
+.totalAward {
+  width: 100%;
+  height: 84rpx;
+  overflow-y: hidden;
+  overflow-x: scroll;
+  -webkit-overflow-scrolling: touch;
+  text-align: center;
+  position: relative;
+  white-space: nowrap;
 }
 
-.hasNoAward{
-    color: #ffb8a6;
-    white-space: nowrap;
-    font-size: 28rpx;
-    line-height: 84rpx;
+.hasNoAward {
+  color: #ffb8a6;
+  white-space: nowrap;
+  font-size: 28rpx;
+  line-height: 84rpx;
+  /* overflow: hidden; */
+}
+
+.hasAward {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  white-space: nowrap;
+  /* overflow: hidden; */
+}
+
+.signAwardTip {
+  font-size: 28rpx;
+  line-height: 84rpx;
+  /* white-space: nowrap; */
+  position: absolute;
+  white-space: nowrap;
+  /* 防止向下换行*/
+  animation-timing-function: linear;
+  animation-fill-mode: none;
+  z-index: 11;
+  color: #ffffff;
+  font-size: 24rpx;
+  box-sizing: border-box;
+}
+
+.signAwardTip .signAwardNormal {
+  display: inline-block;
+  white-space: nowrap;
+  /* 防止向下换行*/
+  color: #ffb8a6;
+  font-size: 28rpx;
+  margin-left: 5rpx;
+}
+
+.signAwardTip .signAwardHighLight {
+  color: #ffffff;
 }
 
 .calendarMain {
-    background: #ffe3db;
-    box-sizing: border-box;
-    padding: 0 20rpx 16rpx 20rpx;
+  background: #ffe3db;
+  box-sizing: border-box;
+  padding: 0 20rpx 16rpx 20rpx;
 }
 
-.dateTit{
+.dateTit {
   padding-top: 6rpx;
   padding-bottom: 16rpx;
 }
 
-.dateWeek{
+.calendarDetail {
+  transition: all 0.5s;
+  overflow: hidden;
+}
+
+.dateWeek {
   width: 93rpx;
   text-align: center;
   font-weight: 700;
   font-size: 26rpx;
   color: #8a3613;
+}
+
+.everyDayArea {
+  width: 93rpx;
+  height: 80rpx;
+  /* box-sizing: border-box; */
+  /* line-height: 80rpx; */
+  text-align: center;
+  font-size: 26rpx;
+  color: #8a3613;
+}
+
+/*特殊奖励 已领取过的*/
+
+.everySpeDayRed {
+  width: 56rpx;
+  height: 46rpx;
+  padding: 17rpx 0;
+  display: inline-block;
+  background: url(https://img.sfddj.com/miniappImg/activity/signIn/prizeRecived.png) no-repeat center;
+  background-size: 100%;
+}
+
+/*特殊奖励 未领取的*/
+
+.everySpeDay {
+  padding: 20rpx 0;
+  width: 40rpx;
+  height: 40rpx;
+  display: inline-block;
+  background: url(https://img.sfddj.com/miniappImg/activity/signIn/prize.png) no-repeat center;
+  background-size: 100%;
+}
+
+/* 普通奖励 已领取 */
+
+.everyDaySigned {
+  display: inline-block;
+  margin: 20rpx 0;
+  width: 40rpx;
+  height: 40rpx;
+  line-height: 40rpx;
+  border-radius: 50%;
+  background: rgba(215, 184, 175, 0.5);
+}
+
+/* 普通奖励 未领取 */
+
+.everyDayIcon {
+  display: inline-block;
+  margin: 20rpx 0;
+  width: 40rpx;
+  height: 40rpx;
+  line-height: 40rpx;
+}
+
+/* 普通奖励 当天日期未领取 */
+
+.everyDayIconToday {
+  display: inline-block;
+  margin: 20rpx 0;
+  width: 40rpx;
+  height: 40rpx;
+  line-height: 40rpx;
+  border-radius: 50%;
+  background: rgba(255, 114, 60, 0.5);
 }
 
 .calendarBtn {
@@ -173,7 +329,7 @@
   background-size: 100%;
 }
 
-.arrowControl{
+.arrowControl {
   display: inline-block;
   line-height: 30rpx;
   background: url(https://img.sfddj.com/miniappImg/activity/signIn/calenderIcon.png) no-repeat;
@@ -182,14 +338,13 @@
   height: 14rpx;
 }
 
-.arrowControl.rotate{
+.arrowControl.rotate {
   animation: 0.2s arrowOpen linear forwards;
 }
 
-.arrowControl.rotateClose{
+.arrowControl.rotateClose {
   animation: 0.2s arrowClose linear forwards;
 }
-
 
 .signBtnArea {
   box-sizing: border-box;
@@ -197,7 +352,7 @@
 }
 
 .signInBtn {
-  width:400rpx;
+  width: 400rpx;
   height: 96rpx;
   background: url(https://img.sfddj.com/miniappImg/activity/signIn/signInBtn.png) no-repeat;
   background-size: 100%;
@@ -205,7 +360,7 @@
 }
 
 .signInedBtn {
-  width:400rpx;
+  width: 400rpx;
   height: 96rpx;
   background: url(https://img.sfddj.com/miniappImg/activity/signIn/signedBtn.png) no-repeat;
   background-size: 100%;
@@ -217,12 +372,12 @@
 }
 
 .award {
-    width: 100%;
-    height: 268rpx;
-    box-sizing: border-box;
-    overflow: hidden;
-    border-radius: 30rpx;
-    background: #fa4d62;
+  width: 100%;
+  height: 268rpx;
+  box-sizing: border-box;
+  overflow: hidden;
+  border-radius: 30rpx;
+  background: #fa4d62;
 }
 
 .awardDel {
@@ -237,12 +392,27 @@
   width: 100%;
 }
 
-.awardText {
-  padding-top: 24rpx;
-  color: rgba(255,255,255,0.8);
+.prizeRecived {
+  position: absolute;
+  width: 112rpx;
+  height: 112rpx;
+  top: 22rpx;
+  right: 27rpx;
+  z-index: 3;
+  background: url(https://img.sfddj.com/miniappImg/activity/signIn/received.png) no-repeat;
+  background-size: 100%;
 }
 
-.awardTextDay{
+.awardText {
+  padding-top: 24rpx;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.awardText text {
+  white-space: nowrap;
+}
+
+.awardTextDay {
   padding-bottom: 8rpx;
 }
 
@@ -264,114 +434,161 @@
   color: #ff6b22;
   font-size: 24rpx;
   font-weight: 700;
+  z-index: 10;
 }
 
-.goodsList {
-  box-sizing: border-box;
-  padding: 0 18rpx 30rpx 18rpx;
+/*****热卖推荐********/
+
+.hotSaleArea {
+  padding-bottom: 30rpx;
+  background: #ffffff;
 }
 
-.alsoCanTit {
+.hotSaleTit {
+  padding: 24rpx 40rpx;
   box-sizing: border-box;
-  padding: 32rpx 0;
   text-align: center;
 }
 
-.alsoCanTitText {
-  height: 42rpx;
-  width: 204rpx;
-  background: url(../../../image/alsoCanTit.png) no-repeat;
+.hotSaleDel {
+  display: inline-block;
+  width: 200rpx;
+  height: 50rpx;
+  color: #323232;
+  font-size: 38rpx;
+  line-height: 50rpx;
+  font-weight: 700;
+  background: url(https://img.sfddj.com/miniappImg/activity/signIn/goodsTit.png) no-repeat bottom;
   background-size: 100%;
 }
 
-.hotGoodsItem {
+.guessLike {
+  display: flex;
+  padding: 0 20rpx;
+  box-sizing: border-box;
+}
+
+.hotSaleDel {
+  display: inline-block;
+}
+
+.guessLikeView {
   width: 50%;
-  height: 496rpx;
   box-sizing: border-box;
-  padding: 6rpx;
-  float: left;
+  position: relative;
+  padding: 0;
+  border: none;
+  overflow: hidden;
 }
 
-.alsoCanArea {
-  /* float: left; */
-  /* padding-bottom: 30rpx; */
-}
-
-.hotGoodsBox {
-    position: relative;
-    box-sizing: border-box;
-    padding: 15rpx 20rpx 30rpx 20rpx;
-    border-radius: 10rpx;
-    overflow: hidden;
-    box-shadow: 1rpx 2rpx 30rpx hsla(0,0%,41.2%,.2), 1rpx 2rpx 30rpx hsla(0,0%,41.2%,.1);
-    
-    /* box-shadow: 0.02667rem 0.02667rem 0.08rem hsla(0,0%,41.2%,.2), -0.02667rem 0.05333rem 0.05333rem hsla(0,0%,41.2%,.1); */
-}
-
-.hotGoodsImag {
-   box-sizing: border-box;
-   padding: 15rpx;
-   height: 282rpx;
-}
-
-.hotGoodNameMessage {
+.goodsArea {
+  position: relative;
+  display: block;
+  background-color: #FFFFFF;
+  box-shadow: 1px 1px 2px rgba(105, 105, 105, .1), -1px 1px 2px rgba(105, 105, 105, .1);
+  border-radius: 10px;
   box-sizing: border-box;
-  padding-top: 20rpx;
+  width: 100%;
+  height: auto;
+  overflow: hidden;
 }
 
-.hotGoodNamePrice {
+.goodsImg {
+  text-align: center;
+  position: relative;
+  height: 312rpx;
+  width: auto;
+  margin: 0;
+  overflow: hidden;
   box-sizing: border-box;
-  padding-top: 40rpx;
+  line-height: 312rpx;
 }
 
+.goodsImg image {
+  display: inline-block;
+  width: 260rpx;
+  height: 260rpx;
+  border-radius: 2px;
+  vertical-align: middle;
+}
+
+/*提示弹窗*/
+
+.exchangeCoupon_fail {
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.5);
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 110;
+}
+
+.exchangeCoupon_failMes {
+  background-color: white;
+  padding: 30rpx 40rpx;
+  border-radius: 10rpx;
+}
 
 /* 箭头换方向 */
+
 @keyframes arrowOpen {
-  0%{
+  0% {
     transform: rotate(0);
   }
-  100%{
+  100% {
     transform: rotate(180deg);
   }
 }
+
 /* 箭头换方向 */
+
 @keyframes arrowClose {
-  0%{
+  0% {
     transform: rotate(180deg);
   }
-  100%{
+  100% {
     transform: rotate(0);
- }
-}
-
-
-@keyframes shrink
-  {
-      0%  {
-          transform:scale3d(0.8, 0.8, 0.8);
-          -webkit-transform:scale3d(0.8, 0.8, 0.8); /* Safari and Chrome */
-      }
-      25% {
-          transform:scale3d(1,1,1);
-          -webkit-transform:scale3d(1,1,1); /* Safari and Chrome */
-      }
-      50% {
-          transform:scale3d(0.8, 0.8, 0.8);
-          -webkit-transform:scale3d(0.8, 0.8, 0.8); /* Safari and Chrome */
-      }
-      75%  {
-          transform:scale3d(1,1,1);
-          -webkit-transform:scale3d(1,1,1); /* Safari and Chrome */
-      }
-      100% {
-          transform:scale3d(1,1,1);
-          -webkit-transform:scale3d(1,1,1); /* Safari and Chrome */
-      }
   }
-
-@keyframes first{
-  from{left: 100%; }
-  to{left: -100%;}
 }
 
+@keyframes shrink {
+  0% {
+    transform: scale3d(0.8, 0.8, 0.8);
+    -webkit-transform: scale3d(0.8, 0.8, 0.8);
+    /* Safari and Chrome */
+  }
+  25% {
+    transform: scale3d(1, 1, 1);
+    -webkit-transform: scale3d(1, 1, 1);
+    /* Safari and Chrome */
+  }
+  50% {
+    transform: scale3d(0.8, 0.8, 0.8);
+    -webkit-transform: scale3d(0.8, 0.8, 0.8);
+    /* Safari and Chrome */
+  }
+  75% {
+    transform: scale3d(1, 1, 1);
+    -webkit-transform: scale3d(1, 1, 1);
+    /* Safari and Chrome */
+  }
+  100% {
+    transform: scale3d(1, 1, 1);
+    -webkit-transform: scale3d(1, 1, 1);
+    /* Safari and Chrome */
+  }
+}
 
+@keyframes first {
+  from {
+    left: 100%;
+  }
+  to {
+    left: -120%;
+  }
+}
