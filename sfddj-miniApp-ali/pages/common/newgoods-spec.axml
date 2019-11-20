@@ -62,7 +62,7 @@
                       <text class="iavValueText">{{item.valueName}}</text>
                     </view>
                   </view>
-                  <view class="goods-spec-view-normal"  a:else style="{{ item.taped ? 'color: #ff2e2e;background: #ffdcdc;' : 'color:#191616; background: #f2f2f2;'}}" data-fatherindex="{{fatherIndex}}"  data-index="{{item.valueName}}" a:key="iakValue" catchTap="specItemTap">
+                  <view class="goods-spec-view-normal"  a:else style="{{ item.taped ? 'color: #ff2e2e;background: #ffdcdc;' : 'color:#191616; background: #f2f2f2;'}}" data-fatherindex="{{fatherIndex}}"  data-index="{{index}}" a:key="iakValue" catchTap="specItemTap">
                     <view class="flex_view_row align_cen justi_around">
                       <image class="width-40" mode="widthFix" a:if="{{item.imgPath}}" src="{{baseImageUrl}}{{item.imgPath}}"/>
                       <text class="iavValueText">{{item.valueName}}</text>

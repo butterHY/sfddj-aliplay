@@ -211,7 +211,7 @@
       <view class="font-26 color-a1a0a0">已选</view>
         <view a:if="{{specType == 'MULTI'}}" class="font-26 marLeft_30 single-line">{{multiformname}} , {{quantity}}件</view>
         <view a:elif="{{specType == 'OPTIONAL'}}" class="font-26 marLeft_30 single-line">
-          <text a:if="{{(optionalProduct.length == 0 && goodsSpecMap.length != 0)}}"><block a:for="{{goodsSpecMap}}">{{item.iakName}}</block></text>
+          <text a:if="{{(optionalProduct.length == 0 && goodsSpecMap.length != 0)}}"><block a:for="{{goodsSpecMap}}">{{item.specName}}</block></text>
           <text a:elif="{{optionalProduct.length > 0 }}"><block a:for="{{optionalProduct}}">{{item.productName}}</block></text>
           <text decode="true" space="true">&nbsp;</text> , {{quantity}}件
         </view>
