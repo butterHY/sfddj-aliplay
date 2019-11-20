@@ -51,6 +51,7 @@ Page({
     allWeeks: 0,                                                    // 共有多少周
     openCalendar: false,                                            // 打开日历高度
     isSignTap: true,                                                // 签到按钮防多次点击
+    arrowTap: true,                                                 // 箭头防双击
   },
   onLoad() {
     let that = this;
@@ -335,7 +336,19 @@ Page({
     let that = this;
     let isCheckCal = that.data.checkCal;
     let allWeeks = that.data.allWeeks * 1;        // 共有多少周
-
+    let arrowTap = that.data.arrowTap;            // 防双击
+    let arrow_timer = null;                       // 防双击定时器
+    console.log(arrowTap)
+    if(!arrowTap)return;
+    that.setData({
+      arrowTap: false
+    })
+    clearTimeout(arrow_timer);
+    arrow_timer = setTimeout(function(){
+      that.setData({
+        arrowTap: true
+      })
+    },1000)
     // 处理箭头翻转
     that.setData({
       checkCal: !isCheckCal,
@@ -351,7 +364,7 @@ Page({
         that.setData({
           openCalendar: false
         })
-      }, 400)
+      }, 350)
     } else {
       that.setData({
         calendarHeight: 80 * allWeeks,
@@ -466,13 +479,13 @@ Page({
 
   onHide() {
     let that = this;
-    clearInterval(that.data.barrage_timer);
-    clearInterval(that.data.roll_timer);
+    // clearInterval(that.data.barrage_timer);
+    // clearInterval(that.data.roll_timer);
   },
   onUnload() {
     let that = this;
-    clearInterval(that.data.barrage_timer);
-    clearInterval(that.data.roll_timer);
+    // clearInterval(that.data.barrage_timer);
+    // clearInterval(that.data.roll_timer);
   }
 
 });
