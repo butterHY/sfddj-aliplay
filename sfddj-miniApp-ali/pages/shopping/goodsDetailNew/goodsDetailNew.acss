@@ -1459,12 +1459,19 @@ page {
    background: linear-gradient(to right, #ffd01e, #ff8917);
 }
 
+.goods-spec-info-start {
+  padding-top: 38rpx;
+  padding-bottom: 0;
+}
+
+
 .goods-spec-bottom-num {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   height: 64rpx;
+  margin-bottom: 30rpx;
   margin-left: 30rpx;
   margin-right: 30rpx;
 }

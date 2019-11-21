@@ -46,7 +46,7 @@
                 </block> -->
               </view>
           </view>
-            <text style="width:22rpx;height:24rpx;margin-top:30rpx;margin-right:30rpx;" class="alipay_catch_img" catchTap="colseSpecDialog"><image class="all_100" src="{{baseLocImgUrl}}miniappImg/icon/icon_cancel.png"/></text>
+            <text style="width:22rpx;height:24rpx;margin-top:38rpx;margin-right:35rpx;" class="alipay_catch_img" catchTap="colseSpecDialog"><image class="all_100" src="{{baseLocImgUrl}}miniappImg/icon/icon_cancel.png"/></text>
         </view>
 
         <!-- 规格 -->
