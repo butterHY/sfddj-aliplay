@@ -68,9 +68,15 @@ Page({
 
 	onLoad: async function(options) {
 		// console.log(';;homeOptions', options)
+		var pageOptions = options
+		// 如果从推文或者其他方进来并且带广告参数时
+		var globalQuery = Object.assign({}, app.globalData.query)
 
+		if (Object.keys(globalQuery).length > 0) {
+			pageOptions = Object.assign(options, globalQuery)
+		}
 		// 友盟+统计--首页浏览
-		getApp().globalData.uma.trackEvent('homepage_show', options);
+		getApp().globalData.uma.trackEvent('homepage_show', pageOptions);
 
 		var that = this;
 
@@ -370,7 +376,7 @@ Page({
 				hideLifeStyle: false
 			})
 		}
-	},300),
+	}, 300),
 
 
 

@@ -65,6 +65,16 @@ Page({
 			pageOptions: query
 		});
 
+		// 如果从推文或者其他方进来并且带广告参数时
+		var globalQuery = Object.assign({}, app.globalData.query)
+		if (globalQuery.goodsSn == query.goodsSn) {
+			this.setData({
+				pageOptions: Object.assign(this.data.pageOptions, globalQuery)
+			})
+			// 重置
+			getApp().globalData.query = {}
+		}
+
 		// 用于测试---清掉token缓存
 		// my.clearStorage();
 

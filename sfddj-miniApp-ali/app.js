@@ -13,6 +13,9 @@ App({
 	// },
 	onLaunch: function(options) {
 		uma.init(UrlConstants.umaAppKey, my);   // 务必填入已注册的appKey，不然将无法统计
+		if (options.query) {
+			this.globalData.query = options.query
+		}
 		var that = this;
 		my.getSystemInfo({
 			success: (res) => {
@@ -23,6 +26,9 @@ App({
 
 	onShow: function(options) {
 		uma.resume();                      // 请务必引入
+		if (options.query) {
+			this.globalData.query = options.query
+		}
 		var that = this;
 		that.globalData.appOptions = options.referrerInfo ? options.referrerInfo.extraData : {};
 		that.globalData.path = options.path;
@@ -58,6 +64,7 @@ App({
 		},
 		SFmember: false, //判断是否是速运+那边跳过来的
 		appOptions: {}, //保存速运+跳过来带的参数
+		query: {},
 		NowAddrId: null,   //用于保存临时选中的地址
 
 
