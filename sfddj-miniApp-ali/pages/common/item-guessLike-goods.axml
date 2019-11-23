@@ -1,6 +1,7 @@
 <import-sjs name="filters" from="../wxsFile/public.sjs"/>
 <template name="itemGuessLike">
-  <navigator url="/pages/shopping/goodsDetail/goodsDetail?goodsSn={{goodsSn}}" class=" {{!isLoaded ? 'js_goodsList_' + index : ''}}" hover-class="none" 
+  
+  <navigator url="{{isTuangou ? '/pages/home/grouping/grouping?goodsSn=' + goodsSn : '/pages/shopping/goodsDetail/goodsDetail?goodsSn=' + goodsSn}}" class=" {{!isLoaded ? 'js_goodsList_' + index : ''}}" hover-class="none" 
     style="{{left ? 'padding:10rpx 10rpx 10rpx 0;':'padding:10rpx 0 10rpx 10rpx;'}}width:100%;box-sizing:border-box;">
     <view class="posi_re" style="width:100%;box-sizing:border-box;position: relative;display: block;background-color: #FFFFFF;box-shadow: 1px 1px 2px rgba(105,105,105,.1), -1px 1px 2px rgba(105,105,105,.1);border-radius: 10px;height:auto;overflow:hidden;">
       <view class="" style="width:100%;height:312rpx;line-height:312rpx;text-align:center;position:relative;padding-top:26rpx;box-sizing:border-box;">
@@ -21,7 +22,7 @@
           <text style="margin-top:10rpx" class="font-24 color-bbbbbb single-line-text">{{productName}}</text>
         </view>
         <view style='width:100%;margin-top:30rpx;display:flex;justify-content:space-between;align-items:center'>
-          <text class="font-30 color-ff5353" style='font-weight:bold;'>¥{{salePrice}}</text>
+          <text class="font-30 color-ff5353" style='font-weight:bold;'>¥{{isTuangou ? tuangouPrices : salePrice}}</text>
           <text style="height:45rpx;width:45rpx;" data-pid="{{productId}}" class="alipay_catch_img" a:if="{{!hiddenCart}}" catchTap="{{!cannotAdd ? 'addCart' : ''}}"><image src="{{baseLocImgUrl}}miniappImg/icon/icon_redCart.png" class="all_100"/></text>
         </view>
       </view>

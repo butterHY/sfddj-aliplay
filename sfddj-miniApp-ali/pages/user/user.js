@@ -428,7 +428,7 @@ Page({
 		// let chInfo = constants.UrlConstants.chInfo;
 
 		// // 友盟+统计--签到页浏览
-		// this.umaTrackEvent('signIn')
+		this.umaTrackEvent('signIn')
 
 		// my.call('startApp', { appId: '20000067', param: { url: signInUrl, chInfo: chInfo } })
 

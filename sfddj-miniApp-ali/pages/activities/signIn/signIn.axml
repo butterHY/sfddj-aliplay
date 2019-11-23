@@ -80,7 +80,7 @@
                 <text class="everySpeDayRed" dataId="{{item.day}}" a:if="{{item.status}}"></text>
                 <text class="everySpeDay" dataId="{{item.day}}" a:else></text>
               </block>
-              <!--非特殊奖励-->
+              <!--非特殊奖励 -->
               <block a:else>
                 <text a:if="{{item.status}}" class="everyDaySigned" dataId="{{item.day}}">{{item.day}}</text>
                 <text a:elif="{{item.day == currentDay}}" class="everyDayIconToday" dataId="{{item.day}}">{{item.day}}</text>
