@@ -46,7 +46,7 @@
                 </block> -->
               </view>
           </view>
-            <text style="width:22rpx;height:24rpx;margin-top:30rpx;margin-right:30rpx;" class="alipay_catch_img" catchTap="colseSpecDialog"><image class="all_100" src="{{baseLocImgUrl}}miniappImg/icon/icon_cancel.png"/></text>
+            <text style="width:22rpx;height:24rpx;margin-top:38rpx;margin-right:35rpx;" class="alipay_catch_img" catchTap="colseSpecDialog"><image class="all_100" src="{{baseLocImgUrl}}miniappImg/icon/icon_cancel.png"/></text>
         </view>
 
         <!-- 规格 -->
@@ -62,7 +62,7 @@
                       <text class="iavValueText">{{item.valueName}}</text>
                     </view>
                   </view>
-                  <view class="goods-spec-view-normal"  a:else style="{{ item.taped ? 'color: #ff2e2e;background: #ffdcdc;' : 'color:#191616; background: #f2f2f2;'}}" data-fatherindex="{{fatherIndex}}"  data-index="{{item.valueName}}" a:key="iakValue" catchTap="specItemTap">
+                  <view class="goods-spec-view-normal"  a:else style="{{ item.taped ? 'color: #ff2e2e;background: #ffdcdc;' : 'color:#191616; background: #f2f2f2;'}}" data-fatherindex="{{fatherIndex}}"  data-index="{{index}}" a:key="iakValue" catchTap="specItemTap">
                     <view class="flex_view_row align_cen justi_around">
                       <image class="width-40" mode="widthFix" a:if="{{item.imgPath}}" src="{{baseImageUrl}}{{item.imgPath}}"/>
                       <text class="iavValueText">{{item.valueName}}</text>
