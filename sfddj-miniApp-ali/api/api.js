@@ -43,10 +43,10 @@ export default {
 		SHOW_CART: '/m/g/cartItem/1.0/showCart',         //新版购物车列表接口
 	},
   GOODSDETAIL: {
-    GET_GOODS_DETAIL: '/m/g/goodsShow/1.0/view',                            // 新的商品详情商品数据
-    GOODS_DETAIL_COUPON: '/m/o/coupon/1.0/goodsDetailCoupon',               // 新的商品详情优惠券数据
-    GOODS_DETAIL_DRAWCOUPON: '/m/o/coupon/1.0/drawCoupon',                  // 新的商品详情领取优惠券
-    GOODS_DETAIL_CONTACTSTORE: '/m/c/m/customer/service/1.0/xnCustomer',     // 新的商品详情领取优惠券
+    GET_GOODS_DETAIL: '/m/g/goodsShow/1.0/view',                              // 新的商品详情商品数据
+    GOODS_DETAIL_COUPON: '/m/o/coupon/1.0/goodsDetailCoupon',                 // 新的商品详情优惠券数据
+    GOODS_DETAIL_DRAWCOUPON: '/m/o/coupon/1.0/drawCoupon',                    // 新的商品详情领取优惠券
+    GOODS_DETAIL_CONTACTSTORE: '/m/c/m/customer/service/1.0/xnCustomer',      // 新的商品详情获取 “联系商家”的参数
 
   },
 

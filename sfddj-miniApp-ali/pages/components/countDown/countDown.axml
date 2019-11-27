@@ -1,5 +1,5 @@
   <!-- 秒杀价格 -->
-  <view class="backgroiund_orange secondkill-price font-weight flex_view_row color_fff">
+  <view class="backgroiund_orange secondkill-price font-weight flex_view_row color_fff" a:if="{{secKillStatus}}">
     <view class="flex-1 flex_view_row align_cen">
       <view>
         <block a:if="{{viewStatus != 'SALEING'}}">

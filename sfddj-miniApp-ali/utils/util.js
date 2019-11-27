@@ -13,6 +13,16 @@ const formatTime = date => {
 	return [year, month, day].map(formatNumber).join('-');
 };
 
+const pointFormatTime = millSec => {
+  var date = new Date(millSec);
+  var year = date.getFullYear();
+  var month = date.getMonth() + 1;
+  var date = date.getDate();
+  var monthStr = month < 10 ? '0' + month : month;
+  var dateStr = date < 10 ? '0' + date : date;
+  return year + '.' + monthStr + '.' + dateStr;
+}
+
 const formatNumber = n => {
 	n = n.toString();
 	return n[1] ? n : '0' + n;
@@ -347,6 +357,7 @@ function guid() {
 
 module.exports = {
 	formatTime: formatTime,
+  pointFormatTime,
 	px2Rpx: px2Rpx,
 	rpx2Px: rpx2Px,
 	login: login,

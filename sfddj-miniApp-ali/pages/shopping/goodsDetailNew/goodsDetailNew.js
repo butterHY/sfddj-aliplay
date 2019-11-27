@@ -80,17 +80,19 @@ Page({
     multiformname: null,                        // 多选规格显示的名称；
     selectedSpecsBar: false,                    // 已选规格展示导航栏
 
-    // 底部导航栏数据
-    supplierId: null,
-
     // 返回顶部或首页的导航的节流开关
     setComeBack: true,
+
+    pageOptions: {},                            //商详页打开时所带的参数
+    user_memId: '默认是会员',                   //是否存在memberId，判断是否绑定手机号
+    priceInfo: {}                              // 商详页不同商品类型的价格和积分和返现数据；
 	},
 
 	onLoad: async function(query) {
     var that = this;
 		this.setData({
 			isonLoad: true,
+      pageOptions: query,
 		});
 		// 达观数据上报
 		// this.da_upload_goods(query.goodsSn)
@@ -112,7 +114,6 @@ Page({
     let defaultAddress = my.getStorageSync({
       key: 'defaultAddress', // 缓存数据的默认地址
     });
-
 		// 新的写法，如果显示，只要不是页面初始化，那就重新执行倒计时，因为我得判断活动是否过期；
 		// 最新的写法，如果是从确认订单页返回再返回，应该重新请求数据以更新库存，还有如果现在还不是秒杀商品，但返回后刚好这个商品正处于秒杀活动时间内，这就得重新请求数据获取时间进行倒计时
 		if (!that.data.isonLoad) {
@@ -124,8 +125,7 @@ Page({
 			}
 		}
 	},
-
-
+  
 	// 页面隐藏
 	onHide() {
 		clearTimeout(getApp().globalData.goodsDetail_spikeTime);
@@ -143,14 +143,13 @@ Page({
 	 * 获取商品评价
 	 * @param goodsId 商品id
 	 */
-
 	getComment(resData) {
 		var that = this;     
       var comment = [];
       if(resData.commentList && resData.commentList.length > 0) {                      // commentList 不为 null 或者 undefied;
         resData.commentList.forEach(function(value, index) {
           if(value && (index == 0 || index == 1)) {                                   // commentList 的值不为 null；
-            value.createDate = utils.formatTime(new Date(value.createDate));
+            value.createDate = utils.pointFormatTime(new Date(value.createDate));
             comment.push(value);
           }
         })
@@ -194,30 +193,23 @@ Page({
 			isLoadMore: true
 		});
     http.post(api.GOODSDETAIL.GOODS_DETAIL_COUPON, data, function(res) {
+      console.log('请求回来了')
       let resData = res.data.data;
       if(resData && resData.length > 0) {
-        resData.forEach(function(value) {
-          value.beginDate = utils.formatTime(new Date(value.beginDate));
-          value.endDate = utils.formatTime(new Date(value.endDate));
+        resData.forEach(value => {
+          value.beginDateStr = utils.pointFormatTime(new Date(value.beginDate));
+          value.endDateStr = utils.pointFormatTime(new Date(value.endDate));
         })
       }                                                         // NO_RECEIVE   还没领  NORMAR 已经领了
-			var hasMore = false;
-			var goodsList = that.data.couponDataList;
 
-			if (resData && resData.length == that.data.limitCoupon) { // 如果返回的数据长度等于请求条数说明还有更多数据
-				hasMore = true;
-			}
+      resData && resData.length == that.data.limitCoupon ? that.data.hasMore = true : that.data.hasMore = false;  // 如果返回的数据长度等于请求条数说明还有更多数据
 
-			if (type == '0') {
-				goodsList = resData;                    // 初始化
-			} else {
-				goodsList = goodsList.concat(resData);   // 每次加载拼接进去的数据
-			}
+      type == '0' ? that.data.couponDataList = resData : that.data.couponDataList = that.data.couponDataList.concat(resData);  // 0: 初始化; 1: 每次加载拼接进去的数据;
 
 			that.setData({
-				couponDataList: goodsList,
-				hasMore: hasMore,           // 是否还有更多
-				isLoadMore: false,          // 正在加载中的加载进度条
+				couponDataList: that.data.couponDataList,
+				hasMore: that.data.hasMore,           // 是否还有更多
+				isLoadMore: false,                    // 正在加载中的加载进度条
 			});
     }, function(err){
       that.setData({
@@ -377,6 +369,31 @@ Page({
         	var resData = res.data.data;
           var resRet = res.data.ret
 					if (resRet.code == '0' && resRet.message ==  'SUCCESS') {
+            that.data.goods = resData.goodsShowVO;
+
+            // 判断是否绑定了手机
+            try {
+              let user_memId = my.getStorageSync({
+                key: "user_memId",
+              }).data;
+
+              that.setData({
+                user_memId: user_memId == 'null' || user_memId == null || user_memId == 'undefined' || user_memId == undefined ? '默认是会员' : user_memId
+              })
+            } catch (e) {}
+
+            let supplierInfo = resData.goodsShowVO.supplierInfo ? resData.goodsShowVO.supplierInfo : {};
+
+            // 友盟+统计
+            //进来就统计的
+            getApp().globalData.uma.trackEvent('goodsDetailPageView', { channel_source: 'mini_alipay', supplierName: supplierInfo.nickName, supplierId: supplierInfo.supplierId, goodsName: that.data.goods.goodsName, goodsSn: that.data.goods.goodsSn, goodsCategoryId: that.data.goods.goodsCategoryId });
+            // 如果是从别的广告进来的则统计
+            if (that.data.pageOptions.utm_source && that.data.pageOptions.utm_source != 'undefined' && that.data.pageOptions.utm_source != 'null') {
+              getApp().globalData.uma.trackEvent('goodsDetailPage_source', { utm_source: that.data.pageOptions.utm_source, utm_medium: that.data.pageOptions.utm_medium, utm_campaign: that.data.pageOptions.utm_campaign, utm_content: that.data.pageOptions.utm_content, utm_term: that.data.pageOptions.utm_term })
+            }
+
+
+
             //当请求返回成功才请求评论和猜你喜欢的数据
             that.data.goodsId = resData.goodsShowVO.goodsId;
             // 处理商品评论；
@@ -388,7 +405,7 @@ Page({
             // 请求联系商家的 webCallParam
             that.getWebCallParam(resData.goodsShowVO.supplierInfo.supplierId);
           
-            that.data.goods = resData.goodsShowVO;
+
             that.data.goods.supplierInfo.headImage = that.data.goods.supplierInfo.headImage ? that.data.baseImageLocUrl + that.data.goods.supplierInfo.headImage : that.data.baseImageLocUrl + 'miniappImg/icon/icon_default_head.jpeg'; // 商家头像
             var article = that.data.goods.introduction;                                           // 商详的富文本字符串
             that.data.minCount = resData.goodsShowVO.minCount ? resData.goodsShowVO.minCount : 1; //最少起售数
@@ -446,6 +463,7 @@ Page({
 
             that.setGoodsSpecMap();
 
+            that.data.goods.secKillStatus == null ? that.data.goods.secKillStatus = false : '';
             var activityList = that.data.goods.activity ? that.data.goods.activity : {};  // 秒杀数据
             activityList.totalStock = that.data.goods.secKillTotalCount;
             activityList.totalSaleVolume = that.data.goods.secKillTotalSale;
@@ -456,6 +474,7 @@ Page({
 
  
             WxParse.wxParse('article', 'html', article, that, 0);
+            that.goodsPrice();
 
             that.setData({
               loadComplete: true,
@@ -470,15 +489,17 @@ Page({
               goods: that.data.goods,
               goodsSecondKill: activityList,
               SFmember: that.data.SFmember,
-              type: type ? type : '',                                                                   // 积分商品 type = 3,用来判断选规格的价格那里的显示
-              theMemberPoint: that.data.theMemberPoint ? that.data.theMemberPoint : 0,                                                           // 这是获取会员积分
-              theCostMemberScore: that.data.theCostMemberScore ? that.data.theCostMemberScore : 0,      // 顺丰会员会员消耗积分
+              // SFmember: true,
+              type: type ? type : '',                                                                // 积分商品 type = 3,用来判断选规格的价格那里的显示
+              // theMemberPoint: that.data.theMemberPoint ? that.data.theMemberPoint : 0,                  // 这是获取会员积分
+              // theCostMemberScore: that.data.theCostMemberScore ? that.data.theCostMemberScore : 0,      // 顺丰会员会员消耗积分
 					    theAwardMemberScore: that.data.theAwardMemberScore ? that.data.theAwardMemberScore : 0,   // 顺丰会员会员奖励积分
               addressList: resData.addressList,                                                         // 用户的收货地址
               otherGoods: resData.supplierGoodsList,                                                    // 商家的其他商品，
               goodsId: that.data.goodsId,
             })
 
+            
             reslove({
               type: true
             })
@@ -684,7 +705,7 @@ Page({
           // ----- 位修改规格的价格，改为直接使用后台返回的单价格和单位积分 , 不再 * 起购数量     start;  字段都与新接口核对正确, 只全部值都暂时展示单位
           value.tuanPrice = value.tuangouPrices;                              
           value.goodsPrice = value.salePrice;                                 
-          value.secondKillPrice =  value.activityPrice;                       
+          value.secondKillPrice =  value.activityPrice;
           value.thisMemberPoint =  value.memberPoint;                        
           value.thisReturnMoneyPrice = value.returnMoney;                     
           value.memberPriceAll = value.memberPrice;                           
@@ -865,7 +886,7 @@ Page({
 	 * 点击已选规格栏
 	 */
   selectedSpecs: function() {
-    if(this.data.goods.viewStatus != 'SALEING') {
+    if( this.data.goods.viewStatus != 'SALEING' ) {
       return;
     }
     this.setData({
@@ -1220,6 +1241,9 @@ Page({
 	 */
 	toBuyNow: function() {
 		var that = this;
+    // 友盟统计 购买便统计
+    that.umaTrackEvent('buyNow');
+
 		my.navigateTo({
 			url: '/pages/shopping/confirmOrder/confirmOrder?&productId=' + that.data.product.productId + '&quantity=' + that.data.quantity + '&SFmember=' + that.data.SFmember
 		});
@@ -1256,6 +1280,9 @@ Page({
 			if (res.data.errorCode == '0001') {
 				// 达观数据上报
 				// utils.uploadClickData_da('cart', [{ productId: that.data.product.id, actionNum: '1' }])
+        //友盟+  加入购物车点击
+				that.umaTrackEvent('addCart')
+        
 				my.showToast({
 					content: '添加购物车成功'
 				});
@@ -1454,14 +1481,22 @@ Page({
     http.post(api.GOODSDETAIL.GOODS_DETAIL_DRAWCOUPON, {ruleSign}, function(res) {
       let resData = res.data.data;
       if(resData && resData.length > 0) {
-         resData[0].beginDate = utils.formatTime(new Date(resData[0].beginDate));
-         resData[0].endDate = utils.formatTime(new Date(resData[0].endDate));
+         resData[0].beginDateStr = utils.pointFormatTime(new Date(resData[0].beginDate));
+         resData[0].endDateStr = utils.pointFormatTime(new Date(resData[0].endDate));
+
+        //           resData[0].beginDateStr = utils.pointFormatTime(new Date(resData[0].beginDate));
+        //  resData[0].endDateStr = utils.pointFormatTime(new Date(resData[0].endDate));
+
          that.data.couponDataList[index] = resData[0];
          that.setData({
            couponDataList: that.data.couponDataList
          })
       }
-    }, function(err){
+    }, function(err) {
+      my.showToast({
+        content: '领取失败',
+        duration: 2000,
+      })
     })
   },
 
@@ -1472,6 +1507,7 @@ Page({
 			that.setData({
 				startCoupon: that.data.couponDataList.length
 			});
+      that.data.hasMore = false;
 			that.getCoupon('1');
 		}
   },
@@ -1553,8 +1589,11 @@ Page({
           })
         },
         fail(err) {
-          my.hideLoading();
-          my.alert({ title: '定位失败' });
+          // my.hideLoading();
+          my.showToast({
+            content: '定位失败',
+            duration: 2000,
+          })
         }}
     )
   },
@@ -1714,9 +1753,147 @@ Page({
       multiformname: multiformnames.toString()
     })
     console.log(multiformnames.toString());
+  },
+
+  	// 友盟+数据上报  ---立即购买、加入购物车、商家、评论
+	umaTrackEvent(type) {
+		let umaData = {}
+		let { pageOptions, goods } = this.data
+		umaData.channel_source = pageOptions.utm_source ? pageOptions.utm_source : 'mini_alipay' //来源
+		umaData.supplierName = goods.nickName  //商家名称
+		umaData.supplierId = goods.supplierId   //商家id
+		umaData.goodsName = goods.name        //商品名称
+		umaData.goodsSn = goods.goodSn       //商品id/商品编码
+		umaData.goodsCategoryId = goods.goodsCategoryId  //商品分类id
+
+		if (type == 'buyNow') {
+			// 友盟+统计  ----商详立即购买点击
+			getApp().globalData.uma.trackEvent('goodsDetail_buyNow', umaData);
+		}
+		else if (type == 'addCart') {
+			// 友盟+统计  ----商详加入购物车点击
+			getApp().globalData.uma.trackEvent('goodsDetail_addCart', umaData);
+
+		}
+		else if (type == 'supplier') {
+
+			// 友盟+统计  ----商详商家点击
+			getApp().globalData.uma.trackEvent('goodsDetail_custService', umaData);
+		}
+		else if (type == 'comment') {
+			// 友盟+统计  ----商详评论点击
+			getApp().globalData.uma.trackEvent('goodsDetail_comment', umaData);
+
+		}
+	},
+
+  	// 跳转去商家店铺页
+	goToTargetPage(e) {
+		let { url, type } = e.currentTarget.dataset
+		if (type == 'supplier') {
+			// 友盟+  商家点击
+			this.umaTrackEvent('supplier');
+		} else if (type == 'comment') {
+			// 友盟+  评论点击
+			this.umaTrackEvent('comment');
+		}
+		my.navigateTo({
+			url: url
+		})
+	},
+
+  	// 获取手机号
+	getPhoneNumber: function(e) {
+		var that = this;
+    console.log('获取手机号')
+		my.getPhoneNumber({
+			success: (res) => {
+				let response = res.response
+				sendRequest.send(constants.InterfaceUrl.USER_BINGMOBILEV4, {
+					response: response,
+				}, function(res) {
+					if (res.data.result) {
+						try {
+							my.setStorageSync({ key: constants.StorageConstants.tokenKey, data: res.data.result.loginToken });
+							my.setStorageSync({ key: 'user_memId', data: res.data.result.memberId });
+						} catch (e) {
+							my.setStorage({ key: 'user_memId', data: res.data.result.memberId });
+						}
+					}
+					else {}
+
+					my.showToast({
+						content: '绑定成功'
+					})
+					that.setData({
+						user_memId: res.data.result ? res.data.result.memberId : '默认会员'
+					})
+				}, function(res, resData) {
+          // '1013',为该用户已绑定手机号；
+					var resData = resData ? resData : {}
+					if (resData.errorCode == '1013') {
+						that.setData({
+							user_memId: '默认会员'
+						})
+						my.setStorage({ key: 'user_memId', data: '默认会员' });
+					} else {
+						my.showToast({
+							content: res,
+              duration: 2000,
+						})
+					}
+				});
+			},
+			fail: (res) => {
+				my.navigateTo({
+					url: '/pages/user/bindPhone/bindPhone'
+				});
+			},
+		});
+	},
+
+  // 价格和积分的设置
+  goodsPrice() {
+      let that = this;
+      that.data.priceInfo.price = that.data.goods.defaultPrice;   // 商品默认价格
+      that.data.priceInfo.oldPrice = '';                          // 商品默认旧价格
+
+      that.data.priceInfo.integralVal = '';                       // 默认积分
+      // 如果是积分商品但不是会员商品，则使用默认积分
+      if( that.data.goods.jifenStatus && !that.data.SFmember &&  that.data.theMemberPoint ) {
+        that.data.priceInfo.integralVal = that.data.theMemberPoint;
+      }
+      // 如果是会员商品但不是积分商品的话，则使用兑换会员积分
+      else if( !that.data.goods.jifenStatus && that.data.SFmember && that.data.theCostMemberScore ) {
+        that.data.priceInfo.integralVal = that.data.theCostMemberScore;
+      }
+
+      // 会员商品使用会员价格
+      if ( that.data.SFmember ) {
+          that.data.priceInfo.price = that.data.goods.defaultMemberPrice;
+          that.data.priceInfo.oldPrice = that.data.goods.defaultPrice;
+      }
+
+      // 全球购状态
+      that.data.goods.globalStatus ?  that.data.priceInfo.isGlobal = true : that.data.priceInfo.isGlobal = false;
+
+      /*  包税 isBaoShui 状态
+          0:非进口
+          1:CC 1.0海外直邮（包税）
+          2:国内保税仓（包税）
+          3.BC海外直邮（必税）
+          4.CC2.0海外直邮-运费和商品价格分离（包税）
+      */
+      that.data.priceInfo.isBaoShui = false;
+      if(  that.data.goods.goodsViceVO.crossBorderPattern == 1 || that.data.goods.goodsViceVO.crossBorderPattern == 2 || that.data.goods.goodsViceVO.rossBorderPattern == 4) {
+          that.data.priceInfo.isBaoShui = true;
+      }
+
+      // 员工专享
+      if(that.data.goods.staffStatus) {}
+
+      that.setData({
+        priceInfo: that.data.priceInfo
+      })
   }
-
-
-
-
 });

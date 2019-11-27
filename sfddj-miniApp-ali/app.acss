@@ -995,6 +995,10 @@ input {
   z-index: 9100;
 }
 
+.zIndex100 {
+ z-index: 100;  
+}
+
 /*按钮样式    */
 
 button {

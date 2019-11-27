@@ -6,6 +6,8 @@
 <import src="/pages/common/cashBackRule.axml"/>
 <import src="/pages/common/compensationRule.axml"/>
 <import-sjs name='filters' from="../../wxsFile/public.sjs"/>
+<import src="/pages/common/couponItem.axml"/>
+
 <!-- 加载中 -->
 <view a:if="{{!loadComplete}}">
 	<loading-now></loading-now>
@@ -70,9 +72,47 @@
 		<view class="color-a1a0a0 font-24">已售：{{goods.salesCount}}份
 		</view>
 	</view>
+  <!-- 优惠券导航栏                      -->
+  <view class="receiveCoupon flex_view_row justi_between font-24" onTap="showPopup" a:if="{{couponDataList && couponDataList.length > 0}}">
+    <view class="flex_view_row flex_1 justi_start">
+      <view class="couponTitle">
+        <image src="{{baseImageLocUrl}}miniappImg/public/goodsDetail/icon_coupon.png" class="width_100 height_100" mode="widthFix"></image>
+      </view>
+      <view class="couponName" a:for="{{couponDataList}}">
+        <block a:if="{{index == 0 || index == 1 || index == 2}}">满{{item.needPrice}}减{{item.costPrice}}</block>
+      </view>
+    </view>
+    <view>
+      <text class="color-a1a0a0">领券</text>
+      <text class="icon-href-right font-22 color-c7c7cc marLeft_20"></text>
+    </view>
+  </view>
+  <!-- 新增的领券按钮和领券弹窗 -->
+  <popup show="{{isShowPopup}}" mask="{{true}}" position="bottom" animation="{{true}}" onClose="onPopupClose" zIndex="100" disableScroll="{{false}}">
+    <view class="coupon-popup">
+      <view class="flex_view_col all_100">
+        <scroll-view class="flex_1" scroll-y="{{true}}" onScrollToLower="lowLoadMore">
+          <block a:for="{{couponDataList}}"  a:key="couponDataList">
+            <template is="couponItem" data="{{item,index,isExpired: false, pageFrom: 'goodsDetail', user_memId, baseImageLocUrl}}"></template>
+          </block>
+          <view class="moreBtnBox">
+            <view class="loadingBtn" a:if="{{!hasMore && !isLoadMore}}">
+              <text class="information">没有更多</text>
+            </view>
+            <view class="loadingBtn" a:if="{{isLoadMore}}">
+              <text class="icon-spinner3"></text>
+              <text class="information">加载中</text>
+            </view>
+          </view>
+        </scroll-view>
+        <view class="couponPopup-btn color-white" onTap="onPopupClose">完成</view>
+      </view>
+    </view>
+  </popup>
+
 	<!-- 如果是顺丰会员商品会显示奖励多少积分  -->
 	<view class="flex_view_row" style="padding: 0 30rpx 10rpx;" a:if="{{SFmember}}">
-		<text class="color-ff5353 font-24">奖励会员积分{{theAwardMemberScore}}
+		<text class="color-ff5353 font-24">奖励会员积分{{theAwardMemberScore}}100积分
 		</text>
 	</view>
 	<!--<view class="division-line"></view><view class="advantage_view"><image src="{{base64imageUrl}}miniappImg/bg/bg_advantage.jpg" class="advantage_img"></image></view> -->
@@ -405,6 +445,7 @@
 			<!--<view class='bottom-text-white-bg buyNowBtn font-30' bindtap='addCart'>加入购物车</view> -->
 		</view>
 	</block>
+  </view>
 	<!-- 规格选择框 -->
 	<template is="goodsSpec" data="{{show:showGoodsSpec,baseLocImgUrl:base64imageUrl,product:product,baseImageUrl:baseImageUrl,goodsSpecMap:goodsSpecMap,quantity:quantity,type,showInput:true,SFmember, isBing: (user_memId == 0 || user_memId == '0')}}"/>
 	<!-- 点击确定之后数量大于2的情况下弹出 -->

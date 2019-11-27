@@ -103,6 +103,7 @@ Page({
 			if ('不是会员' == res.data.result.message) {
 				isMember = false;
 			}
+      console.log(isMember)
 			try {
 				my.setStorageSync({ key: constants.StorageConstants.isMember, data: isMember });
 			} catch (e) { }
@@ -235,11 +236,16 @@ Page({
 	},
 
 	// 跳转去h5的优惠券页
-	goToH5Coupon() {
-		let url = constants.UrlConstants.baseUrlOnly + '/coupon/couponList'
-		let chInfo = constants.UrlConstants.chInfo
-		my.call('startApp', { appId: '20000067', param: { url: url, chInfo: chInfo } })
-	},
+	// goToH5Coupon() {
+	// 	let url = constants.UrlConstants.baseUrlOnly + '/coupon/couponList'
+	// 	let chInfo = constants.UrlConstants.chInfo
+	// 	my.call('startApp', { appId: '20000067', param: { url: url, chInfo: chInfo } })
+	// },
+  
+	// 跳转去原生的优惠券页
+  goToCoupon() {
+    my.navigateTo({ url: './myCoupon/myCoupon' })
+  },
 
 	// 获取手机号
 	getPhoneNumber: function(e) {
