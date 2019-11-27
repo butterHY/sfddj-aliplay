@@ -8,32 +8,41 @@
               <image src="{{baseImageUrl}}{{product.imgPath}}" class="showImag"></image>
               <!-- 从目前goodsDetail.js 的代码来看并没有 type == 1 和 type == 2 和 type == 5 的赋值 -->
               <!-- 只有积分商品 type == 3，物返现商品 type == 4 -->
-              <view class="goods-spec-text marTop_50">
+              <view class="goods-spec-text">
                 <view class="font-40 color-ff5353" a:if="{{type == 1}}">
-                  <text>￥{{product.tuanPrice}}</text><text class="font-24 color-666 marLeft_15" a:if="{{SFmember}}">+{{product.costMemberScoreAll ? product.costMemberScoreAll : 0}}积分</text> 
+                  <text>￥{{product.tuanPrice}}</text><text class="font-24 color-a1a0a0 marLeft_15" a:if="{{SFmember}}">+{{product.costMemberScoreAll ? product.costMemberScoreAll : 0}}积分</text> 
                 </view>
                 <view class="font-40 color-ff5353" a:elif="{{type == 2}}"><text>￥0.00</text> </view>
-                <view class="font-40 color-ff5353" a:elif="{{type == 3}}"><text>￥{{product.goodsPrice}}</text> <text class="font-24">+ {{product.thisMemberPoint}}积分</text></view>
+                 <!-- a:elif="{{type == 3}}" {{product.thisMemberPoint}}-->
+                <view class="font-40 color-ff5353" a:elif="{{type == 3}}"><text class="marRight_5">￥{{product.goodsPrice}}</text> <text class="font-24 color-a1a0a0"> + {{product.thisMemberPoint}}积分</text></view>
 
-                <!-- 购物返现商品 --> 
+                <!-- 购物返现商品  --> 
                 <view class="font-40 color-ff5353 flex_view_row align_cen" a:elif="{{type == 4}}">
                   <text>￥{{product.goodsPrice}}</text>
-                  <view a:if='{{product.thisReturnMoneyPrice && product.thisReturnMoneyPrice > 0}}' class="font-22 marLeft_10" style="color: #ff8f0a; border: 1px solid #ff8f0a; padding: 3rpx 18rpx; border-radius: 45rpx;">购买最高可返{{product.thisReturnMoneyPrice}}元</view> 
                 </view>
 
-                <!-- 其他 -->
+                <!-- 其他，不是积分商品也不是返现商品 -->
                 <view class="font-40 color-ff5353" a:else>
+                  <!-- 秒杀商品，秒杀价 -->
                   <text class="aba" a:if="{{product.secondKillPrice}}">￥{{product.secondKillPrice}}</text>
+                  <!-- 不是会员商品，普通价 -->
                   <text class="aba" a:elif="{{!SFmember || SFmember && type == 5}}">￥{{product.goodsPrice}}</text>
-                  <!-- 会员商品 -->
-                  <text class="cbc" a:if="{{SFmember && type != 5}}">￥ {{product.memberPriceAll}}</text>
-                  <text class="font-24 color-666 marLeft_15" a:if="{{SFmember && type != 5}}">+{{product.costMemberScoreAll ? product.costMemberScoreAll : 0}}积分</text>
+                  <!-- 会员商品，会员价 + 兑换会员积分 -->
+                  <block a:if="{{SFmember && type != 5}}">
+                    <text class="cbc">￥{{product.memberPriceAll}}</text>
+                    <text class="font-24 color-a1a0a0 marLeft_5">+ {{product.costMemberScoreAll ? product.costMemberScoreAll : 0}}积分</text>
+                  </block>
                 </view>
 
-                <!-- 会员商品 -->
+                <!-- 会员商品 + 奖励会员积分-->
                 <view class="font-24 color-ff5353" a:if="{{SFmember && type != 5}}">奖励会员积分{{product.awardMemberScoreAll ? product.awardMemberScoreAll : 0}}</view>
-            
-                <view class="font-24 color-black margin-top18">库存 {{product.store < 0 ? "0" : product.store}} 份</view>
+                <!-- 库存 -->
+                <view class="font-26 color-black margin-top18">库存 {{product.store < 0 ? "0" : product.store}} 份</view>
+                <!-- 返现商品且有返现金额 -->
+                <view class="margin-top18" a:if="{{type == 4 && product.thisReturnMoneyPrice && product.thisReturnMoneyPrice > 0}}">
+                  <text class="font-22" style="color: #ff8f0a; border: 1px solid #ff8f0a; padding: 6rpx 18rpx; border-radius: 10rpx;">购买最高可返{{product.thisReturnMoneyPrice}}元</text>
+                </view>
+
                 <!-- <block a:if="{{specType == 'OPTIONAL'}}">
                   <view class="font-24" style="margin-top:12rpx"  a:if="{{(optionalProduct.length == 0)}}">已选择:</view>
                   <view class="font-24" style="margin-top:12rpx"  a:else>已选择:<text a:for="{{product.productName}}">{{item}} </text></view>
@@ -106,28 +115,38 @@
           </view>
           <block a:if="{{specType == 'OPTIONAL'}}">
             <view class="whiteBack buttonView">
-              <view class="goods-sepc-bottom-button2">
-                <view class="flex_1  shopButton" a:if="{{goodsStore == 0}}">查看类似商品</view>
-                <view class="flex_1  shopButton" a:elif="{{optionalProduct.length == xgCount && selectedSpecsBar}}" data-buyNow="buyNow" catchTap="buyNow">立即购买</view>
-                <view class="flex_1  shopButton" a:elif="{{optionalProduct.length == xgCount && !selectedSpecsBar}}" catchTap="goodsSpecSubmitTap">确定</view>
-                <view class="flex_1  shopButton gray" a:else>还需要选 {{xgCount - optionalProduct.length}} 种规格</view>
+              <view class="goods-sepc-bottom-button2 posi_re background_red">
+                <view class="flex_1  shopButton" a:if="{{ goods.goodsStore == 0 || (goods.secKillStatus && goodsSecondKill.totalSaleVolume == goodsSecondKill.totalStock) }}">查看类似商品</view>
+                <view class="flex_1  shopButton" a:elif="{{ optionalProduct.length == xgCount && selectedSpecsBar }}" data-buyNow="buyNow" catchTap="buyNow">立即购买</view>
+                <view class="flex_1  shopButton" a:elif="{{ optionalProduct.length == xgCount && !selectedSpecsBar }}" catchTap="goodsSpecSubmitTap">确定</view>
+                <view class="flex_1  shopButton gray" a:else>还需要选 {{ xgCount - optionalProduct.length }} 种规格</view>
+                <button class="btnStyle gpnBtn zIndex100" a:if="{{ (goods.secKillStatus && goodsSecondKill.totalSaleVolume != goodsSecondKill.totalStock) && optionalProduct.length == xgCount && (user_memId == 0 || user_memId == '0')}}" open-type="getAuthorize" onGetAuthorize="getPhoneNumber" scope='phoneNumber' onError="onAuthError"></button>
+                <button class="btnStyle gpnBtn zIndex100" a:elif="{{ !goods.secKillStatus && goods.goodsStore != 0  && optionalProduct.length == xgCount && (user_memId == 0 || user_memId == '0')}}" open-type="getAuthorize" onGetAuthorize="getPhoneNumber" scope='phoneNumber' onError="onAuthError"></button>
               </view>
             </view>
           </block>
           <block a:else>
             <view class="whiteBack buttonView">
-              <view class="goods-sepc-bottom-button2">
-                <view class="flex_1  shopButton" a:if="{{goodsStore == 0}}">查看类似商品</view>
-                <block a:elif="{{selectedSpecsBar}}">  
-                  <view class="flex_1  shopButton shopCart_button" data-addCart="addCart" catchTap="addCart">加入购物车</view>
-                  <view class="flex_1  shopButton" data-buyNow="buyNow" catchTap="buyNow">立即购买</view>
+              <view class="goods-sepc-bottom-button2 posi_re">
+                 <!-- a:if="{{goods.goodsStore == 0}}" -->
+                <view class="flex_1  shopButton background_red" a:if="{{ goods.goodsStore == 0 || (goods.secKillStatus && goodsSecondKill.totalSaleVolume == goodsSecondKill.totalStock) }}">查看类似商品</view>
+                <block a:elif="{{selectedSpecsBar}}">
+                  <!-- <view class="flex_1  shopButton shopCart_button" data-addCart="addCart" catchTap="addCart">加入购物车</view> -->
+                  <block a:if="{{ SFmember || ( !SFmember && (goods.jifenStatus || goods.deductStatus || goods.memberDayGoods || goods.secKillStatus) ) }}">
+                    <view  class="flex_1  shopButton background_red" data-buyNow="buyNow" catchTap="buyNow">立即购买</view>
+                  </block>
+                  <block a:else>
+                    <view class="shopButton separateShopButton background-f2 color-ff5353">加入购物车</view>
+                    <view class="shopButton separateShopButton background_red">立即购买</view>
+                  </block>
                 </block>
-                <view class="flex_1  shopButton" a:else catchTap="goodsSpecSubmitTap">确定</view>
+                <view class="flex_1  shopButton background_red" a:else catchTap="goodsSpecSubmitTap">确定</view>
+                <button class="btnStyle gpnBtn zIndex100" a:if="{{ (goods.secKillStatus && goodsSecondKill.totalSaleVolume != goodsSecondKill.totalStock) && (user_memId == 0 || user_memId == '0')}}" open-type="getAuthorize" onGetAuthorize="getPhoneNumber" scope='phoneNumber' onError="onAuthError"></button>
+                <button class="btnStyle gpnBtn zIndex100" a:elif="{{ !goods.secKillStatus && goods.goodsStore != 0 && (user_memId == 0 || user_memId == '0')}}" open-type="getAuthorize" onGetAuthorize="getPhoneNumber" scope='phoneNumber' onError="onAuthError"></button>
               </view>
             </view>
           </block>
         </view>
       </view>
-      
   </view>
 </template>

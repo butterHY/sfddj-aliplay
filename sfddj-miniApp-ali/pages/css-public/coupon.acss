@@ -323,3 +323,43 @@
   /* border-color: transparent; */
   border: none;
 }
+
+
+.useThisCouponBtn {
+  width: 100%;
+  height: 100%;
+  font-size: 24rpx;
+  font-weight: 600;
+}
+
+.haveReceivedImg {
+  width: 92rpx;
+  height: 86rpx;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: -1;
+  background: transparent;
+}
+
+.platformCouponInfoLeft {
+  background: -webkit-linear-gradient(135deg,#ffb473,#ff5f55);
+  background: -o-linear-gradient(135deg,#ffb473,#ff5f55);
+  background: -moz-linear-gradient(135deg,#ffb473,#ff5f55);
+  background: linear-gradient(135deg,#ffb473,#ff5f55);   
+}
+
+.businessCouponInfoLeft {
+  background: -webkit-linear-gradient(135deg,#ff8cb5,#ff4083);
+  background: -o-linear-gradient(135deg,#ff8cb5,#ff4083);
+  background: -moz-linear-gradient(135deg,#ff8cb5,#ff4083);
+  background: linear-gradient(135deg,#ff8cb5,#ff4083);   
+}
+
+.platformTicket {
+  padding: 5rpx 10rpx;
+  font-size: 18rpx;
+  color: #fff;
+  border-radius: 15rpx;
+  margin-right: 10rpx;
+}

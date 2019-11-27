@@ -4,6 +4,8 @@
 
 @import "../../css-public/cashBackRulePopUp.acss";
 @import "../../css-public/compensationRule.acss";
+@import "../../css-public/coupon.acss";
+
 page {
   width: 100%;
   height: 100%;
@@ -767,6 +769,63 @@ page {
   justify-content: center;
   align-items: center;
   background: #999;
+}
+
+/* 优惠券导航栏样式 */
+.receiveCoupon {
+  padding: 0 30rpx 37rpx 30rpx;
+}
+
+.couponTitle {
+  margin-right: 20rpx;
+  width: 64rpx;
+  height: 32rpx;
+}
+
+.couponName {
+  color: red;
+  margin-right: 18rpx;
+}
+
+/* 优惠券弹窗样式 */
+.coupon-popup {
+  width: 100%;
+  height: 902rpx;
+  padding: 46rpx 28rpx;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  background: #fafafa;
+  border-radius: 30rpx 30rpx 0 0 ;
+}
+
+.moreBtnBox {
+  text-align: center;
+  background: #FFFFFF;
+}
+
+.loadingBtn {
+  text-align: center;
+  padding: 20.8rpx 0;
+  font-size: 26rpx;
+  line-height: 41.6rpx;
+  color: #323232;
+}
+
+.information {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 36.4rpx;
+  margin-left: 10.4rpx;
+}
+
+.couponPopup-btn {
+  height: 88rpx;
+  background: #fd5040;
+  border-radius: 50rpx;
+  line-height: 88rpx;
+  text-align: center;
+  margin-top: 20rpx;
 }
 
 

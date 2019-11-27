@@ -5,6 +5,7 @@
 <import src="/pages/common/goodsTheway.axml"/>
 <import src="/pages/common/cashBackRule.axml"/>
 <import src="/pages/common/compensationRule.axml"/>
+<import src="/pages/common/couponItem.axml"/>
 <import-sjs name='filters' from="../../wxsFile/public.sjs"/>
 
 <!-- 加载中 -->
@@ -42,81 +43,22 @@
     </image>
   </view>
 
-  <!-- 新增的领券按钮和领券弹窗 -->
-  <popup show="{{isShowPopup}}" mask="{{true}}" position="bottom" animation="{{true}}" onClose="onPopupClose" zIndex="100" disableScroll="{{false}}">
-    <view class="coupon-popup">
-      <view class="flex_view_col all_100">
-        <scroll-view class="flex_1" scroll-y="{{true}}" onScrollToLower="lowLoadMore">
-          <view class="coupon platCoupon" a:for="{{couponDataList}}">
-              <view class="couponBox">
-                  <view class="couponInfo HBox">
-                      <view class="{{item.platformCoupon ? 'platformCouponInfoLeft' : 'businessCouponInfoLeft'}} HBox BoxCenter">
-                          <view class="couponPrice flex_view_col justi_between">
-                              <text><text>￥</text> <text class="moneyNumber">{{item.costPrice}}</text></text>
-                              <view class="describe">满{{item.needPrice}}元可用</view>
-                          </view>
-                      </view>
-                      <!--中间-->
-                      <view class="couponInfoCenter Bflex1 height_100">
-                          <view class="couponUseType">
-                              <view class="singleLine">
-                                <text a:if="{{item.platformCoupon}}" class="platformCouponInfoLeft platformTicket">平台券</text>
-                                <text a:else class="businessCouponInfoLeft platformTicket">商家券</text>
-                                {{item.couponName}}
-                              </view>
-                              <view class="tip_useLimt Bflex1 termValidity">
-                                  {{item.beginDate}} - {{item.endDate}}
-                              </view>
-                          </view>
-                      </view>
-                      <view class="couponInfoRight HBox BoxCenter" data-index="{{index}}" data-ruleSign="{{item.couponShowRuleSign}}" onTap="{{item.couponStatus == 'NO_RECEIVE' ? 'collectCoupons' : ''}}">
-                          <view class="useThisCoupon">
-                              <view class="{{item.platformCoupon ? 'color-ff4949' : 'color-ff4285'}} useThisCouponBtn HBox BoxCenter js_getNow"
-                                  data-couponid="116244"
-                                  style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-                                  <!-- <text a:if="{{item.couponStatus == 'NO_RECEIVE'}}">立即领取</text> -->
-                                  <!-- <text a:elif="{{item.couponStatus == 'NORMAR'}}">已领取</text> -->
-                                  立即领取
-                              </view>
-                          </view>
-                          <image  class="haveReceivedImg" a:if="{{item.couponStatus == 'NORMAR'}}" src="{{baseImageLocUrl}}/miniappImg/public/coupon/haveReceived.png"/>
-                      </view>
-                  </view>
-              </view>
-              <view class="gapBox gapBox_right">
-                  <text class="gap gap_top"></text>
-                  <text class="gap_line"></text>
-                  <text class="gap gap_bot"></text>
-              </view>
-          </view>
-          <view class="moreBtnBox js_moreBtnBox">
-            <view class="loadingBtn js_loadingBtn js_loadNull" a:if="{{!hasMore && !isLoadMore}}">
-                <text class="information">没有更多</text>
-            </view>
-            <view class="loadingBtn js_loadingBtn js_loading" a:if="{{isLoadMore}}">
-                <text class="icon_loading iconStyle icon-spinner3 myRotateRefresh"></text>
-                <text class="information">加载中</text>
-            </view>
-          </view>
-        </scroll-view>
-        <view class="couponPopup-btn color-white" onTap="onPopupClose">完成</view>
-      </view>
-    </view>
-  </popup>
+
 
   <!-- 秒杀商品的价格                       已完成新接口字段更换-->
-  <view>
+  <view class="{{goods.secKillStatus ? 'marBot_20' : ''}}">
     <!-- goodsSecondKill 应该放置一个默认价格，因为这样在改动规格的时候倒计时模块展示的价格才不会跟着规格改变，原有版本并没有这个效果 -->
     <!-- a:if="{{goodsSecondKill}}" -->
-    <spike-price a:if="{{secKillStatus}}" goodsSecondKill="{{goodsSecondKill}}" goodsStore="{{goods.goodsStore}}" viewStatus="{{goods.viewStatus}}" isFirstTime="{{isFirstTime}}" onSpikeOver="onSpikeOver" oldPrice="{{goods.defaultPrice}}"></spike-price> 
+    <spike-price secKillStatus="{{goods.secKillStatus}}" goodsSecondKill="{{goodsSecondKill}}" viewStatus="{{goods.viewStatus}}" isFirstTime="{{isFirstTime}}" oldPrice="{{goods.defaultPrice}}" onSpikeOver="onSpikeOver" ></spike-price> 
   </view>
 
   <!-- 商品价格、销量 -->
-  <view class="priceView" a:if="{{!secKillStatus}}" >
+  <view class="priceView" a:if="{{!goods.secKillStatus}}" >
     <!-- 包税等图片 -->
     <view class="priceTagArea">
-       <!-- <image class="priceTagImg" src="{{base64imageUrl}}miniappImg/public/goodsDetail/iconBg_baoshui.png"/> -->
-       <image class="priceTagImg" src="{{base64imageUrl}}miniappImg/public/goodsDetail/iconBg_vip.png"/>
+       <image class="priceTagImg" a:if="{{priceInfo.isBaoShui}}" src="{{base64imageUrl}}miniappImg/public/goodsDetail/iconBg_baoshui.png"/>
+       <image class="priceTagImg" a:elif="{{priceInfo.isVip}}" src="{{base64imageUrl}}miniappImg/public/goodsDetail/iconBg_vip.png"/>
+       <image class="priceTagImg" a:elif="{{priceInfo.isGlobal}}" src="{{base64imageUrl}}miniappImg/public/goodsDetail/iconBg_globle.png"/>
     </view>
     <!-- 价格销量 -->
     <view class="detail-sale-view font-36" >
@@ -125,20 +67,22 @@
       </block>
       <block a:else>
         <view class="color-ff5353 flex_view_row align_end">
-          <view class="color-a1a0a0 font-26" a:if="{{false}}">会员价 <text decode="true" space="true">&nbsp;</text></view>
+          <!-- <view class="color-a1a0a0 font-26" a:if="{{false}}">会员价 <text decode="true" space="true">&nbsp;</text></view> -->
           <view class="posi_re">
             <view class="defaultPrice">
               <!-- 价格 -->
-              <text a:if="{{false}}">
+              <text a:if="{{priceInfo.price}}">
                 <text>¥</text>
                 <text decode="true" space="true">&nbsp;</text>
-                <text class="font-56 font-weight-600">{{goods.defaultPrice}}</text>
+                <text class="font-56 font-weight-600">{{priceInfo.price}}</text>
+                <!-- 原价 -->
+                <text class="color-a1a0a0 font-26 line-through" a:if="{{priceInfo.oldPrice}}">{{priceInfo.oldPrice}}</text>
               </text>
-              <!-- 原价 -->
-              <text class="color-a1a0a0 font-26 line-through" a:if="{{false}}">￥100</text>
               <!-- 积分 -->
-              <text class="font-weight-600" a:if="{{false}}"><text decode="true" space="true">&nbsp;</text>+<text decode="true" space="true">&nbsp;</text></text>
-              <text ><text class="font-56 font-weight-600 color-a1a0a0">500</text><text class="color-a1a0a0">积分</text></text>
+              <text a:if="{{priceInfo.integralVal}}">
+                <text class="font-weight-600" a:if="{{priceInfo.price}}"><text decode="true" space="true">&nbsp;</text>+<text decode="true" space="true">&nbsp;</text></text>
+                <text ><text class="{{!priceInfo.price ? color-ff5353 : color-a1a0a0}} font-56 font-weight-600">{{priceInfo.integralVal}}</text><text class="{{!priceInfo.price ? color-ff5353 : color-a1a0a0}}">积分</text></text>
+              </text>
             </view>
           </view>
         </view>
@@ -152,8 +96,8 @@
             <text>¥{{goods.defaultPrice}}</text>
             <text class="font-26 color-666"> + {{theCostMemberScore}}积分</text>
         </view> -->
-        <view class="color-a1a0a0 font-26">已售：{{goods.salesCount}}份</view>
       </block>
+      <view class="color-a1a0a0 font-26">已售：{{goods.salesCount}}份</view>
     </view>
   </view>
 
@@ -173,6 +117,29 @@
     </view>
   </view>
 
+    <!-- 新增的领券按钮和领券弹窗 -->
+  <popup show="{{isShowPopup}}" mask="{{true}}" position="bottom" animation="{{true}}" onClose="onPopupClose" zIndex="100" disableScroll="{{false}}">
+    <view class="coupon-popup">
+      <view class="flex_view_col all_100">
+        <scroll-view class="flex_1" scroll-y="{{true}}" onScrollToLower="lowLoadMore">
+          <block a:for="{{couponDataList}}" a:key="couponDataList">
+             <template is="couponItem" data="{{item,isExpired: false, pageFrom: 'goodsDetail', user_memId, baseImageLocUrl}}"></template>
+          </block>
+          <view class="moreBtnBox">
+            <view class="loadingBtn" a:if="{{!hasMore && !isLoadMore}}">
+                <text class="information">没有更多</text>
+            </view>
+            <view class="loadingBtn" a:if="{{isLoadMore}}">
+                <text class="icon-spinner3"></text>
+                <text class="information">加载中</text>
+            </view>
+          </view>
+        </scroll-view>
+        <view class="couponPopup-btn color-white" onTap="onPopupClose">完成</view>
+      </view>
+    </view>
+  </popup>
+
   <!-- 商品名称、title、标签              已完成新接口字段更换-->
   <view class="detail-header-view posi_re ">
     <view class="detail-header-name color-323232 font-30">
@@ -185,7 +152,7 @@
         <view class="goodsTag label" a:if="{{goods.goodsTag}}">{{goods.goodsTag}}</view>
       </view>    
     </view>
-    <button open-type="share" size="mini" plain="{{true}}" class="flex_view_col justi_between align_end shareButton posi_ab">
+    <button open-type="share" size="mini" plain="{{true}}" class="btnStyle flex_view_col justi_between align_end shareButton posi_ab">
       <!-- <image class="shareImag" src="{{base64imageUrl}}miniappImg/icon/share.png"/> -->
       <text class="iconfont icon-collect font-40"></text>
       <text class="font-22  color-a1a0a0">分享</text>
@@ -265,10 +232,10 @@
 
   
   <!-- 如果是顺丰会员商品会显示奖励多少积分         已完成新接口字段更换--->
-  <view class="flex_view_row" style="padding: 0 30rpx 10rpx;" a:if="{{SFmember}}">
+  <!-- <view class="flex_view_row" style="padding: 0 30rpx 10rpx;" a:if="{{SFmember}}">
     <text class="color-ff5353 font-24">奖励会员积分{{theAwardMemberScore}}        
     </text>
-  </view>
+  </view> -->
 
   <!-- 店铺信息                                   已完成新接口字段更换-->
   <view>
@@ -353,7 +320,8 @@
   <!-- 评分和评价条数                             已完成新接口字段更换但还没有验图片-->
   <view class="division-area" a:if="{{showComment}}">
   </view>
-  <navigator url="/pages/shopping/comment/comment?goodScore={{goods.commentScore}}&goodsCommentTotal={{goods.commentTotal}}&goodsId={{goods.goodsId}}" hover-class="none" a:if="{{showComment}}">
+  <!-- <view data-url="/pages/shopping/comment/comment?goodScore={{goods.commentScore}}&goodsCommentTotal={{goods.commentTotal}}&goodsId={{goods.goodsId}}" data-type="comment" onTap="goToTargetPage" hover-class="none" a:if="{{showComment}}"> -->
+  <view data-url="/pages/shopping/comment/comment?goodScore={{goods.commentScore}}&goodsCommentTotal={{goods.commentTotal}}&goodsId={{goods.goodsId}}" data-type="comment" onTap="goToTargetPage" hover-class="none" a:if="{{showComment}}">
     <view class="goods-comment-title">
       <view class="flex_view_row align_cen">
         <view>好评率<text class="marLeft_5 color-ff5353 font-28">{{goods.commentScore}}%</text></view>
@@ -368,7 +336,7 @@
         <text class="icon-href-right font-22 marLeft_10 color-c7c7cc padding-r15"></text>
       </view>
     </view>
-  </navigator>
+  </view>
   <!-- 评价示例 -->
   <view class="goods-comment-area" a:if="{{showComment && comment.length > 0}}" a:for="{{comment}}">
     <view class="comment-line"></view>
@@ -496,7 +464,7 @@
 
   <!-- 商家其他商品                                  已完成新接口字段更换-->
   <block a:if="{{otherGoods.length > 0}}">
-    <navigator url="/pages/shopping/storeInfo/storeInfo?supplierId={{goods.supplierInfo.supplierId}}" hover-class="none">
+    <view data-url="/pages/shopping/storeInfo/storeInfo?supplierId={{goods.supplierInfo.supplierId}}" data-type="supplier" onTap="goToTargetPage" hover-class="none">
       <view class="storePro_view">
         <view class="flex_view_row align_cen">
           <image class="store-image storeImg_head" src="{{goods.supplierInfo.headImage}}">
@@ -512,7 +480,7 @@
           </text>
         </view>
       </view>
-    </navigator>
+    </view>
     <scroll-view scroll-x class="goods-scrollx-view" scroll-with-animation="true">
       <block a:for="{{otherGoods}}">
         <template is="itemGoodsScrollX" data="{{...item,baseImageUrl: baseImageUrl,baseLocImgUrl: base64imageUrl}}"/>
@@ -598,13 +566,14 @@
         </view>
       </view>
       <view class="flex_1  height_100 flex_view_row align_cen justi_cen noJifen color-white font-32">
-        <block a:if="{{goods.viewStatus != 'SALEING' || (goods.viewStatus == 'SALEING' && goods.goodsStore == 0)}}">
-          <view class="bottom-bg bottom-text-yellow-bg">查看类似商品</view>
-        </block>
-        <block a:elif="{{goods.secKillStatus}}">
-          <view  class="bottom-bg background_gray" a:if="{{isSpikeOver}}">活动结束</view>
+        <block a:if="{{goods.secKillStatus}}">
+          <view class="bottom-bg bottom-text-yellow-bg" a:if="{{goods.viewStatus != 'SALEING'}}">查看类似商品</view>
+          <view  class="bottom-bg background_gray" a:elif="{{isSpikeOver}}">活动结束</view>
           <view  class="bottom-bg background_gray" a:elif="{{goods.secKillStatus && (goodsSecondKill.totalSaleVolume == goodsSecondKill.totalStock)}}">已售罄</view>
           <view  class="bottom-bg background_red" a:else onTap="buyNow">立即购买</view>
+        </block>
+        <block a:elif="{{goods.viewStatus != 'SALEING' || (goods.viewStatus == 'SALEING' && goods.goodsStore == 0)}}">
+          <view class="bottom-bg bottom-text-yellow-bg">查看类似商品</view>
         </block>
         <block a:else>
           <view class="bottom-bg font-30">
@@ -619,11 +588,12 @@
   <!-- 底部购物按钮，速运会员                         还差联系商家的 webCallParam，其它都已完成新接口字段更换-->
   <block a:else>
     <view class='bottom-view justi_between' >
-      <navigator class="btnNoBor contactBtn bottom-icon-view font-20 color-565d6f" url="/pages/shopping/storeInfo/storeInfo?supplierId={{goods.supplierInfo.supplierId}}" hover-class="none" style='width: 20%;'>
+      <!-- <view data-url="/pages/shopping/storeInfo/storeInfo?supplierId={{goods.supplierInfo.supplierId}}" data-type="supplier" onTap="goToTargetPage" hover-class="none"> -->
+      <view class="btnNoBor contactBtn bottom-icon-view font-20 color-565d6f" url="/pages/shopping/storeInfo/storeInfo?supplierId={{goods.supplierInfo.supplierId}}" data-type="supplier" onTap="goToTargetPage" hover-class="none" style='width: 20%;'>
         <!-- <image src="{{base64imageUrl}}miniappImg/icon/icon-business.png" class="contactBtn_icon"></image> -->
         <text class="iconfont icon-home font-42"></text>
         <text>店铺</text>
-      </navigator>
+      </view>
       <view class=' flex_view_row isJifenViewLeft' style='width: 20%;' catchTap="goToWebCall">
         <view catchTap='goToWebCall' class='btnNoBor contactBtn bottom-icon-view font-20 color-565d6f'>
           <!-- <image src='{{base64imageUrl}}miniappImg/icon/icon_contact_businesser.png' class='contactBtn_icon'></image> -->
@@ -646,7 +616,7 @@
  </view>
 
   <!-- 规格选择框                                   已完成新接口字段更换-->
-  <template is="goodsSpec" data="{{show:showGoodsSpec,baseLocImgUrl:base64imageUrl,baseImageUrl,product,goodsSpecMap,optionalProduct,xgCount,specType,selectedSpecsBar,multiformname,goodsStore: goods.goodsStore,quantity,type,showInput:true,SFmember}}"/>
+  <template is="goodsSpec" data="{{show:showGoodsSpec,baseLocImgUrl:base64imageUrl,baseImageUrl,goods,user_memId,goodsSecondKill,product,goodsSpecMap,optionalProduct,xgCount,specType,selectedSpecsBar,multiformname,quantity,type,showInput:true,SFmember}}"/>
   <!-- 送礼方式选择弹窗，点击‘确定’之后数量大于2的情况下弹出              已完成新接口字段更换-->
   <template is="goodsGiftBomb" data="{{show:showGiftBomb,base64imageUrl:base64imageUrl}}"/>
   <!-- 送礼方式介绍弹窗，点击 ‘什么是送礼方式’ 弹出                         已完成新接口字段更换-->

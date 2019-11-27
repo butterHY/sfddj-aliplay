@@ -76,21 +76,18 @@
         <view a:if="{{loadingNoMore}}" class='couponLoading_view'>
           没有更多优惠券了
         </view>
-        
       </view>
 
-      <!--没有更多优惠券-->
+      <!--没有优惠券-->
       <view a:if="{{!isHasCoupon}}" class="myCoupon_noMore font-28">
         <view class="icon_noMoreImg">
             <image src='{{baseLocImgUrl}}miniappImg/invite/noCoupon.png' class='icon_empty'></image>
           </view>
-          <!--没有更多-->
           <view a:if="true" class='couponLoading_view'>
            您还没有优惠券
           </view>
       </view>
     </view>
-
   </view>
 
     <!--猜你喜欢-->
@@ -115,7 +112,6 @@
             <view a:if="{{!guessLikeLoadMore}}" class='loading_view font-26 color-323232'>
               没有更多了
         </view>
-        
     </view>
 
     <!-- 底部切换优惠券按钮 -->
