@@ -89,6 +89,7 @@ Page({
 		actionType: 'buy',         //达观上报场景类型
 		invoiceOff: 'noInvoice',    //可开发票的类型， noInvoice--不可开发票, normal---只可开普通发票， electronic--只可开电子发票， multi---可开普通/电子发票
 		initMobile: '',     //用来保存最原始的电话
+		nowAddrId: null,     //当前选择的地址id
 		// couponShow: false   // 优惠券弹窗
 	},
 
@@ -196,7 +197,12 @@ Page({
 	onShow: function() {
 		var that = this;
 		my.hideLoading();
-		var nowAddrId = getApp().globalData.NowAddrId;
+		var nowAddrId = getApp().globalData.NowAddrId ? getApp().globalData.NowAddrId : that.data.NowAddrId;
+		that.setData({
+			nowAddrId: getApp().globalData.NowAddrId ? getApp().globalData.NowAddrId : that.data.nowAddrId
+		})
+		// 重置当前选择的地址id
+		getApp().globalData.NowAddrId = null;
 		// utils.getNetworkType(that);
 		if (that.data.needLoad) {
 			if (that.data.fromPage == 'cart') {
@@ -212,6 +218,9 @@ Page({
 
 	onUnload() {
 		clearTimeout(this.data.timeOut);
+		// 重置全局缓存的地址
+		getApp().globalData.NowAddrId = null
+		console.log(';;------0000',getApp().globalData.NowAddrId);
 	},
 
 	// 计算中间内容的高度

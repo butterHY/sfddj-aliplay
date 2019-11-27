@@ -59,8 +59,8 @@
 <view class="mark flex_view_col align_cen justi_cen" a:if="{{couponShow}}">
   <view class="toastView_wb" style="">
 
-		<view class="posi_ab" style="right: 0; top: 0;z-index:9102;" onTap="closePop">
-			<icon type="clear" size="25" color="rgba(255,255,255,0.3)"/>
+		<view class="posi_ab" style="right: -30rpx; top: -30rpx;z-index:9102;" onTap="closePop">
+			<icon type="clear" size="25" color="rgba(255,255,255,0.6)"/>
 		</view>
 
     <view class="font-26 confirmorderPop">

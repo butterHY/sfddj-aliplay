@@ -11,7 +11,7 @@
 			<view style="height:2rpx;background-color:#e3e3e3;margin-top:30rpx"></view>
 		</view>
 		<view style="display:flex;align-items:center;justify-content:space-between;margin-top:30rpx;">
-			<view style="flex:1;display:flex;align-items:center" data-index="{{index}}" onTap="{{comeFrom == 'confirmOrder' ? 'selectAddr' : (isDefault ? '':'setDefault')}}">
+			<view style="flex:1;display:flex;align-items:center" data-index="{{index}}" data-addrId="{{id}}" onTap="{{comeFrom == 'confirmOrder' ? 'selectAddr' : (isDefault ? '':'setDefault')}}">
 				<image src="{{isDefault ? baseLocImgUrl + 'miniappImg/icon/icon_sel.png': baseLocImgUrl + 'miniappImg/icon/icon_unsel.png'}}" style="width:36rpx;height:36rpx"></image>
 				<text a:if="{{comeFrom == 'confirmOrder'}}" class="font-26 color-b3b3b3" style="margin-left:10rpx">选择地址</text>
 				<text a:else class="font-26 color-b3b3b3" style="margin-left:10rpx">{{isDefault ? '默认地址' : '设置默认'}}</text>
