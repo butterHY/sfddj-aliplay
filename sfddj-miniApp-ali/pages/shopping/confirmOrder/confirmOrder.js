@@ -1018,6 +1018,8 @@ Page({
 			}
 		}
 		result.couponValue = '￥0.00';
+
+    console.log(result.availableCoupon)
 	},
 	/**
 	 * 拼团订单支付成功后，通过订单sn查询recordId跳转拼团成功页面

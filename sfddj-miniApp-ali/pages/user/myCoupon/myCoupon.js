@@ -374,7 +374,7 @@ Page({
    },
 
    /**
-    * 切换优惠券列表
+    * 切换优惠券列表，跳转到失效优惠券列表页
     */
    changeCouponList() {
      my.navigateTo({

@@ -28,8 +28,7 @@ Component({
 
   didMount() {
     this.$page.spikePrice = this; // 通过此操作可以将组件实例挂载到所属页面实例上
-
-    if (this.props.goodsSecondKill) {
+    if (this.props.secKillStatus) {
       this.getTimes(this.props.isFirstTime);
     };
   },

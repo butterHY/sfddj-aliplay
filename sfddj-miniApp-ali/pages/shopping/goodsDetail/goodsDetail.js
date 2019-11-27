@@ -53,6 +53,15 @@ Page({
 		floatVal: 50,
 		pageOptions: {},       //商详页打开时所带的参数
 		user_memId: '默认是会员',         //是否存在memberId，判断是否绑定手机号
+
+    // 优惠券数据
+    isShowPopup: false,
+    startCoupon: 0,                             
+		limitCoupon: 4,
+    hasMore: true,
+		isLoadMore: false,
+    loadComplete: false,
+    couponDataList: [],
 	},
 
 	onLoad: async function(query) {
@@ -221,8 +230,11 @@ Page({
 					that.setData({
 						user_memId: user_memId == 'null' || user_memId == null || user_memId == 'undefined' || user_memId == undefined ? '默认是会员' : user_memId
 					})
+
 				} catch (e) {
 				}
+
+
 
 				var result = res.data.result ? res.data.result : {};
 
@@ -236,11 +248,13 @@ Page({
 
 				//当请求返回成功才请求评论
 				if (res.data.message == 'success') {
-					var id = res.data.result.id;
-					that.getComment(id);
+          that.data.goodsId = res.data.result.id;
+					that.getComment(that.data.goodsId);
 
 					// 请求获取猜你喜欢的数据
-					that.getGuessLike(id, true)
+					that.getGuessLike(that.data.goodsId, true);
+          // 请求获取优惠券数据)
+          that.getCoupon('0');
 				}
 
 				var article = res.data.result.introduction;
@@ -300,7 +314,7 @@ Page({
 					groupNameTopList: res.data.groupNameTopList,
 					otherGoods: res.data.otherGoods,
 					goodsSecondKill: res.data.goodsSecondKill,    // 秒杀商品数据
-
+          goodsId: that.data.goodsId,
 					goodsSpecMap: that.data.goodsSpecMap,
 					product: that.data.product,
 					quantity: minCount,
@@ -1078,7 +1092,7 @@ Page({
 	// 获取手机号
 	getPhoneNumber: function(e) {
 		var that = this;
-
+    console.log('获取手机号')
 		my.getPhoneNumber({
 			success: (res) => {
 				let response = res.response
@@ -1094,11 +1108,7 @@ Page({
 							my.setStorage({ key: 'user_memId', data: res.data.result.memberId });
 						}
 					}
-					else {
-
-					}
-
-
+					else {}
 
 					my.showToast({
 						content: '绑定成功'
@@ -1107,20 +1117,19 @@ Page({
 						user_memId: res.data.result ? res.data.result.memberId : '默认会员'
 					})
 				}, function(res, resData) {
+          // '1013',为该用户已绑定手机号；
 					var resData = resData ? resData : {}
 					if (resData.errorCode == '1013') {
 						that.setData({
 							user_memId: '默认会员'
 						})
 						my.setStorage({ key: 'user_memId', data: '默认会员' });
-					}
-					else {
+					} else {
 						my.showToast({
-							content: res
+							content: res,
+              duration: 2000,
 						})
-
 					}
-
 				});
 			},
 			fail: (res) => {
@@ -1129,8 +1138,99 @@ Page({
 				});
 			},
 		});
-
 	},
+
+  /**
+	 * 获取优惠券数据
+	 */
+  getCoupon: function(type) {
+    let that = this;
+    let data = {
+      goodsId: that.data.goodsId,
+      start: that.data.startCoupon,
+      limit: that.data.limitCoupon
+    }
+    this.setData({
+			isLoadMore: true
+		});
+    http.post(api.GOODSDETAIL.GOODS_DETAIL_COUPON, data, function(res) {
+      console.log('请求回来了')
+      let resData = res.data.data;
+      if(resData && resData.length > 0) {
+        resData.forEach(value => {
+          value.beginDateStr = utils.pointFormatTime(new Date(value.beginDate));
+          value.endDateStr = utils.pointFormatTime(new Date(value.endDate));
+        })
+      }                                                         // NO_RECEIVE   还没领  NORMAR 已经领了
+
+      resData && resData.length == that.data.limitCoupon ? that.data.hasMore = true : that.data.hasMore = false;  // 如果返回的数据长度等于请求条数说明还有更多数据
+
+      type == '0' ? that.data.couponDataList = resData : that.data.couponDataList = that.data.couponDataList.concat(resData);  // 0: 初始化; 1: 每次加载拼接进去的数据;
+
+			that.setData({
+				couponDataList: that.data.couponDataList,
+				hasMore: that.data.hasMore,           // 是否还有更多
+				isLoadMore: false,                    // 正在加载中的加载进度条
+			});
+    }, function(err){
+      that.setData({
+				isLoadMore: false,
+			});
+    })
+  },
+
+  // 拖拽优惠券弹窗
+  lowLoadMore: function () {
+    let that = this;
+    if (that.data.hasMore) {
+			that.setData({
+				startCoupon: that.data.couponDataList.length
+			});
+      that.data.hasMore = false;
+			that.getCoupon('1');
+		}
+  },
+
+  // 领取优惠券
+  collectCoupons: function (e) {
+    console.log('领取优惠券')
+    console.log(e)
+    let that = this;
+    let index = e.currentTarget.dataset.index;
+    let ruleSign = e.currentTarget.dataset.ruleSign;
+    http.post(api.GOODSDETAIL.GOODS_DETAIL_DRAWCOUPON, {ruleSign}, function(res) {
+      let resData = res.data.data;
+      if(resData && resData.length > 0) {
+         resData[0].beginDateStr = utils.pointFormatTime(new Date(resData[0].beginDate));
+         resData[0].endDateStr = utils.pointFormatTime(new Date(resData[0].endDate));
+         that.data.couponDataList[index] = resData[0];
+         that.setData({
+           couponDataList: that.data.couponDataList
+         })
+      }
+    }, function(err) {
+      my.showToast({
+        content: '领取失败',
+        duration: 2000,
+      })
+    })
+  },
+
+  // 领券弹窗打开
+  showPopup: function () {
+    var that = this;
+    that.setData({
+      isShowPopup: true
+    })
+  },
+  // 领券弹窗关闭
+  onPopupClose: function () {
+     var that = this;
+      that.setData({
+        isShowPopup: false
+      })
+  },
+
 
 
 	// 获取手机号失败

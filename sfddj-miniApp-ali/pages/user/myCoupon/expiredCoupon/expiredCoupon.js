@@ -78,6 +78,8 @@ Page({
             recommondList: that.data.recommondList.concat(expirescouponList),
           })
 
+          console.log(that.data.recommondList)
+
           if (expirescouponList.length < that.data.limit) {
             that.setData({
               invalidScrollMore: false,
