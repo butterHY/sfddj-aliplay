@@ -39,7 +39,6 @@
     "pages/home/spike/spike",
     "pages/home/grouping/grouping",
     "pages/activities/thematicActivities/thematicActivities",
-    "pages/shopping/goodsDetailNew/goodsDetailNew",
     "pages/activities/signIn/signIn",
     "pages/user/myCoupon/expiredCoupon/expiredCoupon",
     "pages/user/myCoupon/couponInfo/couponInfo"
