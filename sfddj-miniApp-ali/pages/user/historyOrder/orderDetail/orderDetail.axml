@@ -95,9 +95,17 @@
 			<text>活动优惠</text>
 			<text>-¥{{order.discountAmount ? order.dicountAmount : 0}}</text>
 		</view>
-		<view class="priceCal_view font-24 color-323232">
+		<!-- <view class="priceCal_view font-24 color-323232">
 			<text>优惠券折扣</text>
-			<text>-¥{{order.platformCouponPrice + order.supplierCouponPrice}}</text>
+			<text>-¥{{order.platformCouponPrice + order.supplierCouponPrice}}</text>  
+		</view> -->
+		<view class="priceCal_view font-24 color-323232">
+			<text>平台优惠券折扣</text>
+			<text>-¥{{order.platformCouponPrice ? order.platformCouponPrice : 0}}</text>
+		</view>
+		<view class="priceCal_view font-24 color-323232">
+			<text>商家优惠券折扣</text>
+			<text>-¥{{order.supplierCouponPrice ? order.supplierCouponPrice : 0}}</text>
 		</view>
 		<view class="priceCal_view font-24 color-323232" a:if="{{order.pointCostMoney > 0}}">
 			<text>积分抵扣</text>
