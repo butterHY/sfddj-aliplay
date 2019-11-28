@@ -19,12 +19,8 @@
           <view class="all_100 myCoupon_useType flex_view_col">
             <!-- 标题 -->
             <view class="myCoupon_itemTit width_100">
-              <!-- <block a:if="{{pageFrom == 'goodsDetail'}}"> -->
-                  <text a:if="{{item.platformCoupon && !isExpired}}" class="platformCouponInfoLeft platformTicket">平台券</text>
-                  <text a:elif="{{!item.platformCoupon && !isExpired}}" class="businessCouponInfoLeft platformTicket">商家券</text>
-                  <text a:elif="{{item.platformCoupon && isExpired}}" class="myCoupon_couponLeft platformTicket">平台券</text>
-                  <text a:elif="{{!item.platformCoupon && isExpired}}" class="myCoupon_couponLeft platformTicket">商家券</text>
-              <!-- </block> -->
+              <text wx:if="{{item.platformCoupon}}" class="{{isExpired ? 'myCoupon_couponLeft' : 'platformCouponInfoLeft'}} platformTicket">平台券</text>
+              <text wx:elif="{{!item.platformCoupon}}" class="{{isExpired ? 'myCoupon_couponLeft' : 'businessCouponInfoLeft'}} platformTicket">商家券</text>
               {{item.couponName}}
             </view>
             <!--使用说明 -->
@@ -61,7 +57,7 @@
               <view class="{{item.platformCoupon ? 'color-ff4949' : 'color-ff4285'}} useThisCouponBtn flex_view_row justi_cen align_cen">
                 立即领取
               </view>
-              <image  class="haveReceivedImg" a:if="{{item.couponStatus == 'NORMAR'}}" src="{{baseImageLocUrl}}/miniappImg/public/coupon/haveReceived.png"/>
+              <image  class="haveReceivedImg" a:if="{{item.couponStatus == 'NORMAR'}}" src="{{baseImageLocUrl}}/miniappImg/public/coupon/haveReceived.png">
             </view>
             <button class="all_100 btnStyle gpnBtn zIndex100" open-type="getAuthorize" onGetAuthorize="getPhoneNumber" scope='phoneNumber' onError="onAuthError" a:if="{{(user_memId == 0 || user_memId == '0') && item.couponStatus == 'NO_RECEIVE'}}"></button>
           </view>

@@ -41,6 +41,11 @@ page {
   color: #323232;
   font-size: 24rpx;
 }
+
+.CouponspMerchant {
+  border-bottom: 2rpx #eaeaea solid;
+}
+
 .choice-coupon-view {
   display: flex;
   flex-direction: row;

@@ -84,7 +84,7 @@ Page({
     setComeBack: true,
 
     pageOptions: {},                            //商详页打开时所带的参数
-    user_memId: '默认是会员',                   //是否存在memberId，判断是否绑定手机号
+    user_memId: '默认是会员',                   //是否存在 memberId，判断是否绑定手机号
     priceInfo: {}                              // 商详页不同商品类型的价格和积分和返现数据；
 	},
 
@@ -1716,7 +1716,7 @@ Page({
         var multiProduct = that.data.allProduct.filter(valProduct => valProduct.iavPath.indexOf(val.valueId) > -1);
         console.log(multiProduct)
         console.log('找到一个子规格对应的规格组合 --------');
-        if(multiProduct.every(valStore =>  valStore.store == 0 || valStore.store == '')) {
+        if(multiProduct.every(valStore =>  valStore.store == 0 || valStore.store == '')) {user_memId
           console.log('这个子规格的规格组合的库存都为 0', val)
           val.store = 0;
         } else if(val.store == 0) {

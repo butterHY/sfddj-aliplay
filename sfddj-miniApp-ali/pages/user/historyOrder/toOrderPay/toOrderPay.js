@@ -21,12 +21,14 @@ Page({
   data: {
     baseImgLocUrl: constants.UrlConstants.baseImageLocUrl,
     loadComplete: false,
-    loadFail: false
+    loadFail: false,
+    totalSupplierCouponPrice: 0,      // 商家优惠总额
   },
 
   onLoad: function (options) {
     var that = this;
     var paymentId = options.paymentId;
+    console.log(paymentId)
     this.setData({
       paymentId: paymentId
     });
@@ -49,11 +51,11 @@ Page({
       paymentId: this.data.paymentId
     }, function (res) {
 	  let result = res.data.result ? Object.assign({},res.data.result) : {}
-
 	  if(result.orderSupplier) {
 		  for(var i = 0; i < result.orderSupplier.length; i++){
 			  var originalTotalPrice = 0;
-			  var item = result.orderSupplier[i].orderGoodsList ? result.orderSupplier[i].orderGoodsList : []
+			  var item = result.orderSupplier[i].orderGoodsList ? result.orderSupplier[i].orderGoodsList : [];
+        result.orderSupplier[i].totalCouponPrice ?  that.data.totalSupplierCouponPrice += result.orderSupplier[i].totalCouponPrice : '';
 			  for(var j = 0; j < item.length; j++){
 				  originalTotalPrice += (item[j].quantity * item[j].salePrice)
 			  }
@@ -71,7 +73,8 @@ Page({
         orderType: res.data.result.orderType,
         baseImageUrl: baseImageUrl,
         loadComplete: true,
-        loadFail: false
+        loadFail: false,
+        totalSupplierCouponPrice: that.data.totalSupplierCouponPrice
       });
     }, function (err) {
       that.setData({

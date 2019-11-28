@@ -55,9 +55,14 @@
 			<view>总运费</view>
 			<view class="color-ff5353 font-28">￥{{result.totalPostFee ? filters.toFix(result.totalPostFee) : '0.00'}}</view>
 		</view>
+		<!-- 平台优惠总额 -->
 		<view class="should-pay-item">
 			<view>优惠总额</view>
-			<view class="color-ff5353 font-28">￥{{filters.toFix(totalCouponPrice)}}</view>
+			<view class="color-ff5353 font-28">￥{{result.totalCouponPrice ? filters.toFix(result.totalCouponPrice) : '0.00'}}</view>
+		</view>
+		<view class="should-pay-item" a:if="{{totalSupplierCouponPrice}}">
+			<view>商家优惠总额</view>
+			<view class="color-ff5353 font-28">￥{{ filters.toFix(totalSupplierCouponPrice) }}</view>
 		</view>
 		<view class="should-pay-item" a:if="{{result.useBalance}}">
 			<view>余额抵扣</view>
@@ -111,6 +116,10 @@
 					</view>
 				</view>
 			</block>
+			<view class="should-pay-item CouponspMerchant" a:if="{{item.totalCouponPrice}}">
+				<view>商家优惠</view>
+				<view class="color-ff5353 font-28">￥{{ filters.toFix(item.totalCouponPrice) }}</view>
+			</view>
 			<view class="leaveMes font-24 color-a1a0a0">买家留言:{{item.orderGoodsList[0].memo || '选填'}}</view>
 		</view>
 		<view class="division-area"></view>
