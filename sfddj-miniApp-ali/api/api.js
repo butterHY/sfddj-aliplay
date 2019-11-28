@@ -32,29 +32,30 @@ export default {
 	ORDER: {
 		order_search: '/m/o/1.0/order/mySearch',   //订单列表页搜索
 		order_invoice: '/m/o/1.0/orderInvoice/patch',      //补开电子发票，订单详情
+		afterSale_reason: '/m/o/1.0/order/getShowAfterSalesReason',     //获取售后原因
 	},
-  
-  COUPON: {
-    COUPON_VALID_LIST: '/m/o/coupon/1.0/user/couponList',               // 获取分页用户有效优惠券列表
-    COUPON_INVALID_LIST: '/m/o/coupon/1.0/user/invalidCouponList',      // 获取分页用户有效优惠券列表
-  },
+
+	COUPON: {
+		COUPON_VALID_LIST: '/m/o/coupon/1.0/user/couponList',               // 获取分页用户有效优惠券列表
+		COUPON_INVALID_LIST: '/m/o/coupon/1.0/user/invalidCouponList',      // 获取分页用户有效优惠券列表
+	},
 
 	CART: {
 		SHOW_CART: '/m/g/cartItem/1.0/showCart',         //新版购物车列表接口
 	},
-  GOODSDETAIL: {
-    GET_GOODS_DETAIL: '/m/g/goodsShow/1.0/view',                              // 新的商品详情商品数据
-    GOODS_DETAIL_COUPON: '/m/o/coupon/1.0/goodsDetailCoupon',                 // 新的商品详情优惠券数据
-    GOODS_DETAIL_DRAWCOUPON: '/m/o/coupon/1.0/drawCoupon',                    // 新的商品详情领取优惠券
-    GOODS_DETAIL_CONTACTSTORE: '/m/c/m/customer/service/1.0/xnCustomer',      // 新的商品详情获取 “联系商家”的参数
+	GOODSDETAIL: {
+		GET_GOODS_DETAIL: '/m/g/goodsShow/1.0/view',                              // 新的商品详情商品数据
+		GOODS_DETAIL_COUPON: '/m/o/coupon/1.0/goodsDetailCoupon',                 // 新的商品详情优惠券数据
+		GOODS_DETAIL_DRAWCOUPON: '/m/o/coupon/1.0/drawCoupon',                    // 新的商品详情领取优惠券
+		GOODS_DETAIL_CONTACTSTORE: '/m/c/m/customer/service/1.0/xnCustomer',      // 新的商品详情获取 “联系商家”的参数
 
-  },
+	},
 
-  // 签到接口
-  SIGNIN: {
-    MEMBER_SIGN: '/m/u/1.0/member/newVersion/memberSign',     // 点击签到按钮请求接口
-    PRIZE_DETAIL: '/m/u/1.0/member/newVersion/prizeDetail',   // 会员签到奖励详情
-  }
+	// 签到接口
+	SIGNIN: {
+		MEMBER_SIGN: '/m/u/1.0/member/newVersion/memberSign',     // 点击签到按钮请求接口
+		PRIZE_DETAIL: '/m/u/1.0/member/newVersion/prizeDetail',   // 会员签到奖励详情
+	}
 
 
 }

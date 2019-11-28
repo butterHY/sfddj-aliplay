@@ -72,7 +72,6 @@ Page({
 		this.setData({
 			[setAddrListName]: true
 		})
-
 		getApp().globalData.NowAddrId = addrId
 		for (var i = 0; i < addressList.length; i++) {
 			if (i == index) {
@@ -192,7 +191,7 @@ Page({
 						city: res.result.city,
 						area: res.result.area,
 						AccAddress: res.result.address,
-						isDefault: '1'
+						isDefault: '0'
 					};
 
 					// 暂不支持香港，澳门，台湾地区的配送，请重新选择地址；
@@ -207,17 +206,20 @@ Page({
 					my.showLoading({
 						content: 'loading'
 					});
-
 					sendRequest.send(constants.InterfaceUrl.ADD_ADDRESS, payLoad, function(res) {
 						my.hideLoading();
 						sendRequest.send(constants.InterfaceUrl.SEARCH_ADDRESS, {}, function(res) {
 							my.hideLoading();
+							let result = res.data.result ? res.data.result: that.data.addressList
 							that.setData({
 								addressList: res.data.result,
 								isLoadMore: false,
 								loadComplete: true,
 								loadFail: false
 							});
+							if(that.data.comeFrom == 'confirmOrder') {
+								that.selectAddr({currentTarget:{dataset:{index: that.data.addressList.length - 1,addrId: that.data.addressList[that.data.addressList.length -1].id}}})
+							}
 						}, function(err) {
 							that.setData({
 								isLoadMore: false,

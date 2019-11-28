@@ -24,13 +24,13 @@
     </view>
     <view class="orderStatus">
       <view class="notRecevied" data-index="0" onTap="switchStatus">
-        <image src="{{tap1 ? baseImgLocUrl + 'miniappImg/icon/icon_sel.png' : baseImgLocUrl + 'miniappImg/icon/icon_unsel.png'}}" class="icon_unsel">
+        <image src="{{switchIndex == 0 ? baseImgLocUrl + 'miniappImg/icon/icon_sel.png' : baseImgLocUrl + 'miniappImg/icon/icon_unsel.png'}}" class="icon_unsel">
         </image>
         <text class="font-26 color-252525 marLeft_20">未收到货
         </text>
       </view>
       <view class="recevied" data-index="1" onTap="switchStatus">
-        <image src="{{tap2 ? baseImgLocUrl + 'miniappImg/icon/icon_sel.png' : baseImgLocUrl + 'miniappImg/icon/icon_unsel.png'}}" class="icon_unsel">
+        <image src="{{switchIndex == 1 ? baseImgLocUrl + 'miniappImg/icon/icon_sel.png' : baseImgLocUrl + 'miniappImg/icon/icon_unsel.png'}}" class="icon_unsel">
         </image>
         <text class="font-26 color-252525 marLeft_20">已收到货
         </text>
