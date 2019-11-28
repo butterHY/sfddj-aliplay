@@ -114,14 +114,19 @@ App({
     // console.log('我在 app.js 的公共方法');
     var that = this;
     var canUsesetTab = my.canIUse('setTabBarBadge');
-    if(canUsesetTab) {
+		var canUsesremoveTab = my.canIUse('removeTabBarBadge');
+    if(canUsesetTab && canUsesremoveTab) {
       sendRequest.send(constants.InterfaceUrl.SHOP_GET_COUNT, {}, function(res) {
         if(res.data.result.count) {
           my.setTabBarBadge({
             index: 2,
             text: (res.data.result.count).toString()
           })
-        }
+        } else {
+					my.removeTabBarBadge({
+						index: 2
+					})
+				}
       }, function(res) { });
     }
   }
