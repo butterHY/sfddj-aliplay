@@ -30,7 +30,8 @@
   min-height: 75rpx;
   border: 1px solid rgb(212, 212, 212);
   border-radius: 4px;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   padding-right: 0;
 }
 
@@ -43,7 +44,8 @@
   color: #ff6000;
   font-size: 28rpx;
   padding: 25rpx 20rpx;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 .myCoupon_warnBtn {
@@ -62,7 +64,8 @@
 
 .myCoupon_list {
   padding: 0 24rpx;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 .myCoupon_couponItem {
@@ -72,9 +75,11 @@
   z-index: 1;
   border-radius: 10rpx;
   overflow: hidden;
-  box-shadow: 2px 2px 4px rgba(1, 1, 1, 0.05), -2px -2px 4px rgba(1, 1, 1, 0.05);
+  -webkit-box-shadow: 2px 2px 4px rgba(1, 1, 1, 0.05), -2px -2px 4px rgba(1, 1, 1, 0.05);
+          box-shadow: 2px 2px 4px rgba(1, 1, 1, 0.05), -2px -2px 4px rgba(1, 1, 1, 0.05);
   border-right: 1px solid rgba(1, 1, 1, 0.05);
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 .marTop_24 {
@@ -88,8 +93,6 @@
 .myCoupon_couponBox {
   height: 182rpx;
   background-color: #FFFFFF;
-  -webkit-border-radius: 10rpx;
-  -moz-border-radius: 10rpx;
   border-radius: 10rpx;
   position: relative;
   width: 100%;
@@ -150,12 +153,12 @@
 .myCoupon_couponLeft {
   width: 28.37%;
   height: 100%;
-  background: -webkit-linear-gradient(135deg, #ff8cb4, #ff4083);
   background: -o-linear-gradient(135deg, #ff8cb4, #ff4083);
-  background: -moz-linear-gradient(135deg, #ff8cb4, #ff4083);
+  background: -o-linear-gradient(315deg, #ff8cb4, #ff4083);
   background: linear-gradient(135deg, #ff8cb4, #ff4083);
   padding: 0 13rpx;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 .myCoupon_couponPrice {
@@ -185,7 +188,8 @@
   margin: 0;
   padding: 36rpx 16rpx 0;
   color: #999999;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 .myCoupon_itemTit {
@@ -193,7 +197,8 @@
   margin-bottom: 22rpx;
   color: #323232;
   font-weight: 400;
-  text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+     text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
@@ -211,7 +216,8 @@
   width: 100%;
   margin-top: -6rpx;
   overflow: hidden;
-  text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+     text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
@@ -221,7 +227,6 @@
   width: 22.13%;
   height: 100%;
   -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
 
@@ -236,10 +241,8 @@
 /* 橙色系列优惠券 */
 
 .orangeCoupon .myCoupon_couponLeft {
-  background: -moz-linear-gradient(135deg, #fdc290, #ff5e55);
-  background: -ms-linear-gradient(135deg, #fdc290, #ff5e55);
   background: -o-linear-gradient(135deg, #fdc290, #ff5e55);
-  background: -webkit-linear-gradient(135deg, #fdc290, #ff5e55);
+  background: -o-linear-gradient(315deg, #fdc290, #ff5e55);
   background: linear-gradient(135deg, #fdc290, #ff5e55);
 }
 
@@ -250,9 +253,8 @@
 /* 粉色系列的优惠券 */
 
 .pinkCoupon .myCoupon_couponLeft {
-  background: -webkit-linear-gradient(135deg, #ff8cb4, #ff4083);
   background: -o-linear-gradient(135deg, #ff8cb4, #ff4083);
-  background: -moz-linear-gradient(135deg, #ff8cb4, #ff4083);
+  background: -o-linear-gradient(315deg, #ff8cb4, #ff4083);
   background: linear-gradient(135deg, #ff8cb4, #ff4083);
 }
 
@@ -292,9 +294,16 @@
 }
 
 .dialog_couponList {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
-  align-items: center
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center
 }
 
 .dialog_couponTit {
@@ -307,7 +316,8 @@
   align-items: center; */
   height: 760rpx;
   padding: 0 24rpx;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 .dialog_couponSelBtn {
@@ -316,7 +326,8 @@
   border: 2px solid rgba(50, 50, 50, 0.25);
   border-radius: 50%;
   overflow: hidden;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 .dialog_couponSelBtn.transBor {
@@ -343,16 +354,14 @@
 }
 
 .platformCouponInfoLeft {
-  background: -webkit-linear-gradient(135deg,#ffb473,#ff5f55);
   background: -o-linear-gradient(135deg,#ffb473,#ff5f55);
-  background: -moz-linear-gradient(135deg,#ffb473,#ff5f55);
+  background: -o-linear-gradient(315deg,#ffb473,#ff5f55);
   background: linear-gradient(135deg,#ffb473,#ff5f55);   
 }
 
 .businessCouponInfoLeft {
-  background: -webkit-linear-gradient(135deg,#ff8cb5,#ff4083);
   background: -o-linear-gradient(135deg,#ff8cb5,#ff4083);
-  background: -moz-linear-gradient(135deg,#ff8cb5,#ff4083);
+  background: -o-linear-gradient(315deg,#ff8cb5,#ff4083);
   background: linear-gradient(135deg,#ff8cb5,#ff4083);   
 }
 

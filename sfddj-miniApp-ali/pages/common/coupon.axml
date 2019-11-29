@@ -32,77 +32,49 @@
 		<view class="getCouponList_coupon">
 			<!-- 优惠券内容 -->
 			<view class="getCouponList_couponBox">
-				<form onSubmit="exchangeCoupon">
-					<view class="getCouponList_couponInfo flex_view_row">
-						<!-- 左边 -->
-						<view class="flex_1 flex_view_row">
-							<!-- 图片 -->
-							<view class="getCouponList_couponInfoLeft flex_view_row">
-								<view class="getCouponList_couponInfoImgBox">
-									<image a:if="{{showImage}}" src="{{baseImageUrl}}{{showImage}}" class="all_100"/>
-									<image a:else src="{{baseLocImgUrl}}miniappImg/coupon/couDefaultImg.png" class="all_100"/>
-								</view>
+				<!--<form onSubmit="exchangeCoupon"> -->
+				<view class="getCouponList_couponInfo flex_view_row align_cen justi_cen">
+					<!-- 左边 -->
+					<view class="flex_1 flex_view_row">
+						<!-- 图片 -->
+						<view class="getCouponList_couponInfoLeft flex_view_row">
+							<view class="getCouponList_couponInfoImgBox">
+								<image a:if="{{showImage}}" src="{{baseImageUrl}}{{showImage}}" class="all_100"/>
+								<image a:else src="{{baseLocImgUrl}}miniappImg/coupon/couDefaultImg.png" class="all_100"/>
 							</view>
-							<!-- 右边信息 -->
-							<view class="getCouponList_couponInfoCenter height_100 flex_view_row flex_1">
-								<view class="getCouponList_couponUseType">
-									<!-- 标题与时间 -->
-									<view class="getCouponList_couponTit">
-										<!-- 标题 -->
-										<view class="getCouponList_couponTitH5 width_100">{{couponName}}</view>
-										<!-- 有效时间 -->
-										<view class="getCouponList_couponValidDate color-999999">
-											<view class="font-20">{{beginDateStr}}-{{endDateStr}}</view>
-										</view>
+						</view>
+						<!-- 右边信息 -->
+						<view class="getCouponList_couponInfoCenter height_100 flex_view_row flex_1">
+							<view class="getCouponList_couponUseType">
+								<!-- 标题与时间 -->
+								<view class="getCouponList_couponTit">
+									<!-- 标题 -->
+									<view class="getCouponList_couponTitH5 width_100">{{couponName}}</view>
+									<!-- 有效时间 -->
+									<view class="getCouponList_couponValidDate color-999999">
+										<view class="font-20">{{beginDateStr}}-{{endDateStr}}</view>
 									</view>
-									<!-- 价格 -->
-									<view class="getCouponList_tipUseLimit flex_view_row align_cen">
-										<view class="height_100">
-											<text>￥</text>
-											<text class="font-36">{{costPrice}}</text></view>
-										<view class="getCouponList_couponLimit">
-											<text>满{{needPrice}}元可用</text>
-										</view>
+								</view>
+								<!-- 价格 -->
+								<view class="getCouponList_tipUseLimit flex_view_row align_cen">
+									<view class="height_100">
+										<text>￥</text>
+										<text class="font-36">{{costPrice}}</text></view>
+									<view class="getCouponList_couponLimit">
+										<text>满{{needPrice}}元可用</text>
 									</view>
 								</view>
 							</view>
 						</view>
-						<!-- 右边 -->
-						<!-- 立即领取 -->
-						<form a:if="{{receiveStatus == 0}}" report-submit="true" onSubmit="exchangeCoupon">
-							<button formType="{{!isBing ? '' : 'submit'}}" class="getCouponList_couponInfoRight flex_view_col justi_cen align_cen coupon-right-part" data-index="{{index}}" data-expiretype="{{couponExpireType}}" data-validday="{{validDay}}" data-limittype="{{limitType}}" data-useUrl="{{useLink}}" data-id="{{id}}">
-								<!-- 进度条+按钮 -->
-								<view class="getCouponList_draw">
-									<!-- 进度条 -->
-									<view class="width_100 flex_view_row justi_cen posi_re flex_view_row height_90r">
-										<!--<canvas id="{{canvasId1}}" class="posi_ab" style="width: {{progressW}}px; height: {{progressW}}px;"></canvas><canvas id="{{canvasId}}" class="posi_ab rotate_90" style="width: {{progressW}}px; height: {{progressW}}px;"></canvas> -->
-										<!-- 圆形 -->
-										<!--<image a:if="{{receiveStatus == 2}}" mode="widthFix" src="{{baseLocImgUrl}}miniappImg/icon/icon_progress_gray.png" class="icon_progress"/> -->
-										<image mode="widthFix" src="{{baseLocImgUrl}}miniappImg/icon/icon_progress_orange.png" class="icon_progress"/>
-										<!-- 文字 -->
-										<view class="posi_ab width_100 tex_center flex_view_col align_cen justi_cen getCouponList_drawPercent">
-											<text>已抢</text>
-											<text>{{drawPercent}}%</text>
-										</view>
-									</view>
-									<!-- 按钮 -->
-									<view class="getCouponList_receiveBtn posi_re" data-index="{{index}}" data-expiretype="{{couponExpireType}}" data-validday="{{validDay}}" data-limittype="{{limitType}}" data-useUrl="{{useLink}}">
-										<text>立即领取</text>
-									</view>
-									<!--<view class="getCouponList_receiveBtn posi_re" a:if="{{receiveStatus == 1}}" data-index="{{index}}" data-id="{{id}}" data-expiretype="{{couponExpireType}}" data-validday="{{validDay}}" data-limittype="{{limitType}}" data-useUrl="{{useLink}}"><text>去使用</text></view><view class="getCouponList_receiveBtn posi_re" a:if="{{receiveStatus == 2}}" data-index="{{index}}" data-expiretype="{{couponExpireType}}" data-validday="{{validDay}}"><text>已抢光</text></view> -->
-								</view>
-								<button a:if="{{!isBing}}" class="coupon-button flex_view_row align_cen justi_cen" open-type="{{!isBing ? 'getAuthorize' : ''}}" onGetAuthorize="{{!isBing ? 'getPhoneNumber' : ''}}" scope="{{!isBing ? 'phoneNumber' : ''}}"></button>
-							</button>
-						</form>
-						<!-- 去使用 -->
-						<view a:if="{{receiveStatus == 1}}" class="getCouponList_couponInfoRight flex_view_col justi_cen align_cen coupon-right-part" data-index="{{index}}" onTap="toUseCoupon" data-expiretype="{{couponExpireType}}" data-validday="{{validDay}}" data-limittype="{{limitType}}" data-useUrl="{{useLink}}" data-id="{{id}}">
+					</view>
+					<!-- 右边 -->
+					<!-- 立即领取 -->
+					<form a:if="{{receiveStatus == 0}}" report-submit="true" onSubmit="exchangeCoupon">
+						<button formType="{{!isBing ? '' : 'submit'}}" class="getCouponList_couponInfoRight flex_view_col justi_cen align_cen coupon-right-part" data-index="{{index}}" data-expiretype="{{couponExpireType}}" data-validday="{{validDay}}" data-limittype="{{limitType}}" data-useUrl="{{useLink}}" data-id="{{id}}">
 							<!-- 进度条+按钮 -->
 							<view class="getCouponList_draw">
 								<!-- 进度条 -->
 								<view class="width_100 flex_view_row justi_cen posi_re flex_view_row height_90r">
-									<!--<canvas id="{{canvasId1}}" class="posi_ab" style="width: {{progressW}}px; height: {{progressW}}px;"></canvas><canvas id="{{canvasId}}" class="posi_ab rotate_90" style="width: {{progressW}}px; height: {{progressW}}px;"></canvas> -->
-									<!-- 圆形 -->
-									<!--<image a:if="{{receiveStatus == 2}}" mode="widthFix" src="{{baseLocImgUrl}}miniappImg/icon/icon_progress_gray.png" class="icon_progress"/> -->
 									<image mode="widthFix" src="{{baseLocImgUrl}}miniappImg/icon/icon_progress_orange.png" class="icon_progress"/>
 									<!-- 文字 -->
 									<view class="posi_ab width_100 tex_center flex_view_col align_cen justi_cen getCouponList_drawPercent">
@@ -111,48 +83,73 @@
 									</view>
 								</view>
 								<!-- 按钮 -->
-								<!--<view class="getCouponList_receiveBtn posi_re" a:if="{{receiveStatus == 0}}" data-index="{{index}}" data-expiretype="{{couponExpireType}}" data-validday="{{validDay}}" data-limittype="{{limitType}}" data-useUrl="{{useLink}}"><text>立即领取</text></view> -->
-								<view class="getCouponList_receiveBtn posi_re" data-index="{{index}}" data-id="{{id}}" data-expiretype="{{couponExpireType}}" data-validday="{{validDay}}" data-limittype="{{limitType}}" data-useUrl="{{useLink}}">
-									<text>去使用</text>
-								</view>
-								<!--<view class="getCouponList_receiveBtn posi_re" a:if="{{receiveStatus == 2}}" data-index="{{index}}" data-expiretype="{{couponExpireType}}" data-validday="{{validDay}}"><text>已抢光</text></view> -->
-							</view>
-							<button a:if="{{!isBing}}" class="coupon-button flex_view_row align_cen justi_cen" open-type="{{!isBing ? 'getAuthorize' : ''}}" onGetAuthorize="{{!isBing ? 'getPhoneNumber' : ''}}" scope="{{!isBing ? 'phoneNumber' : ''}}"></button>
-						</view>
-						<!-- 右边 -->
-						<view a:if="{{receiveStatus == 2}}" class="getCouponList_couponInfoRight flex_view_col justi_cen align_cen coupon-right-part">
-							<!-- 进度条+按钮 -->
-							<view class="getCouponList_draw">
-								<!-- 进度条 -->
-								<view class="width_100 flex_view_row justi_cen posi_re flex_view_row height_90r">
-									<!--<canvas id="{{canvasId1}}" class="posi_ab" style="width: {{progressW}}px; height: {{progressW}}px;"></canvas><canvas id="{{canvasId}}" class="posi_ab rotate_90" style="width: {{progressW}}px; height: {{progressW}}px;"></canvas> -->
-									<!-- 圆形 -->
-									<image a:if="{{receiveStatus == 2}}" mode="widthFix" src="{{baseLocImgUrl}}miniappImg/icon/icon_progress_gray.png" class="icon_progress"/>
-									<image a:else mode="widthFix" src="{{baseLocImgUrl}}miniappImg/icon/icon_progress_orange.png" class="icon_progress"/>
-									<!-- 文字 -->
-									<view class="posi_ab width_100 tex_center flex_view_col align_cen justi_cen getCouponList_drawPercent">
-										<text>已抢</text>
-										<text>{{drawPercent}}%</text>
-									</view>
-								</view>
-								<!-- 按钮 -->
-								<view class="getCouponList_receiveBtn posi_re" a:if="{{receiveStatus == 0}}" data-index="{{index}}" data-expiretype="{{couponExpireType}}" data-validday="{{validDay}}" data-limittype="{{limitType}}" data-useUrl="{{useLink}}">
+								<view class="getCouponList_receiveBtn posi_re" data-index="{{index}}" data-expiretype="{{couponExpireType}}" data-validday="{{validDay}}" data-limittype="{{limitType}}" data-useUrl="{{useLink}}">
 									<text>立即领取</text>
-									<!--<button class="coupon-button flex_view_row align_cen justi_cen" open-type="{{!isBing ? 'getAuthorize' : ''}}" onGetAuthorize="{{!isBing ? 'getPhoneNumber' : ''}}" scope="{{!isBing ? 'phoneNumber' : ''}}"></button> -->
 								</view>
-								<view class="getCouponList_receiveBtn posi_re" a:if="{{receiveStatus == 1}}" data-index="{{index}}" data-id="{{id}}" data-expiretype="{{couponExpireType}}" data-validday="{{validDay}}" data-limittype="{{limitType}}" data-useUrl="{{useLink}}">
-									<text>去使用</text>
-									<!--<button class="coupon-button flex_view_row align_cen justi_cen" open-type="{{!isBing ? 'getAuthorize' : ''}}" onGetAuthorize="{{!isBing ? 'getPhoneNumber' : ''}}" scope="{{!isBing ? 'phoneNumber' : ''}}"></button> -->
-								</view>
-								<view class="getCouponList_receiveBtn posi_re" a:if="{{receiveStatus == 2}}" data-index="{{index}}" onTap="" data-expiretype="{{couponExpireType}}" data-validday="{{validDay}}">
-									<text>已抢光</text>
-									<!--<button class="coupon-button flex_view_row align_cen justi_cen" open-type="{{!isBing ? 'getAuthorize' : ''}}" onGetAuthorize="{{!isBing ? 'getPhoneNumber' : ''}}" scope="{{!isBing ? 'phoneNumber' : ''}}"></button> -->
-								</view>
+								<!--<view class="getCouponList_receiveBtn posi_re" a:if="{{receiveStatus == 1}}" data-index="{{index}}" data-id="{{id}}" data-expiretype="{{couponExpireType}}" data-validday="{{validDay}}" data-limittype="{{limitType}}" data-useUrl="{{useLink}}"><text>去使用</text></view><view class="getCouponList_receiveBtn posi_re" a:if="{{receiveStatus == 2}}" data-index="{{index}}" data-expiretype="{{couponExpireType}}" data-validday="{{validDay}}"><text>已抢光</text></view> -->
 							</view>
 							<button a:if="{{!isBing}}" class="coupon-button flex_view_row align_cen justi_cen" open-type="{{!isBing ? 'getAuthorize' : ''}}" onGetAuthorize="{{!isBing ? 'getPhoneNumber' : ''}}" scope="{{!isBing ? 'phoneNumber' : ''}}"></button>
+						</button>
+					</form>
+					<!-- 去使用 -->
+					<view a:if="{{receiveStatus == 1}}" class="getCouponList_couponInfoRight flex_view_col justi_cen align_cen coupon-right-part" data-index="{{index}}" onTap="toUseCoupon" data-expiretype="{{couponExpireType}}" data-validday="{{validDay}}" data-limittype="{{limitType}}" data-useUrl="{{useLink}}" data-id="{{id}}">
+						<!-- 进度条+按钮 -->
+						<view class="getCouponList_draw">
+							<!-- 进度条 -->
+							<view class="width_100 flex_view_row justi_cen posi_re height_90r">
+								<!--<canvas id="{{canvasId1}}" class="posi_ab" style="width: {{progressW}}px; height: {{progressW}}px;"></canvas><canvas id="{{canvasId}}" class="posi_ab rotate_90" style="width: {{progressW}}px; height: {{progressW}}px;"></canvas> -->
+								<!-- 圆形 -->
+								<!--<image a:if="{{receiveStatus == 2}}" mode="widthFix" src="{{baseLocImgUrl}}miniappImg/icon/icon_progress_gray.png" class="icon_progress"/> -->
+								<image mode="widthFix" src="{{baseLocImgUrl}}miniappImg/icon/icon_progress_orange.png" class="icon_progress"/>
+								<!-- 文字 -->
+								<view class="posi_ab width_100 tex_center flex_view_col align_cen justi_cen getCouponList_drawPercent">
+									<text>已抢</text>
+									<text>{{drawPercent}}%</text>
+								</view>
+							</view>
+							<!-- 按钮 -->
+							<!--<view class="getCouponList_receiveBtn posi_re" a:if="{{receiveStatus == 0}}" data-index="{{index}}" data-expiretype="{{couponExpireType}}" data-validday="{{validDay}}" data-limittype="{{limitType}}" data-useUrl="{{useLink}}"><text>立即领取</text></view> -->
+							<view class="getCouponList_receiveBtn posi_re" data-index="{{index}}" data-id="{{id}}" data-expiretype="{{couponExpireType}}" data-validday="{{validDay}}" data-limittype="{{limitType}}" data-useUrl="{{useLink}}">
+								<text>去使用</text>
+							</view>
+							<!--<view class="getCouponList_receiveBtn posi_re" a:if="{{receiveStatus == 2}}" data-index="{{index}}" data-expiretype="{{couponExpireType}}" data-validday="{{validDay}}"><text>已抢光</text></view> -->
 						</view>
+						<button a:if="{{!isBing}}" class="coupon-button flex_view_row align_cen justi_cen" open-type="{{!isBing ? 'getAuthorize' : ''}}" onGetAuthorize="{{!isBing ? 'getPhoneNumber' : ''}}" scope="{{!isBing ? 'phoneNumber' : ''}}"></button>
 					</view>
-				</form>
+					<!-- 右边 -->
+					<view a:if="{{receiveStatus == 2}}" class="getCouponList_couponInfoRight flex_view_col justi_cen align_cen coupon-right-part">
+						<!-- 进度条+按钮 -->
+						<view class="getCouponList_draw">
+							<!-- 进度条 -->
+							<view class="width_100 flex_view_row justi_cen posi_re height_90r">
+								<!--<canvas id="{{canvasId1}}" class="posi_ab" style="width: {{progressW}}px; height: {{progressW}}px;"></canvas><canvas id="{{canvasId}}" class="posi_ab rotate_90" style="width: {{progressW}}px; height: {{progressW}}px;"></canvas> -->
+								<!-- 圆形 -->
+								<image a:if="{{receiveStatus == 2}}" mode="widthFix" src="{{baseLocImgUrl}}miniappImg/icon/icon_progress_gray.png" class="icon_progress"/>
+								<image a:else mode="widthFix" src="{{baseLocImgUrl}}miniappImg/icon/icon_progress_orange.png" class="icon_progress"/>
+								<!-- 文字 -->
+								<view class="posi_ab width_100 tex_center flex_view_col align_cen justi_cen getCouponList_drawPercent">
+									<text>已抢</text>
+									<text>{{drawPercent}}%</text>
+								</view>
+							</view>
+							<!-- 按钮 -->
+							<view class="getCouponList_receiveBtn posi_re" a:if="{{receiveStatus == 0}}" data-index="{{index}}" data-expiretype="{{couponExpireType}}" data-validday="{{validDay}}" data-limittype="{{limitType}}" data-useUrl="{{useLink}}">
+								<text>立即领取</text>
+								<!--<button class="coupon-button flex_view_row align_cen justi_cen" open-type="{{!isBing ? 'getAuthorize' : ''}}" onGetAuthorize="{{!isBing ? 'getPhoneNumber' : ''}}" scope="{{!isBing ? 'phoneNumber' : ''}}"></button> -->
+							</view>
+							<view class="getCouponList_receiveBtn posi_re" a:if="{{receiveStatus == 1}}" data-index="{{index}}" data-id="{{id}}" data-expiretype="{{couponExpireType}}" data-validday="{{validDay}}" data-limittype="{{limitType}}" data-useUrl="{{useLink}}">
+								<text>去使用</text>
+								<!--<button class="coupon-button flex_view_row align_cen justi_cen" open-type="{{!isBing ? 'getAuthorize' : ''}}" onGetAuthorize="{{!isBing ? 'getPhoneNumber' : ''}}" scope="{{!isBing ? 'phoneNumber' : ''}}"></button> -->
+							</view>
+							<view class="getCouponList_receiveBtn posi_re" a:if="{{receiveStatus == 2}}" data-index="{{index}}" onTap="" data-expiretype="{{couponExpireType}}" data-validday="{{validDay}}">
+								<text>已抢光</text>
+								<!--<button class="coupon-button flex_view_row align_cen justi_cen" open-type="{{!isBing ? 'getAuthorize' : ''}}" onGetAuthorize="{{!isBing ? 'getPhoneNumber' : ''}}" scope="{{!isBing ? 'phoneNumber' : ''}}"></button> -->
+							</view>
+						</view>
+						<button a:if="{{!isBing}}" class="coupon-button flex_view_row align_cen justi_cen" open-type="{{!isBing ? 'getAuthorize' : ''}}" onGetAuthorize="{{!isBing ? 'getPhoneNumber' : ''}}" scope="{{!isBing ? 'phoneNumber' : ''}}"></button>
+					</view>
+				</view>
+				<!--</form> -->
 			</view>
 			<!-- 右边的虚线 -->
 			<view class="getCouponList_gapBox gapBox_right">

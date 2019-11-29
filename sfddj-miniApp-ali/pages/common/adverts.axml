@@ -67,7 +67,7 @@
         </view>
         <!-- 商品 -->
         <view>
-          <scroll-view scroll-x class="goods-scrollx-view flex_view_row" scroll-with-animation="true" class="width_100" data-fatherIndex="{{index}}" onScroll="scrollGoods">
+          <scroll-view scroll-x class="goods-scrollx-view" scroll-with-animation="true" class="width_100" data-fatherIndex="{{index}}" onScroll="scrollGoods">
             <block a:for="{{item.groupGoodsVoList}}" a:for-index="idx">
               <!--<template is="itemGoodsScrollX" data="{{item: item,baseImageUrl:baseImageUrl,baseLocImgUrl: baseLocImgUrl}}"/> -->
               <view class='goodsViewBox'>
@@ -106,7 +106,7 @@
         </view>
         <!-- 下面商品列表 -->
         <view class='goodsListBox'>
-          <scroll-view scroll-x class="goods-scrollx-view flex_view_row" scroll-with-animation="true" class="width_100" data-fatherIndex="{{index}}" onScroll="scrollGoods">
+          <scroll-view scroll-x class="goods-scrollx-view" scroll-with-animation="true" class="width_100" data-fatherIndex="{{index}}" onScroll="scrollGoods">
             <block a:for="{{item.groupGoodsVoList}}" a:for-index="idx">
               <!--<template is="itemGoodsScrollX" data="{{item: item,baseImageUrl:baseImageUrl,baseLocImgUrl: baseLocImgUrl}}"/> -->
               <view class='goodsViewBox'>
@@ -267,7 +267,7 @@
         </view>
         <!-- 商品 -->
         <view>
-          <scroll-view scroll-x class="goods-scrollx-view flex_view_row" scroll-with-animation="true" class="width_100" data-fatherIndex="{{index}}" onScroll="scrollGoods">
+          <scroll-view scroll-x class="goods-scrollx-view" scroll-with-animation="true" class="width_100" data-fatherIndex="{{index}}" onScroll="scrollGoods">
             <block a:for="{{item.secondKillModuleVO.secondKillGoods}}" a:for-index="idx">
               <view class='goodsViewBox'>
                 <navigator url="/pages/shopping/goodsDetail/goodsDetail?goodsSn={{item.goodsSn}}&goodsId={{item.goodsId}}" open-type="navigate" hover-class="none" class="posi_re width_260r {{'js_adsGoodsList' + index + '_' + idx }}">

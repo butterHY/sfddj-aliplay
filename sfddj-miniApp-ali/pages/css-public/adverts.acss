@@ -43,7 +43,8 @@
 .bannerNav {
   height: 260rpx;
   padding: 0 10rpx;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 .borderRa_15r {
@@ -96,4 +97,9 @@
 
 .goodsViewBox .goodsShowImg {
   border-radius: 10rpx;
+}
+
+.goods-scrollx-view {
+	white-space: nowrap;
+	font-size: 0;
 }
