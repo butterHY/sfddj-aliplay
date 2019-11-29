@@ -212,7 +212,7 @@ Page({
 			cannotSubmit: true
 		});
 		if (!that.data.isRefund) {
-			gooodsStatus = that.data.tap1 ? '未收到商品' : '已收到商品';
+			gooodsStatus = that.data.switchIndex == 0 ? '未收到商品' : '已收到商品';
 		} else {
 			gooodsStatus = '未收到商品';
 		}
