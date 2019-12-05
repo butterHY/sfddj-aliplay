@@ -1,4 +1,5 @@
 <import src="../../common/item-goods-list"/>
+<import src="../../common/item-store-list"/>
 <import src="../../common/hotWords"/>
 <!-- 加载中 -->
 <view a:if="{{!loadComplete}}">
@@ -15,7 +16,9 @@
   <no-wifi>
   </no-wifi>
 </view> -->
-<scroll-view a:else scroll-y class="flex_view_col flex_1 all_100v" onScrollToLower="scrollToLower" onScrollToUpper="scrollToUpper" onScroll="scrollPage">
+
+<!-- onScrollToUpper="scrollToUpper"  -->
+<scroll-view a:else scroll-y class="flex_view_col flex_1 all_100v" onScrollToLower="scrollToLower" onScroll="scrollPage">
   <!--搜索框部分-->
   <view class="searchFrame">
     <view class="posi_re">
@@ -26,30 +29,64 @@
       </view>
     </view>
   </view>
-  <!--搜索结果排序条件-->
-  <view class="resultSort font-30 color-323232 {{scrollTop ? 'scrollTop':''}}">
-    <text data-sort-type="0" class="{{sortIndex == 0 ? 'color-ff5353' : ''}}" onTap="chooseSort">综合排序
-    </text>
-    <text data-sort-type="1" class="{{sortIndex == 1 ? 'color-ff5353' : ''}}" onTap="chooseSort">销量优先
-    </text>
-    <view data-sort-type="2" class="{{sortIndex == 2 ? 'color-ff5353' : ''}}" onTap="chooseSort">      价格      
-      <view class="resultSort_price">
-        <image src="{{priceHigher ? baseLocImgUrl+'miniappImg/icon/up_sel.png' : baseLocImgUrl+'miniappImg/icon/up_unsel.png'}}" class="resultSort_priceIcon resultSort_priceIcon_up">
-        </image>
-        <image src="{{priceHigher ? baseLocImgUrl+'miniappImg/icon/down_unsel.png' : baseLocImgUrl+'miniappImg/icon/down_sel.png'}}" class="resultSort_priceIcon">
-        </image>
-      </view>
+  <view class="goodsAndStore">
+    <view class="flex_1 height_100 flex_view_row  justi_cen" >
+      <view class="{{goodsOrStore == '0' ? 'color-ff5353 border-b' : '' }} height_100" data-goodsOrStore ="0" onTap="setGoodsOrStore">商品</view>
+    </view>
+    <view class="flex_1 height_100 flex_view_row  justi_cen">
+      <view class="{{goodsOrStore == '1' ? 'color-ff5353 border-b' : '' }} height_100" data-goodsOrStore ="1" onTap="setGoodsOrStore">店铺</view>
     </view>
   </view>
+  <!--搜索结果排序条件-->
+  <view class="resultSort font-30 color-323232 {{scrollTop ? 'scrollTop' : ''}}" a:if="{{goodsOrStore == '0'}}">
+    <view data-sort-type="0" class="{{sortIndex == 0 ? 'color-ff5353 border-b' : ''}} flex_1 tex_center" onTap="chooseSort">综合
+      <view class="resultSort_price">
+        <image src="{{priceHigher ? baseLocImgUrl+'miniappImg/icon/up_sel.png' : baseLocImgUrl+'miniappImg/icon/up_unsel.png'}}" class="resultSort_priceIcon resultSort_priceIcon_up"></image>
+        <image src="{{priceHigher ? baseLocImgUrl+'miniappImg/icon/down_unsel.png' : baseLocImgUrl+'miniappImg/icon/down_sel.png'}}" class="resultSort_priceIcon"></image>
+      </view>
+    </view>
+    <view data-sort-type="1" class="{{sortIndex == 1 ? 'color-ff5353 border-b' : ''}} flex_1 tex_center" onTap="chooseSort">销量
+      <view class="resultSort_price">
+        <image src="{{priceHigher ? baseLocImgUrl+'miniappImg/icon/up_sel.png' : baseLocImgUrl+'miniappImg/icon/up_unsel.png'}}" class="resultSort_priceIcon resultSort_priceIcon_up"></image>
+        <image src="{{priceHigher ? baseLocImgUrl+'miniappImg/icon/down_unsel.png' : baseLocImgUrl+'miniappImg/icon/down_sel.png'}}" class="resultSort_priceIcon"></image>
+      </view>
+    </view>
+    <view data-sort-type="2" class="{{sortIndex == 2 ? 'color-ff5353 border-b' : ''}} flex_1 tex_center" onTap="chooseSort">价格      
+      <view class="resultSort_price">
+        <image src="{{priceHigher ? baseLocImgUrl+'miniappImg/icon/up_sel.png' : baseLocImgUrl+'miniappImg/icon/up_unsel.png'}}" class="resultSort_priceIcon resultSort_priceIcon_up"></image>
+        <image src="{{priceHigher ? baseLocImgUrl+'miniappImg/icon/down_unsel.png' : baseLocImgUrl+'miniappImg/icon/down_sel.png'}}" class="resultSort_priceIcon"></image>
+      </view>
+    </view>
+    <view data-sort-type="3" class="{{sortIndex == 3 ? 'color-ff5353 border-b' : ''}} flex_1 tex_center" onTap="chooseSort">好评
+      <view class="resultSort_price">
+        <image src="{{priceHigher ? baseLocImgUrl+'miniappImg/icon/up_sel.png' : baseLocImgUrl+'miniappImg/icon/up_unsel.png'}}" class="resultSort_priceIcon resultSort_priceIcon_up"></image>
+        <image src="{{priceHigher ? baseLocImgUrl+'miniappImg/icon/down_unsel.png' : baseLocImgUrl+'miniappImg/icon/down_sel.png'}}" class="resultSort_priceIcon"></image>
+      </view>
+    </view>
+    <view class="queue height_100" onTap="isTwoColumns">
+      <text class="iconfont icon-check-cir font-38"></text><!-- <!-- icon-check -->
+    </view>
+  </view>
+
   <!--下面的内容  -->
   <view class="{{scrollTop ? 'padTop_78' : ''}} flex_view_col flex_1">
-    <!-- <view class='flex_view_col flex_1' style='padding-top:78rpx'> -->
-    <!-- <scroll-view scroll-y style=''>  -->
+    <!-- 这个 resultList 得分情况判断 -->
     <!--搜索结果列表-->
-    <view class="resultList">
-      <template is="itemGoodsList" data="{{...goodsItem,baseImageUrl,baseLocImgUrl,index,clickTap: true}}" a:for="{{goodsList}}" a:for-item="goodsItem">
-      </template>
+    <view class="{{ activity ? 'activity' : 'resultList'}} clearfix" a:if="{{goodsOrStore == '0' && goodsList && goodsList.length > 0}}">
+      <block a:for="{{goodsList}}" a:for-item="goodsItem" a:key="goodsList">
+        <template is="itemGoodsList" data="{{...goodsItem,baseImageUrl,baseLocImgUrl,index,activity,clickTap: true,}}">
+        </template>
+      </block>
     </view>
+    <view class="storeBox" a:elif="{{goodsOrStore == '1' && storeList && storeList.length > 0}}">
+      <block  a:for="{{storeList}}" a:for-item="sotreItem" a:key="storeList">
+        <template is="itemStoreList" data="{{...sotreItem,baseImageUrl,baseLocImgUrl,index,sotreItem}}"></template>
+      </block>
+    </view>
+
+
+    
+
     <!--没有更多-->
     <view a:if="{{!hasMore}}">
       <view class="loading_view font-24 color-b1b6bb">          没有更多了        
@@ -75,7 +112,6 @@
         </view>
       </view>
     </view>
-    <!-- </scroll-view> -->
   </view>
   <!--加载数据进度条-->
   <view class="loading_view" a:if="{{isLoadMore}}">

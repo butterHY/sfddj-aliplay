@@ -28,7 +28,7 @@ Page({
 		product: '',                            // 当前选中的规格
 		quantity: 1,                            // 规格的数量
 		goodsSn: '',
-		goodsId: '',                            // 通过 query 传进来商品的 goodsSn 和 goodsId ，但在此商品详情页中并没有使用这个传进来的 goodsId；
+		goodsId: '',                            // 通过 query 传进来商品的 goodsSn 和 goodsId 
 		loadComplete: false,                    // 页面加载完成
 		loadFail: false,                        // 页面加载失败
 		errMsg: '',
@@ -40,12 +40,8 @@ Page({
 		wifiAvailable: true,
 		goodsSecondKill: null,                    // 秒杀数据
 		isonLoad: false,                          // 页面是否是初始化
-		isFirstTime: true,                        // 是否是第一次执行倒计时
 		spikePrice: null,                         // 秒杀价格
 		isSpikeOver: false,                       // 秒杀倒计时是否完毕
-		commentScore: 0,                          //商品好评度
-		start: 0,
-		limit: 10,
 		showGuessPosition: 10000,
 		lastShowGuessPosition: 11000,
 		floatVal: 50,
@@ -60,7 +56,7 @@ Page({
     suctionTop: 1,
     flag: true,                                 // 监听产详和售后的节流开关
     isTitleViewClone: false,                    // 商品详情页和服务售后的导航克隆,
-    startCoupon: 0,                             
+    startCoupon: 0,                           
 		limitCoupon: 4,
     hasMore: true,
 		isLoadMore: false,
@@ -68,7 +64,8 @@ Page({
     couponDataList: [],
 
     // 收货地址弹窗
-    isShowAddressPop: false, 
+    isShowAddressPop: false,
+		nonDeliveryArea: false, 										// 是否是不发货地区 
 
     // 规格数据
     goods: null,                                // 新的商品详情页接口的商品数据
@@ -83,9 +80,9 @@ Page({
     // 返回顶部或首页的导航的节流开关
     setComeBack: true,
 
-    pageOptions: {},                            //商详页打开时所带的参数
-    user_memId: '默认是会员',                   //是否存在 memberId，判断是否绑定手机号
-    priceInfo: {}                              // 商详页不同商品类型的价格和积分和返现数据；
+    pageOptions: {},                            // 商详页打开时所带的参数
+    user_memId: '默认是会员',                   //  是否存在 memberId，判断是否绑定手机号
+    priceInfo: {}                              //  商详页不同商品类型的价格和积分和返现数据；
 	},
 
 	onLoad: async function(query) {
@@ -114,14 +111,18 @@ Page({
     let defaultAddress = my.getStorageSync({
       key: 'defaultAddress', // 缓存数据的默认地址
     });
+		console.log('全局的 ID',getApp().globalData.NowAddrId);
+		
 		// 新的写法，如果显示，只要不是页面初始化，那就重新执行倒计时，因为我得判断活动是否过期；
 		// 最新的写法，如果是从确认订单页返回再返回，应该重新请求数据以更新库存，还有如果现在还不是秒杀商品，但返回后刚好这个商品正处于秒杀活动时间内，这就得重新请求数据获取时间进行倒计时
 		if (!that.data.isonLoad) {
-      console.log('我只是显示')
+      console.log('我只是显示');
+			that.data.startCoupon = 0;
+			that.data.limitCoupon = 4;
 			clearTimeout(getApp().globalData.goodsDetail_spikeTime);
 			var isSuccess = await that.getNewGoodsDetail(that.data.goodsSn);           // 旧的商品详情数据请求 
 			if (isSuccess.type && that.data.goods.secKillStatus) {
-				that.spikePrice.getTimes(that.data.isFirstTime)
+				that.spikePrice.getTimes(true)
 			}
 		}
 	},
@@ -136,7 +137,7 @@ Page({
 
 	// 页面被关闭
 	onUnload() {
-		clearTimeout(getApp().globalData.goodsDetail_spikeTime)
+		clearTimeout(getApp().globalData.goodsDetail_spikeTime);
 	},
 
 	/**
@@ -247,7 +248,6 @@ Page({
 		var that = this;
 		return new Promise((reslove, reject) => {
 			sendRequest.send(constants.InterfaceUrl.GOODS_DETAIL, { goodsSn: goodsSn }, function(res) {
-
 				//当请求返回成功才请求评论和猜你喜欢的数据
 				if (res.data.message == 'success') {
 					var id = res.data.result.id;
@@ -414,23 +414,43 @@ Page({
             that.data.allProduct = resData.goodsShowVO.products;
             that.data.xgCount = resData.goodsShowVO.xgCount;
 				    that.data.SFmember = resData.goodsShowVO.memberGoods ? true : false;                  // 判断是否是会员商品
-            if(!resData.addressList || resData.addressList.length <= 0) {
-              // 调用 API 获取当前用户地址
-              that.getAddress();
-            } else if(resData.addressList.length > 0) {
-              !resData.addressList.find(value =>  value.isDefault) ? resData.addressList[0].isDefault = true : '';
+						// that.data.addressList = resData.addressList;
+						that.data.addressList = null;
+						that.data.goods.nonDeliveryArea = that.data.goods.nonDeliveryArea.split(',');
+            if(!that.data.addressList || that.data.addressList.length <= 0) {											// 如果是没有收货地址说明用户没有登录 ， 调用 API 获取当前用户地址
+						console.log('===============================')
+              that.getAddress();																																	// 没有登录在下单的时候就是快捷下单，需手动填写收货地址；
+            } else if(that.data.addressList.length > 0) {
+							console.log('+++++++++++++++++++++++++++')
+							let detailAddressId = my.getStorageSync({ key: 'detailAddressId' }).data;
+							if( detailAddressId ) {																																																											
+								if( that.data.addressList.find(value => value.id == detailAddressId) ) {					// 有缓存的选中地址，且数据地址中有则说明用户还在使用该地址，设置这一条数据为显示地址
+									that.data.addressList.forEach(value => (value.id == detailAddressId ? value.isDefault = true : value.isDefault = false));
+								} else {																																					// 有缓存的选中地址，且数据的地址中没有则说明用户已经删除了，故删除缓存选中地址；
+									my.removeStorageSync( {key: 'detailAddressId'} );
+									!that.data.addressList.find(value => value.isDefault) ? that.data.addressList[0].isDefault = true : '';
+								}
+							} else {								  																													// 没有缓存的选中地址则使用数据中的默认地址
+								!that.data.addressList.find(value => value.isDefault) ? that.data.addressList[0].isDefault = true : '';
+							}
+							console.log(detailAddressId);
+							that.auto_send();
             }
+						
+						console.log(that.data.addressList);
+						that.setCategoryData();
     
             // 判断是否积分商品,积分商品type==3, 判断是否购物返现商品,积分商品type==4
             var type = '';
             resData.goodsShowVO.jifenStatus ? type = 3 : (resData.goodsShowVO.returnMoneyStatus ? type = 4 : type = '');
 
             if (resData.goodsShowVO.products) {
-              let defaultProducts = resData.goodsShowVO.products.find(value => value.isDefault == true);
-                  that.data.theMemberPoint = defaultProducts.memberPoint;                         // 会员积分
-                  that.data.theCostMemberScore = defaultProducts.costMemberScore;                 // 兑换会员积分
-                  that.data.theAwardMemberScore = defaultProducts.awardMemberScore;               // 奖励会员积分
-                  that.data.specType == 'SINGLE' ? that.data.iavPath = defaultProducts.iavPath : that.data.iavPath = [];
+              let defaultProducts = that.data.allProduct.find(value => value.isDefault == true);
+								console.log(defaultProducts)
+								that.data.theMemberPoint = defaultProducts.memberPoint;                         // 会员积分
+								that.data.theCostMemberScore = defaultProducts.costMemberScore;                 // 兑换会员积分
+								that.data.theAwardMemberScore = defaultProducts.awardMemberScore;               // 奖励会员积分
+								that.data.specType == 'SINGLE' ? that.data.iavPath = defaultProducts.iavPath : that.data.iavPath = [];
             }
 
         // 测试用的，让库存为 0
@@ -450,11 +470,14 @@ Page({
                     let matching = that.data.allProduct.find(val => value.valueId == parseInt(val.iavPath));
                     console.log(matching);
                     matching && matching.store == 0 ? value.store = 0 : '';
-                    matching && matching.imgPath ? value.imgPath = matching.imgPath : '';
+										matching && !matching.imgPath ? matching.imgPath = that.data.goods.goodsImages[0] : '';
+                    matching && matching.imgPath ? value.imgPath = matching.imgPath : value.imgPath = that.data.goods.goodsImages[0];
                   })
                 })
               }
 
+
+					  console.log(that.data.allProduct)
             console.log(that.data.goodsSpecMap);
 
             // that.data.iavPath 在多选和单选的规格中是字符串，在任选规格中需要是数组;
@@ -468,6 +491,7 @@ Page({
             var activityList = that.data.goods.activity ? that.data.goods.activity : {};  // 秒杀数据
             activityList.totalStock = that.data.goods.secKillTotalCount;
             activityList.totalSaleVolume = that.data.goods.secKillTotalSale;
+						activityList.secKillPrice = that.data.goods.products.activityPrice;
 
             // 测试用  
             console.log('是否已售罄总库存，goodsStore', that.data.goods.goodsStore);
@@ -495,7 +519,7 @@ Page({
               // theMemberPoint: that.data.theMemberPoint ? that.data.theMemberPoint : 0,                  // 这是获取会员积分
               // theCostMemberScore: that.data.theCostMemberScore ? that.data.theCostMemberScore : 0,      // 顺丰会员会员消耗积分
 					    theAwardMemberScore: that.data.theAwardMemberScore ? that.data.theAwardMemberScore : 0,   // 顺丰会员会员奖励积分
-              addressList: resData.addressList,                                                         // 用户的收货地址
+              addressList: that.data.addressList,                                                         // 用户的收货地址
               otherGoods: resData.supplierGoodsList,                                                    // 商家的其他商品，
               goodsId: that.data.goodsId,
             })
@@ -531,7 +555,7 @@ Page({
 	// 获取达观推荐的商品---猜你喜欢
 	async getGuessLike(goodsId, isFirst) {
     let that = this;
-    http.get(api.GUESSLIKE,  { start: that.data.start, limit: that.data.limit, sceneType: 'detail', is_first: isFirst, goodsId }, 
+    http.get(api.GUESSLIKE,  { start: 0, limit: 10, sceneType: 'detail', is_first: isFirst, goodsId }, 
       function(res) {
         let guessLikeGoods = res.data.data ? res.data.data : []
         that.setData({
@@ -1237,7 +1261,11 @@ Page({
 		var that = this;
     // 友盟统计 购买便统计
     that.umaTrackEvent('buyNow');
-
+		let detailAddressId = my.getStorageSync({ key: 'detailAddressId' }).data;
+		console.log(detailAddressId);
+		if(that.data.addressList && that.data.addressList.length && detailAddressId) {
+			 getApp().globalData.NowAddrId = detailAddressId; 
+		}
 		my.navigateTo({
 			url: '/pages/shopping/confirmOrder/confirmOrder?&productId=' + that.data.product.productId + '&quantity=' + that.data.quantity + '&SFmember=' + that.data.SFmember
 		});
@@ -1474,6 +1502,8 @@ Page({
     let ruleSign = e.currentTarget.dataset.ruleSign;
     http.post(api.GOODSDETAIL.GOODS_DETAIL_DRAWCOUPON, {ruleSign}, function(res) {
       let resData = res.data.data;
+			console.log(resData)
+			console.log(index)
       if(resData && resData.length > 0) {
          resData[0].beginDateStr = utils.pointFormatTime(new Date(resData[0].beginDate));
          resData[0].endDateStr = utils.pointFormatTime(new Date(resData[0].endDate));
@@ -1485,6 +1515,8 @@ Page({
          that.setData({
            couponDataList: that.data.couponDataList
          })
+
+				 console.log(that.data.couponDataList)
       }
     }, function(err) {
       my.showToast({
@@ -1573,14 +1605,17 @@ Page({
 
    // 调用 API 获取当前用户地址
   getAddress() {
-    const that = this;
+    let that = this;
     my.showLoading();
     my.getLocation({ type: 1,
         success(res) {
           my.hideLoading();
           that.setData({
-            address: res.province + ' ' + res.city + ' ' + res.district 
+            address: res
           })
+					console.log(that.data.address)
+					console.log(that.data.addressList)
+					that.auto_send();
         },
         fail(err) {
           // my.hideLoading();
@@ -1710,7 +1745,7 @@ Page({
         var multiProduct = that.data.allProduct.filter(valProduct => valProduct.iavPath.indexOf(val.valueId) > -1);
         console.log(multiProduct)
         console.log('找到一个子规格对应的规格组合 --------');
-        if(multiProduct.every(valStore =>  valStore.store == 0 || valStore.store == '')) {user_memId
+        if(multiProduct.every(valStore =>  valStore.store == 0 || valStore.store == '')) {
           console.log('这个子规格的规格组合的库存都为 0', val)
           val.store = 0;
         } else if(val.store == 0) {
@@ -1864,8 +1899,8 @@ Page({
 
       // 会员商品使用会员价格
       if ( that.data.SFmember ) {
-          that.data.priceInfo.price = that.data.goods.defaultMemberPrice;
-          that.data.priceInfo.oldPrice = that.data.goods.defaultPrice;
+				that.data.priceInfo.price = that.data.goods.defaultMemberPrice;
+				that.data.priceInfo.oldPrice = that.data.goods.defaultPrice;
       }
 
       // 全球购状态
@@ -1889,5 +1924,46 @@ Page({
       that.setData({
         priceInfo: that.data.priceInfo
       })
-  }
+  },
+
+	selectAddress(e, index) {
+		let that = this;
+		my.setStorageSync({
+			key: 'detailAddressId',
+			data: e.currentTarget.dataset.addressId
+		});
+		console.log('当前点击的 ID', e.currentTarget.dataset.addressId);	
+		console.log('全局的 ID', my.getStorageSync({ key: 'detailAddressId' }).data);
+		that.data.addressList.find(value => value.isDefault).isDefault = false;
+		that.data.addressList[e.currentTarget.dataset.index].isDefault = true;
+		that.setData({addressList: that.data.addressList});
+		that.auto_send();
+		console.log(that.data.addressList);
+	},
+
+	auto_send() {
+		let that = this;
+		let defaultAddress = null;
+		if(that.data.addressList && that.data.addressList.length > 0) {
+			defaultAddress = that.data.addressList.find(value => value.isDefault);
+		} else if (that.data.address && that.data.address.province) {
+			defaultAddress = that.data.address;
+		}
+
+		that.data.nonDeliveryAre = that.data.goods.nonDeliveryArea.some(value => defaultAddress.province.indexOf(value) > -1) ?  true :  false;
+		that.setData({ nonDeliveryArea: that.data.nonDeliveryAre });
+		console.log(that.data.goods.nonDeliveryArea)
+		console.log(that.data.nonDeliveryArea)
+	},
+
+	setCategoryData() {
+		let that = this;
+		my.setStorageSync({
+			key: constants.StorageConstants.detfatherCategory,	
+			data: {
+				id: that.data.goods.categoryVO.parentId,
+				name: "",
+			}
+		});
+	}
 });

@@ -48,6 +48,7 @@ var UrlConstants = {
 	childrenCategoryKey: "childrenCategoryKey",
 	searchWordsKey: 'searchWordsKey',
 	fatherCategoryId: "fatherCategoryId",
+	detfatherCategory: "detfatherCategory",
 	isMember: 'isMebmer',
 	myPhone: 'myPhone'
 
