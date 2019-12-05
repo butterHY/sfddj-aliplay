@@ -55,6 +55,12 @@ export default {
 	SIGNIN: {
 		MEMBER_SIGN: '/m/u/1.0/member/newVersion/memberSign',     // 点击签到按钮请求接口
 		PRIZE_DETAIL: '/m/u/1.0/member/newVersion/prizeDetail',   // 会员签到奖励详情
+	},
+
+	search: {
+		'GOODSSEARCH': '/m/c/1.0/opensearch/goodsSearch',													// 根据关键字分页搜索商品接口
+		'GOODSSUGGEST': '/m/c/1.0/opensearch/goodsSuggest',												// 根据关键字返回智能推荐搜索片段
+		'SUPPLIERSEARCH': '/m/c/1.0/opensearch/supplierSearch',										// 根据关键字分页搜索店铺接口
 	}
 
 

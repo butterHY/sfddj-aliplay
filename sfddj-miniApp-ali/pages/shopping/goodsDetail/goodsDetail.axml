@@ -26,7 +26,7 @@
   <!-- 商品图片轮播图                     已完成新接口字段更换-->
   <view class="posi_re">
     <swiper indicator-dots="true" class="swiper_img" indicator-active-color="#ff5353" indicator-color='rgba(0,0,0,.3)' autoplay="true" circular="true">
-      <block a:for="{{goods.goodsImages}}">
+      <block a:for="{{goods.goodsImages}}" a:key="*this">
         <swiper-item>
           <image src="{{baseImageUrl}}{{item}}" class="swiper_img" data-current="{{item}}" data-urls="{{goods.goodsImages}}" onTap="commentViewTap"/>
         </swiper-item>
@@ -49,7 +49,7 @@
   <view class="{{goods.secKillStatus ? 'marBot_20' : ''}}">
     <!-- goodsSecondKill 应该放置一个默认价格，因为这样在改动规格的时候倒计时模块展示的价格才不会跟着规格改变，原有版本并没有这个效果 -->
     <!-- a:if="{{goodsSecondKill}}" -->
-    <spike-price secKillStatus="{{goods.secKillStatus}}" goodsSecondKill="{{goodsSecondKill}}" viewStatus="{{goods.viewStatus}}" isFirstTime="{{isFirstTime}}" oldPrice="{{goods.defaultPrice}}" onSpikeOver="onSpikeOver" ></spike-price> 
+    <spike-price secKillStatus="{{goods.secKillStatus}}" goodsSecondKill="{{goodsSecondKill}}" viewStatus="{{goods.viewStatus}}" isFirstTime="{{true}}" oldPrice="{{goods.defaultPrice}}" onSpikeOver="onSpikeOver" ></spike-price> 
   </view>
 
   <!-- 商品价格、销量 -->
@@ -107,11 +107,11 @@
       <view class="couponTitle">
         <image src="{{baseImageLocUrl}}miniappImg/public/goodsDetail/icon_coupon.png" class="width_100 height_100" mode="widthFix"></image>
       </view>
-      <view class="couponName" a:for="{{couponDataList}}">
+      <view class="couponName" a:for="{{couponDataList}}" a:key="*this">
         <block a:if="{{index == 0 || index == 1 || index == 2}}">满{{item.needPrice}}减{{item.costPrice}}</block>
       </view>
     </view>
-    <view>
+    <view class="getCouponText">
       <text class="color-a1a0a0">领券</text>
       <text class="icon-href-right font-22 color-c7c7cc marLeft_20"></text>
     </view>
@@ -122,8 +122,8 @@
     <view class="coupon-popup">
       <view class="flex_view_col all_100">
         <scroll-view class="flex_1" scroll-y="{{true}}" onScrollToLower="lowLoadMore">
-          <block a:for="{{couponDataList}}" a:key="couponDataList">
-             <template is="couponItem" data="{{item,isExpired: false, pageFrom: 'goodsDetail', user_memId, baseImageLocUrl}}"></template>
+          <block a:for="{{couponDataList}}" a:key="*this">
+             <template is="couponItem" data="{{item,index,isExpired: false, pageFrom: 'goodsDetail', user_memId, baseImageLocUrl}}"></template>
           </block>
           <view class="moreBtnBox">
             <view class="loadingBtn" a:if="{{!hasMore && !isLoadMore}}">
@@ -144,12 +144,12 @@
   <view class="detail-header-view posi_re ">
     <view class="detail-header-name color-323232 font-30">
       <view class="twoLineHide">
-        <text class="labelName font-22 " a:if="{{goods.goodsLabels}}">{{goods.goodsLabels}}</text>
+        <text class="goodsTag label" a:if="{{goods.goodsLabels}}">{{goods.goodsLabels}}</text>
         <text class="goodsName font-weight-600">{{goods.goodsName}}</text>   
       </view> 
-      <view class="flex_view_row  justi_start font-20 labelList" a:if="{{that.data.goods.goodsViceVO.labelList.length > 0 || goods.goodsTag}}">
-        <view class="goodsTag label" a:for="{{that.data.goods.goodsViceVO.labelList}}" a:if="{{index == 0 || index == 1 || index == 2}}">{{item}}</view>
-        <view class="goodsTag label" a:if="{{goods.goodsTag}}">{{goods.goodsTag}}</view>
+      <view class="flex_view_row  justi_start font-20 labelList" a:if="{{goods.goodsViceVO.labelList.length > 0 || goods.goodsTag}}">
+        <view class="labelName font-22 " a:if="{{goods.goodsTag}}">{{goods.goodsTag}}</view>
+        <view class="goodsTag label" a:for="{{goods.goodsViceVO.labelList}}" a:key="*this" a:if="{{index == 0 || index == 1 || index == 2}}">{{item}}</view>
       </view>    
     </view>
     <button open-type="share" size="mini" plain="{{true}}" class="btnStyle flex_view_col justi_between align_end shareButton posi_ab">
@@ -178,8 +178,8 @@
       <view class="font-26 color-a1a0a0">已选</view>
         <view a:if="{{specType == 'MULTI'}}" class="font-26 marLeft_30 single-line">{{multiformname}} , {{quantity}}件</view>
         <view a:elif="{{specType == 'OPTIONAL'}}" class="font-26 marLeft_30 single-line">
-          <text a:if="{{(optionalProduct.length == 0 && goodsSpecMap.length != 0)}}"><block a:for="{{goodsSpecMap}}">{{item.specName}}</block></text>
-          <text a:elif="{{optionalProduct.length > 0 }}"><block a:for="{{optionalProduct}}">{{item.productName}}</block></text>
+          <text a:if="{{(optionalProduct.length == 0 && goodsSpecMap.length != 0)}}"><block a:for="{{goodsSpecMap}}" a:key="*this">{{item.specName}}</block></text>
+          <text a:elif="{{optionalProduct.length > 0 }}"><block a:for="{{optionalProduct}}" a:key="*this">{{item.productName}}</block></text>
           <text decode="true" space="true">&nbsp;</text> , {{quantity}}件
         </view>
         <view a:else class="font-26 marLeft_30 single-line">{{product.productName}} , {{quantity}}件</view>
@@ -199,11 +199,11 @@
         <view class="marLeft_30 single-line flex_view_row">
           <!-- <image class="addressImag marRight_15" mode="scaleToFill" src="{{base64imageUrl}}miniappImg/icon/icon_detail_address.png"/> -->
           <text class="iconfont icon-compass font-26 marRight_15"></text>
-          <block a:if="{{addressList && addressList.length > 0}}" a:for="{{addressList}}">
+          <block a:if="{{addressList && addressList.length > 0}}" a:for="{{addressList}}" a:key="*this">
              <view class="single-line" a:if="{{item.isDefault}}">{{item.province}}<text decode="true" space="true">&nbsp;</text>{{item.city}}<text decode="true" space="true">&nbsp;</text>{{item.area}}<text decode="true" space="true">&nbsp;</text>{{item.address}}</view>
           </block>
           <block a:if="{{address}}">
-            <view class="single-line">{{address}}</view>
+            <view class="single-line">{{address.province + ' ' + address.city + ' ' + address.district }}</view>
           </block>
         </view>
       </view>
@@ -218,14 +218,14 @@
       <view class="flex_view_row justi_end" onTap="onAddressPop">
          <image class="canceImag" mode="scaleToFill" src="{{base64imageUrl}}miniappImg/icon/icon_closeBtn.png"/>
       </view>
-      <scroll-view scroll-y="{{true}}"  class="addressBox font-26 flex-1">
-        <view class="addressMessage posi_re" a:for="{{addressList}}" data-addressid="{{item.id}}" onTap="selectAddress">
+      <scroll-view scroll-y="{{true}}"  class="addressBox font-26 flex-1" a:if="{{addressList && addressList.length > 0}}">
+        <view class="addressMessage posi_re" a:for="{{addressList}}" a:key="*this" data-addressId="{{item.id}}" data-index="{{index}}" onTap="selectAddress">
           <!-- <image class="addressImag posi_ab marTop_5"  mode="scaleToFill" src="{{base64imageUrl}}miniappImg/icon/{{item.isDefault ? 'icon_address_choose.': 'icon_detail_address.'}}png"/> -->
           <text class="iconfont icon-compass font-26 marRight_15 posi_ab marTop_5" style="{{item.isDefault ? 'color: #ff2e2e' : 'color: #8c8a8a'}}"></text>
           <view class="{{item.isDefault ? 'color-ff5353': 'color-black'}} address"><text class="marRight_10">{{item.province}}</text><text class="marRight_10">{{item.city}}</text><text class="marRight_10">{{item.area}}</text><text class="marRight_10">{{item.address}}</text></view>
         </view>
       </scroll-view>
-      <view class="addressButton flex_view_col justi_cen font-30">
+      <view class="addressButton flex_view_col justi_cen font-30" a:if="{{addressList && addressList.length > 0}}">
         <navigator  url="/pages/user/addressManage/addressManage">添加其他地址</navigator>
       </view>
     </view>
@@ -279,7 +279,7 @@
         </view>
       </view>
       <view class="guarantee-view single-line font-26" a:if="{{goods.afterSaleGueeList && goods.afterSaleGueeList.length > 0}}">
-        <block a:for="{{goods.afterSaleGueeList}}" class="single-line">
+        <block a:for="{{goods.afterSaleGueeList}}" a:key="*this">
           <block a:if="{{item == '1'}}">坏果全赔</block>
           <block a:if="{{item == '2'}}">缺一两全赔</block>
           <block a:if="{{item == '3'}}">不甜全赔</block>
@@ -331,7 +331,7 @@
         <view>评价</view> 
         <view class="marLeft_10">
           <text>(</text><text decode="true" space="true">&nbsp;</text>
-          <text> 3956 </text>
+          <text> {{goods.commentTotal}} </text>
           <text decode="true" space="true">&nbsp;</text><text>)</text>
         </view>
         <text class="icon-href-right font-22 marLeft_10 color-c7c7cc padding-r15"></text>
@@ -339,7 +339,7 @@
     </view>
   </view>
   <!-- 评价示例 -->
-  <view class="goods-comment-area" a:if="{{showComment && comment.length > 0}}" a:for="{{comment}}">
+  <view class="goods-comment-area" a:if="{{showComment && comment.length > 0}}" a:for="{{comment}}" a:key="*this">
     <view class="comment-line"></view>
     <view class="comment-user-area">
       <view class="flex_view_row align_cen">
@@ -350,15 +350,15 @@
         <view class="font-24 color-323232 marLeft_20">{{item.nickName}}</view>
       </view>
       <view class="flex_view_row align_cen">
-        <image src="{{base64imageUrl}}miniappImg/icon/icon_star_selected.png" class="proComment_star" a:for="{{item.star}}"></image>
-        <image src="{{base64imageUrl}}miniappImg/icon/icon_star_normal.png" class="proComment_star" a:for="{{5 - item.star}}"></image>
+        <image src="{{base64imageUrl}}miniappImg/icon/icon_star_selected.png" class="proComment_star" a:for="{{item.star}}" a:key="*this"></image>
+        <image src="{{base64imageUrl}}miniappImg/icon/icon_star_normal.png" class="proComment_star" a:for="{{5 - item.star}}" a:key="*this"></image>
       </view>
     </view>
     <view class="proComment_text overHid font-26">
       <view class="comment-text">{{item.comment}}</view>
     </view>
     <view class="blockBox marTop_36" a:if="{{item && item.imagePath.length > 0}}">
-      <image class="proComment_img" a:for="{{item.imagePath}}" a:for-item="items" a:for-inex="inexs" src="{{baseImageUrl}}{{items}}" data-current="{{items}}" data-urls="{{item.imagePath}}" style="{{inexs == item.imagePath.length - 1 ? 'margin-right: 0;' : '  margin-right: 6rpx;'}}" onTap="commentViewTap">
+      <image class="proComment_img" a:for="{{item.imagePath}}" a:key="*this" a:for-item="items" a:for-inex="inexs" src="{{baseImageUrl}}{{items}}" data-current="{{items}}" data-urls="{{item.imagePath}}" style="{{inexs == item.imagePath.length - 1 ? 'margin-right: 0;' : '  margin-right: 6rpx;'}}" onTap="commentViewTap">
       </image>
     </view>
     <!-- <view class="proComment_date font-22 color-a1a0a0">{{comment.createDate}}        
@@ -372,7 +372,7 @@
       <view class="item-header-title-view font-26 color-b3b3b3">- 猜你喜欢 -        
       </view>
       <scroll-view scroll-x class="goods-scrollx-view" scroll-with-animation="true" onScroll="guessLikeScroll">
-        <block a:for="{{guessLikeGoods}}">
+        <block a:for="{{guessLikeGoods}}" a:key="*this">
           <template is="itemGoodsScrollX" data="{{...item,baseImageUrl:baseImageUrl,baseLocImgUrl: base64imageUrl,index}}"/>
         </block>
       </scroll-view>
@@ -401,7 +401,7 @@
     <!-- 商品出售规格 -->
     <block a:if="{{goods.categoryAttrKey.length > 0}}">
       <view class="category-attr-view">
-        <view class="category-attr-item" a:for="{{goods.categoryAttrKey}}">
+        <view class="category-attr-item" a:for="{{goods.categoryAttrKey}}" a:key="*this">
           <view class="category-attr-item-left font-24">{{item.cakName}}                    
           </view>
           <view class="category-attr-item-right font-24 color-a1a0a0">{{item.cakValue}}                    
@@ -483,7 +483,7 @@
       </view>
     </view>
     <scroll-view scroll-x class="goods-scrollx-view" scroll-with-animation="true">
-      <block a:for="{{otherGoods}}">
+      <block a:for="{{otherGoods}}" a:key="*this">
         <template is="itemGoodsScrollX" data="{{...item,baseImageUrl: baseImageUrl,baseLocImgUrl: base64imageUrl}}"/>
       </block>
     </scroll-view>
@@ -503,13 +503,14 @@
 
   <view class="goods-soldOut" a:if="{{goods.viewStatus != 'SALEING'}}">非常抱歉，该商品已经下架</view>
   <view class="goods-soldOut" a:if="{{goods.viewStatus == 'SALEING' && goods.goodsStore == 0}}">非常抱歉，该商品已经售罄</view>
+  <view class="goods-soldOut" a:if="{{nonDeliveryArea}}" style="background: rgba(238, 135, 38, 0.8);">非常抱歉，该地区不发货</view>
 
   <!-- 底部购物按钮,不是顺丰会员商品                  还差联系商家的 webCallParam，其它都已完成新接口字段更换-->
   <block a:if="{{!SFmember}}">
     <!--积分商品,不能显示送他按钮和加入购物车按钮 memberDeductGoods 会员积分抵扣旧字段， memberDayGoods 与原有接口字段一样-->
     <view class="bottom-view" a:if="{{goods.jifenStatus || goods.deductStatus || goods.memberDayGoods}}">
       <view class="flex_1 flex_view_row isJifenViewLeft">
-        <navigator class="btnNoBor contactBtn bottom-icon-view font-20 color-565d6f flex_1" url="/pages/shopping/storeInfo/storeInfo?supplierId={{goods.supplierInfo.supplierId}}" hover-class="none">
+        <navigator class="btnNoBor contactBtn bottom-icon-view font-20 color-565d6f flex_1" url="/pages/shopping/storeInfo/storeInfo?supplierId={{goods.supplierInfo.supplierId}}"  hover-class="none">
           <!-- <image src="{{base64imageUrl}}miniappImg/icon/icon-business.png" class="contactBtn_icon"></image> -->
           <text class="iconfont icon-home font-42"></text>
           <text>店铺</text>
@@ -532,7 +533,8 @@
       </view>
       <view class="flex_1 height_100 isJifenViewRight flex_view_row align_cen justi_cen font-32">
         <block a:if="{{goods.viewStatus != 'SALEING' || (goods.viewStatus == 'SALEING' && goods.goodsStore == 0)}}">
-          <navigator class="bottom-text-red-bg bottom-text-yellow-bg width_100" open-type="switchTab" url="/pages/home/home">查看类似商品</navigator>
+          <!-- <navigator class="bottom-text-red-bg bottom-text-yellow-bg width_100" open-type="switchTab" url="/pages/home/home">查看类似商品</navigator> -->
+          <navigator class="bottom-text-red-bg bottom-text-yellow-bg width_100"  url="/pages/category/secondCategory/secondCategory?categoryId={{goods.categoryVO.categoryId}}" open-type="navigate" hover-class="none">查看类似商品</navigator>
         </block>
         <block a:else>
           <view class="bottom-text-red-bg width_100" onTap="buyNow">立即购买</view>
@@ -568,13 +570,15 @@
       </view>
       <view class="flex_1  height_100 flex_view_row align_cen justi_cen noJifen color-white font-32">
         <block a:if="{{goods.secKillStatus}}">
-          <navigator class="bottom-bg bottom-text-yellow-bg" a:if="{{goods.viewStatus != 'SALEING'}}"  open-type="switchTab" url="/pages/home/home">查看类似商品</navigator>
+          <navigator  a:if="{{goods.viewStatus != 'SALEING'}}" class="bottom-bg bottom-text-yellow-bg"  url="/pages/category/secondCategory/secondCategory?categoryId={{goods.categoryVO.categoryId}}" open-type="navigate" hover-class="none">查看类似商品</navigator>
+          <!-- <navigator class="bottom-bg bottom-text-yellow-bg" a:if="{{goods.viewStatus != 'SALEING'}}"  open-type="switchTab" url="/pages/home/home">查看类似商品</navigator> -->
           <view  class="bottom-bg background_gray" a:elif="{{isSpikeOver}}">活动结束</view>
           <view  class="bottom-bg background_gray" a:elif="{{goods.secKillStatus && (goodsSecondKill.totalSaleVolume == goodsSecondKill.totalStock)}}">已售罄</view>
           <view  class="bottom-bg background_red" a:else onTap="buyNow">立即购买</view>
         </block>
         <block a:elif="{{goods.viewStatus != 'SALEING' || (goods.viewStatus == 'SALEING' && goods.goodsStore == 0)}}">
-          <navigator class="bottom-bg bottom-text-yellow-bg" open-type="switchTab" url="/pages/home/home">查看类似商品</navigator>
+          <!-- <navigator class="bottom-bg bottom-text-yellow-bg" open-type="switchTab" url="/pages/home/home">查看类似商品</navigator> -->
+          <navigator class="bottom-bg bottom-text-yellow-bg" url="/pages/category/secondCategory/secondCategory?categoryId={{goods.categoryVO.categoryId}}" open-type="navigate" hover-class="none">查看类似商品</navigator>
         </block>
         <block a:else>
           <view class="bottom-bg font-30">
@@ -604,7 +608,8 @@
       </view>
       <view class='flex_1 height_100 isJifenViewRight flex_view_col align_cen justi_cen font-32'>
         <block a:if="{{goods.viewStatus != 'SALEING' || (goods.viewStatus == 'SALEING' && goods.goodsStore == 0)}}">
-          <navigator class='bottom-text-red-bg width_100' open-type="switchTab" url="/pages/home/home">查看类似商品</navigator>
+          <!-- <navigator class='bottom-text-red-bg width_100' open-type="switchTab" url="/pages/home/home">查看类似商品</navigator> -->
+           <navigator class='bottom-text-red-bg width_100' url="/pages/category/secondCategory/secondCategory?categoryId={{goods.categoryVO.categoryId}}" open-type="navigate" hover-class="none">查看类似商品</navigator>
         </block>
         <block a:else>
           <view class='bottom-text-red-bg width_100' onTap='buyNow'>立即购买</view>

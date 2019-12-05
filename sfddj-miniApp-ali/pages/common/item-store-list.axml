@@ -1,0 +1,29 @@
+<template name="itemStoreList">
+  <view class="storeItem">
+    <view class="storeHeader">
+      <view class="merchantImg">
+        <image mode="widthFix" a:if="{{headImage}}" src="{{baseImageUrl}}{{headImage}}" class="all_100"/>
+        <!-- <image mode="" a:else src="{{baseImageUrl}}miniappImg/icon/icon_default_head.jpeg"  class="all_100"/> -->
+        <image mode="widthFix" a:else src="{{baseImageUrl}}{{supplierGoods[0].defaultImage}}"  class="all_100"/>
+      </view>
+      <view class="merchantName">
+        <view class="storeName">{{nickName}}</view>
+        <view class="storeStart">
+         <view class="start" a:for="{{star}}" a:key="{{star}}">
+            <image src="{{baseLocImgUrl}}miniappImg/icon/icon_star_selected.png" class="all_100"></image>
+         </view>
+         <view class="start" a:for="{{ 5 - star}}">
+            <image src="{{baseLocImgUrl}}miniappImg/icon/icon_star_normal.png"  class="all_100"></image>
+         </view>
+        </view>
+      </view>
+      <view class="intoShop">进店</view>
+    </view>
+    <view class="storeImg">
+      <view class="imgBox"  a:for="{{supplierGoods}}" a:for-index="supplierGoodsIndex" a:key="supplierGoods" a:if="{{supplierGoodsIndex == 0 || supplierGoodsIndex == 1 || supplierGoodsIndex == 2 }}" style="{{supplierGoodsIndex == 2 ? 'margin-right: 0': ''}}">
+        <image mode="widthFix" src="{{baseImageUrl}}{{item.defaultImage}}" class="all_100 supplierGoodsImg"/>
+        <text class="sotrePrice">￥ {{item.defaultPrice}}</text>
+      </view>
+    </view>
+  </view>
+</template>

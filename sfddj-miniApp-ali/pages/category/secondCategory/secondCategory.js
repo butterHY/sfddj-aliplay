@@ -36,11 +36,16 @@ Page({
 		user_memId: '默认是会员',         //是否存在memberId，判断是否绑定手机号
 	},
 
-	onLoad: function(options) {
+	onLoad: async function(options) {
 		var that = this;
+		console.log(options)
 		//获取父分类信息
 		var fatherCategory = {};
-		fatherCategory = my.getStorageSync({ key: constants.StorageConstants.fatherCategoryId }).data ? my.getStorageSync({ key: constants.StorageConstants.fatherCategoryId }).data : {}; //获取父分类信息
+		    fatherCategory = my.getStorageSync({ key: constants.StorageConstants.fatherCategoryId }).data ? my.getStorageSync({ key: constants.StorageConstants.fatherCategoryId }).data : {}; //获取父分类信息
+		var detfatherCategory = my.getStorageSync({ key: constants.StorageConstants.detfatherCategory }).data ? my.getStorageSync({ key: constants.StorageConstants.detfatherCategory }).data : {}; //获取商详页分类信息
+		if(Object.keys(detfatherCategory).length != 0) {
+			fatherCategory = detfatherCategory
+		}
 		var name = '';
 		// if(fatherCategory){
 		//   name = fatherCategory.name
@@ -49,7 +54,6 @@ Page({
 		my.setNavigationBar({
 			title: fatherCategory.name ? fatherCategory.name : "顺丰大当家",
 			success: (res) => {
-
 			},
 		});
 		fatherCategory.name = '精选'; //更改父分类信息为精选
@@ -61,8 +65,20 @@ Page({
 			}).data ? my.getStorageSync({
 				key: constants.StorageConstants.childrenCategoryKey,
 			}).data : {};
-		} catch (e) { }
+		} catch (e) { };
 
+
+
+		// 有商详页缓存的父类 id 则请求父类分类数据使用该父类的数据，，没有就说明是从父页分类进来的，那走原来的逻辑;
+		if( detfatherCategory.id ){
+				// 获取如果缓存中有父类的 id 则请求父类分类数据使用该父类的数据, 但不缓存子类数据，为了和分类页用户的行为保持一致；
+				let send = await that.getChildCategoryTags(fatherCategory.id);
+				if( send.type == 'success' && send.data ) {
+					this.data.childrenCategoryTags = send.data.children;
+				}
+		}
+
+		console.log('开始合并父类和子类的数据')
 		var newChildrenCateTags = [];
 		newChildrenCateTags = newChildrenCateTags.concat(fatherCategory, this.data.childrenCategoryTags);
 		this.data.childrenCategoryTags = newChildrenCateTags;
@@ -84,6 +100,32 @@ Page({
 			this.data.categoryId = options.categoryId;
 			that.getGoodsData(0);
 		}
+	},
+
+	getChildCategoryTags(id) {
+		let that = this;
+		return new Promise( (reslove, reject) => {
+			sendRequest.send(constants.InterfaceUrl.HOME_ALL_CATEGORY, {}, function(res) {
+				let categoryTags = res.data.result.dtoList;
+				if ( categoryTags.length > 0 ) {
+					let fatherCategory = categoryTags.find(value => value.id == id);
+					console.log(categoryTags);
+					console.log(fatherCategory);
+					reslove({
+						type: 'success',
+						data: fatherCategory
+					})
+				} else {
+					reject({
+						type: 'fail'
+					})
+				}
+			},function(err) {
+				reject({
+					type: 'fail'
+				})
+			})
+		})
 	},
 
 	/**

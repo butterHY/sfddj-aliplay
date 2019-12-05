@@ -62,8 +62,9 @@
         <scroll-view class="marTop_50 marLeft_30" style="height:400rpx" scroll-y="true" catchtouchmove="move" a:if="{{goodsSpecMap}}">
           <block a:for="{{goodsSpecMap}}" a:for-index="fatherIndex" a:for-item="fatherItem" a:key="goodsSpecMap">
             <view class="font-30 font-weight-600 goods-spec-iakName">{{fatherItem.specName}}:</view>
-            <view class="{{fatherIndex != goodsSpecMap.length -1 ? 'goods-spec-iakValue' : ''}}">
-              <block a:if="{{specType == 'OPTIONAL' || specType == 'SINGLE' || 'MULTI'}}">
+            <view class="{{fatherIndex != goodsSpecMap.length -1 ? 'goods-spec-iakValue' : ''}} flex_view_row justi_start">
+              <!-- a:if="{{specType == 'OPTIONAL' || specType == 'SINGLE' || 'MULTI'}}" -->
+              <block>
                 <block a:for="{{fatherItem.values}}" >
                   <view class="goods-spec-view-normal" a:if="{{item.store == 0}}" style="color: #999;background: #f5f5f5;">
                     <view class="flex_view_row align_cen justi_around">
@@ -117,7 +118,7 @@
             <view class="whiteBack buttonView">
               <view class="goods-sepc-bottom-button2 posi_re background_red">
                 <!-- <view class="flex_1  shopButton" a:if="{{ goods.goodsStore == 0 || (goods.secKillStatus && goodsSecondKill.totalSaleVolume == goodsSecondKill.totalStock) }}">查看类似商品</view> -->
-                <navigator class="flex_1  shopButton" a:if="{{ goods.goodsStore == 0 || (goods.secKillStatus && goodsSecondKill.totalSaleVolume == goodsSecondKill.totalStock) }}" open-type="switchTab" url="/pages/home/home">查看类似商品</navigator>
+                <navigator class="flex_1  shopButton" a:if="{{ goods.goodsStore == 0 || (goods.secKillStatus && goodsSecondKill.totalSaleVolume == goodsSecondKill.totalStock) }}" url="/pages/category/secondCategory/secondCategory?categoryId={{goods.categoryVO.categoryId}}" open-type="navigate" hover-class="none">查看类似商品</navigator>
                 <view class="flex_1  shopButton" a:elif="{{ optionalProduct.length == xgCount && selectedSpecsBar }}" data-buyNow="buyNow" catchTap="buyNow">立即购买</view>
                 <view class="flex_1  shopButton" a:elif="{{ optionalProduct.length == xgCount && !selectedSpecsBar }}" catchTap="goodsSpecSubmitTap">确定</view>
                 <view class="flex_1  shopButton gray" a:else>还需要选 {{ xgCount - optionalProduct.length }} 种规格</view>
@@ -131,7 +132,7 @@
               <view class="goods-sepc-bottom-button2 posi_re">
                  <!-- a:if="{{goods.goodsStore == 0}}" -->
                 <!-- <view class="flex_1  shopButton background_red" a:if="{{ goods.goodsStore == 0 || (goods.secKillStatus && goodsSecondKill.totalSaleVolume == goodsSecondKill.totalStock) }}">查看类似商品</view> -->
-                <navigator class="flex_1  shopButton background_red" a:if="{{ goods.goodsStore == 0 || (goods.secKillStatus && goodsSecondKill.totalSaleVolume == goodsSecondKill.totalStock) }}" open-type="switchTab" url="/pages/home/home">查看类似商品</navigator>
+                <navigator class="flex_1  shopButton background_red" a:if="{{ goods.goodsStore == 0 || (goods.secKillStatus && goodsSecondKill.totalSaleVolume == goodsSecondKill.totalStock) }}" url="/pages/category/secondCategory/secondCategory?categoryId={{goods.categoryVO.categoryId}}" open-type="navigate" hover-class="none">查看类似商品</navigator>
                 <block a:elif="{{selectedSpecsBar}}">
                   <!-- <view class="flex_1  shopButton shopCart_button" data-addCart="addCart" catchTap="addCart">加入购物车</view> -->
                   <block a:if="{{ SFmember || ( !SFmember && (goods.jifenStatus || goods.deductStatus || goods.memberDayGoods || goods.secKillStatus) ) }}">

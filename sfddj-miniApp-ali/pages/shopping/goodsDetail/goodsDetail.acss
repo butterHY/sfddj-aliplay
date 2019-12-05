@@ -331,8 +331,9 @@ page {
   align-items: center;
   font-size: 26rpx;
   color: #fff;
-  background: rgba(0,0,0,0.5); 
+  background: rgba(0,0,0,0.4); 
 }
+
 
 .bottom-icon-view {
   display: flex;
@@ -384,8 +385,9 @@ page {
 }
 
 .noJifen .bottom-white-bg {
-  background: #fff;
-  border: 1rpx solid red;
+  /* background: #fff; */
+  background: #f2f2f2;
+  border: 1rpx solid #f2f2f2;
   border-radius: 60rpx 0 0 60rpx;
   display: flex;
   justify-content: center;
@@ -393,8 +395,8 @@ page {
 }
 
 .noJifen .bottom-red-bg {
-  background: red;
-  border: 1rpx solid red;
+  background: #ff5353;
+  border: 1rpx solid #ff5353;
   border-radius: 0 60rpx 60rpx 0;
   display: flex;
   justify-content: center;
@@ -419,8 +421,8 @@ page {
 
 .bottom-text-yellow-bg {
   border: 1rpx solid yellowgreen;
-  background: #fff;
-  color: yellowgreen;
+  background: #ff5353;
+  color: #fff;
 }
 
 .goods-detail-title-view {
@@ -1173,6 +1175,10 @@ page {
 .couponName {
   color: red;
   margin-right: 18rpx;
+}
+
+.getCouponText {
+  width: 100rpx;
 }
 
 .label {

@@ -43,7 +43,9 @@ Page({
 		// that.getCateData();
 
       that.getCartNumber();
-      // console.log('我是 category 我在显示了 onShow ')
+			try {
+				my.removeStorageSync({ key: constants.StorageConstants.detfatherCategory });
+			} catch (e) {}
 	},
 
 	getCateData() {

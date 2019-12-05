@@ -66,6 +66,7 @@ App({
 		appOptions: {}, //保存速运+跳过来带的参数
 		query: {},
 		NowAddrId: null,   //用于保存临时选中的地址
+		detailNowAddrId: null,	// 用于商详页保存用户选择的地址；
 
 
 	},

@@ -12,6 +12,8 @@ text {
 .padTop_78 {
   padding-top: 78rpx;
 }
+
+
 /*推荐商品右侧线 */
 .ver_line {
   border-right: solid #e6e6e6 2rpx;
@@ -52,6 +54,7 @@ text {
 .resultSort {
   width: 100%;
   height: 78rpx;
+  line-height: 78rpx;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -107,3 +110,290 @@ text {
   height: 220rpx;
   border-radius: 3px;
 }
+
+/* 单列的展示的样式 */
+.itemGoodsList {
+  width:100%;
+  height:250rpx;
+  padding:30rpx 0;
+  display:flex;
+  flex-direction:row;
+  border-bottom: solid #eeeeee 2rpx;
+  box-sizing:border-box;
+  position:relative;
+}
+
+
+.goodsImg {
+  width:190rpx;
+  height:100%;
+}
+
+.icon_Payoff {
+  position: absolute;
+  width: 56rpx;
+  height: 56rpx;
+  top: 40rpx;
+  left: 130rpx;
+}
+
+.goodsMessageBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: absolute;
+  top: 30rpx;
+  left: 210rpx;
+  bottom: 30rpx;
+  right: 30rpx;
+}
+
+.nameAndTitle {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: flex;
+  flex-direction: column;
+}
+
+.name {
+  font-size: 26rpx;
+  color: #323232;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.title {
+  font-size: 24rpx;
+  color: #bbbbbb;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display:block;
+  margin-top:10rpx;
+}
+
+.payBox {
+  max-width: 350rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 30rpx;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #bbbbbb;
+}
+
+.salePrice {
+  color: #ff5353;
+}
+
+.salesCountBox {
+  margin-left:10rpx;
+  font-size: 24rpx;
+  color: #bbbbbb;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  overflow: hidden;
+}
+
+.salesCount {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.addCartBox {
+  width:50rpx;
+  height:50rpx;
+  position:absolute;
+  right:30rpx;
+  bottom:30rpx;
+}
+
+/* 两列样式 */
+.guessLike {
+	display: flex;
+	padding: 0 30rpx;
+}
+
+.guessLikeView {
+	width: 50%;
+	box-sizing: border-box;
+}
+
+.activity {
+  width: 100%;
+  background: white;
+  box-sizing: border-box;
+  padding: 0 30rpx;
+  margin-top: 30rpx;
+}
+
+.activity .itemGoodsList {
+  float: left;
+  width: 50%;
+  height: auto;
+  box-sizing: border-box;
+  position: relative;
+  padding: 0;
+  display: block;
+  flex-direction: inherit;
+  border-bottom: 0;
+}
+
+.activity .leftLi {
+  padding: 16rpx 16rpx 16rpx 0;
+  border-right: 1rpx solid #f6f6f6;
+  border-bottom: 1rPX solid #f6f6f6;
+}
+
+.activity .rightLi {
+  padding: 16rpx 0 16rpx 16rpx;
+}
+
+.actGoodsMessageBox {
+  margin-top: 16rpx;
+  height: 140rpx;
+}
+
+.actNameAndTitle {
+  height: 100rpx;
+}
+
+/* 商品和店铺导航栏样式 */
+.goodsAndStore {
+  width: 100%;
+  height: 78rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  background-color: white;
+  line-height: 78rpx;
+}
+
+.border-b {
+  box-sizing: border-box;
+  border-bottom: 3rpx solid #ff5353;
+}
+
+.queue {
+  width: 80rpx;
+  text-align: center;
+  line-height: 78rpx;
+}
+
+
+/* 店铺样式 */
+.storeBox {
+  /* width: 100%; */
+  background: #fff;
+  box-sizing: border-box;
+  padding: 0 30rpx;
+}
+
+.storeItem {
+  height: 442rpx;
+  padding-top: 18rpx;
+  display: flex;
+  flex-direction: column;
+}
+
+.storeHeader {
+  height: 168rpx;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 38rpx 0 60rpx 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.storeImg {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  width: 100%;
+  box-sizing: border-box;
+  padding-bottom: 54rpx;
+}
+
+.merchantImg {
+  width: 102rpx;
+  height: 72rpx;
+  box-sizing: border-box;
+  padding: 12rpx 18rpx 9rpx;
+}
+
+.merchantName {
+  flex: 1;
+  height: 100%;
+  flex-direction: column;
+  box-sizing: border-box;
+  padding: 0 82rpx 0 12rpx;
+}
+
+.intoShop {
+  width: 118rpx;
+  height: 42rpx;
+  border: 2rpx solid #ffa200;
+  color: #ffa200;
+  text-align: center;
+  line-height: 42rpx;
+  border-radius: 20rpx;
+}
+
+.storeStart {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+}
+
+.start {
+  width: 26rpx;
+  height: 24rpx;
+  margin-right: 14rpx;
+}
+
+.storeName {
+  height: 29rpx;
+  width: 100%;
+  font-size: 31rpx;
+  /* box-sizing: border-box; */
+  padding-bottom: 18rpx;
+}
+
+.imgBox {
+  width: 220rpx;
+  height: 100%;
+  border-radius: 20rpx;
+  position: relative;
+  margin-right: 19rpx;
+}
+
+.sotrePrice {
+  font-size: 25rpx;
+  color: #fff;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 72rpx;
+  height: 44rpx;
+  line-height: 44rpx;
+  border-radius: 0 20rpx 0 20rpx;
+  /* background: black; */
+   background-color: rgba(0,0,0,0.5);
+  /* background: rgba(#999, 0.5); */
+}
+
+.supplierGoodsImg {
+  border-radius: 20rpx;
+}
+/* 云意氏优多水果店 */

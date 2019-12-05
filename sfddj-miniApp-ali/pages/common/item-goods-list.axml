@@ -27,29 +27,35 @@
 			<button a:if="{{isBing}}" class="btnStyle gpnBtn zIndex100" open-type="getAuthorize" onGetAuthorize="getPhoneNumber" scope='phoneNumber' onError="onAuthError"></button>
 		</view>
 	</navigator>
-	<view a:else data-url="/pages/shopping/goodsDetail/goodsDetail?goodsSn={{goodsSn}}" class="{{!isLoaded ? 'js_goodsList_' + index : ''}}" style="width:100%;height:250rpx;padding:30rpx 0;display:flex;flex-direction:row;border-bottom: solid #eeeeee 2rpx;box-sizing:border-box;position:relative" hover-class="none" data-index="{{index}}" onTap="searchResultClick">
-		<image src="{{baseImageUrl}}{{showImage}}" style="width:190rpx;height:100%;"></image>
-		<!--小图标 全赔  -->
-		<image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff1.png" class="allCompensation posi_ab" style="width: 56rpx; height: 56rpx; top: 40rpx; left: 130rpx;" a:if="{{filters.strIndexOf(afterSaleGuee,'1')}}"></image>
-		<image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff2.png" class="allCompensation posi_ab" style="width: 56rpx; height: 56rpx; top: 40rpx; left: 130rpx;" a:elif="{{filters.strIndexOf(afterSaleGuee,'2')}}"></image>
-		<image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff3.png" class="allCompensation posi_ab" style="width: 56rpx; height: 56rpx; top: 40rpx; left: 130rpx;" a:elif="{{filters.strIndexOf(afterSaleGuee,'3')}}"></image>
-		<image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff4.png?version=2.0" class="allCompensation posi_ab" style="width: 56rpx; height: 56rpx; top: 40rpx; left: 130rpx;" a:elif="{{filters.strIndexOf(afterSaleGuee,'4')}}"></image>
-		<view style="display:flex; flex-direction:column;justify-content:space-between;position:absolute;top:30rpx;left:210rpx;bottom:30rpx;right:30rpx;">
-			<view class="single-line flex_view_col">
-				<view class="font-26 color-323232 single-line">{{name}}</view>
-				<view style="display:block;margin-top:10rpx;" class="font-24 color-bbbbbb single-line">{{title}}</view>
+
+
+
+	<view a:else data-url="/pages/shopping/goodsDetail/goodsDetail?goodsSn={{goodsSn}}" class="{{!isLoaded ? 'js_goodsList_' + index : ''}} itemGoodsList" style="{{activity ? (index % 2 == 0 ? 'padding: 16rpx 16rpx 16rpx 0; border-right: 1rpx solid #f6f6f6;border-bottom: 1rPX solid #f6f6f6;' : 'padding: 16rpx 0 16rpx 16rpx;border-bottom: 1rPX solid #f6f6f6;') : ''}}" hover-class="none" data-index="{{index}}" onTap="searchResultClick">
+		<view style="{{activity ? 'width:100%;height:330rpx;' : ''}}">
+			<image src="{{baseImageUrl}}{{goodsDefaultImage}}" class="{{activity ? 'all_100' : 'goodsImg'}}" lazy-load='true' mode="{{activity ? 'widthFix' : 'scaleToFill'}}"></image>
+		</view>
+		
+		<!-- 小图标 全赔  -->
+		<image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff1.png" class="icon_Payoff" style="{{activity ? (index % 2 == 0 ? 'left: auto; right: 26rpx;' : 'left: auto; right: 10rpx;') : 'left: 130rpx'}}" a:if="{{filters.strIndexOf(afterSaleGuee,'1')}}"></image>
+		<image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff2.png" class="icon_Payoff" style="{{activity ? (index % 2 == 0 ? 'left: auto; right: 26rpx;' : 'left: auto; right: 10rpx;') : 'left: 130rpx'}}" a:elif="{{filters.strIndexOf(afterSaleGuee,'2')}}"></image>
+		<image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff3.png" class="icon_Payoff" style="{{activity ? (index % 2 == 0 ? 'left: auto; right: 26rpx;' : 'left: auto; right: 10rpx;') : 'left: 130rpx'}}" a:elif="{{filters.strIndexOf(afterSaleGuee,'3')}}"></image>
+		<image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff4.png?version=2.0" class="icon_Payoff" style="{{activity ? (index % 2 == 0 ? 'left: auto; right: 26rpx;' : 'left: auto; right: 10rpx;') : 'left: 130rpx'}}" a:elif="{{filters.strIndexOf(afterSaleGuee,'4')}}"></image>
+		<view class="{{activity ? 'actGoodsMessageBox' : 'goodsMessageBox'}}" style="">
+			<view class="{{activity ? 'actNameAndTitle' : 'nameAndTitle'}}">
+				<view class="name">{{goodsName}}</view>
+				<view style="" class="title">{{goodsTitle}}</view>
 			</view>
-			<view style="max-width:350rpx" class="font-30 font-weight-500 single-line color-bbbbbb flex_view_row algin_cen">
-				<view class="color-ff5353">¥{{salePrice}}</view>
-				<view style="margin-left:10rpx" class="font-24 color-bbbbbb flex_view_col align_cen justi_cen flex_1 overHid">
-					<view a:if="{{salesCount || salesCount == 0}}" class="single-line width_100">{{salesCount}}人付款</view>
+			<view style="" class="payBox">
+				<view class="salePrice">¥ {{salePrice}}</view>
+				<view style="" class="salesCountBox">
+					<view a:if="{{salesCount || salesCount == 0}}" class="salesCount">{{salesCount}} 人付款</view>
 					<view a:else class="single-line width_100">{{productName}}</view>
 				</view>
 			</view>
 		</view>
-		<view style="width:50rpx;height:50rpx;position:absolute;right:30rpx;bottom:30rpx" class="posi_re">
-			<image class="all_100" src="{{baseLocImgUrl}}miniappImg/icon/icon_redCart.png" data-pid="{{productId}}" catchTap="addCart"/>
-			<!--埋点---快捷绑定手机号 -->
+		<view style="" class="addCartBox ">
+			<image class="all_100" src="{{baseLocImgUrl}}miniappImg/icon/icon_redCart.png" data-pid="{{productId}}" catchTap="addCart"></image>
+			<!-- 埋点---快捷绑定手机号 -->
 			<button a:if="{{isBing}}" class="btnStyle gpnBtn zIndex100" open-type="getAuthorize" onGetAuthorize="getPhoneNumber" scope='phoneNumber' onError="onAuthError"></button>
 		</view>
 	</view>
