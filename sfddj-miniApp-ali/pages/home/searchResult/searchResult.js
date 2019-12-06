@@ -38,6 +38,8 @@ Page({
 		showChannel: 0,						// 显示渠道,0为主站,1为地区管
 		goodsOrStore: '0',				// '0' 代表是商品类型，'1' 代表是店铺类型；
 
+		searchShow: false,				// 智能搜索模版显示开关
+		smartSearchList: [],			// 智能搜索数据
 	},
 
 	/**
@@ -168,10 +170,17 @@ Page({
 	handleInput: function(event) {
 		console.log(event.detail.value.replace(/\s*/g,''))
 		let inputVal = event.detail.value.replace(/\s*/g,'');
+		let hotWordShow = true;
+		let searchShow = true;
 		if( inputVal ) {
 			this.smartSearch(inputVal);
+			hotWordShow = false;
+		} else {
+			searchShow = false;
 		}
 		this.setData({
+			show: hotWordShow,
+			searchShow,
 			inputVal: event.detail.value
 		});
 	},
@@ -182,8 +191,8 @@ Page({
 	handleConfirm: function(event) {
 		// 达观数据上报
 		// utils.uploadClickData_da('search', [{ keyword: event.detail.value }])
-		// 先关闭热门推荐和搜索记录模块
-		this.data.goodsOrStore == '0' ? this.setData({goodsStart: 0, show: false}) : this.setData({storeStart: 0, show: false});
+		// 先关闭热门推荐和搜索记录模块以及智能搜索模块
+		this.data.goodsOrStore == '0' ? this.setData({goodsStart: 0, show: false, searchShow: false}) : this.setData({storeStart: 0, show: false, searchShow: false});
 		console.log(event.detail.value)
 		this.searchProduct(event.detail.value, 0);
 	},
@@ -272,17 +281,12 @@ Page({
 				var list = that.data.storeList;
 			}
 
-
 			var hasMore = result && result.length == that.data.limit ? true : false;
-			// if (result && result.length == that.data.limit) {
-			// 	hasMore = true;
-			// }
 
 			type == 0 ? list = result : list = list.concat(result);
 			console.log(list);
 
 			let upData = {
-				// baseImageUrl: baseImageUrl,
 				hasMore: hasMore,
 				isLoadMore: false,
 				loadComplete: true,
@@ -313,8 +317,31 @@ Page({
 			showChannel: 0
 		}
 		http.post( api.search.GOODSSUGGEST, data ,(res) => {
-			console.log(res)
+			console.log(res);
+			let resData = res.data.data;
+			let retData = res.data.ret;
+			// let hotWordShow = true;
+			// let searchShow = true;
+
+			if( retData.code == '0' && retData.message == "SUCCESS" ) {
+				that.setData({
+					// show: hotWordShow,
+					// searchShow,
+					smartSearchList: resData
+				})
+			} else {
+				that.setData({
+					// show: hotWordShow,
+					// searchShow,
+					smartSearchList: []
+				})
+			}
 		}, (err) => {
+			that.setData({
+				// show: hotWordShow,
+				// searchShow,
+				smartSearchList: []
+			})
 			console.log(err)
 		})
 	},

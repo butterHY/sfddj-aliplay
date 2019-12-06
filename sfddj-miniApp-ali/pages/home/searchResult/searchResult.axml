@@ -1,6 +1,8 @@
 <import src="../../common/item-goods-list"/>
 <import src="../../common/item-store-list"/>
 <import src="../../common/hotWords"/>
+<import src="../../common/search-goods-list"/>
+
 <!-- 加载中 -->
 <view a:if="{{!loadComplete}}">
   <loading-now>
@@ -122,6 +124,7 @@
 <!--搜索热词-->
 <template is="hotWords" data="{{show:show,baseLocImgUrl,top:'120rpx',hotWords:hotWords,searchWords:searchWords}}">
 </template>
+<template is="searchGoodsList" data="{{show:searchShow,top:'120rpx',smartSearchList}}"></template>
 <!--toast弹窗-->
 <view class="mark flex_view_col align_cen justi_cen" a:if="{{showToast}}">
   <view class="toastView_wb" catchtouchmove="move">
