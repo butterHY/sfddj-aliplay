@@ -105,7 +105,7 @@ Page({
 		this.data.hasMore = false;									// scroll-view 滚动时，如果有滚动高度的时，即有 scroll-Top 的时候，点击导航栏的时候会触发上拉触底加载的事件；
 	},
 
-	// 点击 “商品” 和 “店铺”
+	// 点击 “商品” 和 “店铺” 切换类型
 	setGoodsOrStore: function(e) {
 		let that = this;
 		console.log(e.currentTarget.dataset.goodsOrStore)
@@ -151,6 +151,7 @@ Page({
 		} catch (e) { }
 	},
 
+
 	/**
 	 * 输入框失焦时隐藏热词模块提示
 	 */
@@ -165,6 +166,11 @@ Page({
 	 * 键盘输入事件
 	 */
 	handleInput: function(event) {
+		console.log(event.detail.value.replace(/\s*/g,''))
+		let inputVal = event.detail.value.replace(/\s*/g,'');
+		if( inputVal ) {
+			this.smartSearch(inputVal);
+		}
 		this.setData({
 			inputVal: event.detail.value
 		});
@@ -186,12 +192,14 @@ Page({
 	 * 选择搜索词
 	 */
 	chooseWord: function(event) {
+		let that = this;
 		this.setData({
 			inputVal: event.currentTarget.dataset.word,
-			show: false
+			show: false,
 		});
 		// 达观数据上报
 		// utils.uploadClickData_da('search', [{ keyword: event.currentTarget.dataset.word }])
+		this.data.goodsOrStore == '0' ? this.setData({goodsStart: 0}) : this.setData({storeStart: 0});
 		this.searchProduct(event.currentTarget.dataset.word, 0);
 	},
 
@@ -255,10 +263,6 @@ Page({
 				return;
 			}
 
-			// (that.data.goodsOrStore == '0' && !res.data.data.goodsList) || (that.data.goodsOrStore == '1' && !res.data.data.supplierDTO)
-
-
-
 			my.stopPullDownRefresh();
 			if(that.data.goodsOrStore == '0') {
 				var result = res.data.data.goodsList;
@@ -268,14 +272,14 @@ Page({
 				var list = that.data.storeList;
 			}
 
-			var hasMore = false;
-			if (result && result.length == that.data.limit) {
-				hasMore = true;
-			}
+
+			var hasMore = result && result.length == that.data.limit ? true : false;
+			// if (result && result.length == that.data.limit) {
+			// 	hasMore = true;
+			// }
 
 			type == 0 ? list = result : list = list.concat(result);
 			console.log(list);
-
 
 			let upData = {
 				// baseImageUrl: baseImageUrl,
@@ -298,17 +302,31 @@ Page({
 		});
 	},
 
+		/**
+	 * 搜索商品
+	 * type 0:刷新 1:加载更多
+	 */
+	smartSearch(inputVal) {
+		let that = this;
+		let data = {
+			suggestStr: inputVal,
+			showChannel: 0
+		}
+		http.post( api.search.GOODSSUGGEST, data ,(res) => {
+			console.log(res)
+		}, (err) => {
+			console.log(err)
+		})
+	},
+
 
 	/**
-	 * 点击切换搜索商品或店铺
+	 * 点击切换商品展示单列排序还是两列排序
 	 * 
 	*/
-
 	isTwoColumns() {
 		let that = this;
-		that.setData({
-			activity: !that.data.activity,
-		})
+		that.setData({ activity: !that.data.activity })
 	},
 
 	// 点击搜索结果的商品
@@ -322,9 +340,10 @@ Page({
 		my.navigateTo({
 			url: url
 		});
-
 	},
 
+
+	// 这个事件没有被触发
 	scrollToTop: function() {
 		console.log('我回到顶部')
 		my.pageScrollTo({

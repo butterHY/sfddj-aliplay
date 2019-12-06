@@ -455,13 +455,13 @@ Page({
 
         // 测试用的，让库存为 0
         // that.data.allProduct[1].store = 0;
-
             // specType 规格类型,  MULTI 多规格, SINGLE 单规格, OPTIONAL 任选规格；
               that.data.goodsSpecMap = JSON.parse(JSON.stringify(that.data.goods.specifications));
               if( that.data.specType == 'MULTI') {
                 that.data.goodsSpecMap.forEach(values => that.data.iavPath.push(''));
                  that.data.iavPath = that.data.iavPath.toString();
                  that.data.multiDimension = that.data.goodsSpecMap.length;
+								 that.data.allProduct.forEach(value => !value.imgPath ? value.imgPath = that.data.goods.goodsImages[0] : '');
                  that.multiFormName();
                  that.setGoodsSpecMapAllStore();
               } else {
