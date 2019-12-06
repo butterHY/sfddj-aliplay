@@ -414,8 +414,8 @@ Page({
             that.data.allProduct = resData.goodsShowVO.products;
             that.data.xgCount = resData.goodsShowVO.xgCount;
 				    that.data.SFmember = resData.goodsShowVO.memberGoods ? true : false;                  // 判断是否是会员商品
-						// that.data.addressList = resData.addressList;
-						that.data.addressList = null;
+						that.data.addressList = resData.addressList;
+						// that.data.addressList = null;
 						that.data.goods.nonDeliveryArea = that.data.goods.nonDeliveryArea.split(',');
             if(!that.data.addressList || that.data.addressList.length <= 0) {											// 如果是没有收货地址说明用户没有登录 ， 调用 API 获取当前用户地址
 						console.log('===============================')

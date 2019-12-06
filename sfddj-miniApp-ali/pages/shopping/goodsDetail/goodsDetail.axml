@@ -214,7 +214,7 @@
   </view>
   <!-- a:if="{{addressList && addressList.length > 0}}" -->
   <popup  show="{{isShowAddressPop}}" mask="{{true}}" position="bottom" animation="{{true}}" onClose="onAddressPop" zIndex="100" disableScroll="{{false}}">
-    <view class="addressPop flex_view_col">
+    <view class="addressPop flex_view_col justi_between">
       <view class="flex_view_row justi_end" onTap="onAddressPop">
          <image class="canceImag" mode="scaleToFill" src="{{base64imageUrl}}miniappImg/icon/icon_closeBtn.png"/>
       </view>
@@ -225,7 +225,7 @@
           <view class="{{item.isDefault ? 'color-ff5353': 'color-black'}} address"><text class="marRight_10">{{item.province}}</text><text class="marRight_10">{{item.city}}</text><text class="marRight_10">{{item.area}}</text><text class="marRight_10">{{item.address}}</text></view>
         </view>
       </scroll-view>
-      <view class="addressButton flex_view_col justi_cen font-30" a:if="{{addressList && addressList.length > 0}}">
+      <view class="addressButton flex_view_col justi_cen font-30">
         <navigator  url="/pages/user/addressManage/addressManage">添加其他地址</navigator>
       </view>
     </view>
