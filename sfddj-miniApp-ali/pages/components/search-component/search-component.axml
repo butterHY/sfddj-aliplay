@@ -1,0 +1,60 @@
+<view class="searchComponent height_100vh">
+  <view class="searchInput row-aliCenter">
+    <view class="inputBox flex_1">
+      <view class="iconBox row-aliCenter">
+        <text class="iconfont icon-compass"></text>
+      </view>
+      <input class=" input flex_1 font-24 color-323232" placeholder="{{placeholderVal}}" value="{{inputVal}}" focus="{{isFocus}}" confirm-type="search"  onConfirm="handleConfirm" onFocus="handleFocus"  onInput="handleInput" />
+      <view class="iconBox row-aliCenter" a:if="{{clearSearchShow}}">
+        <text class="iconfont icon-compass" catchTap="clearSearchVal"></text>
+      </view>
+    </view>
+    <view class="center" catchTap="onHideSearch">取消</view>
+  </view>
+  <scroll-view class="scrollView wordBox flex_1" scroll-y="true" >
+    <block a:if="{{hotWordShow}}">
+      <view class="hotWordBox ">
+        <view class="hotWordTitle font-38 font-font-weight-600">热门搜索</view>
+                <!-- <view class="font-24 {{hotWord.isSign ? 'color-ff5353':'color-323232'}}" style="background-color:#eeeeee;padding:10rpx 20rpx;border-radius:5px;margin-right:20rpx;max-width:650rpx;display:inline-block;margin-bottom:20rpx;" data-word="{{hotWord.name}}" a:for="{{hotWords}}" a:for-item="hotWord" a:key="itemIndex0" catchTap="chooseWord">{{hotWord.name}}</view> -->
+        <view class="wordLeft clearfix">
+          <view class="hotWordItem" style="{{hotWord.isSign ? 'color: #ff5353' : ''}}" data-word="{{hotWord.name}}" data-type="searcHotWord" a:for="{{hotWords}}" a:for-item="hotWord" a:key="*this" catchTap="chooseWord" >{{hotWord.name}}</view>
+        </view>
+      </view>
+      <view class="historyWordBox ">
+        <view class="hisWordTitle font-38 font-font-weight-600">
+          <text>历史记录</text>
+          <view class="delIcon" catchTap="clearHist"><image class="all_100" src="{{baseLocImgUrl}}miniappImg/icon/icon_del.png"/></view>
+        </view>
+        <view class="wordLeft clearfix">
+        <!-- <view class="font-24" style="background-color:#eeeeee;padding:10rpx 20rpx;border-radius:5px;margin-right:20rpx;margin-bottom:20rpx;max-width:650rpx;display:inline-block" data-word="{{searchWord}}" data-type="searchHist" a:for="{{searchWords}}" a:for-item="searchWord" a:key="*this" catchTap="chooseWord">{{searchWord}}</view> -->
+          <view class="hisWordItem hotWordItem" a:for="{{searchWords}}"  data-word="{{searchWord}}" data-type="searchHist" a:for="{{searchWords}}" a:for-item="searchWord" a:key="*this" catchTap="chooseWord">{{searchWord}}</view>
+        </view>
+      </view>
+    </block>
+    <view  a:if="{{smSearchShow}}" class="smartItem" style="border-bottom:{{index != smartSearchList.length - 1 ? '1rpx solid #e3e3e3;': ''}}" a:for="{{smartSearchList}}" a:key="*this" data-type="searchValue" data-word="{{item.suggestion}}" catchTap="chooseWord">{{item.suggestion}}</view>
+  </scroll-view>
+</view>
+
+<!-- <template name="hotWords">
+   <view  style="position:absolute;top:{{top}};left:0;right:0;bottom:0;background-color:rgba(0,0,0,0.5);z-index:9000;" a:if="{{show}}" catchTap='handleBlur'> 
+    <view style="width:100%;background-color:white;padding:24rpx 46rpx;box-sizing:border-box">
+      <view class="font-26 color-323232">热门推荐</view>
+      <view style="margin-top:24rpx;">
+        <view class="font-24 {{hotWord.isSign ? 'color-ff5353':'color-323232'}}" style="background-color:#eeeeee;padding:10rpx 20rpx;border-radius:5px;margin-right:20rpx;max-width:650rpx;display:inline-block;margin-bottom:20rpx;" data-word="{{hotWord.name}}" a:for="{{hotWords}}" a:for-item="hotWord" a:key="itemIndex0" catchTap="chooseWord">{{hotWord.name}}</view>
+      </view>
+      <view style="display:flex;align-items:center;justify-content:space-between">
+        <view class="font-26 color-323232">搜索记录</view>
+        <view style="width:32rpx;height:33rpx;margin-right:50rpx;" class="alipay_catch_img" catchTap="clearHist"><image class="all_100" src="{{baseLocImgUrl}}miniappImg/icon/icon_del.png"/></view>
+      </view>
+      <view style="margin-top:24rpx;">
+        <view class="font-24" style="background-color:#eeeeee;padding:10rpx 20rpx;border-radius:5px;margin-right:20rpx;margin-bottom:20rpx;max-width:650rpx;display:inline-block" data-word="{{searchWord}}" a:for="{{searchWords}}" a:for-item="searchWord" a:key="itemIndex" catchTap="chooseWord">{{searchWord}}</view>
+      </view>
+    </view>
+  </view>
+</template> -->
+
+<!-- <template name="search">
+  <view style="width:100%;height:120rpx;padding:20rpx 30rpx;background-color:#252630;box-sizing:border-box">
+    <input style="padding:10rpx 30rpx 10rpx 30rpx;background-color:white;border-radius:5px;" placeholder="今天吃什么呢" class="font-24 color-323232" value="{{inputVal}}" confirm-type="search" onConfirm="handleConfirm" onFocus="handleFocus"/>
+  </view>
+</template> -->

@@ -52,3 +52,8 @@ page {
 	padding-left: 30rpx;
 	box-sizing: border-box;
 }
+
+/* 新版搜索组件在子分类页的样式 */
+.am-popup-content {
+  width: 100%;
+}

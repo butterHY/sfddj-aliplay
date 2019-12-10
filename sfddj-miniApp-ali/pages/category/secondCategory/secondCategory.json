@@ -3,6 +3,8 @@
   "titleBarColor": "#ffffff",
   "usingComponents": {
     "loading-now": "../../components/loadingNow/loadingNow",
-    "load-fail": "../../components/loadFail/loadFail"
+    "load-fail": "../../components/loadFail/loadFail",
+    "search-component": "../../components/search-component/search-component",
+    "popup": "mini-antui/es/popup/index"
   }
 }

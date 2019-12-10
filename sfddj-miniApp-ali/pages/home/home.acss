@@ -560,3 +560,9 @@ page {
   background: red;
   z-index: 9999999999;
 }
+
+
+/* 新版搜索组件在首页的样式 */
+.am-popup-content {
+  width: 100%;
+}

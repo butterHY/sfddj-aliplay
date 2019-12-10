@@ -1,0 +1,118 @@
+.searchComponent {
+  width: 100%;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  /* position: relative; */
+  box-sizing: border-box;
+  /* padding-top: 120rpx; */
+
+  /* z-index: 9000; */
+
+}
+
+.row-aliCenter {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+
+.searchInput {
+  height: 120rpx;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 26rpx 0 26rpx 30rpx;
+  /* position: absolute; */
+  /* top: 0; */
+  /* left: 0; */
+}
+
+.inputBox {
+  height: 100%;
+  display: flex;
+  border-radius: 25px;
+  background:#f7f8fa;
+  padding: 0 25rpx;
+}
+
+.iconBox {
+  width: 30rpx;
+  height: 100%;
+  font-size: 30rpx;
+}
+
+
+.input {
+  padding: 10rpx 20rpx;
+  background-color:white;
+  text-align: left;
+  background-color: transparent;
+}
+
+.center {
+  height: 100%;
+  padding: 0 22rpx;
+  color: #323233;
+  font-size: 30rpx;
+  line-height: 67rpx;
+}
+
+.wordBox {
+  padding: 0 30rpx;
+}
+
+.hotWordTitle {
+  margin-bottom: 50rpx;
+  margin-top: 20rpx;
+}
+
+.wordLeft {
+  margin-left: -30rpx;
+}
+
+.hotWordItem {
+  float: left;
+  margin-bottom: 30rpx;
+  margin-left: 30rpx;
+  background-color: #f5f5f5;
+  border-radius: 25rpx;
+  text-align: center;
+  font-size: 30rpx;
+  padding: 20rpx 25rpx;;
+  box-sizing: border-box;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: #595959;
+}
+
+.hisWordTitle {
+  margin-bottom: 37rpx;
+  margin-top: 24rpx;
+  display: flex;
+  justify-content: space-between;
+}
+
+.delIcon {
+  width: 30rpx;
+  height: 30rpx;
+  line-height: 30rpx;
+}
+
+.hisWordItem {
+  padding: 22rpx 30rpx;
+  background-color: transparent;
+  margin-bottom: 0;
+  margin-left: 0;
+}
+
+.scrollView {
+  padding-bottom: 30rpx;
+}
+
+.smartItem {
+  font-size: 36rpx;
+  line-height: 96rpx;
+}
+

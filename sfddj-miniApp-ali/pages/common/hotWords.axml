@@ -1,6 +1,6 @@
 <!--搜索热词模板-->
 <template name="hotWords">
-   <view  style="position:absolute;top:{{top}};left:0;right:0;bottom:0;background-color:rgba(0,0,0,0.5);z-index:9000" a:if="{{show}}" catchTap='handleBlur'> 
+   <view  style="position:absolute;top:{{top}};left:0;right:0;bottom:0;background-color:rgba(0,0,0,0.5);z-index:9000;" a:if="{{show}}" catchTap='handleBlur'> 
     <view style="width:100%;background-color:white;padding:24rpx 46rpx;box-sizing:border-box">
       <view class="font-26 color-323232">热门推荐</view>
       <view style="margin-top:24rpx;">
