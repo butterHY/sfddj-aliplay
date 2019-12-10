@@ -141,10 +141,10 @@
     </view>
     <view class='guessLike'>
       <view class='guessLikeView'>
-        <template is="itemGoodsCard" a:for="{{goodsList}}" a:if="{{index % 2 == 0}}" data="{{...item,left:true,baseImageUrl:baseImageUrl,baseLocImgUrl,smallImgArg}}" a:key="itemIndex"></template>
+        <template is="itemGoodsCard" a:for="{{goodsList}}" a:if="{{index % 2 == 0}}" data="{{...item,left:true,baseImageUrl:baseImageUrl,baseLocImgUrl: baseImageLocUrl,smallImgArg,hiddenCart: true}}" a:key="itemIndex"></template>
       </view>
       <view class='guessLikeView'>
-        <template is="itemGoodsCard" a:for="{{goodsList}}" a:if="{{index % 2 != 0}}" data="{{...item,left:false,baseImageUrl:baseImageUrl,baseLocImgUrl,smallImgArg}}" a:key="itemIndex2"></template>
+        <template is="itemGoodsCard" a:for="{{goodsList}}" a:if="{{index % 2 != 0}}" data="{{...item,left:false,baseImageUrl:baseImageUrl,baseLocImgUrl: baseImageLocUrl,smallImgArg,hiddenCart: true}}" a:key="itemIndex2"></template>
       </view>
     </view>
   </view>

@@ -1,24 +1,25 @@
 <import src="./couponItem.axml"/>
 <template name="dialogCoupon">
-  <view class="dialogCoupon" catchtouchmove="move" a:if="{{show}}">
-    <view class="dialog_height20" catchTap="colseCouponDialog"></view>
-    <view class="dialog_couponCon">
+  <view>
+    <view class="dialogCoupon" catchtouchmove="move" a:if="{{show}}" catchtap="closeCouponDialog">
+    </view>
+    <view class="dialog_couponCon {{show ? '' : 'hide'}}">
       <view class="dialog_couponList">
-        <view class="single-line font-30 color-323232 dialog_couponTit">我的优惠券</view>
+        <view class="single-line font-30 color-323232 dialog_couponTit">
+          <text a:if="{{type == 'platform'}}">我的优惠券</text>
+          <text a:else>商家优惠券</text></view>
         <scroll-view class="width_100 dialog_couponScroll " scroll-y="true" catchtouchmove="move2">
           <block a:for="{{couponList}}" a:key="couponList">
-            <template is="couponItem" data="{{item,isExpired: false, pageFrom: 'order', iconSize}}"></template>
+            <template a:if="{{!item.showCoupon}}" is="couponItem" data="{{item,isExpired: false, pageFrom: 'order', iconSize, fatherIndex, index}}"></template>
           </block>
         </scroll-view>
       </view>
       <view class="goods-sepc-bottom-view">
-        <view class="goods-sepc-bottom-button" catchTap="colseCouponDialog">关闭</view>
+        <view class="goods-sepc-bottom-button" catchtap="closeCouponDialog">关闭</view>
       </view>
     </view>
   </view>
 </template>
-
-
 <template name="dialogCouponOld">
   <view style="position:fixed;top:0;left:0;right:0;bottom:0;background-color:rgba(0,0,0,0.5);z-index:10000" catchtouchmove="move" a:if="{{show}}">
     <view style="height:20%" catchTap="colseCouponDialog"></view>

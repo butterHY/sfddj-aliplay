@@ -454,18 +454,35 @@ button.bottom-text-red-bg::after, button.bottom-text-red-bg::before, button.bott
 	background-color: #c4c7c4;
 }
 
+.jiFenWhiteBtn {
+  background: #fff;
+  border: 2px solid #ddd;
+  box-sizing: border-box;
+}
+
 .jiFenUseBtn_cir {
 	width: 56rpx;
-	height: 56rpx;
-	border-radius: 50%;
-	transition: 0.2s ease-in-out;
+  height: 56rpx;
+  border-radius: 50%;
+  transition: 0.2s ease-in-out;
+  position: absolute;
+  left: 3rpx;
+  top: 3rpx;
 }
 
 .jiFenGreenBtn_cir {
 	background-color: #fff;
 	position: absolute;
-	right: 3rpx;
-	top: 3rpx;
+	left: 46rpx;
+  top: 3rpx;
+}
+
+.jiFenWhiteBtn_cir {
+  background: #fff;
+  left: 0;
+  top: -1rpx;
+  -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
 }
 
 .jiFenGrayBtn_cir {

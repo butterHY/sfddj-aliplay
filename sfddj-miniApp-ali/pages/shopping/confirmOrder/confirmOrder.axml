@@ -166,15 +166,14 @@
 						<view class="should-pay-item" a:if="{{!isTuangou}}">
 							<view>优惠总额
 							</view>
-							<view class="color-ff5353 font-28">{{result.couponValue}}
-							</view>
+							<view>{{totalCouponValue > 0 ? "￥" + filters.toFix(totalCouponValue) : "￥0.00"}}</view>
 						</view>
 						<!-- 假如是秒杀商品则不能使用优惠券 ！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！-->
 						<view class="choice-coupon-view borTop " a:if="{{!isJifen && !isSpike}}">
 							<view class="font-26 color-323232">使用优惠券
 							</view>
 							<view class="coupon-name-view">
-								<view class="font-26 color-ff5353" a:if="{{result.availableCoupon.length > 0}}" onTap="availableCouponTap">{{result.couponStr}}
+								<view class="font-26 color-ff5353" a:if="{{canUseCouponCount > 0}}" onTap="availableCouponTap">{{result.couponStr}}
 								</view>
 								<view class="font-26 color-b3b3b3" a:else>暂无可用优惠券
 								</view>
@@ -253,10 +252,9 @@
 							</view>
 							<!--<view wx:if="{{result.canUseBalance}}" class='coupon-name-view'><view class='jiFenUseBtn posi_re {{canBuy ? "jiFenGreenBtn" : "jiFenGrayBtn"}}'><view class='jiFenUseBtn_cir {{canBuy ? "jiFenGreenBtn_cir" : "jiFenGrayBtn_cir"}}'></view></view></view> -->
 							<view class="coupon-name-view" a:if="{{result.canUseBalance}}" catchTap="{{canFirstClick ? 'useBalanceFn' : ''}}">
-								<view class="jiFenUseBtn posi_re {{canClick ? 'jiFenGreenBtn' : 'jiFenGrayBtn'}}">
-									<view class="jiFenUseBtn_cir {{canClick ? 'jiFenGreenBtn_cir' : 'jiFenGrayBtn_cir'}}">
-									</view>
-								</view>
+								<view class='jiFenUseBtn posi_re {{canClick ? (isUseBalance ? "jiFenGreenBtn" : "jiFenWhiteBtn" ) : "jiFenGrayBtn"}}'>
+            <view class='jiFenUseBtn_cir {{canClick ? (isUseBalance ? "jiFenGreenBtn_cir" : "jiFenWhiteBtn_cir" ) : "jiFenGrayBtn_cir"}}'></view>
+          </view>
 							</view>
 						</view>
 					</view>
@@ -276,7 +274,7 @@
 									</view>
 									<view class="font-24 color-323232 marLeft_20">小计
 									</view>
-									<view class="font-30 color-ff5353">￥{{isTuanZhang ? '0.00' : item.supplierPrice}}
+									<view class="font-30 color-ff5353">￥{{isTuanZhang ? '0.00' :  filters.toFix(item.supplierPrice)}}
 									</view>
 									<view class="font-24 color-323232" a:if="{{isTuanZhang}}">(团长免单)
 									</view>
@@ -302,6 +300,17 @@
 									</view>
 								</view>
 							</block>
+							<!-- 商家优惠券 -->
+							<view class='choice-coupon-view borBot ' a:if='{{item.supplierCoupon}}' data-index="{{index}}" onTap='{{item.supplierCoupon? "selectSupplierCoupon" : ""}}'>
+								<view class='font-26 color-323232'>商家优惠</view>
+								<view class='coupon-name-view'>
+									<view class='font-26 color-ff5353' a:if='{{item.supplierCoupon.length>0}}'>{{item.couponStr}}</view>
+									<view class='font-26 color-b3b3b3' a:else>暂无可用优惠券</view>
+									<text class='coupon_arrIcon icon-href-right color-c7c7cc font-22'></text>
+								</view>
+							</view>
+							<!-- 商家优惠券选择框 -->
+							<template a:if="{{item.supplierCoupon}}" is="dialogCoupon" data="{{baseImageUrlLoc:baseLocImgUrl,show:isShowStoreCouponList[index],couponList:item.supplierCoupon,iconSize,type: 'supplier',fatherIndex: index}}" />
 							<input type='text' placeholder="买家留言：选填" maxlength="60" class="font-26 order_leaMes" data-index="{{index}}" disabled="{{isSubmit}}" value="{{bbsData}}" a:if="{{!showDialogCoupon}}" onInput="memoInput"/>
 							<text class="font-24 color-a1a0a0 order_leaMesLeft">剩余：{{item.leftCount}}字
 							</text>
@@ -372,7 +381,8 @@
 					<block a:if="{{totalPostFee && totalPostFee != '0.00' && totalPostFee != 0}}">
 						<view class="totalPostFee color-a1a0a0 font-26 marRight_10">
 							<text>含运费</text>
-							<text>￥<text class="font-30">{{totalPostFee}}</text></text>
+							<text>￥
+								<text class="font-30">{{totalPostFee}}</text></text>
 						</view>
 					</block>
 					<view class="flex_view_row align_cen">
@@ -392,7 +402,7 @@
 <template is="dialogCoupon" data="{{baseImageUrlLoc:baseLocImgUrl,show:showDialogCoupon,couponList:result.availableCoupon,iconSize}}"/>
 <!--发票弹框  -->
 <view class="invoiceDialog" a:if="{{showInvoice}}">
-	<view class="blackSpace" catchTap="colseCouponDialog">
+	<view class="blackSpace" catchTap="closeCouponDialog">
 	</view>
 	<view class="totalInvoice ">
 		<scroll-view scroll-y='true' class="invoiceScroll height_100">
@@ -598,16 +608,5 @@
 	</view>
 </view>
 <!-- 优惠券弹窗 -->
-<!-- <view class="mark flex_view_col align_cen justi_cen" a:if="{{couponShow}}">
-  <view class="toastView_wb" style="background-color:rgba(0, 0, 0, 0);">
-      <view class="font-26 confirmorderPop posi_re">
-          <image src="https://img.sfddj.com/miniappImg/couponsPop/backgroundPop.png" class="width_100 height_100" mode="widthFix"></image>
-          <view class="couponPrice posi_ab tex_center"><text>￥</text><text class="font-60 font-weight-600">100</text></view>
-          <view class="ikonw posi_ab" onTap="closeCouponShow">
-            <image src="https://img.sfddj.com/miniappImg/couponsPop/closeBtn.png" class="width_100 height_100" mode="widthFix"/></image>
-          </view>
-      </view>
-  </view>
-</view> -->
+<!--<view class="mark flex_view_col align_cen justi_cen" a:if="{{couponShow}}"><view class="toastView_wb" style="background-color:rgba(0, 0, 0, 0);"><view class="font-26 confirmorderPop posi_re"><image src="https://img.sfddj.com/miniappImg/couponsPop/backgroundPop.png" class="width_100 height_100" mode="widthFix"></image><view class="couponPrice posi_ab tex_center"><text>￥</text><text class="font-60 font-weight-600">100</text></view><view class="ikonw posi_ab" onTap="closeCouponShow"><image src="https://img.sfddj.com/miniappImg/couponsPop/closeBtn.png" class="width_100 height_100" mode="widthFix"/></image></view></view></view></view> -->
 <!-- 上传中提示 -->
-
