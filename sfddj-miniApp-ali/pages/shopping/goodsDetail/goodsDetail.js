@@ -155,7 +155,7 @@ Page({
           }
         })
       }
-
+			console.log(comment)
       if(resData.goodsShowVO.commentTotal > 0) {                                    // 总评论数为空不显示评论模块, 不为空的话且 comment 不为空才渲染评论
         that.setData({
           showComment: true,
@@ -1975,9 +1975,10 @@ Page({
 		} else if ( that.data.address ) {
 			defaultAddress = that.data.address;
 		}
-		
+		console.log(defaultAddress)
+		console.log( that.data.goods.nonDeliveryArea)
 		that.data.nonDeliveryAre = that.data.goods.nonDeliveryArea.some(value => {
-			defaultAddress.province.indexOf(value) > -1 || value.indexOf(defaultAddress.province) > -1 || defaultAddress.city.indexOf(value) > -1 || value.indexOf(defaultAddress.city) > -1
+			return defaultAddress.province.indexOf(value) > -1 || value.indexOf(defaultAddress.province) > -1 || defaultAddress.city.indexOf(value) > -1 || value.indexOf(defaultAddress.city) > -1
 		})
 
 		that.setData({ nonDeliveryArea: that.data.nonDeliveryAre });

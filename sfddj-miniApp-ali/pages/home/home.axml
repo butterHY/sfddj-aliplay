@@ -15,7 +15,7 @@
 		<lifestyle a:if="{{canUseLife}}" publicId='2016071501623328'/>
 		<view class="width_100" style="height: 120rpx;" catchTap="showSearch">
 			<view class="{{!canUseLife || hideLifeStyle ? 'posi_fix' : ''}} width_100" style="top: 0; left: 0; z-index: 100;">
-				<template is="home-search" data="{{baseLocImgUrl:baseLocImgUrl}}"></template>
+				<template is="home-search" data="{{baseLocImgUrl, inputVal}}"></template>
 			</view>
 		</view>
 	</view>

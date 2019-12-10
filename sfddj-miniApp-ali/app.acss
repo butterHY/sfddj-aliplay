@@ -312,6 +312,14 @@ input {
   color: #795a1a;
 }
 
+.color-ff2e2e {
+  color: #ff2e2e;
+}
+
+.color-772a2a {
+  color: #772a2a;
+}
+
 .color-ff4949 {
   color: #ff4949;
 }
@@ -347,6 +355,10 @@ input {
 .color-ff5353 {
   /** 红色字体 **/
   color: #ff5353;
+}
+
+.corlor-ff2e2e {
+  color: #ff2e2e;
 }
 
 .color-bbbbbb {
@@ -1038,14 +1050,12 @@ button {
 }
 
 /*加载中和加载错误信息部分   */
-
 .loadingTop {
   text-align: center;
   margin-top: 20rpx;
 }
 
 /*一行显示   */
-
 .oneLineShow {
   overflow: hidden;
   white-space: nowrap;
@@ -1057,7 +1067,6 @@ button {
 }
 
 /* 加载动画 */
-
 .loading { 
   display: flex; 
   width: 100%;

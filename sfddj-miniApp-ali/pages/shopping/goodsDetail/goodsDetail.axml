@@ -25,7 +25,7 @@
 <view a:else class="posi_re js_page">
   <!-- 商品图片轮播图                     已完成新接口字段更换-->
   <view class="posi_re">
-    <swiper indicator-dots="true" class="swiper_img" indicator-active-color="#ff5353" indicator-color='rgba(0,0,0,.3)' autoplay="true" circular="true">
+    <swiper indicator-dots="true" class="swiper_img" indicator-active-color="#ff5353" indicator-color='rgba(0,0,0,.3)' autoplay="{{false}}" circular="true">
       <block a:for="{{goods.goodsImages}}" a:key="*this">
         <swiper-item>
           <image src="{{baseImageUrl}}{{item}}" class="swiper_img" data-current="{{item}}" data-urls="{{goods.goodsImages}}" onTap="commentViewTap"/>
@@ -33,14 +33,10 @@
       </block>
     </swiper>
     <!--小图标,全赔..  -->
-    <image src="{{base64imageUrl}}miniappImg/icon/icon_Payoff1.png" class="allCompensation posi_ab" a:if="{{filters.strIndexOf(goods.afterSaleGuee,'1')}}">
-    </image>
-    <image src="{{base64imageUrl}}miniappImg/icon/icon_Payoff2.png" class="allCompensation posi_ab" a:elif="{{filters.strIndexOf(goods.afterSaleGuee,'2')}}">
-    </image>
-    <image src="{{base64imageUrl}}miniappImg/icon/icon_Payoff3.png" class="allCompensation posi_ab" a:elif="{{filters.strIndexOf(goods.afterSaleGuee,'3')}}">
-    </image>
-    <image src="{{base64imageUrl}}miniappImg/icon/icon_Payoff4.png?version=2.0" class="allCompensation posi_ab" a:elif="{{filters.strIndexOf(goods.afterSaleGuee,'4')}}">
-    </image>
+    <!-- <image src="{{base64imageUrl}}miniappImg/icon/icon_Payoff1.png" class="allCompensation posi_ab" a:if="{{filters.strIndexOf(goods.afterSaleGuee,'1')}}"></image>
+    <image src="{{base64imageUrl}}miniappImg/icon/icon_Payoff2.png" class="allCompensation posi_ab" a:elif="{{filters.strIndexOf(goods.afterSaleGuee,'2')}}"></image>
+    <image src="{{base64imageUrl}}miniappImg/icon/icon_Payoff3.png" class="allCompensation posi_ab" a:elif="{{filters.strIndexOf(goods.afterSaleGuee,'3')}}"></image>
+    <image src="{{base64imageUrl}}miniappImg/icon/icon_Payoff4.png?version=2.0" class="allCompensation posi_ab" a:elif="{{filters.strIndexOf(goods.afterSaleGuee,'4')}}"></image> -->
   </view>
 
   <!-- 秒杀商品的价格                       已完成新接口字段更换-->
@@ -58,6 +54,7 @@
           <image class="priceTagImg" src="{{base64imageUrl}}miniappImg/public/goodsDetail/iconBg_globle.png"/>
           <image class="priceTagImg" a:if="{{priceInfo.isBaoShui}}" src="{{base64imageUrl}}miniappImg/public/goodsDetail/iconBg_baoshui.png"/>
         </block>
+        <!-- a:elif="{{goods.memberDayPriceStatus}}" -->
         <image class="priceTagImg" a:elif="{{goods.memberDayPriceStatus}}" src="{{base64imageUrl}}miniappImg/public/goodsDetail/iconBg_vip.png"/>
     </view>
     <!-- 价格销量 -->
@@ -66,7 +63,7 @@
         <view class="font-50 font-weight-600 color-a1a0a0">暂无报价</view>
       </block>
       <block a:else>
-        <view class="color-ff5353 flex_view_row align_end">
+        <view class="color-ff2e2e flex_view_row align_end">
           <!-- <view class="color-a1a0a0 font-26" a:if="{{false}}">会员价 <text decode="true" space="true">&nbsp;</text></view> -->
           <view class="posi_re">
             <view class="defaultPrice">
@@ -76,12 +73,12 @@
                 <text decode="true" space="true">&nbsp;</text>
                 <text class="font-56 font-weight-600">{{priceInfo.price}}</text>
                 <!-- 原价 -->
-                <text class="color-a1a0a0 font-26 line-through" a:if="{{priceInfo.oldPrice}}">¥ {{priceInfo.oldPrice}}</text>
+                <text a:if="{{priceInfo.oldPrice}}" class="color-a1a0a0 font-22 line-through marLeft_5" >¥ 100{{priceInfo.oldPrice}}</text>
               </text>
               <!-- 积分 -->
               <text a:if="{{priceInfo.integralVal}}">
                 <text class="font-weight-600" a:if="{{priceInfo.price}}"><text decode="true" space="true">&nbsp;</text>+<text decode="true" space="true">&nbsp;</text></text>
-                <text ><text class="{{!priceInfo.price ? color-ff5353 : color-a1a0a0}} font-56 font-weight-600">{{priceInfo.integralVal}}</text><text class="{{!priceInfo.price ? color-ff5353 : color-a1a0a0}}">积分</text></text>
+                <text class="{{!priceInfo.price ? color-ff2e2e : color-a1a0a0 }}"><text class="{{!priceInfo.price ? font-56 : font-30}} font-weight-600">{{priceInfo.integralVal}}</text><text class="font-30">积分</text></text>
               </text>
             </view>
           </view>
@@ -102,18 +99,19 @@
   </view>
 
     <!-- 优惠券导航栏                      -->
-  <view class="receiveCoupon flex_view_row justi_between font-24" onTap="showPopup" a:if="{{couponDataList && couponDataList.length > 0}}">
+  <view class="receiveCoupon flex_view_row justi_between font-26" onTap="showPopup" a:if="{{couponDataList && couponDataList.length > 0}}">
     <view class="flex_view_row flex_1 justi_start">
       <view class="couponTitle">
         <image src="{{baseImageLocUrl}}miniappImg/public/goodsDetail/icon_coupon.png" class="width_100 height_100" mode="widthFix"></image>
       </view>
-      <view class="couponName" a:for="{{couponDataList}}" a:key="*this">
+      <view class="couponName color-ff2e2e" a:for="{{couponDataList}}" a:key="*this">
         <block a:if="{{index == 0 || index == 1 || index == 2}}">满{{item.needPrice}}减{{item.costPrice}}</block>
       </view>
     </view>
     <view class="getCouponText">
       <text class="color-a1a0a0">领券</text>
-      <text class="icon-href-right font-22 color-c7c7cc marLeft_20"></text>
+      <!-- marLeft_20 -->
+      <text class="icon-href-right font-22 color-c7c7cc"></text>
     </view>
   </view>
 
@@ -142,7 +140,7 @@
 
   <!-- 商品名称、title、标签              已完成新接口字段更换-->
   <view class="detail-header-view posi_re ">
-    <view class="detail-header-name color-323232 font-30">
+    <view class="detail-header-name color-323232 font-32">
       <view class="twoLineHide">
         <text class="labelName  label font-20" a:if="{{goods.goodsLabels}}">{{goods.goodsLabels}}</text>
         <text class="goodsName font-weight-600">{{goods.goodsName}}</text>   
@@ -155,16 +153,16 @@
     <button open-type="share" size="mini" plain="{{true}}" class="btnStyle flex_view_col justi_between align_end shareButton posi_ab">
       <!-- <image class="shareImag" src="{{base64imageUrl}}miniappImg/icon/share.png"/> -->
       <text class="iconfont icon-collect font-40"></text>
-      <text class="font-22  color-a1a0a0">分享</text>
+      <text class="font-26  color-a1a0a0">分享</text>
     </button>
   </view>
 
-    <!--购物返现金额                      已完成新接口字段更换-->
-  <view class="returnCashView" a:if="{{goods.returnMoneyStatus}}"  catchTap="showCashBackRuleFn">
+    <!--购物返现金额                     已完成新接口字段更换-->
+  <view class="returnCashView" a:if="{{goods.returnMoneyStatus}}" catchTap="showCashBackRuleFn">
     <view class="returnCash flex_view_row justi_between">
       <view class="returnCashDescribe flex_view_row  font-32">
         <image class="returnCashimage" src="{{baseImageLocUrl}}miniappImg/public/goodsDetail/cash_envelopes.png"/>
-        <view>购买最高可返{{filters.toFix(goods.maxReturnMoney)}}元</view>
+        <view class="color-772a2a">购买最高可返{{filters.toFix(goods.maxReturnMoney)}}元</view>
       </view>
       <view class="returnCashrule font-26">查看详情</view>
     </view>
@@ -210,7 +208,7 @@
       <text class="icon-href-right font-22 color-c7c7cc padding-r15">
       </text>
     </view>
-    <view class="addressTips" a:if="{{goods.deliveryTime}}">下单后<text class="color_red">{{goods.deliveryTime}}小时以内</text>发货</view>
+    <view class="addressTips" a:if="{{goods.deliveryTime}}">下单后<text class="color-ff2e2e">{{goods.deliveryTime}}小时以内</text>发货</view>
   </view>
   <!-- a:if="{{addressList && addressList.length > 0}}" -->
   <popup  show="{{isShowAddressPop}}" mask="{{true}}" position="bottom" animation="{{true}}" onClose="onAddressPop" zIndex="100" disableScroll="{{false}}">
@@ -325,7 +323,7 @@
   <view data-url="/pages/shopping/comment/comment?goodScore={{goods.commentScore}}&goodsCommentTotal={{goods.commentTotal}}&goodsId={{goods.goodsId}}" data-type="comment" onTap="goToTargetPage" hover-class="none" a:if="{{showComment}}">
     <view class="goods-comment-title">
       <view class="flex_view_row align_cen">
-        <view>好评率<text class="marLeft_5 color-ff5353 font-28">{{goods.commentScore}}%</text></view>
+        <view>好评率<text class="marLeft_5 color-ff2e2e">{{goods.commentScore}}%</text></view>
       </view>
       <view class="flex_view_row align_cen color-a1a0a0">
         <view>评价</view> 
@@ -347,18 +345,18 @@
           <image src="{{item.headPortraitPath ? item.headPortraitPath : base64imageUrl + 'miniappImg/icon/icon_default_head.jpeg'}}" class="proComment_headPort">
           </image>
         </view>
-        <view class="font-24 color-323232 marLeft_20">{{item.nickName}}</view>
+        <view class="font-22 color-a1a0a0 marLeft_20">{{item.nickName}}</view>
       </view>
       <view class="flex_view_row align_cen">
         <image src="{{base64imageUrl}}miniappImg/icon/icon_star_selected.png" class="proComment_star" a:for="{{item.star}}" a:key="*this"></image>
         <image src="{{base64imageUrl}}miniappImg/icon/icon_star_normal.png" class="proComment_star" a:for="{{5 - item.star}}" a:key="*this"></image>
       </view>
     </view>
-    <view class="proComment_text overHid font-26">
+    <view class="proComment_text font-26">
       <view class="comment-text">{{item.comment}}</view>
     </view>
-    <view class="blockBox marTop_36" a:if="{{item && item.imagePath.length > 0}}">
-      <image class="proComment_img" a:for="{{item.imagePath}}" a:key="*this" a:for-item="items" a:for-inex="inexs" src="{{baseImageUrl}}{{items}}" data-current="{{items}}" data-urls="{{item.imagePath}}" style="{{inexs == item.imagePath.length - 1 ? 'margin-right: 0;' : '  margin-right: 6rpx;'}}" onTap="commentViewTap">
+    <view class="blockBox marTop_38" a:if="{{item && item.imagePath.length > 0}}">
+      <image class="proComment_img" a:for="{{item.imagePath}}" a:key="*this" a:for-item="items" a:for-inex="inexs" src="{{baseImageUrl}}{{items}}" data-current="{{items}}" data-urls="{{item.imagePath}}" style="{{inexs == item.imagePath.length - 1 ? 'margin-right: 0;' : '  margin-right: 3rpx;'}}" onTap="commentViewTap">
       </image>
     </view>
     <!-- <view class="proComment_date font-22 color-a1a0a0">{{comment.createDate}}        
@@ -384,10 +382,10 @@
   <!-- 产品详情和服务售后的选择栏                 已完成新接口字段更换-->
   <view class="goods-detail-title-view js_titleView whiteBack width_100" style="{{suctionTop == 0 ? 'position: fixed; top: 0; left: 0; z-index: 1000;' : ''}}">
     <view class="goods-detail-title" id="0" onTap="switchDetailShowTap">
-      <view class="height_100 flex_view_col justi_cen" style="{{!hideDetailTag ? 'border-bottom: #ff5353 5rpx solid; color: #ff5353;' : ''}}">产品详情</view>
+      <view class="height_100 flex_view_col justi_cen" style="{{!hideDetailTag ? 'border-bottom: #ff2e2e 4rpx solid; color: #ff2e2e;' : ''}}">产品详情</view>
     </view>
     <view class="goods-detail-title" id="1" onTap="switchDetailShowTap">
-      <view class="height_100 flex_view_col justi_cen" style="{{hideDetailTag ? 'border-bottom: #ff5353 5rpx solid; color: #ff5353;' : ''}}">服务售后</view>        
+      <view class="height_100 flex_view_col justi_cen" style="{{hideDetailTag ? 'border-bottom: #ff2e2e 4rpx solid; color: #ff2e2e;' : ''}}">服务售后</view>        
     </view>
   </view>
   <view class="goods-detail-title-view js_titleViewClone" a:if="{{isTitleViewClone}}">
@@ -542,51 +540,19 @@
       </view>
       <!-- <view class='bottom-text-white-bg buyNowBtn font-30' onTap='addCart'>加入购物车</view> -->
     </view>
-    <!--不是送礼,不显示送他按钮  -->
-    <view class="bottom-view" a:else>
-      <view class="flex_1 flex_view_row">
-        <navigator class="btnNoBor contactBtn bottom-icon-view font-20 color-565d6f flex_1" url="/pages/shopping/storeInfo/storeInfo?supplierId={{goods.supplierInfo.supplierId}}" hover-class="none">
-          <!-- <image src="{{base64imageUrl}}miniappImg/icon/icon-business.png" class="contactBtn_icon"></image> -->
-          <text class="iconfont icon-home font-42"></text>
-          <text>店铺</text>
-        </navigator>
-        <view class="btnNoBor contactBtn bottom-icon-view font-20 color-565d6f flex_1" catchTap="goToWebCall">
-          <!-- <image src="{{base64imageUrl}}miniappImg/icon/icon_contact_businesser.png" class="contactBtn_icon"></image> -->
-          <text class="iconfont icon-message_fang font-42"></text>
-          <text>联系商家 </text>
-        </view>
-        <view class="btnNoBor contactBtn height_100 posi_re myCart flex_1">
-          <navigator open-type="switchTab" class="bottom-icon-view font-20 color-565d6f" hover-class="none" url="/pages/cart/cart">
-            <!-- <image src="{{base64imageUrl}}miniappImg/icon/icon_shop_cart.png" class="shopCart_icon"></image> -->
-            <text class="iconfont icon-shopcar_small font-42"></text>
-            <text>购物车</text>
-          </navigator>
-          <!-- 以下 view 原有的写法 style="{{secKillStatus ? 'margin-right: -20%;' : ''}}" -->
-          <view class="red-count-view " a:if="{{count > 0}}" >
-            <text class="oneLineShow">{{count}}                    
-            </text>
+
+    <!--不是送礼,不显示送他按钮   a:else-->
+    <view class="bottom-view">
+      <view class="regularButton">
+        <view class="regularItem">
+          <view class="regularItemIcon iconfont icon-compass">
           </view>
+          <view class="regularItemText">店铺</view>
         </view>
+        <view class="regularItem"></view>
+        <view class="regularItem"></view>
       </view>
-      <view class="flex_1  height_100 flex_view_row align_cen justi_cen noJifen color-white font-32">
-        <block a:if="{{goods.secKillStatus}}">
-          <navigator  a:if="{{goods.viewStatus != 'SALEING'}}" class="bottom-bg bottom-text-yellow-bg"  url="/pages/category/secondCategory/secondCategory?categoryId={{goods.categoryVO.categoryId}}" open-type="navigate" hover-class="none">查看类似商品</navigator>
-          <!-- <navigator class="bottom-bg bottom-text-yellow-bg" a:if="{{goods.viewStatus != 'SALEING'}}"  open-type="switchTab" url="/pages/home/home">查看类似商品</navigator> -->
-          <view  class="bottom-bg background_gray" a:elif="{{isSpikeOver}}">活动结束</view>
-          <view  class="bottom-bg background_gray" a:elif="{{goods.secKillStatus && (goodsSecondKill.totalSaleVolume == goodsSecondKill.totalStock)}}">已售罄</view>
-          <view  class="bottom-bg background_red" a:else onTap="buyNow">立即购买</view>
-        </block>
-        <block a:elif="{{goods.viewStatus != 'SALEING' || (goods.viewStatus == 'SALEING' && goods.goodsStore == 0)}}">
-          <!-- <navigator class="bottom-bg bottom-text-yellow-bg" open-type="switchTab" url="/pages/home/home">查看类似商品</navigator> -->
-          <navigator class="bottom-bg bottom-text-yellow-bg" url="/pages/category/secondCategory/secondCategory?categoryId={{goods.categoryVO.categoryId}}" open-type="navigate" hover-class="none">查看类似商品</navigator>
-        </block>
-        <block a:else>
-          <view class="bottom-bg font-30">
-            <view class="flex_1 height_100 bottom-white-bg color-ff5353" a:if="{{specType != 'OPTIONAL'}}" onTap="addCart">加入购物车</view>
-            <view class="flex_1 height_100 bottom-red-bg" style="{{specType == 'OPTIONAL' ? 'border-radius: 60rpx;' : ''}}" onTap="buyNow">立即购买</view>
-          </view>
-        </block>
-      </view>
+      <view class="buyOrAddCart"></view>
     </view>
   </block>
 
