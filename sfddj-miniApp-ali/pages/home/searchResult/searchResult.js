@@ -40,6 +40,10 @@ Page({
 
 		searchShow: false,				// 智能搜索模版显示开关
 		smartSearchList: [],			// 智能搜索数据
+
+		isShowSearch: false,								// 新版搜索组件显示开关
+		isFocus: false,											// 新版搜索组件焦点开关
+		searchComponent: null,							// 新版搜索组件实例
 	},
 
 	/**
@@ -71,11 +75,9 @@ Page({
 		// 因为添加了 “商品”和“店铺”的导航栏 ，所以页面滚动距离得由原来的 120 ，变为 198
 		// console.log(utils.px2Rpx(scrollTop));    为什么要使用   utils.px2Rpx 来装换 rpx ? 这样在真机并不准确；
 		if (utils.px2Rpx(e.detail.scrollTop) > 198 && !this.data.scrollTop) {
-			console.log('>= 98', this.data.scrollTop)
 			this.data.scrollTop = true;							
 			this.setData({ scrollTop: this.data.scrollTop });
 		} else if (utils.px2Rpx(e.detail.scrollTop) <= 198 && this.data.scrollTop){
-			console.log('< 98', this.data.scrollTop);
 			this.data.scrollTop = false;
 			this.setData({
 				scrollTop: this.data.scrollTop
@@ -131,86 +133,100 @@ Page({
 	},
 
 	/**
-	 * 输入框聚焦时弹出搜索历史、推荐词
+	 * 输入框聚焦时弹出搜索历史、推荐词	   ------  搜索改版
 	 */
-	handleFocus: function(event) {
-		var that = this;
-		console.log('输入框聚焦')
-		sendRequest.send(constants.InterfaceUrl.HOT_WORD, {}, function(res) {
-			that.setData({
-				hotWords: res.data.result
-			});
-		}, function(err) {
-		}, 'GET');
-		try {
-			var searchWords = my.getStorageSync({
-				key: constants.StorageConstants.searchWordsKey, // 缓存数据的key
-			}).data;
-			this.setData({
-				searchWords: searchWords,
-				show: true
-			});
-		} catch (e) { }
-	},
+	// handleFocus: function(event) {
+	// 	var that = this;
+	// 	console.log('输入框聚焦')
+	// 	sendRequest.send(constants.InterfaceUrl.HOT_WORD, {}, function(res) {
+	// 		that.setData({
+	// 			hotWords: res.data.result
+	// 		});
+	// 	}, function(err) {
+	// 	}, 'GET');
+	// 	try {
+	// 		var searchWords = my.getStorageSync({
+	// 			key: constants.StorageConstants.searchWordsKey, // 缓存数据的key
+	// 		}).data;
+	// 		this.setData({
+	// 			searchWords: searchWords.reverse(),
+	// 			show: true
+	// 		});
+	// 	} catch (e) { }
+	// },
 
 
 	/**
-	 * 输入框失焦时隐藏热词模块提示
+	 * 输入框失焦时隐藏热词模块提示			-------   搜索改版
 	 */
-	handleBlur: function(event) {
-		console.log('输入框失焦')
+	// handleBlur: function(event) {
+	// 	console.log('输入框失焦')
+	// 	this.setData({
+	// 		show: false
+	// 	});
+	// },
+
+	/**
+	 * 键盘输入事件			------- 		搜索改版
+	 */
+	// handleInput: function(event) {
+	// 	console.log(event.detail.value.replace(/\s*/g,''))
+	// 	let inputVal = event.detail.value.replace(/\s*/g,'');
+	// 	let hotWordShow = true;
+	// 	let searchShow = true;
+	// 	if( inputVal ) {
+	// 		this.smartSearch(inputVal);
+	// 		hotWordShow = false;
+	// 	} else {
+	// 		searchShow = false;
+	// 	}
+	// 	this.setData({
+	// 		show: hotWordShow,
+	// 		searchShow,
+	// 		inputVal: event.detail.value
+	// 	});
+	// },
+
+
+
+	/**
+	 * 键盘确认时搜索，默认排序类型是 0；			------- 		搜索改版
+	 */
+	// handleConfirm: function(event) {
+	// 	// 达观数据上报
+	// 	// utils.uploadClickData_da('search', [{ keyword: event.detail.value }])
+	// 	// 先关闭热门推荐和搜索记录模块以及智能搜索模块
+	// 	this.data.goodsOrStore == '0' ? this.setData({goodsStart: 0, show: false, searchShow: false}) : this.setData({storeStart: 0, show: false, searchShow: false});
+	// 	console.log(event.detail.value)
+	// 	this.searchProduct(event.detail.value, 0);
+	// },
+
+	/**
+	 * 选择搜索热词 或者 选择智能搜索词			 ---------		搜索改版
+	 */
+	// chooseWord: function(event) {
+	// 	let that = this;
+	// 	this.setData({
+	// 		inputVal: event.currentTarget.dataset.word,
+	// 		show: false,
+	// 		searchShow: false,
+	// 	});
+	// 	// 达观数据上报
+	// 	// utils.uploadClickData_da('search', [{ keyword: event.currentTarget.dataset.word }])
+	// 	this.data.goodsOrStore == '0' ? this.setData({goodsStart: 0}) : this.setData({storeStart: 0});
+	// 	this.searchProduct(event.currentTarget.dataset.word, 0);
+	// },
+
+	selectOrEnter(word, noGetHistory) {
+		console.log('我被触发了', word)
 		this.setData({
-			show: false
-		});
-	},
-
-	/**
-	 * 键盘输入事件
-	 */
-	handleInput: function(event) {
-		console.log(event.detail.value.replace(/\s*/g,''))
-		let inputVal = event.detail.value.replace(/\s*/g,'');
-		let hotWordShow = true;
-		let searchShow = true;
-		if( inputVal ) {
-			this.smartSearch(inputVal);
-			hotWordShow = false;
-		} else {
-			searchShow = false;
-		}
-		this.setData({
-			show: hotWordShow,
-			searchShow,
-			inputVal: event.detail.value
-		});
-	},
-
-	/**
-	 * 键盘确认时搜索，默认排序类型是 0；
-	 */
-	handleConfirm: function(event) {
-		// 达观数据上报
-		// utils.uploadClickData_da('search', [{ keyword: event.detail.value }])
-		// 先关闭热门推荐和搜索记录模块以及智能搜索模块
-		this.data.goodsOrStore == '0' ? this.setData({goodsStart: 0, show: false, searchShow: false}) : this.setData({storeStart: 0, show: false, searchShow: false});
-		console.log(event.detail.value)
-		this.searchProduct(event.detail.value, 0);
-	},
-
-	/**
-	 * 选择搜索词
-	 */
-	chooseWord: function(event) {
-		let that = this;
-		this.setData({
-			inputVal: event.currentTarget.dataset.word,
-			show: false,
-		});
-		// 达观数据上报
-		// utils.uploadClickData_da('search', [{ keyword: event.currentTarget.dataset.word }])
+			inputVal: word,
+		})
+		this.showSearch(noGetHistory);
 		this.data.goodsOrStore == '0' ? this.setData({goodsStart: 0}) : this.setData({storeStart: 0});
-		this.searchProduct(event.currentTarget.dataset.word, 0);
+		this.searchProduct(word, 0);
 	},
+
 
 	/**
 	 * 搜索商品
@@ -298,6 +314,7 @@ Page({
 			that.setData(upData);
 			
 		}, function(err) {
+			console.log(err)
 			my.stopPullDownRefresh();
 			that.setData({
 				isLoadMore: false,
@@ -307,44 +324,47 @@ Page({
 	},
 
 		/**
-	 * 搜索商品
-	 * type 0:刷新 1:加载更多
+	 * 智能搜索数据		--------  搜索改版
+	 * 
 	 */
-	smartSearch(inputVal) {
-		let that = this;
-		let data = {
-			suggestStr: inputVal,
-			showChannel: 0
-		}
-		http.post( api.search.GOODSSUGGEST, data ,(res) => {
-			console.log(res);
-			let resData = res.data.data;
-			let retData = res.data.ret;
-			// let hotWordShow = true;
-			// let searchShow = true;
+	// smartSearch(inputVal) {
+	// 	let that = this;
+	// 	console.log(inputVal);
+	// 	let data = {
+	// 		suggestStr: inputVal,
+	// 		showChannel: 0
+	// 	}
+	// 	http.post( api.search.GOODSSUGGEST, data ,(res) => {
+	// 		console.log(res);
+	// 		let resData = res.data.data;
+	// 		let retData = res.data.ret;
+	// 		// let hotWordShow = true;
+	// 		// let searchShow = true;
 
-			if( retData.code == '0' && retData.message == "SUCCESS" ) {
-				that.setData({
-					// show: hotWordShow,
-					// searchShow,
-					smartSearchList: resData
-				})
-			} else {
-				that.setData({
-					// show: hotWordShow,
-					// searchShow,
-					smartSearchList: []
-				})
-			}
-		}, (err) => {
-			that.setData({
-				// show: hotWordShow,
-				// searchShow,
-				smartSearchList: []
-			})
-			console.log(err)
-		})
-	},
+	// 		if( retData.code == '0' && retData.message == "SUCCESS" ) {
+	// 			that.setData({
+	// 				// show: hotWordShow,
+	// 				// searchShow,
+
+	// 				// .concat(resData)
+	// 				smartSearchList: resData
+	// 			})
+	// 		} else {
+	// 			that.setData({
+	// 				// show: hotWordShow,
+	// 				// searchShow,
+	// 				smartSearchList: []
+	// 			})
+	// 		}
+	// 	}, (err) => {
+	// 		that.setData({
+	// 			// show: hotWordShow,
+	// 			// searchShow,
+	// 			smartSearchList: []
+	// 		})
+	// 		console.log(err)
+	// 	})
+	// },
 
 
 	/**
@@ -382,21 +402,23 @@ Page({
 	 * 保存搜索词
 	 */
 	saveSearchHist: function(keyWord) {
-		if (stringUtils.isNotEmpty(keyWord)) {
+		console.log(keyWord);
+		if ( stringUtils.isNotEmpty(keyWord) ) {
 			try {
 				var searchWords = my.getStorageSync({ key: constants.StorageConstants.searchWordsKey }).data || [];
 				// 搜索记录去重
-				for (var key in searchWords) {
-					if (searchWords[key] == keyWord) {
-						return;
-					}
-				}
-				// 小于 8 个则直接插入，大于 8 个则删除时间最远的一个，然后按照时间从远到近排序同时插入最新的一个词；
-				if (searchWords.length < 8) {
+				let keyWordIndex = searchWords.findIndex(val => keyWord == val);
+				if( keyWordIndex != -1 ) {
+					searchWords.splice(keyWordIndex, 1);
 					searchWords.push(keyWord);
 				} else {
-					searchWords.reverse().pop();
-					searchWords.reverse().push(keyWord);
+					// 小于 8 个则直接插入，大于 8 个则删除时间最远的一个，然后按照时间从远到近排序同时插入最新的一个词；
+					if (searchWords.length < 5) {
+						searchWords.push(keyWord);
+					} else {
+						searchWords.reverse().pop();
+						searchWords.reverse().push(keyWord);
+					}
 				}
 				my.setStorageSync({
 					key: constants.StorageConstants.searchWordsKey, // 缓存数据的key
@@ -407,16 +429,16 @@ Page({
 	},
 
 	/**
-	 * 清除搜索历史
+	 * 清除搜索历史				---- 搜索改版
 	 */
-	clearHist: function() {
-		try {
-			my.setStorageSync({
-				key: constants.StorageConstants.searchWordsKey, // 缓存数据的key
-				data: [], // 要缓存的数据
-			});
-		} catch (e) { }
-	},
+	// clearHist: function() {
+	// 	try {
+	// 		my.setStorageSync({
+	// 			key: constants.StorageConstants.searchWordsKey, // 缓存数据的key
+	// 			data: [], // 要缓存的数据
+	// 		});
+	// 	} catch (e) { }
+	// },
 
 	/**
 	 * 添加购物车
@@ -424,12 +446,9 @@ Page({
 	addCart: function(e) {
 		let that = this;
 		let productId = e.currentTarget.dataset.pid;
-
 		sendRequest.send(constants.InterfaceUrl.SHOP_ADD_CART, { pId: productId, quantity: '1' }, function(res) {
-
 			// 达观数据上报
 			// utils.uploadClickData_da('cart', [{ productId, actionNum: '1' }])
-
 			my.showToast({
 				content: '添加购物车成功'
 			});
@@ -494,5 +513,29 @@ Page({
 		  this.data.hasMore = false;
 			this.searchProduct(this.data.inputVal, 1);
 		}
+	},
+
+	setIputValue() {
+		
+	},
+
+	/**
+	  * 存储新版搜索组件实例（但只在页面初始化是挂载，页面重显取不到）
+	*/
+	saveRef(ref) {
+		this.searchComponent = ref;
+		console.log(this.searchComponent);
+  },
+	
+	/**
+	  * 新版搜索组件开关
+	*/
+	showSearch: function(noGetHistory) {
+		console.log(noGetHistory)
+		noGetHistory == 'noGetHistory' ? '' : 	this.searchComponent.getHistory();
+		this.setData({
+			isShowSearch: !this.data.isShowSearch,
+			isFocus: !this.data.isFocus,
+		})
 	}
 });

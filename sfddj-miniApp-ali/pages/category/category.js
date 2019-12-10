@@ -17,7 +17,11 @@ Page({
 	data: {
 		baseLocImgUrl: constants.UrlConstants.baseImageLocUrl,
 		loadComplete: false,
-		loadFail: false
+		loadFail: false,
+
+		isShowSearch: false,								// 新版搜索组件显示开关
+		isFocus: false,											// 新版搜索组件焦点开关
+		searchComponent: null,							// 新版搜索组件实例
 	},
 
 	/**
@@ -28,8 +32,8 @@ Page({
 
 		// 友盟+统计  ----分类页浏览
 		getApp().globalData.uma.trackEvent('categoryView');
-		
 		this.getCateData();
+		
 	},
 
 	onShow: function(options) {
@@ -41,11 +45,23 @@ Page({
 		// utils.getNetworkType(that);
 		
 		// that.getCateData();
-
+			// 一进入到页面，获取购物车数据；
       that.getCartNumber();
+			// 一进入到父分类页时，先删除掉商详页缓存的子分类数据；
 			try {
 				my.removeStorageSync({ key: constants.StorageConstants.detfatherCategory });
 			} catch (e) {}
+			// 回到页面关闭搜索组件
+			console.log('关闭搜索组件');
+			console.log(this.searchComponent);
+			this.setData({
+				isFocus: false,
+				isShowSearch: false,
+			});
+			if( this.searchComponent ) {
+				this.searchComponent.setData({inputVal: ''});
+				this.searchComponent.getHistory();
+			}
 	},
 
 	getCateData() {
@@ -155,55 +171,54 @@ Page({
 	},
 
 	//-------搜索相关代码开始--------//
-	handleFocus: function() {
-		var that = this;
-		sendRequest.send(constants.InterfaceUrl.HOT_WORD, {}, function(res) {
-			that.setData({
-				hotWords: res.data.result
-			});
-		}, function(err) {
-		}, 'GET');
-		try {
-			var searchWords = my.getStorageSync({
-				key: constants.StorageConstants.searchWordsKey, // 缓存数据的key
-			}).data;
-			that.setData({
-				searchWords: searchWords,
-				show: true
-			});
-		} catch (e) { }
-	},
+	// handleFocus: function() {
+	// 	var that = this;
+	// 	sendRequest.send(constants.InterfaceUrl.HOT_WORD, {}, function(res) {
+	// 		that.setData({
+	// 			hotWords: res.data.result
+	// 		});
+	// 	}, function(err) {
+	// 	}, 'GET');
+	// 	try {
+	// 		var searchWords = my.getStorageSync({
+	// 			key: constants.StorageConstants.searchWordsKey, // 缓存数据的key
+	// 		}).data;
+	// 		that.setData({
+	// 			searchWords: searchWords,
+	// 			show: true
+	// 		});
+	// 	} catch (e) { }
+	// },
 
-	chooseWord: function(event) {
-		this.goToSearchPage(event.currentTarget.dataset.word);
-	},
-	goToSearchPage(keyWord) {
-		if (keyWord && keyWord.trim()) {
-			// 达观数据上报
-			// utils.uploadClickData_da('search', [{ keyword: keyWord }])
+	// chooseWord: function(event) {
+	// 	this.goToSearchPage(event.currentTarget.dataset.word);
+	// },
+	// goToSearchPage(keyWord) {
+	// 	if (keyWord && keyWord.trim()) {
+	// 		// 达观数据上报
+	// 		// utils.uploadClickData_da('search', [{ keyword: keyWord }])
+	// 		my.navigateTo({
+	// 			url: '/pages/home/searchResult/searchResult?keyWord=' + keyWord
+	// 		});
+	// 	}
+	// },
 
-			my.navigateTo({
-				url: '/pages/home/searchResult/searchResult?keyWord=' + keyWord
-			});
-		}
-	},
-
-	handleBlur: function(e) {
-		this.setData({
-			show: false
-		});
-	},
-	handleConfirm: function(event) {
-		this.goToSearchPage(event.detail.value);
-	},
-	clearHist: function() {
-		try {
-			my.setStorageSync({
-				key: constants.StorageConstants.searchWordsKey, // 缓存数据的key
-				data: [], // 要缓存的数据
-			});
-		} catch (e) { }
-	},
+	// handleBlur: function(e) {
+	// 	this.setData({
+	// 		show: false
+	// 	});
+	// },
+	// handleConfirm: function(event) {
+	// 	this.goToSearchPage(event.detail.value);
+	// },
+	// clearHist: function() {
+	// 	try {
+	// 		my.setStorageSync({
+	// 			key: constants.StorageConstants.searchWordsKey, // 缓存数据的key
+	// 			data: [], // 要缓存的数据
+	// 		});
+	// 	} catch (e) { }
+	// },
 	//-------搜索相关代码介绍--------//
 
 
@@ -214,5 +229,24 @@ Page({
     var app = getApp();
     app.getCartNumber();
 	},
+
+	/**
+	  * 存储新版搜索组件实例（但只在页面初始化是挂载，页面重显取不到）
+	*/
+	saveRef(ref) {
+		this.searchComponent = ref;
+		console.log(this.searchComponent);
+  },
+	
+	/**
+	  * 新版搜索组件开关
+	*/
+	showSearch: function() {
+		this.searchComponent.getHistory();
+		this.setData({
+			isShowSearch: !this.data.isShowSearch,
+			isFocus: !this.data.isFocus,
+		})
+	}
 
 });

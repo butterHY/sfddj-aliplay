@@ -17,9 +17,7 @@
                 <view class="font-40 color-ff5353" a:elif="{{type == 3}}"><text class="marRight_5">￥{{product.goodsPrice}}</text> <text class="font-24 color-a1a0a0"> + {{product.thisMemberPoint}}积分</text></view>
 
                 <!-- 购物返现商品  --> 
-                <view class="font-40 color-ff5353 flex_view_row align_cen" a:elif="{{type == 4}}">
-                  <text>￥{{product.goodsPrice}}</text>
-                </view>
+                <view class="font-40 color-ff5353 flex_view_row align_cen" a:elif="{{type == 4}}"><text>￥{{product.goodsPrice}}</text></view>
 
                 <!-- 其他，不是积分商品也不是返现商品 -->
                 <view class="font-40 color-ff5353" a:else>
@@ -27,18 +25,20 @@
                   <text class="aba" a:if="{{product.secondKillPrice}}">￥{{product.secondKillPrice}}</text>
                   <!-- 不是会员商品，普通价 -->
                   <text class="aba" a:elif="{{!SFmember || SFmember && type == 5}}">￥{{product.goodsPrice}}</text>
-                  <!-- 会员商品，会员价 + 兑换会员积分 -->
+                  <!-- 会员商品，会员价 + 兑换会员积分  -->
                   <block a:if="{{SFmember && type != 5}}">
                     <text class="cbc">￥{{product.memberPriceAll}}</text>
                     <text class="font-24 color-a1a0a0 marLeft_5">+ {{product.costMemberScoreAll ? product.costMemberScoreAll : 0}}积分</text>
                   </block>
                 </view>
 
-                <!-- 会员商品 + 奖励会员积分-->
-                <view class="font-24 color-ff5353" a:if="{{SFmember && type != 5}}">奖励会员积分{{product.awardMemberScoreAll ? product.awardMemberScoreAll : 0}}</view>
+                <!-- 会员商品 + 奖励会员积分  -->
+                <view class="font-24 color-ff5353 marTop_10" a:if="{{SFmember && type != 5}}">奖励会员积分{{product.awardMemberScoreAll ? product.awardMemberScoreAll : 0}}</view>
+                <!-- <view class="font-24 color-ff5353  marTop_10">税费: 0</view> -->
                 <!-- 库存 -->
                 <view class="font-26 color-black margin-top18">库存 {{product.store < 0 ? "0" : product.store}} 份</view>
                 <!-- 返现商品且有返现金额 -->
+                 <!--  -->
                 <view class="margin-top18" a:if="{{type == 4 && product.thisReturnMoneyPrice && product.thisReturnMoneyPrice > 0}}">
                   <text class="font-22" style="color: #ff8f0a; border: 1px solid #ff8f0a; padding: 6rpx 18rpx; border-radius: 10rpx;">购买最高可返{{product.thisReturnMoneyPrice}}元</text>
                 </view>
@@ -135,7 +135,7 @@
                 <navigator class="flex_1  shopButton background_red" a:if="{{ goods.goodsStore == 0 || (goods.secKillStatus && goodsSecondKill.totalSaleVolume == goodsSecondKill.totalStock) }}" url="/pages/category/secondCategory/secondCategory?categoryId={{goods.categoryVO.categoryId}}" open-type="navigate" hover-class="none">查看类似商品</navigator>
                 <block a:elif="{{selectedSpecsBar}}">
                   <!-- <view class="flex_1  shopButton shopCart_button" data-addCart="addCart" catchTap="addCart">加入购物车</view> -->
-                  <block a:if="{{ SFmember || ( !SFmember && (goods.jifenStatus || goods.deductStatus || goods.memberDayGoods || goods.secKillStatus) ) }}">
+                  <block a:if="{{ SFmember || ( !SFmember && (goods.jifenStatus || goods.deductStatus || goods.memberDayGoods || goods.secKillStatus || goods.memberDayPriceStatus) ) }}">
                     <view  class="flex_1  shopButton background_red" data-buyNow="buyNow" catchTap="buyNow">立即购买</view>
                   </block>
                   <block a:else>

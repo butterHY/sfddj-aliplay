@@ -45,12 +45,14 @@
 				<view class="name">{{goodsName}}</view>
 				<view style="" class="title">{{goodsTitle}}</view>
 			</view>
-			<view style="" class="payBox">
-				<view class="salePrice">¥ {{salePrice}}</view>
-				<view style="" class="salesCountBox">
-					<view a:if="{{salesCount || salesCount == 0}}" class="salesCount">{{salesCount}} 人付款</view>
-					<view a:else class="single-line width_100">{{productName}}</view>
+			<view>
+				<view style="" class="payBox">
+					<view class="salePrice"><text class="font-26">¥ </text> {{salePrice}}</view>
+					<view style="" class="salesCountBox">
+						<view a:if="{{salesCount || salesCount == 0}}" class="salesCount">{{salesCount}} 人付款</view>
+					</view>
 				</view>
+				<view  class="productName single-line">{{productName}}</view>
 			</view>
 		</view>
 		<view style="" class="addCartBox ">

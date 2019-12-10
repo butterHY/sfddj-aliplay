@@ -63,7 +63,11 @@ Page({
 		isCollected: false,
 		canUseLife: my.canIUse('lifestyle'),
 		hideLifeStyle: false,             //隐藏关注生活号组件
-		hotWordTop: (windowWidth * 120 / 750) + 56
+		hotWordTop: (windowWidth * 120 / 750) + 56,
+
+		isShowSearch: false,								// 新版搜索组件显示开关
+		isFocus: false,											// 新版搜索组件焦点开关
+		searchComponent: null,							// 新版搜索组件实例
 	},
 
 	onLoad: async function(options) {
@@ -116,7 +120,6 @@ Page({
 
 	onShow: function() {
 		var that = this;
-
 		// 每次页面显示判断是否是热启动，如果是就请求数据；
 		var isHotStart = my.getStorageSync({
 			key: 'isHotStart',
@@ -131,6 +134,18 @@ Page({
 		// }
 		that.getCartNumber();
 		// console.log('我是 home， 我在显示了 onShow ')
+
+			// 回到页面关闭搜索组件
+		console.log('关闭搜索组件');
+		console.log(this.searchComponent);
+		this.setData({
+			isFocus: false,
+			isShowSearch: false,
+		});
+		if( this.searchComponent ) {
+			this.searchComponent.setData({inputVal: ''});
+			this.searchComponent.getHistory();
+		}
 	},
 
 	onReady() {
@@ -633,13 +648,14 @@ Page({
 	},
 
 	/**
-	* 清除搜索历史
+	* 清除搜索历史    	-------		搜索改版
 	*/
-	clearHist: function() {
-		try {
-			my.setStorageSync({ key: nstants.StorageConstants.searchWordsKey, data: [] });
-		} catch (e) { }
-	},
+	// clearHist: function() {
+	// 	try {
+	// 		my.setStorageSync({ key: nstants.StorageConstants.searchWordsKey, data: [] });
+	// 	} catch (e) { }
+	// },
+	
 
 	/**
 	* 下拉刷新
@@ -1058,97 +1074,99 @@ Page({
 	},
 
 
-	// 搜索模块，敲击键盘完成去到搜索页
-	goToSearchPage(keyWord, type) {
-		if (keyWord && keyWord.trim()) {
-			// 达观数据上报
-			// utils.uploadClickData_da('search', [{ keyword: keyWord }])
+	// 搜索模块，敲击键盘完成去到搜索页  	-------		搜索改版
+	// goToSearchPage(keyWord, type) {
+	// 	if (keyWord && keyWord.trim()) {
+	// 		// 达观数据上报
+	// 		// utils.uploadClickData_da('search', [{ keyword: keyWord }])
 
-			// 友盟+ 统计  输入框输入探索
-			this.umaTrackEvent(type, keyWord)
+	// 		// 友盟+ 统计  输入框输入探索
+	// 		this.umaTrackEvent(type, keyWord)
 
-			my.navigateTo({
-				url: '/pages/home/searchResult/searchResult?keyWord=' + keyWord
-			});
-		}
-	},
+	// 		my.navigateTo({
+	// 			url: '/pages/home/searchResult/searchResult?keyWord=' + keyWord
+	// 		});
+	// 	}
+	// },
 
-	handleConfirm: function(event) {
-		this.goToSearchPage(event.detail.value, 'searchValue');
+	// 键盘输入回车后去到搜索页	-------		搜索改版
+	// handleConfirm: function(event) {
+	// 	this.goToSearchPage(event.detail.value, 'searchValue');
+	// },
 
-	},
+	// 失去焦点后保持现有的值为输入值，并且关闭热词	-------		搜索改版
+	// changeValue: function(event) {
+	// 	var that = this;
+	// 	this.setData({
+	// 		searchValue: event.detail.value
+	// 	})
 
-	changeValue: function(event) {
-		var that = this;
-		this.setData({
-			searchValue: event.detail.value
-		})
+	// 	setTimeout(function() {
+	// 		that.setData({
+	// 			show: false
+	// 		})
+	// 	}, 500)
+	// },
 
-		setTimeout(function() {
-			that.setData({
-				show: false
-			})
-		}, 500)
+	// 点击放大镜进行搜索，	-------		搜索改版
+	// searchGoods: function() {
+	// 	this.goToSearchPage(this.data.searchValue, 'searchValue');
+	// },
 
-	},
+	// 选择搜索记录或热词  -------		搜索改版
+	// chooseWord: function(event) {
+	// 	let { type } = event.currentTarget.dataset
+	// 	this.goToSearchPage(event.currentTarget.dataset.word, type);
+	// },
 
-	searchGoods: function() {
-		this.goToSearchPage(this.data.searchValue, 'searchValue');
-	},
+	// 清除搜索记录		  	-------		搜索改版
+	// clearHist: function() {
+	// 	try {
+	// 		my.setStorageSync({
+	// 			key: constants.StorageConstants.searchWordsKey, // 缓存数据的key
+	// 			data: [], // 要缓存的数据
+	// 		});
+	// 	} catch (e) { }
+	// },
 
-	// 选择搜索记录或热词
-	chooseWord: function(event) {
-		let { type } = event.currentTarget.dataset
-		this.goToSearchPage(event.currentTarget.dataset.word, type);
-
-	},
-
-	// 清除搜索记录
-	clearHist: function() {
-		try {
-			my.setStorageSync({
-				key: constants.StorageConstants.searchWordsKey, // 缓存数据的key
-				data: [], // 要缓存的数据
-			});
-		} catch (e) { }
-	},
-
-	// 点击热词弹窗 == 关闭热词弹窗
-	handleBlur: function(e) {
-		this.setData({
-			show: false
-		});
-	},
+	// 点击热词弹窗 == 关闭热词弹窗  -------		搜索改版
+	// handleBlur: function(e) {
+	// 	this.setData({
+	// 		show: false
+	// 	});
+	// },
 
 	// 阻止默认事件
 	touchReturn() {
 		return;
 	},
 
-	handleFocus: function() {
-		var that = this;
+	// 获取焦点事件，	-------		搜索改版
+	// handleFocus: function() {
+	// 	var that = this;
+	// 	// 友盟+统计--首页搜索点击
+	// 	getApp().globalData.uma.trackEvent('homepage_searchClick');
 
-		// 友盟+统计--首页搜索点击
-		getApp().globalData.uma.trackEvent('homepage_searchClick');
-
-		sendRequest.send(constants.InterfaceUrl.HOT_WORD, {}, function(res) {
-			that.setData({
-				hotWords: res.data.result
-			});
-		}, function(err) {
-		}, 'GET');
-		try {
-			var searchWords = my.getStorageSync({
-				key: constants.StorageConstants.searchWordsKey, // 缓存数据的key
-			}).data;
-			that.setData({
-				searchWords: searchWords,
-				show: true
-			});
-		} catch (e) { }
-	},
+	// 	sendRequest.send(constants.InterfaceUrl.HOT_WORD, {}, function(res) {
+	// 		that.setData({
+	// 			hotWords: res.data.result
+	// 		});
+	// 	}, function(err) {
+	// 	}, 'GET');
+	// 	try {
+	// 		var searchWords = my.getStorageSync({
+	// 			key: constants.StorageConstants.searchWordsKey, // 缓存数据的key
+	// 		}).data;
+	// 		that.setData({
+	// 			searchWords: searchWords,
+	// 			show: true
+	// 		});
+	// 	} catch (e) { }
+	// },
 
 	// 友盟+ 统计 --搜索
+	
+	
 	umaTrackEvent(type, keyWord) {
 
 		var keyWord = keyWord
@@ -1632,11 +1650,28 @@ Page({
 
 	/**
 	   * 获取购物车数量
-	   */
+	*/
 	getCartNumber: function() {
 		var app = getApp();
 		app.getCartNumber();
 	},
 
+	/**
+	  * 存储新版搜索组件实例
+	*/
+	saveRef(ref) {
+    this.searchComponent = ref;
+  },
+	
+	/**
+	  * 新版搜索组件开关
+	*/
+	showSearch: function() {
+		this.searchComponent.getHistory();
+		this.setData({
+			isShowSearch: !this.data.isShowSearch,
+			isFocus: !this.data.isFocus,
+		})
+	}
 
 }); 

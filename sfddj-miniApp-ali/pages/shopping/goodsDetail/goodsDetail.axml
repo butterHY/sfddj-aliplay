@@ -43,8 +43,6 @@
     </image>
   </view>
 
-
-
   <!-- 秒杀商品的价格                       已完成新接口字段更换-->
   <view class="{{goods.secKillStatus ? 'marBot_20' : ''}}">
     <!-- goodsSecondKill 应该放置一个默认价格，因为这样在改动规格的时候倒计时模块展示的价格才不会跟着规格改变，原有版本并没有这个效果 -->
@@ -56,9 +54,11 @@
   <view class="priceView" a:if="{{!goods.secKillStatus}}" >
     <!-- 包税等图片 -->
     <view class="priceTagArea">
-       <image class="priceTagImg" a:if="{{priceInfo.isBaoShui}}" src="{{base64imageUrl}}miniappImg/public/goodsDetail/iconBg_baoshui.png"/>
-       <image class="priceTagImg" a:elif="{{priceInfo.isVip}}" src="{{base64imageUrl}}miniappImg/public/goodsDetail/iconBg_vip.png"/>
-       <image class="priceTagImg" a:elif="{{priceInfo.isGlobal}}" src="{{base64imageUrl}}miniappImg/public/goodsDetail/iconBg_globle.png"/>
+        <block a:if="{{priceInfo.isGlobal && !priceInfo.nonImport}}">
+          <image class="priceTagImg" src="{{base64imageUrl}}miniappImg/public/goodsDetail/iconBg_globle.png"/>
+          <image class="priceTagImg" a:if="{{priceInfo.isBaoShui}}" src="{{base64imageUrl}}miniappImg/public/goodsDetail/iconBg_baoshui.png"/>
+        </block>
+        <image class="priceTagImg" a:elif="{{goods.memberDayPriceStatus}}" src="{{base64imageUrl}}miniappImg/public/goodsDetail/iconBg_vip.png"/>
     </view>
     <!-- 价格销量 -->
     <view class="detail-sale-view font-36" >
@@ -76,7 +76,7 @@
                 <text decode="true" space="true">&nbsp;</text>
                 <text class="font-56 font-weight-600">{{priceInfo.price}}</text>
                 <!-- 原价 -->
-                <text class="color-a1a0a0 font-26 line-through" a:if="{{priceInfo.oldPrice}}">{{priceInfo.oldPrice}}</text>
+                <text class="color-a1a0a0 font-26 line-through" a:if="{{priceInfo.oldPrice}}">¥ {{priceInfo.oldPrice}}</text>
               </text>
               <!-- 积分 -->
               <text a:if="{{priceInfo.integralVal}}">
@@ -144,11 +144,11 @@
   <view class="detail-header-view posi_re ">
     <view class="detail-header-name color-323232 font-30">
       <view class="twoLineHide">
-        <text class="goodsTag label" a:if="{{goods.goodsLabels}}">{{goods.goodsLabels}}</text>
+        <text class="labelName  label font-20" a:if="{{goods.goodsLabels}}">{{goods.goodsLabels}}</text>
         <text class="goodsName font-weight-600">{{goods.goodsName}}</text>   
       </view> 
       <view class="flex_view_row  justi_start font-20 labelList" a:if="{{goods.goodsViceVO.labelList.length > 0 || goods.goodsTag}}">
-        <view class="labelName font-22 " a:if="{{goods.goodsTag}}">{{goods.goodsTag}}</view>
+        <view class="goodsTag label " a:if="{{goods.goodsTag}}">{{goods.goodsTag}}</view>
         <view class="goodsTag label" a:for="{{goods.goodsViceVO.labelList}}" a:key="*this" a:if="{{index == 0 || index == 1 || index == 2}}">{{item}}</view>
       </view>    
     </view>
@@ -164,7 +164,7 @@
     <view class="returnCash flex_view_row justi_between">
       <view class="returnCashDescribe flex_view_row  font-32">
         <image class="returnCashimage" src="{{baseImageLocUrl}}miniappImg/public/goodsDetail/cash_envelopes.png"/>
-        <view>购买最高可返{{filters.toFix(goods.maxReturnMoney * minCount)}}元</view>
+        <view>购买最高可返{{filters.toFix(goods.maxReturnMoney)}}元</view>
       </view>
       <view class="returnCashrule font-26">查看详情</view>
     </view>
@@ -280,10 +280,10 @@
       </view>
       <view class="guarantee-view single-line font-26" a:if="{{goods.afterSaleGueeList && goods.afterSaleGueeList.length > 0}}">
         <block a:for="{{goods.afterSaleGueeList}}" a:key="*this">
-          <block a:if="{{item == '1'}}">坏果全赔</block>
-          <block a:if="{{item == '2'}}">缺一两全赔</block>
-          <block a:if="{{item == '3'}}">不甜全赔</block>
-          <block a:if="{{item == '4'}}">损坏全赔</block>
+          <block a:if="{{item == '1'}}">不好吃全赔</block>
+          <block a:if="{{item == '2'}}">坏果全赔</block>
+          <block a:if="{{item == '3'}}">规格不符全赔</block>
+          <block a:if="{{item == '4'}}">缺一两全赔</block>
           <block a:if="{{index != goods.afterSaleGueeList.length - 1}}"><text decode="true" space="true">&nbsp;</text> • <text decode="true" space="true">&nbsp;</text></block>
         </block>
       </view>
@@ -507,8 +507,8 @@
 
   <!-- 底部购物按钮,不是顺丰会员商品                  还差联系商家的 webCallParam，其它都已完成新接口字段更换-->
   <block a:if="{{!SFmember}}">
-    <!--积分商品,不能显示送他按钮和加入购物车按钮 memberDeductGoods 会员积分抵扣旧字段， memberDayGoods 与原有接口字段一样-->
-    <view class="bottom-view" a:if="{{goods.jifenStatus || goods.deductStatus || goods.memberDayGoods}}">
+    <!--积分商品和抵扣商品和会员日商品,不能显示送他按钮和加入购物车按钮                  memberDeductGoods 会员积分抵扣旧字段， memberDayGoods 与原有接口字段一样-->
+    <view class="bottom-view" a:if="{{goods.jifenStatus || goods.deductStatus || goods.memberDayPriceStatus}}">
       <view class="flex_1 flex_view_row isJifenViewLeft">
         <navigator class="btnNoBor contactBtn bottom-icon-view font-20 color-565d6f flex_1" url="/pages/shopping/storeInfo/storeInfo?supplierId={{goods.supplierInfo.supplierId}}"  hover-class="none">
           <!-- <image src="{{base64imageUrl}}miniappImg/icon/icon-business.png" class="contactBtn_icon"></image> -->

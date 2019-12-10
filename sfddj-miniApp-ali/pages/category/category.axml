@@ -19,8 +19,9 @@
 </view> -->
 <view a:else class="all_100 flex_view_col" style='height: 100vh'>
   <!-- 搜索 -->
-  <template is="search">
-  </template>
+  <view catchTap="showSearch">
+    <template is="search" data="{{baseLocImgUrl, inputVal}}"></template>  
+  </view>
   <!-- <view style="width:100%;height:120rpx;padding:20rpx 30rpx;background-color:#252630;box-sizing:border-box"><input style="padding:10rpx 30rpx 10rpx 30rpx;background-color:white;border-radius:5px;" placeholder="今天吃什么呢" class="font-24 color-323232" value="{{inputVal}}" confirm-type="search" onConfirm="handleConfirm" onFocus="handleFocus"/></view> -->
   <view class="category-page flex_1">
     <!-- 竖排顶级分类 -->
@@ -56,7 +57,12 @@
       </scroll-view>
     </view>
   </view>
+  <!-- 新版搜索热词和历史记录膜层 -->
+
 </view>
 <!-- 搜索热词和历史记录膜层 -->
-<template is="hotWords" data="{{show:show,baseLocImgUrl,hotWords:hotWords,searchWords:searchWords,top:'120rpx'}}">
-</template>
+<!-- <template is="hotWords" data="{{show:show,baseLocImgUrl,hotWords:hotWords,searchWords:searchWords,top:'120rpx'}}">
+</template> -->
+  <popup show="{{isShowSearch}}" position="right" zIndex="9000" disableScroll={{false}} mask="{{false}}" >
+    <search-component  ref="saveRef" onShowSearch="showSearch" isFocus="{{isFocus}}" pageType="category"></search-component>
+  </popup>

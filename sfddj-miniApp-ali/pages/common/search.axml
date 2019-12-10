@@ -1,5 +1,17 @@
-<template name="search">
+<!-- <template name="search">
   <view style="width:100%;height:120rpx;padding:20rpx 30rpx;background-color:#252630;box-sizing:border-box">
-    <input style="padding:10rpx 30rpx 10rpx 30rpx;background-color:white;border-radius:5px;" placeholder="今天吃什么呢" class="font-24 color-323232" value="{{inputVal}}" confirm-type="search" onConfirm="handleConfirm" onFocus="handleFocus"/>
+    <input style="padding:10rpx 30rpx 10rpx 30rpx;background-color:white;border-radius:5px;" placeholder="今天吃什么呢" class="font-24 color-323232" onfirm-type="search"/>
+  </view>
+</template> -->
+<template name="search">
+  <view style="width:100%;height:114rpx;padding:26rpx 30rpx;background-color:#fff;box-sizing:border-box;">
+  <!-- value="{{inputVal}}" confirm-type="search" onConfirm="handleConfirm" onFocus="handleFocus" -->
+    <!-- <input style="padding:10rpx 30rpx 10rpx 30rpx;background-color:white;border-radius:5px;" placeholder="今天吃什么呢" class="font-24 color-323232" onfirm-type="search"/> -->
+    <view class="flex_view_row justi_between height_100 align_cen" style="border-radius:25px;background:#f0f0f0;padding: 0 25rpx;">
+      <view class="height_100 flex_view_row  align_cen">
+        <image src="{{baseLocImgUrl}}miniappImg/icon/icon_search.png" style="width:40rpx;height:40rpx;"></image>
+      </view>
+      <view class="flex_1 height_100 oneLineShow font-32" style="line-height:50rpx;padding:10rpx 20rpx;box-sizing:border-box;color:#c9c3c3;">{{inputVal}}</view>
+    </view>
   </view>
 </template>

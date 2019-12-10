@@ -444,13 +444,13 @@ Page({
             var type = '';
             resData.goodsShowVO.jifenStatus ? type = 3 : (resData.goodsShowVO.returnMoneyStatus ? type = 4 : type = '');
 
-            if (resData.goodsShowVO.products) {
-              let defaultProducts = that.data.allProduct.find(value => value.isDefault == true);
-								console.log(defaultProducts)
-								that.data.theMemberPoint = defaultProducts.memberPoint;                         // 会员积分
-								that.data.theCostMemberScore = defaultProducts.costMemberScore;                 // 兑换会员积分
-								that.data.theAwardMemberScore = defaultProducts.awardMemberScore;               // 奖励会员积分
-								that.data.specType == 'SINGLE' ? that.data.iavPath = defaultProducts.iavPath : that.data.iavPath = [];
+            if (resData.goodsShowVO.defaultProd) {																	// 如果有返回默认规格的数据
+              // let defaultProducts = that.data.allProduct.find(value => value.isDefault == true);
+							// 	console.log(defaultProducts)
+								that.data.theMemberPoint = resData.goodsShowVO.defaultProd.memberPoint;                         // 默认会员积分（也是用于积分商品的积分）
+								that.data.theCostMemberScore = resData.goodsShowVO.defaultProd.costMemberScore;                 // 默认兑换会员积分
+								that.data.theAwardMemberScore = resData.goodsShowVO.defaultProd.awardMemberScore;               // 默认奖励会员积分
+								that.data.specType == 'SINGLE' ? that.data.iavPath = resData.goodsShowVO.defaultProd.iavPath : that.data.iavPath = [];	// 单选商品设置默认规格
             }
 
         // 测试用的，让库存为 0
@@ -728,14 +728,14 @@ Page({
           // ----- 修改规格的价格，原有的是单位价格和单位积分 * 起购数量（没有就取 1）       end;
 
           // ----- 位修改规格的价格，改为直接使用后台返回的单价格和单位积分 , 不再 * 起购数量     start;  字段都与新接口核对正确, 只全部值都暂时展示单位
-          value.tuanPrice = value.tuangouPrices;                              
+          value.tuanPrice = value.tuangouPrices;        // 价格和积分不变                      
           value.goodsPrice = value.salePrice;                                 
           value.secondKillPrice =  value.activityPrice;
           value.thisMemberPoint =  value.memberPoint;                        
-          value.thisReturnMoneyPrice = value.returnMoney;                     
+          value.thisReturnMoneyPrice = (value.returnMoney * that.data.minCount).toFixed(2);                     
           value.memberPriceAll = value.memberPrice;                           
-          value.costMemberScoreAll = value.costMemberScore;                   
-          value.awardMemberScoreAll = value.awardMemberScore;                 
+          value.costMemberScoreAll = (value.costMemberScore * that.data.minCount).toFixed(2);                   
+          value.awardMemberScoreAll = (value.awardMemberScore * that.data.minCount).toFixed(2);                 
           // ----- 修改规格的价格，改为直接使用后台返回的单位价格和单位积分 , 不再 * 起购数量       end;
 
 
@@ -745,7 +745,7 @@ Page({
               that.data.product = value;
           } else if (specType != 'firstTime' && specType != 'modifyOptional' && that.data.iavPath == value.iavPath) {
               console.log('多选规格和单选规格修改规格')
-            // 多选规格和单选规格，如果当前这条子类规格的 iavPath 与 全局默认子类规格的 iavPath 相等，那让全局的默认规格等于这条子类规格；
+          // 多选规格和单选规格，如果当前这条子类规格的 iavPath 与 全局默认子类规格的 iavPath 相等，那让全局的默认规格等于这条子类规格；
               that.data.product = value;
           }
         });
@@ -980,7 +980,11 @@ Page({
 		}
     // 数量减减，秒杀价格 * 新数量
 		that.data.quantity--;
+		that.data.goods.returnMoneyStatus && that.data.product.returnMoney ? value.thisReturnMoneyPrice = (value.returnMoney * that.data.quantity).toFixed(2) : '';
+		that.data.SFmember && that.data.product.costMemberScore ? value.costMemberScoreAll = (value.costMemberScore * that.data.quantity).toFixed(2) : '';
+		that.data.SFmember && that.data.product.awardMemberScore ? value.awardMemberScoreAll = (value.awardMemberScore * that.data.quantity).toFixed(2) : '';
 
+                     
     // ---------  任选，多规格，单选的规格选择或者加减更改规格数量，该规格对应的价格和积分都不变     start;
     // ---------  修改默认规格的价格和积分，这一段在 --，++，直接修改，离开焦点修改，中都是一样的； start
 		// that.data.product.goodsPrice = (that.data.product.salePrice * that.data.quantity).toFixed(2);
@@ -1005,7 +1009,7 @@ Page({
 
 		this.setData({
 			quantity: that.data.quantity + '',
-			// product: that.data.product     // 该规格对应的价格和积分都不变 所以也就不用去修改规格了
+			product: that.data.product
 		});
 	},
 
@@ -1029,6 +1033,11 @@ Page({
 			return;
 		}
 		that.data.quantity++;
+		that.data.goods.returnMoneyStatus && that.data.product.returnMoney ? value.thisReturnMoneyPrice = (value.returnMoney * that.data.quantity).toFixed(2) : '';
+		that.data.SFmember && that.data.product.costMemberScore ? value.costMemberScoreAll = (value.costMemberScore * that.data.quantity).toFixed(2) : '';
+		that.data.SFmember && that.data.product.awardMemberScore ? value.awardMemberScoreAll = (value.awardMemberScore * that.data.quantity).toFixed(2) : '';
+
+
 
     // ---------   任选，多规格，单选的规格选择或者加减更改规格数量，该规格对应的价格和积分都不变     start;
 		// that.data.product.goodsPrice = (that.data.product.salePrice * that.data.quantity).toFixed(2);
@@ -1052,7 +1061,7 @@ Page({
 
 		this.setData({
 			quantity: that.data.quantity + '',
-			// product: that.data.product   // 该规格对应的价格和积分都不变 所以也就不用去修改规格了
+			product: that.data.product
 		});
 	},
 
@@ -1068,6 +1077,10 @@ Page({
 		if (quantity >= maxCount) {
       console.log('数量大于最大限购数量')
 			var mes = that.data.product.store && that.data.product.store <= 99 ? '库存只有' + that.data.product.store + '，不能太贪心喔' : '最多只能99，不要太贪心哦';
+
+			that.data.goods.returnMoneyStatus && that.data.product.returnMoney ? value.thisReturnMoneyPrice = (value.returnMoney * maxCount).toFixed(2) : '';
+			that.data.SFmember && that.data.product.costMemberScore ? value.costMemberScoreAll = (value.costMemberScore * maxCount).toFixed(2) : '';
+			that.data.SFmember && that.data.product.awardMemberScore ? value.awardMemberScoreAll = (value.awardMemberScore * maxCount).toFixed(2) : '';
 
       // ---------   任选，多规格，单选的规格选择或者加减更改规格数量，该规格对应的价格和积分都不变     start;
 			// that.data.product.goodsPrice = (that.data.product.salePrice * maxCount).toFixed(2);
@@ -1103,6 +1116,9 @@ Page({
 				});
 			}, 2000);
 		} else {
+			that.data.goods.returnMoneyStatus && that.data.product.returnMoney ? value.thisReturnMoneyPrice = (value.returnMoney * quantity).toFixed(2) : '';
+			that.data.SFmember && that.data.product.costMemberScore ? value.costMemberScoreAll = (value.costMemberScore * quantity).toFixed(2) : '';
+			that.data.SFmember && that.data.product.awardMemberScore ? value.awardMemberScoreAll = (value.awardMemberScore * quantity).toFixed(2) : '';
 
       // ---------    任选，多规格，单选的规格选择或者加减更改规格数量，该规格对应的价格和积分都不变     start;
 			// that.data.product.goodsPrice = (that.data.product.salePrice * quantity).toFixed(2);
@@ -1127,7 +1143,7 @@ Page({
 
 			that.setData({
 				quantity: quantity,
-				// product: that.data.product     // 该规格对应的价格和积分都不变 所以也就不用去修改规格了
+				product: that.data.product
 			});
 		}
 	},
@@ -1139,7 +1155,7 @@ Page({
 		var quantity = e.detail.value;
 		var that = this;
 		var minCount = that.data.minCount;
-		if (quantity <= minCount || quantity == '' || !Number(quantity)) {
+		if ( !quantity || !Number(quantity) || quantity <= minCount ) {
 
       // ---------    任选，多规格，单选的规格选择或者加减更改规格数量，该规格对应的价格和积分都不变     start;
 			// that.data.product.goodsPrice = (that.data.product.salePrice * minCount).toFixed(2);
@@ -1162,9 +1178,14 @@ Page({
 			// }
       // ---------    任选，多规格，单选的规格选择或者加减更改规格数量，该规格对应的价格和积分都不变     end;
 
+			
+			that.data.goods.returnMoneyStatus && that.data.product.returnMoney ? value.thisReturnMoneyPrice = (value.returnMoney * that.data.minCount).toFixed(2) : '';
+			that.data.SFmember && that.data.product.costMemberScore ? value.costMemberScoreAll = (value.costMemberScore * that.data.minCount).toFixed(2) : '';
+			that.data.SFmember && that.data.product.awardMemberScore ? value.awardMemberScoreAll = (value.awardMemberScore * that.data.minCount).toFixed(2) : '';
+
 			this.setData({
 				quantity: minCount,
-				// product: that.data.product       // 该规格对应的价格和积分都不变 所以也就不用去修改规格了
+				product: that.data.product
 			});
 		}
 	},
@@ -1396,8 +1417,6 @@ Page({
 			url: '/pages/user/webCallView/webCallView?link=' + webCallLink
 		});
 	},
-
-
 
 	// 页面滚动事件
 	_onPageScroll: _.debounce(function(e) {
@@ -1884,24 +1903,26 @@ Page({
   // 价格和积分的设置
   goodsPrice() {
       let that = this;
-      that.data.priceInfo.price = that.data.goods.defaultPrice;   // 商品默认价格
-      that.data.priceInfo.oldPrice = '';                          // 商品默认旧价格
+      that.data.priceInfo.price = that.data.goods.defaultPrice;   							// 商品默认价格
+      that.data.priceInfo.oldPrice = '';                         							 	// 商品默认旧价格
+      that.data.priceInfo.integralVal = '';                      							 	// 默认积分
 
-      that.data.priceInfo.integralVal = '';                       // 默认积分
-      // 如果是积分商品但不是会员商品，则使用默认积分
-      if( that.data.goods.jifenStatus && !that.data.SFmember &&  that.data.theMemberPoint ) {
+      
+      if( that.data.goods.jifenStatus && !that.data.SFmember &&  that.data.theMemberPoint ) {						   // 如果是积分商品但不是会员商品，则使用默认积分
         that.data.priceInfo.integralVal = that.data.theMemberPoint;
-      }
-      // 如果是会员商品但不是积分商品的话，则使用兑换会员积分
-      else if( !that.data.goods.jifenStatus && that.data.SFmember && that.data.theCostMemberScore ) {
+      } else if( !that.data.goods.jifenStatus && that.data.SFmember && that.data.theCostMemberScore ) {		 // 如果是会员商品但不是积分商品的话，则使用兑换会员积分
         that.data.priceInfo.integralVal = that.data.theCostMemberScore;
       }
 
-      // 会员商品使用会员价格
-      if ( that.data.SFmember ) {
+      
+      if ( that.data.SFmember ) {																																					// 顺丰会员商品使用会员价格（顺丰会员商品和大当家会员日商品不会重叠）
 				that.data.priceInfo.price = that.data.goods.defaultMemberPrice;
 				that.data.priceInfo.oldPrice = that.data.goods.defaultPrice;
-      }
+      } else if(that.data.goods.memberDayPriceStatus) {																										// 大当家会员日商品
+				that.data.priceInfo.price = that.data.goods.defaultProd.memberDayPrice;
+				that.data.priceInfo.oldPrice = that.data.goods.defaultProd.salePrice;
+			}
+
 
       // 全球购状态
       that.data.goods.globalStatus ?  that.data.priceInfo.isGlobal = true : that.data.priceInfo.isGlobal = false;
@@ -1913,10 +1934,13 @@ Page({
           3.BC海外直邮（必税）
           4.CC2.0海外直邮-运费和商品价格分离（包税）
       */
-      that.data.priceInfo.isBaoShui = false;
+      that.data.priceInfo.isBaoShui = false; // (是否报税)
+			that.data.priceInfo.nonImport = false; // (是否进口)
       if(  that.data.goods.goodsViceVO.crossBorderPattern == 1 || that.data.goods.goodsViceVO.crossBorderPattern == 2 || that.data.goods.goodsViceVO.rossBorderPattern == 4) {
           that.data.priceInfo.isBaoShui = true;
-      }
+      } else if( that.data.goods.goodsViceVO.crossBorderPattern == 0 ) {
+				 that.data.priceInfo.nonImport = true;
+			}
 
       // 员工专享
       if(that.data.goods.staffStatus) {}
@@ -1925,7 +1949,8 @@ Page({
         priceInfo: that.data.priceInfo
       })
   },
-
+	
+	// 选择地址
 	selectAddress(e, index) {
 		let that = this;
 		my.setStorageSync({
@@ -1940,22 +1965,27 @@ Page({
 		that.auto_send();
 		console.log(that.data.addressList);
 	},
-
+	
+	// 当前地址是否发货
 	auto_send() {
 		let that = this;
 		let defaultAddress = null;
-		if(that.data.addressList && that.data.addressList.length > 0) {
+		if( that.data.addressList && that.data.addressList.length > 0 ) {
 			defaultAddress = that.data.addressList.find(value => value.isDefault);
-		} else if (that.data.address && that.data.address.province) {
+		} else if ( that.data.address ) {
 			defaultAddress = that.data.address;
 		}
+		
+		that.data.nonDeliveryAre = that.data.goods.nonDeliveryArea.some(value => {
+			defaultAddress.province.indexOf(value) > -1 || value.indexOf(defaultAddress.province) > -1 || defaultAddress.city.indexOf(value) > -1 || value.indexOf(defaultAddress.city) > -1
+		})
 
-		that.data.nonDeliveryAre = that.data.goods.nonDeliveryArea.some(value => defaultAddress.province.indexOf(value) > -1) ?  true :  false;
 		that.setData({ nonDeliveryArea: that.data.nonDeliveryAre });
 		console.log(that.data.goods.nonDeliveryArea)
 		console.log(that.data.nonDeliveryArea)
 	},
 
+	// 查看类似商品，缓存商品类型 id 缓存
 	setCategoryData() {
 		let that = this;
 		my.setStorageSync({

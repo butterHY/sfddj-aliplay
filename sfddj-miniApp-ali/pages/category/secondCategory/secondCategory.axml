@@ -15,8 +15,9 @@
 <!--<view a:elif="{{!wifiAvailable}}"><no-wifi></no-wifi></view> -->
 <scroll-view class="all_100v" scroll-y="true" a:else onScrollToLower="lowLoadMore" onScroll="scrollingFn" scroll-top='{{scrollTop}}'>
 	<!-- 搜索 -->
-	<template is="search">
-	</template>
+	<view catchTap="showSearch">
+		<template is="search" data="{{baseLocImgUrl, inputVal}}"></template>		
+	</view>
 	<!-- 顶部标签部分 -->
 	<scroll-view a:if="{{sticky}}" class="category-tag-area fixedArea" scroll-x='true' scroll-with-animation='true'>
 		<block a:for="{{childrenCategoryTags}}" a:key="category_tag">
@@ -48,8 +49,8 @@
 	</view>
 </scroll-view>
 <!-- 搜索热词和历史记录膜层 -->
-<template is="hotWords" data="{{show:show,baseLocImgUrl,hotWords:hotWords,searchWords:searchWords,top:'120rpx'}}">
-</template>
+<!-- <template is="hotWords" data="{{show:show,baseLocImgUrl,hotWords:hotWords,searchWords:searchWords,top:'120rpx'}}">
+</template> -->
 <!--toast弹窗-->
 <view class="mark flex_view_col align_cen justi_cen" a:if="{{showToast}}">
 	<view class="toastView_wb" catchtouchmove="move">
@@ -57,3 +58,8 @@
 		</view>
 	</view>
 </view>
+
+<!-- 新版搜索热词和历史记录膜层 -->
+<popup show="{{isShowSearch}}" position="right" zIndex="9000" disableScroll={{false}} mask="{{false}}">
+	<search-component  ref="saveRef" onShowSearch="showSearch" isFocus="{{isFocus}}" pageType="secondCategory"></search-component>
+</popup>

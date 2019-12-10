@@ -34,6 +34,11 @@ Page({
 		floatVal: 50,
 		cateHeight: 100,
 		user_memId: '默认是会员',         //是否存在memberId，判断是否绑定手机号
+
+
+		isShowSearch: false,								// 新版搜索组件显示开关
+		isFocus: false,											// 新版搜索组件焦点开关
+		searchComponent: null,							// 新版搜索组件实例
 	},
 
 	onLoad: async function(options) {
@@ -73,7 +78,7 @@ Page({
 		if( detfatherCategory.id ){
 				// 获取如果缓存中有父类的 id 则请求父类分类数据使用该父类的数据, 但不缓存子类数据，为了和分类页用户的行为保持一致；
 				let send = await that.getChildCategoryTags(fatherCategory.id);
-				if( send.type == 'success' && send.data ) {
+				if( send.type == 'success' && send.data && send.data.children && send.data.children.length > 0 ) {
 					this.data.childrenCategoryTags = send.data.children;
 				}
 		}
@@ -99,6 +104,20 @@ Page({
 		if (options.categoryId) {
 			this.data.categoryId = options.categoryId;
 			that.getGoodsData(0);
+		}
+	},
+
+	onShow() {
+		// 回到页面关闭搜索组件
+		console.log('关闭搜索组件');
+		console.log(this.searchComponent);
+		this.setData({
+			isFocus: false,
+			isShowSearch: false,
+		});
+		if( this.searchComponent ) {
+			this.searchComponent.setData({inputVal: ''});
+			this.searchComponent.getHistory();
 		}
 	},
 
@@ -138,7 +157,6 @@ Page({
 		this.setData({
 			isLoadMore: true
 		});
-
 		// 一开始进入页面，isFatherCategory 为 false, 请求的数据是从进入页面的携带过来的子类的 id 的数据，接口是子类接口，如果为 true 则请求的是父类的接口
 		var url = this.data.isFatherCategory ? constants.InterfaceUrl.CATEGORY_LOAD_ALL : constants.InterfaceUrl.CATEGORY_LOAD_ONE;
 		sendRequest.send(url, {
@@ -199,7 +217,7 @@ Page({
 			// 	that.getUploadData_da();
 			// }
 
-		}, function() {
+		}, function(err) {
 			that.setData({
 				isLoadMore: false,
 				loadFail: true
@@ -342,9 +360,7 @@ Page({
 	addCart: function(e) {
 		let that = this;
 		let productId = e.currentTarget.dataset.pid;
-
 		sendRequest.send(constants.InterfaceUrl.SHOP_ADD_CART, { pId: productId, quantity: '1' }, function(res) {
-
 			// 达观数据上报
 			// util.uploadClickData_da('cart', [{ productId, actionNum: '1' }])
 
@@ -370,54 +386,54 @@ Page({
 	},
 
 	//-------搜索相关代码开始--------//
-	handleFocus: function() {
-		var that = this;
-		sendRequest.send(constants.InterfaceUrl.HOT_WORD, {}, function(res) {
-			that.setData({
-				hotWords: res.data.result
-			});
-		}, function(err) {
-		}, 'GET');
-		try {
-			var searchWords = my.getStorageSync({
-				key: constants.StorageConstants.searchWordsKey, // 缓存数据的key
-			}).data;
-			that.setData({
-				searchWords: searchWords,
-				show: true
-			});
-		} catch (e) { }
-	},
-	handleBlur: function(e) {
-		this.setData({
-			show: false
-		});
-	},
-	handleConfirm: function(event) {
-		this.goToSearchPage(event.detail.value);
-	},
-	chooseWord: function(event) {
-		this.goToSearchPage(event.currentTarget.dataset.word);
-	},
-	goToSearchPage(keyWord) {
-		if (keyWord && keyWord.trim()) {
-			// util.uploadClickData_da('search', [{ keyword: keyWord }])
+	// handleFocus: function() {
+	// 	var that = this;
+	// 	sendRequest.send(constants.InterfaceUrl.HOT_WORD, {}, function(res) {
+	// 		that.setData({
+	// 			hotWords: res.data.result
+	// 		});
+	// 	}, function(err) {
+	// 	}, 'GET');
+	// 	try {
+	// 		var searchWords = my.getStorageSync({
+	// 			key: constants.StorageConstants.searchWordsKey, // 缓存数据的key
+	// 		}).data;
+	// 		that.setData({
+	// 			searchWords: searchWords,
+	// 			show: true
+	// 		});
+	// 	} catch (e) { }
+	// },
+	// handleBlur: function(e) {
+	// 	this.setData({
+	// 		show: false
+	// 	});
+	// },
+	// handleConfirm: function(event) {
+	// 	this.goToSearchPage(event.detail.value);
+	// },
+	// chooseWord: function(event) {
+	// 	this.goToSearchPage(event.currentTarget.dataset.word);
+	// },
+	// goToSearchPage(keyWord) {
+	// 	if (keyWord && keyWord.trim()) {
+	// 		// util.uploadClickData_da('search', [{ keyword: keyWord }])
 
-			my.navigateTo({
-				url: '/pages/home/searchResult/searchResult?keyWord=' + keyWord
-			});
-		}
-	},
-	clearHist: function() {
-		try {
-			my.setStorageSync({
-				key: constants.StorageConstants.searchWordsKey, // 缓存数据的key
-				data: [], // 要缓存的数据
-			});
-		} catch (e) {
+	// 		my.navigateTo({
+	// 			url: '/pages/home/searchResult/searchResult?keyWord=' + keyWord
+	// 		});
+	// 	}
+	// },
+	// clearHist: function() {
+	// 	try {
+	// 		my.setStorageSync({
+	// 			key: constants.StorageConstants.searchWordsKey, // 缓存数据的key
+	// 			data: [], // 要缓存的数据
+	// 		});
+	// 	} catch (e) {
 
-		}
-	},
+	// 	}
+	// },
 	//-------搜索相关代码结束--------//
 
 
@@ -441,10 +457,7 @@ Page({
 						}
 					}
 					else {
-
 					}
-
-
 
 					my.showToast({
 						content: '绑定成功'
@@ -464,9 +477,7 @@ Page({
 						my.showToast({
 							content: res
 						})
-
 					}
-
 				});
 			},
 			fail: (res) => {
@@ -478,10 +489,28 @@ Page({
 
 	},
 
-
 	// 获取手机号失败
 	onAuthError(res) {
 		return
 	},
+
+	/**
+	  * 存储新版搜索组件实例（但只在页面初始化是挂载，页面重显取不到）
+	*/
+	saveRef(ref) {
+		this.searchComponent = ref;
+		console.log(this.searchComponent);
+  },
+	
+	/**
+	  * 新版搜索组件开关
+	*/
+	showSearch: function() {
+		this.searchComponent.getHistory();
+		this.setData({
+			isShowSearch: !this.data.isShowSearch,
+			isFocus: !this.data.isFocus,
+		})
+	}
 
 });

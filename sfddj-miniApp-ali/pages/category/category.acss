@@ -43,3 +43,8 @@
   width: 190rpx;
   height: 100%;
 }
+
+/* 新版搜索组件在父分类页的样式 */
+.am-popup-content {
+  width: 100%;
+}

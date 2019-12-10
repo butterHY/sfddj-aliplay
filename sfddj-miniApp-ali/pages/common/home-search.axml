@@ -1,13 +1,20 @@
 <!-- 首页搜索 -->
 <template name="home-search">
-
   <view class="js_homeSearch" style="width:100%;height:120rpx;padding:20rpx 30rpx;background-color:#fff;box-sizing:border-box;">
     <view class="posi_re">
-      <input style="padding:10rpx 30rpx 10rpx 60rpx;background-color:white;border: 1px solid #999999;border-radius:7px;" placeholder="今天吃什么呢" class="font-24 color-323232" value="{{inputVal}}" confirm-type="search" onConfirm="handleConfirm" onFocus="handleFocus" onBlur="changeValue"/>
-      <view class="searchFrame_viewImg" onTap="searchGoods">
-        <image src="{{baseLocImgUrl}}miniappImg/icon/icon_search.png" class="searchFrame_img">
-        </image>
+    <!-- value="{{inputVal}}" confirm-type="search" onConfirm="handleConfirm" onFocus="handleFocus" onBlur="changeValue" -->
+      <input style="padding:10rpx 30rpx 10rpx 60rpx;background-color:white;border: 1px solid #999999;border-radius:7px;" placeholder="今天吃什么呢" class="font-24 color-323232" />
+       <!-- onTap="searchGoods" -->
+      <view class="searchFrame_viewImg">
+        <image src="{{baseLocImgUrl}}miniappImg/icon/icon_search.png" class="searchFrame_img"></image>
       </view>
     </view>
   </view>
 </template>
+
+<!-- 分类页和子分类页的搜索 -->
+<!-- <template name="search">
+  <view style="width:100%;height:120rpx;padding:20rpx 30rpx;background-color:#252630;box-sizing:border-box">
+    <input style="padding:10rpx 30rpx 10rpx 30rpx;background-color:white;border-radius:5px;" placeholder="今天吃什么呢" class="font-24 color-323232" value="{{inputVal}}" confirm-type="search" onConfirm="handleConfirm" onFocus="handleFocus"/>
+  </view>
+</template> -->

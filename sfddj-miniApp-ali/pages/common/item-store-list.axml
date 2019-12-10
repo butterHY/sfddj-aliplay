@@ -17,13 +17,16 @@
          </view>
         </view>
       </view>
-      <view class="intoShop">进店</view>
+      <navigator class='intoShop' url="/pages/shopping/storeInfo/storeInfo?supplierId={{supplierId}}" open-type="navigate" hover-class="none">进店</navigator>
+      <!-- <view class="intoShop">进店</view> -->
     </view>
     <view class="storeImg">
-      <view class="imgBox"  a:for="{{supplierGoods}}" a:for-index="supplierGoodsIndex" a:key="supplierGoods" a:if="{{supplierGoodsIndex == 0 || supplierGoodsIndex == 1 || supplierGoodsIndex == 2 }}" style="{{supplierGoodsIndex == 2 ? 'margin-right: 0': ''}}">
-        <image mode="widthFix" src="{{baseImageUrl}}{{item.defaultImage}}" class="all_100 supplierGoodsImg"/>
-        <text class="sotrePrice">￥ {{item.defaultPrice}}</text>
-      </view>
+      <navigator class='imgBox' url="/pages/shopping/goodsDetail/goodsDetail?goodsSn={{item.goodsSn}}" open-type="navigate" hover-class="none" a:for="{{supplierGoods}}" a:for-index="supplierGoodsIndex" a:key="supplierGoods" a:if="{{supplierGoodsIndex == 0 || supplierGoodsIndex == 1 || supplierGoodsIndex == 2 }}" style="{{supplierGoodsIndex == 2 ? 'margin-right: 0': ''}}">
+        <!-- <view class="imgBox"  > -->
+          <image mode="widthFix" src="{{baseImageUrl}}{{item.defaultImage}}" class="all_100 supplierGoodsImg"/>
+          <text class="sotrePrice">￥ {{item.defaultPrice}}</text>
+        <!-- </view> -->
+      </navigator>
     </view>
   </view>
 </template>

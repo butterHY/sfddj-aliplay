@@ -53,8 +53,9 @@ text {
 /*搜索结果排序   */
 .resultSort {
   width: 100%;
-  height: 78rpx;
-  line-height: 78rpx;
+  /* height: 78rpx; */
+  height: 100rpx;
+  line-height: 100rpx;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -113,14 +114,14 @@ text {
 
 /* 单列的展示的样式 */
 .itemGoodsList {
-  width:100%;
-  height:250rpx;
-  padding:30rpx 0;
-  display:flex;
-  flex-direction:row;
+  width: 100%;
+  height: 275rpx;
+  padding: 36rpx 0;
+  display: flex;
+  flex-direction: row;
   border-bottom: solid #eeeeee 2rpx;
-  box-sizing:border-box;
-  position:relative;
+  box-sizing: border-box;
+  position: relative;
 }
 
 
@@ -142,9 +143,9 @@ text {
   flex-direction: column;
   justify-content: space-between;
   position: absolute;
-  top: 30rpx;
+  top: 36rpx;
   left: 210rpx;
-  bottom: 30rpx;
+  bottom: 36rpx;
   right: 30rpx;
 }
 
@@ -157,7 +158,7 @@ text {
 }
 
 .name {
-  font-size: 26rpx;
+  font-size: 32rpx;
   color: #323232;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -165,21 +166,23 @@ text {
 }
 
 .title {
-  font-size: 24rpx;
+  font-size: 27rpx;
   color: #bbbbbb;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   display:block;
-  margin-top:10rpx;
+  margin-top: 20rpx;
 }
+
+
 
 .payBox {
   max-width: 350rpx;
   display: flex;
   flex-direction: row;
   align-items: center;
-  font-size: 30rpx;
+  font-size: 24rpx;
   font-weight: 500;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -187,35 +190,66 @@ text {
   color: #bbbbbb;
 }
 
+.activity .payBox {
+  max-width: 250rpx;
+}
+
 .salePrice {
+  font-size: 36rpx;
   color: #ff5353;
 }
 
+
 .salesCountBox {
-  margin-left:10rpx;
-  font-size: 24rpx;
+  margin-left: 18rpx;
+  font-size: 28rpx;
   color: #bbbbbb;
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: center; */
+  height: 36rpx;
+  position: relative;
   flex: 1;
   overflow: hidden;
 }
+
 
 .salesCount {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   width: 100%;
+  font-size: 28rpx;
+  line-height: 28rpx;
+  position: absolute;
+  left: 0;
+  bottom: 0;
 }
 
+.productName {
+  margin-top: 12rpx;
+  font-size: 27rpx;
+  color: #a1a0a0;
+  max-width: 350rpx;
+}
+
+.activity .productName {
+  max-width: 250rpx;
+}
+
+
+
 .addCartBox {
-  width:50rpx;
-  height:50rpx;
-  position:absolute;
-  right:30rpx;
-  bottom:30rpx;
+  width: 44rpx;
+  height: 44rpx;
+  position: absolute;
+  right: 30rpx;
+  bottom: 36rpx;
+}
+
+.activity .addCartBox {
+  bottom: 30rpx;
 }
 
 /* 两列样式 */
@@ -264,6 +298,13 @@ text {
   height: 140rpx;
 }
 
+.activity .actGoodsMessageBox {
+  height: 200rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 .actNameAndTitle {
   height: 100rpx;
 }
@@ -288,7 +329,7 @@ text {
 .queue {
   width: 80rpx;
   text-align: center;
-  line-height: 78rpx;
+  line-height: 100rpx;
 }
 
 
@@ -296,15 +337,23 @@ text {
 .storeBox {
   /* width: 100%; */
   background: #fff;
-  box-sizing: border-box;
-  padding: 0 30rpx;
+
+}
+
+.isolationBelt {
+  height: 18rpx;
+  background: #f5f5f5;
 }
 
 .storeItem {
   height: 442rpx;
-  padding-top: 18rpx;
+  /* padding-top: 18rpx; */
+  /* margin-top: 18rpx; */
+  /* border-top: 18rpx solid #f5f5f5; */
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
+  padding: 0 30rpx;
 }
 
 .storeHeader {
@@ -396,4 +445,9 @@ text {
 .supplierGoodsImg {
   border-radius: 20rpx;
 }
-/* 云意氏优多水果店 */
+/* 云意氏优多水果店  storeBox*/
+
+/* 新版搜索组件在子分类页的样式 */
+.am-popup-content {
+  width: 100%;
+}
