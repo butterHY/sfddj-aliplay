@@ -540,7 +540,7 @@
       </view>
       <!-- <view class='bottom-text-white-bg buyNowBtn font-30' onTap='addCart'>加入购物车</view> -->
     </view>
-
+<!-- 重构按钮 -->
     <!--不是送礼,不显示送他按钮   a:else-->
     <view class="bottom-view">
       <view class="regularButton">
