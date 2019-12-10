@@ -26,10 +26,9 @@
 			<!-- 首页轮播 -->
 			<!-- class="margin_top_120" -->
 			<view a:if='{{ materialArr && materialArr.length > 0}}' class="flex_view_col width_100 js_banner">
-				<swiper class="whiteBack" indicator-dots="{{materialArr.length > 1 ? 'true' : ''}}" indicator-color='rgba(255,255,255,.8)' indicator-active-color='#ff5353' autoplay="{{materialArr.length > 1 ? 'true' : ''}}" interval="{{materialArr.length > 1 ? '3000' : ''}}" circular="{{materialArr.length > 1 ? 'true' : ''}}" acceleration='true' class="width_100" onChange="{{stopBannerSwiper || bannerNonGoods ? '' : 'bannerSwiper'}}">
+				<swiper class="whiteBack width_100" indicator-dots="{{materialArr.length > 1 ? 'true' : ''}}" indicator-color='rgba(255,255,255,.8)' indicator-active-color='#ff5353' autoplay="{{materialArr.length > 1 ? 'true' : ''}}" interval="{{materialArr.length > 1 ? '3000' : ''}}" circular="{{materialArr.length > 1 ? 'true' : ''}}" acceleration='true' onChange="{{stopBannerSwiper || bannerNonGoods ? '' : 'bannerSwiper'}}">
 					<block a:for="{{materialArr}}">
 						<swiper-item class="width_100">
-							<!--<navigator url="{{item.url}}" open-type="navigate" hover-class="none" class="width_100 height_300r backImg {{(filters.isGoodsLink(item.url) && !item.isLoaded) ? 'js_bannerGoods_' + index : ''}}"><image src="{{baseImageUrl}}{{item.imageUrl}}" class="all_100" lazy-load="{{true}}"/></navigator> -->
 							<view data-url="{{item.url}}" data-title="{{item.title}}" data-type="banner" class="width_100 height_300r backImg {{(filters.isGoodsLink(item.url) && !item.isLoaded) ? 'js_bannerGoods_' + index : ''}}" onTap="goToPage">
 								<image src="{{baseImageUrl}}{{item.imageUrl}}" class="all_100" lazy-load="{{true}}"/>
 							</view>

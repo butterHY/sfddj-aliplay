@@ -80,7 +80,7 @@ Page({
 		timeOut: null,
 		lessPay: 0.01, //余额抵扣最少要付0.01  
 		SFmember: false,
-		bbsData: '',
+		bbsData: [],
 		botBtnH: 102,
 		loadComplete: false,
 		loadFail: false,
@@ -91,6 +91,16 @@ Page({
 		initMobile: '',     //用来保存最原始的电话
 		nowAddrId: null,     //当前选择的地址id
 		// couponShow: false   // 优惠券弹窗
+		isShowStoreCouponList: [],  //是否展示各个商家优惠券
+		maxDeductPrice: 0,
+    maxDeductPoint: 0,
+    firstMaxDeductPoint: 0,
+    firstMaxDeductPrice: 0,
+    isDikou: false,
+    userCouponId: 0, //
+    canUseCouponCount: 0, //可用的平台优惠券数量
+    totalCouponValue: 0, //总的优惠金额
+    useSupplierCouponList: [], //使用商家券对应商家的id列表
 	},
 
 	onLoad: function(options) {
@@ -119,8 +129,8 @@ Page({
 		}
 
 		// 有没有带留言信息
-		var bbsData = '';
-		bbsData = options.bbsData ? options.bbsData : '';
+		var bbsData = []
+    bbsData = options.bbsData ? options.bbsData : [];
 
 		that.setData({
 			isTuanZhang: isTuanZhang,
@@ -265,8 +275,6 @@ Page({
 			getApp().globalData.uma.trackEvent('orderConfirmView', { channel_source: 'mini_alipay', order_city: myDefaultAddress.city, order_province: myDefaultAddress.province });
 
 			// 判断电子发票显不显示
-
-			// 判断电子发票显不显示
 			var invoiceOff = 'noInvoice';
 			if (result.invoiceTypes != 'null' && result.invoiceTypes != 'undefined' && result.invoiceTypes != null && result.invoiceTypes != undefined) {
 				var invoiceTypesArr = JSON.parse(result.invoiceTypes) ? JSON.parse(result.invoiceTypes) : [];
@@ -314,10 +322,6 @@ Page({
 			}
 
 			if (res.data.result.globalGoods == '0') {
-				// that.setData({
-				//   globalGoods: true
-				// })
-
 				// 判断是非进口（0）、海外直邮（1）、国内保税仓（2）
 				if (result.globalCross == '0') {
 					that.setData({
@@ -359,11 +363,11 @@ Page({
 			}
 
 			// 保存有多少个商品，如果是用余额抵扣可能会用到
-			var goodsAmount = 0;
-			for (var k in result.supplierList) {
-				goodsAmount += result.supplierList[k].orderGoodsList.length;
-			}
-			that.data.goodsAmount = goodsAmount;
+			// var goodsAmount = 0;
+			// for (var k in result.supplierList) {
+			// 	goodsAmount += result.supplierList[k].orderGoodsList.length;
+			// }
+			// that.data.goodsAmount = goodsAmount;
 
 			// 如果要验证身份证名与号码的，重新选择地址时，如果不是同一个人就要重新验证身份证
 			// 如果要验证身份证名与号码的，重新选择地址时，如果不是同一个人就要重新验证身份证
@@ -389,73 +393,80 @@ Page({
       // =================================================
 
 
-
+			var goodsAmount = 0;
 			that.data.result = res.data.result;
 			that.data.totalPrice = 0;
 			that.data.result.supplierList.forEach(function(v1, i1, arr1) {
 				v1.leftCount = '60';
-				var supplierCount = 0;
-				var supplierPrice = 0;
-				var orderGoodsList = v1.orderGoodsList;
-				orderGoodsList.forEach(function(value, index, arr) {
-					supplierCount += value.quantity;
-					supplierPrice += value.quantity * value.salePrice;
+				// 多少个商家则有多少个留言信息
+        goodsAmount += v1.orderGoodsList.length
+        that.data.bbsData.push('');
+				// var supplierCount = 0;
+				// var supplierPrice = 0;
+				// var orderGoodsList = v1.orderGoodsList;
+				// orderGoodsList.forEach(function(value, index, arr) {
+				// 	supplierCount += value.quantity;
+				// 	supplierPrice += value.quantity * value.salePrice;
 
-					// 达观数据保存 --start
-					da_upload_data.push({ productId: value.productId, actionNum: value.quantity })
-					// 达观数据保存 --end
+				// 	// 达观数据保存 --start
+				// 	da_upload_data.push({ productId: value.productId, actionNum: value.quantity })
+				// 	// 达观数据保存 --end
 
-				});
-				v1.supplierCount = supplierCount;
-				that.data.totalPrice += supplierPrice;
-				v1.supplierPrice = supplierPrice.toFixed(2);
+				// });
+				// v1.supplierCount = supplierCount;
+				// that.data.totalPrice += supplierPrice;
+				// v1.supplierPrice = supplierPrice.toFixed(2);
 			});
-			that.data.originalTotalPrice = that.data.totalPrice; //记录原始总额，用于后续计算（优惠券等）
-			that.data.totalPrice = that.data.totalPrice.toFixed(2); //用于显示的总额
+			// that.data.originalTotalPrice = that.data.totalPrice; //记录原始总额，用于后续计算（优惠券等）
+			// that.data.totalPrice = that.data.totalPrice.toFixed(2); //用于显示的总额
 
 			// 判断是否可用余额
-			if (result.canUseBalance) {
-				// 如果可使用余额大于零且现总价要大于0.01*n个商品
-				if (result.availableBalance > 0 && that.data.totalPrice > that.data.lessPay * that.data.goodsAmount) {
-					that.setData({
-						canClick: true,
-						canFirstClick: true,
-						isUseBalance: true
-					});
-					// 判断是否用完余额
-					if (result.availableBalance >= that.data.totalPrice) {
-						that.data.balanceAmount = that.data.totalPrice - that.data.lessPay * that.data.goodsAmount;
-						that.data.totalPrice = that.data.lessPay * that.data.goodsAmount;
-					} else {
-						that.data.balanceAmount = result.availableBalance;
-						that.data.totalPrice = (that.data.totalPrice - result.availableBalance * 1).toFixed(2);
-					}
-				} else {
-					that.setData({
-						canClick: false,
-						canFirstClick: false,
-						isUseBalance: false
-					});
-				}
-				// that.data.totalPrice = ((goodsInfo.salePrice * goodsInfo.quantity).toFixed(2) - result.availableBalance * 1).toFixed(2);
-				// that.data.totalPrice
-			}
+			// if (result.canUseBalance) {
+			// 	// 如果可使用余额大于零且现总价要大于0.01*n个商品
+			// 	if (result.availableBalance > 0 && that.data.totalPrice > that.data.lessPay * that.data.goodsAmount) {
+			// 		that.setData({
+			// 			canClick: true,
+			// 			canFirstClick: true,
+			// 			isUseBalance: true
+			// 		});
+			// 		// 判断是否用完余额
+			// 		if (result.availableBalance >= that.data.totalPrice) {
+			// 			that.data.balanceAmount = that.data.totalPrice - that.data.lessPay * that.data.goodsAmount;
+			// 			that.data.totalPrice = that.data.lessPay * that.data.goodsAmount;
+			// 		} else {
+			// 			that.data.balanceAmount = result.availableBalance;
+			// 			that.data.totalPrice = (that.data.totalPrice - result.availableBalance * 1).toFixed(2);
+			// 		}
+			// 	} else {
+			// 		that.setData({
+			// 			canClick: false,
+			// 			canFirstClick: false,
+			// 			isUseBalance: false
+			// 		});
+			// 	}
+			// 	// that.data.totalPrice = ((goodsInfo.salePrice * goodsInfo.quantity).toFixed(2) - result.availableBalance * 1).toFixed(2);
+			// 	// that.data.totalPrice
+			// }
 
-			that.setCoupon(that.data.result);
+			// that.setCoupon(that.data.result);
 			that.setData({
 				result: that.data.result,
 				baseImageUrl: baseImageUrl,
-				totalPrice: that.data.totalPrice,
-				originalTotalPrice: that.data.originalTotalPrice, // 保留原始价格
+				// totalPrice: that.data.totalPrice,
+				// originalTotalPrice: that.data.originalTotalPrice, // 保留原始价格
 				defaultAddress: that.data.result.defaultAddress,
 				invoiceOff: invoiceOff,
 				itype: invoiceOff == 'electronic' ? 1 : 0,
 				loadComplete: true,
 				loadFail: false,
 				totalPostFee: result.totalPostFee ? result.totalPostFee * 1 : 0,
+				bbsData: that.data.bbsData,
 				// da_upload_data: da_upload_data,
-				knockActivityDescribe: result.knockActivityDescribe && result.knockActivityDescribe != 'null' && result.knockActivityDescribe != 'undefined' ? result.knockActivityDescribe : ''
+				knockActivityDescribe: result.knockActivityDescribe && result.knockActivityDescribe != 'null' && result.knockActivityDescribe != 'undefined' ? result.knockActivityDescribe : '',
+				isShowStoreCouponList: new Array(result.supplierList.length).fill(false),
 			});
+
+			that.resetTotalPrice('', 'init')
 		}, function(res) {
 			// wx.showToast({
 			//   title: res,
@@ -511,7 +522,6 @@ Page({
 			let myDefaultAddress = result.defaultAddress ? result.defaultAddress : {}
 			getApp().globalData.uma.trackEvent('orderConfirmView', { channel_source: 'mini_alipay', order_city: myDefaultAddress.city, order_province: myDefaultAddress.province });
 
-			// 判断电子发票显不显示
 			// 判断电子发票显不显示
 			var invoiceOff = 'noInvoice';
 			if (result.invoiceTypes != 'null' && result.invoiceTypes != 'undefined' && result.invoiceTypes != null && result.invoiceTypes != undefined) {
@@ -601,47 +611,48 @@ Page({
 			orderGoodsList.push(goodsInfo);
 			supplierListItem.leftCount = '60'; //初始化剩余字数
 			// 如果是会员商品，跳去速运那边选地址了，并跳前留言了，这个剩余字数也要跟着变
-			supplierListItem.leftCount = that.data.bbsData ? 60 - that.data.bbsData.length + '' : '60';
+			supplierListItem.leftCount = that.data.bbsData[0] ? (60 - that.data.bbsData[0].length) + '' : '60';
 			supplierListItem.orderGoodsList = orderGoodsList;
 			supplierListItem.supplierName = that.data.result.supplierName;
 			supplierListItem.supplierHeadImg = that.data.result.supplierHeadImg;
 			supplierListItem.supplierCount = goodsInfo.quantity;
 			supplierListItem.supplierPrice = (goodsInfo.salePrice * goodsInfo.quantity).toFixed(2);
+			supplierListItem.supplierCoupon = result.supplierCoupon ? result.supplierCoupon : []
 			supplierListItem.memo = '';
 			supplierList.push(supplierListItem);
 			that.data.result.supplierList = supplierList;
 
-			that.data.originalTotalPrice = goodsInfo.salePrice * goodsInfo.quantity; //记录原始总额，用于后续计算（优惠券等）
-			that.data.totalPrice = (goodsInfo.salePrice * goodsInfo.quantity).toFixed(2); //用于显示的总额
+			// that.data.originalTotalPrice = goodsInfo.salePrice * goodsInfo.quantity; //记录原始总额，用于后续计算（优惠券等）
+			// that.data.totalPrice = (goodsInfo.salePrice * goodsInfo.quantity).toFixed(2); //用于显示的总额
 			// 积分抵扣商品 且 不是秒杀商品
-			if (isDikou && !that.data.result.isActivitys) {
-				// 如果所拥有的积分少于用户积分能使用的最小值
-				if (result.memberPoint < result.memberPointRule.minPoint) {
-					that.setData({
-						canFirstClick: false,
-						canClick: false
-					});
-				} else {
+			// if (isDikou && !that.data.result.isActivitys) {
+			// 	// 如果所拥有的积分少于用户积分能使用的最小值
+			// 	if (result.memberPoint < result.memberPointRule.minPoint) {
+			// 		that.setData({
+			// 			canFirstClick: false,
+			// 			canClick: false
+			// 		});
+			// 	} else {
 
-					that.setData({
-						canFirstClick: true,
-						canClick: true
-					});
-					// 当如果可以使用积分，但现在的价格比可抵扣的积分用的价格低就直接不能用
-					if (goodsInfo.salePrice * that.data.quantity < result.maxDeductPrice) {
-						that.setData({
-							canFirstClick: false,
-							noUseJifen: true,
-							maxDeductPoint: 0,
-							maxDeductPrice: 0
-						});
-					} else {
-						that.data.maxDeductPoint = result.maxDeductPoint;
-						that.data.maxDeductPrice = result.maxDeductPrice;
-						that.data.totalPrice = ((goodsInfo.salePrice * goodsInfo.quantity).toFixed(2) - result.maxDeductPrice).toFixed(2);
-					}
-				}
-			}
+			// 		that.setData({
+			// 			canFirstClick: true,
+			// 			canClick: true
+			// 		});
+			// 		// 当如果可以使用积分，但现在的价格比可抵扣的积分用的价格低就直接不能用
+			// 		if (goodsInfo.salePrice * that.data.quantity < result.maxDeductPrice) {
+			// 			that.setData({
+			// 				canFirstClick: false,
+			// 				noUseJifen: true,
+			// 				maxDeductPoint: 0,
+			// 				maxDeductPrice: 0
+			// 			});
+			// 		} else {
+			// 			that.data.maxDeductPoint = result.maxDeductPoint;
+			// 			that.data.maxDeductPrice = result.maxDeductPrice;
+			// 			that.data.totalPrice = ((goodsInfo.salePrice * goodsInfo.quantity).toFixed(2) - result.maxDeductPrice).toFixed(2);
+			// 		}
+			// 	}
+			// }
 
 			// 保存有多少个商品，如果是用余额抵扣可能会用到
 			var goodsAmount = 0;
@@ -651,32 +662,32 @@ Page({
 			that.data.goodsAmount = goodsAmount;
 
 			// 判断是否可用余额 且 不是秒杀商品
-			if (result.canUseBalance && !that.data.isGiftOrder && !that.data.SFmember && !that.data.result.isActivitys) {
-				// 如果可使用余额大于零且现总价要大于0.01
-				if (result.availableBalance > 0 && that.data.totalPrice > that.data.lessPay * that.data.goodsAmount) {
-					that.setData({
-						canClick: true,
-						canFirstClick: true,
-						isUseBalance: true
-					});
-					// 判断是否用完余额
-					if (result.availableBalance >= that.data.totalPrice) {
-						that.data.balanceAmount = that.data.totalPrice - that.data.lessPay * that.data.goodsAmount;
-						that.data.totalPrice = that.data.lessPay * that.data.goodsAmount;
-					} else {
-						that.data.balanceAmount = result.availableBalance;
-						that.data.totalPrice = (that.data.totalPrice - result.availableBalance * 1).toFixed(2);
-					}
-				} else {
-					that.setData({
-						canClick: false,
-						canFirstClick: false,
-						isUseBalance: false
-					});
-				}
-				// that.data.totalPrice = ((goodsInfo.salePrice * goodsInfo.quantity).toFixed(2) - result.availableBalance * 1).toFixed(2);
-				// that.data.totalPrice
-			}
+			// if (result.canUseBalance && !that.data.isGiftOrder && !that.data.SFmember && !that.data.result.isActivitys) {
+			// 	// 如果可使用余额大于零且现总价要大于0.01
+			// 	if (result.availableBalance > 0 && that.data.totalPrice > that.data.lessPay * that.data.goodsAmount) {
+			// 		that.setData({
+			// 			canClick: true,
+			// 			canFirstClick: true,
+			// 			isUseBalance: true
+			// 		});
+			// 		// 判断是否用完余额
+			// 		if (result.availableBalance >= that.data.totalPrice) {
+			// 			that.data.balanceAmount = that.data.totalPrice - that.data.lessPay * that.data.goodsAmount;
+			// 			that.data.totalPrice = that.data.lessPay * that.data.goodsAmount;
+			// 		} else {
+			// 			that.data.balanceAmount = result.availableBalance;
+			// 			that.data.totalPrice = (that.data.totalPrice - result.availableBalance * 1).toFixed(2);
+			// 		}
+			// 	} else {
+			// 		that.setData({
+			// 			canClick: false,
+			// 			canFirstClick: false,
+			// 			isUseBalance: false
+			// 		});
+			// 	}
+			// 	// that.data.totalPrice = ((goodsInfo.salePrice * goodsInfo.quantity).toFixed(2) - result.availableBalance * 1).toFixed(2);
+			// 	// that.data.totalPrice
+			// }
 
 			// 判断是否是全球购商品
 			if (result.judgeGlobalGoods == '0') {
@@ -704,27 +715,27 @@ Page({
 			}
 
 			// 积分商品优惠商品不能用优惠券
-			if (!goodsInfo.isJifen) {
-				that.setCoupon(that.data.result);
-			}
+			// if (!goodsInfo.isJifen) {
+			// 	that.setCoupon(that.data.result);
+			// }
 
 			that.setData({
 				isTuanZhang: that.data.isTuanZhang,
 				result: that.data.result,
 				baseImageUrl: baseImageUrl,
 				totalPostFee: goodsInfo.postFee ? goodsInfo.postFee * 1 : 0,     //运费价格
-				totalPrice: that.data.totalPrice,                 // 取2位小数的总价
-				originalTotalPrice: that.data.originalTotalPrice, //保留原始总价，用于后续计算（优惠券等）
+				// totalPrice: that.data.totalPrice,                 // 取2位小数的总价
+				// originalTotalPrice: that.data.originalTotalPrice, //保留原始总价，用于后续计算（优惠券等）
 				isJifen: goodsInfo.isJifen,
 				isSpike: that.data.result.isActivitys,            // 是否是秒杀商品，如果是秒杀商品则不显示使用优惠券和余额抵扣；
 				canBuy: res.data.result.goodsInfo.canBuy,
 				isDikou: that.data.isDikou,
 				// maxDeductPoint: that.data.noUseJifen ? that.data.maxDeductPoint : result.maxDeductPoint,
-				// maxDeductPrice: that.data.noUseJifen ? that.data.maxDeductPrice: result.maxDeductPrice,
-				maxDeductPoint: that.data.maxDeductPoint ? that.data.maxDeductPoint : 0,
-				maxDeductPrice: that.data.maxDeductPrice ? that.data.maxDeductPrice : 0,
-				firstMaxDeductPoint: that.data.maxDeductPoint ? that.data.maxDeductPoint : 0,
-				firstMaxDeductPrice: that.data.maxDeductPrice ? that.data.maxDeductPrice : 0,
+				// // maxDeductPrice: that.data.noUseJifen ? that.data.maxDeductPrice: result.maxDeductPrice,
+				// maxDeductPoint: that.data.maxDeductPoint ? that.data.maxDeductPoint : 0,
+				// maxDeductPrice: that.data.maxDeductPrice ? that.data.maxDeductPrice : 0,
+				// firstMaxDeductPoint: that.data.maxDeductPoint ? that.data.maxDeductPoint : 0,
+				// firstMaxDeductPrice: that.data.maxDeductPrice ? that.data.maxDeductPrice : 0,
 				defaultAddress: that.data.result.defaultAddress,
 				// isSFProduct: goodsInfo.isSFProduct ? goodsInfo.isSFProduct : false,
 				isShowSFScore: goodsInfo.isSFProduct && goodsInfo.isShow ? true : false,
@@ -732,8 +743,11 @@ Page({
 				itype: invoiceOff == 'electronic' ? 1 : 0,
 				loadComplete: true,
 				loadFail: false,
-				knockActivityDescribe: result.knockActivityDescribe && result.knockActivityDescribe != 'null' && result.knockActivityDescribe != 'undefined' ? result.knockActivityDescribe : ''
+				knockActivityDescribe: result.knockActivityDescribe && result.knockActivityDescribe != 'null' && result.knockActivityDescribe != 'undefined' ? result.knockActivityDescribe : '',
+				bbsData: ['']
 			});
+
+			that.resetTotalPrice('', 'init')
 
 			// 如果是从顺丰速运+那里过来
 			if (app.globalData.addUpdate) {
@@ -939,6 +953,7 @@ Page({
 				item.beginDateStr = that.formatTime(item.beginDate);
 				item.endDateStr = that.formatTime(item.endDate);
 				item.taped = false;
+				item.platformCoupon = true
 				if (max < item.costPrice) {
 					max = item.costPrice;
 					index = i;
@@ -953,7 +968,7 @@ Page({
 				}
 			});
 			result.availableCoupon[index].taped = true;
-			that.data.couponId = result.availableCoupon[index].userCouponId;
+			that.data.userCouponId = result.availableCoupon[index].userCouponId;
 			// result.couponStr = result.availableCoupon.length + '张优惠券可用'
 			// result.couponStr = '-' + result.availableCoupon[index].costPrice;
 			that.data.result.couponStr = '-￥' + result.availableCoupon[index].costPrice.toFixed(2);
@@ -1223,7 +1238,7 @@ Page({
 			groupBuyType: that.data.groupBuyType,
 			groupBuyActivityId: that.data.groupBuyActivityId,
 			groupBuyRecordId: that.data.groupBuyRecordId,
-			couponId: that.data.couponId,
+			// couponId: that.data.couponId,
 			deductPrice: deductPrice,
 			formId: formId,
 			isUseBalance: that.data.isUseBalance ? that.data.isUseBalance : false,
@@ -1246,13 +1261,39 @@ Page({
 			payType: "MINI_ALIPAY",
 			channelSource: "ALI_MINI_APP",
 			giftOrder: that.data.showType,
-			couponId: that.data.couponId
+			// couponId: that.data.couponId
 
 			//多人抢礼end
 
 
 			// 如果非送礼单要传收件地址信息
-		}; if (!that.data.isGiftOrder) {
+		}; 
+
+		// 判断是否使用平台优惠券
+    if(that.data.userCouponId && that.data.userCouponId != '0'){
+      data.couponId = that.data.userCouponId
+			if(!that.data.isGiftOrder) {
+				data2.couponId = that.data.userCouponId
+			}
+    }
+
+		 // 如果有使用商家优惠券的
+    // let supplierCoupon = []
+    if (that.data.useSupplierCouponList && that.data.useSupplierCouponList.length > 0) {
+      if (that.data.useSupplierCouponList[0] && that.data.useSupplierCouponList[0] != "") {
+        let couponObj = {}
+        let couponKey = that.data.result.supplierCoupon[0].supplierId + ""
+        let couponValue = that.data.useSupplierCouponList[0]
+        couponObj = Object.assign({},{[couponKey]: couponValue})
+        data.supplierCoupon = JSON.stringify(couponObj)
+				if(that.data.isGiftOrder){
+					data2.supplierCoupon = JSON.stringify(couponObj)
+				}
+      }
+
+    }
+
+		if (!that.data.isGiftOrder) {
 
 			data.shipName = that.data.defaultAddress.shipName;
 			data.shipMobile = that.data.defaultAddress.shipMobile;
@@ -1443,13 +1484,33 @@ Page({
 			addr: that.data.defaultAddress.addr,
 			payType: "MINI_ALIPAY",
 			channelSource: "ALI_MINI_APP",
-			couponId: that.data.couponId,
+			// couponId: that.data.couponId,
 			formId: formId,
 			isUseBalance: that.data.isUseBalance,
 			balanceAmount: that.data.balanceAmount ? that.data.balanceAmount : 0
 		};
 		that.invoiceToData(data, 1);
+		
+		// 判断是否使用平台优惠券
+    if (that.data.userCouponId && that.data.userCouponId != '0') {
+      data.couponId = that.data.userCouponId
+    }
 
+    // 如果有使用商家优惠券的
+    if (that.data.useSupplierCouponList && that.data.useSupplierCouponList.length > 0) {
+      let couponObj = {}
+      for (let j = 0; j < that.data.useSupplierCouponList.length; j++) {
+        // data.supplierCoupon.push({ that.data.result.supplierList[j].supplierId})
+        if (that.data.useSupplierCouponList[j]) {
+          let couponKey = that.data.result.supplierList[j].supplierId + ''
+          let couponValue = that.data.useSupplierCouponList[j]
+          couponObj = Object.assign(couponObj,{[couponKey]: couponValue})
+        }
+      }
+      if(Object.keys(couponObj).length > 0){
+        data.supplierCoupon = JSON.stringify(couponObj)
+      }
+    }
 
 		// 全球购商品要多传身份证信息
 		if ((that.data.globalGoods || that.data.hasGlobalGoods) && that.data.globalCross != 0) {
@@ -1867,27 +1928,35 @@ Page({
 	 * 选择要不要用余额抵扣
 	 * */
 	useBalanceFn() {
-		var that = this;
-		var availableBalance = that.data.result.availableBalance * 1;
-		var totalPrice = that.data.totalPrice * 1;
-		var balanceAmount = that.data.balanceAmount;
-		that.data.canClick = !that.data.canClick;
-		if (that.data.canClick) {
-			totalPrice = (totalPrice - balanceAmount).toFixed(2);
-			that.setData({
-				isUseBalance: true
-			});
-		} else {
-			totalPrice = (totalPrice + balanceAmount).toFixed(2);
-			that.setData({
-				isUseBalance: false
-			});
-		}
+		let that = this;
+    let availableBalance = that.data.result.availableBalance * 1;
+    let totalPrice = that.data.totalPrice * 1
+    let balanceAmount = that.data.balanceAmount;
+    let {
+      lessPay,
+      goodsAmount
+    } = this.data
+    that.data.isUseBalance = !that.data.isUseBalance
+    if (that.data.isUseBalance) {
+      if (availableBalance >= totalPrice) {
+        balanceAmount = totalPrice - (lessPay * goodsAmount);
+        totalPrice = lessPay * goodsAmount;
+      } else {
+        balanceAmount = result.availableBalance;
+        totalPrice = totalPrice - result.availableBalance * 1;
+      }
 
-		that.setData({
-			totalPrice: totalPrice,
-			canClick: that.data.canClick
-		});
+    } else {
+      totalPrice = (totalPrice + balanceAmount).toFixed(2);
+      balanceAmount = 0
+    }
+
+    that.setData({
+      totalPrice: totalPrice,
+      canClick: that.data.canClick,
+      isUseBalance: that.data.isUseBalance,
+      balanceAmount
+    })
 	},
 
 	/**
@@ -1898,15 +1967,17 @@ Page({
 		var value = e.detail.value;
 		var index = e.currentTarget.dataset.index;
 		var supplier = that.data.result.supplierList[index];
+		var bbsData = that.data.bbsData;
 		supplier.memo = value;
 		supplier.leftCount = 60 - value.length + '';
-		that.setData({
-			result: that.data.result,
-			bbsData: e.detail.value
-		});
+		bbsData[index] = e.detail.value
+    that.setData({
+      result: that.data.result,
+      bbsData: bbsData
+    })
 	},
 	/**
-	 * 点击显示优惠券
+	 * 点击显示平台优惠券
 	 */
 	availableCouponTap: function(e) {
 		var that = this;
@@ -1915,16 +1986,29 @@ Page({
 			scrollView: false
 		});
 	},
+	/**
+   * 点击显示商家优惠券
+   * */
+  selectSupplierCoupon(e) {
+    let {
+      index
+    } = e.currentTarget.dataset
+    let setShowListName = 'isShowStoreCouponList[' + index + ']'
+    this.setData({
+      [setShowListName]: true
+    })
+  },
 
 	/**
 	 * 隐藏优惠券dialog
 	 */
-	colseCouponDialog: function(e) {
+	closeCouponDialog: function(e) {
 		var that = this;
 		that.setData({
 			showDialogCoupon: false,
 			showInvoice: false,
-			scrollView: true
+			scrollView: true,
+			isShowStoreCouponList: new Array(this.data.isShowStoreCouponList.length).fill(false)
 		});
 	},
 
@@ -1964,163 +2048,372 @@ Page({
 	 * 点击选中优惠券
 	 */
 	couponTap: function(e) {
-		var that = this;
-		var couponId = e.currentTarget.dataset.couponid;
-		that.data.result.availableCoupon.forEach(function(v, i, arr) {
-			if (v.userCouponId == couponId) {
-				v.taped = !v.taped;
-				if (v.taped) {
-					that.data.couponId = couponId;
-					that.data.result.couponStr = '-￥' + v.costPrice.toFixed(2);
-					that.data.result.couponValue = '￥' + v.costPrice.toFixed(2);
-					that.data.totalPrice = (that.data.originalTotalPrice * 1 - v.costPrice).toFixed(2);
-					// 如果是积分抵扣商品且能用积分抵扣
-					if (that.data.isDikou && that.data.canFirstClick) {
-						if (that.data.totalPrice < that.data.result.maxDeductPrice) {
-							that.data.maxDeductPrice = Math.floor(that.data.totalPrice);
-							that.data.maxDeductPoint = that.data.maxDeductPrice * that.data.result.memberPointRule.payRate;
-							that.data.firstMaxDeductPrice = Math.floor(that.data.totalPrice);
-							that.data.firstMaxDeductPoint = that.data.maxDeductPrice * that.data.result.memberPointRule.payRate;
-							if (that.data.canClick) {
-								that.data.totalPrice = ((that.data.originalTotalPrice * 1 - v.costPrice).toFixed(2) - that.data.maxDeductPrice).toFixed(2);
-							}
-							that.setData({
-								maxDeductPrice: that.data.maxDeductPrice,
-								maxDeductPoint: that.data.maxDeductPoint,
-								firstMaxDeductPrice: that.data.firstMaxDeductPrice,
-								firstMaxDeductPoint: that.data.firstMaxDeductPoint
-							});
-						} else {
-							if (that.data.maxDeductPoint < that.data.result.maxDeductPoint) {
-								that.data.maxDeductPoint = that.data.result.maxDeductPoint;
-								that.data.maxDeductPrice = that.data.result.maxDeductPrice;
-								that.setData({
-									maxDeductPrice: that.data.maxDeductPrice,
-									maxDeductPoint: that.data.maxDeductPoint,
-									firstMaxDeductPrice: that.data.result.maxDeductPrice,
-									firstMaxDeductPoint: that.data.result.maxDeductPoint
-								});
-							}
-							that.data.totalPrice = ((that.data.originalTotalPrice * 1 - v.costPrice).toFixed(2) - that.data.maxDeductPrice).toFixed(2);
-						}
-					}
+		var that = this
+    let {
+      couponId,
+      type,
+      fatherIndex,
+      index
+    } = e.currentTarget.dataset
 
-					// 如果可用余额抵扣
-					if (that.data.result.canUseBalance && that.data.result.availableBalance > 0) {
-						// 判断用了优惠券后余额不能少于0.01
-						if (that.data.totalPrice > that.data.lessPay * that.data.goodsAmount && that.data.isUseBalance) {
-							// 判断是可用余额是否大于用了优惠券总价
-							if (that.data.result.availableBalance >= that.data.totalPrice) {
-								// 所用了的余额
-								that.data.balanceAmount = that.data.totalPrice - that.data.lessPay * that.data.goodsAmount;
-								// 用余额抵扣最低需支付0.01
-								that.data.totalPrice = that.data.lessPay * that.data.goodsAmount;
-							} else {
-								that.data.balanceAmount = that.data.result.availableBalance;
-								that.data.totalPrice = (that.data.totalPrice - that.data.result.availableBalance).toFixed(2);
-							}
-						} else if (that.data.totalPrice > that.data.lessPay * that.data.goodsAmount && !that.data.isUseBalance) {
-							that.data.totalPrice = that.data.totalPrice;
-							// that.data.balanceAmount = 0;
-							if (that.data.result.availableBalance >= that.data.totalPrice) {
-								// 所用了的余额
-								that.data.balanceAmount = that.data.totalPrice - that.data.lessPay * that.data.goodsAmount;
-								// 用余额抵扣最低需支付0.01
-								// that.data.totalPrice = (that.data.lessPay * that.data.goodsAmount);
-							} else {
-								that.data.balanceAmount = that.data.result.availableBalance;
-								// that.data.totalPrice = (that.data.totalPrice - that.data.result.availableBalance).toFixed(2);
-							}
-						} else {
-							// 如果用了优惠券后价格低于等于0.01，则不能用余额抵扣&& that.data.isUseBalance
-
-							that.setData({
-								canFirstClick: false,
-								canClick: false,
-								isUseBalance: false
-							});
-						}
-					}
-				} else {
-					that.data.couponId = '';
-					that.data.result.couponStr = that.data.result.availableCoupon.length + '张优惠券可用';
-					that.data.result.couponValue = '￥0.00';
-					that.data.totalPrice = that.data.originalTotalPrice.toFixed(2);
-					// 如果是积分抵扣商品且能用积分抵扣
-					if (that.data.isDikou && that.data.canFirstClick) {
-						// 重置原始数据
-						that.data.maxDeductPrice = that.data.result.maxDeductPrice;
-						that.data.maxDeductPoint = that.data.result.maxDeductPoint;
-						that.data.firstMaxDeductPrice = that.data.result.maxDeductPrice;
-						that.data.firstMaxDeductPoint = that.data.result.maxDeductPoint;
-						if (!that.data.canClick) {
-							that.data.maxDeductPrice = 0;
-							that.data.maxDeductPoint = 0;
-						} else {
-							that.data.totalPrice = (that.data.originalTotalPrice.toFixed(2) - that.data.result.maxDeductPrice).toFixed(2);
-						}
-						that.setData({
-							maxDeductPrice: that.data.maxDeductPrice,
-							maxDeductPoint: that.data.maxDeductPoint,
-							firstMaxDeductPrice: that.data.firstMaxDeductPrice,
-							firstMaxDeductPoint: that.data.firstMaxDeductPoint
-						});
-					}
-
-					// 如果是可用额抵扣商品
-					if (that.data.result.canUseBalance && that.data.result.availableBalance > 0) {
-						// 判断现总价有没大于0.01且有没有选择用余额
-						if (that.data.totalPrice > that.data.lessPay * that.data.goodsAmount && that.data.isUseBalance) {
-							that.setData({
-								canFirstClick: true,
-								canClick: true,
-								isUseBalance: true
-							});
-							// 判断余额大不大于现总价
-							if (that.data.result.availableBalance >= that.data.totalPrice) {
-								// 先保存用的余额
-								that.data.balanceAmount = that.data.totalPrice - that.data.lessPay * that.data.goodsAmount;
-								that.data.totalPrice = that.data.lessPay * that.data.goodsAmount;
-							} else {
-								// 可用余额小于现总价，可用完
-								that.data.balanceAmount = that.data.result.availableBalance;
-								that.data.totalPrice = (that.data.totalPrice - that.data.result.availableBalance).toFixed(2);
-							}
-							// 判断现总价有没大于0.01且有没有选择用余额
-						} else if (that.data.totalPrice > that.data.lessPay * that.data.goodsAmount && !that.data.isUseBalance) {
-							that.setData({
-								canFirstClick: true,
-								canClick: false,
-								isUseBalance: false
-							});
-							// 没用余额时不能减掉余额的价格
-							that.data.totalPrice = that.data.totalPrice;
-							// 判断余额大不大于现总价
-							if (that.data.result.availableBalance >= that.data.totalPrice) {
-								// 先保存用的余额
-								that.data.balanceAmount = that.data.totalPrice - that.data.lessPay * that.data.goodsAmount;
-							} else {
-								// 可用余额小于现总价，可用完
-								that.data.balanceAmount = that.data.result.availableBalance;
-							}
-						} else {
-							that.setData({
-								canFirstClick: false,
-								canClick: false,
-								isUseBalance: false
-							});
-						}
-					}
-				}
-			} else {
-				v.taped = false;
-			}
-		});
-		that.setData({
-			result: that.data.result,
-			totalPrice: that.data.totalPrice
-		});
+    if (type == 'platform') {
+      this.platformCouponTap(couponId)
+    } else {
+      this.supplierCouponTap(fatherIndex, index)
+    }
 	},
+
+	platformCouponTap(couponId) {
+    let that = this;
+    let {
+      result
+    } = this.data
+    let userCouponId = this.data.userCouponId
+    result.availableCoupon.forEach(function(v, i, arr) {
+      if (v.userCouponId == couponId) {
+        v.taped = !v.taped
+        if (v.taped) {
+          userCouponId = v.userCouponId
+          result.couponStr = '-￥' + v.costPrice.toFixed(2)
+          result.couponValue = '￥' + v.costPrice.toFixed(2)
+          result.couponPrice = v.costPrice
+          // that.data.totalPrice = (that.data.originalTotalPrice * 1 - v.costPrice).toFixed(2)
+          that.setData({
+            userCouponId,
+            result
+          })
+
+          that.resetTotalPrice('platform')
+
+        } else {
+          userCouponId = ''
+          // result.couponStr = that.data.result.availableCoupon.length + '张优惠券可用'
+          result.couponValue = '￥0.00'
+          result.couponPrice = 0;
+          // that.data.totalPrice = that.data.originalTotalPrice.toFixed(2)
+          that.setData({
+            userCouponId,
+            result
+          })
+          that.resetTotalPrice('platform')
+        }
+      } else {
+        v.taped = false
+      }
+    })
+    that.setData({
+      result,
+    })
+  },
+
+	supplierCouponTap(fatherIndex, index) {
+    let that = this;
+    let supplierCouponList = that.data.fromPage == 'cart' ? Object.assign([], that.data.result.supplierList[fatherIndex].supplierCoupon) : Object.assign([], that.data.result.supplierCoupon)
+    let supplierList = this.data.result.supplierList
+    let setSupplerName = 'result.supplierList[' + fatherIndex + '].supplierCoupon'
+
+    for (let i = 0; i < supplierCouponList.length; i++) {
+      let item = supplierCouponList[i]
+      if (i == index) {
+        item.taped = !item.taped
+        // 点击前是未选中状态时
+        if (item.taped) {
+          supplierList[fatherIndex].couponId = item.userCouponId
+          supplierList[fatherIndex].couponStr = '-￥' + item.costPrice.toFixed(2)
+          supplierList[fatherIndex].couponValue = '￥' + item.costPrice.toFixed(2)
+          supplierList[fatherIndex].supplierCouponPrice = item.costPrice
+          supplierList[fatherIndex].selectIndex = i
+          // that.data.totalPrice = (that.data.originalTotalPrice * 1 - v.costPrice).toFixed(2)
+          that.resetTotalPrice('supplier');
+        } else {
+          supplierList[fatherIndex].couponId = 0
+          supplierList[fatherIndex].couponStr = supplierCouponList.length + '张优惠券可用'
+          supplierList[fatherIndex].couponValue = '￥0.00'
+          supplierList[fatherIndex].supplierCouponPrice = 0
+          supplierList[fatherIndex].selectIndex = null
+          // that.data.totalPrice = (that.data.originalTotalPrice * 1 - v.costPrice).toFixed(2)
+          that.resetTotalPrice('supplier');
+        }
+
+      } else {
+        item.taped = false
+      }
+    }
+
+    this.setData({
+      [setSupplerName]: supplierCouponList
+    })
+
+  },
+
+	// 重新算一次总价
+  resetTotalPrice(tapType, setType) {
+    // 先算商家优惠券
+    let that = this;
+    let totalPrice = 0;
+    let totalCouponValue = 0;
+    let {
+      result,
+      maxDeductPrice,
+      maxDeductPoint,
+      firstMaxDeductPrice,
+      firstMaxDeductPoint,
+      isDikou,
+      canFirstClick,
+      canClick,
+      lessPay,
+      goodsAmount,
+      isUseBalance,
+      balanceAmount,
+      userCouponId,
+      canUseCouponCount,
+      isJifen,
+    } = this.data;
+
+    // 计算原始价格和商家优惠券使用情况
+    let supplierList = result.supplierList
+    let useSupplierCouponList = [] //每次重置选中的商家券的id列表
+
+    // 初始化使用商家券id列表
+    if (setType == 'init') {
+      useSupplierCouponList = new Array(supplierList).fill("")
+    }
+
+    for (let i = 0; i < supplierList.length; i++) {
+      let supplierItem = supplierList[i]
+      let supplierTotalPrice = 0;
+      supplierItem.supplierPrice = 0;
+
+      for (let k = 0; k < supplierItem.orderGoodsList.length; k++) {
+        let goodsItem = supplierItem.orderGoodsList[k]
+        supplierTotalPrice += goodsItem.salePrice * goodsItem.quantity
+        supplierItem.supplierPrice += goodsItem.salePrice * goodsItem.quantity
+        if (k == (supplierItem.orderGoodsList.length - 1)) {
+          // 当是优惠券点击的时候
+          if (tapType == 'supplier' || tapType == 'platform') {
+            if (supplierItem.supplierCoupon) {
+              // 如果有当前选中的价格才计算
+              if (supplierItem.supplierCouponPrice) {
+                supplierTotalPrice -= supplierItem.supplierCouponPrice
+                supplierItem.supplierPrice -= supplierItem.supplierCouponPrice
+                totalCouponValue += supplierItem.supplierCouponPrice
+                useSupplierCouponList[i] = supplierItem.supplierCoupon[supplierItem.selectIndex].userCouponId
+              }
+
+            }
+          } else { //商家优惠券初始化， 选择最大金额那张券
+            if (supplierItem.supplierCoupon && supplierItem.supplierCoupon.length > 0) {
+              var max = supplierItem.supplierCoupon[0].costPrice;
+              var index = 0;
+              var endDateStr = new Date(supplierItem.supplierCoupon[0].endDate);
+              supplierItem.supplierCoupon.forEach(function(couponItem, couponIndex, arr) {
+
+                couponItem.beginDateStr = that.formatTime(couponItem.beginDate)
+                couponItem.endDateStr = that.formatTime(couponItem.endDate)
+                couponItem.taped = false
+                if (max < couponItem.costPrice) {
+                  max = couponItem.costPrice;
+                  index = couponIndex;
+                  endDateStr = new Date(couponItem.endDate);
+                  // 如果有两张一样的金额的优惠券，就选择最快过期的
+                } else if (max == couponItem.costPrice) {
+                  if (endDateStr.getTime() > new Date(couponItem.endDate).getTime()) {
+                    max = couponItem.costPrice;
+                    index = couponIndex;
+                    endDateStr = new Date(couponItem.endDate);
+                  }
+                }
+
+              })
+              supplierItem.supplierCoupon[index].taped = true; //更新优惠券选中状态
+              supplierItem.selectIndex = index; //更新已选择优惠券的索引
+              supplierItem.couponId = supplierItem.supplierCoupon[index].userCouponId; //更新已选中的优惠券id
+              // result.couponStr = result.availableCoupon.length + '张优惠券可用'
+              // result.couponStr = '-' + result.availableCoupon[index].costPrice;
+              supplierItem.couponStr = '-￥' + supplierItem.supplierCoupon[index].costPrice.toFixed(2) //更新选中优惠券价格字符串
+              supplierItem.couponValue = '￥' + supplierItem.supplierCoupon[index].costPrice.toFixed(2) //更新 -- 可不要
+              supplierItem.supplierCouponPrice = supplierItem.supplierCoupon[index].costPrice //更新选中优惠券的价格
+              supplierTotalPrice -= supplierItem.supplierCouponPrice //更新这个商家的总价格
+              supplierItem.supplierPrice -= supplierItem.supplierCoupon[index].costPrice //更新在列表中商家的总价
+              totalCouponValue += supplierItem.supplierCoupon[index].costPrice //更新总的优惠金额
+              useSupplierCouponList[i] = supplierItem.supplierCoupon[index].userCouponId //更新使用商家券id列表
+            }
+          }
+
+
+        }
+      }
+      totalPrice += supplierTotalPrice
+    }
+
+
+    // 计算平台优惠券
+    if (result.availableCoupon && result.availableCoupon.length > 0 && !isJifen) {
+      if (tapType == 'platform') { //如果是点击某个券时调用 
+        if (userCouponId) { //如果之前没选中，现在选中的时候
+          totalPrice -= result.couponPrice
+          totalCouponValue += result.couponPrice
+        } else {
+          //看看有无可用优惠券
+          result.couponStr = that.filterPlatCouponList(totalPrice).length > 0 ? that.filterPlatCouponList(totalPrice).length + '张优惠券可用' : '暂无可用优惠券'
+          canUseCouponCount = that.filterPlatCouponList(totalPrice).length //更新可用平台优惠券的数量
+          totalPrice -= 0
+        }
+      } else {
+        // 先筛选一遍可用的平台券，如果有
+        let nowAvailableList = this.filterPlatCouponList(totalPrice)
+        if (nowAvailableList.length > 0) {
+          let max = nowAvailableList[0].costPrice;
+          let index = nowAvailableList[0].couponIndex;
+          let endDateStr = new Date(nowAvailableList[0].endDate);
+          for (let m = 0; m < nowAvailableList.length; m++) {
+            let item = nowAvailableList[m]
+            // item.beginDateStr = that.formatTime(item.beginDate)
+            // item.endDateStr = that.formatTime(item.endDate)
+            item.taped = false
+            if (max < item.costPrice) {
+              max = item.costPrice;
+              index = item.couponIndex;
+              endDateStr = new Date(item.endDate);
+              // result.availableCoupon[item.couponIndex].taped = true
+              // 如果有两张一样的金额的优惠券，就选择最快过期的
+            } else if (max == item.costPrice) {
+              if (endDateStr.getTime() > new Date(item.endDate).getTime()) {
+                max = item.costPrice;
+                index = item.couponIndex;
+                endDateStr = new Date(item.endDate);
+                // result.availableCoupon[item.couponIndex].taped = true
+              }
+            }
+
+          }
+          result.availableCoupon[index].taped = true
+          userCouponId = result.availableCoupon[index].userCouponId
+          result.couponStr = '-￥' + result.availableCoupon[index].costPrice.toFixed(2)
+          result.couponValue = '￥' + result.availableCoupon[index].costPrice.toFixed(2)
+          result.couponPrice = result.availableCoupon[index].costPrice
+          totalCouponValue += result.availableCoupon[index].costPrice
+          canUseCouponCount = nowAvailableList.length
+
+          // 更新总价
+          totalPrice -= max;
+        } else { //如果不可用平台优惠券，则不用打开平台优惠券弹窗
+          result.couponStr = '暂无可用优惠券'
+          canUseCouponCount = 0
+        }
+      }
+
+    } else {
+      result.couponStr = '暂无可用优惠券'
+      canUseCouponCount = 0
+    }
+
+    // 如果是积分抵扣商品且能用积分抵扣
+    if (isDikou && canFirstClick) {
+      if (totalPrice.toFixed(2) < result.maxDeductPrice) {
+        maxDeductPrice = Math.floor(totalPrice)
+        maxDeductPoint = maxDeductPrice * result.memberPointRule.payRate
+        firstMaxDeductPrice = Math.floor(totalPrice)
+        firstMaxDeductPoint = maxDeductPrice * result.memberPointRule.payRate
+        if (canClick) {
+          totalPrice = totalPrice - maxDeductPrice
+        }
+      } else {
+        if (maxDeductPoint < result.maxDeductPoint) {
+          maxDeductPoint = result.maxDeductPoint;
+          maxDeductPrice = result.maxDeductPrice;
+        }
+        totalPrice = totalPrice - maxDeductPrice
+      }
+    }
+
+    // 判断是否可用余额
+    if (result.canUseBalance) {
+      // 如果可使用余额大于零且现总价要大于0.01*n个商品
+
+      if (result.availableBalance > 0 && (totalPrice.toFixed(2) > (lessPay * goodsAmount))) {
+        canClick = true
+        canFirstClick = true
+        // 初始化，默认如果可用余额且自动选上用余额
+        if (setType == 'init') {
+          isUseBalance = true
+          // 判断是否用完余额
+          if (result.availableBalance >= totalPrice) {
+            balanceAmount = totalPrice - (lessPay * goodsAmount);
+            totalPrice = lessPay * goodsAmount;
+          } else {
+            balanceAmount = result.availableBalance;
+            totalPrice = totalPrice - result.availableBalance * 1;
+          }
+        } else {
+          // 如果用户确认用余额时，更新总价
+          if (isUseBalance) {
+            // 判断是否用完余额
+            if (result.availableBalance >= totalPrice) {
+              balanceAmount = totalPrice - (lessPay * goodsAmount);
+              totalPrice = lessPay * goodsAmount;
+            } else {
+              balanceAmount = result.availableBalance;
+              totalPrice = totalPrice - result.availableBalance * 1;
+            }
+          }
+        }
+
+      } else {
+        canClick = false
+        canFirstClick = false
+        isUseBalance = false
+      }
+    } else {
+      canClick = false
+      canFirstClick = false
+      isUseBalance = false
+    }
+
+    that.data.result = result
+    // 更新数据
+    this.setData({
+      result: that.data.result,
+      maxDeductPrice,
+      maxDeductPoint,
+      firstMaxDeductPrice,
+      firstMaxDeductPoint,
+      isDikou,
+      canFirstClick,
+      canClick,
+      lessPay,
+      goodsAmount,
+      isUseBalance,
+      balanceAmount,
+      totalPrice,
+      userCouponId,
+      canUseCouponCount,
+      totalCouponValue,
+      useSupplierCouponList
+    })
+
+    console.log(';;;;---couponList---', useSupplierCouponList)
+
+  },
+
+	filterPlatCouponList(totalPrice) {
+    let result = Object.assign([], this.data.result)
+    let availableCouponList = []
+    for (let i = 0; i < result.availableCoupon.length; i++) {
+      result.availableCoupon[i].platformCoupon = true
+      result.availableCoupon[i].couponIndex = i
+      result.availableCoupon[i].showCoupon = true
+      if (result.availableCoupon[i].needPrice <= totalPrice) {
+        result.availableCoupon[i].showCoupon = false
+        availableCouponList.push(result.availableCoupon[i])
+      }
+    }
+    this.setData({
+      result
+    })
+    return availableCouponList
+  },
+
 	// 添加发票信息
 	showInvoiceFn: function() {
 		var that = this;
