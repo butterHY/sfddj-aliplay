@@ -1,26 +1,26 @@
 <template name="goodsSpec">  
-  <view style="position:fixed;top:0;left:0;right:0;bottom:0;background-color:rgba(0,0,0,0.5);z-index:9000" catchTouchMove="move"  a:if="{{show}}">
-      <view style="height:20%" catchTap="colseSpecDialog"></view>
+  <view class="flex_view_col" style="position:fixed;top:0;left:0;right:0;bottom:0;background-color:rgba(0,0,0,0.5);z-index:9000" catchTouchMove="move"  a:if="{{show}}">
+      <view class="flex_1" catchTap="colseSpecDialog"></view>
       <!-- onTap="tapSpec" 下面 view 的事件，但没发现该函数 -->
-      <view style="height:80%;background:#fafafa;">
+      <view style="height:936rpx;background:#fafafa;border-radius: 35rpx;">
         <view class="goods-spec-info">
           <view class="goods-spec-info-start">
               <image src="{{baseImageUrl}}{{product.imgPath}}" class="showImag"></image>
               <!-- 从目前goodsDetail.js 的代码来看并没有 type == 1 和 type == 2 和 type == 5 的赋值 -->
               <!-- 只有积分商品 type == 3，物返现商品 type == 4 -->
               <view class="goods-spec-text">
-                <view class="font-40 color-ff5353" a:if="{{type == 1}}">
+                <view class="font-40 color-ff2e2e" a:if="{{type == 1}}">
                   <text>￥{{product.tuanPrice}}</text><text class="font-24 color-a1a0a0 marLeft_15" a:if="{{SFmember}}">+{{product.costMemberScoreAll ? product.costMemberScoreAll : 0}}积分</text> 
                 </view>
-                <view class="font-40 color-ff5353" a:elif="{{type == 2}}"><text>￥0.00</text> </view>
+                <view class="font-40 color-ff2e2e" a:elif="{{type == 2}}"><text>￥0.00</text> </view>
                  <!-- a:elif="{{type == 3}}" {{product.thisMemberPoint}}-->
-                <view class="font-40 color-ff5353" a:elif="{{type == 3}}"><text class="marRight_5">￥{{product.goodsPrice}}</text> <text class="font-24 color-a1a0a0"> + {{product.thisMemberPoint}}积分</text></view>
+                <view class="font-40 color-ff2e2e" a:elif="{{type == 3}}"><text class="marRight_5">￥{{product.goodsPrice}}</text> <text class="font-24 color-a1a0a0"> + {{product.thisMemberPoint}}积分</text></view>
 
                 <!-- 购物返现商品  --> 
-                <view class="font-40 color-ff5353 flex_view_row align_cen" a:elif="{{type == 4}}"><text>￥{{product.goodsPrice}}</text></view>
+                <view class="font-40 color-ff2e2e flex_view_row align_cen" a:elif="{{type == 4}}"><text>￥{{product.goodsPrice}}</text></view>
 
                 <!-- 其他，不是积分商品也不是返现商品 -->
-                <view class="font-40 color-ff5353" a:else>
+                <view class="font-40 color-ff2e2e" a:else>
                   <!-- 秒杀商品，秒杀价 -->
                   <text class="aba" a:if="{{product.secondKillPrice}}">￥{{product.secondKillPrice}}</text>
                   <!-- 不是会员商品，普通价 -->
@@ -33,8 +33,8 @@
                 </view>
 
                 <!-- 会员商品 + 奖励会员积分  -->
-                <view class="font-24 color-ff5353 marTop_10" a:if="{{SFmember && type != 5}}">奖励会员积分{{product.awardMemberScoreAll ? product.awardMemberScoreAll : 0}}</view>
-                <!-- <view class="font-24 color-ff5353  marTop_10">税费: 0</view> -->
+                <view class="font-24 color-ff2e2e marTop_10" a:if="{{SFmember && type != 5}}">奖励会员积分{{product.awardMemberScoreAll ? product.awardMemberScoreAll : 0}}</view>
+                <!-- <view class="font-24 color-ff2e2e  marTop_10">税费: 0</view> -->
                 <!-- 库存 -->
                 <view class="font-26 color-black margin-top18">库存 {{product.store < 0 ? "0" : product.store}} 份</view>
                 <!-- 返现商品且有返现金额 -->
@@ -59,29 +59,31 @@
         </view>
 
         <!-- 规格 -->
-        <scroll-view class="marTop_50 marLeft_30" style="height:400rpx" scroll-y="true" catchtouchmove="move" a:if="{{goodsSpecMap}}">
+        <scroll-view class="marTop_20 marLeft_30 marRight_30" style="height:366rpx;" scroll-y="true" catchtouchmove="move" a:if="{{goodsSpecMap}}">
           <block a:for="{{goodsSpecMap}}" a:for-index="fatherIndex" a:for-item="fatherItem" a:key="goodsSpecMap">
             <view class="font-30 font-weight-600 goods-spec-iakName">{{fatherItem.specName}}:</view>
             <view class="{{fatherIndex != goodsSpecMap.length -1 ? 'goods-spec-iakValue' : ''}} flex_view_row justi_start">
               <!-- a:if="{{specType == 'OPTIONAL' || specType == 'SINGLE' || 'MULTI'}}" -->
               <block>
                 <block a:for="{{fatherItem.values}}" >
-                  <view class="goods-spec-view-normal" a:if="{{item.store == 0}}" style="color: #999;background: #f5f5f5;">
-                    <view class="flex_view_row align_cen justi_around">
-                      <image class="width-40" mode="widthFix" a:if="{{item.imgPath}}" src="{{baseImageUrl}}{{item.imgPath}}"/>
-                      <text class="iavValueText">{{item.valueName}}</text>
+                  <view class="goods-spec-view-normal" a:if="{{item.store == 0}}" style="color: #9b9a9a;background: #f2f2f2;">
+                    <view class="flex_view_row align_cen justi_around iavValueItem">
+                      <image class="width-40 iavValueImg" mode="widthFix" a:if="{{item.imgPath}}" src="{{baseImageUrl}}{{item.imgPath}}"/>
+                      <!-- iavValueText -->
+                      <text class="">{{item.valueName}}</text>
                     </view>
                   </view>
-                  <view class="goods-spec-view-normal"  a:else style="{{ item.taped ? 'color: #ff2e2e;background: #ffdcdc;' : 'color:#191616; background: #f2f2f2;'}}" data-fatherindex="{{fatherIndex}}"  data-index="{{index}}" a:key="iakValue" catchTap="specItemTap">
-                    <view class="flex_view_row align_cen justi_around">
-                      <image class="width-40" mode="widthFix" a:if="{{item.imgPath}}" src="{{baseImageUrl}}{{item.imgPath}}"/>
-                      <text class="iavValueText">{{item.valueName}}</text>
+                  <view class="goods-spec-view-normal"  a:else style="{{ item.taped ? 'color: #ff2e2e;background: #fff7f7; border: 1rpx solid #ff2e2e' : 'color:#191616; background: #f2f2f2;'}}" data-fatherindex="{{fatherIndex}}"  data-index="{{index}}" a:key="iakValue" catchTap="specItemTap">
+                    <view class="flex_view_row align_cen justi_around iavValueItem">
+                      <image class="width-40 iavValueImg" mode="widthFix" a:if="{{item.imgPath}}" src="{{baseImageUrl}}{{item.imgPath}}"/>
+                      <!-- iavValueText -->
+                      <text class="">{{item.valueName}}</text>
                     </view>
                   </view>
                 </block>
               </block>
               <!-- <block a:else>
-                <view class="goods-spec-view-normal " data-index="{{index}}" style="{{ product.store && item.taped ? 'border:2rpx #ff5353 solid;color:#ff5353;' : 'border:2rpx #565d6f solid;color:#565d6f;'}}" data-fatherindex="{{fatherIndex}}" a:for="{{item.iakValue}}" a:key="iakValue" catchTap="specItemTap">
+                <view class="goods-spec-view-normal " data-index="{{index}}" style="{{ product.store && item.taped ? 'border:2rpx #ff2e2e solid;color:#ff2e2e;' : 'border:2rpx #565d6f solid;color:#565d6f;'}}" data-fatherindex="{{fatherIndex}}" a:for="{{item.iakValue}}" a:key="iakValue" catchTap="specItemTap">
                   <view class="flex_view_row align_cen justi_around">
                     <image class="width-40" mode="widthFix" a:if="{{item.imgPath}}"  src="{{baseImageUrl}}{{item.imgPath}}"/>
                     <text>{{item.iavValue}}</text>
@@ -107,16 +109,16 @@
           <view class="goods-spec-bottom-num" a:if="{{!specTrue}}">
             <view class="font-30 font-weight-600">数量</view>
             <view class="number-pick-view">
-              <view class="number-pick-view-symbol background-f2" catchTap="subtractTap">-</view>
+              <view class="number-pick-view-symbol background-f2" catchTap="{{subtractDisabled ? '' : 'subtractTap'}}" style="{{subtractDisabled ? 'color: #b3b2b2;background: #f5f5f5;' : ''}}">-</view>
               <!-- catchTap="quantityTap" 下面 view 的事件，但没发现该函数 -->
               <view class="number-pick-view-text background-f2" ><input disabled="{{showInput ? '' : 'true'}}" class="all_100 font-38 color-323232 tex_center" type="number" controlled="true"  value="{{quantity}}" onBlur="inputBlur" onInput="changeQuantity" style='background: transparent;'/></view>
               <!-- <view class='number-pick-view-text' catchtap='quantityTap'><input disabled='true' class='all_100 font-28 color-323232 tex_center' type='number' value='{{quantity}}' onInput='changeQuantity' onBlur='inputBlur'></input></view> -->
-              <view class="number-pick-view-symbol background-f2" catchTap="addTap">+</view>
+              <view class="number-pick-view-symbol background-f2" catchTap="{{addDisabled ? '' : 'addTap'}}" style="{{addDisabled ? 'color: #b3b2b2;background: #f5f5f5;' : ''}}">+</view>
             </view>
           </view>
           <block a:if="{{specType == 'OPTIONAL'}}">
             <view class="whiteBack buttonView">
-              <view class="goods-sepc-bottom-button2 posi_re background_red">
+              <view class="goods-sepc-bottom-button2 posi_re toBuyNowBack">
                 <!-- <view class="flex_1  shopButton" a:if="{{ goods.goodsStore == 0 || (goods.secKillStatus && goodsSecondKill.totalSaleVolume == goodsSecondKill.totalStock) }}">查看类似商品</view> -->
                 <navigator class="flex_1  shopButton" a:if="{{ goods.goodsStore == 0 || (goods.secKillStatus && goodsSecondKill.totalSaleVolume == goodsSecondKill.totalStock) }}" url="/pages/category/secondCategory/secondCategory?categoryId={{goods.categoryVO.categoryId}}" open-type="navigate" hover-class="none">查看类似商品</navigator>
                 <view class="flex_1  shopButton" a:elif="{{ optionalProduct.length == xgCount && selectedSpecsBar }}" data-buyNow="buyNow" catchTap="buyNow">立即购买</view>
@@ -132,18 +134,18 @@
               <view class="goods-sepc-bottom-button2 posi_re">
                  <!-- a:if="{{goods.goodsStore == 0}}" -->
                 <!-- <view class="flex_1  shopButton background_red" a:if="{{ goods.goodsStore == 0 || (goods.secKillStatus && goodsSecondKill.totalSaleVolume == goodsSecondKill.totalStock) }}">查看类似商品</view> -->
-                <navigator class="flex_1  shopButton background_red" a:if="{{ goods.goodsStore == 0 || (goods.secKillStatus && goodsSecondKill.totalSaleVolume == goodsSecondKill.totalStock) }}" url="/pages/category/secondCategory/secondCategory?categoryId={{goods.categoryVO.categoryId}}" open-type="navigate" hover-class="none">查看类似商品</navigator>
+                <navigator class="flex_1  shopButton toBuyNowBack" a:if="{{ goods.goodsStore == 0 || (goods.secKillStatus && goodsSecondKill.totalSaleVolume == goodsSecondKill.totalStock) }}" url="/pages/category/secondCategory/secondCategory?categoryId={{goods.categoryVO.categoryId}}" open-type="navigate" hover-class="none">查看类似商品</navigator>
                 <block a:elif="{{selectedSpecsBar}}">
                   <!-- <view class="flex_1  shopButton shopCart_button" data-addCart="addCart" catchTap="addCart">加入购物车</view> -->
                   <block a:if="{{ SFmember || ( !SFmember && (goods.jifenStatus || goods.deductStatus || goods.memberDayGoods || goods.secKillStatus || goods.memberDayPriceStatus) ) }}">
-                    <view  class="flex_1  shopButton background_red" data-buyNow="buyNow" catchTap="buyNow">立即购买</view>
+                    <view  class="flex_1  shopButton toBuyNowBack" data-buyNow="buyNow" catchTap="buyNow">立即购买</view>
                   </block>
                   <block a:else>
-                    <view class="shopButton separateShopButton background-f2 color-ff5353" data-addCart="addCart" catchTap="addCart">加入购物车</view>
-                    <view class="shopButton separateShopButton background_red" data-buyNow="buyNow" catchTap="buyNow">立即购买</view>
+                    <view class="shopButton separateShopButton background-ff color-ff2e2e" data-addCart="addCart" catchTap="addCart">加入购物车</view>
+                    <view class="shopButton separateShopButton toBuyNowBack" data-buyNow="buyNow" catchTap="buyNow">立即购买</view>
                   </block>
                 </block>
-                <view class="flex_1  shopButton background_red" a:else catchTap="goodsSpecSubmitTap">确定</view>
+                <view class="flex_1  shopButton toBuyNowBack" a:else catchTap="goodsSpecSubmitTap">确定</view>
                 <button class="btnStyle gpnBtn zIndex100" a:if="{{ (goods.secKillStatus && goodsSecondKill.totalSaleVolume != goodsSecondKill.totalStock) && (user_memId == 0 || user_memId == '0')}}" open-type="getAuthorize" onGetAuthorize="getPhoneNumber" scope='phoneNumber' onError="onAuthError"></button>
                 <button class="btnStyle gpnBtn zIndex100" a:elif="{{ !goods.secKillStatus && goods.goodsStore != 0 && (user_memId == 0 || user_memId == '0')}}" open-type="getAuthorize" onGetAuthorize="getPhoneNumber" scope='phoneNumber' onError="onAuthError"></button>
               </view>

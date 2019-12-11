@@ -58,12 +58,10 @@ page {
 }
 
 .returnCash {
- /* height: 46rpx; */
  background: #fff4f4;
  border-radius: 50rpx;
  box-sizing: border-box;
  padding: 24rpx 36rpx;
-
 }
 
 .returnCashrule {
@@ -147,7 +145,7 @@ page {
   height: 64rpx;
   border-radius: 50%;
   overflow: hidden;
-  display: block
+  display: block;
 }
 
 .store-name-area {
@@ -155,7 +153,6 @@ page {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* width: 454rpx; */
   flex: 1;
   padding-left: 20rpx;
   padding-right: 20rpx;
@@ -177,9 +174,7 @@ page {
   display: flex;
   box-sizing: border-box;
   padding: 30rpx 30rpx 0 30rpx;
-  /* margin: 30rpx 30rpx 20rpx 30rpx; */
   overflow: hidden;
-  /* background: #fafafa; */
 }
 
 .notice-person-view {
@@ -211,16 +206,9 @@ page {
   width: 100%;
   box-sizing: border-box;
   text-indent: 2em;
-  /* margin: 0 30rpx 0 30rpx; */
-  /* padding: 20rpx 20rpx 20rpx 150rpx; */
-  /* padding: 40rpx 35rpx 50rpx 35rpx; */
   padding: 53rpx 35rpx 62rpx 35rpx;
   min-height: 160rpx;
-  /* display: flex; */
-  /* justify-content: center; */
-  /* align-items: center; */
   text-overflow: ellipsis;
-  /* border: 2rpx #342726 solid; */
   border-radius: 10rpx;
   color: #6e6e6e;
   background: #fafafa;
@@ -260,11 +248,11 @@ page {
   padding: 0 30rpx;
 }
 
-.wxParse-p {
+/* .wxParse-p { */
   /* width: 100%;
   box-sizing: border-box; */
   /* padding: 0 30rpx; */
-}
+/* } */
 
 /* 按钮样式 */
 .bottom-view {
@@ -280,7 +268,6 @@ page {
   border-top: #f5f5f5 1rpx solid;
   box-sizing: border-box;
   padding: 0 30rpx;
-  /* background: skyblue; */
 }
 
 .regularButton {
@@ -289,21 +276,24 @@ page {
   justify-content: space-between;
   width: 263rpx;
   height: 100%;
-  box-sizing: border-box;
-  padding: 0 8rpx;
-  background: blue;
+
 }
 
 .regularItem {
-  width: 64rpx;
+  /* width: 66rpx; */
   height: 100%;
-  background: #fff;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   box-sizing: border-box;
-  padding: 11rpx 0;
+  padding: 11rpx 8rpx;
+}
+
+.regularItemIcon {
+  font-size: 32rpx;
+  position: relative;
+
 }
 
 .regularItemText {
@@ -313,9 +303,37 @@ page {
 .buyOrAddCart {
   width: 402rpx;
   height: 100%;
-  background: pink;
   box-sizing: border-box;
   padding: 8rpx 0;
+  font-size: 28rpx;
+  line-height: 70rpx;
+}
+
+.buyOrAddCarts {
+  height: 100%;
+  border-radius: 35rpx;
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+}
+
+.addCart {
+  border-radius: 35rpx 0 0 35rpx;
+  background: #ffeaea;
+  color: #ff2e2e;
+}
+
+.toBuyNow{
+  border-radius: 0 35rpx 35rpx 0 ;
+  color: #ffffff;
+}
+
+.border-radius35 {
+  border-radius: 35rpx;
+}
+
+.toBuyNowBack {
+  background-image: linear-gradient(to right, #ff6c2b , #ff3939);
 }
 
 .comeBack {
@@ -371,28 +389,7 @@ page {
   align-items: center;
   font-size: 26rpx;
   color: #fff;
-  background: rgba(0,0,0,0.4); 
-}
-
-
-.bottom-icon-view {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  width: 140rpx;
-  /* border-right: #e6e6e6 2rpx solid; =======================================*/
-  justify-content: center;
-  align-items: center;
-}
-
-.bottom-text-white-bg {
-  display: flex;
-  width: 200rpx;
-  height: 100%;
-  background: white;
-  color: #ff5353;
-  justify-content: center;
-  align-items: center;
+  background: rgba(238, 135, 38, 0.8); 
 }
 
 .guaranteeImg {
@@ -415,60 +412,8 @@ page {
   height: 40rpx;
 }
 
-.bottom-bg {
-  width: 90%;
-  height: 80%;
-  border-radius: 50rpx;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.noJifen .bottom-white-bg {
-  /* background: #fff; */
-  background: #f2f2f2;
-  border: 1rpx solid #f2f2f2;
-  border-radius: 60rpx 0 0 60rpx;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.noJifen .bottom-red-bg {
-  background: #ff5353;
-  border: 1rpx solid #ff5353;
-  border-radius: 0 60rpx 60rpx 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.bottom-text-red-bg {
-  display: flex;
-  width: 200rpx;
-  height: 100%;
-  background: #ff5353;
-  color: white;
-  justify-content: center;
-  align-items: center;
-}
-
-.isJifenViewRight .bottom-text-red-bg {
-  width: 90%;
-  height: 80%;
-  border-radius: 50rpx;
-}
-
-.bottom-text-yellow-bg {
-  border: 1rpx solid yellowgreen;
-  background: #ff5353;
-  color: #fff;
-}
-
 .goods-detail-title-view {
   display: flex;
-  /* flex-direction: row; */
-  /* margin: 0 30rpx 0 30rpx; */
   box-sizing: border-box;
   padding-left: 30rpx;
   padding-right: 30rpx;
@@ -480,8 +425,6 @@ page {
   display: flex;
   justify-content: center;
   align-items: center;
-  /* border-bottom: #e6e6e6 2rpx solid;
-  color: #565d6f; */
   font-size: 26rpx;
 }
 
@@ -490,8 +433,6 @@ page {
   display: flex;
   justify-content: center;
   align-items: center;
-  /* border-bottom: #ff5353 5rpx solid;
-  color: #ff5353; */
   font-size: 26rpx;
 }
 
@@ -505,13 +446,6 @@ page {
   color: #565d6f;
 }
 
-/* .padding_left_30 {
-  padding-left: 30rpx;
-}
-
-.padding_right_30 {
-  padding-right: 30rpx;
-} */
 
 .after-sales-service {
   display: flex;
@@ -639,9 +573,8 @@ page {
 
 .red-count-view {
   position: absolute;
-  /* top: 10rpx; */
   top: -10rpx;
-  right: 10rpx;
+  right: -25rpx;
   background: #ff5353;
   border-radius: 50%;
   font-size: 24rpx;
@@ -652,14 +585,6 @@ page {
   justify-content: center;
   align-items: center;
 }
-
-.isJifenViewLeft .red-count-view {
-  right: 50%;
-  margin-right: -35%;
-  top: -10rpx;
-}
-
-/* LH  */
 
 .goodsGiftbg {
   position: fixed;
@@ -832,7 +757,6 @@ page {
 
 .proComment_text {
   margin-top: 18rpx;
-  /* margin-bottom: 54rpx; */
 }
 
 .proComment_date {
@@ -857,53 +781,6 @@ page {
 
 /*底部按钮栏   */
 
-.btnNoBor.contactBtn {
-  width: 125rpx;
-  margin: 0;
-  padding: 0;
-  /* border-right: #e6e6e6 2rpx solid;================================== */
-  border-top: 0;
-  border-left: 0;
-  border-bottom: 0;
-  border-radius: 0;
-  line-height: 1.5;
-}
-
-.isJifenViewLeft .btnNoBor.contactBtn {
-  flex: 1;
-}
-
-.contactBtn_icon {
-  width: 46rpx;
-  height: 44rpx;
-}
-
-.shopCart_icon {
-  width: 43rpx;
-  height: 44rpx;
-}
-
-.shopCart_bigView {
-  /* border-right: #e6e6e6 2rpx solid; */
-  height: 100%;
-  position: relative;
-  overflow: visible;
-}
-
-.shopCart_inView {
-  width: 125rpx;
-  border-right: none;
-  overflow: visible;
-}
-
-.isJifenViewLeft .shopCart_bigView {
-  flex: 1;
-}
-
-.isJifenViewLeft .shopCart_bigView .shopCart_inView {
-  width: 100%;
-}
-
 .sendGiftBtn {
   width: 125rpx;
 }
@@ -913,31 +790,10 @@ page {
   height: 51rpx;
 }
 
-.buyNowBtn {
-  width: 187.5rpx;
-}
-
-.isJifenViewLeft {
-  overflow: visible;
-}
-
 .flex_1 {
   flex: 1;
 }
 
-/* .myCart {
-  border-right: 2rpx solid #e6e6e6;
-} */
-
-.myCart .bottom-icon-view {
-  width: 100%;
-  border-right: none;
-}
-
-.myCart .red-count-view {
-  right: 50%;
-  margin-right: -35%;
-}
 
 /*图标   */
 
@@ -963,13 +819,6 @@ page {
 .color_green {
   color: #497f21;
 }
-
-
-
-
-
-
-
 
 /* 秒杀价格 */
 
@@ -1073,11 +922,11 @@ page {
 
 .couponPopup-btn {
   height: 88rpx;
-  background: #fd5040;
   border-radius: 50rpx;
   line-height: 88rpx;
   text-align: center;
   margin-top: 20rpx;
+  color: #fff;
 }
 
 .couponPopup-header {
@@ -1249,7 +1098,6 @@ page {
 }
 
 .getCoupon {
-  /* width: 80rpx; */
   color: rgb(161, 160, 160);
   text-align: right;
   padding-right: 15rpx;
@@ -1291,7 +1139,6 @@ page {
 .addressButton {
   height: 90rpx;
   text-align: center;
-  background: red;
   border-radius: 50rpx;
   color: #fff;
 }
@@ -1305,9 +1152,7 @@ page {
   display: flex;
   width: 695rpx;
   height: 90rpx;
-  /* background: #ff5353; */
   color: white;
-  /* justify-content: center; */
   justify-content: space-around;
   align-items: center;
   font-size: 28rpx;
@@ -1334,6 +1179,8 @@ page {
 
 .goods-spec-info-start {
   align-items: flex-end;
+  padding: 36rpx 30rpx;
+  /* height: 273rpx; */
 }
 
 
@@ -1343,14 +1190,20 @@ page {
   justify-content: space-between;
   align-items: center;
   height: 64rpx;
-  margin-bottom: 30rpx;
+  margin: 0 30rpx 30rpx 30rpx;
+  /* margin-bottom: 30rpx;
   margin-left: 30rpx;
-  margin-right: 30rpx;
+  margin-right: 30rpx; */
 }
 
 .background-f2 {
   background: #f2f2f2;
 }  
+
+.background-ff{
+  background: #ffeaea;
+}
+
 
 .showImag {
   width:200rpx;
@@ -1383,8 +1236,21 @@ page {
   font-size: 24rpx;
 }
 
-.iavValueText {
+.goods-sepc-bottom-view {
+  /* height: 240rpx; */
+}
+
+.number-pick-view-text {
+  margin: 0 2rpx;
+}
+
+.iavValueImg {
+  margin-right: 10px;
+}
+
+.iavValueItem {
   padding: 10rpx;
 }
+
 
 
