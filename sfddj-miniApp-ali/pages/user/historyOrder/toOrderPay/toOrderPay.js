@@ -52,10 +52,11 @@ Page({
     }, function (res) {
 	  let result = res.data.result ? Object.assign({},res.data.result) : {}
 	  if(result.orderSupplier) {
+      let totalSupplierCouponPrice = 0
 		  for(var i = 0; i < result.orderSupplier.length; i++){
 			  var originalTotalPrice = 0;
 			  var item = result.orderSupplier[i].orderGoodsList ? result.orderSupplier[i].orderGoodsList : [];
-        result.orderSupplier[i].totalCouponPrice ?  that.data.totalSupplierCouponPrice += result.orderSupplier[i].totalCouponPrice : '';
+        result.orderSupplier[i].totalCouponPrice ?  totalSupplierCouponPrice += result.orderSupplier[i].totalCouponPrice : 0;
 			  for(var j = 0; j < item.length; j++){
 				  originalTotalPrice += (item[j].quantity * item[j].salePrice)
 			  }
@@ -74,7 +75,7 @@ Page({
         baseImageUrl: baseImageUrl,
         loadComplete: true,
         loadFail: false,
-        totalSupplierCouponPrice: that.data.totalSupplierCouponPrice
+        totalSupplierCouponPrice: totalSupplierCouponPrice
       });
     }, function (err) {
       that.setData({
