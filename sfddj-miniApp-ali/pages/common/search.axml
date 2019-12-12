@@ -9,7 +9,8 @@
     <!-- <input style="padding:10rpx 30rpx 10rpx 30rpx;background-color:white;border-radius:5px;" placeholder="今天吃什么呢" class="font-24 color-323232" onfirm-type="search"/> -->
     <view class="flex_view_row justi_between height_100 align_cen" style="border-radius:25px;background:#f0f0f0;padding: 0 25rpx;">
       <view class="height_100 flex_view_row  align_cen">
-        <image src="{{baseLocImgUrl}}miniappImg/icon/icon_search.png" style="width:40rpx;height:40rpx;"></image>
+        <view class="icon-search_home font-40" style="color: #c9c3c3;"></view>
+        <!-- <image src="{{baseLocImgUrl}}miniappImg/icon/icon_search.png" style="width:40rpx;height:40rpx;"></image> -->
       </view>
       <view class="flex_1 height_100 oneLineShow font-32" style="line-height:50rpx;padding:10rpx 20rpx;box-sizing:border-box;color:#c9c3c3;">{{inputVal}}</view>
     </view>

@@ -346,7 +346,7 @@ Page({
           supplierId: res.data.result.supplierId
 				});
 
-        
+
 				WxParse.wxParse('article', 'html', article, that, 0);
 
 
@@ -458,7 +458,7 @@ Page({
 								that.data.theAwardMemberScore = resData.goodsShowVO.defaultProd.awardMemberScore;               // 默认奖励会员积分
 								that.data.specType == 'SINGLE' ? that.data.iavPath = resData.goodsShowVO.defaultProd.iavPath : that.data.iavPath = [];	// 单选商品设置默认规格
             }
-
+        console.log(that.data.theAwardMemberScore)
         // 测试用的，让库存为 0
         // that.data.allProduct[2].store = 10;
 				// console.log(that.data.allProduct[1])
@@ -742,8 +742,8 @@ Page({
           value.thisMemberPoint =  value.memberPoint;                        
           value.thisReturnMoneyPrice = (value.returnMoney * that.data.minCount).toFixed(2);                     
           value.memberPriceAll = value.memberPrice;                           
-          value.costMemberScoreAll = (value.costMemberScore * that.data.minCount).toFixed(2);                   
-          value.awardMemberScoreAll = (value.awardMemberScore * that.data.minCount).toFixed(2);                 
+          value.costMemberScoreAll = value.costMemberScore * that.data.minCount;                   
+          value.awardMemberScoreAll = value.awardMemberScore * that.data.minCount;                 
           // ----- 修改规格的价格，改为直接使用后台返回的单位价格和单位积分 , 不再 * 起购数量       end;
 
 
@@ -977,13 +977,8 @@ Page({
     console.log(that.data.minCount);
     console.log(that.data.quantity)
 		if (that.data.quantity == that.data.minCount) {
-			that.setData({
-				showToast: true,
-				showToastMes: '该商品起售量不能低于' + that.data.minCount,
-			});
-			setTimeout(function() {
-				that.setData({showToast: false});
-			}, 2000);
+			that.quantityInputTip('该商品起售量不能低于' + that.data.minCount);
+			return;
 		} else {
 			  // 数量减减，秒杀价格 * 新数量
 			that.data.quantity--;
@@ -1015,8 +1010,8 @@ Page({
 				quantity: that.data.quantity + '',
 				product: that.data.product,
 			});
+			that.isDisabled(that.data.quantity);
 		}
-		that.isDisabled(that.data.quantity);
 	},
 
 	/**
@@ -1024,27 +1019,25 @@ Page({
 	 */
 	addTap: function(e) {
 		var that = this;
-		// var maxCount = that.data.product.store && that.data.product.store <= 99 ? that.data.product.store : 99;
 		var mes = '';
 		var maxCount = ''
 		// var maxCount = that.data.product.store && that.data.product.store <= 99 ? that.data.product.store : 99;
 		if( that.data.specType != 'OPTIONAL' && that.data.goods.xgCount > 0 && that.data.goods.xgCount <= that.data.product.store ) {			//  (新版，有限购数时取限购数，没有则使用当前规格的库存)
 			maxCount = that.data.goods.xgCount;
-			mes = '最多只能购买' + that.data.goods.xgCount + '件，不要太贪心喔';
+			mes = '最多只能' + that.data.goods.xgCount + '，不要太贪心喔';
 		} else {
 			maxCount = that.data.product.store;
-			mes = '库存只有' + that.data.product.store + '件，不能太贪心喔';
+			mes = '库存不足喔';
+		}
+		if( maxCount >= 99 ) {
+			maxCount = 99;
+			mes = '最多只能 99 不要太贪心喔';
 		}
 		  
 		if (that.data.quantity == maxCount) {
 			// var mes = that.data.product.store && that.data.product.store <= 99 ? '库存只有' + that.data.product.store + '，不能太贪心喔' : '最多只能99，不要太贪心哦';
-			that.setData({
-				showToast: true,
-				showToastMes: mes,
-			});
-			setTimeout(function() {
-				that.setData({showToast: false});
-			}, 2000);
+			that.quantityInputTip(mes);
+			return;
 		} else {
 			that.data.quantity++;
 			that.setStandAlon();
@@ -1072,10 +1065,9 @@ Page({
 			this.setData({
 				quantity: that.data.quantity + '',
 				product: that.data.product,
-				subtractDisabled: false
 			});
+			that.isDisabled(that.data.quantity);
 		}
-		that.isDisabled(that.data.quantity);
 	},
 
 	/**
@@ -1089,10 +1081,15 @@ Page({
 		// var maxCount = that.data.product.store && that.data.product.store <= 99 ? that.data.product.store : 99;
 		if( that.data.specType != 'OPTIONAL' && that.data.goods.xgCount > 0 && that.data.goods.xgCount <= that.data.product.store ) {			//  (新版，有限购数时取限购数，没有则使用当前规格的库存)
 			maxCount = that.data.goods.xgCount;
-			mes = '最多只能购买' + that.data.goods.xgCount + '件，不要太贪心喔';
+			mes = '最多只能' + that.data.goods.xgCount + '，不要太贪心喔';
 		} else {
 			maxCount = that.data.product.store;
-			mes = that.data.product.store <= 0 ? '库存为 0 ,请重新选择喔' : '库存只有' + that.data.product.store + '件，不能太贪心喔';
+			mes = that.data.product.store <= 0 ? '库存不足喔' : '库存不足喔';
+		}
+
+		if( maxCount >= 99 ) {
+			maxCount = 99;
+			mes = '最多只能 99 不要太贪心喔';
 		}
 
 		if ( quantity >= maxCount ) {
@@ -1123,29 +1120,17 @@ Page({
 			// }
       // ---------   任选，多规格，单选的规格选择或者加减更改规格数量，该规格对应的价格和积分都不变     end;
 
-			that.setData({
-				showToast: true,
-				showToastMes: mes,
-			})
-			setTimeout(function() {
-				that.setData({showToast: false});
-			}, 2000);
+			that.quantityInputTip(mes);
 
 		} else if( !quantity || !Number(quantity) || quantity <= that.data.minCount ) {
-			console.log('商品起购数是' + that.data.minCount + '件喔')
+			console.log('商品起购数是' + that.data.minCount + '喔')
 			that.data.quantity = that.data.minCount;
 			that.setStandAlon();
 
-			that.setData({
-				showToast: true,
-				showToastMes: '商品起购数是' + that.data.minCount + '件喔',
-			})
-			setTimeout(function() {
-				that.setData({showToast: false});
-			}, 2000);
+			that.quantityInputTip('该商品起售量不能低于' + that.data.minCount);
 
 		} else {
-					console.log(quantity)
+			console.log(quantity)
 			that.data.quantity = quantity;
 			that.setStandAlon();
 
@@ -1954,14 +1939,12 @@ Page({
       that.data.priceInfo.oldPrice = '';                         							 	// 商品默认旧价格
       that.data.priceInfo.integralVal = '';                      							 	// 默认积分
 
-      console.log('+++9')
       if( that.data.goods.jifenStatus && !that.data.SFmember &&  that.data.theMemberPoint ) {						   // 如果是积分商品但不是会员商品，则使用默认积分
         that.data.priceInfo.integralVal = that.data.theMemberPoint;
       } else if( !that.data.goods.jifenStatus && that.data.SFmember && that.data.theCostMemberScore ) {		 // 如果是会员商品但不是积分商品的话，则使用兑换会员积分
         that.data.priceInfo.integralVal = that.data.theCostMemberScore;
       }
 
-       console.log('+++10')
       if ( that.data.SFmember ) {																																					// 顺丰会员商品使用会员价格（顺丰会员商品和大当家会员日商品不会重叠）
 				that.data.priceInfo.price = that.data.goods.defaultMemberPrice;
 				that.data.priceInfo.oldPrice = that.data.goods.defaultPrice;
@@ -1969,8 +1952,6 @@ Page({
 				that.data.priceInfo.price = that.data.goods.defaultProd.memberDayPrice;
 				that.data.priceInfo.oldPrice = that.data.goods.defaultProd.salePrice;
 			}
-
-console.log('+++11')
       // 全球购状态
       that.data.goods.globalStatus ?  that.data.priceInfo.isGlobal = true : that.data.priceInfo.isGlobal = false;
 
@@ -1989,7 +1970,6 @@ console.log('+++11')
 				 that.data.priceInfo.nonImport = true;
 			}
 
-console.log('+++12')
       // 员工专享
       // if(that.data.goods.staffStatus) {}
 
@@ -2031,8 +2011,6 @@ console.log('+++12')
 		})
 
 		that.setData({ nonDeliveryArea: that.data.nonDeliveryAre });
-		console.log(that.data.goods.nonDeliveryArea)
-		console.log(that.data.nonDeliveryArea)
 	},
 
 	// 查看类似商品，缓存商品类型 id 缓存
@@ -2050,25 +2028,39 @@ console.log('+++12')
 	// 判断是否禁止按钮, 每一次选择规格的时候都会重置全局数量为最小起购数，任选不考虑，如果是多规格，无论是“确定” “立即购买” “加入购物车”，都会判断是否有选中规格，
 	isDisabled(num) {
 		let that = this;
-		console.log('我进来设置了')
+		console.log('我进来设置了');
 		num <= that.data.minCount ? that.data.subtractDisabled = true : that.data.subtractDisabled = false;
 		if( that.data.specType != 'OPTIONAL' && that.data.goods.xgCount > 0 && that.data.goods.xgCount <= that.data.product.store) {
-			num >= that.data.goods.xgCount ? that.data.addDisabled = true : that.data.addDisabled = false;
+			( num >= 99 || num >= that.data.goods.xgCount )  ? that.data.addDisabled = true : that.data.addDisabled = false;
 		} else {
-			num >= that.data.product.store ? that.data.addDisabled = true : that.data.addDisabled = false;
+			( num >= 99 || num >= that.data.product.store ) ? that.data.addDisabled = true : that.data.addDisabled = false;
 		}
 
 		that.setData ({
 			subtractDisabled: that.data.subtractDisabled,
 			addDisabled: that.data.addDisabled
 		})
+		console.log(that.data.subtractDisabled)
+		console.log(that.data.addDisabled)
 	},
 
+	// 设置当前规格的'购物返现金额'， '顺丰会员的兑换积分', '顺丰会员的奖励'
 	setStandAlon() {
 		let that = this;
 		that.data.goods.returnMoneyStatus && that.data.product.returnMoney ? 	that.data.product.thisReturnMoneyPrice = (that.data.product.returnMoney * that.data.quantity).toFixed(2) : '';
-		that.data.SFmember && that.data.product.costMemberScore ? that.data.product.costMemberScoreAll = (that.data.product.costMemberScore * that.data.quantity).toFixed(2) : '';
-		that.data.SFmember && that.data.product.awardMemberScore ? that.data.product.awardMemberScoreAll = (that.data.product.awardMemberScore * that.data.quantity).toFixed(2) : '';
-	}
+		that.data.SFmember && that.data.product.costMemberScore ? that.data.product.costMemberScoreAll = that.data.product.costMemberScore * that.data.quantity : '';
+		that.data.SFmember && that.data.product.awardMemberScore ? that.data.product.awardMemberScoreAll = that.data.product.awardMemberScore * that.data.quantity : '';
+	},
+
+	quantityInputTip(mes) {
+		let that = this;
+		that.setData({
+			showToast: true,
+			showToastMes: mes,
+		});
+		setTimeout(function() {
+			that.setData({showToast: false});
+		}, 2000);
+	},
 
 });
