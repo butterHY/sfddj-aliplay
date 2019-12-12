@@ -464,6 +464,7 @@ Page({
 				// da_upload_data: da_upload_data,
 				knockActivityDescribe: result.knockActivityDescribe && result.knockActivityDescribe != 'null' && result.knockActivityDescribe != 'undefined' ? result.knockActivityDescribe : '',
 				isShowStoreCouponList: new Array(result.supplierList.length).fill(false),
+				goodsAmount:goodsAmount
 			});
 
 			that.resetTotalPrice('', 'init')
@@ -2328,7 +2329,7 @@ Page({
     }
 
     // 判断是否可用余额
-    if (result.canUseBalance) {
+    if (result.canUseBalance && !that.data.isGiftOrder && !isJifen) {
       // 如果可使用余额大于零且现总价要大于0.01*n个商品
 
       if (result.availableBalance > 0 && (totalPrice.toFixed(2) > (lessPay * goodsAmount))) {
@@ -2392,7 +2393,6 @@ Page({
       useSupplierCouponList
     })
 
-    console.log(';;;;---couponList---', useSupplierCouponList)
 
   },
 

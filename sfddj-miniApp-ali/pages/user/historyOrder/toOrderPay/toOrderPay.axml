@@ -151,7 +151,7 @@
 	</view>
 </form>
 <!-- 规格选择框 -->
-<template is="dialogCoupon" data="{{baseImageUrlLoc:baseImgLocUrl,show:showDialogCoupon,couponList:result.availableCoupon}}"/>
+<!-- <template is="dialogCoupon" data="{{baseImageUrlLoc:baseImgLocUrl,show:showDialogCoupon,couponList:result.availableCoupon}}"/> -->
 <!--toast弹窗-->
 <view class="mark flex_view_col align_cen justi_cen" a:if="{{showToast}}">
 	<view class="toastView_wb" catchtouchmove="move">

@@ -1,7 +1,7 @@
 <import src="./couponItem.axml"/>
 <template name="dialogCoupon">
   <view>
-    <view class="dialogCoupon" catchtouchmove="move" a:if="{{show}}" catchtap="closeCouponDialog">
+    <view class="dialogCoupon" catchtouchmove="move" a:if="{{show}}" catchTap="closeCouponDialog">
     </view>
     <view class="dialog_couponCon {{show ? '' : 'hide'}}">
       <view class="dialog_couponList">

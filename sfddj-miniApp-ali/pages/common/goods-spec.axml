@@ -38,7 +38,8 @@
 					</view>
 				</view>
 				<text style="width:22rpx;height:24rpx;margin-top:30rpx;margin-right:30rpx;" class="alipay_catch_img" catchTap="colseSpecDialog">
-					<image class="all_100" src="{{baseLocImgUrl}}miniappImg/icon/icon_cancel.png"/></text>
+					<image class="all_100" src="{{baseLocImgUrl}}miniappImg/icon/icon_cancel.png"/>
+				</text>
 			</view>
 			<!-- 规格 -->
 			<scroll-view style="height:400rpx" scroll-y="true" catchtouchmove="move" a:if="{{goodsSpecMap}}">
@@ -66,7 +67,8 @@
 						<view class="number-pick-view-symbol" catchTap="subtractTap">-</view>
 						<!-- catchTap="quantityTap" 下面 view 的事件，但没发现该函数 -->
 						<view class="number-pick-view-text">
-							<input disabled="{{showInput ? '' : 'true'}}" class="all_100 font-28 color-323232 tex_center" type="number" value="{{quantity}}" onBlur="inputBlur" onInput="changeQuantity" style='background: transparent;'/></view>
+							<input disabled="{{showInput ? '' : 'true'}}" class="all_100 font-28 color-323232 tex_center" type="number" value="{{quantity}}" onBlur="inputBlur" onInput="changeQuantity" style='background: transparent;'/>
+						</view>
 						<!--<view class='number-pick-view-text' catchtap='quantityTap'><input disabled='true' class='all_100 font-28 color-323232 tex_center' type='number' value='{{quantity}}' onInput='changeQuantity' onBlur='inputBlur'></input></view> -->
 						<view class="number-pick-view-symbol" catchTap="addTap">+</view>
 					</view>
@@ -77,6 +79,5 @@
 				</view>
 			</view>
 		</view>
-	</view>
 	</view>
 </template>
