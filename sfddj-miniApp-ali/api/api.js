@@ -43,6 +43,12 @@ export default {
 	CART: {
 		SHOW_CART: '/m/g/cartItem/1.0/showCart',         //新版购物车列表接口
 	},
+
+	GOODS: {
+
+		LISTGOODSBYNAME: '/m/g/1.0/group/listGoodsByName',     //商品分组接口，可用于猜你喜欢商品列表
+	},
+
 	GOODSDETAIL: {
 		GET_GOODS_DETAIL: '/m/g/goodsShow/1.0/view',                              // 新的商品详情商品数据
 		GOODS_DETAIL_COUPON: '/m/o/coupon/1.0/goodsDetailCoupon',                 // 新的商品详情优惠券数据
