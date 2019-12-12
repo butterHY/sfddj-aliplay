@@ -28,12 +28,12 @@
                   <!-- 会员商品，会员价 + 兑换会员积分  -->
                   <block a:if="{{SFmember && type != 5}}">
                     <text class="cbc">￥{{product.memberPriceAll}}</text>
-                    <text class="font-24 color-a1a0a0 marLeft_5">+ {{product.costMemberScoreAll ? product.costMemberScoreAll : 0}}积分</text>
+                    <text class="font-24 color-a1a0a0 marLeft_5" a:if="{{product.costMemberScoreAll && product.costMemberScoreAll > 0}}">+ {{product.costMemberScoreAll}}积分</text>
                   </block>
                 </view>
 
                 <!-- 会员商品 + 奖励会员积分  -->
-                <view class="font-24 color-ff2e2e marTop_10" a:if="{{SFmember && type != 5}}">奖励会员积分{{product.awardMemberScoreAll ? product.awardMemberScoreAll : 0}}</view>
+                <view class="font-24 color-ff2e2e marTop_10" a:if="{{SFmember && type != 5 && product.awardMemberScoreAll && product.awardMemberScoreAll > 0}}">奖励会员积分{{product.awardMemberScoreAll}}</view>
                 <!-- <view class="font-24 color-ff2e2e  marTop_10">税费: 0</view> -->
                 <!-- 库存 -->
                 <view class="font-26 color-black margin-top18">库存 {{product.store < 0 ? "0" : product.store}} 份</view>
@@ -109,11 +109,13 @@
           <view class="goods-spec-bottom-num" a:if="{{!specTrue}}">
             <view class="font-30 font-weight-600">数量</view>
             <view class="number-pick-view">
-              <view class="number-pick-view-symbol background-f2" catchTap="{{subtractDisabled ? '' : 'subtractTap'}}" style="{{subtractDisabled ? 'color: #b3b2b2;background: #f5f5f5;' : ''}}">-</view>
+            <!-- catchTap="{{subtractDisabled ? '' : 'subtractTap'}}"  -->
+              <view class="number-pick-view-symbol background-f2" catchTap="subtractTap" style="{{subtractDisabled ? 'color: #b3b2b2;background: #f5f5f5;' : ''}}">-</view>
               <!-- catchTap="quantityTap" 下面 view 的事件，但没发现该函数 -->
               <view class="number-pick-view-text background-f2" ><input disabled="{{showInput ? '' : 'true'}}" class="all_100 font-38 color-323232 tex_center" type="number" controlled="true"  value="{{quantity}}" onBlur="inputBlur" onInput="changeQuantity" style='background: transparent;'/></view>
               <!-- <view class='number-pick-view-text' catchtap='quantityTap'><input disabled='true' class='all_100 font-28 color-323232 tex_center' type='number' value='{{quantity}}' onInput='changeQuantity' onBlur='inputBlur'></input></view> -->
-              <view class="number-pick-view-symbol background-f2" catchTap="{{addDisabled ? '' : 'addTap'}}" style="{{addDisabled ? 'color: #b3b2b2;background: #f5f5f5;' : ''}}">+</view>
+              <!-- catchTap="{{addDisabled ? '' : 'addTap'}}" -->
+              <view class="number-pick-view-symbol background-f2" catchTap="addTap" style="{{addDisabled ? 'color: #b3b2b2;background: #f5f5f5;' : ''}}">+</view>
             </view>
           </view>
           <block a:if="{{specType == 'OPTIONAL'}}">

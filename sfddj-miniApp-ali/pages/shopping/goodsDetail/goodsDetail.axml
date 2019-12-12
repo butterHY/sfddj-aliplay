@@ -67,7 +67,7 @@
         <view class="color-ff2e2e flex_view_row align_end">
           <!-- <view class="color-a1a0a0 font-26" a:if="{{false}}">会员价 <text decode="true" space="true">&nbsp;</text></view> -->
           <view class="posi_re">
-            <view class="defaultPrice">
+            <view class="defaultPrice single-line">
               <!-- 价格 -->
               <text a:if="{{priceInfo.price}}">
                 <text>¥</text>
@@ -77,7 +77,7 @@
                 <text a:if="{{priceInfo.oldPrice}}" class="color-a1a0a0 font-22 line-through marLeft_5" >¥ {{priceInfo.oldPrice}}</text>
               </text>
               <!-- 积分 -->
-              <text a:if="{{priceInfo.integralVal}}">
+              <text a:if="{{priceInfo.integralVal && priceInfo.integralVal > 0}}">
                 <text class="font-weight-600 font-24" a:if="{{priceInfo.price}}"><text decode="true" space="true">&nbsp;</text>+<text decode="true" space="true">&nbsp;</text></text>
                 <text class="{{!priceInfo.price ? 'color-ff2e2e' : 'color-a1a0a0' }}"><text class="{{!priceInfo.price ? 'font-56' : 'font-28' }} font-weight-600">{{priceInfo.integralVal}} </text><text class="font-28 marLeft_5"> 积分</text></text>
               </text>
@@ -101,7 +101,7 @@
 
     <!-- 优惠券导航栏                      -->
   <view class="receiveCoupon flex_view_row justi_between font-26" onTap="showPopup" a:if="{{couponDataList && couponDataList.length > 0}}">
-    <view class="flex_view_row flex_1 justi_start">
+    <view class="flex_view_row justi_start" style="width: 80%;">
       <view class="couponTitle">
         <image src="{{baseImageLocUrl}}miniappImg/public/goodsDetail/icon_coupon.png" class="width_100 height_100" mode="widthFix"></image>
       </view>
@@ -110,9 +110,9 @@
       </view>
     </view>
     <view class="getCouponText">
-      <text class="color-a1a0a0">领券</text>
+      <view class="color-a1a0a0">领券</view>
       <!-- marLeft_20 -->
-      <text class="icon-href-right font-22 color-c7c7cc"></text>
+      <view class="icon-href-right font-22 color-c7c7cc"></view>
     </view>
   </view>
 
@@ -176,13 +176,13 @@
   <view class="specifications-view selected-view" onTap="selectedSpecs">
     <view class="selectedSpecifications single-line-text flex_view_row" >
       <view class="font-26 color-a1a0a0">已选</view>
-        <view a:if="{{specType == 'MULTI'}}" class="font-26 marLeft_30 single-line">{{multiformname}} , {{quantity}}件</view>
+        <view a:if="{{specType == 'MULTI'}}" class="font-26 marLeft_30 single-line">{{multiformname}} ; {{quantity}}件</view>
         <view a:elif="{{specType == 'OPTIONAL'}}" class="font-26 marLeft_30 single-line">
           <text a:if="{{(optionalProduct.length == 0 && goodsSpecMap.length != 0)}}"><block a:for="{{goodsSpecMap}}" a:key="*this">{{item.specName}}</block></text>
           <text a:elif="{{optionalProduct.length > 0 }}"><block a:for="{{optionalProduct}}" a:key="*this">{{item.productName}}</block></text>
-          <text decode="true" space="true">&nbsp;</text> , {{quantity}}件
+          <text decode="true" space="true">&nbsp;</text> ; {{quantity}}件
         </view>
-        <view a:else class="font-26 marLeft_30 single-line">{{product.productName}} , {{quantity}}件</view>
+        <view a:else class="font-26 marLeft_30 single-line">{{product.productName}} ; {{quantity}}件</view>
     </view>
     <text class="icon-href-right font-22 color-c7c7cc padding-r15">
     </text>
@@ -210,7 +210,7 @@
       <text class="icon-href-right font-22 color-c7c7cc padding-r15">
       </text>
     </view>
-    <view class="addressTips" a:if="{{goods.deliveryTime}}">下单后<text class="color-ff2e2e">{{goods.deliveryTime}}小时以内</text>发货</view>
+    <view class="addressTips" a:if="{{goods.deliveryTime && goods.viewStatus != 'SALEING' && goods.goodsStore != 0 }}">下单后<text class="color-ff2e2e">{{goods.deliveryTime}}小时以内</text>发货</view>
   </view>
   <!-- a:if="{{addressList && addressList.length > 0}}" -->
   <popup  show="{{ isShowAddressPop }}" mask="{{true}}" position="bottom" animation="{{true}}" onClose="onAddressPop" zIndex="100" disableScroll="{{false}}">
@@ -514,7 +514,7 @@
           <view class="regularItemIcon icon-store"></view>
           <view class="regularItemText">店铺</view>
         </navigator>
-        <view class="regularItem">
+        <view class="regularItem" catchTap='goToWebCall' >
           <view class="regularItemIcon icon-message1"></view>
           <view class="regularItemText">客服</view>
         </view>
@@ -545,7 +545,7 @@
           <view class="regularItemIcon icon-store"></view>
           <view class="regularItemText">店铺</view>
         </navigator>
-        <view class="regularItem">
+        <view class="regularItem" catchTap='goToWebCall' >
           <view class="regularItemIcon icon-message1"></view>
           <view class="regularItemText">客服</view>
         </view>
@@ -585,7 +585,7 @@
           <view class="regularItemIcon icon-store"></view>
           <view class="regularItemText">店铺</view>
         </navigator>
-        <view class="regularItem">
+        <view class="regularItem" catchTap='goToWebCall'>
           <view class="regularItemIcon icon-message1"></view>
           <view class="regularItemText">客服</view>
         </view>

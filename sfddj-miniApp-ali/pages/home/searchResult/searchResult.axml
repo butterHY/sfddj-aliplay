@@ -71,7 +71,7 @@
       </view>
     </view>
     <view class="queue height_100" onTap="isTwoColumns">
-      <text class="iconfont icon-check-cir font-38"></text><!-- <!-- icon-check -->
+      <text class="{{activity ? 'icon-search_list' : 'icon-list'}}  font-38"></text>
     </view>
   </view>
 
