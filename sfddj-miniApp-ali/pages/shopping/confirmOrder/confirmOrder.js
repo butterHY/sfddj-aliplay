@@ -1362,6 +1362,9 @@ Page({
 			}
 		}
 
+		// 友盟+去支付按钮点击
+		// getApp().globalData.uma.trackEvent('confirmOrder_buyNow', { channel_source: 'mini_alipay', order_city: myDefaultAddress.city, order_province: myDefaultAddress.province });
+
 		if (that.data.isGiftOrder) {
 			sendRequest.send(constants.InterfaceUrl.PAY_GIFT_PAY, data2, function(res) {
 				that.showWxPayment(res);

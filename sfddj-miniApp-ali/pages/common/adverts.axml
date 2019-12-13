@@ -67,25 +67,25 @@
         </view>
         <!-- 商品 -->
         <view>
-          <scroll-view scroll-x class="goods-scrollx-view" scroll-with-animation="true" class="width_100" data-fatherIndex="{{index}}" onScroll="scrollGoods">
-            <block a:for="{{item.groupGoodsVoList}}" a:for-index="idx">
+          <scroll-view scroll-x class="goods-scrollx-view width_100" scroll-with-animation="true" data-fatherIndex="{{index}}" onScroll="scrollGoods">
+            <block a:for="{{item.groupGoodsVoList}}" a:for-index="idx" a:for-item="groupItem">
               <!--<template is="itemGoodsScrollX" data="{{item: item,baseImageUrl:baseImageUrl,baseLocImgUrl: baseLocImgUrl}}"/> -->
               <view class='goodsViewBox'>
-                <navigator url="/pages/shopping/goodsDetail/goodsDetail?goodsSn={{item.goodsSn}}&goodsId={{item.id}}" open-type="navigate" hover-class="none" class="posi_re width_260r {{!item.isLoaded ? 'js_adsGoodsList' + index + '_' + idx  : ''}}">
+                <view data-url="/pages/shopping/goodsDetail/goodsDetail?goodsSn={{groupItem.goodsSn}}&goodsId={{groupItem.id}}" onTap="goToPage" data-type="goodsCount" data-index="{{idx}}" data-fatherIndex="{{index}}" data-title="{{item.items[0].moduleTitle}}" open-type="navigate" hover-class="none" class="posi_re width_260r {{!groupItem.isLoaded ? 'js_adsGoodsList' + index + '_' + idx  : ''}}">
                   <view class="goodsShowImgBox">
-                    <image src="{{baseImageUrl}}{{item.goodsDefaultImage}}{{ossImgStyle}}" lazy-load="{{idx > 3 ? true : ''}}" class="width_100 goodsShowImg" mode="widthFix"></image>
+                    <image src="{{baseImageUrl}}{{groupItem.goodsDefaultImage}}{{ossImgStyle}}" lazy-load="{{idx > 3 ? true : ''}}" class="width_100 goodsShowImg" mode="widthFix"></image>
                   </view>
                   <!--小图标 全赔  -->
-                  <image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff1.png" class=" posi_ab littleIcon" a:if="{{filters.strIndexOf(item.afterSaleGuee,'1')}}"></image>
-                  <image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff2.png" class=" posi_ab littleIcon" a:elif="{{filters.strIndexOf(item.afterSaleGuee,'2')}}"></image>
-                  <image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff3.png" class=" posi_ab littleIcon" a:elif="{{filters.strIndexOf(item.afterSaleGuee,'3')}}"></image>
-                  <image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff4.png" class=" posi_ab littleIcon" a:elif="{{filters.strIndexOf(item.afterSaleGuee,'4')}}"></image>
+                  <image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff1.png" class=" posi_ab littleIcon" a:if="{{filters.strIndexOf(groupItem.afterSaleGuee,'1')}}"></image>
+                  <image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff2.png" class=" posi_ab littleIcon" a:elif="{{filters.strIndexOf(groupItem.afterSaleGuee,'2')}}"></image>
+                  <image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff3.png" class=" posi_ab littleIcon" a:elif="{{filters.strIndexOf(groupItem.afterSaleGuee,'3')}}"></image>
+                  <image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff4.png" class=" posi_ab littleIcon" a:elif="{{filters.strIndexOf(groupItem.afterSaleGuee,'4')}}"></image>
                   <view class="width_100 marTop_15">
-                    <view class="font-30 item-goods-scrollx-text width_100">{{item.goodsName}}</view>
-                    <view class="font-26 color-a1a0a0 item-goods-scrollx-text width_100 marTop_5">{{item.productName}}</view>
-                    <view class="font-32 color-ff5353 item-goods-scrollx-text width_100 font-weight-600">￥{{item.salePrice}}</view>
+                    <view class="font-30 item-goods-scrollx-text width_100">{{groupItem.goodsName}}</view>
+                    <view class="font-26 color-a1a0a0 item-goods-scrollx-text width_100 marTop_5">{{groupItem.productName}}</view>
+                    <view class="font-32 color-ff5353 item-goods-scrollx-text width_100 font-weight-600">￥{{groupItem.salePrice}}</view>
                   </view>
-                </navigator>
+                </view>
               </view>
             </block>
           </scroll-view>

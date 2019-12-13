@@ -1018,8 +1018,8 @@ Page({
 		let that = this;
 		let url = e.currentTarget.dataset.url;
 		let chInfo = constants.UrlConstants.chInfo;
-		let { linkType } = e.currentTarget.dataset
-		let { title, type, index } = e.currentTarget.dataset
+		let { linkType, title, type, index, fatherIndex } = e.currentTarget.dataset
+		// let { title, type, index } = e.currentTarget.dataset
 
 		// linkType为2代表跳收藏有礼
 		if (linkType == '2') {
@@ -1055,6 +1055,23 @@ Page({
 
 			if (type == 'popup') {
 				getApp().globalData.uma.trackEvent('homepage_popup_click')
+			}
+
+			// 如果是当家爆款、新品上架、原产好物的统计
+			if(type == 'goodsCount') {
+				let data = {
+					channel_source: 'mini_alipay', supplierName: that.data.advertsArr[fatherIndex].groupGoodsVoList[index].nickName, supplierId: that.data.advertsArr[fatherIndex].groupGoodsVoList[index].supplierId, goodsName: that.data.advertsArr[fatherIndex].groupGoodsVoList[index].goodsName, goodsSn: that.data.advertsArr[fatherIndex].groupGoodsVoList[index].goodsSn, goodsCategoryId: that.data.advertsArr[fatherIndex].groupGoodsVoList[index].goodsCategoryId
+				}
+				// homepage_ddjHotSale , homepage_ddjBestGoods, homepage_ddjNewGoods
+				if (title.indexOf('爆款') > -1) {
+					that.umaTrackEvent(type, 'homepage_ddjHotSale', data)
+				}
+				else if(title.indexOf('新品') > -1) {
+					that.umaTrackEvent(type, 'homepage_ddjNewGoods', data)
+				}
+				else if(title.indexOf('原产') > -1) {
+					that.umaTrackEvent(type, 'homepage_ddjBestGoods', data)
+				}
 			}
 
 			if (url.indexOf('http') > -1) {
@@ -1167,7 +1184,7 @@ Page({
 	// 友盟+ 统计 --搜索
 	
 	
-	umaTrackEvent(type, keyWord) {
+	umaTrackEvent(type, keyWord, eventName,data) {
 
 		var keyWord = keyWord
 
@@ -1184,6 +1201,10 @@ Page({
 			// 友盟+统计--首页搜索输入
 			getApp().globalData.uma.trackEvent('homepage_searchValue', { keyWord: keyWord });
 
+		}
+		else if (type == 'goodsCount'){
+			// 友盟+统计--广告模块当家爆款/原产好物/新品上架  --- eventName = homepage_ddjHotSale , homepage_ddjBestGoods, homepage_ddjNewGoods
+			getApp().globalData.uma.trackEvent(eventName, data);
 		}
 
 	},
