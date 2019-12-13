@@ -37,7 +37,7 @@
 }
 
 .iconBox {
-  width: 30rpx;
+  width: 40rpx;
   height: 100%;
   font-size: 30rpx;
 }
@@ -112,7 +112,7 @@
 }
 
 .smartItem {
-  font-size: 36rpx;
+  font-size: 28rpx;
   line-height: 96rpx;
 }
 
