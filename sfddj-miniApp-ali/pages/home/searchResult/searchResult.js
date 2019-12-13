@@ -58,6 +58,9 @@ Page({
 	},
 
 	onShow: function() {
+		this.setData({
+			placeholder: my.getStorageSync({key: 'searchTextMax'}).data
+		});
 		if( this.searchComponent ) {
 			this.searchComponent.data.pageType = 'showSearchPage';
 			console.log(this.searchComponent)
@@ -524,9 +527,6 @@ Page({
 		}
 	},
 
-	setIputValue() {
-		
-	},
 
 	/**
 	  * 存储新版搜索组件实例（但只在页面初始化是挂载，页面重显取不到）

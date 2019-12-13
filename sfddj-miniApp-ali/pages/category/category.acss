@@ -48,3 +48,7 @@
 .am-popup-content {
   width: 100%;
 }
+
+.am-popup-content {
+  position: absolute;
+}

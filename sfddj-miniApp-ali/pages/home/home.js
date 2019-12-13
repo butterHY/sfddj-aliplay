@@ -20,7 +20,7 @@ Page({
 		homeGoodsList: [],
 		show: false,
 		hotWords: [],
-		inputVal: '',
+		placeholder: '',
 		scrollTop: false,
 		start: 0, //分页查询起点
 		limit: 10, //分页大小
@@ -151,7 +151,7 @@ Page({
 		if( that.searchComponent ) {
 			that.searchComponent.setData({inputVal: ''});
 			that.searchComponent.getHistory();
-			that.searchComponent.data.pageType = 'home';
+			// that.searchComponent.data.pageType = 'home';
 			console.log(that.searchComponent)
 		}
 	},
@@ -1665,12 +1665,25 @@ Page({
 	},
 
 	/**
-	  * placeholder value
+	  * 获取 placeholder value
 	*/
 	getSearchTextMax() {
-		 http.get( api.search.SEARCHTEXTMAX, (res) => {
+		let that = this;
+		 http.get( api.search.SEARCHTEXTMAX, {}, (res) => {
+			 console.log("成功")
 			 console.log(res);
+			 let resData = res.data;
+			if(resData.ret.code == '0' && resData.ret.message == "SUCCESS" && resData.data && resData.data.name) {
+				try {
+					my.setStorageSync({ key: constants.StorageConstants.searchTextMax, data: resData.data.name});
+				} catch (e) { }
+				that.setData({
+					placeholder: resData.data.name
+				})
+				console.log(that.data.placeholder)
+			}
 		 }, (err) => {
+			 console.log('失败')
 			 console.log(err);
 		 })
 	},

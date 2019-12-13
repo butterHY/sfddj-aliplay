@@ -115,10 +115,13 @@ Page({
 			isFocus: false,
 			isShowSearch: false,
 		});
+		this.setData({
+			placeholder: my.getStorageSync({key: 'searchTextMax'}).data
+		});
 		if( this.searchComponent ) {
 			this.searchComponent.setData({inputVal: ''});
 			this.searchComponent.getHistory();
-			this.searchComponent.data.pageType = 'secondCategory';
+			// this.searchComponent.data.pageType = 'secondCategory';
 			console.log(this.searchComponent)
 		}
 	},
