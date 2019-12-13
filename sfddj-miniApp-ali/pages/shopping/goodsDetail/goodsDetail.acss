@@ -1071,6 +1071,7 @@ page {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
   width: 80rpx;
 }
 
@@ -1082,10 +1083,12 @@ page {
 }
 
 .labelName {
-  height: 22rpx;
+  display: inline-block;
+  /* height: 22rpx; */
   padding: 10rpx 10rpx;
   margin-right: 18rpx;
-  border-radius: 10rpx;
+  border: 1rpx solid transparent;
+  border-radius: 15rpx;
   background: #ff2e2e;
   color: #fff;
 }
@@ -1255,6 +1258,16 @@ page {
 
 .iavValueItem {
   padding: 10rpx;
+}
+
+.goodsSpec {
+  bottom:0;
+  ;position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  background-color:rgba(0,0,0,0.5);
+  z-index:9000;
 }
 
 

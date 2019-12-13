@@ -14,7 +14,7 @@ Component({
     hotWords: [],                             // 搜索热词数据
     hotWordShow: true,                        // 搜索板块显示开关
     smSearchShow: false,                      // 智能板块显示开关
-    clearSearchShow: true,                    // 清除搜索词开关
+    clearSearchShow: false,                    // 清除搜索词开关
 
     placeholderVal: '',                       // 输入框隐藏词
   },
@@ -25,15 +25,16 @@ Component({
   },
   
   didMount() {
-    let that = this;
     // this.$page.xxCom = this;  // 通过此操作可以将组件实例挂载到所属页面实例上   
     // console.log(this.is);     // 组件路径
     // console.log(this.$page);  // 组件所属页面实例
     // console.log(this.$id);    // 组件 id，可直接在组件 axml 中渲染值
     console.log('我挂载上去了')
     this.$page.searchComponent = this;  // 页面 onLoad 后的 onShow 获取不到，因为有时差，但之后页面的 onShow 都能获取到，而 saveRef(ref) 只在页面 onLoad 后自动触发，之后不会再触发；
+    this.data.pageType = this.props.pageType;
+    console.log(this.data.pageType)
 
-    that.getHotWord();
+    this.getHotWord();
   },
 
   didUpdate() {},
@@ -45,7 +46,8 @@ Component({
     * 搜索组件开关
   */
     onHideSearch() {
-      this.props.onShowSearch();
+      // this.props.onShowSearch('noGetHistory');
+       this.props.onShowSearch();
       this.setData({
         inputVal: '',
         hotWordShow: true,
@@ -111,14 +113,17 @@ Component({
       let inputVal = event.detail.value.replace(/\s*/g,'');
       let hotWordShow = true;
       let smSearchShow = true;
+      let clearSearchShow = false;
       // inputVal != this.data.inputVal
       if( inputVal ) {
         this.smartSearch(inputVal);
         hotWordShow = false;
+        clearSearchShow = true;
       } else {
         smSearchShow = false;
       }
       this.setData({
+        clearSearchShow,
         hotWordShow,
         smSearchShow,
         inputVal: event.detail.value
@@ -134,7 +139,7 @@ Component({
       console.log(inputVal);
       my.showLoading({
         content: '加载中...',
-        delay: '1000',
+        delay: '2000',
       });
       let data = {
         suggestStr: inputVal,
@@ -178,7 +183,7 @@ Component({
         smartSearchList: false,
       });
       console.log('选中词请求数据 inputVal',this.data.inputVal,'placeholderVal',this.data.placeholderVal)
-
+      console.log(that.props)
       that.props.pageType == 'showSearchPage' ? that.props.onSelectOrEnter(word, 'noGetHistory') : that.goToSearchPage(word, type);
     },
 
@@ -197,8 +202,8 @@ Component({
         smSearchShow: false,
       })
       console.log('键盘回车请求数据 inputVal',this.data.inputVal,'placeholderVal',this.data.placeholderVal)
-
-      that.props.pageType == 'showSearchPage' ? that.props.onSelectOrEnter(value, 'noGetHistory') : that.goToSearchPage(value, type);
+      console.log(that.props)
+      that.props.pageType == 'showSearchPage' ? that.props.onSelectOrEnter(value, 'noGetHistory') : that.goToSearchPage(value, 'searchValue');
     },
 
     /**
@@ -222,6 +227,8 @@ Component({
         inputVal: '',
         hotWordShow: true,
         smSearchShow: false,
+        clearSearchShow: false,
+
       })
     },
 
@@ -246,6 +253,7 @@ Component({
     */
     umaTrackEvent(type, keyWord) {
       var keyWord = keyWord;
+      console.log(type);
       if (type == 'searcHotWord') {
         // 友盟+统计--首页搜索热词点击
         getApp().globalData.uma.trackEvent('homepage_searchHotWord', { keyWord: keyWord });

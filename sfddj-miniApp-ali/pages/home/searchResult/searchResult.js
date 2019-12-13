@@ -15,7 +15,7 @@ Page({
 	 * 页面的初始数据
 	 */
 	data: {
-		priceHigher: true, 				// 价格升序降序开关
+		priceHigher: false, 				// 价格升序降序开关
 		sortIndex: 0,							// 默认综合排序
 		scrollTop: false,
 		show: false,
@@ -57,6 +57,13 @@ Page({
 		this.searchProduct(options.keyWord, 0);
 	},
 
+	onShow: function() {
+		if( this.searchComponent ) {
+			this.searchComponent.data.pageType = 'showSearchPage';
+			console.log(this.searchComponent)
+		}
+	},
+
 	// onPageScroll: function (obj) {
 	//   var scrollTop = obj.scrollTop
 	//   if (utils.px2Rpx(scrollTop) >= 120) {
@@ -95,6 +102,8 @@ Page({
 		// 点击同类会改变升降序，priceHigher 为 true 为升序
 		if (parseInt(sortIndex) == that.data.sortIndex) {
 			priceHigher = !priceHigher;
+		} else {
+			priceHigher = false;
 		}
 		this.setData({
 			scrollTop: false,							// 点击排序导航栏的时候，goodsList: [], 这时排序导航栏还是“吸顶”着，返回数据重新渲染 scroll-view 里的 view ，高度变化了，防止导航栏响应不及时还 “吸顶”；
@@ -531,8 +540,9 @@ Page({
 	  * 新版搜索组件开关
 	*/
 	showSearch: function(noGetHistory) {
-		console.log(noGetHistory)
-		noGetHistory == 'noGetHistory' ? '' : 	this.searchComponent.getHistory();
+		console.log(noGetHistory);
+		this.searchComponent.getHistory()
+		// noGetHistory == 'noGetHistory' ? '' : 	this.searchComponent.getHistory();
 		this.setData({
 			isShowSearch: !this.data.isShowSearch,
 			isFocus: !this.data.isFocus,
