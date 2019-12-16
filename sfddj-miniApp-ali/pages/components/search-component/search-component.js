@@ -20,7 +20,7 @@ Component({
     pageType: null,                           // 从哪个页面进入的
     isFocus: false,                           // 是否获取焦点
     onShowSearch: (data) => console.log(data),
-    placeholderVal: '',                       // 输入框隐藏词
+    placeholderVal: '',                       // 输入框隐藏词。
   },
   
   didMount() {
