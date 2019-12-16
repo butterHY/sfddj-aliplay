@@ -199,8 +199,6 @@ Page({
 	// 	});
 	// },
 
-
-
 	/**
 	 * 键盘确认时搜索，默认排序类型是 0；			------- 		搜索改版
 	 */
@@ -229,6 +227,11 @@ Page({
 	// 	this.searchProduct(event.currentTarget.dataset.word, 0);
 	// },
 
+
+	/**
+	 * 搜索组件 ‘选择’ 热词/历史记录/智能搜索词 或 ‘回车’ 时，重新请求数据；
+	 * 
+	 */
 	selectOrEnter(word, noGetHistory) {
 		console.log('我被触发了', word)
 		this.setData({
