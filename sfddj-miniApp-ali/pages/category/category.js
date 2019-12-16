@@ -248,8 +248,8 @@ Page({
 	*/
 	showSearch: function(noGetHistory) {
 		console.log(noGetHistory)
-		this.searchComponent.getHistory()
-		// noGetHistory == 'noGetHistory' ? '' : 	this.searchComponent.getHistory();
+		// this.searchComponent.getHistory()
+		noGetHistory == 'noGetHistory' ? '' : 	this.searchComponent.getHistory();
 		this.setData({
 			isShowSearch: !this.data.isShowSearch,
 			isFocus: !this.data.isFocus,

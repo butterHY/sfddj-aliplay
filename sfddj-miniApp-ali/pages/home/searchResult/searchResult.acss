@@ -349,9 +349,6 @@ text {
 
 .storeItem {
   height: 442rpx;
-  /* padding-top: 18rpx; */
-  /* margin-top: 18rpx; */
-  /* border-top: 18rpx solid #f5f5f5; */
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
@@ -376,6 +373,15 @@ text {
   padding-bottom: 54rpx;
 }
 
+.emptyGoods {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  /* align-items: flex-start; */
+  font-size: 32rpx;
+  color: #a1a0a0;
+  line-height: 120rpx;
+}
 .merchantImg {
   width: 102rpx;
   height: 72rpx;
@@ -435,13 +441,16 @@ text {
   position: absolute;
   left: 0;
   bottom: 0;
-  width: 72rpx;
-  height: 44rpx;
-  line-height: 44rpx;
+  /* width: 72rpx; */
+  /* height: 44rpx; */
+  /* line-height: 44rpx; */
+  box-sizing: border-box;
+  padding: 12rpx;
+  border: 1rpx solid transparent;
   border-radius: 0 20rpx 0 20rpx;
-  /* background: black; */
-   background-color: rgba(0,0,0,0.5);
-  /* background: rgba(#999, 0.5); */
+  background-color: rgba(0,0,0,0.5);
+  
+  max-width: 220rpx;
 }
 
 .supplierGoodsImg {

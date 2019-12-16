@@ -32,7 +32,7 @@
         </view>
       </view>
     </block>
-    <view  a:if="{{smSearchShow}}" class="smartItem" style="border-bottom:{{index != smartSearchList.length - 1 ? '1rpx solid #e3e3e3;': ''}}" a:for="{{smartSearchList}}" a:key="*this" data-type="searchValue" data-word="{{item.suggestion}}" catchTap="chooseWord">{{item.suggestion}}</view>
+    <view  a:if="{{smSearchShow && smSearchShow.length > 0}}" class="smartItem" style="border-bottom:{{index != smartSearchList.length - 1 ? '1rpx solid #e3e3e3;': ''}}" a:for="{{smartSearchList}}" a:key="*this" data-type="searchValue" data-word="{{item.suggestion}}" catchTap="chooseWord">{{item.suggestion}}</view>
   </scroll-view>
 </view>
 

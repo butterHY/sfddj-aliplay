@@ -58,10 +58,6 @@
   line-height: 67rpx;
 }
 
-.wordBox {
-  padding: 0 30rpx;
-}
-
 .hotWordTitle {
   margin-bottom: 50rpx;
   margin-top: 20rpx;
@@ -108,7 +104,8 @@
 }
 
 .scrollView {
-  padding-bottom: 30rpx;
+  box-sizing: border-box;
+  padding: 0 30rpx 30rpx;
 }
 
 .smartItem {

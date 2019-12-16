@@ -761,12 +761,16 @@ Page({
           // ----- 位修改规格的价格，改为直接使用后台返回的单价格和单位积分 , 不再 * 起购数量     start;  字段都与新接口核对正确, 只全部值都暂时展示单位
           value.tuanPrice = value.tuangouPrices;        // 价格和积分不变 （新版，价格/积分 不随着数量和起购数量变化，只是显示单位价格）                     
           value.goodsPrice = value.salePrice;                                 
-          value.secondKillPrice =  value.activityPrice;
-          value.thisMemberPoint =  value.memberPoint;                        
-          value.thisReturnMoneyPrice = (value.returnMoney * that.data.minCount).toFixed(2);                     
-          value.memberPriceAll = value.memberPrice;                           
-          value.costMemberScoreAll = value.costMemberScore * that.data.minCount;                   
-          value.awardMemberScoreAll = value.awardMemberScore * that.data.minCount;                 
+          that.data.goods.secKillStatus ? value.secondKillPrice =  value.activityPrice : '';
+					that.data.goods.memberDayPriceStatus ? value.memberDayPrice = value.memberDayPrice : '';
+					that.data.goods.jifenStatus ? value.thisMemberPoint =  value.memberPoint : '';
+          that.data.goods.returnMoneyStatus ? value.thisReturnMoneyPrice = (value.returnMoney * that.data.minCount).toFixed(2) : '';
+					if(that.data.SFmember) {
+						value.memberPriceAll = value.memberPrice
+						value.costMemberScoreAll = value.costMemberScore * that.data.minCount;                   
+						value.awardMemberScoreAll = value.awardMemberScore * that.data.minCount; 
+					}
+                
           // ----- 修改规格的价格，改为直接使用后台返回的单位价格和单位积分 , 不再 * 起购数量       end;
 
 
@@ -1729,7 +1733,7 @@ Page({
   goTop() {
     my.pageScrollTo({
       scrollTop: 0,
-      duration: 15000,
+      duration: 1500,
     });
   },
 

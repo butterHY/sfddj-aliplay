@@ -105,9 +105,7 @@
       <view class="couponTitle">
         <image src="{{baseImageLocUrl}}miniappImg/public/goodsDetail/icon_coupon.png" class="width_100 height_100" mode="widthFix"></image>
       </view>
-      <view class="couponName color-ff2e2e" a:for="{{couponDataList}}" a:key="*this">
-        <block a:if="{{index == 0 || index == 1 || index == 2}}">满{{item.needPrice}}减{{item.costPrice}}</block>
-      </view>
+      <view class="couponName color-ff2e2e" a:for="{{couponDataList}}" a:key="*this" a:if="{{index == 0 || index == 1 || index == 2}}">满{{item.needPrice}}减{{item.costPrice}}</view>
     </view>
     <view class="getCouponText">
       <view class="color-a1a0a0">领券</view>
@@ -144,7 +142,9 @@
   <view class="detail-header-view posi_re ">
     <view class="detail-header-name color-323232 font-32">
       <view class="twoLineHide">
-        <view class="labelName  label font-20" a:if="{{goods.goodsLabels}}">{{goods.goodsLabels}}</view>
+        <view class="labelName font-20" a:if="{{goods.goodsLabels}}">
+          <text class="flex_view_col justi_start ">{{goods.goodsLabels}}</text>
+        </view>
         <text class="goodsName font-weight-600">{{goods.goodsName}}</text>   
       </view> 
       <view class="flex_view_row  justi_start font-20 labelList" a:if="{{goods.goodsViceVO.labelList.length > 0 || goods.goodsTag}}">

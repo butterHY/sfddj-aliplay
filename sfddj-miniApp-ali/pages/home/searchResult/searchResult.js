@@ -10,7 +10,6 @@ import api from '../../../api/api';
 import http from '../../../api/http';
 
 Page({
-
 	/**
 	 * 页面的初始数据
 	 */
@@ -31,15 +30,16 @@ Page({
 		isloadMore: false,
 		baseLocImgUrl: constants.UrlConstants.baseImageLocUrl,
 		baseImageUrl: constants.UrlConstants.baseImageUrl,
+		defaultImage: 'miniappImg/icon/icon_default_head.jpeg',
 		loadComplete: false,
 		goodsLoadFail: false,
 
-		activity: false,			 		// 两列切换开关
-		showChannel: 0,						// 显示渠道,0为主站,1为地区管
-		goodsOrStore: '0',				// '0' 代表是商品类型，'1' 代表是店铺类型；
+		activity: false,			 							// 两列切换开关
+		showChannel: 0,											// 显示渠道,0为主站,1为地区管
+		goodsOrStore: '0',									// '0' 代表是商品类型，'1' 代表是店铺类型；
 
-		searchShow: false,				// 智能搜索模版显示开关
-		smartSearchList: [],			// 智能搜索数据
+		searchShow: false,									// 智能搜索模版显示开关
+		smartSearchList: [],								// 智能搜索数据
 
 		isShowSearch: false,								// 新版搜索组件显示开关
 		isFocus: false,											// 新版搜索组件焦点开关
@@ -521,7 +521,7 @@ Page({
 		console.log('我上拉了 加载了');
 		console.log(this.data.hasMore);
 		if (this.data.hasMore) {
-			this.data.goodsOrStore == '0' ? this.setData({goodsStart: this.data.goodsList.length, limit: this.data.limit}) : this.setData({goodsStart: this.data.storeList.length, limit: this.data.limit});
+			this.data.goodsOrStore == '0' ? this.setData({goodsStart: this.data.goodsList.length, limit: this.data.limit}) : this.setData({storeStart: this.data.storeList.length, limit: this.data.limit});
 		  this.data.hasMore = false;
 			this.searchProduct(this.data.inputVal, 1);
 		}
@@ -541,8 +541,8 @@ Page({
 	*/
 	showSearch: function(noGetHistory) {
 		console.log(noGetHistory);
-		this.searchComponent.getHistory()
-		// noGetHistory == 'noGetHistory' ? '' : 	this.searchComponent.getHistory();
+		// this.searchComponent.getHistory()
+		noGetHistory == 'noGetHistory' ? '' : 	this.searchComponent.getHistory();
 		this.setData({
 			isShowSearch: !this.data.isShowSearch,
 			isFocus: !this.data.isFocus,

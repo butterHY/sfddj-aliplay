@@ -1,7 +1,8 @@
 <import src="../../common/item-goods-list"/>
 <import src="../../common/item-store-list"/>
-<import src="../../common/hotWords"/>
 <import src="../../common/search"/>
+<!-- 以下两个模版已经没有是哟 -->
+<import src="../../common/hotWords"/>
 <import src="../../common/search-goods-list"/>
 
 <!-- 加载中 -->
@@ -80,14 +81,13 @@
     <!--搜索结果列表-->
     <view class="{{ activity ? 'activity' : 'resultList'}} clearfix" a:if="{{goodsOrStore == '0' && goodsList && goodsList.length > 0}}">
       <block a:for="{{goodsList}}" a:for-item="goodsItem" a:key="goodsList">
-        <template is="itemGoodsList" data="{{...goodsItem,baseImageUrl,baseLocImgUrl,index,activity,clickTap: true,}}">
-        </template>
+        <template is="itemGoodsList" data="{{...goodsItem,baseImageUrl,baseLocImgUrl,index,activity,clickTap: true,}}"></template>
       </block>
     </view>
     <view class="storeBox" a:elif="{{goodsOrStore == '1' && storeList && storeList.length > 0}}">
       <block  a:for="{{storeList}}" a:for-item="sotreItem" a:key="storeList">
         <view class="isolationBelt"></view>
-        <template is="itemStoreList" data="{{...sotreItem,baseImageUrl,baseLocImgUrl,index,sotreItem}}"></template>
+        <template is="itemStoreList" data="{{...sotreItem,baseImageUrl,baseLocImgUrl,defaultImage,index,sotreItem}}"></template>
       </block>
     </view>
 

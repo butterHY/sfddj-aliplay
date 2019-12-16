@@ -24,9 +24,10 @@
                 <view class="font-40 color-ff2e2e" a:else>
                   <!-- 秒杀商品，秒杀价 -->
                   <text class="aba" a:if="{{product.secondKillPrice}}">￥{{product.secondKillPrice}}</text>
-                  <!-- 不是会员商品，普通价 -->
-                  <text class="aba" a:elif="{{!SFmember || SFmember && type == 5}}">￥{{product.goodsPrice}}</text>
-                  <!-- 会员商品，会员价 + 兑换会员积分  -->
+                  <!-- 不是顺丰会员商品，普通价 -->
+                  <text class="aba" a:elif="{{!SFmember && type == 5}}">￥{{product.goodsPrice}}</text>
+                  <text class="aba" a:elif="{{goods.memberDayPriceStatus}}">￥{{product.memberDayPrice}}</text>
+                  <!-- 是顺丰会员商品，会员价 + 兑换会员积分  -->
                   <block a:if="{{SFmember && type != 5}}">
                     <text class="cbc">￥{{product.memberPriceAll}}</text>
                     <text class="font-24 color-a1a0a0 marLeft_5" a:if="{{product.costMemberScoreAll && product.costMemberScoreAll > 0}}">+ {{product.costMemberScoreAll}}积分</text>
