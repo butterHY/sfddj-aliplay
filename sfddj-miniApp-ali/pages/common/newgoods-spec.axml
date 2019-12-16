@@ -10,37 +10,32 @@
               <!-- 从目前goodsDetail.js 的代码来看并没有 type == 1 和 type == 2 和 type == 5 的赋值 -->
               <!-- 只有积分商品 type == 3，物返现商品 type == 4 -->
               <view class="goods-spec-text">
-                <view class="font-40 color-ff2e2e" a:if="{{type == 1}}">
-                  <text>￥{{product.tuanPrice}}</text><text class="font-24 color-a1a0a0 marLeft_15" a:if="{{SFmember}}">+{{product.costMemberScoreAll ? product.costMemberScoreAll : 0}}积分</text> 
-                </view>
-                <view class="font-40 color-ff2e2e" a:elif="{{type == 2}}"><text>￥0.00</text> </view>
-                 <!-- a:elif="{{type == 3}}" {{product.thisMemberPoint}}-->
-                <view class="font-40 color-ff2e2e" a:elif="{{type == 3}}"><text class="marRight_5">￥{{product.goodsPrice}}</text> <text class="font-24 color-a1a0a0"> + {{product.thisMemberPoint}}积分</text></view>
-
+                <!-- 积分商品 -->
+                <view class="font-40 color-ff2e2e" a:if="{{type == 3}}"><text class="marRight_5">￥{{product.goodsPrice}}</text> <text class="font-24 color-a1a0a0"> + {{product.thisMemberPoint}}积分</text></view>
                 <!-- 购物返现商品  --> 
                 <view class="font-40 color-ff2e2e flex_view_row align_cen" a:elif="{{type == 4}}"><text>￥{{product.goodsPrice}}</text></view>
 
                 <!-- 其他，不是积分商品也不是返现商品 -->
                 <view class="font-40 color-ff2e2e" a:else>
                   <!-- 秒杀商品，秒杀价 -->
-                  <text class="aba" a:if="{{product.secondKillPrice}}">￥{{product.secondKillPrice}}</text>
-                  <!-- 不是顺丰会员商品，普通价 -->
-                  <text class="aba" a:elif="{{!SFmember && type == 5}}">￥{{product.goodsPrice}}</text>
-                  <text class="aba" a:elif="{{goods.memberDayPriceStatus}}">￥{{product.memberDayPrice}}</text>
+                  <block a:if="{{goods.secKillStatus}}"><text class="aba">￥{{product.secondKillPrice}}</text></block>
+                  <!-- 大当家会员日商品 -->
+                  <block a:elif="{{goods.memberDayPriceStatus}}"><text class="aba">￥{{product.memberDayPrice}}</text></block>
                   <!-- 是顺丰会员商品，会员价 + 兑换会员积分  -->
-                  <block a:if="{{SFmember && type != 5}}">
+                  <block a:elif="{{SFmember}}">
                     <text class="cbc">￥{{product.memberPriceAll}}</text>
                     <text class="font-24 color-a1a0a0 marLeft_5" a:if="{{product.costMemberScoreAll && product.costMemberScoreAll > 0}}">+ {{product.costMemberScoreAll}}积分</text>
                   </block>
+                  <!-- 普通商品，普通价 -->
+                  <block  a:else><text class="aba">￥{{product.goodsPrice}}</text></block>
                 </view>
 
                 <!-- 会员商品 + 奖励会员积分  -->
-                <view class="font-24 color-ff2e2e marTop_10" a:if="{{SFmember && type != 5 && product.awardMemberScoreAll && product.awardMemberScoreAll > 0}}">奖励会员积分{{product.awardMemberScoreAll}}</view>
-                <!-- <view class="font-24 color-ff2e2e  marTop_10">税费: 0</view> -->
+                <view class="font-24 color-ff2e2e marTop_10" a:if="{{SFmember && product.awardMemberScoreAll && product.awardMemberScoreAll > 0}}">奖励会员积分{{product.awardMemberScoreAll}}</view>
+                <view class="font-24 color-ff2e2e  marTop_10" a:if="{{ goods.globalStatus && goods.goodsViceVO.crossBorderPattern == 3 }}">税费: {{product.calGlobalFeeAll}}</view>
                 <!-- 库存 -->
                 <view class="font-26 color-black margin-top18">库存 {{product.store < 0 ? "0" : product.store}} 份</view>
                 <!-- 返现商品且有返现金额 -->
-                 <!--  -->
                 <view class="margin-top18" a:if="{{type == 4 && product.thisReturnMoneyPrice && product.thisReturnMoneyPrice > 0}}">
                   <text class="font-22" style="color: #ff8f0a; border: 1px solid #ff8f0a; padding: 6rpx 18rpx; border-radius: 10rpx;">购买最高可返{{product.thisReturnMoneyPrice}}元</text>
                 </view>
