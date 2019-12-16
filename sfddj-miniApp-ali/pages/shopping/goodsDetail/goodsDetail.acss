@@ -15,6 +15,7 @@ page {
 
 .detail-header-view {
   padding: 0 30rpx 37rpx 30rpx;
+  /* line-height: 46rpx; */
 }
 
 .detail-title-view {
@@ -1008,12 +1009,12 @@ page {
   top: 0;
   right: 46rpx;
   width: 50rpx;
-  height: 72rpx;
+  height: 76rpx;
 }
 
 
 .detail-header-name {
-  height: 100%;
+  /* height: 100%; */
   width: 552rpx;
 }
 
@@ -1025,6 +1026,10 @@ page {
   -webkit-line-clamp: 2;
   line-clamp: 2;
   -webkit-box-orient: vertical;
+  /* line-height: 46rpx; */
+  position: relative;
+  /* display: flex;
+  align-items: center; */
 }
 
 .button-small {
@@ -1071,6 +1076,7 @@ page {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
   width: 80rpx;
 }
 
@@ -1082,16 +1088,18 @@ page {
 }
 
 .labelName {
-  height: 22rpx;
+  display: inline-block;
   padding: 10rpx 10rpx;
   margin-right: 18rpx;
+  border: 1rpx solid transparent;
   border-radius: 10rpx;
   background: #ff2e2e;
   color: #fff;
 }
 
 .goodsName {
-  line-height: 46rpx;
+  line-height: 48rpx;
+  vertical-align: top;
 }
 
 .goodsTag {
@@ -1255,6 +1263,16 @@ page {
 
 .iavValueItem {
   padding: 10rpx;
+}
+
+.goodsSpec {
+  bottom:0;
+  ;position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  background-color:rgba(0,0,0,0.5);
+  z-index:9000;
 }
 
 

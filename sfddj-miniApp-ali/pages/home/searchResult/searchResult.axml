@@ -1,7 +1,8 @@
 <import src="../../common/item-goods-list"/>
 <import src="../../common/item-store-list"/>
-<import src="../../common/hotWords"/>
 <import src="../../common/search"/>
+<!-- 以下两个模版已经没有是哟 -->
+<import src="../../common/hotWords"/>
 <import src="../../common/search-goods-list"/>
 
 <!-- 加载中 -->
@@ -33,7 +34,7 @@
   </view> -->
   <!--新版搜索 -->
   <view catchTap="showSearch">
-    <template is="search" data="{{baseLocImgUrl, inputVal}}"></template>  
+    <template is="search" data="{{baseLocImgUrl, placeholder}}"></template>  
   </view>
 
   <view class="goodsAndStore font-40">
@@ -48,26 +49,26 @@
   <view class="resultSort font-30 color-323232 {{scrollTop ? 'scrollTop' : ''}}" a:if="{{goodsOrStore == '0'}}">
     <view data-sort-type="0" class="{{sortIndex == 0 ? 'color-ff5353' : ''}} flex_1 tex_center" onTap="chooseSort">综合
       <view class="resultSort_price">
-        <image src="{{priceHigher ? baseLocImgUrl+'miniappImg/icon/up_sel.png' : baseLocImgUrl+'miniappImg/icon/up_unsel.png'}}" class="resultSort_priceIcon resultSort_priceIcon_up"></image>
-        <image src="{{priceHigher ? baseLocImgUrl+'miniappImg/icon/down_unsel.png' : baseLocImgUrl+'miniappImg/icon/down_sel.png'}}" class="resultSort_priceIcon"></image>
+        <image src="{{priceHigher && sortIndex == 0 ? baseLocImgUrl+'miniappImg/icon/up_sel.png' : baseLocImgUrl+'miniappImg/icon/up_unsel.png'}}" class="resultSort_priceIcon resultSort_priceIcon_up"></image>
+        <image src="{{priceHigher && sortIndex == 0 ? baseLocImgUrl+'miniappImg/icon/down_unsel.png' : baseLocImgUrl+'miniappImg/icon/down_sel.png'}}" class="resultSort_priceIcon"></image>
       </view>
     </view>
     <view data-sort-type="1" class="{{sortIndex == 1 ? 'color-ff5353' : ''}} flex_1 tex_center" onTap="chooseSort">销量
       <view class="resultSort_price">
-        <image src="{{priceHigher ? baseLocImgUrl+'miniappImg/icon/up_sel.png' : baseLocImgUrl+'miniappImg/icon/up_unsel.png'}}" class="resultSort_priceIcon resultSort_priceIcon_up"></image>
-        <image src="{{priceHigher ? baseLocImgUrl+'miniappImg/icon/down_unsel.png' : baseLocImgUrl+'miniappImg/icon/down_sel.png'}}" class="resultSort_priceIcon"></image>
+        <image src="{{priceHigher && sortIndex == 1 ? baseLocImgUrl+'miniappImg/icon/up_sel.png' : baseLocImgUrl+'miniappImg/icon/up_unsel.png'}}" class="resultSort_priceIcon resultSort_priceIcon_up"></image>
+        <image src="{{priceHigher && sortIndex == 1 ? baseLocImgUrl+'miniappImg/icon/down_unsel.png' : baseLocImgUrl+'miniappImg/icon/down_sel.png'}}" class="resultSort_priceIcon"></image>
       </view>
     </view>
     <view data-sort-type="2" class="{{sortIndex == 2 ? 'color-ff5353' : ''}} flex_1 tex_center" onTap="chooseSort">价格      
       <view class="resultSort_price">
-        <image src="{{priceHigher ? baseLocImgUrl+'miniappImg/icon/up_sel.png' : baseLocImgUrl+'miniappImg/icon/up_unsel.png'}}" class="resultSort_priceIcon resultSort_priceIcon_up"></image>
-        <image src="{{priceHigher ? baseLocImgUrl+'miniappImg/icon/down_unsel.png' : baseLocImgUrl+'miniappImg/icon/down_sel.png'}}" class="resultSort_priceIcon"></image>
+        <image src="{{priceHigher && sortIndex == 2 ? baseLocImgUrl+'miniappImg/icon/up_sel.png' : baseLocImgUrl+'miniappImg/icon/up_unsel.png'}}" class="resultSort_priceIcon resultSort_priceIcon_up"></image>
+        <image src="{{priceHigher && sortIndex == 2 ? baseLocImgUrl+'miniappImg/icon/down_unsel.png' : baseLocImgUrl+'miniappImg/icon/down_sel.png'}}" class="resultSort_priceIcon"></image>
       </view>
     </view>
     <view data-sort-type="3" class="{{sortIndex == 3 ? 'color-ff5353' : ''}} flex_1 tex_center" onTap="chooseSort">好评
       <view class="resultSort_price">
-        <image src="{{priceHigher ? baseLocImgUrl+'miniappImg/icon/up_sel.png' : baseLocImgUrl+'miniappImg/icon/up_unsel.png'}}" class="resultSort_priceIcon resultSort_priceIcon_up"></image>
-        <image src="{{priceHigher ? baseLocImgUrl+'miniappImg/icon/down_unsel.png' : baseLocImgUrl+'miniappImg/icon/down_sel.png'}}" class="resultSort_priceIcon"></image>
+        <image src="{{priceHigher && sortIndex == 3 ? baseLocImgUrl+'miniappImg/icon/up_sel.png' : baseLocImgUrl+'miniappImg/icon/up_unsel.png'}}" class="resultSort_priceIcon resultSort_priceIcon_up"></image>
+        <image src="{{priceHigher && sortIndex == 3 ? baseLocImgUrl+'miniappImg/icon/down_unsel.png' : baseLocImgUrl+'miniappImg/icon/down_sel.png'}}" class="resultSort_priceIcon"></image>
       </view>
     </view>
     <view class="queue height_100" onTap="isTwoColumns">
@@ -80,14 +81,13 @@
     <!--搜索结果列表-->
     <view class="{{ activity ? 'activity' : 'resultList'}} clearfix" a:if="{{goodsOrStore == '0' && goodsList && goodsList.length > 0}}">
       <block a:for="{{goodsList}}" a:for-item="goodsItem" a:key="goodsList">
-        <template is="itemGoodsList" data="{{...goodsItem,baseImageUrl,baseLocImgUrl,index,activity,clickTap: true,}}">
-        </template>
+        <template is="itemGoodsList" data="{{...goodsItem,baseImageUrl,baseLocImgUrl,index,activity,clickTap: true,}}"></template>
       </block>
     </view>
     <view class="storeBox" a:elif="{{goodsOrStore == '1' && storeList && storeList.length > 0}}">
       <block  a:for="{{storeList}}" a:for-item="sotreItem" a:key="storeList">
         <view class="isolationBelt"></view>
-        <template is="itemStoreList" data="{{...sotreItem,baseImageUrl,baseLocImgUrl,index,sotreItem}}"></template>
+        <template is="itemStoreList" data="{{...sotreItem,baseImageUrl,baseLocImgUrl,defaultImage,index,sotreItem}}"></template>
       </block>
     </view>
 
@@ -129,11 +129,10 @@
 <!--toast弹窗-->
 <view class="mark flex_view_col align_cen justi_cen" a:if="{{showToast}}">
   <view class="toastView_wb" catchtouchmove="move">
-    <view class="toastView_wb_con font-26 color-232323">      {{showToastMes}}    
-    </view>
+    <view class="toastView_wb_con font-26 color-232323">{{showToastMes}}</view>
   </view>
 </view>
 <!-- 新版搜索热词和历史记录膜层 -->
 <popup show="{{isShowSearch}}" position="right" zIndex="9000" disableScroll="{{false}}" mask="{{false}}">
-	<search-component  ref="saveRef" onShowSearch="showSearch" onSelectOrEnter="selectOrEnter" isFocus="{{isFocus}}" pageType="showSearchPage" ></search-component>
+	<search-component  ref="saveRef" onShowSearch="showSearch" onSelectOrEnter="selectOrEnter" isFocus="{{isFocus}}"  placeholderVal="{{placeholder}}" pageType="showSearchPage" ></search-component>
 </popup>

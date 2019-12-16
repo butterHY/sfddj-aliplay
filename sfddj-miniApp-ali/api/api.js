@@ -54,7 +54,7 @@ export default {
 		GOODS_DETAIL_COUPON: '/m/o/coupon/1.0/goodsDetailCoupon',                 // 新的商品详情优惠券数据
 		GOODS_DETAIL_DRAWCOUPON: '/m/o/coupon/1.0/drawCoupon',                    // 新的商品详情领取优惠券
 		GOODS_DETAIL_CONTACTSTORE: '/m/c/m/customer/service/1.0/xnCustomer',      // 新的商品详情获取 “联系商家”的参数
-
+		lISTGOODSBYNAME: '/m/g//1.0/group/listGoodsByName',												// 新的商品详情猜你喜欢接口
 	},
 
 	// 签到接口
@@ -63,10 +63,12 @@ export default {
 		PRIZE_DETAIL: '/m/u/1.0/member/newVersion/prizeDetail',   // 会员签到奖励详情
 	},
 
+	// 搜索接口
 	search: {
 		'GOODSSEARCH': '/m/c/1.0/opensearch/goodsSearch',													// 根据关键字分页搜索商品接口
 		'GOODSSUGGEST': '/m/c/1.0/opensearch/goodsSuggest',												// 根据关键字返回智能推荐搜索片段
 		'SUPPLIERSEARCH': '/m/c/1.0/opensearch/supplierSearch',										// 根据关键字分页搜索店铺接口
+		'SEARCHTEXTMAX': '/m/g/1.0/search/searchTextMax'													//  搜索隐藏文字
 	}
 
 

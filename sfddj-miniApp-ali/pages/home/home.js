@@ -11,12 +11,16 @@ let utils = require('../../utils/util');
 let windowWidth = my.getSystemInfoSync().windowWidth;
 let windowHeight = my.getSystemInfoSync().windowHeight;
 
+import api from '../../api/api';
+import http from '../../api/http';
+
+
 Page({
 	data: {
 		homeGoodsList: [],
 		show: false,
 		hotWords: [],
-		inputVal: '',
+		placeholder: '',
 		scrollTop: false,
 		start: 0, //分页查询起点
 		limit: 10, //分页大小
@@ -116,6 +120,8 @@ Page({
 			this.getTimes('isFirstTime');
 		}
 
+		
+		that.getSearchTextMax()
 	},
 
 	onShow: function() {
@@ -137,14 +143,16 @@ Page({
 
 			// 回到页面关闭搜索组件
 		console.log('关闭搜索组件');
-		console.log(this.searchComponent);
-		this.setData({
+		console.log(that.searchComponent);
+		that.setData({
 			isFocus: false,
 			isShowSearch: false,
 		});
-		if( this.searchComponent ) {
-			this.searchComponent.setData({inputVal: ''});
-			this.searchComponent.getHistory();
+		if( that.searchComponent ) {
+			that.searchComponent.setData({inputVal: ''});
+			that.searchComponent.getHistory();
+			// that.searchComponent.data.pageType = 'home';
+			console.log(that.searchComponent)
 		}
 	},
 
@@ -1678,6 +1686,30 @@ Page({
 	},
 
 	/**
+	  * 获取 placeholder value
+	*/
+	getSearchTextMax() {
+		let that = this;
+		 http.get( api.search.SEARCHTEXTMAX, {}, (res) => {
+			 console.log("成功")
+			 console.log(res);
+			 let resData = res.data;
+			if(resData.ret.code == '0' && resData.ret.message == "SUCCESS" && resData.data && resData.data.name) {
+				try {
+					my.setStorageSync({ key: constants.StorageConstants.searchTextMax, data: resData.data.name});
+				} catch (e) { }
+				that.setData({
+					placeholder: resData.data.name
+				})
+				console.log(that.data.placeholder)
+			}
+		 }, (err) => {
+			 console.log('失败')
+			 console.log(err);
+		 })
+	},
+
+	/**
 	  * 存储新版搜索组件实例
 	*/
 	saveRef(ref) {
@@ -1687,12 +1719,14 @@ Page({
 	/**
 	  * 新版搜索组件开关
 	*/
-	showSearch: function() {
-		this.searchComponent.getHistory();
+	showSearch: function(noGetHistory) {
+		console.log(noGetHistory);
+		// this.searchComponent.getHistory();
+		noGetHistory == 'noGetHistory' ? '' : 	this.searchComponent.getHistory();
 		this.setData({
 			isShowSearch: !this.data.isShowSearch,
 			isFocus: !this.data.isFocus,
 		})
 	}
 
-}); 
+});

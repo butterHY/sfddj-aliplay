@@ -58,9 +58,14 @@ Page({
 				isFocus: false,
 				isShowSearch: false,
 			});
+			this.setData({
+				placeholder: my.getStorageSync({key: 'searchTextMax'}).data
+			});
 			if( this.searchComponent ) {
 				this.searchComponent.setData({inputVal: ''});
 				this.searchComponent.getHistory();
+				// that.searchComponent.data.pageType = 'category';
+				console.log(that.searchComponent)
 			}
 	},
 
@@ -241,8 +246,10 @@ Page({
 	/**
 	  * 新版搜索组件开关
 	*/
-	showSearch: function() {
-		this.searchComponent.getHistory();
+	showSearch: function(noGetHistory) {
+		console.log(noGetHistory)
+		// this.searchComponent.getHistory()
+		noGetHistory == 'noGetHistory' ? '' : 	this.searchComponent.getHistory();
 		this.setData({
 			isShowSearch: !this.data.isShowSearch,
 			isFocus: !this.data.isFocus,

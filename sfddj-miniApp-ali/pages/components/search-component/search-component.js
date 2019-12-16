@@ -12,28 +12,29 @@ Component({
     inputVal: '',                             // 搜索值
     searchWords: [],                          // 搜索记录数据
     hotWords: [],                             // 搜索热词数据
-    hotWordShow: true,                        // 搜索板块显示开关
+    hotWordShow: true,                        // 搜索热词显示开关
     smSearchShow: false,                      // 智能板块显示开关
-    clearSearchShow: true,                    // 清除搜索词开关
-
-    placeholderVal: '',                       // 输入框隐藏词
+    clearSearchShow: false,                    // 清除搜索词开关
   },
   props: {
     pageType: null,                           // 从哪个页面进入的
     isFocus: false,                           // 是否获取焦点
     onShowSearch: (data) => console.log(data),
+    placeholderVal: '',                       // 输入框隐藏词。
   },
   
   didMount() {
-    let that = this;
     // this.$page.xxCom = this;  // 通过此操作可以将组件实例挂载到所属页面实例上   
     // console.log(this.is);     // 组件路径
     // console.log(this.$page);  // 组件所属页面实例
     // console.log(this.$id);    // 组件 id，可直接在组件 axml 中渲染值
     console.log('我挂载上去了')
     this.$page.searchComponent = this;  // 页面 onLoad 后的 onShow 获取不到，因为有时差，但之后页面的 onShow 都能获取到，而 saveRef(ref) 只在页面 onLoad 后自动触发，之后不会再触发；
+    this.data.pageType = this.props.pageType;
+    console.log(this.props.placeholderVal);
+    console.log(this.data.pageType)
 
-    that.getHotWord();
+    this.getHotWord();
   },
 
   didUpdate() {},
@@ -45,7 +46,8 @@ Component({
     * 搜索组件开关
   */
     onHideSearch() {
-      this.props.onShowSearch();
+      this.props.onShowSearch('noGetHistory');
+      //  this.props.onShowSearch();
       this.setData({
         inputVal: '',
         hotWordShow: true,
@@ -62,13 +64,6 @@ Component({
       if(that.props.pageType == 'home') {
         getApp().globalData.uma.trackEvent('homepage_searchClick'); 
       }
-      // console.log(event.detail.value)
-      // console.log(this.data.hotWordShow);
-      // console.log(this.data.smSearchShow);
-      // console.log(this.data.hotWords);
-      // console.log(this.data.searchWords);
-      // console.log(this.data.inputVal)
-      // that.handleInput(e);
     },
 
     /**
@@ -91,15 +86,14 @@ Component({
     */
     getHistory() {
       let that = this;
-      console.log(this.data.inputVal)
       try {
         var searchWords = my.getStorageSync({
           key: constants.StorageConstants.searchWordsKey, // 缓存数据的key
         }).data;
         that.setData({
-          searchWords: searchWords.reverse(),
+          searchWords: searchWords && searchWords.length > 0 ? searchWords.reverse() : [],
         });
-        console.log('获取历史记录，', searchWords);
+        console.log('获取历史记录+++++++++++++++', searchWords);
       } catch (e) { }
     },
 
@@ -111,14 +105,17 @@ Component({
       let inputVal = event.detail.value.replace(/\s*/g,'');
       let hotWordShow = true;
       let smSearchShow = true;
+      let clearSearchShow = false;
       // inputVal != this.data.inputVal
       if( inputVal ) {
         this.smartSearch(inputVal);
         hotWordShow = false;
+        clearSearchShow = true;
       } else {
         smSearchShow = false;
       }
       this.setData({
+        clearSearchShow,
         hotWordShow,
         smSearchShow,
         inputVal: event.detail.value
@@ -134,21 +131,21 @@ Component({
       console.log(inputVal);
       my.showLoading({
         content: '加载中...',
-        delay: '1000',
+        delay: '2000',
       });
       let data = {
         suggestStr: inputVal,
         showChannel: 0
       }
+      let retunData = {
+        hotWordShow: true,
+        smSearchShow: false,
+        smartSearchList: []
+      };
       http.post( api.search.GOODSSUGGEST, data ,(res) => {
         console.log(res);
         let resData = res.data.data;
         let retData = res.data.ret;
-        let retunData = {
-            hotWordShow: true,
-            smSearchShow: false,
-            smartSearchList: []
-        };
         if( retData && retData.code == '0' && retData.message == "SUCCESS" && resData && resData.length > 0 ) {
           retunData.hotWordShow = false;
           retunData.smSearchShow = true;
@@ -173,12 +170,12 @@ Component({
       let { type, word } = event.currentTarget.dataset
       this.setData({
         inputVal: '',
-        placeholderVal: word,
+        placeholderVal: '',
         hotWordShow: true,
         smartSearchList: false,
       });
       console.log('选中词请求数据 inputVal',this.data.inputVal,'placeholderVal',this.data.placeholderVal)
-
+      console.log(that.props)
       that.props.pageType == 'showSearchPage' ? that.props.onSelectOrEnter(word, 'noGetHistory') : that.goToSearchPage(word, type);
     },
 
@@ -192,13 +189,12 @@ Component({
       console.log(value)
       this.setData({
         inputVal: '',
-        placeholderVal: value,
         hotWordShow: true,
         smSearchShow: false,
       })
       console.log('键盘回车请求数据 inputVal',this.data.inputVal,'placeholderVal',this.data.placeholderVal)
-
-      that.props.pageType == 'showSearchPage' ? that.props.onSelectOrEnter(value, 'noGetHistory') : that.goToSearchPage(value, type);
+      console.log(that.props)
+      that.props.pageType == 'showSearchPage' ? that.props.onSelectOrEnter(value, 'noGetHistory') : that.goToSearchPage(value, 'searchValue');
     },
 
     /**
@@ -222,6 +218,7 @@ Component({
         inputVal: '',
         hotWordShow: true,
         smSearchShow: false,
+        clearSearchShow: false,
       })
     },
 
@@ -229,11 +226,12 @@ Component({
     *  搜索模块，敲击键盘完成去到搜索页（首页需要添加 友盟统计）
     */
     goToSearchPage(keyWord, type) {
+      let that = this;
       if ( keyWord && keyWord.replace(/\s*/g,'') ) {
         // 达观数据上报
         // utils.uploadClickData_da('search', [{ keyword: keyWord }])
         // 友盟+ 统计  输入框输入探索
-        this.umaTrackEvent(type, keyWord)
+        that.props.pageType == 'home' ? that.umaTrackEvent(type, keyWord) : '';
 
         my.navigateTo({
           url: '/pages/home/searchResult/searchResult?keyWord=' + keyWord
@@ -246,6 +244,7 @@ Component({
     */
     umaTrackEvent(type, keyWord) {
       var keyWord = keyWord;
+      console.log(type);
       if (type == 'searcHotWord') {
         // 友盟+统计--首页搜索热词点击
         getApp().globalData.uma.trackEvent('homepage_searchHotWord', { keyWord: keyWord });

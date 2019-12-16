@@ -105,9 +105,7 @@
       <view class="couponTitle">
         <image src="{{baseImageLocUrl}}miniappImg/public/goodsDetail/icon_coupon.png" class="width_100 height_100" mode="widthFix"></image>
       </view>
-      <view class="couponName color-ff2e2e" a:for="{{couponDataList}}" a:key="*this">
-        <block a:if="{{index == 0 || index == 1 || index == 2}}">满{{item.needPrice}}减{{item.costPrice}}</block>
-      </view>
+      <view class="couponName color-ff2e2e" a:for="{{couponDataList}}" a:key="*this" a:if="{{index == 0 || index == 1 || index == 2}}">满{{item.needPrice}}减{{item.costPrice}}</view>
     </view>
     <view class="getCouponText">
       <view class="color-a1a0a0">领券</view>
@@ -120,7 +118,7 @@
   <popup show="{{ isShowPopup }}" mask="{{true}}" position="bottom" animation="{{true}}" onClose="onPopupClose" zIndex="100" disableScroll="{{false}}">
     <view class="coupon-popup">
       <view class="flex_view_col all_100">
-        <scroll-view class="flex_1" scroll-y="{{true}}" onScrollToLower="lowLoadMore">
+        <scroll-view class="flex_1" scroll-y="{{true}}" data-type="coupon" onScrollToLower="lowLoadMore">
           <block a:for="{{couponDataList}}" a:key="*this">
              <template is="couponItem" data="{{item,index,isExpired: false, pageFrom: 'goodsDetail', user_memId, baseImageLocUrl}}"></template>
           </block>
@@ -144,7 +142,9 @@
   <view class="detail-header-view posi_re ">
     <view class="detail-header-name color-323232 font-32">
       <view class="twoLineHide">
-        <text class="labelName  label font-20" a:if="{{goods.goodsLabels}}">{{goods.goodsLabels}}</text>
+        <view class="labelName font-20" a:if="{{goods.goodsLabels}}">
+          <text class="flex_view_col justi_start ">{{goods.goodsLabels}}</text>
+        </view>
         <text class="goodsName font-weight-600">{{goods.goodsName}}</text>   
       </view> 
       <view class="flex_view_row  justi_start font-20 labelList" a:if="{{goods.goodsViceVO.labelList.length > 0 || goods.goodsTag}}">
@@ -371,7 +371,7 @@
     <view class="js_guessLike">
       <view class="item-header-title-view font-26 color-b3b3b3">- 猜你喜欢 -        
       </view>
-      <scroll-view scroll-x class="goods-scrollx-view" scroll-with-animation="true" onScroll="guessLikeScroll">
+      <scroll-view scroll-x class="goods-scrollx-view" scroll-with-animation="true" data-type="guessLike" onScrollToLower="lowLoadMore" onScroll="guessLikeScroll">
         <block a:for="{{guessLikeGoods}}" a:key="*this">
           <template is="itemGoodsScrollX" data="{{...item,baseImageUrl:baseImageUrl,baseLocImgUrl: base64imageUrl,index}}"/>
         </block>
@@ -494,10 +494,10 @@
   <!-- 回到首页或顶部 -->
   <view class="{{comeBackBar == 'show'? 'comeBackDisplay' : (comeBackBar == 'hide' ? 'comeBackHide' : '')}} comeBack font-36" >
     <navigator open-type="switchTab" url="/pages/home/home"  class="goIcon">
-      <text class="iconfont icon-home"></text>
+      <text class="icon-home"></text>
     </navigator>
     <view class="goIcon" onTap="goTop">
-      <text class="iconfont icon-goTop"></text>
+      <text class="icon-goTop_home"></text>
     </view>
   </view>
 
@@ -606,7 +606,7 @@
  </view>
 
   <!-- 规格选择框                                   已完成新接口字段更换-->
-  <template is="goodsSpec" data="{{show:showGoodsSpec,baseLocImgUrl:base64imageUrl,baseImageUrl,goods,user_memId,goodsSecondKill,product,goodsSpecMap,optionalProduct,xgCount,specType,selectedSpecsBar,multiformname,quantity,subtractDisabled,addDisabled,type,showInput:true,SFmember}}"/>
+  <template is="goodsSpec" data="{{show:showGoodsSpec,baseLocImgUrl:base64imageUrl,baseImageUrl,bottom,goodsSpecHeight,goods,user_memId,goodsSecondKill,product,goodsSpecMap,optionalProduct,xgCount,specType,selectedSpecsBar,multiformname,quantity,subtractDisabled,addDisabled,type,showInput:true,SFmember}}"/>
   <!-- 送礼方式选择弹窗，点击‘确定’之后数量大于2的情况下弹出              已完成新接口字段更换-->
   <template is="goodsGiftBomb" data="{{show:showGiftBomb,base64imageUrl:base64imageUrl}}"/>
   <!-- 送礼方式介绍弹窗，点击 ‘什么是送礼方式’ 弹出                         已完成新接口字段更换-->

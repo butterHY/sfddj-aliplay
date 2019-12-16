@@ -476,6 +476,14 @@ input {
   color: #5d5d5d;
 }
 
+.color-c9c3c3 {
+  color: #c9c3c3;
+}
+
+.color-c8c8c8 {
+  color: #c8c8c8;
+}
+
 /*橙色   */
 
 .color-fd5e2e {

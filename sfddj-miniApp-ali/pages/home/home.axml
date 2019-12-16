@@ -2,9 +2,11 @@
 <import src="../common/item-pintuan"/>
 <import src="../common/adverts"/>
 <import-sjs name="filters" from="../wxsFile/public.sjs"/>
-<!-- 搜索模版和热词模版-->
-<import src="../common/home-search"/>
-<import src="../common/home-hotWords"/> 
+<!-- 旧的搜索模版和热词模版-->
+<!-- <import src="../common/home-search"/> -->
+<!-- <import src="../common/home-hotWords"/>  -->
+<!-- 新的搜索模块 -->
+<import src="../common/search"/>
 
 <view a:if="{{true}}" class="width_100 flex_view_col posi_re" style="{{ showToast ? 'height: 100vh; overflow-y: scroll;' : '' }}" disable-scroll="{{show || showToast ? true : false}}">
 	<!-- <favorite type="tips" bottom="0rpx">收藏小程序，下次使用更方便</favorite> -->
@@ -15,7 +17,10 @@
 		<lifestyle a:if="{{canUseLife}}" publicId='2016071501623328'/>
 		<view class="width_100" style="height: 120rpx;" catchTap="showSearch">
 			<view class="{{!canUseLife || hideLifeStyle ? 'posi_fix' : ''}} width_100" style="top: 0; left: 0; z-index: 100;">
-				<template is="home-search" data="{{baseLocImgUrl, inputVal}}"></template>
+				<!-- <template is="home-search" data="{{baseLocImgUrl, inputVal}}"></template> -->
+			<view catchTap="showSearch">
+				<template is="search" data="{{baseLocImgUrl, placeholder, pageType: 'home'}}"></template>  
+			</view>
 			</view>
 		</view>
 	</view>
@@ -106,6 +111,6 @@
 </view>
 <!-- 新版搜索热词和历史记录膜层 -->
 <popup show="{{isShowSearch}}" position="right" zIndex="9000" disableScroll={{false}} mask="{{false}}">
-	<search-component  ref="saveRef" onShowSearch="showSearch" isFocus="{{isFocus}}" pageType="home"></search-component>
+	<search-component  ref="saveRef" onShowSearch="showSearch" isFocus="{{isFocus}}" placeholderVal="{{placeholder}}" pageType="home"></search-component>
 </popup>
 

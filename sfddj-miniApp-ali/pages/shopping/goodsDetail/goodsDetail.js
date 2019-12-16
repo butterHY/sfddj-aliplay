@@ -56,9 +56,9 @@ Page({
     suctionTop: 1,
     flag: true,                                 // 监听产详和售后的节流开关
     isTitleViewClone: false,                    // 商品详情页和服务售后的导航克隆,
-    startCoupon: 0,                           
-		limitCoupon: 4,
-    hasMore: true,
+    startCoupon: 0,    													// 优惠券请求参数                       
+		limitCoupon: 4,															// 优惠券请求参数
+    hasMore: true,															// 优惠券是否还有更多
 		isLoadMore: false,
     loadComplete: false,
     couponDataList: [],
@@ -84,9 +84,18 @@ Page({
     user_memId: '默认是会员',                   //  是否存在 memberId，判断是否绑定手机号
     priceInfo: {},                              //  商详页不同商品类型的价格和积分和返现数据；
 
-
+		// 规格弹窗按钮禁用值
 		subtractDisabled: false,										// 数量 -- 禁止按钮
 		addDisabled: true,													// 数量 ++ 禁止按钮
+
+		// 猜你喜欢数据
+		guessLikeGoods: [],											
+		youLikeStart: 0,
+		youLikeLimit: 10,
+    youLikeHasMore: true,
+		youLikeIsLoadMore: false,
+    youLikeLoadComplete: false,
+
 	},
 
 	onLoad: async function(query) {
@@ -405,7 +414,7 @@ Page({
             // 处理商品评论；
             that.getComment(resData);
             // 请求获取猜你喜欢的数据
-            that.getGuessLike(that.data.goodsId, true);
+            that.getGuessLike('0');
             // 请求获取优惠券数据
             that.getCoupon('0');
             // 请求联系商家的 webCallParam
@@ -561,15 +570,29 @@ Page({
 
 
 	// 获取达观推荐的商品---猜你喜欢
-	async getGuessLike(goodsId, isFirst) {
+	getGuessLike(type) {
     let that = this;
-    http.get(api.GUESSLIKE,  { start: 0, limit: 10, sceneType: 'detail', is_first: isFirst, goodsId }, 
-      function(res) {
-        let guessLikeGoods = res.data.data ? res.data.data : []
-        that.setData({
-          guessLikeGoods
-        })
-      }, function(err) { })
+		let data = {
+      groupName: '支付宝小程序猜你喜欢',
+      start: that.data.youLikeStart,
+      limit: that.data.youLikeLimit
+    }
+		that.setData({youLikeIsLoadMore: true});
+
+		http.get(api.GOODSDETAIL.lISTGOODSBYNAME, data ,(res) => {
+			if( res.data.ret.code == '0' && res.data.ret.message == "SUCCESS" ) {
+				let resData = res.data.data;
+				resData && resData.length == that.data.youLikeLimit ? that.data.youLikeHasMore = true : that.data.youLikeHasMore = false;  // 如果返回的数据长度等于请求条数说明还有更多数据
+
+				type == '0' ? that.data.guessLikeGoods = resData : that.data.guessLikeGoods = that.data.guessLikeGoods.concat(resData);  // 0: 初始化; 1: 每次加载拼接进去的数据;
+
+				that.setData({
+					guessLikeGoods: that.data.guessLikeGoods,
+					youLikeHasMore: that.data.youLikeHasMore,           // 是否还有更多                  
+				});
+			}
+			that.setData({youLikeIsLoadMore: false })								// 正在加载中的加载进度条
+		}, (err) => { that.setData({youLikeIsLoadMore: false }) })
 	},
 
 	// 设置滚动到猜你喜欢的位置
@@ -738,12 +761,16 @@ Page({
           // ----- 位修改规格的价格，改为直接使用后台返回的单价格和单位积分 , 不再 * 起购数量     start;  字段都与新接口核对正确, 只全部值都暂时展示单位
           value.tuanPrice = value.tuangouPrices;        // 价格和积分不变 （新版，价格/积分 不随着数量和起购数量变化，只是显示单位价格）                     
           value.goodsPrice = value.salePrice;                                 
-          value.secondKillPrice =  value.activityPrice;
-          value.thisMemberPoint =  value.memberPoint;                        
-          value.thisReturnMoneyPrice = (value.returnMoney * that.data.minCount).toFixed(2);                     
-          value.memberPriceAll = value.memberPrice;                           
-          value.costMemberScoreAll = value.costMemberScore * that.data.minCount;                   
-          value.awardMemberScoreAll = value.awardMemberScore * that.data.minCount;                 
+          that.data.goods.secKillStatus ? value.secondKillPrice =  value.activityPrice : '';
+					that.data.goods.memberDayPriceStatus ? value.memberDayPrice = value.memberDayPrice : '';
+					that.data.goods.jifenStatus ? value.thisMemberPoint =  value.memberPoint : '';
+          that.data.goods.returnMoneyStatus ? value.thisReturnMoneyPrice = (value.returnMoney * that.data.minCount).toFixed(2) : '';
+					if(that.data.SFmember) {
+						value.memberPriceAll = value.memberPrice
+						value.costMemberScoreAll = value.costMemberScore * that.data.minCount;                   
+						value.awardMemberScoreAll = value.awardMemberScore * that.data.minCount; 
+					}
+                
           // ----- 修改规格的价格，改为直接使用后台返回的单位价格和单位积分 , 不再 * 起购数量       end;
 
 
@@ -861,6 +888,8 @@ Page({
         showGoodsSpec: true,
         selectedSpecsBar: false,
       });
+
+			// this.data.showGoodsSpec ? this.inputFocus() : '';
     }
 	},
 
@@ -879,6 +908,7 @@ Page({
         showGoodsSpec: true,
         selectedSpecsBar: false,
       });
+			// this.data.showGoodsSpec ? this.inputFocus() : '';
     }
 	},
 
@@ -915,13 +945,19 @@ Page({
 	 * 点击已选规格栏
 	 */
   selectedSpecs: function() {
-    if( this.data.goods.viewStatus != 'SALEING' ) {
-      return;
-    }
-    this.setData({
+		let that = this;
+		if(that.data.goods.secKillStatus) {
+			if( that.data.goods.viewStatus != 'SALEING' || that.data.goodsSecondKill.totalSaleVolume == that.data.goodsSecondKill.totalStock ) {
+				return;
+			}
+		} else if ( that.data.goods.viewStatus != 'SALEING' ||  that.data.goods.goodsStore == 0 ) {
+				return;
+		}
+    that.setData({
       selectedSpecsBar: true,
       showGoodsSpec: true,
     })
+		// this.data.showGoodsSpec ? this.inputFocus() : '';
   },
 
 	/**
@@ -1203,9 +1239,48 @@ Page({
 
 			that.isDisabled(that.data.quantity);
 		}
+		that.setData({
+			// goodsSpecHeight: that.data.goodsSpecHeight,
+			// miniGoodsSpecHeight: that.data.miniGoodsSpecHeight,
+			bottom: 0
+		})
 	},
 
+	// inputFocus: function(e) {
+	// 	let that = this;
+	// 	my.createSelectorQuery()
+  //     .select('.js_goodsSpecInput').boundingClientRect()
+  //     .exec((ret) => {
+	// 			console.log(ret);
+	// 	})
+
+	// 	my.createSelectorQuery()
+  //     .select('.js_a').boundingClientRect()
+  //     .exec((ret) => {
+	// 			console.log(ret);
+	// 			!e ? that.data.goodsSpecHeight = ret[0].height : that.data.miniGoodsSpecHeight = ret[0].height;
+	// 			console.log('没有获取焦点',that.data.goodsSpecHeight);
+	// 			console.log('没有获取焦点',that.data.miniGoodsSpecHeight)
+	// 			console.log('没有获取焦点',that.data.bottom)
+	// 			if(e) {
+	// 				console.log('获取焦点')
+	// 				that.setData({
+	// 					goodsSpecHeight: that.data.goodsSpecHeight,
+	// 					miniGoodsSpecHeight: that.data.miniGoodsSpecHeight,
+	// 					bottom: that.data.goodsSpecHeight - that.data.miniGoodsSpecHeight
+	// 				})
+
+	// 				console.log('获取焦点',that.data.goodsSpecHeight)
+	// 				console.log('获取焦点',that.data.miniGoodsSpecHeight)
+	// 				console.log('没有获取焦点',that.data.bottom)
+	// 			}
+	// 	})
+	// 	console.log(e);
+
+	// },
+
   // 去到购物车
+	
 	cartTap: function(e) {
 		my.navigateTo({
 			url: '/pages/cart/cart'
@@ -1578,14 +1653,22 @@ Page({
   },
 
   // 拖拽优惠券弹窗
-  lowLoadMore: function () {
+
+  lowLoadMore: function (e) {
     let that = this;
-    if (that.data.hasMore) {
+		console.log(e)
+		if(e.target.dataset.type == 'coupon' && that.data.hasMore) {
 			that.setData({
 				startCoupon: that.data.couponDataList.length
 			});
       that.data.hasMore = false;
 			that.getCoupon('1');
+		} else if(e.target.dataset.type == 'guessLike' && that.data.youLikeHasMore) {
+			that.setData({
+				youLikeStart: that.data.guessLikeGoods.length
+			});
+      that.data.youLikeHasMore = false;
+			that.getGuessLike('1');
 		}
   },
 
@@ -1650,7 +1733,7 @@ Page({
   goTop() {
     my.pageScrollTo({
       scrollTop: 0,
-      duration: 3000,
+      duration: 1500,
     });
   },
 
@@ -1964,11 +2047,13 @@ Page({
       */
       that.data.priceInfo.isBaoShui = false; // (是否报税)
 			that.data.priceInfo.nonImport = false; // (是否进口)
-      if(  that.data.goods.goodsViceVO.crossBorderPattern == 1 || that.data.goods.goodsViceVO.crossBorderPattern == 2 || that.data.goods.goodsViceVO.rossBorderPattern == 4) {
+      if(  that.data.goods.goodsViceVO.crossBorderPattern == 1 || that.data.goods.goodsViceVO.crossBorderPattern == 2 || that.data.goods.goodsViceVO.crossBorderPattern == 4) {
           that.data.priceInfo.isBaoShui = true;
       } else if( that.data.goods.goodsViceVO.crossBorderPattern == 0 ) {
 				 that.data.priceInfo.nonImport = true;
 			}
+
+			console.log(that.data.priceInfo)
 
       // 员工专享
       // if(that.data.goods.staffStatus) {}

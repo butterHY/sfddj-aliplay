@@ -1,10 +1,9 @@
 <template name="itemStoreList">
-  <view class="storeItem">
+  <view class="storeItem" style="{{!supplierGoods || supplierGoods.length <= 0 ? 'height: 354rpx;' : ''}}">
     <view class="storeHeader">
       <view class="merchantImg">
         <image mode="widthFix" a:if="{{headImage}}" src="{{baseImageUrl}}{{headImage}}" class="all_100"/>
-        <!-- <image mode="" a:else src="{{baseImageUrl}}miniappImg/icon/icon_default_head.jpeg"  class="all_100"/> -->
-        <image mode="widthFix" a:else src="{{baseImageUrl}}{{supplierGoods[0].defaultImage}}"  class="all_100"/>
+        <image mode="widthFix" a:else src="{{baseLocImgUrl}}{{defaultImage}}"  class="all_100"/>
       </view>
       <view class="merchantName">
         <view class="storeName">{{nickName}}</view>
@@ -18,15 +17,13 @@
         </view>
       </view>
       <navigator class='intoShop' url="/pages/shopping/storeInfo/storeInfo?supplierId={{supplierId}}" open-type="navigate" hover-class="none">进店</navigator>
-      <!-- <view class="intoShop">进店</view> -->
     </view>
-    <view class="storeImg">
-      <navigator class='imgBox' url="/pages/shopping/goodsDetail/goodsDetail?goodsSn={{item.goodsSn}}" open-type="navigate" hover-class="none" a:for="{{supplierGoods}}" a:for-index="supplierGoodsIndex" a:key="supplierGoods" a:if="{{supplierGoodsIndex == 0 || supplierGoodsIndex == 1 || supplierGoodsIndex == 2 }}" style="{{supplierGoodsIndex == 2 ? 'margin-right: 0': ''}}">
-        <!-- <view class="imgBox"  > -->
-          <image mode="widthFix" src="{{baseImageUrl}}{{item.defaultImage}}" class="all_100 supplierGoodsImg"/>
-          <text class="sotrePrice">￥ {{item.defaultPrice}}</text>
-        <!-- </view> -->
+    <view class="storeImg" a:if="{{supplierGoods && supplierGoods.length > 0}}">
+      <navigator class='imgBox' url="/pages/shopping/goodsDetail/goodsDetail?goodsSn={{item.goodsSn}}" open-type="navigate" hover-class="none"  a:if="{{supplierGoodsIndex == 0 || supplierGoodsIndex == 1 || supplierGoodsIndex == 2 }}" a:for="{{supplierGoods}}" a:for-index="supplierGoodsIndex" a:key="*this" style="{{supplierGoodsIndex == 2 ? 'margin-right: 0': ''}}">
+        <image mode="widthFix" src="{{baseImageUrl}}{{item.defaultImage}}" class="all_100 supplierGoodsImg"/>
+        <text class="sotrePrice single-line">￥ {{item.defaultPrice}}</text>
       </navigator>
     </view>
+    <view class="emptyGoods" a:else>暂无商品内容</view>
   </view>
 </template>

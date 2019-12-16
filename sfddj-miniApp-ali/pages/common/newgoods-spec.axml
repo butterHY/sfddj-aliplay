@@ -1,5 +1,6 @@
 <template name="goodsSpec">  
-  <view class="flex_view_col" style="position:fixed;top:0;left:0;right:0;bottom:0;background-color:rgba(0,0,0,0.5);z-index:9000" catchTouchMove="move"  a:if="{{show}}">
+ <!-- style="{{goodsSpecHeight && goodsSpecHeight > 0 ? 'height:{{goodsSpecHeight}}'  : ''}} bottom:{{bottom}};" -->
+  <view class="flex_view_col goodsSpec js_a" catchTouchMove="move"  a:if="{{show}}">
       <view class="flex_1" catchTap="colseSpecDialog"></view>
       <!-- onTap="tapSpec" 下面 view 的事件，但没发现该函数 -->
       <view style="height:936rpx;background:#fafafa;border-radius: 35rpx;">
@@ -23,9 +24,10 @@
                 <view class="font-40 color-ff2e2e" a:else>
                   <!-- 秒杀商品，秒杀价 -->
                   <text class="aba" a:if="{{product.secondKillPrice}}">￥{{product.secondKillPrice}}</text>
-                  <!-- 不是会员商品，普通价 -->
-                  <text class="aba" a:elif="{{!SFmember || SFmember && type == 5}}">￥{{product.goodsPrice}}</text>
-                  <!-- 会员商品，会员价 + 兑换会员积分  -->
+                  <!-- 不是顺丰会员商品，普通价 -->
+                  <text class="aba" a:elif="{{!SFmember && type == 5}}">￥{{product.goodsPrice}}</text>
+                  <text class="aba" a:elif="{{goods.memberDayPriceStatus}}">￥{{product.memberDayPrice}}</text>
+                  <!-- 是顺丰会员商品，会员价 + 兑换会员积分  -->
                   <block a:if="{{SFmember && type != 5}}">
                     <text class="cbc">￥{{product.memberPriceAll}}</text>
                     <text class="font-24 color-a1a0a0 marLeft_5" a:if="{{product.costMemberScoreAll && product.costMemberScoreAll > 0}}">+ {{product.costMemberScoreAll}}积分</text>
@@ -111,7 +113,7 @@
             <view class="number-pick-view">
             <!-- catchTap="{{subtractDisabled ? '' : 'subtractTap'}}"  -->
               <view class="number-pick-view-symbol background-f2" catchTap="subtractTap" style="{{subtractDisabled ? 'color: #b3b2b2;background: #f5f5f5;' : ''}}">-</view>
-              <!-- catchTap="quantityTap" 下面 view 的事件，但没发现该函数 -->
+              <!-- catchTap="quantityTap" 下面 view 的事件，但没发现该函数   onFocus="inputFocus" -->
               <view class="number-pick-view-text background-f2" ><input disabled="{{showInput ? '' : 'true'}}" class="all_100 font-38 color-323232 tex_center" type="number" controlled="true"  value="{{quantity}}" onBlur="inputBlur" onInput="changeQuantity" style='background: transparent;'/></view>
               <!-- <view class='number-pick-view-text' catchtap='quantityTap'><input disabled='true' class='all_100 font-28 color-323232 tex_center' type='number' value='{{quantity}}' onInput='changeQuantity' onBlur='inputBlur'></input></view> -->
               <!-- catchTap="{{addDisabled ? '' : 'addTap'}}" -->
@@ -153,7 +155,9 @@
               </view>
             </view>
           </block>
+          
         </view>
       </view>
+      <view class="js_goodsSpecInput"></view>
   </view>
 </template>

@@ -10,12 +10,11 @@ import api from '../../../api/api';
 import http from '../../../api/http';
 
 Page({
-
 	/**
 	 * 页面的初始数据
 	 */
 	data: {
-		priceHigher: true, 				// 价格升序降序开关
+		priceHigher: false, 				// 价格升序降序开关
 		sortIndex: 0,							// 默认综合排序
 		scrollTop: false,
 		show: false,
@@ -31,15 +30,16 @@ Page({
 		isloadMore: false,
 		baseLocImgUrl: constants.UrlConstants.baseImageLocUrl,
 		baseImageUrl: constants.UrlConstants.baseImageUrl,
+		defaultImage: 'miniappImg/icon/icon_default_head.jpeg',
 		loadComplete: false,
 		goodsLoadFail: false,
 
-		activity: false,			 		// 两列切换开关
-		showChannel: 0,						// 显示渠道,0为主站,1为地区管
-		goodsOrStore: '0',				// '0' 代表是商品类型，'1' 代表是店铺类型；
+		activity: false,			 							// 两列切换开关
+		showChannel: 0,											// 显示渠道,0为主站,1为地区管
+		goodsOrStore: '0',									// '0' 代表是商品类型，'1' 代表是店铺类型；
 
-		searchShow: false,				// 智能搜索模版显示开关
-		smartSearchList: [],			// 智能搜索数据
+		searchShow: false,									// 智能搜索模版显示开关
+		smartSearchList: [],								// 智能搜索数据
 
 		isShowSearch: false,								// 新版搜索组件显示开关
 		isFocus: false,											// 新版搜索组件焦点开关
@@ -55,6 +55,16 @@ Page({
 		});
 		// utils.getNetworkType(this);
 		this.searchProduct(options.keyWord, 0);
+	},
+
+	onShow: function() {
+		this.setData({
+			placeholder: my.getStorageSync({key: 'searchTextMax'}).data
+		});
+		if( this.searchComponent ) {
+			this.searchComponent.data.pageType = 'showSearchPage';
+			console.log(this.searchComponent)
+		}
 	},
 
 	// onPageScroll: function (obj) {
@@ -95,6 +105,8 @@ Page({
 		// 点击同类会改变升降序，priceHigher 为 true 为升序
 		if (parseInt(sortIndex) == that.data.sortIndex) {
 			priceHigher = !priceHigher;
+		} else {
+			priceHigher = false;
 		}
 		this.setData({
 			scrollTop: false,							// 点击排序导航栏的时候，goodsList: [], 这时排序导航栏还是“吸顶”着，返回数据重新渲染 scroll-view 里的 view ，高度变化了，防止导航栏响应不及时还 “吸顶”；
@@ -509,15 +521,12 @@ Page({
 		console.log('我上拉了 加载了');
 		console.log(this.data.hasMore);
 		if (this.data.hasMore) {
-			this.data.goodsOrStore == '0' ? this.setData({goodsStart: this.data.goodsList.length, limit: this.data.limit}) : this.setData({goodsStart: this.data.storeList.length, limit: this.data.limit});
+			this.data.goodsOrStore == '0' ? this.setData({goodsStart: this.data.goodsList.length, limit: this.data.limit}) : this.setData({storeStart: this.data.storeList.length, limit: this.data.limit});
 		  this.data.hasMore = false;
 			this.searchProduct(this.data.inputVal, 1);
 		}
 	},
 
-	setIputValue() {
-		
-	},
 
 	/**
 	  * 存储新版搜索组件实例（但只在页面初始化是挂载，页面重显取不到）
@@ -531,7 +540,8 @@ Page({
 	  * 新版搜索组件开关
 	*/
 	showSearch: function(noGetHistory) {
-		console.log(noGetHistory)
+		console.log(noGetHistory);
+		// this.searchComponent.getHistory()
 		noGetHistory == 'noGetHistory' ? '' : 	this.searchComponent.getHistory();
 		this.setData({
 			isShowSearch: !this.data.isShowSearch,

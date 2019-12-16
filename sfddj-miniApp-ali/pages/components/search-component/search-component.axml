@@ -2,11 +2,12 @@
   <view class="searchInput row-aliCenter">
     <view class="inputBox flex_1">
       <view class="iconBox row-aliCenter">
-        <text class="iconfont icon-compass"></text>
+        <!-- <text class="iconfont icon-compass"></text> -->
+        <text class="icon-search_home font-40 color-c9c3c3"></text>
       </view>
-      <input class=" input flex_1 font-24 color-323232" placeholder="{{placeholderVal}}" value="{{inputVal}}" focus="{{isFocus}}" confirm-type="search"  onConfirm="handleConfirm" onFocus="handleFocus"  onInput="handleInput" />
+      <input class=" input flex_1 font-28 color-323232" placeholder="{{placeholderVal}}" value="{{inputVal}}" focus="{{isFocus}}"  confirm-type="search"  onConfirm="handleConfirm" onFocus="handleFocus"  onInput="handleInput" />
       <view class="iconBox row-aliCenter" a:if="{{clearSearchShow}}">
-        <text class="iconfont icon-compass" catchTap="clearSearchVal"></text>
+        <text class="icon-clear font-40 color-c8c8c8" catchTap="clearSearchVal"></text>
       </view>
     </view>
     <view class="center" catchTap="onHideSearch">取消</view>
@@ -27,11 +28,11 @@
         </view>
         <view class="wordLeft clearfix">
         <!-- <view class="font-24" style="background-color:#eeeeee;padding:10rpx 20rpx;border-radius:5px;margin-right:20rpx;margin-bottom:20rpx;max-width:650rpx;display:inline-block" data-word="{{searchWord}}" data-type="searchHist" a:for="{{searchWords}}" a:for-item="searchWord" a:key="*this" catchTap="chooseWord">{{searchWord}}</view> -->
-          <view class="hisWordItem hotWordItem" a:for="{{searchWords}}"  data-word="{{searchWord}}" data-type="searchHist" a:for="{{searchWords}}" a:for-item="searchWord" a:key="*this" catchTap="chooseWord">{{searchWord}}</view>
+          <view class="hisWordItem hotWordItem" a:for="{{searchWords}}"  a:for-item="searchWord" a:key="*this"  data-word="{{searchWord}}" data-type="searchHist" catchTap="chooseWord">{{searchWord}}</view>
         </view>
       </view>
     </block>
-    <view  a:if="{{smSearchShow}}" class="smartItem" style="border-bottom:{{index != smartSearchList.length - 1 ? '1rpx solid #e3e3e3;': ''}}" a:for="{{smartSearchList}}" a:key="*this" data-type="searchValue" data-word="{{item.suggestion}}" catchTap="chooseWord">{{item.suggestion}}</view>
+    <view  a:if="{{smSearchShow && smSearchShow.length > 0}}" class="smartItem" style="border-bottom:{{index != smartSearchList.length - 1 ? '1rpx solid #e3e3e3;': ''}}" a:for="{{smartSearchList}}" a:key="*this" data-type="searchValue" data-word="{{item.suggestion}}" catchTap="chooseWord">{{item.suggestion}}</view>
   </scroll-view>
 </view>
 
