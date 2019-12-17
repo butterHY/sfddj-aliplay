@@ -11,7 +11,7 @@
 
       <swiper-item class="swiperItem" a:for="{{swiperList}}" key="swiper-item-{{index}}">
         <!-- <view class="swiper-item bc_{{item}}" ></view> -->
-        <view class="swiper-item" style="height:{{height? height : '300rpx'}};border-radius:{{radius? radius : '20rpx'}};overflow:hidden;" data-url="{{item.url}}" data-title="{{item.title}}" data-type="banner" class="width_100 height_300r backImg {{(filters.isGoodsLink(item.url) && !item.isLoaded) ? 'js_bannerGoods_' + index : ''}}" onTap="goToPage">
+        <view style="height:{{height? height : '300rpx'}};border-radius:{{radius? radius : '20rpx'}};overflow:hidden;" data-url="{{item.url}}" data-title="{{item.title}}" data-type="banner" class="swiper-item width_100 height_300r backImg {{(filters.isGoodsLink(item.url) && !item.isLoaded) ? 'js_bannerGoods_' + index : ''}}" onTap="goToPage">
           <image src="{{baseImageUrl}}{{item.imageUrl}}" class="all_100" lazy-load="{{true}}"/>
           </view>
       </swiper-item>

@@ -50,19 +50,20 @@ Page({
     sendRequest.send(constants.InterfaceUrl.TO_ORDER_PAY, {
       paymentId: this.data.paymentId
     }, function (res) {
-	  let result = res.data.result ? Object.assign({},res.data.result) : {}
-	  if(result.orderSupplier) {
+      let result = res.data.result ? Object.assign({}, res.data.result) : {}
+
       let totalSupplierCouponPrice = 0
-		  for(var i = 0; i < result.orderSupplier.length; i++){
-			  var originalTotalPrice = 0;
-			  var item = result.orderSupplier[i].orderGoodsList ? result.orderSupplier[i].orderGoodsList : [];
-        result.orderSupplier[i].totalCouponPrice ?  totalSupplierCouponPrice += result.orderSupplier[i].totalCouponPrice : 0;
-			  for(var j = 0; j < item.length; j++){
-				  originalTotalPrice += (item[j].quantity * item[j].salePrice)
-			  }
-			  result.orderSupplier[i].originalTotalPrice = originalTotalPrice
-		  }
-	  }
+      if (result.orderSupplier) {
+        for (var i = 0; i < result.orderSupplier.length; i++) {
+          var originalTotalPrice = 0;
+          var item = result.orderSupplier[i].orderGoodsList ? result.orderSupplier[i].orderGoodsList : [];
+          result.orderSupplier[i].totalCouponPrice ? totalSupplierCouponPrice += result.orderSupplier[i].totalCouponPrice : 0;
+          for (var j = 0; j < item.length; j++) {
+            originalTotalPrice += (item[j].quantity * item[j].salePrice)
+          }
+          result.orderSupplier[i].originalTotalPrice = originalTotalPrice
+        }
+      }
 
       that.setData({
         result: result,

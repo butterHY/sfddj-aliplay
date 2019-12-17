@@ -36,11 +36,11 @@
   <view class="guessLikePro">
     <view class="guessLike_oneSide">
       <block a:for="{{recommondList}}" a:key="itemIndex">
-        <template is="itemGoodsCard" data="{{...item,left:true,baseImageUrl:baseImageUrl,hiddenCart:true,baseLocImgUrl,smallImgArg}}" a:if="{{index % 2 == 0}}"></template></block>
+        <template is="itemGoodsCard" data="{{...item,left:true,baseImageUrl:baseImageUrl,hiddenCart:true,baseLocImgUrl,smallImgArg, listType: 'goods', type: 'skipOther'}}" a:if="{{index % 2 == 0}}"></template></block>
     </view>
     <view class="guessLike_oneSide">
       <block a:for="{{recommondList}}" a:key="itemIndex2">
-        <template is="itemGoodsCard" data="{{...item,left:false,baseImageUrl:baseImageUrl,hiddenCart:true,baseLocImgUrl,smallImgArg}}" a:if="{{index % 2 != 0}}"></template></block>
+        <template is="itemGoodsCard" data="{{...item,left:false,baseImageUrl:baseImageUrl,hiddenCart:true,baseLocImgUrl,smallImgArg, listType: 'goods', type: 'skipOther'}}" a:if="{{index % 2 != 0}}"></template></block>
     </view>
   </view>
   <!-- 加载 -->

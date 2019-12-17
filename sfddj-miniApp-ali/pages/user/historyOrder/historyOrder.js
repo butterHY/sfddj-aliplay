@@ -1244,8 +1244,13 @@ Page({
   **/
   goToPage: function(e) {
       let that = this;
-      let url = e.currentTarget.dataset.url;
+      let { type, url} = e.currentTarget.dataset.url;
       let chInfo = constants.UrlConstants.chInfo;
+
+			if(type == 'banner'){
+				let data = {targetUrl: url}
+				getApp().globalData.uma.trackEvent('myOrder_banner', data);
+			}
       
       if (url.indexOf('http') > -1) {
         my.call('startApp', { appId: '20000067', param: { url: url, chInfo: chInfo } })

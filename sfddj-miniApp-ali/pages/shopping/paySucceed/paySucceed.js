@@ -192,4 +192,5 @@ Page({
       this.getGuessLike(1)
     }
   },
+
 });

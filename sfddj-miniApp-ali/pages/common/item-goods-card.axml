@@ -1,29 +1,56 @@
 <import-sjs name="filters" from="../wxsFile/public.sjs"/>
 <template name='itemGoodsCard'>
-  <!---->
-  <navigator url="{{tuangou ? '/pages/home/grouping/grouping?goodsSn=' + goodsSn : '/pages/shopping/goodsDetail/goodsDetail?goodsSn=' + goodsSn}}" class='itemGoodsCard borBox' hover-class='none' style='{{left ? "padding:10rpx 10rpx 10rpx 0":"padding:10rpx 0 10rpx 10rpx"}};'>
-    <view class='posi_re goodsArea'>
-      <view class='goodsImg'>
-        <image src='{{baseImageUrl}}{{goodsDefaultImage}}{{smallImgArg}}'></image>
-        <!--<image style='width:100%;height:250rpx;' src='{{baseImageUrl}}{{showImage}}{{smallImgArg}}'mode='widthFix'></image> -->
-      </view>
-      <!--小图标 全赔  -->
-      <image a:if='{{filters.strIndexOf(afterSaleGuee,"1")}}' src='{{baseLocImgUrl}}miniappImg/icon/icon_Payoff1.png' class='allCompensation posi_ab' style='{{left ? "right: 30rpx;" : "right: 10rpx;"}}'></image>
-      <image a:elif='{{filters.strIndexOf(afterSaleGuee,"2")}}' src='{{baseLocImgUrl}}miniappImg/icon/icon_Payoff2.png' class='allCompensation posi_ab' style='{{left ? "right: 30rpx;" : "right: 10rpx;"}}'></image>
-      <image a:elif='{{filters.strIndexOf(afterSaleGuee,"3")}}' src='{{baseLocImgUrl}}miniappImg/icon/icon_Payoff3.png' class='allCompensation posi_ab' style='{{left ? "right: 30rpx;" : "right: 10rpx;"}}'></image>
-      <image a:elif='{{filters.strIndexOf(afterSaleGuee,"4")}}' src='{{baseLocImgUrl}}miniappImg/icon/icon_Payoff4.png?version=2.0' class='allCompensation posi_ab' style='{{left ? "right: 30rpx;" : "right: 10rpx;"}}'></image>
-      <view class="goodsInfo height_176r notAtHome">
-        <view class='single-line2 height_80r'>
-          <text class='font-26 color-323232 single-line-text lineH_2'>{{goodsName}}</text>
-          <text class='font-26 color-bbbbbb single-line-text goods_productName'>{{productName}}</text>
+  <view>
+    <view a:if="{{type == 'skipOther'}}" data-index="{{index}}" data-type="{{listType}}" data-url="{{tuangou ? '/pages/home/pintuan/tuangouGoodsDetail?goodsSn=' + goodsSn : '/pages/shopping/goodsDetail/goodsDetail?goodsSn=' + goodsSn}}" class='itemGoodsCard borBox' style='{{left ? "padding:10rpx 10rpx 10rpx 0":"padding:10rpx 0 10rpx 10rpx"}};' onTap="goToPage">
+      <view class='posi_re goodsArea'>
+        <view class='goodsImg'>
+          <image src='{{baseImageUrl}}{{goodsDefaultImage}}{{smallImgArg}}'></image>
+          <!--<image style='width:100%;height:250rpx;' src='{{baseImageUrl}}{{showImage}}{{smallImgArg}}'mode='widthFix'></image> -->
         </view>
-        <view class="goodsPriceBox">
-          <text class='font-34 color-ff5353 font-weight-bold'>¥{{tuangou ? tuangouPrices : salePrice}}</text>
-          <view wx:if="{{!hiddenCart}}" catchtap='{{!cannotAdd ? "addCart" : ""}}' data-pid='{{productId}}'>
-            <text class="icon-shopcar_small color-ff5353 font-38"></text>
+        <!--小图标 全赔  -->
+        <image a:if='{{filters.strIndexOf(afterSaleGuee,"1")}}' src='{{baseLocImgUrl}}miniappImg/icon/icon_Payoff1.png' class='allCompensation posi_ab' style='{{left ? "right: 30rpx;" : "right: 10rpx;"}}'></image>
+        <image a:elif='{{filters.strIndexOf(afterSaleGuee,"2")}}' src='{{baseLocImgUrl}}miniappImg/icon/icon_Payoff2.png' class='allCompensation posi_ab' style='{{left ? "right: 30rpx;" : "right: 10rpx;"}}'></image>
+        <image a:elif='{{filters.strIndexOf(afterSaleGuee,"3")}}' src='{{baseLocImgUrl}}miniappImg/icon/icon_Payoff3.png' class='allCompensation posi_ab' style='{{left ? "right: 30rpx;" : "right: 10rpx;"}}'></image>
+        <image a:elif='{{filters.strIndexOf(afterSaleGuee,"4")}}' src='{{baseLocImgUrl}}miniappImg/icon/icon_Payoff4.png?version=2.0' class='allCompensation posi_ab' style='{{left ? "right: 30rpx;" : "right: 10rpx;"}}'></image>
+        <view class="goodsInfo height_176r notAtHome">
+          <view class='single-line2 height_80r'>
+            <text class='font-26 color-323232 single-line-text lineH_2'>{{goodsName}}</text>
+            <text class='font-26 color-bbbbbb single-line-text goods_productName'>{{productName}}</text>
+          </view>
+          <view class="goodsPriceBox">
+            <text class='font-34 color-ff5353 font-weight-bold'>¥{{tuangou ? tuangouPrices : salePrice}}</text>
+            <view wx:if="{{!hiddenCart}}" catchtap='{{!cannotAdd ? "addCart" : ""}}' data-pid='{{productId}}'>
+              <text class="icon-shopcar_small color-ff5353 font-38"></text>
+            </view>
           </view>
         </view>
       </view>
     </view>
-  </navigator>
+    <!---->
+    <navigator a:else url="{{tuangou ? '/pages/home/grouping/grouping?goodsSn=' + goodsSn : '/pages/shopping/goodsDetail/goodsDetail?goodsSn=' + goodsSn}}" class='itemGoodsCard borBox' hover-class='none' style='{{left ? "padding:10rpx 10rpx 10rpx 0":"padding:10rpx 0 10rpx 10rpx"}};'>
+      <view class='posi_re goodsArea'>
+        <view class='goodsImg'>
+          <image src='{{baseImageUrl}}{{goodsDefaultImage}}{{smallImgArg}}'></image>
+          <!--<image style='width:100%;height:250rpx;' src='{{baseImageUrl}}{{showImage}}{{smallImgArg}}'mode='widthFix'></image> -->
+        </view>
+        <!--小图标 全赔  -->
+        <image a:if='{{filters.strIndexOf(afterSaleGuee,"1")}}' src='{{baseLocImgUrl}}miniappImg/icon/icon_Payoff1.png' class='allCompensation posi_ab' style='{{left ? "right: 30rpx;" : "right: 10rpx;"}}'></image>
+        <image a:elif='{{filters.strIndexOf(afterSaleGuee,"2")}}' src='{{baseLocImgUrl}}miniappImg/icon/icon_Payoff2.png' class='allCompensation posi_ab' style='{{left ? "right: 30rpx;" : "right: 10rpx;"}}'></image>
+        <image a:elif='{{filters.strIndexOf(afterSaleGuee,"3")}}' src='{{baseLocImgUrl}}miniappImg/icon/icon_Payoff3.png' class='allCompensation posi_ab' style='{{left ? "right: 30rpx;" : "right: 10rpx;"}}'></image>
+        <image a:elif='{{filters.strIndexOf(afterSaleGuee,"4")}}' src='{{baseLocImgUrl}}miniappImg/icon/icon_Payoff4.png?version=2.0' class='allCompensation posi_ab' style='{{left ? "right: 30rpx;" : "right: 10rpx;"}}'></image>
+        <view class="goodsInfo height_176r notAtHome">
+          <view class='single-line2 height_80r'>
+            <text class='font-26 color-323232 single-line-text lineH_2'>{{goodsName}}</text>
+            <text class='font-26 color-bbbbbb single-line-text goods_productName'>{{productName}}</text>
+          </view>
+          <view class="goodsPriceBox">
+            <text class='font-34 color-ff5353 font-weight-bold'>¥{{tuangou ? tuangouPrices : salePrice}}</text>
+            <view wx:if="{{!hiddenCart}}" catchtap='{{!cannotAdd ? "addCart" : ""}}' data-pid='{{productId}}'>
+              <text class="icon-shopcar_small color-ff5353 font-38"></text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </navigator>
+  </view>
 </template>
