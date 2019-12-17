@@ -68,6 +68,6 @@
   <!-- <popup show="{{isShowSearch}}" position="right" zIndex="9000" disableScroll={{false}} mask="{{false}}" >
     <search-component  ref="saveRef" onShowSearch="showSearch" isFocus="{{isFocus}}"  placeholderVal="{{placeholder}}" pageType="category"></search-component>
   </popup> -->
-<view class="index_search {{isShowSearch ? 'show' : ''}}" style="{{!isShowSearch ? 'position: fixed;' : 'position: absolute;'}}">
+<view class="index_search {{isShowSearch ? 'show' : ''}}" style="{{!isShowSearch ? 'position: fixed;' : 'position: absolute;'}}" disable-scroll="{{isShowSearch ? true : false}}">
 	<search-component   ref="saveRef" onShowSearch="showSearch" isFocus="{{isFocus}}"  placeholderVal="{{placeholder}}" pageType="category" ></search-component>  
 </view>
