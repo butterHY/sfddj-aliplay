@@ -32,7 +32,7 @@
 
                 <!-- 会员商品 + 奖励会员积分  -->
                 <view class="font-24 color-ff2e2e marTop_10" a:if="{{SFmember && product.awardMemberScoreAll && product.awardMemberScoreAll > 0}}">奖励会员积分{{product.awardMemberScoreAll}}</view>
-                <view class="font-24 color-ff2e2e  marTop_10" a:if="{{ goods.globalStatus && goods.goodsViceVO.crossBorderPattern == 3 }}">税费: {{product.calGlobalFeeAll}}</view>
+                <view class="font-24 color-ff2e2e  marTop_10" a:if="{{ goods.globalStatus && goods.goodsViceVO.crossBorderPattern == 3 }}">税费: ￥{{product.calGlobalFeeAll}}</view>
                 <!-- 库存 -->
                 <view class="font-26 color-black margin-top18">库存 {{product.store < 0 ? "0" : product.store}} 份</view>
                 <!-- 返现商品且有返现金额 -->

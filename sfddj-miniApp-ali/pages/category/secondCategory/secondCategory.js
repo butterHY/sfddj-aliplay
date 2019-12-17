@@ -111,12 +111,11 @@ Page({
 		// 回到页面关闭搜索组件
 		console.log('关闭搜索组件');
 		console.log(this.searchComponent);
+
 		this.setData({
+			placeholder: my.getStorageSync({key: 'searchTextMax'}).data,
 			isFocus: false,
 			isShowSearch: false,
-		});
-		this.setData({
-			placeholder: my.getStorageSync({key: 'searchTextMax'}).data
 		});
 		if( this.searchComponent ) {
 			this.searchComponent.setData({inputVal: ''});

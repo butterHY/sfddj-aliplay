@@ -144,7 +144,8 @@ Page({
 			// 回到页面关闭搜索组件
 		console.log('关闭搜索组件');
 		console.log(that.searchComponent);
-		that.setData({
+		this.setData({
+			placeholder: my.getStorageSync({key: 'searchTextMax'}).data,
 			isFocus: false,
 			isShowSearch: false,
 		});
@@ -1727,6 +1728,8 @@ Page({
 			isShowSearch: !this.data.isShowSearch,
 			isFocus: !this.data.isFocus,
 		})
+
+		console.log(	this.searchComponent)
 	}
 
 });

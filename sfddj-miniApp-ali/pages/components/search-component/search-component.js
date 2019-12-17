@@ -8,13 +8,13 @@ Component({
   mixins: [],
   data: {
     baseLocImgUrl: constants.UrlConstants.baseImageLocUrl,
-    smartSearchList: [],
+    smartSearchList: [],                      // 智能搜索数据
     inputVal: '',                             // 搜索值
     searchWords: [],                          // 搜索记录数据
     hotWords: [],                             // 搜索热词数据
     hotWordShow: true,                        // 搜索热词显示开关
     smSearchShow: false,                      // 智能板块显示开关
-    clearSearchShow: false,                    // 清除搜索词开关
+    clearSearchShow: false,                    // 清除搜索词开关                     
   },
   props: {
     pageType: null,                           // 从哪个页面进入的
@@ -100,25 +100,30 @@ Component({
     /**
      * 键盘输入事件
      */
-    handleInput(event) {
-      console.log(event.detail.value.replace(/\s*/g,''))
-      let inputVal = event.detail.value.replace(/\s*/g,'');
+    handleInput(value) {
+      console.log(value)
+      console.log(value.replace(/\s*/g,''))
+      let inputVal = value.replace(/\s*/g,'');
       let hotWordShow = true;
       let smSearchShow = true;
       let clearSearchShow = false;
       // inputVal != this.data.inputVal
       if( inputVal ) {
+        console.log(inputVal)
         this.smartSearch(inputVal);
         hotWordShow = false;
         clearSearchShow = true;
       } else {
+        console.log(inputVal)
         smSearchShow = false;
       }
+      console.log('热词开关',hotWordShow);
+      console.log('智能搜索开关',smSearchShow)
       this.setData({
         clearSearchShow,
         hotWordShow,
         smSearchShow,
-        inputVal: event.detail.value
+        inputVal: value
       });
     },
 
@@ -146,7 +151,8 @@ Component({
         console.log(res);
         let resData = res.data.data;
         let retData = res.data.ret;
-        if( retData && retData.code == '0' && retData.message == "SUCCESS" && resData && resData.length > 0 ) {
+        // 添加 that.data.inputVal.replace(/\s*/g,'') 是为了防止，input 删除为空的时候，数据请求才回来，这时就会导致 input 为空，智能搜索模版显示，但热词模版不显示的情况；
+        if( retData && retData.code == '0' && retData.message == "SUCCESS" && resData && resData.length > 0 && that.data.inputVal.replace(/\s*/g,'') ) {
           retunData.hotWordShow = false;
           retunData.smSearchShow = true;
           retunData.smartSearchList = resData;
@@ -170,9 +176,10 @@ Component({
       let { type, word } = event.currentTarget.dataset
       this.setData({
         inputVal: '',
-        placeholderVal: '',
+        // placeholderVal: '',
         hotWordShow: true,
-        smartSearchList: false,
+        smSearchShow: false,
+        smartSearchList: [],
       });
       console.log('选中词请求数据 inputVal',this.data.inputVal,'placeholderVal',this.data.placeholderVal)
       console.log(that.props)
@@ -182,11 +189,16 @@ Component({
     /**
     *  键盘回车
     */
-    handleConfirm(event) {
+    handleConfirm(value) {
       let that = this;
-      console.log(event)
-      let { value } = event.detail;
       console.log(value)
+      // let { value } = event.detail;
+      console.log(value)
+      let confirmValue = value;
+      if( !value.replace(/\s*/g,'') ) {
+        confirmValue = that.props.placeholderVal;
+      }
+      console.log(confirmValue)
       this.setData({
         inputVal: '',
         hotWordShow: true,
@@ -194,7 +206,7 @@ Component({
       })
       console.log('键盘回车请求数据 inputVal',this.data.inputVal,'placeholderVal',this.data.placeholderVal)
       console.log(that.props)
-      that.props.pageType == 'showSearchPage' ? that.props.onSelectOrEnter(value, 'noGetHistory') : that.goToSearchPage(value, 'searchValue');
+      that.props.pageType == 'showSearchPage' ? that.props.onSelectOrEnter(confirmValue, 'noGetHistory') : that.goToSearchPage(confirmValue, 'searchValue');
     },
 
     /**

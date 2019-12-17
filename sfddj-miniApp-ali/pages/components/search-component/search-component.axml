@@ -1,18 +1,20 @@
 <view class="searchComponent height_100vh">
   <view class="searchInput row-aliCenter">
-    <view class="inputBox flex_1">
-      <view class="iconBox row-aliCenter">
-        <!-- <text class="iconfont icon-compass"></text> -->
+  <!-- inputBox -->
+    <view class=" flex_1 height_100">
+      <!-- <view class="iconBox row-aliCenter">
         <text class="icon-search_home font-40 color-c9c3c3"></text>
-      </view>
-      <input class=" input flex_1 font-28 color-323232" placeholder="{{placeholderVal}}" value="{{inputVal}}" focus="{{isFocus}}"  confirm-type="search"  onConfirm="handleConfirm" onFocus="handleFocus"  onInput="handleInput" />
-      <view class="iconBox row-aliCenter" a:if="{{clearSearchShow}}">
+      </view> -->
+      <!-- <input class=" input flex_1 font-28 color-323232" placeholder="{{placeholderVal}}" value="{{inputVal}}" focus="{{isFocus}}"  confirm-type="search"  onConfirm="handleConfirm" onFocus="handleFocus"  onInput="handleInput" /> -->
+        <search-bar  placeholder="{{placeholderVal}}" value="{{inputVal}}" focus="{{isFocus}}" onSubmit="handleConfirm" onInput="handleInput"  onClear="clearSearchVal" onCancel="onHideSearch" showCancelButton="{{true}}" />
+      <!-- <view class="iconBox row-aliCenter" a:if="{{clearSearchShow}}">
         <text class="icon-clear font-40 color-c8c8c8" catchTap="clearSearchVal"></text>
-      </view>
+      </view> -->
     </view>
-    <view class="center" catchTap="onHideSearch">取消</view>
+    <!-- <view class="center" catchTap="onHideSearch">取消</view> -->
   </view>
-  <scroll-view class="scrollView wordBox flex_1" scroll-y="true" >
+  <!-- <scroll-view class="scrollView wordBox flex_1" scroll-y="true" > -->
+  <view class="scrollView wordBox flex_1">
     <block a:if="{{hotWordShow}}">
       <view class="hotWordBox ">
         <view class="hotWordTitle font-38 font-font-weight-600">热门搜索</view>
@@ -32,8 +34,9 @@
         </view>
       </view>
     </block>
-    <view  a:if="{{smSearchShow && smSearchShow.length > 0}}" class="smartItem" style="border-bottom:{{index != smartSearchList.length - 1 ? '1rpx solid #e3e3e3;': ''}}" a:for="{{smartSearchList}}" a:key="*this" data-type="searchValue" data-word="{{item.suggestion}}" catchTap="chooseWord">{{item.suggestion}}</view>
-  </scroll-view>
+    <view  a:if="{{smSearchShow && smartSearchList.length > 0}}" class="smartItem" style="border-bottom:{{index != smartSearchList.length - 1 ? '1rpx solid #e3e3e3;': ''}}" a:for="{{smartSearchList}}" a:key="*this" data-type="searchValue" data-word="{{item.suggestion}}" catchTap="chooseWord">{{item.suggestion}}</view>
+  <!-- </scroll-view> -->
+  </view>
 </view>
 
 <!-- <template name="hotWords">
