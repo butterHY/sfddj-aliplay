@@ -63,6 +63,11 @@
 <!-- 搜索热词和历史记录膜层 -->
 <!-- <template is="hotWords" data="{{show:show,baseLocImgUrl,hotWords:hotWords,searchWords:searchWords,top:'120rpx'}}">
 </template> -->
-  <popup show="{{isShowSearch}}" position="right" zIndex="9000" disableScroll={{false}} mask="{{false}}" >
+
+  <!-- 新版搜索热词和历史记录膜层 -->
+  <!-- <popup show="{{isShowSearch}}" position="right" zIndex="9000" disableScroll={{false}} mask="{{false}}" >
     <search-component  ref="saveRef" onShowSearch="showSearch" isFocus="{{isFocus}}"  placeholderVal="{{placeholder}}" pageType="category"></search-component>
-  </popup>
+  </popup> -->
+<view class="index_search {{isShowSearch ? 'show' : ''}}" style="{{!isShowSearch ? 'position: fixed;' : 'position: absolute;'}}">
+	<search-component   ref="saveRef" onShowSearch="showSearch" isFocus="{{isFocus}}"  placeholderVal="{{placeholder}}" pageType="category" ></search-component>  
+</view>

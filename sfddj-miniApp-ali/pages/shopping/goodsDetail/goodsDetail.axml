@@ -152,7 +152,7 @@
         <view class="goodsTag label" a:for="{{goods.goodsViceVO.labelList}}" a:key="*this" a:if="{{index == 0 || index == 1 || index == 2}}">{{item}}</view>
       </view>    
     </view>
-    <button open-type="share" size="mini" plain="{{true}}" class="btnStyle flex_view_col justi_between align_end shareButton posi_ab">
+    <button open-type="share" hover-class="none"  size="mini" plain="{{true}}" class="btnStyle flex_view_col justi_between align_end shareButton posi_ab">
       <!-- <image class="shareImag" src="{{base64imageUrl}}miniappImg/icon/share.png"/> -->
       <text class="icon-share1 font-36 color-a1a0a0"></text>
       <text class="font-26  color-a1a0a0">分享</text>
