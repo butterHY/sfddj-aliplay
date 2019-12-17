@@ -1,7 +1,7 @@
 /* pages/user/myCoupon/myCoupon.wxss  */
 @import '../../../font/font-myInfo.acss';
-
 @import '../../css-public/coupon.acss';    /*优惠券的样式*/
+@import '../../css-public/itemGoodsCard.acss';
 
 .width_85 {
   width: 85%;

@@ -46,6 +46,10 @@ Page({
 		slideButtons: { right: [{ type: 'delete', text: '删除' }] },
 		user_memId: '默认是会员',         //是否存在memberId，判断是否绑定手机号
     isProhibitTap: false,                                     // 当点击数量输入框获取焦点的时候，则禁止数量左右的加减事件
+    likeStart: 0, //猜你喜欢开始索引
+    likeLimit: 20, //猜你喜欢每次请求的条数
+    recommondList: [],    //猜你喜欢列表
+		isLoadComplete: false,
     // isFocus: false,
 	},
 
@@ -63,6 +67,8 @@ Page({
 
 		// 友盟+统计  ----购物车页浏览
 		getApp().globalData.uma.trackEvent('myCartView');
+		// 猜你喜欢
+		this.getGuessLike(0)
 
 	},
 
@@ -176,8 +182,8 @@ Page({
 
 	},
 
-	// 获取猜你喜欢的数据
-	getGuessLike() {
+	// 获取猜你喜欢的数据 ---旧的
+	getGuessLikeOld() {
 		var that = this
 
 		sendRequest.send(constants.InterfaceUrl.SHOP_FIND_GROUP, {
@@ -207,6 +213,39 @@ Page({
 
 		})
 	},
+
+	// 新的猜你喜欢
+  getGuessLike(type) {
+    let that = this;
+    let data = {
+      start: this.data.likeStart,
+      limit: this.data.likeLimit,
+      groupName: '微信小程序猜你喜欢'
+    }
+    http.get(api.GOODS.LISTGOODSBYNAME, data, res => {
+      let result = res.data.data ? res.data.data : []
+      let lastRecommentList = that.data.recommondList
+      let recommondList = []
+      let isLoadComplete = false
+      if(result.length < that.data.likeLimit){
+        isLoadComplete = true
+      }
+      if(type == 1){
+        recommondList = lastRecommentList.concat(result)
+      }
+      else {
+        recommondList = result
+      }
+      that.setData({
+        recommondList: recommondList,
+        isLoadComplete
+      })
+    }, err =>{
+      that.setData({
+        recommondList: []
+      })
+    })
+  },
 
 	// 设置滚动到猜你喜欢的时候的高度
 	setGuessTop() {
@@ -281,7 +320,7 @@ Page({
 			}
 
 
-			that.getGuessLike();
+			// that.getGuessLike();
 
 			result = res.data.data ? res.data.data : []
 
@@ -835,5 +874,16 @@ Page({
     var app = getApp();
     app.getCartNumber();
 	},
+
+	// 下拉刷新
+  onReachBottom(){
+    let that = this;
+    if(!that.data.isLoadComplete){
+      that.setData({
+        likeStart: that.data.recommondList.length
+      })
+      that.getGuessLike(1)
+    }
+  },
 
 });

@@ -1057,6 +1057,17 @@ button {
   height: 64rpx;
 }
 
+/* 新的商品列表下的加载样式 */
+.itemGoodsCardList .loading_view {
+  font-size: 26rpx;
+  color: #323232;
+}
+.itemGoodsCardList .loading_gif {
+  width: 26rpx;
+  height: 26rpx;
+  margin-right: 8rpx;
+}
+
 /*加载中和加载错误信息部分   */
 .loadingTop {
   text-align: center;

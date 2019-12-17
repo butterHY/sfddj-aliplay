@@ -8,6 +8,8 @@ var sendRequest = require('../../../utils/sendRequest');
 var constants = require('../../../utils/constants');
 var util = require('../../../utils/util');
 var baseImageUrl = constants.UrlConstants.baseImageUrl; //图片资源地址前缀
+import http from '../../../api/http'
+import api from '../../../api/api'
 Page({
   data: {
     baseLocImgUrl: constants.UrlConstants.baseImageLocUrl,
@@ -16,6 +18,9 @@ Page({
     couponShow: false,                                          // 优惠券弹窗
     couponAmount: null,                                         // 优惠券弹窗的金额
     succeedSwiperList: [],                                      // 轮播图数据
+    likeStart: 0,
+    likeLimit: 10,
+    isLoadComplete: false
   },
   onLoad: function (options) {
     let that = this;
@@ -28,9 +33,10 @@ Page({
     that.getMaterial();
 
     // 获取猜你喜欢列表
-    if (orderSn) {
-      that.getLikeList(orderSn)
-    }
+    // if (orderSn) {
+    //   that.getLikeList(orderSn)
+    // }
+    that.getGuessLike(0)
 
     // 获取付款成功发放的优惠券
     if (paymentId) {
@@ -40,7 +46,7 @@ Page({
   },
 
   /*
-  * 获取猜你喜欢数据
+  * 获取猜你喜欢数据---旧的
   **/
   getLikeList(sn) {
     let that = this;
@@ -50,6 +56,41 @@ Page({
         baseImageUrl: baseImageUrl
       });
     }, function (res) { });
+  },
+
+  // 新的猜你喜欢
+  getGuessLike(type) {
+    let that = this;
+    let data = {
+      start: this.data.likeStart,
+      limit: this.data.likeLimit,
+      groupName: '支付宝小程序猜你喜欢'
+    }
+    if (type == 0) {
+      data.isFirst = 1
+    }
+    http.get(api.GOODS.LISTGOODSBYNAME, data, res => {
+      let result = res.data.data ? res.data.data : []
+      let lastRecommentList = that.data.recommondList
+      let recommondList = []
+      let isLoadComplete = false
+      if (result.length < that.data.likeLimit) {
+        isLoadComplete = true
+      }
+      if (type == 1) {
+        recommondList = lastRecommentList.concat(result)
+      } else {
+        recommondList = result
+      }
+      that.setData({
+        recommondList: recommondList,
+        isLoadComplete
+      })
+    }, err => {
+      that.setData({
+        recommondList: []
+      })
+    })
   },
 
   /**
@@ -118,7 +159,7 @@ Page({
 
     }
 
-    if(type == 'banner') {
+    if (type == 'banner') {
       // let data = 
       that.umaTrackEvent(type, data)
     }
@@ -138,8 +179,17 @@ Page({
     if (type == 'goods') {
       getApp().globalData.uma.trackEvent('paySucceed_guessLikeGoods', data)
     }
-    else if(type == 'banner') {
+    else if (type == 'banner') {
       getApp().globalData.uma.trackEvent('paySucceed_banner', data)
+    }
+  },
+  // 上拉加载
+  onReachBottom() {
+    if (!this.data.isLoadComplete) {
+      this.setData({
+        likeStart: this.data.recommondList.length,
+      })
+      this.getGuessLike(1)
     }
   },
 });

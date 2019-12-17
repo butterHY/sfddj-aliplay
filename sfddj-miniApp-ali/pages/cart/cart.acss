@@ -1,4 +1,5 @@
 /* pages/cart/cart.wxss  */
+@import '../css-public/itemGoodsCard.acss';
 
 page {
 	background: white;
