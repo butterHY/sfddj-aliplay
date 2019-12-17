@@ -58,9 +58,10 @@ Page({
 	},
 
 	onShow: function() {
+		my.hideKeyboard();
 		this.setData({
 			placeholder: my.getStorageSync({key: 'searchTextMax'}).data
-		});
+		})
 		if( this.searchComponent ) {
 			this.searchComponent.data.pageType = 'showSearchPage';
 			console.log(this.searchComponent)

@@ -23,6 +23,7 @@
   width: 100%;
   box-sizing: border-box;
   padding: 26rpx 0 26rpx 30rpx;
+  position: relative;
 
   /* padding: 26rpx 30rpx; */
 
@@ -32,11 +33,13 @@
 }
 
 .inputBox {
-  height: 100%;
+  /* height: 100%; */
+  height: 68rpx;
   display: flex;
   border-radius: 25px;
   background:#f7f8fa;
   padding: 0 25rpx;
+  position: relative;
 }
 
 .iconBox {
@@ -47,14 +50,18 @@
 
 
 .input {
+  height: 100%;
+  box-sizing: border-box;
   padding: 10rpx 20rpx;
   background-color:white;
   text-align: left;
   background-color: transparent;
+  position: relative;
 }
 
 .center {
-  height: 100%;
+  /* height: 100%; */
+  height: 68rpx;
   padding: 0 22rpx;
   color: #323233;
   font-size: 30rpx;
@@ -113,7 +120,7 @@
 
 .smartItem {
   font-size: 28rpx;
-  line-height: 96rpx;
+  line-height: 95rpx;
 }
 
 .am-search {

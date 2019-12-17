@@ -142,8 +142,9 @@ Page({
 		// console.log('我是 home， 我在显示了 onShow ')
 
 			// 回到页面关闭搜索组件
-		console.log('关闭搜索组件');
+		console.log('onShow - 关闭搜索组件');
 		console.log(that.searchComponent);
+		my.hideKeyboard();															//  关闭搜索组件
 		this.setData({
 			placeholder: my.getStorageSync({key: 'searchTextMax'}).data,
 			isFocus: false,
@@ -151,7 +152,7 @@ Page({
 		});
 		if( that.searchComponent ) {
 			that.searchComponent.setData({inputVal: ''});
-			that.searchComponent.getHistory();
+			// that.searchComponent.getHistory();
 			// that.searchComponent.data.pageType = 'home';
 			console.log(that.searchComponent)
 		}
@@ -1728,7 +1729,8 @@ Page({
 			isShowSearch: !this.data.isShowSearch,
 			isFocus: !this.data.isFocus,
 		})
-
+		// this.searchComponent.setIsFocus();
+		console.log(this.data.isFocus)
 		console.log(	this.searchComponent)
 	}
 
