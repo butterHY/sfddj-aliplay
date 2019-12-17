@@ -32,7 +32,7 @@
   </block>
 </view>
 <view class="item-tag-view font-26 color-b3b3b3" a:if="{{recommondList.length > 0}}">- 猜你喜欢 -</view>
-<view a:if="{{recommondList.length > 0}}" class="flex_view_col">
+<view a:if="{{recommondList.length > 0}}" class="flex_view_col itemGoodsCardList">
   <view class="guessLikePro">
     <view class="guessLike_oneSide">
       <block a:for="{{recommondList}}" a:key="itemIndex">
@@ -45,13 +45,13 @@
   </view>
   <!-- 加载 -->
   <!--加载数据进度条-->
-  <view wx:if="{{!isLoadComplete}}" class='loading_view flex_view_row align_cen justi_cen'>
+  <view a:if="{{!isLoadComplete}}" class='loading_view flex_view_row align_cen justi_cen'>
     <image src='{{baseLocImgUrl}}miniappImg/loading/loading.gif' class='loading_gif'></image>
     <text>加载中</text>
   </view>
 
   <!--没有更多-->
-  <view wx:if="{{isLoadComplete}}" class='loading_view font-26 color-323232'>
+  <view a:if="{{isLoadComplete}}" class='loading_view font-26 color-323232'>
     没有更多了
   </view>
 </view>
