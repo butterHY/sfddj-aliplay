@@ -58,7 +58,7 @@ Page({
 	},
 
 	onShow: function() {
-		my.hideKeyboard();
+		// my.hideKeyboard();
 		this.setData({
 			placeholder: my.getStorageSync({key: 'searchTextMax'}).data
 		})

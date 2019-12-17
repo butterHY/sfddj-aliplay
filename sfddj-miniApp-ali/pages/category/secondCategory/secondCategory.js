@@ -111,7 +111,7 @@ Page({
 		// 回到页面关闭搜索组件
 		console.log('关闭搜索组件');
 		console.log(this.searchComponent);
-		my.hideKeyboard();
+		// my.hideKeyboard();
 		this.setData({
 			placeholder: my.getStorageSync({key: 'searchTextMax'}).data,
 			isFocus: false,
