@@ -2171,12 +2171,13 @@ Page({
       balanceAmount,
       userCouponId,
       canUseCouponCount,
-      isJifen,
+      isJifen
     } = this.data;
 
     // 计算原始价格和商家优惠券使用情况
     let supplierList = result.supplierList
     let useSupplierCouponList = [] //每次重置选中的商家券的id列表
+		let originalTotalPrice = 0;    //计算总共的商品价格
 
     // 初始化使用商家券id列表
     if (setType == 'init') {
@@ -2192,6 +2193,7 @@ Page({
         let goodsItem = supplierItem.orderGoodsList[k]
         supplierTotalPrice += goodsItem.salePrice * goodsItem.quantity
         supplierItem.supplierPrice += goodsItem.salePrice * goodsItem.quantity
+				originalTotalPrice += goodsItem.salePrice * goodsItem.quantity
         if (k == (supplierItem.orderGoodsList.length - 1)) {
           // 当是优惠券点击的时候
           if (tapType == 'supplier' || tapType == 'platform') {
@@ -2393,7 +2395,8 @@ Page({
       userCouponId,
       canUseCouponCount,
       totalCouponValue,
-      useSupplierCouponList
+      useSupplierCouponList,
+			originalTotalPrice
     })
 
 

@@ -19,7 +19,7 @@
           </view>
           <view class="goodsPriceBox">
             <text class='font-34 color-ff5353 font-weight-bold'>¥{{tuangou ? tuangouPrices : salePrice}}</text>
-            <view wx:if="{{!hiddenCart}}" catchtap='{{!cannotAdd ? "addCart" : ""}}' data-pid='{{productId}}'>
+            <view a:if="{{!hiddenCart}}" catchTap='{{!cannotAdd ? "addCart" : ""}}' data-pid='{{productId}}'>
               <text class="icon-shopcar_small color-ff5353 font-38"></text>
             </view>
           </view>
@@ -45,7 +45,7 @@
           </view>
           <view class="goodsPriceBox">
             <text class='font-34 color-ff5353 font-weight-bold'>¥{{tuangou ? tuangouPrices : salePrice}}</text>
-            <view wx:if="{{!hiddenCart}}" catchtap='{{!cannotAdd ? "addCart" : ""}}' data-pid='{{productId}}'>
+            <view a:if="{{!hiddenCart}}" catchTap='{{!cannotAdd ? "addCart" : ""}}' data-pid='{{productId}}'>
               <text class="icon-shopcar_small color-ff5353 font-38"></text>
             </view>
           </view>

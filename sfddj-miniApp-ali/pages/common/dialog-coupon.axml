@@ -15,7 +15,7 @@
         </scroll-view>
       </view>
       <view class="goods-sepc-bottom-view">
-        <view class="goods-sepc-bottom-button" catchtap="closeCouponDialog">关闭</view>
+        <view class="goods-sepc-bottom-button" catchTap="closeCouponDialog">关闭</view>
       </view>
     </view>
   </view>

@@ -469,9 +469,9 @@ Page({
 	addCart: function (e) {
 		let that = this;
 		let productId = e.currentTarget.dataset.pid;
-		my.showLoading({
-			content: '加载中'
-		});
+		// my.showLoading({
+		// 	content: '加载中'
+		// });
 
 
 		sendRequest.send(constants.InterfaceUrl.SHOP_ADD_CART, { pId: productId, quantity: '1' }, function (res) {
@@ -479,7 +479,7 @@ Page({
 			// 达观数据上报
 			// utils.uploadClickData_da('cart', [{ productId, actionNum: '1' }])
 
-			my.hideLoading();
+			// my.hideLoading();
 			my.showToast({
 				content: '添加购物车成功'
 			});

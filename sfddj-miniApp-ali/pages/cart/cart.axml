@@ -82,10 +82,10 @@
 		<view a:if='{{recommondList.length > 0}}'>
 			<view class='guessLike'>
 				<view class='guessLikeView'>
-					<template is="itemGoodsCard" a:for="{{recommondList}}" a:if="{{index % 2 == 0}}" data="{{...item,left:true,baseImageUrl:baseImageUrl,baseLocImgUrl,smallImgArg, listType: 'recommond', type: 'skipOther'}}" a:key="itemIndex"></template>
+					<template is="itemGoodsCard" a:for="{{recommondList}}" a:if="{{index % 2 == 0}}" data="{{...item,left:true,baseImageUrl:baseImageUrl,baseLocImgUrl,smallImgArg, listType: 'recommond', type: 'skipOther', index}}" a:key="itemIndex"></template>
 				</view>
 				<view class='guessLikeView'>
-					<template is="itemGoodsCard" a:for="{{recommondList}}" a:if="{{index % 2 != 0}}" data="{{...item,left:false,baseImageUrl:baseImageUrl,baseLocImgUrl,smallImgArg, listType: 'recommond', type: 'skipOther'}}" a:key="itemIndex2"></template>
+					<template is="itemGoodsCard" a:for="{{recommondList}}" a:if="{{index % 2 != 0}}" data="{{...item,left:false,baseImageUrl:baseImageUrl,baseLocImgUrl,smallImgArg, listType: 'recommond', type: 'skipOther', index}}" a:key="itemIndex2"></template>
 				</view>
 			</view>
 			<!--加载数据进度条-->
