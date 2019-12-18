@@ -117,7 +117,7 @@
 </popup> -->
 
 	<!-- 新版搜索热词和历史记录膜层 -->
-<view class="index_search {{isShowSearch ? 'show' : ''}}" style="{{!isShowSearch ? 'position: fixed;' : 'position: absolute;'}}" disable-scroll="{{isShowSearch ? true : false}}">
+<view class="index_search {{isShowSearch ? 'show' : ''}}" style=" {{  isShowSearch ? 'position:absolute;' : 'position:fixed;' }}" disable-scroll="{{isShowSearch ? true : false}}">
 	<search-component  ref="saveRef" onShowSearch="showSearch" isFocus="{{isFocus}}" placeholderVal="{{placeholder}}" pageType="home"></search-component>
 </view>
 

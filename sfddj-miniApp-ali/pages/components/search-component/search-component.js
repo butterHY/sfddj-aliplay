@@ -194,6 +194,7 @@ Component({
       console.log(value)
       // let { value } = event.detail;
       console.log(value)
+      my.hideKeyboard();
       let confirmValue = value;
       if( !value.replace(/\s*/g,'') ) {
         confirmValue = that.props.placeholderVal;

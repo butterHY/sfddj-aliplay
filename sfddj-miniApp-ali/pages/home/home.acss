@@ -577,12 +577,17 @@ page {
   height: 100vh;
   background: #fff;
   position: absolute;
+  left: 0;
   top: 0;
-  transform: translateX(100%);
+  /* transform: translate(100%, 0); */
+  transform: translate3d(100%,0,0);
+  backface-visibility: hidden;
   transition: transform 0.3s;
   z-index: 10001;
 }
 
 .index_search.show {
-  transform: translateX(0);
+  transform: translate3d(0, 0, 0);
+  left: 0;
+  top: 0;
 }
