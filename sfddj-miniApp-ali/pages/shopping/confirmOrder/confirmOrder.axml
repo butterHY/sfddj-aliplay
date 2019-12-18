@@ -311,7 +311,7 @@
 							</view>
 							<!-- 商家优惠券选择框 -->
 							<template a:if="{{item.supplierCoupon}}" is="dialogCoupon" data="{{baseImageUrlLoc:baseLocImgUrl,show:isShowStoreCouponList[index],couponList:item.supplierCoupon,iconSize,type: 'supplier',fatherIndex: index}}" />
-							<input type='text' placeholder="买家留言：选填" maxlength="60" class="font-26 order_leaMes" data-index="{{index}}" disabled="{{isSubmit}}" value="{{bbsData}}" a:if="{{!showDialogCoupon}}" onInput="memoInput"/>
+							<input type='text' placeholder="买家留言：选填" maxlength="60" class="font-26 order_leaMes" data-index="{{index}}" disabled="{{isSubmit}}" value="{{bbsData[index]}}" a:if="{{!showDialogCoupon}}" onInput="memoInput"/>
 							<text class="font-24 color-a1a0a0 order_leaMesLeft">剩余：{{item.leftCount}}字
 							</text>
 						</view>

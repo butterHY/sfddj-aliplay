@@ -3,6 +3,8 @@
 var sendRequest = require('../../../utils/sendRequest');
 var constants = require('../../../utils/constants');
 var utils = require('../../../utils/util');
+import http from '../../../api/http'
+import api from '../../../api/api'
 Page({
 
 	/**
@@ -18,16 +20,17 @@ Page({
 		baseLocImgUrl: constants.UrlConstants.baseImageLocUrl,
 		baseImageUrl: constants.UrlConstants.baseImageUrl,
 		smallImgArg: '?x-oss-process=style/goods_img_3',
-		start: 0,
+		likeStart: 0,
 		end: 0,
-		limit: 10,
+		likeLimit: 10,
+		isLoadComplete: false,
 		loadIndex: 1 //加载的次数
 	},
 
 	/**
 	 * 生命周期函数--监听页面加载
 	 */
-	onLoad: function(options) {
+	onLoad: function (options) {
 		// utils.getNetworkType(this)
 
 
@@ -35,25 +38,25 @@ Page({
 		getApp().globalData.uma.trackEvent('couponCenterView');
 
 		this.getCouponList();
-		this.getTop100();
+		this.getGuessLike(0);
 	},
 
 	/**
 	 * 获取优惠券列表
 	 */
-	getCouponList: function() {
+	getCouponList: function () {
 		var that = this;
 		this.setData({
 			isLoadMore: true
 		});
-		sendRequest.send(constants.InterfaceUrl.CAN_RECEIVE_COUPON2, {}, function(res) {
+		sendRequest.send(constants.InterfaceUrl.CAN_RECEIVE_COUPON2, {}, function (res) {
 			let couponList = res.data.result.couponDTOS;
 			// var resOff = []
 			that.setData({
 				isBing: res.data.result.isBing
 			});
 			if (couponList || Object.keys(couponList).length > 0) {
-				couponList.forEach(function(item, index) {
+				couponList.forEach(function (item, index) {
 					item.beginDateStr = that.formatTime(item.beginDate);
 					item.endDateStr = that.formatTime(item.endDate);
 
@@ -66,11 +69,13 @@ Page({
 
 			that.setData({
 				couponList: couponList,
-				isLoadMore: false
+				isLoadMore: false,
+				loadComplete: true
 			});
-		}, function(err) {
+		}, function (err) {
 			that.setData({
-				isLoadMore: false
+				isLoadMore: false,
+				loadComplete: true
 			});
 			my.showToast({
 				content: err
@@ -81,7 +86,7 @@ Page({
 	/**
 	 * 领取优惠券
 	 */
-	exchangeCoupon: function(event) {
+	exchangeCoupon: function (event) {
 		var that = this;
 		// wx.showLoading({
 		//   title: 'loading..',
@@ -102,13 +107,13 @@ Page({
 
 		// 友盟+统计  ----领券中心点击
 		getApp().globalData.uma.trackEvent('couponCenterClick', { codeSign: couponList[index].codeSign });
-		
+
 		if (that.data.isBing) {
 			//兑换优惠券
 			sendRequest.send(constants.InterfaceUrl.EXCHANGE_COUPON, {
 				ruleSign: couponList[index].codeSign,
 				formId: formId
-			}, function(res) {
+			}, function (res) {
 
 				let { result } = res.data;
 
@@ -157,7 +162,7 @@ Page({
 						showToast: true,
 						errMsg: errMsg
 					});
-					setTimeout(function() {
+					setTimeout(function () {
 						that.setData({
 							showToast: false
 						});
@@ -167,7 +172,7 @@ Page({
 				}
 
 
-			}, function(err) {
+			}, function (err) {
 				my.hideLoading();
 				my.showToast({
 					content: err,
@@ -181,17 +186,52 @@ Page({
 
 	},
 
+	// 新的猜你喜欢
+	getGuessLike(type) {
+		let that = this;
+		let data = {
+			start: this.data.likeStart,
+			limit: this.data.likeLimit,
+			groupName: '支付宝小程序猜你喜欢'
+		}
+		if (type == 0) {
+			data.isFirst = 1
+		}
+		http.get(api.GOODS.LISTGOODSBYNAME, data, res => {
+			let result = res.data.data ? res.data.data : []
+			let lastRecommentList = that.data.recommondList
+			let recommondList = []
+			let isLoadComplete = false
+			if (result.length < that.data.likeLimit) {
+				isLoadComplete = true
+			}
+			if (type == 1) {
+				recommondList = lastRecommentList.concat(result)
+			} else {
+				recommondList = result
+			}
+			that.setData({
+				recommondList: recommondList,
+				isLoadComplete
+			})
+		}, err => {
+			that.setData({
+				recommondList: []
+			})
+		})
+	},
+
 	// 获取销量前100的商品
-	getTop100: function() {
+	getTop100: function () {
 		var that = this;
-		sendRequest.send(constants.InterfaceUrl.GET_TOP100, {}, function(res) {
+		sendRequest.send(constants.InterfaceUrl.GET_TOP100, {}, function (res) {
 			that.setData({
 				allGoodsList: res.data.result.goodsVos,
 				loadComplete: true,
 				loadFail: false
 			});
 			that.handMakePaging();
-		}, function(err) {
+		}, function (err) {
 			that.setData({
 				loadFail: true
 			})
@@ -199,7 +239,7 @@ Page({
 	},
 
 	// 手动分页
-	handMakePaging: function() {
+	handMakePaging: function () {
 		var that = this;
 		var loadIndex = that.data.loadIndex;
 		var start = that.data.start;
@@ -235,11 +275,11 @@ Page({
 	/**
 	 * 添加购物车
 	 */
-	addCart: function(e) {
+	addCart: function (e) {
 		let that = this;
 		let productId = e.currentTarget.dataset.pid;
 
-		sendRequest.send(constants.InterfaceUrl.SHOP_ADD_CART, { pId: productId, quantity: '1' }, function(res) {
+		sendRequest.send(constants.InterfaceUrl.SHOP_ADD_CART, { pId: productId, quantity: '1' }, function (res) {
 
 			// 达观数据上报
 			// utils.uploadClickData_da('cart', [{ productId, actionNum: '1' }])
@@ -247,7 +287,7 @@ Page({
 			my.showToast({
 				content: '添加购物车成功'
 			});
-		}, function(res) {
+		}, function (res) {
 			// wx.showToast({
 			//   title: res,
 			// })
@@ -256,7 +296,7 @@ Page({
 				showToast: true,
 				errMsg: res
 			});
-			setTimeout(function() {
+			setTimeout(function () {
 				that.setData({
 					showToast: false
 				});
@@ -264,7 +304,7 @@ Page({
 		});
 	},
 
-	getPhoneNumber: function(e) {
+	getPhoneNumber: function (e) {
 		var that = this;
 
 		my.getPhoneNumber({
@@ -272,7 +312,7 @@ Page({
 				let response = res.response
 				sendRequest.send(constants.InterfaceUrl.USER_BINGMOBILEV4, {
 					response: response,
-				}, function(res) {
+				}, function (res) {
 					try {
 						my.setStorageSync({ key: constants.StorageConstants.tokenKey, data: res.data.result.loginToken });
 						my.setStorageSync({ key: 'user_memId', data: res.data.result.memberId });
@@ -283,7 +323,7 @@ Page({
 					}
 					sendRequest.send(constants.InterfaceUrl.EXCHANGE_COUPON, {
 						ruleSign: that.data.couponList[that.data.tapIndex].codeSign
-					}, function(res) {
+					}, function (res) {
 						if (res.data.result[0].errMsg) {
 							var errMsg = res.data.result[0].errMsg;
 						} else {
@@ -294,14 +334,14 @@ Page({
 							showToast: true,
 							errMsg: errMsg
 						});
-						setTimeout(function() {
+						setTimeout(function () {
 							that.setData({
 								showToast: false
 							});
 						}, 1000);
 
 						that.getCouponList();
-					}, function(err) {
+					}, function (err) {
 						my.hideLoading();
 						// wx.showToast({
 						//   title: '优惠券领取失败',
@@ -309,10 +349,10 @@ Page({
 						that.getPhoneNumber();
 					});
 					// that.getCouponList()
-				}, function(res) {
+				}, function (res) {
 				});
 			},
-			fail: function() {
+			fail: function () {
 				return;
 			}
 		})
@@ -352,9 +392,15 @@ Page({
 	},
 
 	//滚动加载
-	onReachBottom: function(e) {
+	onReachBottom: function (e) {
 		var that = this;
-		that.handMakePaging();
+		// that.handMakePaging();
+		if (!this.data.isLoadComplete) {
+			this.setData({
+				likeStart: this.data.recommondList.length
+			})
+			this.getGuessLike(1)
+		}
 	},
 
 	/**
@@ -371,7 +417,7 @@ Page({
 		return year + '.' + monthStr + '.' + dateStr;
 	},
 	// 分享页面
-	onShareAppMessage: function(e) {
+	onShareAppMessage: function (e) {
 		return {
 			title: '顺丰大当家-顺丰旗下电商平台',
 			path: '/pages/home/getCoupon/getCoupon'

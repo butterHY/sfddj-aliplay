@@ -1,4 +1,5 @@
 @import '../../css-public/getCouponList.acss';
+@import '../../css-public/itemGoodsCard.acss';
 
 .title {
   width: 100%;
