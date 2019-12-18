@@ -79,7 +79,7 @@
 }
 
 .goods_productName {
-  margin-top: 4rpx;
+  /* margin-top: 4rpx; */
   color: #a1a0a0;
 }
 
