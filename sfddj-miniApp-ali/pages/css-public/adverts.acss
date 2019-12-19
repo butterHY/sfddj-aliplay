@@ -89,10 +89,12 @@
 .goodsViewBox .goodsShowImgBox {
   height: 260rpx;
   width: 100%;
-  background-image: url('/image/loadImg.jpg');
-  /* background-image: url('https://img.sfddj.com/miniappImg/loading/loadImg.jpg'); */
+  /* background-image: url('/image/loadImg.jpg');
   background-size: 100% 100%;
-  background-repeat: no-repeat;
+  background-repeat: no-repeat; */
+  background:#f3f5fa;
+  border-radius: 10rpx;
+  overflow:hidden;
 }
 
 .goodsViewBox .goodsShowImg {

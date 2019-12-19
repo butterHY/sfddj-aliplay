@@ -354,7 +354,7 @@
       <view class="comment-text">{{item.comment}}</view>
     </view>
     <view class="blockBox marTop_38" a:if="{{item && item.imagePath.length > 0}}">
-      <image class="proComment_img" a:for="{{item.imagePath}}" a:key="*this" a:for-item="items" a:for-inex="inexs" src="{{filters.isHttpUrl(items) ? items : baseImageUrl + items}}" data-current="{{items}}" data-urls="{{item.imagePath}}" style="{{inexs == item.imagePath.length - 1 ? 'margin-right: 0;' : '  margin-right: 3rpx;'}}" onTap="commentViewTap">
+      <image class="proComment_img" a:for="{{item.imagePath}}" a:key="*this" a:for-item="items" a:for-inex="inexs" src="{{filters.isHttpUrl(items) ? baseImageLocUrl + 'vueStatic/img/commentErrImg.png' : baseImageUrl + items}}" data-current="{{items}}" data-urls="{{item.imagePath}}" style="{{inexs == item.imagePath.length - 1 ? 'margin-right: 0;' : '  margin-right: 3rpx;'}}" onTap="commentViewTap">
       </image>
     </view>
     <!-- <view class="proComment_date font-22 color-153">{{comment.createDate}}        
