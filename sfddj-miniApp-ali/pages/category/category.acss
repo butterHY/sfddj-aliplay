@@ -63,7 +63,7 @@
   top: 0;
   transform: translate(100%, 0);
   transition: transform 0.3s;
-  z-index: 10001;
+  z-index: 1001;
 }
 
 .index_search.show {

@@ -160,4 +160,7 @@
   color: #323233;
   font-size: 30rpx;
   line-height: 70rpx;
+  width: auto;
+  box-sizing: border-box;
+  padding: 0 22rpx;
 }
