@@ -52,7 +52,7 @@
 						<view a:if="{{salesCount || salesCount == 0}}" class="salesCount">{{salesCount}} 人付款</view>
 					</view>
 				</view>
-				<view  class="productName single-line">{{productName}}</view>
+				<view  class="productName single-line">{{supplierNickName}}</view>
 			</view>
 		</view>
 		<view style="" class="addCartBox ">

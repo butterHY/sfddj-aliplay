@@ -132,9 +132,6 @@ page {
   padding-left: 30rpx;
 }
 
-.rich-text-view {
-  /* padding: 30rpx; */
-}
 
 .wxParse-p {
   padding: 0 20rpx;

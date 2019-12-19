@@ -68,7 +68,8 @@ export default {
 		'GOODSSEARCH': '/m/c/1.0/opensearch/goodsSearch',													// 根据关键字分页搜索商品接口
 		'GOODSSUGGEST': '/m/c/1.0/opensearch/goodsSuggest',												// 根据关键字返回智能推荐搜索片段
 		'SUPPLIERSEARCH': '/m/c/1.0/opensearch/supplierSearch',										// 根据关键字分页搜索店铺接口
-		'SEARCHTEXTMAX': '/m/g/1.0/search/searchTextMax'													//  搜索隐藏文字
+		'SEARCHTEXTMAX': '/m/g/1.0/search/searchTextMax',													//  搜索隐藏文字
+		'SEARCHHOTWORD': '/m/g/1.0/search/hotWordList'														//  热门搜索关键字'
 	}
 
 
