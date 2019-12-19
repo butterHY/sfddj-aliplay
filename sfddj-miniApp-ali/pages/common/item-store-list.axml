@@ -6,7 +6,7 @@
         <image mode="widthFix" a:else src="{{baseLocImgUrl}}{{defaultImage}}"  class="all_100"/>
       </view>
       <view class="merchantName">
-        <view class="storeName">{{nickName}}</view>
+        <view class="storeName single-line">{{nickName}}</view>
         <view class="storeStart">
          <view class="start" a:for="{{star}}" a:key="{{star}}">
             <image src="{{baseLocImgUrl}}miniappImg/icon/icon_star_selected.png" class="all_100"></image>

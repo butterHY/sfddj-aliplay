@@ -17,16 +17,16 @@
   <view class="scrollView wordBox flex_1">
     <block a:if="{{hotWordShow}}">
       <view class="hotWordBox ">
-        <view class="hotWordTitle font-38 font-font-weight-600">热门搜索</view>
+        <view class="hotWordTitle font-34 font-weight-bold">热门搜索</view>
                 <!-- <view class="font-24 {{hotWord.isSign ? 'color-ff5353':'color-323232'}}" style="background-color:#eeeeee;padding:10rpx 20rpx;border-radius:5px;margin-right:20rpx;max-width:650rpx;display:inline-block;margin-bottom:20rpx;" data-word="{{hotWord.name}}" a:for="{{hotWords}}" a:for-item="hotWord" a:key="itemIndex0" catchTap="chooseWord">{{hotWord.name}}</view> -->
         <view class="wordLeft clearfix">
           <view class="hotWordItem" a:if="{{hotWords && hotWords.length > 0}}" style="{{hotWord.isSign ? 'color: #ff5353' : ''}}"  a:for="{{hotWords}}" a:for-item="hotWord"  data-word="{{hotWord.name}}" data-type="searcHotWord" a:key="*this" catchTap="chooseWord" >{{hotWord.name}}</view>
         </view>
       </view>
       <view class="historyWordBox ">
-        <view class="hisWordTitle font-38 font-font-weight-600">
+        <view class="hisWordTitle font-34 font-weight-bold">
           <text>历史记录</text>
-          <view class="delIcon" catchTap="clearHist"><image class="all_100" src="{{baseLocImgUrl}}miniappImg/icon/icon_del.png"/></view>
+          <view class="delIcon" catchTap="clearHist"><text class="icon-del"></text></view>
         </view>
         <view class="wordLeft clearfix">
         <!-- <view class="font-24" style="background-color:#eeeeee;padding:10rpx 20rpx;border-radius:5px;margin-right:20rpx;margin-bottom:20rpx;max-width:650rpx;display:inline-block" data-word="{{searchWord}}" data-type="searchHist" a:for="{{searchWords}}" a:for-item="searchWord" a:key="*this" catchTap="chooseWord">{{searchWord}}</view> -->
