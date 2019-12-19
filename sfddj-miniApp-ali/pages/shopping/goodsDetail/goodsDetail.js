@@ -1498,6 +1498,8 @@ Page({
 		var that = this;
     var webCallLink = that.data.webCallParam;
     console.log(webCallLink)
+		// let data = {}
+		this.umaTrackEvent('contactSupplier')
 		try {
 			my.setStorageSync({
 				key: 'webCallLink', // 缓存数据的key
@@ -1920,7 +1922,7 @@ Page({
   },
 
   	// 友盟+数据上报  ---立即购买、加入购物车、商家、评论
-	umaTrackEvent(type) {
+	umaTrackEvent(type, data) {
 		let umaData = {}
 		let { pageOptions, goods } = this.data
 		umaData.channel_source = pageOptions.utm_source ? pageOptions.utm_source : 'mini_alipay' //来源
@@ -1948,6 +1950,22 @@ Page({
 			// 友盟+统计  ----商详评论点击
 			getApp().globalData.uma.trackEvent('goodsDetail_comment', umaData);
 
+		}
+		else if(type == 'goods'){
+			// 友盟+统计  ----猜你喜欢点击
+			getApp().globalData.uma.trackEvent('goodsDetail_guessLikeGoods', data);
+		}
+		else if(type == 'banner'){
+			// 友盟+统计  ----banner点击
+			getApp().globalData.uma.trackEvent('goodsDetail_banner', data);
+		}
+		else if(type == 'contactSupplier'){
+			// 友盟+统计  ----banner点击
+			getApp().globalData.uma.trackEvent('goodsDetail_contactSupplier', umaData);
+		}
+		else if(type == 'supplierGoods'){
+			// 友盟+统计  ----banner点击
+			getApp().globalData.uma.trackEvent('goodsDetail_supplierGoods', data);
 		}
 	},
 
@@ -2151,5 +2169,36 @@ Page({
 			that.setData({showToast: false});
 		}, 2000);
 	},
+
+
+	// 
+	goToPage(e){
+		let { type, url, index} = e.currentTarget.dataset
+		let that = this
+
+		if(type == 'goods'){
+			let data = {channel_source: 'mini_alipay', supplierName: that.data.guessLikeGoods[index].nickName, supplierId: that.data.guessLikeGoods[index].supplierId, goodsName: that.data.guessLikeGoods[index].goodsName, goodsSn: that.data.guessLikeGoods[index].goodsSn, goodsCategoryId: that.data.guessLikeGoods[index].goodsCategoryId}
+			this.umaTrackEvent(type, data)
+		}
+		else if( type == 'banner') {
+			let data = {targetUrl: url}
+			this.umaTrackEvent(type, data)
+		}
+		else if(type == 'supplierGoods'){
+			let data = {channel_source: 'mini_alipay', supplierName: that.data.otherGoods[index].nickName, supplierId: that.data.otherGoods[index].supplierId, goodsName: that.data.otherGoods[index].goodsName, goodsSn: that.data.otherGoods[index].goodsSn, goodsCategoryId: that.data.otherGoods[index].goodsCategoryId}
+			this.umaTrackEvent(type, data)
+		}
+
+		if (url.indexOf('http') > -1) {
+      my.call('startApp', { appId: '20000067', param: { url: url, chInfo: chInfo } })
+    }
+    else {
+      my.navigateTo({
+        url: url
+      });
+    }
+
+	},
+
 
 });

@@ -1363,10 +1363,13 @@ Page({
 		}
 
 		// 友盟+去支付按钮点击
-		// getApp().globalData.uma.trackEvent('confirmOrder_buyNow', { channel_source: 'mini_alipay', order_city: myDefaultAddress.city, order_province: myDefaultAddress.province });
+		// getApp().globalData.uma.trackEvent('orderConfirm_toPay', { channel_source: 'mini_alipay', order_city: myDefaultAddress.city, order_province: myDefaultAddress.province });
 
 		if (that.data.isGiftOrder) {
 			sendRequest.send(constants.InterfaceUrl.PAY_GIFT_PAY, data2, function(res) {
+				// 友盟+埋点 --点击去付款
+			let umaData = {channel_source: 'mini_alipay', order_city: data2.city, order_province: data2.province, orderSn: res.data.orderSn}
+			getApp().globalData.uma.trackEvent('orderConfirm_toPay', umaData);
 				that.showWxPayment(res);
 			}, function(res) {
 				my.hideLoading();
@@ -1388,6 +1391,8 @@ Page({
 			sendRequest.send(constants.InterfaceUrl.PAY_BUY_NOW_2, data, function(res) {
 				my.hideLoading();
 				var result = res.data.result;
+				let umaData = {channel_source: 'mini_alipay', order_city: data.city, order_province: data.province, orderSn: res.data.orderSn}
+			getApp().globalData.uma.trackEvent('orderConfirm_toPay', umaData);
 				if (result.orderStr) {
 					if (result.orderStr.trade_no) {
 						that.showWxPayment(res);
@@ -1570,6 +1575,9 @@ Page({
 		sendRequest.send(constants.InterfaceUrl.PAY_CART_PAY, data, function(res) {
 			my.hideLoading();
 			var result = res.data.result;
+			// 友盟+埋点 --点击去付款
+			let umaData = {channel_source: 'mini_alipay', order_city: data.city, order_province: data.province, orderSn: result.orderSn}
+			getApp().globalData.uma.trackEvent('orderConfirm_toPay', umaData);
 			// that.showWxPayment(res);
 			if (result.orderStr.trade_no) {
 				that.showWxPayment(res);

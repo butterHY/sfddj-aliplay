@@ -1,6 +1,6 @@
 /* pages/goodsDetail/goodsDetail.wxss  */
 
-/* @import "/wxParse/wxParse.acss"; */
+@import "/wxParse/wxParse.acss";
 
 @import "../../css-public/cashBackRulePopUp.acss";
 @import "../../css-public/compensationRule.acss";
@@ -517,8 +517,8 @@ page {
 }
 
 .goods-scrollx-view {
-  display: flex;
-  flex-direction: row;
+  /* display: flex;
+  flex-direction: row; */
   font-size: 26rpx;
   white-space: nowrap;
   background-color: white;

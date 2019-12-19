@@ -25,10 +25,17 @@ var isGoodsLink = function(link){
   return link.indexOf('shopping/goodsDetail/goodsDetail') > -1
 }
 
+// 判断链接是否是http开头的
+var isHttpUrl =  function(url) {
+  var url = url && typeof(url) == 'string' ? url : ''
+  return url.substring(0,4).indexOf('http') > -1 
+}
+
 export default {
   toFix,
   numberChange,
   strIndexOf,
   randowNum,
-  isGoodsLink
+  isGoodsLink,
+  isHttpUrl
 };

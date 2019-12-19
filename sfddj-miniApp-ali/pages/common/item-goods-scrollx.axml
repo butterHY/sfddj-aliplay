@@ -1,22 +1,31 @@
 <import-sjs name="filters" from="../wxsFile/public.sjs"/>
 <template name="itemGoodsScrollX">
-
   <view style="display:inline-block;padding-right:20rpx">
-    <navigator url="/pages/shopping/goodsDetail/goodsDetail?goodsSn={{goodsSn}}&goodsId={{id ? id : goodsId}}" open-type="redirect" hover-class="none" class="posi_re {{isLoaded ? '' : 'js_goodsList_' + index}}">
+    <view a:if="{{type == 'skipOther'}}" data-url="/pages/shopping/goodsDetail/goodsDetail?goodsSn={{goodsSn}}" data-index="{{index}}" data-type="{{listType}}" open-type="redirect" hover-class="none" class="posi_re {{isLoaded ? '' : 'js_goodsList_' + index}}" onTap="goToPage">
       <image a:if="{{showImage}}" src="{{baseImageUrl}}{{showImage}}" style="width:180rpx;height:180rpx"></image>
-	  <image a:if="{{goodsDefaultImage && !showImage}}" src="{{baseImageUrl}}{{goodsDefaultImage}}" style="width:180rpx;height:180rpx"></image>
-
+      <image a:if="{{goodsDefaultImage && !showImage}}" src="{{baseImageUrl}}{{goodsDefaultImage}}" style="width:180rpx;height:180rpx"></image>
       <!--小图标 全赔  -->
-      <image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff1.png" class=" posi_ab" style="width: 50rpx; height: 50rpx; top:10rpx; right: 10rpx;" a:if="{{filters.strIndexOf(afterSaleGuee,'1')}}"></image> 
-      <image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff2.png" class=" posi_ab" style="width: 50rpx; height: 50rpx; top:10rpx; right: 10rpx;" a:elif="{{filters.strIndexOf(afterSaleGuee,'2')}}"></image> 
-      <image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff3.png" class=" posi_ab" style="width: 50rpx; height: 50rpx; top:10rpx; right: 10rpx;" a:elif="{{filters.strIndexOf(afterSaleGuee,'3')}}"></image> 
+      <image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff1.png" class=" posi_ab" style="width: 50rpx; height: 50rpx; top:10rpx; right: 10rpx;" a:if="{{filters.strIndexOf(afterSaleGuee,'1')}}"></image>
+      <image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff2.png" class=" posi_ab" style="width: 50rpx; height: 50rpx; top:10rpx; right: 10rpx;" a:elif="{{filters.strIndexOf(afterSaleGuee,'2')}}"></image>
+      <image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff3.png" class=" posi_ab" style="width: 50rpx; height: 50rpx; top:10rpx; right: 10rpx;" a:elif="{{filters.strIndexOf(afterSaleGuee,'3')}}"></image>
       <image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff4.png?version=2.0" class=" posi_ab" style="width: 50rpx; height: 50rpx; top:10rpx; right: 10rpx;" a:elif="{{filters.strIndexOf(afterSaleGuee,'4')}}"></image>
-
       <view a:if="{{name}}" class="font-26 item-goods-scrollx-text">{{name}}</view>
-	  <view a:if="{{goodsName && !name}}" class="font-26 item-goods-scrollx-text">{{goodsName}}</view>
+      <view a:if="{{goodsName && !name}}" class="font-26 item-goods-scrollx-text">{{goodsName}}</view>
+      <view class="font-24 color-a1a0a0 item-goods-scrollx-text">{{productName}}</view>
+      <view class="font-24 color-ff5353 item-goods-scrollx-text">￥{{salePrice}}</view>
+    </view>
+    <navigator a:else url="/pages/shopping/goodsDetail/goodsDetail?goodsSn={{goodsSn}}&goodsId={{id ? id : goodsId}}" open-type="redirect" hover-class="none" class="posi_re {{isLoaded ? '' : 'js_goodsList_' + index}}">
+      <image a:if="{{showImage}}" src="{{baseImageUrl}}{{showImage}}" style="width:180rpx;height:180rpx"></image>
+      <image a:if="{{goodsDefaultImage && !showImage}}" src="{{baseImageUrl}}{{goodsDefaultImage}}" style="width:180rpx;height:180rpx"></image>
+      <!--小图标 全赔  -->
+      <image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff1.png" class=" posi_ab" style="width: 50rpx; height: 50rpx; top:10rpx; right: 10rpx;" a:if="{{filters.strIndexOf(afterSaleGuee,'1')}}"></image>
+      <image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff2.png" class=" posi_ab" style="width: 50rpx; height: 50rpx; top:10rpx; right: 10rpx;" a:elif="{{filters.strIndexOf(afterSaleGuee,'2')}}"></image>
+      <image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff3.png" class=" posi_ab" style="width: 50rpx; height: 50rpx; top:10rpx; right: 10rpx;" a:elif="{{filters.strIndexOf(afterSaleGuee,'3')}}"></image>
+      <image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff4.png?version=2.0" class=" posi_ab" style="width: 50rpx; height: 50rpx; top:10rpx; right: 10rpx;" a:elif="{{filters.strIndexOf(afterSaleGuee,'4')}}"></image>
+      <view a:if="{{name}}" class="font-26 item-goods-scrollx-text">{{name}}</view>
+      <view a:if="{{goodsName && !name}}" class="font-26 item-goods-scrollx-text">{{goodsName}}</view>
       <view class="font-24 color-a1a0a0 item-goods-scrollx-text">{{productName}}</view>
       <view class="font-24 color-ff5353 item-goods-scrollx-text">￥{{salePrice}}</view>
     </navigator>
   </view>
-
 </template>
