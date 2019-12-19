@@ -325,7 +325,9 @@ Page({
 				loadFail: false,
 			};
 
-			that.data.goodsOrStore == '0' ? upData.goodsList = list : upData.storeList = list;														// 搜索商品 
+			that.data.goodsOrStore == '0' ? upData.goodsList = list : upData.storeList = list;														// 搜索商品
+			that.data.goodsOrStore == '1' ? upData.storeList.forEach( value => value.star = Math.round(value.star) ) : '';
+
 			// groupList: res.data.result.groupList,		// 推荐商品,新接口没有 "推荐商品"
 			that.setData(upData);
 			
