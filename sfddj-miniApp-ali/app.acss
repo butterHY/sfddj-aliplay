@@ -660,6 +660,12 @@ input {
   font-weight: 600;
 }
 
+.font-weight-bold {
+  font-weight: bold;
+}
+
+
+
 /** template * */
 
 /** item-pintuan * */

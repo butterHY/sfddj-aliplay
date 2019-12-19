@@ -19,17 +19,11 @@
 
 
 .searchInput {
-  height: 120rpx;
+  height: 116rpx;
   width: 100%;
   box-sizing: border-box;
-  padding: 26rpx 0 26rpx 30rpx;
+  padding: 28rpx 0 28rpx 24rpx;
   position: relative;
-
-  /* padding: 26rpx 30rpx; */
-
-  /* position: absolute; */
-  /* top: 0; */
-  /* left: 0; */
 }
 
 .inputBox {
@@ -69,23 +63,25 @@
 }
 
 .hotWordTitle {
-  margin-bottom: 50rpx;
-  margin-top: 20rpx;
+  margin: 27rpx 0 40rpx 0;
+  /* margin-bottom: 50rpx; */
+  /* margin-top: 20rpx; */
 }
 
 .wordLeft {
-  margin-left: -30rpx;
+  margin-left: -24rpx;
 }
 
 .hotWordItem {
   float: left;
-  margin-bottom: 30rpx;
-  margin-left: 30rpx;
+  margin-bottom: 20rpx;
+  margin-left: 24rpx;
+  margin-right: 6rpx;
   background-color: #f5f5f5;
   border-radius: 25rpx;
   text-align: center;
   font-size: 30rpx;
-  padding: 20rpx 25rpx;;
+  padding: 21rpx 24rpx;
   box-sizing: border-box;
   overflow: hidden;
   white-space: nowrap;
@@ -94,8 +90,8 @@
 }
 
 .hisWordTitle {
-  margin-bottom: 37rpx;
-  margin-top: 24rpx;
+  /* margin-bottom: 37rpx; */
+  margin: 40rpx 0 25rpx 0;
   display: flex;
   justify-content: space-between;
 }
@@ -104,13 +100,14 @@
   width: 30rpx;
   height: 30rpx;
   line-height: 30rpx;
+  color: #989898;
+  margin-right: 5rpx;
 }
 
 .hisWordItem {
-  padding: 22rpx 30rpx;
+  padding: 25rpx 25rpx 25rpx 24rpx;
   background-color: transparent;
-  margin-bottom: 0;
-  margin-left: 0;
+  margin: 0;
 }
 
 .scrollView {
@@ -135,8 +132,7 @@
   height: 68rpx;
   display: flex;
   border-radius: 25px;
-  background:#f7f8fa;
-
+  background:#f2f2f2;
 }
 
 .am-search-synthetic {
@@ -162,5 +158,5 @@
   line-height: 70rpx;
   width: auto;
   box-sizing: border-box;
-  padding: 0 22rpx;
+  padding: 0 44rpx 0 30rpx;
 }

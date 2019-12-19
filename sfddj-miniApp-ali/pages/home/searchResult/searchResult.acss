@@ -421,7 +421,8 @@ text {
 
 .storeName {
   height: 29rpx;
-  width: 100%;
+  /* width: 100%; */
+  max-width: 350rpx;
   font-size: 31rpx;
   /* box-sizing: border-box; */
   padding-bottom: 18rpx;
