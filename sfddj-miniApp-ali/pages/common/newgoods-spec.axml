@@ -11,12 +11,12 @@
               <!-- 只有积分商品 type == 3，物返现商品 type == 4 -->
               <view class="goods-spec-text">
                 <!-- 积分商品 -->
-                <view class="font-40 color-ff2e2e" a:if="{{type == 3}}"><text class="marRight_5">￥{{product.goodsPrice}}</text> <text class="font-24 color-a1a0a0"> + {{product.thisMemberPoint}}积分</text></view>
+                <view class="font-40 color-57" a:if="{{type == 3}}"><text class="marRight_5">￥{{product.goodsPrice}}</text> <text class="font-24 color-153"> + {{product.thisMemberPoint}}积分</text></view>
                 <!-- 购物返现商品  --> 
-                <view class="font-40 color-ff2e2e flex_view_row align_cen" a:elif="{{type == 4}}"><text>￥{{product.goodsPrice}}</text></view>
+                <view class="font-40 color-57 flex_view_row align_cen" a:elif="{{type == 4}}"><text>￥{{product.goodsPrice}}</text></view>
 
                 <!-- 其他，不是积分商品也不是返现商品 -->
-                <view class="font-40 color-ff2e2e" a:else>
+                <view class="font-40 color-57" a:else>
                   <!-- 秒杀商品，秒杀价 -->
                   <block a:if="{{goods.secKillStatus}}"><text class="aba">￥{{product.secondKillPrice}}</text></block>
                   <!-- 大当家会员日商品 -->
@@ -24,15 +24,15 @@
                   <!-- 是顺丰会员商品，会员价 + 兑换会员积分  -->
                   <block a:elif="{{SFmember}}">
                     <text class="cbc">￥{{product.memberPriceAll}}</text>
-                    <text class="font-24 color-a1a0a0 marLeft_5" a:if="{{product.costMemberScoreAll && product.costMemberScoreAll > 0}}">+ {{product.costMemberScoreAll}}积分</text>
+                    <text class="font-24 color-153 marLeft_5" a:if="{{product.costMemberScoreAll && product.costMemberScoreAll > 0}}">+ {{product.costMemberScoreAll}}积分</text>
                   </block>
                   <!-- 普通商品，普通价 -->
                   <block  a:else><text class="aba">￥{{product.goodsPrice}}</text></block>
                 </view>
 
                 <!-- 会员商品 + 奖励会员积分  -->
-                <view class="font-24 color-ff2e2e marTop_10" a:if="{{SFmember && product.awardMemberScoreAll && product.awardMemberScoreAll > 0}}">奖励会员积分{{product.awardMemberScoreAll}}</view>
-                <view class="font-24 color-ff2e2e  marTop_10" a:if="{{ goods.globalStatus && goods.goodsViceVO.crossBorderPattern == 3 }}">税费: ￥{{product.calGlobalFeeAll}}</view>
+                <view class="font-24 color-57 marTop_10" a:if="{{SFmember && product.awardMemberScoreAll && product.awardMemberScoreAll > 0}}">奖励会员积分{{product.awardMemberScoreAll}}</view>
+                <view class="font-24 color-57  marTop_10" a:if="{{ goods.globalStatus && goods.goodsViceVO.crossBorderPattern == 3 }}">税费: ￥{{product.calGlobalFeeAll}}</view>
                 <!-- 库存 -->
                 <view class="font-26 color-black margin-top18">库存 {{product.store < 0 ? "0" : product.store}} 份</view>
                 <!-- 返现商品且有返现金额 -->
@@ -70,7 +70,7 @@
                       <text class="">{{item.valueName}}</text>
                     </view>
                   </view>
-                  <view class="goods-spec-view-normal"  a:else style="{{ item.taped ? 'color: #ff2e2e;background: #fff7f7; border: 1rpx solid #ff2e2e' : 'color:#191616; background: #f2f2f2;'}}" data-fatherindex="{{fatherIndex}}"  data-index="{{index}}" a:key="iakValue" catchTap="specItemTap">
+                  <view class="goods-spec-view-normal"  a:else style="{{ item.taped ? 'color: rgb(255, 44, 57);background: #fff7f7; border: 1rpx solid rgb(255, 44, 57)' : 'color:#191616; background: #f2f2f2;'}}" data-fatherindex="{{fatherIndex}}"  data-index="{{index}}" a:key="iakValue" catchTap="specItemTap">
                     <view class="flex_view_row align_cen justi_around iavValueItem">
                       <image class="width-40 iavValueImg" mode="widthFix" a:if="{{item.imgPath}}" src="{{baseImageUrl}}{{item.imgPath}}"/>
                       <!-- iavValueText -->
@@ -119,9 +119,9 @@
             <view class="whiteBack buttonView">
               <view class="goods-sepc-bottom-button2 posi_re toBuyNowBack">
                 <!-- <view class="flex_1  shopButton" a:if="{{ goods.goodsStore == 0 || (goods.secKillStatus && goodsSecondKill.totalSaleVolume == goodsSecondKill.totalStock) }}">查看类似商品</view> -->
-                <navigator class="flex_1  shopButton" a:if="{{ goods.goodsStore == 0 || (goods.secKillStatus && goodsSecondKill.totalSaleVolume == goodsSecondKill.totalStock) }}" url="/pages/category/secondCategory/secondCategory?categoryId={{goods.categoryVO.categoryId}}" open-type="navigate" hover-class="none">查看类似商品</navigator>
-                <view class="flex_1  shopButton" a:elif="{{ optionalProduct.length == xgCount && selectedSpecsBar }}" data-buyNow="buyNow" catchTap="buyNow">立即购买</view>
-                <view class="flex_1  shopButton" a:elif="{{ optionalProduct.length == xgCount && !selectedSpecsBar }}" catchTap="goodsSpecSubmitTap">确定</view>
+                <navigator class="flex_1  shopButton color-255" a:if="{{ goods.goodsStore == 0 || (goods.secKillStatus && goodsSecondKill.totalSaleVolume == goodsSecondKill.totalStock) }}" url="/pages/category/secondCategory/secondCategory?categoryId={{goods.categoryVO.categoryId}}" open-type="navigate" hover-class="none">查看类似商品</navigator>
+                <view class="flex_1  shopButton color-255" a:elif="{{ optionalProduct.length == xgCount && selectedSpecsBar }}" data-buyNow="buyNow" catchTap="buyNow">立即购买</view>
+                <view class="flex_1  shopButton color-255" a:elif="{{ optionalProduct.length == xgCount && !selectedSpecsBar }}" catchTap="goodsSpecSubmitTap">确定</view>
                 <view class="flex_1  shopButton gray" a:else>还需要选 {{ xgCount - optionalProduct.length }} 种规格</view>
                 <button class="btnStyle gpnBtn zIndex100" a:if="{{ (goods.secKillStatus && goodsSecondKill.totalSaleVolume != goodsSecondKill.totalStock) && optionalProduct.length == xgCount && (user_memId == 0 || user_memId == '0')}}" open-type="getAuthorize" onGetAuthorize="getPhoneNumber" scope='phoneNumber' onError="onAuthError"></button>
                 <button class="btnStyle gpnBtn zIndex100" a:elif="{{ !goods.secKillStatus && goods.goodsStore != 0  && optionalProduct.length == xgCount && (user_memId == 0 || user_memId == '0')}}" open-type="getAuthorize" onGetAuthorize="getPhoneNumber" scope='phoneNumber' onError="onAuthError"></button>
@@ -137,14 +137,14 @@
                 <block a:elif="{{selectedSpecsBar}}">
                   <!-- <view class="flex_1  shopButton shopCart_button" data-addCart="addCart" catchTap="addCart">加入购物车</view> -->
                   <block a:if="{{ SFmember || ( !SFmember && (goods.jifenStatus || goods.deductStatus || goods.memberDayGoods || goods.secKillStatus || goods.memberDayPriceStatus) ) }}">
-                    <view  class="flex_1  shopButton toBuyNowBack" data-buyNow="buyNow" catchTap="buyNow">立即购买</view>
+                    <view  class="flex_1  shopButton toBuyNowBack color-255" data-buyNow="buyNow" catchTap="buyNow">立即购买</view>
                   </block>
                   <block a:else>
-                    <view class="shopButton separateShopButton background-ff color-ff2e2e" data-addCart="addCart" catchTap="addCart">加入购物车</view>
-                    <view class="shopButton separateShopButton toBuyNowBack" data-buyNow="buyNow" catchTap="buyNow">立即购买</view>
+                    <view class="addCart shopButton separateShopButton" data-addCart="addCart" catchTap="addCart">加入购物车</view>
+                    <view class="shopButton separateShopButton toBuyNowBack color-255" data-buyNow="buyNow" catchTap="buyNow">立即购买</view>
                   </block>
                 </block>
-                <view class="flex_1  shopButton toBuyNowBack" a:else catchTap="goodsSpecSubmitTap">确定</view>
+                <view class="flex_1  shopButton toBuyNowBack color-255" a:else catchTap="goodsSpecSubmitTap">确定</view>
                 <button class="btnStyle gpnBtn zIndex100" a:if="{{ (goods.secKillStatus && goodsSecondKill.totalSaleVolume != goodsSecondKill.totalStock) && (user_memId == 0 || user_memId == '0')}}" open-type="getAuthorize" onGetAuthorize="getPhoneNumber" scope='phoneNumber' onError="onAuthError"></button>
                 <button class="btnStyle gpnBtn zIndex100" a:elif="{{ !goods.secKillStatus && goods.goodsStore != 0 && (user_memId == 0 || user_memId == '0')}}" open-type="getAuthorize" onGetAuthorize="getPhoneNumber" scope='phoneNumber' onError="onAuthError"></button>
               </view>
@@ -153,6 +153,5 @@
           
         </view>
       </view>
-      <view class="js_goodsSpecInput"></view>
   </view>
 </template>

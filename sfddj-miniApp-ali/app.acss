@@ -484,6 +484,22 @@ input {
   color: #c8c8c8;
 }
 
+/* 商详页红色字色 */
+.color-57 {
+  color: rgb(255, 44, 57);
+}
+
+/* 商详页灰色字色 */
+.color-153 {
+  color: rgb(153, 153, 153);
+}
+
+.color-255 {
+  color: rgb(255, 255, 255);
+}
+
+
+
 /*橙色   */
 
 .color-fd5e2e {
@@ -791,9 +807,6 @@ input {
   height: 20rpx;
 }
 
-.interlayer {
-  
-}
 
 .sticky-view {
   position: fixed;

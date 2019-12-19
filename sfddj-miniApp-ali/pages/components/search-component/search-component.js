@@ -72,12 +72,15 @@ Component({
     getHotWord() {
       let that = this;
       console.log('获取热词');
-      sendRequest.send(constants.InterfaceUrl.HOT_WORD, {}, function(res) {
-        that.setData({
-          hotWords: res.data.result
-        });
-      }, function(err) {
-      }, 'GET');
+      http.get( api.search.SEARCHHOTWORD, {}, (res) => {
+        let resData = res.data.data;
+        let resRet = res.data.ret;
+        if(resRet.code == '0' && resRet.message == "SUCCESS" && resData ) {
+          that.setData({
+            hotWords: resData
+          });
+        }
+      },(err) => { })
       that.getHistory();
     },
 
@@ -215,12 +218,21 @@ Component({
     */
     clearHist() {
       console.log('珊瑚虫')
-      this.setData({
-        searchWords: [],
+      my.confirm({
+        title: '',
+        content: '您确定要清除历史纪录？',
+        success: (res) => {
+          console.log(res);
+          if( res.confirm == true ) {
+            this.setData({
+              searchWords: [],
+            })
+            try {
+              my.setStorageSync({ key: constants.StorageConstants.searchWordsKey, data: [] });
+            } catch (e) { }
+          }
+        }
       })
-      try {
-        my.setStorageSync({ key: constants.StorageConstants.searchWordsKey, data: [] });
-      } catch (e) { }
     },
 
     /**
