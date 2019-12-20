@@ -17,9 +17,9 @@
     color: #666;
     line-height: 1.8;
 }
-view{
+/* view{                                    注释这个样式是因为会影响页面所有 view 的样式，所以换成在商详页里的  rich-text-view 下添加这个样式；
     word-break:break-all; overflow:auto;
-}
+} */
 .wxParse-inline{
     display: inline;
     margin: 0;

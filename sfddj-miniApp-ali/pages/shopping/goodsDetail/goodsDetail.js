@@ -117,6 +117,7 @@ Page({
 			that.getNewGoodsDetail(that.data.goodsSn)                             // 新的获取商品详情数据，现主要是用来替换旧的商详数据；
 		}
 		that.getCartNumber();
+		that.getListMaterialByName();
 	},
 
 	onShow: async function() {
@@ -164,6 +165,7 @@ Page({
         resData.commentList.forEach(function(value, index) {
           if(value && (index == 0 || index == 1)) {                                   // commentList 的值不为 null；
             value.createDate = utils.pointFormatTime(new Date(value.createDate));
+						// value.imagePath && value.imagePath.length > 0 ? value.imagePath = value.imagePath.concat(value.imagePath.concat(value.imagePath)) : '';
             comment.push(value);
           }
         })
@@ -591,6 +593,7 @@ Page({
 					youLikeHasMore: that.data.youLikeHasMore,           // 是否还有更多                  
 				});
 			}
+			console.log(this.data.guessLikeGoods)
 			that.setData({youLikeIsLoadMore: false })								// 正在加载中的加载进度条
 		}, (err) => { that.setData({youLikeIsLoadMore: false }) })
 	},
@@ -859,10 +862,27 @@ Page({
 	*/
 	commentViewTap: function(e) {
 		var urls = e.currentTarget.dataset.urls;
+		console.log(urls)
 		my.previewImage({
 			urls: urls.map(value => value = baseImageUrl + value),
 			current: 0
 		});
+	},
+
+	getListMaterialByName() {
+		let that = this;
+		http.get(api.GOODSDETAIL.LISTMATERIALBYNAME, {groupName: '商品详情页_banner'}, (res) => {
+			let resData = res.data.data;
+			let resRet = res.data.ret;
+			if( resRet.code == '0' && resRet.message == "SUCCESS" && resData.length > 0 ) {
+				that.setData({
+					bannerImgList: resData.concat(resData)
+				})
+			}
+			console.log(res)
+		}, (err) => {
+			console.log(err)
+		})
 	},
 
 	/**
@@ -2081,6 +2101,7 @@ Page({
         priceInfo: that.data.priceInfo
       })
 			console.log(that.data.priceInfo)
+			console.log(that.data.goods.viewStatus, that.data.goods.goodsStore)
   },
 	
 	// 选择地址

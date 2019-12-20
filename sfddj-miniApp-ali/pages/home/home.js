@@ -75,7 +75,6 @@ Page({
 	},
 
 	onLoad: async function(options) {
-		// console.log(';;homeOptions', options)
 		var pageOptions = options
 		// 如果从推文或者其他方进来并且带广告参数时
 		var globalQuery = Object.assign({}, app.globalData.query)
@@ -139,11 +138,8 @@ Page({
 		// 	this.getTimes('isFirstTime');
 		// }
 		that.getCartNumber();
-		// console.log('我是 home， 我在显示了 onShow ')
 
-			// 回到页面关闭搜索组件
-		console.log('onShow - 关闭搜索组件');
-		console.log(that.searchComponent);
+		// 回到页面关闭搜索组件
 		// my.hideKeyboard();															//  关闭搜索组件
 		this.setData({
 			placeholder: my.getStorageSync({key: 'searchTextMax'}).data,
@@ -154,7 +150,6 @@ Page({
 			that.searchComponent.setData({inputVal: ''});
 			// that.searchComponent.getHistory();
 			// that.searchComponent.data.pageType = 'home';
-			console.log(that.searchComponent)
 		}
 	},
 
@@ -327,10 +322,6 @@ Page({
 				}
 			}
 		}
-
-		// console.log('我在请求广告模块', result)
-
-
 	},
 
 	// rpx 转化 px
@@ -937,7 +928,6 @@ Page({
 	},
 
 	getPop() {
-		// console.log('我是弹窗广告')
 		my.removeStorageSync({
 			key: 'isHotStart',
 		});
@@ -963,8 +953,6 @@ Page({
 				var result = resData.data;
 				if (resData.ret.code == '0') {
 					// 如果为收藏有礼的弹窗
-					// console.log(resData.data.appLink);
-					// console.log(my.canIUse('isCollected'));
 					var canUseCollected = my.canIUse('isCollected');
 					if (!canUseCollected) {
 						my.showToast({
@@ -1693,8 +1681,6 @@ Page({
 	getSearchTextMax() {
 		let that = this;
 		 http.get( api.search.SEARCHTEXTMAX, {}, (res) => {
-			 console.log("成功")
-			 console.log(res);
 			 let resData = res.data;
 			if(resData.ret.code == '0' && resData.ret.message == "SUCCESS" && resData.data && resData.data.name) {
 				try {
@@ -1703,11 +1689,8 @@ Page({
 				that.setData({
 					placeholder: resData.data.name
 				})
-				console.log(that.data.placeholder)
 			}
 		 }, (err) => {
-			 console.log('失败')
-			 console.log(err);
 		 })
 	},
 
@@ -1722,7 +1705,6 @@ Page({
 	  * 新版搜索组件开关
 	*/
 	showSearch: function(noGetHistory) {
-		console.log(noGetHistory);
 		// this.searchComponent.getHistory();
 		noGetHistory == 'noGetHistory' ? '' : 	this.searchComponent.getHistory();
 		this.setData({
@@ -1730,8 +1712,6 @@ Page({
 			isFocus: !this.data.isFocus,
 		})
 		// this.searchComponent.setIsFocus();
-		console.log(this.data.isFocus)
-		console.log(	this.searchComponent)
 	}
 
 });

@@ -55,6 +55,7 @@ export default {
 		GOODS_DETAIL_DRAWCOUPON: '/m/o/coupon/1.0/drawCoupon',                    // 新的商品详情领取优惠券
 		GOODS_DETAIL_CONTACTSTORE: '/m/c/m/customer/service/1.0/xnCustomer',      // 新的商品详情获取 “联系商家”的参数
 		lISTGOODSBYNAME: '/m/g//1.0/group/listGoodsByName',												// 新的商品详情猜你喜欢接口
+		LISTMATERIALBYNAME: '/m/a/material/1.0/listMaterialByName'								// 新商详 banner 位接口
 	},
 
 	// 签到接口

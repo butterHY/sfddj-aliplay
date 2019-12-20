@@ -64,7 +64,6 @@ Page({
 		})
 		if( this.searchComponent ) {
 			this.searchComponent.data.pageType = 'showSearchPage';
-			console.log(this.searchComponent)
 		}
 	},
 
@@ -84,7 +83,6 @@ Page({
 	 */
 	scrollPage: function(e) {
 		// 因为添加了 “商品”和“店铺”的导航栏 ，所以页面滚动距离得由原来的 120 ，变为 198
-		// console.log(utils.px2Rpx(scrollTop));    为什么要使用   utils.px2Rpx 来装换 rpx ? 这样在真机并不准确；
 		if (utils.px2Rpx(e.detail.scrollTop) > 198 && !this.data.scrollTop) {
 			this.data.scrollTop = true;							
 			this.setData({ scrollTop: this.data.scrollTop });
@@ -125,7 +123,6 @@ Page({
 	// 点击 “商品” 和 “店铺” 切换类型
 	setGoodsOrStore: function(e) {
 		let that = this;
-		console.log(e.currentTarget.dataset.goodsOrStore)
 		if(that.data.goodsOrStore == e.currentTarget.dataset.goodsOrStore) {
 			return;
 		} else {	
@@ -139,7 +136,6 @@ Page({
 				storeList: [],
 				hasMore: true
 			});
-			console.log('切换商品和店铺', that.data.goodsOrStore);
 			that.searchProduct(this.data.inputVal, 0);
 			// that.data.hasMore = false;
 		}
@@ -234,7 +230,6 @@ Page({
 	 * 
 	 */
 	selectOrEnter(word, noGetHistory) {
-		console.log('我被触发了', word)
 		this.setData({
 			inputVal: word,
 		})
@@ -250,7 +245,6 @@ Page({
 	 */
 	searchProduct: function(keyWord, type) {
 		let that = this;
-		console.log('搜索商品，我开始请求了')
 		that.setData({
 			isLoadMore: true
 		});
@@ -293,7 +287,6 @@ Page({
 			start: start,
 			limit: that.data.limit
 		}, function(res) {
-			console.log(res)
 			if (!res.data.data) {
 				that.setData({
 					loadComplete: true,
@@ -316,7 +309,6 @@ Page({
 			var hasMore = result && result.length == that.data.limit ? true : false;
 
 			type == 0 ? list = result : list = list.concat(result);
-			console.log(list);
 
 			let upData = {
 				hasMore: hasMore,
@@ -332,7 +324,6 @@ Page({
 			that.setData(upData);
 			
 		}, function(err) {
-			console.log(err)
 			my.stopPullDownRefresh();
 			that.setData({
 				isLoadMore: false,
@@ -410,7 +401,6 @@ Page({
 
 	// 这个事件没有被触发
 	scrollToTop: function() {
-		console.log('我回到顶部')
 		my.pageScrollTo({
 			scrollTop: 0
 		});
@@ -420,7 +410,6 @@ Page({
 	 * 保存搜索词
 	 */
 	saveSearchHist: function(keyWord) {
-		console.log(keyWord);
 		if ( stringUtils.isNotEmpty(keyWord) ) {
 			try {
 				var searchWords = my.getStorageSync({ key: constants.StorageConstants.searchWordsKey }).data || [];
@@ -524,8 +513,6 @@ Page({
 	// },
 	
 	scrollToLower: function() {
-		console.log('我上拉了 加载了');
-		console.log(this.data.hasMore);
 		if (this.data.hasMore) {
 			this.data.goodsOrStore == '0' ? this.setData({goodsStart: this.data.goodsList.length, limit: this.data.limit}) : this.setData({storeStart: this.data.storeList.length, limit: this.data.limit});
 		  this.data.hasMore = false;
@@ -539,14 +526,12 @@ Page({
 	*/
 	saveRef(ref) {
 		this.searchComponent = ref;
-		console.log(this.searchComponent);
   },
 	
 	/**
 	  * 新版搜索组件开关
 	*/
 	showSearch: function(noGetHistory) {
-		console.log(noGetHistory);
 		// this.searchComponent.getHistory()
 		noGetHistory == 'noGetHistory' ? '' : 	this.searchComponent.getHistory();
 		this.setData({

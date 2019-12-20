@@ -43,7 +43,6 @@ Page({
 
 	onLoad: async function(options) {
 		var that = this;
-		console.log(options)
 		//获取父分类信息
 		var fatherCategory = {};
 		    fatherCategory = my.getStorageSync({ key: constants.StorageConstants.fatherCategoryId }).data ? my.getStorageSync({ key: constants.StorageConstants.fatherCategoryId }).data : {}; //获取父分类信息
@@ -83,7 +82,6 @@ Page({
 				}
 		}
 
-		console.log('开始合并父类和子类的数据')
 		var newChildrenCateTags = [];
 		newChildrenCateTags = newChildrenCateTags.concat(fatherCategory, this.data.childrenCategoryTags);
 		this.data.childrenCategoryTags = newChildrenCateTags;
@@ -109,8 +107,6 @@ Page({
 
 	onShow() {
 		// 回到页面关闭搜索组件
-		console.log('关闭搜索组件');
-		console.log(this.searchComponent);
 		// my.hideKeyboard();
 		this.setData({
 			placeholder: my.getStorageSync({key: 'searchTextMax'}).data,
@@ -121,7 +117,6 @@ Page({
 			this.searchComponent.setData({inputVal: ''});
 			// this.searchComponent.getHistory();
 			// this.searchComponent.data.pageType = 'secondCategory';
-			console.log(this.searchComponent)
 		}
 	},
 
@@ -132,8 +127,6 @@ Page({
 				let categoryTags = res.data.result.dtoList;
 				if ( categoryTags.length > 0 ) {
 					let fatherCategory = categoryTags.find(value => value.id == id);
-					console.log(categoryTags);
-					console.log(fatherCategory);
 					reslove({
 						type: 'success',
 						data: fatherCategory
@@ -451,7 +444,6 @@ Page({
 				sendRequest.send(constants.InterfaceUrl.USER_BINGMOBILEV4, {
 					response: response,
 				}, function(res) {
-					console.log(res)
 					if (res.data.result) {
 						try {
 							my.setStorageSync({ key: constants.StorageConstants.tokenKey, data: res.data.result.loginToken });
@@ -503,14 +495,12 @@ Page({
 	*/
 	saveRef(ref) {
 		this.searchComponent = ref;
-		console.log(this.searchComponent);
   },
 	
 	/**
 	  * 新版搜索组件开关
 	*/
 	showSearch: function(noGetHistory) {
-		console.log(noGetHistory);
 		// this.searchComponent.getHistory()
 		noGetHistory == 'noGetHistory' ? '' : 	this.searchComponent.getHistory();
 		this.setData({

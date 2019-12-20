@@ -14,7 +14,7 @@ page {
 }
 
 .detail-header-view {
-  padding: 0 28rpx 28rpx 28rpx;
+  padding: 0 30rpx 30rpx 30rpx;
   /* line-height: 46rpx; */
 }
 
@@ -40,7 +40,7 @@ page {
 .priceView {
   box-sizing: border-box;
   /* padding: 42rpx 30rpx 28rpx 30rpx; */
-  padding: 0 28rpx 28rpx 28rpx;
+  padding: 0 30rpx 30rpx 30rpx;
 }
 
 
@@ -96,7 +96,7 @@ page {
 } 
 
 .priceTagArea {
-  padding: 16rpx 0 21rpx 0;
+  padding: 16rpx 0 20rpx 0;
 }
 
 .defaultPrice {
@@ -120,16 +120,16 @@ page {
   box-sizing: border-box;
 }
 .store-view {
-  padding: 35rpx 28rpx;
+  padding: 32rpx 30rpx;
 }
 
 .specifications-view {
-  padding: 36rpx 28rpx;
+  padding: 30rpx;
 }
 
 .addressTips {
-   padding-top: 21rpx;
-   margin-left: 78rpx;
+   padding-top: 20rpx;
+   margin-left: 88rpx;
 }
 .color_red {
   color: red;
@@ -173,10 +173,10 @@ page {
 .notice-area {
   position: relative;
   width: 100%;
-  margin-bottom: 20rpx;
+  margin-bottom: 30rpx;
   display: flex;
   box-sizing: border-box;
-  padding: 30rpx 28rpx 0 28rpx;
+  padding: 30rpx 30rpx 0 30rpx;
   overflow: hidden;
 }
 
@@ -194,9 +194,9 @@ page {
 }
 
 .notice-title .ontice-titleText {
-  padding: 0 18rpx;
-  height: 32rpx;
-  color: #71a461;
+  padding: 0 20rpx;
+  height: 38rpx;
+  color: #00a958;
 }
 
 .notice-title .notice-line {
@@ -209,13 +209,13 @@ page {
   width: 100%;
   box-sizing: border-box;
   text-indent: 2em;
-  padding: 53rpx 35rpx 62rpx 35rpx;
+  padding: 36rpx 27rpx 38rpx 33rpx;
   min-height: 160rpx;
   text-overflow: ellipsis;
   border-radius: 10rpx;
-  color: #6e6e6e;
+  color: rgb(102, 102, 102);
   background: #fafafa;
-  line-height: 44rpx;
+  line-height: 48rpx;
 }
 
 .returnMoneyView {
@@ -249,6 +249,13 @@ page {
 
 .rich-text-view {
   padding: 0 28rpx;
+}
+
+
+/* wxParse/wxParse.acss  中的这条样式被注释了，换成在商详页 rich-text-view 父节点下添加这个样式 */
+.rich-text-view view {
+  word-break:break-all; 
+  overflow:auto;
 }
 
 /* .wxParse-p { */
@@ -513,9 +520,12 @@ page {
 .item-header-title-view {
   display: flex;
   align-items: center;
-  justify-content: center;
-  background: #f3f3f3;
-  height: 80rpx;
+  justify-content: start;
+  /* background: #f3f3f3; */
+  /* height: 80rpx; */
+  padding: 30rpx 0;
+  margin: 0 30rpx;
+  border-bottom: 1rpx solid #e6e6e6;
 }
 
 .goods-scrollx-view {
@@ -525,7 +535,7 @@ page {
   white-space: nowrap;
   background-color: white;
   overflow: auto;
-  margin: 30rpx 28rpx;
+  margin: 30rpx 30rpx;
   width: 690rpx;
 }
 
@@ -534,21 +544,21 @@ page {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin: 0 28rpx;
-  padding: 35rpx 0;
-  font-size: 24rpx;
+  margin: 0 30rpx;
+  padding: 30rpx 0;
+  font-size: 30rpx;
   color: #323232;
 }
 
 .goods-comment-area {
   display: flex;
   flex-direction: column;
-  padding: 0 30rpx 54rpx 30rpx;
+  padding: 0 30rpx 40rpx 30rpx;
 }
 
 .comment-line {
   border-top: 2rpx #e6e6e6 solid;
-  padding-bottom: 36rpx;
+  /* padding-bottom: 36rpx; */
 }
 
 .comment-user-area {
@@ -556,25 +566,35 @@ page {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  box-sizing: border-box;
+  padding: 30rpx 0;
+}
+
+.commentImgList {
+  height: 188rpx;
+  /* width: 300rpx; */
+  white-space: nowrap;
+  overflow: auto;
 }
 
 .comment-user-image {
-  width: 45rpx;
-  height: 45rpx;
+  width: 68rpx;
+  height: 68rpx;
   border-radius: 50%;
   overflow: hidden;
 }
 
 .comment-text {
   /* height: 58rpx;  */
-  font-size: 26rpx;
-  line-height: 30rpx;
+  font-size: 30rpx;
+  line-height: 48rpx;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
 }
+
 
 .red-count-view {
   position: absolute;
@@ -742,10 +762,6 @@ page {
   margin-left: 20rpx;
 }
 
-.proComment_headPort {
-  width: 50rpx;
-  height: 50rpx;
-}
 
 .proComment_star {
   width: 20rpx;
@@ -754,15 +770,20 @@ page {
 }
 
 .proComment_img {
-  width: 168rpx;
-  height: 168rpx;
-  /* margin-right: 4rpx; */
+  /* float: left; */
+  width: 188rpx;
+  height: 188rpx;
+  margin-right: 5rpx;
   border-radius: 15rpx;
 }
 
-.proComment_text {
-  margin-top: 18rpx;
+.commentImgList {
+
 }
+
+/* .proComment_text {
+  margin-top: 18rpx;
+} */
 
 .proComment_date {
   margin: 20rpx 0 0 550rpx;
@@ -813,12 +834,31 @@ page {
 /*全赔保障 */
 
 .goodsCoverage {
-  padding: 41rpx 28rpx 36rpx 28rpx;
+  /* padding: 41rpx 28rpx 36rpx 28rpx; */
+  padding: 30rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .guarantee-view {
-   padding-top: 20rpx;
-   margin-left: 78rpx;
+   /* padding-top: 20rpx; */
+   margin-left: 30rpx;
+   flex: 1;
+   /* display: flex;
+   flex-direction: row;
+   justify-content: space-between; */
+   /* justify-content:  */
+}
+
+.afterSaleGueeName {
+  float: left;
+  box-sizing: border-box;
+  padding: 10rpx 20rpx;
+  border-radius: 10rpx;
+  background: #f2fbf6;
+  color: #00a958;
+  margin-right: 20rpx;
 }
 
 .color_green {
@@ -1010,15 +1050,17 @@ page {
 .shareButton {
   top: 10rpx;
   right: 0;
-  width: 122rpx;
-  height: 50rpx;
+  width: 130rpx;
+  height: 54rpx;
   background: pink;
   box-sizing: border-box;
-  padding: 8rpx 8rpx 8rpx 20rpx;
+  padding: 14rpx 10rpx 14rpx  20rpx;
   border-radius: 25rpx 0 0 25rpx;
   display: flex;
   justify-content: space-between;
-  line-height: 40rpx;
+  /* align-items: center; */
+  line-height: 32rpx;
+  /* vertical-align: middle; */
   background: #f5f5f5;
 }
 
@@ -1065,17 +1107,28 @@ page {
 }
 
 .receiveCoupon {
-  padding: 0 28rpx 28rpx 28rpx;
+  padding: 0 30rpx 20rpx 30rpx;
 }
 
 .couponTitle {
   margin-right: 20rpx;
   width: 64rpx;
-  height: 32rpx;
+  /* height: 32rpx; */
+  height: 100%;
+}
+
+.couponNameBox {
+   width: 80%;
+}
+
+.couponNameLine {
+  width: 500rpx;
 }
 
 .couponName {
-  margin-right: 18rpx;
+  display: inline-block;
+
+  margin-right: 20rpx;
 }
 
 .getCouponText {
@@ -1083,34 +1136,32 @@ page {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  width: 80rpx;
-}
-
-.label {
-  height: 24rpx;
-  padding: 10rpx;
-  margin-right: 18rpx;
-  border-radius: 10rpx;
+  width: 90rpx;
 }
 
 .labelName {
   display: inline-block;
-  padding: 10rpx 10rpx;
-  margin-right: 18rpx;
+  padding: 5rpx 10rpx;
+  margin-right: 16rpx;
   border: 1rpx solid transparent;
   border-radius: 10rpx;
-  background: #ff2e2e;
+  background: linear-gradient(to bottom right, #ffcf61, #ff0000);
+  /* background: #ff2e2e; */
   color: #fff;
+  vertical-align: middle;
 }
 
 .goodsName {
-  line-height: 44rpx;
-  vertical-align: top;
+  line-height: 50rpx;
+  vertical-align: middle;
 }
 
 .goodsTag {
-  background: #fff4f4;
-  color: #ff2e2e;
+  background: #fff4f5;
+  /* height: 24rpx; */
+  padding: 7rpx 10rpx;
+  margin-right: 20rpx;
+  border-radius: 10rpx;
 }
 
 .getCoupon {
@@ -1273,6 +1324,65 @@ page {
 
 .division-area {
   background: rgb(245, 245, 245);
+}
+
+/*  banner  位样式 */
+.bannerImgBox {
+  width: 100%;
+  height: 140rpx;
+  box-sizing: border-box;
+  padding: 0 30rpx;
+  margin: 30rpx 0 44rpx;
+  border-radius: 25rpx;
+}
+
+.bannerImgList {
+  width: 690rpx;
+  height: 140rpx;
+  border-radius: 25rpx;
+}
+
+.banner_img {
+  width: 690rpx;
+  height: 140rpx;
+  border-radius: 25rpx;
+}
+
+/* 猜你喜欢样式 */
+
+.guessLikeBox {
+  padding: 20rpx 0;
+  margin: 0 30rpx;
+}
+
+.guessLikeGoodsName {
+  height: 74rpx;
+  width: 228rpx;
+}
+
+.guessLikeGoodsName .name {
+  font-size: 28rpx;
+  line-height: 30rpx;
+}
+
+.guessLikeGoodsName .productName {
+  font-size: 22rpx;
+  color: #b3b3b3;
+  margin-top: 8rpx;
+}
+
+.guessLikeGoodsName .productName {
+  margin-top: 8rpx;
+  color: #b3b3b3;
+  display: block;
+  font-size: 24rpx;
+}
+
+.guessLikeGoodsName .price {
+  margin-top: 6rpx;
+  color: #ff5353;
+  font-weight: 700;
+  font-size: 30rpx;
 }
 
 

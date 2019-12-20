@@ -70,11 +70,11 @@
             <view class="defaultPrice single-line">
               <!-- 价格 -->
               <text a:if="{{priceInfo.price}}">
-                <text>¥</text>
+                <text class=" font-32">¥</text>
                 <text decode="true" space="true">&nbsp;</text>
-                <text class="font-56 font-weight-600">{{priceInfo.price}}</text>
+                <text class="font-48 font-weight-600">{{priceInfo.price}}</text>
                 <!-- 原价 -->
-                <text a:if="{{priceInfo.oldPrice}}" class="color-153 font-22 line-through marLeft_5" >¥ {{priceInfo.oldPrice}}</text>
+                <text a:if="{{priceInfo.oldPrice}}" class="color-153 font-30 line-through marLeft_10" >¥ {{priceInfo.oldPrice}}</text>
               </text>
               <!-- 积分 -->
               <text a:if="{{priceInfo.integralVal && priceInfo.integralVal > 0}}">
@@ -95,22 +95,24 @@
             <text class="font-26 color-666"> + {{theCostMemberScore}}积分</text>
         </view> -->
       </block>
-      <view class="color-153 font-26">已售：{{goods.salesCount}}份</view>
+      <view class="color-153 font-30">已售：{{goods.salesCount}}份</view>
     </view>
   </view>
 
     <!-- 优惠券导航栏                      -->
-  <view class="receiveCoupon flex_view_row justi_between font-26" onTap="showPopup" a:if="{{couponDataList && couponDataList.length > 0}}">
-    <view class="flex_view_row justi_start" style="width: 80%;">
+  <view class="receiveCoupon flex_view_row justi_between font-30 single-line" onTap="showPopup" a:if="{{couponDataList && couponDataList.length > 0}}">
+    <view class="couponNameBox flex_view_row justi_start single-line">
       <view class="couponTitle">
-        <image src="{{baseImageLocUrl}}miniappImg/public/goodsDetail/icon_coupon.png" class="width_100 height_100" mode="widthFix"></image>
+        <image src="{{baseImageLocUrl}}miniappImg/public/goodsDetail/icon_coupon.png" class="all_100" ></image>
       </view>
-      <view class="couponName color-57" a:for="{{couponDataList}}" a:key="*this" a:if="{{index == 0 || index == 1 || index == 2}}">满{{item.needPrice}}减{{item.costPrice}}</view>
+      <view class="single-line couponNameLine">
+         <text class="couponName color-46 " a:for="{{couponDataList}}" a:key="*this" a:if="{{index == 0 || index == 1 || index == 2}}" style="{{ index == 2 ? 'margin-right: 0' : '' }}">满{{item.needPrice}}减{{item.costPrice}}</text>
+      </view>
     </view>
     <view class="getCouponText color-153">
       <view>领券</view>
       <!-- marLeft_20 -->
-      <view class="icon-href-right font-22"></view>
+      <view class="icon-href-right font-24"></view>
     </view>
   </view>
 
@@ -142,19 +144,21 @@
   <view class="detail-header-view posi_re ">
     <view class="detail-header-name color-323232 font-32">
       <view class="twoLineHide">
-        <view class="labelName font-20" a:if="{{goods.goodsLabels}}">
+        <view class="labelName font-26" a:if="{{goods.goodsLabels}}">
           <text class="flex_view_col justi_start ">{{goods.goodsLabels}}</text>
         </view>
-        <text class="goodsName font-weight-600">{{goods.goodsName}}</text>   
+        <text class="goodsName font-34 font-weight-600">{{goods.goodsName}}</text>   
       </view> 
-      <view class="flex_view_row  justi_start font-20 labelList" a:if="{{goods.goodsViceVO.labelList.length > 0 || goods.goodsTag}}">
-        <view class="goodsTag label " a:if="{{goods.goodsTag}}">{{goods.goodsTag}}</view>
-        <view class="goodsTag label" a:for="{{goods.goodsViceVO.labelList}}" a:key="*this" a:if="{{index == 0 || index == 1 || index == 2}}">{{item}}</view>
+      <view class="flex_view_row font-28  justi_start labelList" a:if="{{ goods.goodsTag || (that.data.goods.goodsViceVO.labelList && that.data.goods.goodsViceVO.labelList.length > 0) }}">
+        <view class="goodsTag color-57" a:if="{{ goods.goodsTag }}">{{goods.goodsTag}}</view>
+        <block a:if="{{ that.data.goods.goodsViceVO.labelList && that.data.goods.goodsViceVO.labelList.length > 0 }}">
+          <view class="goodsTag color-57" a:if="{{index == 0 || index == 1 || index == 2}}" a:for="{{that.data.goods.goodsViceVO.labelList}}">{{item}}</view>
+        </block>
       </view>    
     </view>
     <button open-type="share" hover-class="none"  size="mini" plain="{{true}}" class="btnStyle shareButton posi_ab color-153">
-      <text class="icon-share1 font-32 "></text>
-      <text class="font-26">分享</text>
+      <text class="icon-share1 font-32"></text>
+      <text class="font-30">分享</text>
     </button>
   </view>
 
@@ -173,16 +177,16 @@
   <view class="division-area"></view>
   <view class="specifications-view selected-view" onTap="selectedSpecs">
     <view class="selectedSpecifications single-line-text flex_view_row" >
-      <view class="font-26 color-153">已选</view>
-        <view a:if="{{specType == 'MULTI'}}" class="font-26 marLeft_30 single-line">{{multiformname}} ; {{quantity}}件</view>
-        <view a:elif="{{specType == 'OPTIONAL'}}" class="font-26 marLeft_30 single-line">
+      <view class="font-30 color-153">已选</view>
+        <view a:if="{{specType == 'MULTI'}}" class="font-30 marLeft_30 single-line color-51">{{multiformname}} ; {{quantity}}件</view>
+        <view a:elif="{{specType == 'OPTIONAL'}}" class="font-30 marLeft_30 single-line color-51">
           <text a:if="{{(optionalProduct.length == 0 && goodsSpecMap.length != 0)}}"><block a:for="{{goodsSpecMap}}" a:key="*this">{{item.specName}}</block></text>
           <text a:elif="{{optionalProduct.length > 0 }}"><block a:for="{{optionalProduct}}" a:key="*this">{{item.productName}}</block></text>
           <text decode="true" space="true">&nbsp;</text> ; {{quantity}}件
         </view>
-        <view a:else class="font-26 marLeft_30 single-line">{{product.productName}} ; {{quantity}}件</view>
+        <view a:else class="font-30 marLeft_30 single-line color-51">{{product.productName}} ; {{quantity}}件</view>
     </view>
-    <text class="icon-href-right font-22 color-153">
+    <text class="icon-href-right font-24 color-153">
     </text>
   </view>
 
@@ -190,22 +194,22 @@
   <view class="line-view">
     <view class="one-line"></view>
   </view>
-  <view class="store-view font-26" onTap="showAddressPop">
+  <view class="store-view font-30" onTap="showAddressPop">
     <view class="selected-view">
       <view class="selectedSpecifications flex_view_row single-line-text">
-        <view class="font-26 color-153">送至</view>
-        <view class="marLeft_30 single-line flex_view_row">
+        <view class="color-153">送至</view>
+        <view class="marLeft_30  single-line flex_view_row">
           <!-- <image class="addressImag marRight_15" mode="scaleToFill" src="{{base64imageUrl}}miniappImg/icon/icon_detail_address.png"/> -->
-          <text class="icon-locate font-26 marRight_15"></text>
+          <text class="icon-locate font-34"></text>
           <block a:if="{{addressList && addressList.length > 0}}" a:for="{{addressList}}" a:key="*this">
-             <view class="single-line" a:if="{{item.isDefault}}">{{item.province}}<text decode="true" space="true">&nbsp;</text>{{item.city}}<text decode="true" space="true">&nbsp;</text>{{item.area}}<text decode="true" space="true">&nbsp;</text>{{item.address}}</view>
+             <view class="single-line color-51" a:if="{{item.isDefault}}">{{item.province}}<text decode="true" space="true">&nbsp;</text>{{item.city}}<text decode="true" space="true">&nbsp;</text>{{item.area}}<text decode="true" space="true">&nbsp;</text>{{item.address}}</view>
           </block>
           <block a:if="{{address}}">
-            <view class="single-line">{{address.province + ' ' + address.city + ' ' + address.district }}</view>
+            <view class="single-line color-51">{{address.province + ' ' + address.city + ' ' + address.district }}</view>
           </block>
         </view>
       </view>
-      <text class="icon-href-right font-22 color-153 ">
+      <text class="icon-href-right font-24 color-153 ">
       </text>
     </view>
     <view class="addressTips" a:if="{{goods.deliveryTime && goods.viewStatus != 'SALEING' && goods.goodsStore != 0 }}">下单后<text class="color-57">{{goods.deliveryTime}}小时以内</text>发货</view>
@@ -260,10 +264,10 @@
 
     <!--全赔说明                                  已完成新接口字段更换-->
     <view class="division-area" a:if="{{goods.afterSaleGueeList && goods.afterSaleGueeList.length > 0}}"></view>
-    <view class="goodsCoverage" onTap="goToAfterSaleGuee" a:if="{{goods.afterSaleGueeList && goods.afterSaleGueeList.length > 0}}">
-      <view class="flex_view_row justi_between align_cen">
+    <view class="goodsCoverage single-line" onTap="goToAfterSaleGuee" a:if="{{goods.afterSaleGueeList && goods.afterSaleGueeList.length > 0}}">
+      <!-- <view class="flex_view_row justi_between align_cen">
         <view class="flex_view_row">
-          <text class="font-26 color-153">保障        
+          <text class="font-30 color-153">保障        
           </text>
           <view class="marLeft_30 flex_view_row">
             <image class="guaranteeImg marRight_10" mode="scaleToFill" src="{{baseImageLocUrl}}miniappImg/public/goodsDetail/icon_img_safe.png"/>
@@ -271,30 +275,32 @@
           </view>
         </view>
         <view>
-          <text class="icon-href-right font-22 color-153">
+          <text class="icon-href-right font-24 color-153">
           </text>
         </view>
-      </view>
-      <view class="guarantee-view single-line font-26">
-        <block a:for="{{goods.afterSaleGueeList}}" a:key="*this">
-          <block a:if="{{item == '1'}}">不好吃全赔</block>
-          <block a:if="{{item == '2'}}">坏果全赔</block>
-          <block a:if="{{item == '3'}}">规格不符全赔</block>
-          <block a:if="{{item == '4'}}">缺一两全赔</block>
-          <block a:if="{{index != goods.afterSaleGueeList.length - 1}}"><text decode="true" space="true">&nbsp;</text> • <text decode="true" space="true">&nbsp;</text></block>
+      </view> -->
+      <view class="font-30  color-153">保障</view>
+      <view class="guarantee-view single-line font-28  clearfix">
+        <block a:for="{{goods.afterSaleGueeList}}" a:if="{{index == 0 || index == 1}}" a:key="*this">
+          <view class="afterSaleGueeName single-line" a:if="{{item == '1'}}">不好吃全赔</view>
+          <view class="afterSaleGueeName single-line" a:if="{{item == '2'}}">坏果全赔</view>
+          <view class="afterSaleGueeName single-line" a:if="{{item == '3'}}">规格不符全赔</view>
+          <view class="afterSaleGueeName single-line" a:if="{{item == '4'}}">缺一两全赔</view>
+          <!-- <block a:if="{{index != goods.afterSaleGueeList.length - 1}}"><text decode="true" space="true">&nbsp;</text> • <text decode="true" space="true">&nbsp;</text></block> -->
         </block>
       </view>
+      <text class="icon-href-right font-24 color-153"></text>
     </view>
 
-    <!-- 店铺公告                                 已完成新接口字段更换-->
-    <view class="division-area"  a:if="{{goods.supplierInfo.supplierNotice}}"></view>
+    <!-- 店铺公告                                 已完成新接口字段更换  -->
+    <view class="division-area" a:if="{{goods.supplierInfo.supplierNotice}}"></view>
     <view class="notice-area flex_view_col" a:if="{{goods.supplierInfo.supplierNotice}}">
       <view class="tex_center notice-title flex_view_row justi_cen align_cen" style="background: url({{baseImageLocUrl}}miniappImg/goodsDetail/noticeTitle.png); background-size: 100%;">
         <view class="notice-line"></view>
-        <view class="ontice-titleText font-32">店铺公告</view>
+        <view class="ontice-titleText font-36">店铺公告</view>
         <view class="notice-line"></view>
       </view>
-      <view class="notice-text font-26"> {{goods.supplierInfo.supplierNotice}} </view>
+      <view class="notice-text font-30">{{goods.supplierInfo.supplierNotice}} </view>
       <!-- <image src="{{base64imageUrl}}miniappImg/bg/bg_notice_person.png" class="store_noticeImg notice-person-view">
       </image> -->
     </view>
@@ -306,11 +312,11 @@
     <view class="test-report">
       <view class="test-report-text">
         <!-- <image src="{{base64imageUrl}}miniappImg/icon/icon_test_report.png" class="testReport_img"></image> -->
-        <text class="iconfont icon-check-cir font-26"></text>
-        <text class="font-26 color-323232 testReport_text">检验报告</text>
-        <text class="font-26 color-153 marLeft_20">严格质检，品质保证</text>
+        <text class="icon-check-cir font-30"></text>
+        <text class="font-30 color-323232 testReport_text">检验报告</text>
+        <text class="font-30 color-153 marLeft_20">严格质检，品质保证</text>
       </view>
-      <text class="font-22 icon-href-right color-153 marRight_30"></text>
+      <text class="font-24 icon-href-right color-153 marRight_30"></text>
     </view>
   </navigator>
 
@@ -321,7 +327,8 @@
   <view data-url="/pages/shopping/comment/comment?goodScore={{goods.commentScore}}&goodsCommentTotal={{goods.commentTotal}}&goodsId={{goods.goodsId}}" data-type="comment" onTap="goToTargetPage" hover-class="none" a:if="{{showComment}}">
     <view class="goods-comment-title">
       <view class="flex_view_row align_cen">
-        <view>好评率<text class="marLeft_5 color-57">{{goods.commentScore}}%</text></view>
+      <!-- <text class="marLeft_5 color-57">{{goods.commentScore}}%</text> -->
+        <view class="color-51">卖家秀</view>
       </view>
       <view class="flex_view_row align_cen color-153">
         <view>评价</view> 
@@ -340,36 +347,67 @@
     <view class="comment-user-area">
       <view class="flex_view_row align_cen">
         <view class="comment-user-image">
-          <image src="{{item.headPortraitPath ? item.headPortraitPath : base64imageUrl + 'miniappImg/icon/icon_default_head.jpeg'}}" class="proComment_headPort">
-          </image>
+          <image src="{{item.headPortraitPath ? item.headPortraitPath : base64imageUrl + 'miniappImg/icon/icon_default_head.jpeg'}}" class="all_100"></image>
         </view>
-        <view class="font-22 color-153 marLeft_20">{{item.nickName}}</view>
+        <view class="height_100 flex_view_col marLeft_20">
+          <view class="font-30 color-153 ">{{item.nickName}}</view>
+          <view class="flex_view_row align_cen marTop_5">
+            <image src="{{base64imageUrl}}miniappImg/icon/icon_star_selected.png" class="proComment_star" a:for="{{item.star}}" a:key="*this"></image>
+            <image src="{{base64imageUrl}}miniappImg/icon/icon_star_normal.png" class="proComment_star" a:for="{{5 - item.star}}" a:key="*this"></image>
+          </view>
+        </view>
       </view>
-      <view class="flex_view_row align_cen">
-        <image src="{{base64imageUrl}}miniappImg/icon/icon_star_selected.png" class="proComment_star" a:for="{{item.star}}" a:key="*this"></image>
-        <image src="{{base64imageUrl}}miniappImg/icon/icon_star_normal.png" class="proComment_star" a:for="{{5 - item.star}}" a:key="*this"></image>
-      </view>
+      <view  class="font-30 color-153">{{item.createDate}}</view>
     </view>
     <view class="proComment_text font-26">
       <view class="comment-text">{{item.comment}}</view>
     </view>
-    <view class="blockBox marTop_38" a:if="{{item && item.imagePath.length > 0}}">
-      <image class="proComment_img" a:for="{{item.imagePath}}" a:key="*this" a:for-item="items" a:for-inex="inexs" src="{{filters.isHttpUrl(items) ? baseImageLocUrl + 'vueStatic/img/commentErrImg.png' : baseImageUrl + items}}" data-current="{{items}}" data-urls="{{item.imagePath}}" style="{{inexs == item.imagePath.length - 1 ? 'margin-right: 0;' : '  margin-right: 3rpx;'}}" onTap="commentViewTap">
-      </image>
-    </view>
-    <!-- <view class="proComment_date font-22 color-153">{{comment.createDate}}        
-    </view> -->
+    <scroll-view  a:if="{{item && item.imagePath.length > 0}}" class="commentImgList marTop_30" scroll-x="{{true}}" scroll-with-animation="{{true}}"  onScrollToLower="lowLoadMore" >
+        <image class="proComment_img" a:for="{{item.imagePath}}" a:key="*this" a:for-item="items" a:for-inex="inexs" src="{{filters.isHttpUrl(items) ? baseImageLocUrl + 'vueStatic/img/commentErrImg.png' : baseImageUrl + items}}" data-current="{{items}}" data-urls="{{item.imagePath}}" style="{{inexs == item.imagePath.length - 1 ? 'margin-right: 0;' : ''}}" onTap="commentViewTap"></image>
+    </scroll-view>
   </view>
 
+  <view class="division-area" a:if="{{bannerImgList && bannerImgList.length > 0}}"></view>
+  <view class="bannerImgBox" a:if="{{bannerImgList && bannerImgList.length > 0}}">
+    <view class="posi_re">
+      <swiper indicator-dots="true" class="bannerImgList" indicator-active-color="#ff5353" indicator-color='rgba(0,0,0,.3)' autoplay="{{true}}" circular="true">
+        <block a:for="{{bannerImgList}}" a:key="*this">
+          <swiper-item>
+            <image src="{{baseImageUrl}}{{item.imageUrl}}" class="banner_img" data-current="{{item.imageUrl}}" data-urls="{{goods.goodsImages}}" onTap="commentViewTap"/>
+          </swiper-item>
+        </block>
+      </swiper>
+    </view>
+  </view>
 
   <!-- 猜你喜欢                                  已完成新接口字段更换-->
-  <block a:if="{{guessLikeGoods.length > 0}}">
+  <view class="division-area"  a:if="{{ guessLikeGoods && guessLikeGoods.length > 0}}"></view>
+  <block a:if="{{ guessLikeGoods && guessLikeGoods.length > 0}}">
     <view class="js_guessLike">
-      <view class="item-header-title-view font-26 color-153">- 猜你喜欢 -        
-      </view>
-      <scroll-view scroll-x class="goods-scrollx-view" scroll-with-animation="true" data-type="guessLike" onScrollToLower="lowLoadMore" onScroll="guessLikeScroll">
+      <view class="item-header-title-view font-30 color-153">猜你喜欢</view>
+      <scroll-view scroll-x class="goods-scrollx-view guessLikeBox" scroll-with-animation="true" data-type="guessLike" onScrollToLower="lowLoadMore" onScroll="guessLikeScroll">
         <block a:for="{{guessLikeGoods}}" a:key="*this">
-          <template is="itemGoodsScrollX" data="{{...item,baseImageUrl:baseImageUrl,baseLocImgUrl: base64imageUrl,index, type: 'skipOther', listType: 'goods'}}"/>
+          <view style="display:inline-block;padding: 0 10rpx">
+            <view data-url="/pages/shopping/goodsDetail/goodsDetail?goodsSn={{item.goodsSn}}" data-index="{{index}}" data-type="goods" open-type="redirect" hover-class="none" class="posi_re {{isLoaded ? '' : 'js_goodsList_' + index}}" onTap="goToPage">
+              <image a:if="{{item.goodsDefaultImage}}" src="{{baseImageUrl}}{{item.goodsDefaultImage}}" style="width:228rpx;height:228rpx"></image>
+              <!--小图标 全赔  -->
+              <image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff1.png" class=" posi_ab" style="width: 50rpx; height: 50rpx; top:10rpx; right: 10rpx;" a:if="{{filters.strIndexOf(item.afterSaleGuee,'1')}}"></image>
+              <image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff2.png" class=" posi_ab" style="width: 50rpx; height: 50rpx; top:10rpx; right: 10rpx;" a:elif="{{filters.strIndexOf(item.afterSaleGuee,'2')}}"></image>
+              <image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff3.png" class=" posi_ab" style="width: 50rpx; height: 50rpx; top:10rpx; right: 10rpx;" a:elif="{{filters.strIndexOf(item.afterSaleGuee,'3')}}"></image>
+              <image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff4.png?version=2.0" class=" posi_ab" style="width: 50rpx; height: 50rpx; top:10rpx; right: 10rpx;" a:elif="{{filters.strIndexOf(item.afterSaleGuee,'4')}}"></image>
+              <view class="guessLikeGoodsName">
+                <view a:if="{{item.name}}" class="name single-line">{{item.name}}</view>
+                <view a:if="{{item.goodsName && !name}}" class="name single-line">{{item.goodsName}}</view>
+                <view class="productName single-line">{{item.productName}}</view>
+              </view>
+              <view class="price single-line">￥{{item.salePrice}}</view>
+              <!-- <view a:if="{{item.name}}" class="font-26 item-goods-scrollx-text single-line">{{item.name}}</view>
+              <view a:if="{{item.goodsName && !name}}" class="font-26 item-goods-scrollx-text single-line">{{item.goodsName}}</view>
+              <view class="font-24 color-a1a0a0 item-goods-scrollx-text single-line">{{item.productName}}</view>
+              <view class="font-24 color-ff5353 item-goods-scrollx-text single-line">￥{{item.salePrice}}</view> -->
+            </view>
+          </view>
+          <!-- <template is="itemGoodsScrollX" data="{{...item,baseImageUrl:baseImageUrl,baseLocImgUrl: base64imageUrl,index, type: 'skipOther', listType: 'goods'}}"/> -->
         </block>
       </scroll-view>
     </view>

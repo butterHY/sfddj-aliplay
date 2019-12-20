@@ -52,20 +52,16 @@ Page({
 				my.removeStorageSync({ key: constants.StorageConstants.detfatherCategory });
 			} catch (e) {}
 			// 回到页面关闭搜索组件
-			console.log('关闭搜索组件');
-			console.log(this.searchComponent);
 			// my.hideKeyboard();
 			this.setData({
 				placeholder: my.getStorageSync({key: 'searchTextMax'}).data,
 				isFocus: false,
 				isShowSearch: false,
 			});
-			console.log(this.data.placeholder)
 			if( this.searchComponent ) {
 				this.searchComponent.setData({inputVal: ''});
 				// this.searchComponent.getHistory();
 				// that.searchComponent.data.pageType = 'category';
-				console.log(that.searchComponent)
 			}
 	},
 
@@ -240,14 +236,12 @@ Page({
 	*/
 	saveRef(ref) {
 		this.searchComponent = ref;
-		console.log(this.searchComponent);
   },
 	
 	/**
 	  * 新版搜索组件开关
 	*/
 	showSearch: function(noGetHistory) {
-		console.log(noGetHistory)
 		// this.searchComponent.getHistory()
 		noGetHistory == 'noGetHistory' ? '' : 	this.searchComponent.getHistory();
 		this.setData({

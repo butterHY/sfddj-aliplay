@@ -18,22 +18,3 @@
 	<view class="flex_1" onTap="handleBlur"></view>
   </view>
 </template>
-
-<!--<!-- 分类页和子分类页的搜索     --------------搜索热词模板-->
-<!-- <template name="hotWords">
-   <view  style="position:absolute;top:{{top}};left:0;right:0;bottom:0;background-color:rgba(0,0,0,0.5);z-index:9000;" a:if="{{show}}" catchTap='handleBlur'> 
-    <view style="width:100%;background-color:white;padding:24rpx 46rpx;box-sizing:border-box">
-      <view class="font-26 color-323232">热门推荐</view>
-      <view style="margin-top:24rpx;">
-        <view class="font-24 {{hotWord.isSign ? 'color-ff5353':'color-323232'}}" style="background-color:#eeeeee;padding:10rpx 20rpx;border-radius:5px;margin-right:20rpx;max-width:650rpx;display:inline-block;margin-bottom:20rpx;" data-word="{{hotWord.name}}" a:for="{{hotWords}}" a:for-item="hotWord" a:key="itemIndex0" catchTap="chooseWord">{{hotWord.name}}</view>
-      </view>
-      <view style="display:flex;align-items:center;justify-content:space-between">
-        <view class="font-26 color-323232">搜索记录</view>
-        <view style="width:32rpx;height:33rpx;margin-right:50rpx;" class="alipay_catch_img" catchTap="clearHist"><image class="all_100" src="{{baseLocImgUrl}}miniappImg/icon/icon_del.png"/></view>
-      </view>
-      <view style="margin-top:24rpx;">
-        <view class="font-24" style="background-color:#eeeeee;padding:10rpx 20rpx;border-radius:5px;margin-right:20rpx;margin-bottom:20rpx;max-width:650rpx;display:inline-block" data-word="{{searchWord}}" a:for="{{searchWords}}" a:for-item="searchWord" a:key="itemIndex" catchTap="chooseWord">{{searchWord}}</view>
-      </view>
-    </view>
-  </view>
-</template> -->

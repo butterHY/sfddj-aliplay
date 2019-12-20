@@ -28,19 +28,15 @@ Component({
     // console.log(this.is);     // 组件路径
     // console.log(this.$page);  // 组件所属页面实例
     // console.log(this.$id);    // 组件 id，可直接在组件 axml 中渲染值
-    console.log('我挂载上去了')
     this.$page.searchComponent = this;  // 页面 onLoad 后的 onShow 获取不到，因为有时差，但之后页面的 onShow 都能获取到，而 saveRef(ref) 只在页面 onLoad 后自动触发，之后不会再触发；
     this.data.pageType = this.props.pageType;
-    console.log(this.props.placeholderVal);
-    console.log(this.data.pageType)
 
     this.getHotWord();
   },
 
   didUpdate() {},
-  didUnmount() {
-    console.log('我卸载了')
-  },
+  didUnmount() {},
+
   methods: {
   /**
     * 搜索组件开关
@@ -60,7 +56,6 @@ Component({
     */
     handleFocus(event) {
       let that = this;
-      console.log(that.props.pageType);
       if(that.props.pageType == 'home') {
         getApp().globalData.uma.trackEvent('homepage_searchClick'); 
       }
@@ -71,7 +66,6 @@ Component({
     */
     getHotWord() {
       let that = this;
-      console.log('获取热词');
       http.get( api.search.SEARCHHOTWORD, {}, (res) => {
         let resData = res.data.data;
         let resRet = res.data.ret;
@@ -96,7 +90,6 @@ Component({
         that.setData({
           searchWords: searchWords && searchWords.length > 0 ? searchWords.reverse() : [],
         });
-        console.log('获取历史记录+++++++++++++++', searchWords);
       } catch (e) { }
     },
 
@@ -104,24 +97,18 @@ Component({
      * 键盘输入事件
      */
     handleInput(value) {
-      console.log(value)
-      console.log(value.replace(/\s*/g,''))
       let inputVal = value.replace(/\s*/g,'');
       let hotWordShow = true;
       let smSearchShow = true;
       let clearSearchShow = false;
       // inputVal != this.data.inputVal
       if( inputVal ) {
-        console.log(inputVal)
         this.smartSearch(inputVal);
         hotWordShow = false;
         clearSearchShow = true;
       } else {
-        console.log(inputVal)
         smSearchShow = false;
       }
-      console.log('热词开关',hotWordShow);
-      console.log('智能搜索开关',smSearchShow)
       this.setData({
         clearSearchShow,
         hotWordShow,
@@ -136,7 +123,6 @@ Component({
 	 */
     smartSearch(inputVal) {
       let that = this;
-      console.log(inputVal);
       my.showLoading({
         content: '加载中...',
         delay: '2000',
@@ -151,7 +137,6 @@ Component({
         smartSearchList: []
       };
       http.post( api.search.GOODSSUGGEST, data ,(res) => {
-        console.log(res);
         let resData = res.data.data;
         let retData = res.data.ret;
         // 添加 that.data.inputVal.replace(/\s*/g,'') 是为了防止，input 删除为空的时候，数据请求才回来，这时就会导致 input 为空，智能搜索模版显示，但热词模版不显示的情况；
@@ -167,7 +152,6 @@ Component({
       }, (err) => {
         that.setData(retunData);
         my.hideLoading();
-        console.log(err)
       })
     },
 
@@ -184,8 +168,6 @@ Component({
         smSearchShow: false,
         smartSearchList: [],
       });
-      console.log('选中词请求数据 inputVal',this.data.inputVal,'placeholderVal',this.data.placeholderVal)
-      console.log(that.props)
       that.props.pageType == 'showSearchPage' ? that.props.onSelectOrEnter(word, 'noGetHistory') : that.goToSearchPage(word, type);
     },
 
@@ -194,22 +176,16 @@ Component({
     */
     handleConfirm(value) {
       let that = this;
-      console.log(value)
-      // let { value } = event.detail;
-      console.log(value)
       my.hideKeyboard();
       let confirmValue = value;
       if( !value.replace(/\s*/g,'') ) {
         confirmValue = that.props.placeholderVal;
       }
-      console.log(confirmValue)
       this.setData({
         inputVal: '',
         hotWordShow: true,
         smSearchShow: false,
       })
-      console.log('键盘回车请求数据 inputVal',this.data.inputVal,'placeholderVal',this.data.placeholderVal)
-      console.log(that.props)
       that.props.pageType == 'showSearchPage' ? that.props.onSelectOrEnter(confirmValue, 'noGetHistory') : that.goToSearchPage(confirmValue, 'searchValue');
     },
 
@@ -217,12 +193,10 @@ Component({
     * 清除搜索历史
     */
     clearHist() {
-      console.log('珊瑚虫')
       my.confirm({
         title: '',
         content: '您确定要清除历史纪录？',
         success: (res) => {
-          console.log(res);
           if( res.confirm == true ) {
             this.setData({
               searchWords: [],
@@ -269,7 +243,6 @@ Component({
     */
     umaTrackEvent(type, keyWord) {
       var keyWord = keyWord;
-      console.log(type);
       if (type == 'searcHotWord') {
         // 友盟+统计--首页搜索热词点击
         getApp().globalData.uma.trackEvent('homepage_searchHotWord', { keyWord: keyWord });
