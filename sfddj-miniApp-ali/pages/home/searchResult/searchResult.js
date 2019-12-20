@@ -234,7 +234,7 @@ Page({
 			inputVal: word,
 		})
 		this.showSearch(noGetHistory);
-		this.data.goodsOrStore == '0' ? this.setData({goodsStart: 0}) : this.setData({storeStart: 0});
+		this.data.goodsOrStore == '0' ? this.setData({goodsStart: 0, goodsList: [] }) : this.setData({storeStart: 0, storeList: [] });
 		this.searchProduct(word, 0);
 	},
 
@@ -260,7 +260,7 @@ Page({
 		var sortDir = 'desc';
 		var start = that.data.goodsStart;
 		var url = api.search.GOODSSEARCH;
-		if(that.data.goodsOrStore == '0') {
+		if(that.data.goodsOrStore == '0' ) {
 			if (that.data.sortIndex == 0) {
 				sortBy = 'order_list';															// 原有字段综合排序  ZONGHEPAIXU
 			} else if (that.data.sortIndex == 1) {
@@ -287,7 +287,7 @@ Page({
 			start: start,
 			limit: that.data.limit
 		}, function(res) {
-			if (!res.data.data) {
+			if (!res.data.data || (that.data.goodsOrStore == '0' && !res.data.data.goodsList) || (that.data.goodsOrStore == '1' && !res.data.data.supplierDTO) ) {
 				that.setData({
 					loadComplete: true,
 					isLoadMore: false,
@@ -298,7 +298,7 @@ Page({
 			}
 
 			my.stopPullDownRefresh();
-			if(that.data.goodsOrStore == '0') {
+			if(that.data.goodsOrStore == '0' ) {
 				var result = res.data.data.goodsList;
 				var list = that.data.goodsList;
 			} else if (that.data.goodsOrStore == '1') {
@@ -318,7 +318,7 @@ Page({
 			};
 
 			that.data.goodsOrStore == '0' ? upData.goodsList = list : upData.storeList = list;														// 搜索商品
-			that.data.goodsOrStore == '1' ? upData.storeList.forEach( value => value.star = Math.round(value.star) ) : '';
+			that.data.goodsOrStore == '1' && upData.storeList && upData.storeList.length > 0  ? upData.storeList.forEach( value => value.star = Math.round(value.star) ) : '';
 
 			// groupList: res.data.result.groupList,		// 推荐商品,新接口没有 "推荐商品"
 			that.setData(upData);
