@@ -367,6 +367,7 @@
     </scroll-view>
   </view>
 
+  <!-- banner 位 -->
   <view class="division-area" a:if="{{bannerImgList && bannerImgList.length > 0}}"></view>
   <view class="bannerImgBox" a:if="{{bannerImgList && bannerImgList.length > 0}}">
     <view class="posi_re">
@@ -389,7 +390,7 @@
         <block a:for="{{guessLikeGoods}}" a:key="*this">
           <view style="display:inline-block;padding: 0 10rpx">
             <view data-url="/pages/shopping/goodsDetail/goodsDetail?goodsSn={{item.goodsSn}}" data-index="{{index}}" data-type="goods" open-type="redirect" hover-class="none" class="posi_re {{isLoaded ? '' : 'js_goodsList_' + index}}" onTap="goToPage">
-              <image a:if="{{item.goodsDefaultImage}}" src="{{baseImageUrl}}{{item.goodsDefaultImage}}" style="width:228rpx;height:228rpx"></image>
+              <image a:if="{{item.goodsDefaultImage}}" src="{{baseImageUrl}}{{item.goodsDefaultImage}}" class="guessLikeImg"></image>
               <!--小图标 全赔  -->
               <image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff1.png" class=" posi_ab" style="width: 50rpx; height: 50rpx; top:10rpx; right: 10rpx;" a:if="{{filters.strIndexOf(item.afterSaleGuee,'1')}}"></image>
               <image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff2.png" class=" posi_ab" style="width: 50rpx; height: 50rpx; top:10rpx; right: 10rpx;" a:elif="{{filters.strIndexOf(item.afterSaleGuee,'2')}}"></image>
@@ -400,7 +401,7 @@
                 <view a:if="{{item.goodsName && !name}}" class="name single-line">{{item.goodsName}}</view>
                 <view class="productName single-line">{{item.productName}}</view>
               </view>
-              <view class="price single-line">￥{{item.salePrice}}</view>
+              <view class="guessLikeprice single-line">￥{{item.salePrice}}</view>
               <!-- <view a:if="{{item.name}}" class="font-26 item-goods-scrollx-text single-line">{{item.name}}</view>
               <view a:if="{{item.goodsName && !name}}" class="font-26 item-goods-scrollx-text single-line">{{item.goodsName}}</view>
               <view class="font-24 color-a1a0a0 item-goods-scrollx-text single-line">{{item.productName}}</view>
@@ -503,14 +504,14 @@
         <view class="flex_view_row align_cen">
           <image class="store-image storeImg_head" src="{{goods.supplierInfo.headImage}}">
           </image>
-          <text class="color-323232 font-26 marLeft_10">{{goods.supplierInfo.nickName}}                    
+          <text class="color-323232 font-30 marLeft_10">{{goods.supplierInfo.nickName}}                    
           </text>
         </view>
         <view class="flex_view_row align_cen">
-          <view class="color-153 font-24 single-line">更多此商家的其他商品                    
+          <view class="color-153 font-26 single-line">更多此商家的其他商品                    
           </view>
           <!-- <image src='{{base64imageUrl}}miniappImg/icon/icon_right_arrow.png' class='store_checkArr'></image> -->
-          <text class="icon-href-right font-22 color-153 marLeft_20">
+          <text class="icon-href-right font-24 color-153 marLeft_20">
           </text>
         </view>
       </view>

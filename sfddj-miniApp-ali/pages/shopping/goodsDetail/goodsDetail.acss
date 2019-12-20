@@ -267,7 +267,7 @@ page {
 /* 按钮样式 */
 .bottom-view {
   width: 100%;
-  height: 87rpx;
+  height: 98rpx;
   background: white;
   position: fixed;
   bottom: 0;
@@ -277,14 +277,14 @@ page {
   align-items: center;
   border-top: #f5f5f5 1rpx solid;
   box-sizing: border-box;
-  padding: 0 28rpx;
+  padding: 0 30rpx;
 }
 
 .regularButton {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: 263rpx;
+  width: 250rpx;
   height: 100%;
 
 }
@@ -304,17 +304,17 @@ page {
 }
 
 .regularItemIcon {
-  font-size: 42rpx;
+  font-size: 38rpx;
   position: relative;
 
 }
 
 .regularItemText {
-  font-size: 22rpx;
+  font-size: 24rpx;
 }
 
 .buyOrAddCart {
-  width: 402rpx;
+  width: 408rpx;
   height: 100%;
   box-sizing: border-box;
   padding: 8rpx 0;
@@ -428,24 +428,18 @@ page {
 .goods-detail-title-view {
   display: flex;
   box-sizing: border-box;
-  padding: 0 28rpx;
-  height: 100rpx;
+  padding: 0 30rpx;
+  height: 96rpx;
+  margin-bottom: 20rpx;
 }
+
 
 .goods-detail-title {
   width: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 26rpx;
-}
-
-.goods-detail-title {
-  width: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 26rpx;
+  font-size: 32rpx;
 }
 
 .title-tag-normal {
@@ -1358,32 +1352,36 @@ page {
 .guessLikeGoodsName {
   height: 74rpx;
   width: 228rpx;
+  margin-top: 10rpx;
+}
+
+.guessLikeImg {
+  width:228rpx;
+  height:228rpx
 }
 
 .guessLikeGoodsName .name {
-  font-size: 28rpx;
+  font-size: 30rpx;
   line-height: 30rpx;
+  font-weight: 500;
 }
 
 .guessLikeGoodsName .productName {
+  margin-top: 8rpx;
   font-size: 22rpx;
   color: #b3b3b3;
-  margin-top: 8rpx;
 }
 
-.guessLikeGoodsName .productName {
-  margin-top: 8rpx;
-  color: #b3b3b3;
-  display: block;
-  font-size: 24rpx;
-}
 
-.guessLikeGoodsName .price {
+.guessLikeprice {
   margin-top: 6rpx;
   color: #ff5353;
   font-weight: 700;
   font-size: 30rpx;
+  color: #ff5353;
+  vertical-align: middle;
 }
+
 
 
 
