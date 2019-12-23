@@ -78,3 +78,5 @@ page {
 .index_search.show {
   transform: translateX(0);
 }
+
+

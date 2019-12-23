@@ -1314,7 +1314,7 @@ Page({
       }
     }, function(err) {
       my.showToast({
-        content: '领取失败',
+        content: err,
         duration: 2000,
       })
     })

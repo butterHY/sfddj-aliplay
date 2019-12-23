@@ -65,6 +65,8 @@ Page({
 				// this.searchComponent.getHistory();
 				// that.searchComponent.data.pageType = 'category';
 			}
+
+
 	},
 
 	getCateData() {

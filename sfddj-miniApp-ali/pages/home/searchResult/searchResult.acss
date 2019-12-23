@@ -484,3 +484,4 @@ text {
 .index_search.show {
   transform: translateX(0);
 }
+

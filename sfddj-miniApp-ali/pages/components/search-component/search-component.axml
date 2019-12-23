@@ -6,7 +6,7 @@
         <text class="icon-search_home font-40 color-c9c3c3"></text>
       </view> -->
       <!-- <input class=" input flex_1 font-28 color-323232" placeholder="{{placeholderVal}}" value="{{inputVal}}" focus="{{isFocus}}"  confirm-type="search"  onConfirm="handleConfirm" onFocus="handleFocus"  onInput="handleInput" /> -->
-        <search-bar  placeholder="{{placeholderVal}}" value="{{inputVal}}" focus="{{isFocus}}" onBlur="{{setBlur}}" onSubmit="handleConfirm" onInput="handleInput"  onClear="clearSearchVal" onCancel="onHideSearch" showCancelButton="{{true}}" />
+        <search-bar  placeholder="{{placeholderVal}}" value="{{inputVal}}" focus="{{isFocus}}" onBlur="setBlur" onSubmit="handleConfirm" onInput="handleInput"  onClear="clearSearchVal" onCancel="onHideSearch" showCancelButton="{{true}}" />
       <!-- <view class="iconBox row-aliCenter" a:if="{{clearSearchShow}}">
         <text class="icon-clear font-40 color-c8c8c8" catchTap="clearSearchVal"></text>
       </view> -->
