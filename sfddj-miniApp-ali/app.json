@@ -41,8 +41,7 @@
     "pages/activities/thematicActivities/thematicActivities",
     "pages/activities/signIn/signIn",
     "pages/user/myCoupon/expiredCoupon/expiredCoupon",
-    "pages/user/myCoupon/couponInfo/couponInfo",
-    "pages/shopping/goodsDetailOld/goodsDetail"
+    "pages/user/myCoupon/couponInfo/couponInfo"
 
   ],
   "window": {
