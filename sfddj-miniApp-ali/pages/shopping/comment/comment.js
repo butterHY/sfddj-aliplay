@@ -229,12 +229,13 @@ Page({
 	* 查看图片
 	*/
 	commentViewTap: function(e) {
+		var that = this
 		var urls = e.currentTarget.dataset.urls;
 		// var url = baseImageUrl + e.currentTarget.dataset.current;
 		var current = e.currentTarget.dataset.current;
 		var newUrls = [];
 		urls.forEach(function(v, i, arr) {
-			v = baseImageUrl + v;
+			v = v.substring(0, 5).indexOf('http') > -1 ? that.data.baseLocImgUrl + 'vueStatic/img/commentErrImg.png' : baseImageUrl + v
 			newUrls.push(v);
 		});
 		my.previewImage({

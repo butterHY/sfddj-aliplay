@@ -73,6 +73,7 @@ page {
 	width: 190rpx;
 	height: 190rpx;
 	margin-right: 12rpx;
+	border-radius: 8rpx;
 }
 
 /* 新版  ---190826 */

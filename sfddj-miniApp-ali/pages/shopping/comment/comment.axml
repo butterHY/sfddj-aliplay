@@ -1,4 +1,5 @@
 <import src="../../common/comment-reply"/>
+<import-sjs name='filters' from="../../wxsFile/public.sjs"/>
 <!-- 加载中 -->
 <view a:if="{{!loadComplete}}">
 	<loading-now></loading-now>
@@ -65,7 +66,7 @@
 							</view>
 							<view class="commentText font-24 color-414141">{{item.comment}}</view>
 							<view class="commentText blockView">
-								<image src="{{baseImageUrl}}{{item2}}" class="commentTextImg" data-current="{{index}}" data-urls="{{item.imagePath}}" a:for="{{item.imagePath}}" a:for-item="item2" onTap="commentViewTap"></image>
+								<image src="{{filters.isHttpUrl(item2) ? baseLocImgUrl + 'vueStatic/img/commentErrImg.png' : baseImageUrl + item2}}" class="commentTextImg" data-current="{{index}}" data-urls="{{item.imagePath}}" a:for="{{item.imagePath}}" a:for-item="item2" onTap="commentViewTap" a:key="commentImagePath"></image>
 							</view>
 						</view>
 						<!-- 商家第一次回复 -->
@@ -82,7 +83,7 @@
 							<view class="commentText font-24 color-414141">{{item.appendComment}}</view>
 							<view class="commentText blockView">
 								<block a:for="{{item.appendImagePath}}" a:for-item="appendItem">
-									<image src="{{baseImageUrl}}{{appendItem}}" class="commentTextImg" data-current="{{index}}" data-urls="{{item.appendImagePath}}" onTap="commentViewTap"></image>
+									<image src="{{filters.isHttpUrl(appendItem) ? baseLocImgUrl + 'vueStatic/img/commentErrImg.png' : baseImageUrl + appendItem}}" class="commentTextImg" data-current="{{index}}" data-urls="{{item.appendImagePath}}" onTap="commentViewTap" a:key="appendImage"></image>
 								</block>
 							</view>
 						</view>
