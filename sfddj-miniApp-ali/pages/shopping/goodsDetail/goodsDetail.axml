@@ -374,7 +374,7 @@
       <swiper indicator-dots="true" class="bannerImgList" indicator-active-color="#ff5353" indicator-color='rgba(0,0,0,.3)' autoplay="{{true}}" circular="true">
         <block a:for="{{bannerImgList}}" a:key="*this">
           <swiper-item>
-            <image src="{{baseImageUrl}}{{item.imageUrl}}" class="banner_img" data-current="{{item.imageUrl}}" data-urls="{{goods.goodsImages}}" onTap="commentViewTap"/>
+            <image src="{{baseImageUrl}}{{item}}" class="banner_img" data-current="{{item}}" data-urls="{{bannerImgList}}" onTap="commentViewTap"/>
           </swiper-item>
         </block>
       </swiper>
@@ -388,7 +388,7 @@
       <view class="item-header-title-view font-30 color-153">猜你喜欢</view>
       <scroll-view scroll-x class="goods-scrollx-view guessLikeBox" scroll-with-animation="true" data-type="guessLike" onScrollToLower="lowLoadMore" onScroll="guessLikeScroll">
         <block a:for="{{guessLikeGoods}}" a:key="*this">
-          <view style="display:inline-block;padding: 0 10rpx">
+          <view class="guessLikeList" style="display:inline-block;padding: 0 10rpx">
             <view data-url="/pages/shopping/goodsDetail/goodsDetail?goodsSn={{item.goodsSn}}" data-index="{{index}}" data-type="goods" open-type="redirect" hover-class="none" class="posi_re {{isLoaded ? '' : 'js_goodsList_' + index}}" onTap="goToPage">
               <image a:if="{{item.goodsDefaultImage}}" src="{{baseImageUrl}}{{item.goodsDefaultImage}}" class="guessLikeImg"></image>
               <!--小图标 全赔  -->

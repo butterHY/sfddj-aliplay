@@ -304,7 +304,8 @@ page {
 }
 
 .regularItemIcon {
-  font-size: 38rpx;
+  font-size: 40rpx;
+  color: #333333;
   position: relative;
 
 }
@@ -1121,7 +1122,6 @@ page {
 
 .couponName {
   display: inline-block;
-
   margin-right: 20rpx;
 }
 
@@ -1349,9 +1349,12 @@ page {
   margin: 0 30rpx;
 }
 
+.guessLikeList {
+  width: 228rpx;
+}
+
 .guessLikeGoodsName {
   height: 74rpx;
-  width: 228rpx;
   margin-top: 10rpx;
 }
 

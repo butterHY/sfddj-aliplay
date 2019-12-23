@@ -58,6 +58,20 @@ Page({
 		isLoadComplete: false,   //猜你喜欢列表是否加载完成
 		likeStart: 0,            //猜你喜欢开始索引
 		likeLimit: 10,            //猜你喜欢加载条数
+
+		    // 领券弹窗相关数据
+    isShowPopup: false,
+    swiperCurrent: 0,
+    titleCurrent: 0,
+    suctionTop: 1,
+    flag: true,                                 // 监听产详和售后的节流开关
+    isTitleViewClone: false,                    // 商品详情页和服务售后的导航克隆,
+    startCoupon: 0,    													// 优惠券请求参数                       
+		limitCoupon: 4,															// 优惠券请求参数
+    hasMore: true,															// 优惠券是否还有更多
+		isLoadMore: false,
+    loadComplete: false,
+    couponDataList: [],
 	},
 
 	onLoad: async function (query) {
@@ -1227,5 +1241,21 @@ Page({
 
 		}
 	},
+
+	  // 领券弹窗打开
+  showPopup: function () {
+    let that = this;
+		if(that.data.goods.secKillStatus) {
+			if( that.data.goods.viewStatus != 'SALEING' || that.data.goodsSecondKill.totalSaleVolume == that.data.goodsSecondKill.totalStock ) {
+				return;
+			}
+		} else if ( that.data.goods.viewStatus != 'SALEING' ||  that.data.goods.goodsStore == 0 ) {
+				return;
+		}
+
+    that.setData({
+      isShowPopup: true
+    })
+  },
 
 });

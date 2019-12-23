@@ -4,7 +4,8 @@
   "usingComponents": {
     "loading-now": "../../components/loadingNow/loadingNow",
     "load-fail": "../../components/loadFail/loadFail",
-    "spike-price": "../../components/countDown/countDown"
+    "spike-price": "../../components/countDown/countDown",
+    "popup": "mini-antui/es/popup/index"
   }
 
 }

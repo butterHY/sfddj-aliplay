@@ -767,3 +767,85 @@ page {
 }
 
 
+/* 优惠券导航栏的样式 */
+
+.receiveCoupon {
+  padding: 0 30rpx 20rpx 30rpx;
+}
+
+.couponNameBox {
+   width: 80%;
+}
+
+.couponTitle {
+  margin-right: 20rpx;
+  width: 64rpx;
+  /* height: 32rpx; */
+  height: 100%;
+}
+
+.couponNameLine {
+  width: 500rpx;
+}
+
+.couponName {
+  display: inline-block;
+  margin-right: 20rpx;
+}
+
+.getCouponText {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 90rpx;
+}
+
+/* 领券弹窗 */
+.coupon-popup {
+  width: 100%;
+  height: 902rpx;
+  padding: 46rpx 28rpx;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  background: #fafafa;
+  border-radius: 30rpx 30rpx 0 0 ;
+}
+
+.moreBtnBox {
+  text-align: center;
+  background: #FFFFFF;
+}
+
+.loadingBtn {
+  text-align: center;
+  padding: 20.8rpx 0;
+  font-size: 26rpx;
+  line-height: 41.6rpx;
+  color: #323232;
+}
+
+.information {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 36.4rpx;
+  margin-left: 10.4rpx;
+}
+
+.couponPopup-btn {
+  height: 88rpx;
+  border-radius: 50rpx;
+  line-height: 88rpx;
+  text-align: center;
+  margin-top: 20rpx;
+  color: #fff;
+}
+
+.toBuyNowBack {
+  background-image: linear-gradient(to right, rgb(255, 105, 44) , rgb(255, 61, 56));
+}
+
+
+
+

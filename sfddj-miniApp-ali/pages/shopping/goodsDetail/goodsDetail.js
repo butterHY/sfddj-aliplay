@@ -874,14 +874,14 @@ Page({
 		http.get(api.GOODSDETAIL.LISTMATERIALBYNAME, {groupName: '商品详情页_banner'}, (res) => {
 			let resData = res.data.data;
 			let resRet = res.data.ret;
-			if( resRet.code == '0' && resRet.message == "SUCCESS" && resData.length > 0 ) {
+			if( resRet.code == '0' && resRet.message == "SUCCESS" && resData && resData.length > 0 ) {
+				let arr = [];
+				resData.forEach( value => arr.push(value.imageUrl) )
 				that.setData({
-					bannerImgList: resData.concat(resData)
+					bannerImgList: arr
 				})
 			}
-			console.log(res)
 		}, (err) => {
-			console.log(err)
 		})
 	},
 

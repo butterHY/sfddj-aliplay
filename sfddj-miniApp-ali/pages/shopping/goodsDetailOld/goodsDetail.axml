@@ -5,6 +5,7 @@
 <import src="/pages/common/goodsTheway.axml"/>
 <import src="/pages/common/cashBackRule.axml"/>
 <import src="/pages/common/compensationRule.axml"/>
+<import src="/pages/common/couponItem.axml"/>
 <import-sjs name='filters' from="../../wxsFile/public.sjs"/>
 <!-- 加载中 -->
 <view a:if="{{!loadComplete}}">
@@ -52,6 +53,47 @@
 			</view>
 		</view>
 	</view>
+
+	    <!-- 优惠券导航栏                      -->
+  <view class="receiveCoupon flex_view_row justi_between font-30 single-line" onTap="showPopup" a:if="{{couponDataList && couponDataList.length > 0}}">
+    <view class="couponNameBox flex_view_row justi_start single-line">
+      <view class="couponTitle">
+        <image src="{{baseImageLocUrl}}miniappImg/public/goodsDetail/icon_coupon.png" class="all_100" ></image>
+      </view>
+      <view class="single-line couponNameLine">
+         <text class="couponName color-46 " a:for="{{couponDataList}}" a:key="*this" a:if="{{index == 0 || index == 1 || index == 2}}" style="{{ index == 2 ? 'margin-right: 0' : '' }}">满{{item.needPrice}}减{{item.costPrice}}</text>
+      </view>
+    </view>
+    <view class="getCouponText color-153">
+      <view>领券</view>
+      <view class="icon-href-right font-24"></view>
+    </view>
+  </view>
+
+	    <!-- 新增的领券按钮和领券弹窗 -->
+  <popup show="{{ isShowPopup }}" mask="{{true}}" position="bottom" animation="{{true}}" onClose="onPopupClose" zIndex="100" disableScroll="{{false}}">
+    <view class="coupon-popup">
+      <view class="flex_view_col all_100">
+        <scroll-view class="flex_1" scroll-y="{{true}}" data-type="coupon" onScrollToLower="lowLoadMore">
+          <block a:for="{{couponDataList}}" a:key="*this">
+             <template is="couponItem" data="{{item,index,isExpired: false, pageFrom: 'goodsDetail', user_memId, baseImageLocUrl}}"></template>
+          </block>
+          <view class="moreBtnBox">
+            <view class="loadingBtn" a:if="{{!hasMore && !isLoadMore}}">
+                <text class="information">没有更多</text>
+            </view>
+            <view class="loadingBtn" a:if="{{isLoadMore}}">
+                <text class="icon-spinner3"></text>
+                <text class="information">加载中</text>
+            </view>
+          </view>
+        </scroll-view>
+        <view class="couponPopup-btn toBuyNowBack" onTap="onPopupClose">完成</view>
+      </view>
+    </view>
+  </popup>
+  
+
 	<!-- 商品价格、销量 -->
 	<view a:if="{{!goodsSecondKill}}" class="detail-sale-view" style=";">
 		<!--<view></view> -->
