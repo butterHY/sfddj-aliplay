@@ -70,9 +70,11 @@ Component({
         let resData = res.data.data;
         let resRet = res.data.ret;
         if(resRet.code == '0' && resRet.message == "SUCCESS" && resData ) {
+          console.log(resData)
           that.setData({
             hotWords: resData
           });
+          console.log(that.data.hotWords)
         }
       },(err) => { })
       that.getHistory();

@@ -29,10 +29,8 @@
       <view class="hotWordBox ">
         <view class="hotWordTitle font-34 font-weight-bold">热门搜索</view>
         <!-- <view class="font-24 {{hotWord.isSign ? 'color-ff5353':'color-323232'}}" style="background-color:#eeeeee;padding:10rpx 20rpx;border-radius:5px;margin-right:20rpx;max-width:650rpx;display:inline-block;margin-bottom:20rpx;" data-word="{{hotWord.name}}" a:for="{{hotWords}}" a:for-item="hotWord" a:key="itemIndex0" catchTap="chooseWord">{{hotWord.name}}</view> -->
-        <view class="wordLeft clearfix">
-          <block  a:if="{{hotWords && hotWords.length > 0}}" a:for-item="hotWord" >
-            <view class="hotWordItem"  style="{{hotWord.isSign ? 'color: #ff5353' : ''}}"  data-word="{{hotWord.name}}" data-type="searcHotWord" a:key="*this" catchTap="chooseWord" >{{hotWord.name}}</view>
-          </block>
+        <view class="wordLeft clearfix" a:if="{{hotWords && hotWords.length > 0}}">
+            <view class="hotWordItem" a:for="{{hotWords}}"  a:for-item="hotWord"  style="{{hotWord.isSign ? 'color: #ff5353' : ''}}"  data-word="{{hotWord.name}}" data-type="searcHotWord" a:key="*this" catchTap="chooseWord" >{{hotWord.name}}</view>
         </view>
       </view>
     </block>
