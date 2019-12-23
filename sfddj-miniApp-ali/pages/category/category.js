@@ -47,12 +47,14 @@ Page({
 		// that.getCateData();
 			// 一进入到页面，获取购物车数据；
       that.getCartNumber();
+			// 关闭键盘，有些苹果手机会出现输入搜索去到搜索页返回初始页面时，初始页的键盘没有关闭的问题；
+			my.hideKeyboard();
+
 			// 一进入到父分类页时，先删除掉商详页缓存的子分类数据；
 			try {
 				my.removeStorageSync({ key: constants.StorageConstants.detfatherCategory });
 			} catch (e) {}
 			// 回到页面关闭搜索组件
-			// my.hideKeyboard();
 			this.setData({
 				placeholder: my.getStorageSync({key: 'searchTextMax'}).data,
 				isFocus: false,

@@ -199,7 +199,7 @@
         <view class="color-153">送至</view>
         <view class="marLeft_30  single-line flex_view_row">
           <!-- <image class="addressImag marRight_15" mode="scaleToFill" src="{{base64imageUrl}}miniappImg/icon/icon_detail_address.png"/> -->
-          <text class="icon-locate font-34"></text>
+          <text class="icon-locate"></text>
           <block a:if="{{addressList && addressList.length > 0}}" a:for="{{addressList}}" a:key="*this">
              <view class="single-line color-51" a:if="{{item.isDefault}}">{{item.province}}<text decode="true" space="true">&nbsp;</text>{{item.city}}<text decode="true" space="true">&nbsp;</text>{{item.area}}<text decode="true" space="true">&nbsp;</text>{{item.address}}</view>
           </block>
@@ -361,7 +361,7 @@
     <view class="proComment_text font-26">
       <view class="comment-text">{{item.comment}}</view>
     </view>
-    <scroll-view  a:if="{{item && item.imagePath.length > 0}}" class="commentImgList marTop_30" scroll-x="{{true}}" scroll-with-animation="{{true}}"  onScrollToLower="lowLoadMore" >
+    <scroll-view  a:if="{{item && item.imagePath.length > 0}}" class="commentImgList marTop_30" scroll-x="{{true}}" scroll-with-animation="{{true}}"  >
         <image class="proComment_img" a:for="{{item.imagePath}}" a:key="*this" a:for-item="items" a:for-inex="inexs" src="{{filters.isHttpUrl(items) ? baseImageLocUrl + 'vueStatic/img/commentErrImg.png' : baseImageUrl + items}}" data-current="{{items}}" data-urls="{{item.imagePath}}" style="{{inexs == item.imagePath.length - 1 ? 'margin-right: 0;' : ''}}" onTap="commentViewTap"></image>
     </scroll-view>
   </view>
@@ -373,7 +373,7 @@
       <swiper indicator-dots="true" class="bannerImgList" indicator-active-color="#ff5353" indicator-color='rgba(0,0,0,.3)' autoplay="{{true}}" circular="true">
         <block a:for="{{bannerImgList}}" a:key="*this">
           <swiper-item>
-            <image src="{{baseImageUrl}}{{item}}" class="banner_img" data-current="{{item}}" data-urls="{{bannerImgList}}" onTap="commentViewTap"/>
+            <image src="{{baseImageUrl}}{{item.imageUrl}}" class="banner_img" data-current="{{item.imageUrl}}" data-url="{{item.url}}" onTap="bannerImgListTap"/>
           </swiper-item>
         </block>
       </swiper>

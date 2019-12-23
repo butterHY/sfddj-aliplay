@@ -593,7 +593,7 @@ Page({
 			}
 			console.log(this.data.guessLikeGoods)
 			that.setData({youLikeIsLoadMore: false })								// 正在加载中的加载进度条
-		}, (err) => { that.setData({youLikeIsLoadMore: false }) })
+		}, (err) => { that.setData({youLikeIsLoadMore: false}) })
 	},
 
 	// 设置滚动到猜你喜欢的位置
@@ -869,18 +869,17 @@ Page({
 
 	getListMaterialByName() {
 		let that = this;
-		http.get(api.GOODSDETAIL.LISTMATERIALBYNAME, {groupName: '商品详情页_banner'}, (res) => {
+		http.get(api.GOODSDETAIL.LISTMATERIALBYNAME, {groupName: '支付宝小程序商详页banner'}, (res) => {
 			let resData = res.data.data;
 			let resRet = res.data.ret;
 			if( resRet.code == '0' && resRet.message == "SUCCESS" && resData && resData.length > 0 ) {
-				let arr = [];
-				resData.forEach( value => arr.push(value.imageUrl) )
+				console.log(resData)
 				that.setData({
-					bannerImgList: arr
+					bannerImgList: resData
 				})
 			}
-		}, (err) => {
-		})
+			console.log(res)
+		}, (err) => {console.log(err)})
 	},
 
 	/**
@@ -1655,9 +1654,6 @@ Page({
          resData[0].beginDateStr = utils.pointFormatTime(new Date(resData[0].beginDate));
          resData[0].endDateStr = utils.pointFormatTime(new Date(resData[0].endDate));
 
-        //           resData[0].beginDateStr = utils.pointFormatTime(new Date(resData[0].beginDate));
-        //  resData[0].endDateStr = utils.pointFormatTime(new Date(resData[0].endDate));
-
          that.data.couponDataList[index] = resData[0];
          that.setData({
            couponDataList: that.data.couponDataList
@@ -1674,7 +1670,6 @@ Page({
   },
 
   // 拖拽优惠券弹窗
-
   lowLoadMore: function (e) {
     let that = this;
 		console.log(e)
@@ -1735,16 +1730,29 @@ Page({
     that.listenNavigationBar();
   },
 
+
+	bannerImgListTap(e) {
+		let that = this;
+		console.log(e);
+		if( e.target.dataset.url.indexOf('http') != -1 ) {
+			my.navigateTo({
+				url: '/pages/user/webView/webView?link=' +  e.target.dataset.url + '&newMethod=new'
+			});
+		} else {
+			my.navigateTo({ url: e.target.dataset.url })
+		}
+
+	},
+
   	// 跳转去h5的全赔页
 	goToAfterSaleGuee() {
     let that = this;
     // https://shop.fx-sf.com/h/goodspay/quality/YW02329CB9320C?qpKey=1,2,3
     let webCallLink = constants.UrlConstants.baseUrlOnly + '/h/goodspay/quality/' + that.data.goodsSn + '?qpKey=' + that.data.goods.afterSaleGuee;
-    my.setStorageSync({
-      key: 'swiperUrl',
-      data: webCallLink,
-    });
-    
+    // my.setStorageSync({
+    //   key: 'swiperUrl',
+    //   data: webCallLink,
+    // });
     my.navigateTo({
 			url: '/pages/user/webView/webView?link=' + webCallLink + '&newMethod=new'
 		});

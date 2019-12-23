@@ -1365,7 +1365,8 @@ page {
 
 .guessLikeGoodsName .name {
   font-size: 30rpx;
-  line-height: 30rpx;
+  /* line-height: 30rpx; */
+  /* vertical-align: bottom; */
   font-weight: 500;
 }
 
@@ -1382,7 +1383,7 @@ page {
   font-weight: 700;
   font-size: 30rpx;
   color: #ff5353;
-  vertical-align: middle;
+  /* vertical-align: middle; */
 }
 
 

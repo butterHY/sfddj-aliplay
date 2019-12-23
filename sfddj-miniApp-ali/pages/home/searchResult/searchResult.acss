@@ -329,7 +329,7 @@ text {
 .queue {
   box-sizing: border-box;
   padding-right: 30rpx;
-  /* width: 80rpx; */
+  width: 80rpx;
   text-align: center;
   line-height: 100rpx;
 }
