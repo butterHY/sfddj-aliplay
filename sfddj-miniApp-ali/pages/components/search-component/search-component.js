@@ -42,6 +42,9 @@ Component({
     * 搜索组件开关
   */
     onHideSearch() {
+      // 关闭键盘，有些苹果手机会出现输入搜索去到搜索页返回初始页面时，初始页的键盘没有关闭的问题；
+		  my.hideKeyboard();
+
       this.props.onShowSearch('noGetHistory');
       //  this.props.onShowSearch();
       this.setData({
@@ -238,6 +241,11 @@ Component({
           url: '/pages/home/searchResult/searchResult?keyWord=' + keyWord
         });
       }
+    },
+
+    setBlur() {
+      // 关闭键盘，有些苹果手机会出现输入搜索去到搜索页返回初始页面时，初始页的键盘没有关闭的问题；
+		  my.hideKeyboard();
     },
 
     /**
