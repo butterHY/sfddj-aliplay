@@ -59,7 +59,7 @@ function post(url, data, sucFunc, errFunc, header = {}) {
 						// });
 					});
 				} else if (retCode == ERR_CODE.BIND_PHONE) {
-					errFunc(res);
+					errFunc(res.data.ret.message);
 
 					if (url != '/coupon/exchangeCoupon') {
 						my.redirectTo({
@@ -69,7 +69,7 @@ function post(url, data, sucFunc, errFunc, header = {}) {
 						return;
 					}
 				} else {
-					errFunc(res.data.message);
+					errFunc(res.data.ret.message);
 				}
 			} else {
 				errFunc('请求错误，请重试');
@@ -128,7 +128,7 @@ function get(url, data, sucFunc, errFunc, header = {}) {
 						// });
 					});
 				} else if (retCode == ERR_CODE.BIND_PHONE) {
-					errFunc(res);
+					errFunc(res.data.ret.message);
 
 					if (url != '/coupon/exchangeCoupon') {
 						my.redirectTo({
@@ -138,7 +138,7 @@ function get(url, data, sucFunc, errFunc, header = {}) {
 						return;
 					}
 				} else {
-					errFunc(res.data.message);
+					errFunc(res.data.ret.message);
 				}
 			} else {
 				errFunc('请求错误，请重试');
