@@ -278,6 +278,7 @@ page {
   border-top: #f5f5f5 1rpx solid;
   box-sizing: border-box;
   padding: 0 30rpx;
+
 }
 
 .regularButton {
@@ -335,11 +336,13 @@ page {
   border-radius: 35rpx 0 0 35rpx;
   background: rgb(255, 234, 234);
   color: rgb(255, 46, 46);
+  line-height: 82rpx;
 }
 
 .toBuyNow{
   border-radius: 0 35rpx 35rpx 0 ;
   color: rgb(255, 255, 255);
+  line-height: 82rpx;
 }
 
 .border-radius35 {
@@ -1384,6 +1387,10 @@ page {
   font-size: 30rpx;
   color: #ff5353;
   /* vertical-align: middle; */
+}
+
+.alignMiddle {
+   vertical-align: middle;
 }
 
 
