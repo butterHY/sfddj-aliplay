@@ -2051,9 +2051,9 @@ Page({
 				});
 			},
 			fail: (res) => {
-				my.navigateTo({
-					url: '/pages/user/bindPhone/bindPhone'
-				});
+				my.showToast({
+					content: '授权失败'
+				})
 			},
 		});
 	},
