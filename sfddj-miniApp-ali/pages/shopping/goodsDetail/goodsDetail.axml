@@ -102,7 +102,7 @@
         <image src="{{baseImageLocUrl}}miniappImg/public/goodsDetail/icon_coupon.png" class="all_100"></image>
       </view>
       <view class="single-line couponNameLine">
-        <text a:for="{{couponDataList}}" a:if="{{index == 0 || index == 1 || index == 2}}" class="couponName color-46 " a:key="*this" style="{{ index == 2 ? 'margin-right: 0' : '' }}">满{{item.needPrice}}减{{item.costPrice}}</text>
+        <text a:for="{{couponDataList}}" a:if="{{index == 0 || index == 1 || index == 2}}" class="couponName color-46 " a:key="*this" style="{{ index == 2 ? 'margin-right: 0' : '' }}">满{{item.needPrice}}减{{item.costPrice}}满{{item.needPrice}}减{{item.costPrice}}满{{item.needPrice}}减{{item.costPrice}}</text>
       </view>
     </view>
     <view class="getCouponText color-153">
@@ -190,7 +190,7 @@
         <view class="color-153">送至</view>
         <view class="marLeft_30  single-line flex_view_row">
           <!-- <image class="addressImag marRight_15" mode="scaleToFill" src="{{base64imageUrl}}miniappImg/icon/icon_detail_address.png"/> -->
-          <text class="icon-locate"></text>
+          <text class="icon-locate marRight_10"></text>
           <block a:for="{{addressList}}" a:if="{{addressList && addressList.length > 0}}" a:key="*this">
             <view a:if="{{item.isDefault}}" class="single-line color-51">
               {{item.province}}
@@ -324,20 +324,20 @@
   <view a:if="{{showComment}}" class="division-area"></view>
   <view a:if="{{showComment}}" data-url="/pages/shopping/comment/comment?goodScore={{goods.commentScore}}&goodsCommentTotal={{goods.commentTotal}}&goodsId={{goods.goodsId}}" data-type="comment" onTap="goToTargetPage" hover-class="none">
     <view class="goods-comment-title">
-      <view class="flex_view_row align_cen">
+      <view class="alignMiddle">
         好评率: 
         <text class="marLeft_5 color-57"> {{goods.commentScore}}%</text>
         <!-- <view class="color-51">买家秀</view> -->
       </view>
-      <view class="flex_view_row align_cen color-153">
-        <view>评价</view>
-        <view class="marLeft_10">
+      <view class="color-153 alignMiddle">
+        <text>评价</text>
+        <text class="marLeft_10">
           <text>(</text>
           <text decode="true" space="true"></text>
           <text>{{goods.commentTotal}}</text>
           <text decode="true" space="true"></text>
           <text>)</text>
-        </view>
+        </text>
         <text class="icon-href-right font-22 marLeft_10 color-153"></text>
       </view>
     </view>
@@ -385,7 +385,7 @@
   <block a:if="{{ guessLikeGoods && guessLikeGoods.length > 0}}">
     <view class="js_guessLike">
       <view class="item-header-title-view font-30 color-153">猜你喜欢</view>
-      <scroll-view class="goods-scrollx-view guessLikeBox" scroll-with-animation="true" data-type="guessLike" onScrollToLower="lowLoadMore" onScroll="guessLikeScroll">
+      <scroll-view class="goods-scrollx-view guessLikeBox" scroll-x="{{true}}" scroll-with-animation="true" data-type="guessLike" onScrollToLower="lowLoadMore" onScroll="guessLikeScroll">
         <block a:for="{{guessLikeGoods}}" a:key="*this">
           <view class="guessLikeList" style="display:inline-block;padding: 0 10rpx">
             <view data-url="/pages/shopping/goodsDetail/goodsDetail?goodsSn={{item.goodsSn}}" data-index="{{index}}" data-type="goods" open-type="redirect" hover-class="none" class="posi_re {{isLoaded ? '' : 'js_goodsList_' + index}}" onTap="goToPage">
@@ -489,7 +489,7 @@
         </view>
       </view>
     </view>
-    <scroll-view class="goods-scrollx-view" scroll-with-animation="true">
+    <scroll-view class="goods-scrollx-view" scroll-x="{{true}}" scroll-with-animation="true">
       <block a:for="{{otherGoods}}" a:key="*this">
         <template is="itemGoodsScrollX" data="{{...item,baseImageUrl: baseImageUrl,baseLocImgUrl: base64imageUrl, index, type: 'skipOther', listType: 'supplierGoods'}}"></template>
       </block>

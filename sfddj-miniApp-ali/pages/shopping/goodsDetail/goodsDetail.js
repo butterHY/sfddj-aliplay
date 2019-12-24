@@ -868,7 +868,7 @@ Page({
 
 	getListMaterialByName() {
 		let that = this;
-		http.get(api.GOODSDETAIL.LISTMATERIALBYNAME, {groupName: '支付宝小程序商详页banner'}, (res) => {
+		http.get(api.GOODSDETAIL.LISTMATERIALBYNAME, {groupName: '支付宝_小程序商品详情'}, (res) => {
 			let resData = res.data.data;
 			let resRet = res.data.ret;
 			if( resRet.code == '0' && resRet.message == "SUCCESS" && resData && resData.length > 0 ) {
@@ -877,7 +877,6 @@ Page({
 					bannerImgList: resData
 				})
 			}
-			console.log(res)
 		}, (err) => {console.log(err)})
 	},
 
