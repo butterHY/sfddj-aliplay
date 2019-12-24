@@ -604,9 +604,9 @@ Page({
 		that.updateCart(cartId, quantity, findex, index);
 	},
 
-  /**
-	* 点击数据输入数量（手动输入数量，如果数量大于最大数量，则让默认规格的各个价格和积分按照最大数量来计算，如果没有大于最大数量则还是按照输入的数量来计算）
-	* */
+	/**
+	  * 点击数据输入数量（手动输入数量，如果数量大于最大数量，则让默认规格的各个价格和积分按照最大数量来计算，如果没有大于最大数量则还是按照输入的数量来计算）
+	  * */
 	changeQuantity: function (e) {
 		var that = this;
 		var findex = e.currentTarget.dataset.findex;
@@ -853,9 +853,9 @@ Page({
 				});
 			},
 			fail: (res) => {
-				my.navigateTo({
-					url: '/pages/user/bindPhone/bindPhone'
-				});
+				my.showToast({
+					content: '授权失败'
+				})
 			},
 		});
 
@@ -890,10 +890,10 @@ Page({
 	// 跳转页面
 	goToPage(e) {
 		let { index, type, url } = e.currentTarget.dataset
-		let {recommondList} = this.data
+		let { recommondList } = this.data
 
 		if (type == 'recommond') {
-			let data = {channel_source: 'mini_alipay', supplierName: recommondList[index].supplierNickName, supplierId: recommondList[index].supplierId, goodsName: recommondList[index].goodsName, goodsSn: recommondList[index].goodsSn, goodsCategoryId: recommondList[index].goodsCategoryId}
+			let data = { channel_source: 'mini_alipay', supplierName: recommondList[index].supplierNickName, supplierId: recommondList[index].supplierId, goodsName: recommondList[index].goodsName, goodsSn: recommondList[index].goodsSn, goodsCategoryId: recommondList[index].goodsCategoryId }
 			// shopCart_guessLikeGoods
 			getApp().globalData.uma.trackEvent('shopCart_guessLikeGoods', data);
 		}

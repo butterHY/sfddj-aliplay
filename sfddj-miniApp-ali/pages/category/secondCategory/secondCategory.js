@@ -41,13 +41,13 @@ Page({
 		searchComponent: null,							// 新版搜索组件实例
 	},
 
-	onLoad: async function(options) {
+	onLoad: async function (options) {
 		var that = this;
 		//获取父分类信息
 		var fatherCategory = {};
-		    fatherCategory = my.getStorageSync({ key: constants.StorageConstants.fatherCategoryId }).data ? my.getStorageSync({ key: constants.StorageConstants.fatherCategoryId }).data : {}; //获取父分类信息
+		fatherCategory = my.getStorageSync({ key: constants.StorageConstants.fatherCategoryId }).data ? my.getStorageSync({ key: constants.StorageConstants.fatherCategoryId }).data : {}; //获取父分类信息
 		var detfatherCategory = my.getStorageSync({ key: constants.StorageConstants.detfatherCategory }).data ? my.getStorageSync({ key: constants.StorageConstants.detfatherCategory }).data : {}; //获取商详页分类信息
-		if(Object.keys(detfatherCategory).length != 0) {
+		if (Object.keys(detfatherCategory).length != 0) {
 			fatherCategory = detfatherCategory
 		}
 		var name = '';
@@ -74,12 +74,12 @@ Page({
 
 
 		// 有商详页缓存的父类 id 则请求父类分类数据使用该父类的数据，，没有就说明是从父页分类进来的，那走原来的逻辑;
-		if( detfatherCategory.id ){
-				// 获取如果缓存中有父类的 id 则请求父类分类数据使用该父类的数据, 但不缓存子类数据，为了和分类页用户的行为保持一致；
-				let send = await that.getChildCategoryTags(fatherCategory.id);
-				if( send.type == 'success' && send.data && send.data.children && send.data.children.length > 0 ) {
-					this.data.childrenCategoryTags = send.data.children;
-				}
+		if (detfatherCategory.id) {
+			// 获取如果缓存中有父类的 id 则请求父类分类数据使用该父类的数据, 但不缓存子类数据，为了和分类页用户的行为保持一致；
+			let send = await that.getChildCategoryTags(fatherCategory.id);
+			if (send.type == 'success' && send.data && send.data.children && send.data.children.length > 0) {
+				this.data.childrenCategoryTags = send.data.children;
+			}
 		}
 
 		var newChildrenCateTags = [];
@@ -88,7 +88,7 @@ Page({
 
 		// 携带过来的子类 id 与 全部子类 id 匹配，如果相等，则给这个子类对象添加一个新的属性：value.taped = true;
 		// this.data.childrenCategoryTags.unshift(fatherCategory);
-		this.data.childrenCategoryTags.forEach(function(value, index, arr) {
+		this.data.childrenCategoryTags.forEach(function (value, index, arr) {
 			if (options.categoryId && options.categoryId == value.id) {
 				value.taped = true;
 			}
@@ -111,12 +111,12 @@ Page({
 
 		// 回到页面关闭搜索组件
 		this.setData({
-			placeholder: my.getStorageSync({key: 'searchTextMax'}).data,
+			placeholder: my.getStorageSync({ key: 'searchTextMax' }).data,
 			isFocus: false,
 			isShowSearch: false,
 		});
-		if( this.searchComponent ) {
-			this.searchComponent.setData({inputVal: ''});
+		if (this.searchComponent) {
+			this.searchComponent.setData({ inputVal: '' });
 			// this.searchComponent.getHistory();
 			// this.searchComponent.data.pageType = 'secondCategory';
 		}
@@ -124,10 +124,10 @@ Page({
 
 	getChildCategoryTags(id) {
 		let that = this;
-		return new Promise( (reslove, reject) => {
-			sendRequest.send(constants.InterfaceUrl.HOME_ALL_CATEGORY, {}, function(res) {
+		return new Promise((reslove, reject) => {
+			sendRequest.send(constants.InterfaceUrl.HOME_ALL_CATEGORY, {}, function (res) {
 				let categoryTags = res.data.result.dtoList;
-				if ( categoryTags.length > 0 ) {
+				if (categoryTags.length > 0) {
 					let fatherCategory = categoryTags.find(value => value.id == id);
 					reslove({
 						type: 'success',
@@ -138,7 +138,7 @@ Page({
 						type: 'fail'
 					})
 				}
-			},function(err) {
+			}, function (err) {
 				reject({
 					type: 'fail'
 				})
@@ -150,7 +150,7 @@ Page({
 	 * 根据categoryId查询商品列表
 	 * type 0:刷新 1:加载更多
 	 */
-	getGoodsData: function(type) {
+	getGoodsData: function (type) {
 		var that = this;
 		// 开启进度条
 		this.setData({
@@ -162,7 +162,7 @@ Page({
 			categoryId: this.data.categoryId,
 			start: this.data.start,
 			limit: this.data.limit
-		}, function(res) {
+		}, function (res) {
 			// if (res.data.errorCode == '0001') {
 			//   if (that.data.start == 0) {
 			//     that.data.goodsList = res.data.result
@@ -216,7 +216,7 @@ Page({
 			// 	that.getUploadData_da();
 			// }
 
-		}, function(err) {
+		}, function (err) {
 			that.setData({
 				isLoadMore: false,
 				loadFail: true
@@ -228,10 +228,10 @@ Page({
 	 * 点击tag更新商品列表显示，重新请求数据，更新商品列表显示
 	 * @param e 点击参数
 	 */
-	tagViewTap: function(e) {
+	tagViewTap: function (e) {
 		var that = this;
 		var id = e.currentTarget.id;
-		that.data.childrenCategoryTags.forEach(function(value, index, array) {
+		that.data.childrenCategoryTags.forEach(function (value, index, array) {
 			if (index == id) {
 				value.taped = true;
 				that.data.categoryId = value.id ? value.id : that.data.categoryId;
@@ -259,7 +259,7 @@ Page({
 	/**
 	* 页面上拉触底事件的处理函数
 	*/
-	lowLoadMore: function() {
+	lowLoadMore: function () {
 		// if (this.data.hasMore) {
 		//   this.data.start = this.data.goodsList.length
 		//   this.getGoodsData(1)
@@ -280,7 +280,7 @@ Page({
 	 * 监听屏幕滚动事件，调整tagView显示， 顶部分类导航模块的 ‘吸顶效果’
 	 * @param e 滑动参数
 	 */
-	scrollingFn: _.debounce(function(e) {
+	scrollingFn: _.debounce(function (e) {
 		var height = util.px2Rpx(e.detail.scrollTop);
 		this.setData({
 			sticky: height >= 120
@@ -356,10 +356,10 @@ Page({
 	/**
 	 * 添加购物车
 	 */
-	addCart: function(e) {
+	addCart: function (e) {
 		let that = this;
 		let productId = e.currentTarget.dataset.pid;
-		sendRequest.send(constants.InterfaceUrl.SHOP_ADD_CART, { pId: productId, quantity: '1' }, function(res) {
+		sendRequest.send(constants.InterfaceUrl.SHOP_ADD_CART, { pId: productId, quantity: '1' }, function (res) {
 			// 达观数据上报
 			// util.uploadClickData_da('cart', [{ productId, actionNum: '1' }])
 
@@ -367,7 +367,7 @@ Page({
 				content: '添加购物车成功'
 			});
 
-		}, function(res) {
+		}, function (res) {
 			// wx.showToast({
 			//   title: res
 			// })
@@ -376,7 +376,7 @@ Page({
 				showToast: true,
 				showToastMes: res
 			});
-			setTimeout(function() {
+			setTimeout(function () {
 				that.setData({
 					showToast: false
 				});
@@ -437,7 +437,7 @@ Page({
 
 
 	// 获取手机号
-	getPhoneNumber: function(e) {
+	getPhoneNumber: function (e) {
 		var that = this;
 
 		my.getPhoneNumber({
@@ -445,7 +445,7 @@ Page({
 				let response = res.response
 				sendRequest.send(constants.InterfaceUrl.USER_BINGMOBILEV4, {
 					response: response,
-				}, function(res) {
+				}, function (res) {
 					if (res.data.result) {
 						try {
 							my.setStorageSync({ key: constants.StorageConstants.tokenKey, data: res.data.result.loginToken });
@@ -463,7 +463,7 @@ Page({
 					that.setData({
 						user_memId: res.data.result ? res.data.result.memberId : '默认会员'
 					})
-				}, function(res, resData) {
+				}, function (res, resData) {
 					var resData = resData ? resData : {}
 					if (resData.errorCode == '1013') {
 						that.setData({
@@ -479,9 +479,9 @@ Page({
 				});
 			},
 			fail: (res) => {
-				my.navigateTo({
-					url: '/pages/user/bindPhone/bindPhone'
-				});
+				my.showToast({
+					content: '授权失败'
+				})
 			},
 		});
 
@@ -497,14 +497,14 @@ Page({
 	*/
 	saveRef(ref) {
 		this.searchComponent = ref;
-  },
-	
+	},
+
 	/**
 	  * 新版搜索组件开关
 	*/
-	showSearch: function(noGetHistory) {
+	showSearch: function (noGetHistory) {
 		// this.searchComponent.getHistory()
-		noGetHistory == 'noGetHistory' ? '' : 	this.searchComponent.getHistory();
+		noGetHistory == 'noGetHistory' ? '' : this.searchComponent.getHistory();
 		this.setData({
 			isShowSearch: !this.data.isShowSearch,
 			isFocus: !this.data.isFocus,
