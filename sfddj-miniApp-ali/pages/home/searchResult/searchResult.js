@@ -85,7 +85,7 @@ Page({
 	 */
 	scrollPage: function(e) {
 		// 因为添加了 “商品”和“店铺”的导航栏 ，所以页面滚动距离得由原来的 120 ，变为 198
-		if (utils.px2Rpx(e.detail.scrollTop) > 198 && !this.data.scrollTop) {
+		if ( utils.px2Rpx(e.detail.scrollTop) > 198 && !this.data.scrollTop ) {
 			this.data.scrollTop = true;							
 			this.setData({ scrollTop: this.data.scrollTop });
 		} else if (utils.px2Rpx(e.detail.scrollTop) <= 198 && this.data.scrollTop){
@@ -320,7 +320,7 @@ Page({
 			};
 
 			that.data.goodsOrStore == '0' ? upData.goodsList = list : upData.storeList = list;														// 搜索商品
-			that.data.goodsOrStore == '1' && upData.storeList && upData.storeList.length > 0  ? upData.storeList.forEach( value => value.star = Math.round(value.star) ) : '';
+			// that.data.goodsOrStore == '1' && upData.storeList && upData.storeList.length > 0  ? upData.storeList.forEach( value => value.star = Math.round(value.star) ) : '';
 
 			// groupList: res.data.result.groupList,		// 推荐商品,新接口没有 "推荐商品"
 			that.setData(upData);
