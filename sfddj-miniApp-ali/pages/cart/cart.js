@@ -853,9 +853,9 @@ Page({
 				});
 			},
 			fail: (res) => {
-				my.showToast({
-					content: '授权失败'
-				})
+				my.navigateTo({
+					url: '/pages/user/bindPhone/bindPhone'
+				});
 			},
 		});
 
@@ -863,7 +863,9 @@ Page({
 
 	// 获取手机号失败
 	onAuthError(res) {
-		return
+		my.showToast({
+			content: '授权失败'
+		})
 	},
 
 
