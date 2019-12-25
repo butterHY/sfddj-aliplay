@@ -15,7 +15,6 @@ page {
 
 .detail-header-view {
   padding: 0 30rpx 30rpx 30rpx;
-  /* line-height: 46rpx; */
 }
 
 .detail-title-view {
@@ -90,13 +89,14 @@ page {
 }
 
 .priceTagImg {
-  height: 22rpx;
-  width: 62rpx;
+  height: 26rpx;
+  width: 66rpx;
   border-radius: 5rpx;
+  margin: 20rpx 5rpx 0 0;
 } 
 
 .priceTagArea {
-  padding: 16rpx 0 20rpx 0;
+  padding-bottom: 30rpx;
 }
 
 .defaultPrice {
@@ -118,13 +118,15 @@ page {
   align-items: center;
   width: 100%;
   box-sizing: border-box;
+    line-height: 32rpx;
 }
 .store-view {
-  padding: 32rpx 30rpx;
+  padding: 30rpx;
 }
 
 .specifications-view {
   padding: 30rpx;
+  line-height: 32rpx;
 }
 
 .addressTips {
@@ -205,6 +207,8 @@ page {
   border-bottom: 1rpx solid #669e55;
 }
 
+
+
 .notice-text {
   width: 100%;
   box-sizing: border-box;
@@ -248,7 +252,7 @@ page {
 }
 
 .rich-text-view {
-  padding: 0 28rpx;
+  padding: 0 30rpx;
 }
 
 
@@ -285,14 +289,12 @@ page {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: 250rpx;
+  width: 260rpx;
   height: 100%;
-
 }
 
 
 .regularItem {
-  /* width: 66rpx; */
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -484,7 +486,7 @@ page {
   border-top: #e6e6e6 2rpx solid;
   border-left: #e6e6e6 2rpx solid;
   border-right: #e6e6e6 2rpx solid;
-  margin: 30rpx 28rpx;
+  margin: 30rpx 30rpx;
 }
 
 .category-attr-item {
@@ -519,16 +521,12 @@ page {
   display: flex;
   align-items: center;
   justify-content: start;
-  /* background: #f3f3f3; */
-  /* height: 80rpx; */
   padding: 30rpx 0;
   margin: 0 30rpx;
   border-bottom: 1rpx solid #e6e6e6;
 }
 
 .goods-scrollx-view {
-  /* display: flex;
-  flex-direction: row; */
   font-size: 26rpx;
   white-space: nowrap;
   background-color: white;
@@ -556,7 +554,6 @@ page {
 
 .comment-line {
   border-top: 2rpx #e6e6e6 solid;
-  /* padding-bottom: 36rpx; */
 }
 
 .comment-user-area {
@@ -570,7 +567,6 @@ page {
 
 .commentImgList {
   height: 188rpx;
-  /* width: 300rpx; */
   white-space: nowrap;
   overflow: auto;
 }
@@ -583,7 +579,6 @@ page {
 }
 
 .comment-text {
-  /* height: 58rpx;  */
   font-size: 30rpx;
   line-height: 48rpx;
   overflow: hidden;
@@ -665,7 +660,6 @@ page {
 }
 
 /*商品下架后打开的图片   */
-
 .goodsDown_img {
   width: 552rpx;
   height: 484rpx;
@@ -686,21 +680,18 @@ page {
 }
 
 /*加载失败   */
-
 .loadingFail {
   text-align: center;
   border-top: 1px solid #f0f0f0;
 }
 
 /*商品轮播图部分   */
-
 .swiper_img {
   width: 750rpx;
   height: 750rpx;
 }
 
 /*四个图标——图片   */
-
 .advantage_view {
   width: 750rpx;
   height: 81rpx;
@@ -713,7 +704,6 @@ page {
 }
 
 /*店铺信息部分   */
-
 .storeImg_head {
   width: 64rpx;
   height: 64rpx;
@@ -729,14 +719,12 @@ page {
 }
 
 /*店铺通知   */
-
 .store_noticeImg {
   width: 147rpx;
   height: 154rpx;
 }
 
 /*检验报告   */
-
 .testReport_img {
   width: 26rpx;
   height: 26rpx;
@@ -753,7 +741,6 @@ page {
 }
 
 /*商品评价   */
-
 .proComment_arrow {
   width: 16rpx;
   height: 26rpx;
@@ -768,27 +755,17 @@ page {
 }
 
 .proComment_img {
-  /* float: left; */
   width: 188rpx;
   height: 188rpx;
   margin-right: 5rpx;
   border-radius: 15rpx;
 }
 
-.commentImgList {
-
-}
-
-/* .proComment_text {
-  margin-top: 18rpx;
-} */
-
 .proComment_date {
   margin: 20rpx 0 0 550rpx;
 }
 
 /*商家其他商品   */
-
 .storePro_view {
   border-bottom: 2rpx #e6e6e6 solid;
   display: flex;
@@ -796,7 +773,11 @@ page {
   align-items: center;
   justify-content: space-between;
   padding: 10rpx 0 10rpx 0;
-  margin: 0 28rpx;
+  margin: 0 30rpx;
+}
+
+.storeName {
+  width: 300rpx;
 }
 
 .dividedView {
@@ -804,7 +785,6 @@ page {
 }
 
 /*底部按钮栏   */
-
 .sendGiftBtn {
   width: 125rpx;
 }
@@ -820,7 +800,6 @@ page {
 
 
 /*图标   */
-
 .allCompensation {
   width: 112rpx;
   height: 112rpx;
@@ -830,9 +809,7 @@ page {
 }
 
 /*全赔保障 */
-
 .goodsCoverage {
-  /* padding: 41rpx 28rpx 36rpx 28rpx; */
   padding: 30rpx;
   display: flex;
   flex-direction: row;
@@ -840,13 +817,8 @@ page {
 }
 
 .guarantee-view {
-   /* padding-top: 20rpx; */
    margin-left: 30rpx;
    flex: 1;
-   /* display: flex;
-   flex-direction: row;
-   justify-content: space-between; */
-   /* justify-content:  */
 }
 
 .afterSaleGueeName {
@@ -864,7 +836,6 @@ page {
 }
 
 /* 秒杀价格 */
-
 .secondkill-price {
   box-sizing: border-box;
   padding-left: 30rpx;
@@ -893,7 +864,6 @@ page {
 
 
 /* 进度条 */
-
 .flex-1 {
   flex: 1;
 }
@@ -914,13 +884,13 @@ page {
 }
 
 .progress_fill {
-    display: inline-block;
-    height: 100%;
-    width: 60%;
-    border-radius: 30rpx;
-    line-height: 20rpx;
-    vertical-align: top;
-    background: #ff7832;
+  display: inline-block;
+  height: 100%;
+  width: 60%;
+  border-radius: 30rpx;
+  line-height: 20rpx;
+  vertical-align: top;
+  background: #ff7832;
 }
 
 .progress_message {
@@ -952,6 +922,29 @@ page {
 
 
 /* 领券弹窗 */
+
+.coupon-popupBox {
+  width: 100%;
+  height: 100vh;
+  background: #fff;
+  position: fixed;
+  left: 0;
+  top: 0;
+  transform: translateY(100%);
+  backface-visibility: hidden;
+  transition: transform 0.3s;
+  z-index: 1001;
+  display: flex;
+  flex-direction: column;
+  background-color:rgba(0, 0, 0, 0.2)
+}
+
+.coupon-popupBox.show {
+  transform: translateY(0);
+}
+
+
+
 .coupon-popup {
   width: 100%;
   height: 902rpx;
@@ -990,7 +983,6 @@ page {
 }
 
 /* 优惠券展示 */
-
 .coupon:first-child {
   margin-top: 5px;
 }
@@ -1056,9 +1048,7 @@ page {
   border-radius: 25rpx 0 0 25rpx;
   display: flex;
   justify-content: space-between;
-  /* align-items: center; */
   line-height: 32rpx;
-  /* vertical-align: middle; */
   background: #f5f5f5;
 }
 
@@ -1111,7 +1101,6 @@ page {
 .couponTitle {
   margin-right: 20rpx;
   width: 64rpx;
-  /* height: 32rpx; */
   height: 100%;
 }
 
@@ -1143,19 +1132,18 @@ page {
   border: 1rpx solid transparent;
   border-radius: 10rpx;
   background: linear-gradient(to bottom right, #ffcf61, #ff0000);
-  /* background: #ff2e2e; */
   color: #fff;
   vertical-align: middle;
 }
 
 .goodsName {
+  color: #333;
   line-height: 50rpx;
   vertical-align: middle;
 }
 
 .goodsTag {
   background: #fff4f5;
-  /* height: 24rpx; */
   padding: 7rpx 10rpx;
   margin-right: 20rpx;
   border-radius: 10rpx;
@@ -1293,10 +1281,6 @@ page {
   font-size: 24rpx;
 }
 
-.goods-sepc-bottom-view {
-  /* height: 240rpx; */
-}
-
 .number-pick-view-text {
   margin: 0 2rpx;
 }
@@ -1346,7 +1330,6 @@ page {
 }
 
 /* 猜你喜欢样式 */
-
 .guessLikeBox {
   padding: 20rpx 0;
   margin: 0 30rpx;
@@ -1368,8 +1351,6 @@ page {
 
 .guessLikeGoodsName .name {
   font-size: 30rpx;
-  /* line-height: 30rpx; */
-  /* vertical-align: bottom; */
   font-weight: 500;
 }
 
@@ -1386,12 +1367,12 @@ page {
   font-weight: 700;
   font-size: 30rpx;
   color: #ff5353;
-  /* vertical-align: middle; */
 }
 
 .alignMiddle {
    vertical-align: middle;
 }
+
 
 
 
