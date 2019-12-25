@@ -111,7 +111,7 @@
       <view class="icon-href-right font-24"></view>
     </view>
   </view>
-  <popup show="{{ isShowPopup }}" mask="{{true}}" position="bottom" animation="{{true}}" onClose="onPopupClose" zIndex="100" disableScroll="{{false}}" catchTouchMove="move">
+  <popup show="{{ isShowPopup }}" mask="{{true}}" position="bottom" animation="{{true}}" onClose="onPopupClose" zIndex="100" disableScroll="{{false}}">
       <view class="coupon-popup">
         <view class="flex_view_col all_100">
           <scroll-view class="flex_1" scroll-y="{{true}}" data-type="coupon" onScrollToLower="lowLoadMore">
@@ -147,7 +147,7 @@
       </view>
     </view>
     <button open-type="share" hover-class="none" size="mini" plain="{{true}}" class="btnStyle shareButton posi_ab color-999">
-      <text class="icon-share1 font-32"></text>
+      <text class="icon-productdetails_share font-32 marBot_5"></text>
       <text class="font-30">分享</text>
     </button>
   </view>
@@ -182,9 +182,9 @@
     <text class="icon-href-right font-24 color-999"></text>
   </view>
   <!-- 用户默认地址或者获取当前地址         已完成新接口字段更换 -->
-  <view class="line-view">
+  <!-- <view class="line-view">
     <view class="one-line"></view>
-  </view>
+  </view> -->
   <view class="store-view font-30" onTap="showAddressPop">
     <view class="selected-view">
       <view class="selectedSpecifications flex_view_row single-line-text">
@@ -517,15 +517,15 @@
     <view a:if="{{goods.jifenStatus || goods.deductStatus || goods.memberDayPriceStatus}}" class="bottom-view">
       <view class="regularButton">
         <navigator class="regularItem" url="/pages/shopping/storeInfo/storeInfo?supplierId={{goods.supplierInfo.supplierId}}" hover-class="none">
-          <view class="regularItemIcon icon-store"></view>
+          <view class="regularItemIcon icon-home_ic_black"></view>
           <view class="regularItemText">店铺</view>
         </navigator>
         <view class="regularItem" catchTap="goToWebCall">
-          <view class="regularItemIcon icon-message1"></view>
+          <view class="regularItemIcon icon-productdetails_message"></view>
           <view class="regularItemText">客服</view>
         </view>
         <navigator class="regularItem" hover-class="none" url="/pages/cart/cart" open-type="switchTab">
-          <view class="regularItemIcon icon-shopCar1">
+          <view class="regularItemIcon icon-productdetails_shoppingcar">
             <view a:if="{{count > 0}}" class="red-count-view ">
               <text class="single-line">{{count}}</text>
             </view>
@@ -547,15 +547,15 @@
     <view a:else class="bottom-view">
       <view class="regularButton">
         <navigator class="regularItem" url="/pages/shopping/storeInfo/storeInfo?supplierId={{goods.supplierInfo.supplierId}}" hover-class="none">
-          <view class="regularItemIcon icon-store"></view>
+          <view class="regularItemIcon icon-home_ic_black"></view>
           <view class="regularItemText">店铺</view>
         </navigator>
         <view class="regularItem" catchTap="goToWebCall">
-          <view class="regularItemIcon icon-message1"></view>
+          <view class="regularItemIcon icon-productdetails_message"></view>
           <view class="regularItemText">客服</view>
         </view>
         <navigator class="regularItem" hover-class="none" url="/pages/cart/cart" open-type="switchTab">
-          <view class="regularItemIcon icon-shopCar1">
+          <view class="regularItemIcon icon-productdetails_shoppingcar">
             <view a:if="{{count > 0}}" class="red-count-view ">
               <text class="single-line">{{count}}</text>
             </view>
@@ -586,11 +586,11 @@
     <view class="bottom-view">
       <view class="regularButton" style="justify-content: space-around;">
         <navigator class="regularItem" url="/pages/shopping/storeInfo/storeInfo?supplierId={{goods.supplierInfo.supplierId}}" hover-class="none">
-          <view class="regularItemIcon icon-store"></view>
+          <view class="regularItemIcon icon-home_ic_black"></view>
           <view class="regularItemText">店铺</view>
         </navigator>
         <view class="regularItem" catchTap="goToWebCall">
-          <view class="regularItemIcon icon-message1"></view>
+          <view class="regularItemIcon icon-productdetails_message"></view>
           <view class="regularItemText">客服</view>
         </view>
       </view>

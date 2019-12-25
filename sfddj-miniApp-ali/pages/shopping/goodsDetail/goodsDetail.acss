@@ -116,17 +116,17 @@ page {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  width: 100%;
   box-sizing: border-box;
-    line-height: 32rpx;
+  line-height: 32rpx;
 }
 .store-view {
   padding: 30rpx;
 }
 
 .specifications-view {
-  padding: 30rpx;
-  line-height: 32rpx;
+  margin: 0 30rpx;
+  padding: 30rpx 0;
+  border-bottom: 1rpx solid #e6e6e6;
 }
 
 .addressTips {
@@ -137,9 +137,9 @@ page {
   color: red;
 }
 
-.line-view {
+/* .line-view {
   padding: 0 30rpx;
-}
+} */
 
 .one-line {
   border: 1rpx solid #e6e6e6; 
@@ -1048,8 +1048,9 @@ page {
   border-radius: 25rpx 0 0 25rpx;
   display: flex;
   justify-content: space-between;
-  line-height: 32rpx;
+  line-height: 30rpx;
   background: #f5f5f5;
+  vertical-align: middle;
 }
 
 

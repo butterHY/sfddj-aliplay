@@ -958,7 +958,7 @@ Page({
 		var that = this;
 		var fatherIndex = e.currentTarget.dataset.fatherindex;
 		var index = e.currentTarget.dataset.index;
-    // console.log('切换事件被触发')
+    console.log('切换事件被触发')
     if (that.data.specType == 'OPTIONAL') {
       this.updateGoodsSpecMap(fatherIndex, index, 'OPTIONAL');
     } else if (that.data.specType == 'MULTI') {
@@ -1876,7 +1876,8 @@ Page({
     // console.log(addFatherIavth);
     var isHaveStore = false;
     addFatherIavth.forEach(function(value) {
-      that.data.allProduct.find(val => val.iavPath == value).store != 0 && store != '' ? isHaveStore = true : '';
+			let store = that.data.allProduct.find(val => val.iavPath == value).store;
+      store != 0 && store != '' ? isHaveStore = true : '';
     })
     return isHaveStore;
   },

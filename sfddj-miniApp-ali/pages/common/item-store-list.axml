@@ -8,10 +8,10 @@
       <view class="merchantName">
         <view class="storeName single-line">{{nickName}}</view>
         <view class="storeStart">
-         <view class="start" a:for="{{ supplierScore }}" a:key="index">
+         <view class="start" a:if="{{ supplierScore >= 0 }}" a:for="{{ supplierScore }}" a:key="index">
             <image src="{{baseLocImgUrl}}miniappImg/icon/icon_star_selected.png" class="all_100"></image>
          </view>
-         <view class="start" a:if="{{ supplierScore  < 5 }}" a:for="{{ 5 - supplierScore }}" a:key="index">
+         <view class="start" a:if="{{ 0 <= supplierScore < 5 }}" a:for="{{ 5 - supplierScore }}" a:key="index">
             <image src="{{baseLocImgUrl}}miniappImg/icon/icon_star_normal.png"  class="all_100"></image>
          </view>
         </view>
