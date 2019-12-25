@@ -33,7 +33,7 @@ Page({
 		loadFail: false,
 		floatVal: 50,
 		cateHeight: 100,
-		user_memId: '默认是会员',         //是否存在memberId，判断是否绑定手机号
+		user_memId: '默认是会员',         //是否存在memberId，判断是否绑定手机号                                                
 
 
 		isShowSearch: false,								// 新版搜索组件显示开关
@@ -42,7 +42,7 @@ Page({
 	},
 
 	onLoad: async function (options) {
-		var that = this;
+		var that = this;                                  
 		//获取父分类信息
 		var fatherCategory = {};
 		fatherCategory = my.getStorageSync({ key: constants.StorageConstants.fatherCategoryId }).data ? my.getStorageSync({ key: constants.StorageConstants.fatherCategoryId }).data : {}; //获取父分类信息
@@ -511,6 +511,17 @@ Page({
 			isShowSearch: !this.data.isShowSearch,
 			isFocus: !this.data.isFocus,
 		})
-	}
+	},
+
+	// 点击跳转的商品详情页
+	goToPage(e){
+		let { url} = e.currentTarget.dataset
+		if(this.data.user_memId == 0 || this.data.user_memId == '0'){
+			return
+		}
+		my.navigateTo({
+			url: url
+		});
+	},
 
 });

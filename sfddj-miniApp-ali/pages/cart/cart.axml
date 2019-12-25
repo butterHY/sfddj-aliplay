@@ -38,7 +38,7 @@
 								<text class="icon-check icon_cirCheck icon_goodsCheck {{item.shelves ? (item.sellout == 0 ? (item.taped ? 'checkActive' : 'checkNormal') : 'checkUseless') : 'checkUseless'}} marRight_30 marLeft_30"></text>
 							</view>
 							<!-- 商品图片 -->
-							<navigator hover-class url="/pages/shopping/goodsDetail/goodsDetail?goodsSn={{item.goodsSn}}&goodsId={{item.goodsId}}" hover-class="none">
+							<navigator url="/pages/shopping/goodsDetail/goodsDetail?goodsSn={{item.goodsSn}}&goodsId={{item.goodsId}}" hover-class="none">
 								<image src="{{baseImageUrl}}{{item.imgPath}}{{smallImgArg}}" class="goodsImg"></image>
 							</navigator>
 							<!-- 商品详细信息 -->

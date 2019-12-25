@@ -284,6 +284,15 @@ Page({
 		});
 	},
 
+	// 点击跳转的商品详情页
+	goToPage(e){
+		let { url} = e.currentTarget.dataset
+
+		my.navigateTo({
+			url: url
+		});
+	},
+
 	//-------搜索相关代码开始--------//
 	// handleFocus: function () {
 	//   var that = this;

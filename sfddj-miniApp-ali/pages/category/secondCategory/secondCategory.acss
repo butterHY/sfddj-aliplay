@@ -80,3 +80,142 @@ page {
 }
 
 
+/* 单列的展示的样式 */
+.itemGoodsList {
+  width: 100%;
+  height: 275rpx;
+  padding: 36rpx 0;
+  display: flex;
+  flex-direction: row;
+  border-bottom: solid #eeeeee 2rpx;
+  box-sizing: border-box;
+  position: relative;
+}
+
+
+.goodsImg {
+  width:190rpx;
+  height:100%;
+}
+
+.icon_Payoff {
+  position: absolute;
+  width: 56rpx;
+  height: 56rpx;
+  top: 40rpx;
+  left: 130rpx;
+}
+
+.goodsMessageBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: absolute;
+  top: 36rpx;
+  left: 210rpx;
+  bottom: 36rpx;
+  right: 30rpx;
+}
+
+.nameAndTitle {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: flex;
+  flex-direction: column;
+}
+
+.name {
+  font-size: 32rpx;
+  color: #323232;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.title {
+  font-size: 27rpx;
+  color: #bbbbbb;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display:block;
+  margin-top: 20rpx;
+}
+
+
+
+.payBox {
+  max-width: 350rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 24rpx;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #bbbbbb;
+}
+
+.activity .payBox {
+  max-width: 250rpx;
+}
+
+.salePrice {
+  font-size: 36rpx;
+  color: #ff5353;
+}
+
+
+.salesCountBox {
+  margin-left: 18rpx;
+  font-size: 28rpx;
+  color: #bbbbbb;
+  display: flex;
+  /* flex-direction: column;
+  align-items: center;
+  justify-content: center; */
+  height: 36rpx;
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+}
+
+
+.salesCount {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+  font-size: 28rpx;
+  line-height: 28rpx;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+}
+
+.productName {
+  margin-top: 12rpx;
+  font-size: 26rpx;
+  color: #a1a0a0;
+  max-width: 350rpx;
+}
+
+.activity .productName {
+  max-width: 250rpx;
+}
+
+
+
+.addCartBox {
+  width: 44rpx;
+  height: 44rpx;
+  position: absolute;
+  right: 30rpx;
+  bottom: 36rpx;
+}
+
+.activity .addCartBox {
+  bottom: 30rpx;
+}
