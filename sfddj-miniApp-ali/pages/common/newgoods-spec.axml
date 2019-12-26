@@ -59,8 +59,8 @@
         <scroll-view class="marTop_20 marLeft_30 marRight_30" style="height:366rpx;" scroll-y="true" catchtouchmove="move" a:if="{{goodsSpecMap}}">
           <block a:for="{{goodsSpecMap}}" a:for-index="fatherIndex" a:for-item="fatherItem" a:key="goodsSpecMap">
             <view class="font-30 font-weight-600 goods-spec-iakName">{{fatherItem.specName}}:</view>
-            <view class="{{fatherIndex != goodsSpecMap.length -1 ? 'goods-spec-iakValue' : ''}} flex_view_row justi_start">
-              <block>
+            <!-- flex_view_row justi_start -->
+            <view class="{{fatherIndex != goodsSpecMap.length -1 ? 'goods-spec-iakValue' : ''}}  clearfix ">
                 <block a:for="{{fatherItem.values}}" >
                   <view class="goods-spec-view-normal" a:if="{{item.store == 0}}" style="color: #9b9a9a;background: #f2f2f2;">
                     <view class="flex_view_row align_cen justi_around iavValueItem">
@@ -75,7 +75,6 @@
                     </view>
                   </view>
                 </block>
-              </block>
             </view>
           </block>
         </scroll-view>

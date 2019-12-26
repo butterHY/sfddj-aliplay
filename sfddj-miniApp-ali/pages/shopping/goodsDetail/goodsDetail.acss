@@ -1119,7 +1119,7 @@ page {
 
 .couponName {
   display: inline-block;
-  margin-right: 20rpx;
+  /* margin-right: 20rpx; */
 }
 
 .getCouponText {
@@ -1282,10 +1282,10 @@ page {
   border-radius: 10rpx;
   margin: 0 20rpx 20rpx 0;
   /* max-width: 710rpx; */
-  max-width: auto;
   min-width: 80rpx;
-  display: inline-block;
+  /* display: inline-block; */
   font-size: 24rpx;
+  float: left;
 }
 
 .number-pick-view-text {
