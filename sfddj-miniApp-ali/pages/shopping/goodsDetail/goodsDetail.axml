@@ -41,14 +41,14 @@
     <!-- 包税等图片 -->
     <view class="priceTagArea">
     <!-- a:if="{{priceInfo.isGlobal && !priceInfo.nonImport}}" -->
-      <block   a:if="{{priceInfo.isGlobal && !priceInfo.nonImport}}">
-        <image class="priceTagImg" src="{{base64imageUrl}}miniappImg/public/goodsDetail/iconBg_globle.png"></image>
+      <block a:if="{{priceInfo.isGlobal && !priceInfo.nonImport}}">
+        <image class="priceTagImg" src="{{base64imageUrl}}miniappImg/public/goodsDetail/bg_globle.png"></image>
         <!-- a:if="{{priceInfo.isBaoShui}}" -->
-        <image a:if="{{priceInfo.isBaoShui}}"  class="priceTagImg" src="{{base64imageUrl}}miniappImg/public/goodsDetail/iconBg_baoshui.png"></image>
+        <image a:if="{{priceInfo.isBaoShui}}" class="priceTagImg" src="{{base64imageUrl}}miniappImg/public/goodsDetail/bg_baoshui.png"></image>
       </block>
       <!-- a:elif="{{goods.memberDayPriceStatus}}" -->
-      <block a:elif="{{goods.memberDayPriceStatus}}" >
-        <image class="priceTagImg" src="{{base64imageUrl}}miniappImg/public/goodsDetail/iconBg_vip.png"></image>
+      <block a:elif="{{goods.memberDayPriceStatus}}">
+        <image class="priceTagImg" src="{{base64imageUrl}}miniappImg/public/goodsDetail/bg_vip.png"></image>
       </block>
     </view>
     <!-- 价格销量 -->
