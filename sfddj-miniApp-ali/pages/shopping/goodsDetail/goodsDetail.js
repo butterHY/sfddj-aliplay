@@ -812,9 +812,9 @@ Page({
 		that.isDisabled(that.data.minCount);
 	},
 
-  /**
-	* 任选规格商品，合并选中的多个规格的数据
-	*/
+	/**
+	  * 任选规格商品，合并选中的多个规格的数据
+	  */
 	mergeOptionalProduct() {
 		var that = this;
 		console.log('我要开始合并任选规格数组了 ')
@@ -2062,9 +2062,19 @@ Page({
 
 	// 获取手机号失败
 	onAuthError(res) {
-		my.showToast({
-			content: '授权失败'
+		// my.showToast({
+		// 	content: '授权失败'
+		// })
+		let that = this
+		this.setData({
+			showToast: true,
+			showToastMes: '授权失败'
 		})
+		setTimeout(function () {
+			that.setData({
+				showToast: false
+			})
+		}, 2000)
 	},
 
 	// 价格和积分的设置
