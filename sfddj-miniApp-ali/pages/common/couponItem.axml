@@ -59,7 +59,7 @@
               </view>
               <image  class="haveReceivedImg" a:if="{{item.couponStatus == 'NORMAR'}}" src="{{baseImageLocUrl}}/miniappImg/public/coupon/haveReceived.png">
             </view>
-            <button class="all_100 btnStyle gpnBtn zIndex100" open-type="getAuthorize" onGetAuthorize="getPhoneNumber" scope='phoneNumber' onError="onAuthError" a:if="{{(user_memId == 0 || user_memId == '0') && item.couponStatus == 'NO_RECEIVE'}}"></button>
+            <button  a:if="{{(user_memId == 0 || user_memId == '0') && item.couponStatus == 'NO_RECEIVE'}}" class="all_100 btnStyle gpnBtn zIndex100" open-type="getAuthorize" onGetAuthorize="getPhoneNumber" scope='phoneNumber' onError="onAuthError" hover-class="none"></button>
           </view>
 
           <view a:else class="myCoupon_useBtn flex_view_row align_cen justi_cen" data-linkType="{{item.linkType}}" data-uselink="{{item.useLink}}" data-couponid="{{item.couponId}}" data-limitType="{{item.limitType}}" catchTap="{{!isExpired ? 'toUseCoupon' : ''}}">
