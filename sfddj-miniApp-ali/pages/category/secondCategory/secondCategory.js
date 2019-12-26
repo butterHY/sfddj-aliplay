@@ -359,6 +359,10 @@ Page({
 	addCart: function (e) {
 		let that = this;
 		let productId = e.currentTarget.dataset.pid;
+		
+		if(this.data.user_memId == 0 || this.data.user_memId == '0'){
+			return
+		}
 		sendRequest.send(constants.InterfaceUrl.SHOP_ADD_CART, { pId: productId, quantity: '1' }, function (res) {
 			// 达观数据上报
 			// util.uploadClickData_da('cart', [{ productId, actionNum: '1' }])
@@ -489,9 +493,19 @@ Page({
 
 	// 获取手机号失败
 	onAuthError(res) {
-		my.showToast({
-			content: '授权失败'
+		// my.showToast({
+		// 	content: "授权失败"
+		// })
+		let that = this
+		this.setData({
+			showToast: true,
+			showToastMes: '授权失败'
 		})
+		setTimeout(function(){
+			that.setData({
+				showToast: false
+			})
+		},2000)
 	},
 
 	/**
@@ -516,9 +530,6 @@ Page({
 	// 点击跳转的商品详情页
 	goToPage(e){
 		let { url} = e.currentTarget.dataset
-		if(this.data.user_memId == 0 || this.data.user_memId == '0'){
-			return
-		}
 		my.navigateTo({
 			url: url
 		});
