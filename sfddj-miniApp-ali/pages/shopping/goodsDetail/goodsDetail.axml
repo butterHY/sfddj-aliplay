@@ -14,6 +14,7 @@
 <view a:elif="{{loadFail}}">
   <load-fail></load-fail>
 </view>
+
 <view a:else class="posi_re js_page">
   <!-- 商品图片轮播图                     已完成新接口字段更换 -->
   <view class="posi_re">
@@ -25,10 +26,10 @@
       </block>
     </swiper>
     <!-- 小图标,全赔.. -->
-    <!-- <image src="{{base64imageUrl}}miniappImg/icon/icon_Payoff1.png" class="allCompensation posi_ab" a:if="{{filters.strIndexOf(goods.afterSaleGuee,'1')}}"></image>
+    <image src="{{base64imageUrl}}miniappImg/icon/icon_Payoff1.png" class="allCompensation posi_ab" a:if="{{filters.strIndexOf(goods.afterSaleGuee,'1')}}"></image>
     <image src="{{base64imageUrl}}miniappImg/icon/icon_Payoff2.png" class="allCompensation posi_ab" a:elif="{{filters.strIndexOf(goods.afterSaleGuee,'2')}}"></image>
     <image src="{{base64imageUrl}}miniappImg/icon/icon_Payoff3.png" class="allCompensation posi_ab" a:elif="{{filters.strIndexOf(goods.afterSaleGuee,'3')}}"></image>
-    <image src="{{base64imageUrl}}miniappImg/icon/icon_Payoff4.png?version=2.0" class="allCompensation posi_ab" a:elif="{{filters.strIndexOf(goods.afterSaleGuee,'4')}}"></image> -->
+    <image src="{{base64imageUrl}}miniappImg/icon/icon_Payoff4.png?version=2.0" class="allCompensation posi_ab" a:elif="{{filters.strIndexOf(goods.afterSaleGuee,'4')}}"></image>
   </view>
   <!-- 秒杀商品的价格                       已完成新接口字段更换 -->
   <view class="{{goods.secKillStatus ? 'marBot_20' : ''}}">
@@ -40,31 +41,34 @@
   <view a:if="{{!goods.secKillStatus}}" class="priceView">
     <!-- 包税等图片 -->
     <view class="priceTagArea">
-      <block a:if="{{priceInfo.isGlobal && !priceInfo.nonImport}}">
+    <!-- a:if="{{priceInfo.isGlobal && !priceInfo.nonImport}}" -->
+      <block  a:if="{{priceInfo.isGlobal && !priceInfo.nonImport}}">
         <image class="priceTagImg" src="{{base64imageUrl}}miniappImg/public/goodsDetail/iconBg_globle.png"></image>
-        <image a:if="{{priceInfo.isBaoShui}}" class="priceTagImg" src="{{base64imageUrl}}miniappImg/public/goodsDetail/iconBg_baoshui.png"></image>
+        <!-- a:if="{{priceInfo.isBaoShui}}" -->
+        <image a:if="{{priceInfo.isBaoShui}}"  class="priceTagImg" src="{{base64imageUrl}}miniappImg/public/goodsDetail/iconBg_baoshui.png"></image>
       </block>
-      <block a:elif="{{goods.memberDayPriceStatus}}">
+      <!-- a:elif="{{goods.memberDayPriceStatus}}" -->
+      <block  a:elif="{{goods.memberDayPriceStatus}}" >
         <image class="priceTagImg" src="{{base64imageUrl}}miniappImg/public/goodsDetail/iconBg_vip.png"></image>
       </block>
     </view>
     <!-- 价格销量 -->
     <view class="detail-sale-view font-36">
       <block a:if="{{goods.viewStatus != 'SALEING'}}">
-        <view class="font-50 font-weight-600 color-153">暂无报价</view>
+        <view class="font-50 font-weight-600 color-999">暂无报价</view>
       </block>
       <block a:else>
         <view class="color-57 flex_view_row align_end">
-          <!-- <view class="color-153 font-26" a:if="{{false}}">会员价 <text decode="true" space="true">&nbsp;</text></view> -->
+          <!-- <view class="color-999 font-26" a:if="{{false}}">会员价 <text decode="true" space="true">&nbsp;</text></view> -->
           <view class="posi_re">
             <view class="defaultPrice single-line">
               <!-- 价格 -->
               <text a:if="{{priceInfo.price}}">
-                <text class=" font-32">¥</text>
+                <text class=" font-32 font-weight-600">¥</text>
                 <text decode="true" space="true"></text>
                 <text class="font-48 font-weight-600">{{priceInfo.price}}</text>
                 <!-- 原价 -->
-                <text a:if="{{priceInfo.oldPrice}}" class="color-153 font-30 line-through marLeft_10">¥ {{priceInfo.oldPrice}}</text>
+                <text a:if="{{priceInfo.oldPrice}}" class="color-999 font-30 line-through marLeft_10">¥ {{priceInfo.oldPrice}}</text>
               </text>
               <!-- 积分 -->
               <text a:if="{{priceInfo.integralVal && priceInfo.integralVal > 0}}">
@@ -73,7 +77,7 @@
                   +
                   <text decode="true" space="true"></text>
                 </text>
-                <text class="{{!priceInfo.price ? 'color-57' : 'color-153' }}">
+                <text class="{{!priceInfo.price ? 'color-57' : 'color-999' }}">
                   <text class="{{!priceInfo.price ? 'font-56' : 'font-28' }} font-weight-600">{{priceInfo.integralVal}}</text>
                   <text class="font-28 marLeft_5">积分</text>
                 </text>
@@ -92,46 +96,43 @@
             <text class="font-26 color-666"> + {{theCostMemberScore}}积分</text>
         </view> -->
       </block>
-      <view class="color-153 font-30">已售 {{goods.salesCount}} 笔</view>
+      <view class="color-999 font-30">已售 {{goods.salesCount}} 笔</view>
     </view>
   </view>
   <!-- 优惠券导航栏 -->
   <view a:if="{{couponDataList && couponDataList.length > 0}}" class="receiveCoupon flex_view_row justi_between font-30 single-line" onTap="showPopup">
     <view class="couponNameBox flex_view_row justi_start single-line">
-      <view class="couponTitle">
-        <image src="{{baseImageLocUrl}}miniappImg/public/goodsDetail/icon_coupon.png" class="all_100"></image>
-      </view>
       <view class="single-line couponNameLine">
-        <text a:for="{{couponDataList}}" a:if="{{index == 0 || index == 1 || index == 2}}" class="couponName color-46 " a:key="*this" style="{{ index == 2 ? 'margin-right: 0' : '' }}">满{{item.needPrice}}减{{item.costPrice}}满{{item.needPrice}}减{{item.costPrice}}满{{item.needPrice}}减{{item.costPrice}}</text>
+        <text a:for="{{couponDataList}}" a:if="{{index == 0 || index == 1 || index == 2}}" class="couponName color-46 " a:key="*this" style="{{ index == 2 ? 'margin-right: 0' : '' }}">满{{item.needPrice}}减{{item.costPrice}}</text>
       </view>
     </view>
-    <view class="getCouponText color-153">
+    <view class="getCouponText color-999">
       <view>领券</view>
       <view class="icon-href-right font-24"></view>
     </view>
   </view>
-  <!-- 新增的领券按钮和领券弹窗 -->
-  <popup show="{{ isShowPopup }}" mask="{{true}}" position="bottom" animation="{{true}}" onClose="onPopupClose" zIndex="100" disableScroll="{{false}}">
-    <view class="coupon-popup">
-      <view class="flex_view_col all_100">
-        <scroll-view class="flex_1" scroll-y="{{true}}" data-type="coupon" onScrollToLower="lowLoadMore">
-          <block a:for="{{couponDataList}}" a:key="*this">
-            <template is="couponItem" data="{{item,index,isExpired: false, pageFrom: 'goodsDetail', user_memId, baseImageLocUrl}}"></template>
-          </block>
-          <view class="moreBtnBox">
-            <view a:if="{{!hasMore && !isLoadMore}}" class="loadingBtn">
-              <text class="information">没有更多</text>
+  <popup show="{{ isShowPopup }}" mask="{{true}}" position="bottom" animation="{{true}}" onClose="onPopupClose" zIndex="1001" disableScroll="{{false}}">
+      <view class="coupon-popup">
+        <view class="flex_view_col all_100">
+          <scroll-view class="flex_1" scroll-y="{{true}}" data-type="coupon" onScrollToLower="lowLoadMore">
+            <block a:for="{{couponDataList}}" a:key="*this">
+              <template is="couponItem" data="{{item,index,isExpired: false, pageFrom: 'goodsDetail', user_memId, baseImageLocUrl}}"></template>
+            </block>
+            <view class="moreBtnBox">
+              <view a:if="{{!hasMore && !isLoadMore}}" class="loadingBtn">
+                <text class="information">没有更多</text>
+              </view>
+              <view a:if="{{isLoadMore}}" class="loadingBtn">
+                <text class="icon-spinner3"></text>
+                <text class="information">加载中</text>
+              </view>
             </view>
-            <view a:if="{{isLoadMore}}" class="loadingBtn">
-              <text class="icon-spinner3"></text>
-              <text class="information">加载中</text>
-            </view>
-          </view>
-        </scroll-view>
-        <view class="couponPopup-btn toBuyNowBack" onTap="onPopupClose">完成</view>
+          </scroll-view>
+          <view class="couponPopup-btn toBuyNowBack" onTap="onPopupClose">完成</view>
+        </view>
       </view>
-    </view>
   </popup>
+
   <!-- 商品名称、title、标签              已完成新接口字段更换 -->
   <view class="detail-header-view posi_re ">
     <view class="detail-header-name color-323232 font-32">
@@ -145,8 +146,8 @@
           <view a:for="{{goods.goodsViceVO.labelList}}" a:if="{{index == 0 || index == 1 || index == 2}}"  class="goodsTag color-57">{{item}}</view>
       </view>
     </view>
-    <button open-type="share" hover-class="none" size="mini" plain="{{true}}" class="btnStyle shareButton posi_ab color-153">
-      <text class="icon-share1 font-32"></text>
+    <button open-type="share" hover-class="none" size="mini" plain="{{true}}" class="btnStyle shareButton posi_ab color-999">
+      <text class="icon-productdetails_share font-32 marBot_5"></text>
       <text class="font-30">分享</text>
     </button>
   </view>
@@ -164,7 +165,7 @@
   <view class="division-area"></view>
   <view class="specifications-view selected-view" onTap="selectedSpecs">
     <view class="selectedSpecifications single-line-text flex_view_row">
-      <view class="font-30 color-153">已选</view>
+      <view class="font-30 color-999">已选</view>
       <view a:if="{{specType == 'MULTI'}}" class="font-30 marLeft_30 single-line color-51">{{multiformname}} ; {{quantity}}件</view>
       <view a:elif="{{specType == 'OPTIONAL'}}" class="font-30 marLeft_30 single-line color-51">
         <text a:if="{{(optionalProduct.length == 0 && goodsSpecMap.length != 0)}}">
@@ -178,19 +179,19 @@
       </view>
       <view a:else class="font-30 marLeft_30 single-line color-51">{{product.productName}} ; {{quantity}}件</view>
     </view>
-    <text class="icon-href-right font-24 color-153"></text>
+    <text class="icon-href-right font-24 color-999"></text>
   </view>
   <!-- 用户默认地址或者获取当前地址         已完成新接口字段更换 -->
-  <view class="line-view">
+  <!-- <view class="line-view">
     <view class="one-line"></view>
-  </view>
+  </view> -->
   <view class="store-view font-30" onTap="showAddressPop">
     <view class="selected-view">
       <view class="selectedSpecifications flex_view_row single-line-text">
-        <view class="color-153">送至</view>
+        <view class="color-999">送至</view>
         <view class="marLeft_30  single-line flex_view_row">
           <!-- <image class="addressImag marRight_15" mode="scaleToFill" src="{{base64imageUrl}}miniappImg/icon/icon_detail_address.png"/> -->
-          <text class="icon-locate marRight_10"></text>
+          <text class="icon-locate marRight_10 color-a1a0a0 "></text>
           <block a:for="{{addressList}}" a:if="{{addressList && addressList.length > 0}}" a:key="*this">
             <view a:if="{{item.isDefault}}" class="single-line color-51">
               {{item.province}}
@@ -207,9 +208,9 @@
           </block>
         </view>
       </view>
-      <text class="icon-href-right font-24 color-153 "></text>
+      <text class="icon-href-right font-24 color-999 "></text>
     </view>
-    <view a:if="{{goods.deliveryTime && goods.viewStatus == 'SALEING' && goods.goodsStore != 0 }}" class="addressTips">
+    <view a:if="{{ goods.deliveryTime && goods.viewStatus == 'SALEING' && goods.goodsStore != 0 && !nonDeliveryArea }}" class="addressTips">
       下单后
       <text class="color-57">{{goods.deliveryTime}}小时以内</text>
       发货
@@ -253,13 +254,13 @@
         <view class="store-name-area">
           <text class="store-name-font color-323232 font-26">{{goods.supplierInfo.nickName}}                    
           </text>
-          <text class="store-name-font color-153 font-22">{{goods.supplierInfo.introduction}}                    
+          <text class="store-name-font color-999 font-22">{{goods.supplierInfo.introduction}}                    
           </text>
         </view>
-        <view class="color-153 font-24 flex_view_row align_cen">
+        <view class="color-999 font-24 flex_view_row align_cen">
           <text>查看店铺                    
           </text>
-          <text class="icon-href-right font-22 color-153 marLeft_20 ">
+          <text class="icon-href-right font-22 color-999 marLeft_20 ">
           </text>
         </view>
       </view>
@@ -269,7 +270,7 @@
     <view a:if="{{goods.afterSaleGueeList && goods.afterSaleGueeList.length > 0}}" class="goodsCoverage single-line" onTap="goToAfterSaleGuee">
       <!-- <view class="flex_view_row justi_between align_cen">
         <view class="flex_view_row">
-          <text class="font-30 color-153">保障        
+          <text class="font-30 color-999">保障        
           </text>
           <view class="marLeft_30 flex_view_row">
             <image class="guaranteeImg marRight_10" mode="scaleToFill" src="{{baseImageLocUrl}}miniappImg/public/goodsDetail/icon_img_safe.png"/>
@@ -277,11 +278,11 @@
           </view>
         </view>
         <view>
-          <text class="icon-href-right font-24 color-153">
+          <text class="icon-href-right font-24 color-999">
           </text>
         </view>
       </view> -->
-      <view class="font-30  color-153">保障</view>
+      <view class="font-30  color-999">保障</view>
       <view class="guarantee-view single-line font-28  clearfix">
         <block a:for="{{goods.afterSaleGueeList}}" a:if="{{index == 0 || index == 1}}" a:key="*this">
           <view a:if="{{item == '1'}}" class="afterSaleGueeName single-line">不好吃全赔</view>
@@ -291,7 +292,7 @@
           <!-- <block a:if="{{index != goods.afterSaleGueeList.length - 1}}"><text decode="true" space="true">&nbsp;</text> • <text decode="true" space="true">&nbsp;</text></block> -->
         </block>
       </view>
-      <text class="icon-href-right font-24 color-153"></text>
+      <text class="icon-href-right font-24 color-999"></text>
     </view>
     <!-- 店铺公告                                 已完成新接口字段更换 -->
     <view a:if="{{goods.supplierInfo.supplierNotice}}" class="division-area"></view>
@@ -314,9 +315,9 @@
         <!-- <image src="{{base64imageUrl}}miniappImg/icon/icon_test_report.png" class="testReport_img"></image> -->
         <text class="icon-check-cir font-30"></text>
         <text class="font-30 color-323232 testReport_text">检验报告</text>
-        <text class="font-30 color-153 marLeft_20">严格质检，品质保证</text>
+        <text class="font-30 color-999 marLeft_20">严格质检，品质保证</text>
       </view>
-      <text class="font-24 icon-href-right color-153 marRight_30"></text>
+      <text class="font-24 icon-href-right color-999 marRight_30"></text>
     </view>
   </navigator>
   <!-- 商品评价 -->
@@ -329,7 +330,7 @@
         <text class="marLeft_5 color-57"> {{goods.commentScore}}%</text>
         <!-- <view class="color-51">买家秀</view> -->
       </view>
-      <view class="color-153 alignMiddle">
+      <view class="color-999 alignMiddle">
         <text>评价</text>
         <text class="marLeft_10">
           <text>(</text>
@@ -338,7 +339,7 @@
           <text decode="true" space="true"></text>
           <text>)</text>
         </text>
-        <text class="icon-href-right font-22 marLeft_10 color-153"></text>
+        <text class="icon-href-right font-22 marLeft_10 color-999"></text>
       </view>
     </view>
   </view>
@@ -351,14 +352,14 @@
           <image src="{{item.headPortraitPath ? item.headPortraitPath : base64imageUrl + 'miniappImg/icon/icon_default_head.jpeg'}}" class="all_100"></image>
         </view>
         <view class="height_100 flex_view_col marLeft_20">
-          <view class="font-30 color-153 ">{{item.nickName}}</view>
+          <view class="font-30 color-999 ">{{item.nickName}}</view>
           <view class="flex_view_row align_cen marTop_5">
             <image a:for="{{item.star}}" src="{{base64imageUrl}}miniappImg/icon/icon_star_selected.png" class="proComment_star" a:key="*this"></image>
             <image a:for="{{5 - item.star}}" src="{{base64imageUrl}}miniappImg/icon/icon_star_normal.png" class="proComment_star" a:key="*this"></image>
           </view>
         </view>
       </view>
-      <view class="font-30 color-153">{{item.createDate}}</view>
+      <view class="font-30 color-999">{{item.createDate}}</view>
     </view>
     <view class="proComment_text font-26">
       <view class="comment-text">{{item.comment}}</view>
@@ -367,6 +368,49 @@
       <image a:for="{{item.imagePath}}" a:for-item="items" class="proComment_img" a:key="*this" a:for-inex="inexs" src="{{filters.isHttpUrl(items) ? baseImageLocUrl + 'vueStatic/img/commentErrImg.png' : baseImageUrl + items}}" data-current="{{items}}" data-urls="{{item.imagePath}}" style="{{inexs == item.imagePath.length - 1 ? 'margin-right: 0;' : ''}}" onTap="commentViewTap"></image>
     </scroll-view>
   </view> -->
+
+  <view class="division-area"></view>
+  <!-- 产品详情和服务售后的选择栏                 已完成新接口字段更换 -->
+  <view class="goods-detail-title-view js_titleView whiteBack width_100" style="{{suctionTop == 0 ? 'position: fixed; top: 0; left: 0; z-index: 1000;' : ''}}">
+    <view class="goods-detail-title" id="0" onTap="switchDetailShowTap">
+      <view class="height_100 flex_view_col justi_cen" style="{{!hideDetailTag ? 'border-bottom: rgb(255, 44, 57) 4rpx solid; color: rgb(255, 44, 57);' : 'color: rgb(51, 51, 51)'}}">产品详情</view>
+    </view>
+    <view class="goods-detail-title" id="1" onTap="switchDetailShowTap">
+      <view class="height_100 flex_view_col justi_cen" style="{{hideDetailTag ? 'border-bottom: rgb(255, 44, 57) 4rpx solid; color: rgb(255, 44, 57);' : 'color: rgb(51, 51, 51)'}}">服务售后</view>
+    </view>
+  </view>
+  <view a:if="{{isTitleViewClone}}" class="goods-detail-title-view js_titleViewClone"></view>
+  <text class="js_titleText"></text>
+  <!-- 商品规格和商品图文详情                     已完成新接口字段更换 -->
+  <view a:if="{{!hideDetailTag}}">
+    <!-- 商品出售规格 -->
+    <block a:if="{{goods.categoryAttrKey.length > 0}}">
+      <view class="category-attr-view">
+        <view a:for="{{goods.categoryAttrKey}}" class="category-attr-item" a:key="*this">
+          <view class="category-attr-item-left font-24">{{item.cakName}}</view>
+          <view class="category-attr-item-right font-24 color-999">{{item.cakValue}}</view>
+        </view>
+      </view>
+    </block>
+    <!-- 商品图文详情介绍 -->
+    <view class="rich-text-view">
+      <template is="wxParse" data="{{wxParseData: article.nodes}}"></template>
+    </view>
+  </view>
+  <view a:else class="after-sales-service font-30">
+    <text class="font-30 after-sales-service-title">售后服务</text>
+    <text class="font-30">温馨提醒：</text>
+    <view class="after-sales-service-text">
+      <text>1、因水产肉类/新鲜蔬果/熟食等生鲜易腐食品的特殊性，不属于无条件退货范畴，请不要拒签，我们承诺问题包赔，如有商品问题，请在签收后48小时的有效时间内拍照留存并联系客服或申请售后处理，特殊商品如商详页有售后时效说明以页面信息为准，商家将在24小时内处理，遇特殊情形如法定节假日等可能顺延处理。</text>
+      <text>2、请确保您的收件信息准确无误，如发现信息错漏，请第一时间联系客服处理，如因收货人的电话或地址错误导致无法收货而造成的损失，商家是无法售后的。</text>
+      <text>3、售后申请流程：进入“大当家商城”—“我的”—“我的订单”—点击对应商品订单进入“订单详情”申请售后。</text>
+      <text>4、平台尽最大努力确保商品图片与实物一致性，由于食品、生鲜商品特殊性，图片仅供参考，商品以实物为准；因拍摄灯光及显示器色差等造成的商品图片与实务色差，不属于质量问题。</text>
+      <text>5、商品页面如已明确注明商家售后条款的商品，优先适用商家条款规定。</text>
+      <text>6、我们竭诚为客户提供优质商品及服务，但对于故意套单，恶意索赔等违反诚实信用原则的行为，平台将保留取消订单，拒绝相关无理赔偿直至依法追究法律责任的权利。</text>
+      <text>7、如有任何问题，您也可以进入“我的服务”联系平台客服协助处理。</text>
+    </view>
+  </view>
+
   <!-- banner 位 -->
   <view a:if="{{bannerImgList && bannerImgList.length > 0}}" class="division-area"></view>
   <view a:if="{{bannerImgList && bannerImgList.length > 0}}" class="bannerImgBox">
@@ -374,17 +418,16 @@
       <swiper indicator-dots="true" class="bannerImgList" indicator-active-color="#ff5353" indicator-color="rgba(0,0,0,.3)" autoplay="{{true}}" circular="true">
         <block a:for="{{bannerImgList}}" a:key="*this">
           <swiper-item>
-            <image src="{{baseImageUrl}}{{item.imageUrl}}" class="banner_img" data-current="{{item.imageUrl}}" data-url="{{item.url}}" onTap="bannerImgListTap"></image>
+            <image src="{{baseImageUrl}}{{item.imageUrl}}" class="banner_img" data-current="{{item.imageUrl}}" data-url="{{item.url}}" onTap="goToPage"></image>
           </swiper-item>
         </block>
       </swiper>
     </view>
   </view>
   <!-- 猜你喜欢                                  已完成新接口字段更换 -->
-  <view a:if="{{ guessLikeGoods && guessLikeGoods.length > 0}}" class="division-area"></view>
   <block a:if="{{ guessLikeGoods && guessLikeGoods.length > 0}}">
     <view class="js_guessLike">
-      <view class="item-header-title-view font-30 color-153">猜你喜欢</view>
+      <view class="item-header-title-view font-30">猜你喜欢</view>
       <scroll-view class="goods-scrollx-view guessLikeBox" scroll-x="{{true}}" scroll-with-animation="true" data-type="guessLike" onScrollToLower="lowLoadMore" onScroll="guessLikeScroll">
         <block a:for="{{guessLikeGoods}}" a:key="*this">
           <view class="guessLikeList" style="display:inline-block;padding: 0 10rpx">
@@ -412,47 +455,7 @@
       </scroll-view>
     </view>
   </block>
-  <view class="division-area"></view>
-  <!-- 产品详情和服务售后的选择栏                 已完成新接口字段更换 -->
-  <view class="goods-detail-title-view js_titleView whiteBack width_100" style="{{suctionTop == 0 ? 'position: fixed; top: 0; left: 0; z-index: 1000;' : ''}}">
-    <view class="goods-detail-title" id="0" onTap="switchDetailShowTap">
-      <view class="height_100 flex_view_col justi_cen" style="{{!hideDetailTag ? 'border-bottom: rgb(255, 44, 57) 4rpx solid; color: rgb(255, 44, 57);' : 'color: rgb(51, 51, 51)'}}">产品详情</view>
-    </view>
-    <view class="goods-detail-title" id="1" onTap="switchDetailShowTap">
-      <view class="height_100 flex_view_col justi_cen" style="{{hideDetailTag ? 'border-bottom: rgb(255, 44, 57) 4rpx solid; color: rgb(255, 44, 57);' : 'color: rgb(51, 51, 51)'}}">服务售后</view>
-    </view>
-  </view>
-  <view a:if="{{isTitleViewClone}}" class="goods-detail-title-view js_titleViewClone"></view>
-  <text class="js_titleText"></text>
-  <!-- 商品规格和商品图文详情                     已完成新接口字段更换 -->
-  <view a:if="{{!hideDetailTag}}">
-    <!-- 商品出售规格 -->
-    <block a:if="{{goods.categoryAttrKey.length > 0}}">
-      <view class="category-attr-view">
-        <view a:for="{{goods.categoryAttrKey}}" class="category-attr-item" a:key="*this">
-          <view class="category-attr-item-left font-24">{{item.cakName}}</view>
-          <view class="category-attr-item-right font-24 color-153">{{item.cakValue}}</view>
-        </view>
-      </view>
-    </block>
-    <!-- 商品图文详情介绍 -->
-    <view class="rich-text-view">
-      <template is="wxParse" data="{{wxParseData: article.nodes}}"></template>
-    </view>
-  </view>
-  <view a:else class="after-sales-service font-30">
-    <text class="font-30 after-sales-service-title">售后服务</text>
-    <text class="font-30">温馨提醒：</text>
-    <view class="after-sales-service-text">
-      <text>1、因水产肉类/新鲜蔬果/熟食等生鲜易腐食品的特殊性，不属于无条件退货范畴，请不要拒签，我们承诺问题包赔，如有商品问题，请在签收后48小时的有效时间内拍照留存并联系客服或申请售后处理，特殊商品如商详页有售后时效说明以页面信息为准，商家将在24小时内处理，遇特殊情形如法定节假日等可能顺延处理。</text>
-      <text>2、请确保您的收件信息准确无误，如发现信息错漏，请第一时间联系客服处理，如因收货人的电话或地址错误导致无法收货而造成的损失，商家是无法售后的。</text>
-      <text>3、售后申请流程：进入“大当家商城”—“我的”—“我的订单”—点击对应商品订单进入“订单详情”申请售后。</text>
-      <text>4、平台尽最大努力确保商品图片与实物一致性，由于食品、生鲜商品特殊性，图片仅供参考，商品以实物为准；因拍摄灯光及显示器色差等造成的商品图片与实务色差，不属于质量问题。</text>
-      <text>5、商品页面如已明确注明商家售后条款的商品，优先适用商家条款规定。</text>
-      <text>6、我们竭诚为客户提供优质商品及服务，但对于故意套单，恶意索赔等违反诚实信用原则的行为，平台将保留取消订单，拒绝相关无理赔偿直至依法追究法律责任的权利。</text>
-      <text>7、如有任何问题，您也可以进入“我的服务”联系平台客服协助处理。</text>
-    </view>
-  </view>
+
   <!-- 猜你喜欢 -->
   <!-- <block a:if="{{guessLikeGoods.length > 0}}">
     <view class="item-header-title-view font-26 color-b3b3b3">- 猜你喜欢 -        
@@ -478,14 +481,14 @@
   <block a:if="{{otherGoods.length > 0}}">
     <view data-url="/pages/shopping/storeInfo/storeInfo?supplierId={{goods.supplierInfo.supplierId}}" data-type="supplier" onTap="goToTargetPage" hover-class="none">
       <view class="storePro_view">
-        <view class="flex_view_row align_cen">
+        <view class="flex_view_row align_cen ">
           <image class="store-image storeImg_head" src="{{goods.supplierInfo.headImage}}"></image>
-          <text class="color-323232 font-30 marLeft_10">{{goods.supplierInfo.nickName}}</text>
+          <view class="storeName color-323232 font-30 marLeft_10 single-line">{{goods.supplierInfo.nickName}}</view>
         </view>
         <view class="flex_view_row align_cen">
-          <view class="color-153 font-26 single-line">更多此商家的其他商品</view>
+          <view class="color-999 font-26 single-line">更多此商家的其他商品</view>
           <!-- <image src='{{base64imageUrl}}miniappImg/icon/icon_right_arrow.png' class='store_checkArr'></image> -->
-          <text class="icon-href-right font-24 color-153 marLeft_20"></text>
+          <text class="icon-href-right font-24 color-999 marLeft_20"></text>
         </view>
       </view>
     </view>
@@ -506,23 +509,23 @@
     </view>
   </view>
   <view a:if="{{goods.viewStatus != 'SALEING'}}" class="goods-soldOut">非常抱歉，该商品已经下架</view>
-  <view a:if="{{goods.viewStatus == 'SALEING' && goods.goodsStore == 0}}" class="goods-soldOut">非常抱歉，该商品已经售罄</view>
-  <view a:if="{{nonDeliveryArea}}" class="goods-soldOut">当前地址不在服务范围，请切换收货地址</view>
+  <view a:elif="{{goods.viewStatus == 'SALEING' && goods.goodsStore == 0}}" class="goods-soldOut">非常抱歉，该商品已经售罄</view>
+  <view a:elif="{{goods.viewStatus == 'SALEING' && goods.goodsStore != 0 && nonDeliveryArea}}" class="goods-soldOut">当前地址不在服务范围，请切换收货地址</view>
   <!-- 不是顺丰会员商品      重构按钮完成 -->
   <block a:if="{{!SFmember}}">
     <!-- 积分商品和抵扣商品和会员日商品, 不能显示'送他按钮'和'加入购物车按钮'                  memberDeductGoods 会员积分抵扣旧字段， memberDayGoods 与原有接口字段一样 -->
     <view a:if="{{goods.jifenStatus || goods.deductStatus || goods.memberDayPriceStatus}}" class="bottom-view">
       <view class="regularButton">
         <navigator class="regularItem" url="/pages/shopping/storeInfo/storeInfo?supplierId={{goods.supplierInfo.supplierId}}" hover-class="none">
-          <view class="regularItemIcon icon-store"></view>
+          <view class="regularItemIcon icon-home_ic_black"></view>
           <view class="regularItemText">店铺</view>
         </navigator>
         <view class="regularItem" catchTap="goToWebCall">
-          <view class="regularItemIcon icon-message1"></view>
+          <view class="regularItemIcon icon-productdetails_message"></view>
           <view class="regularItemText">客服</view>
         </view>
         <navigator class="regularItem" hover-class="none" url="/pages/cart/cart" open-type="switchTab">
-          <view class="regularItemIcon icon-shopCar1">
+          <view class="regularItemIcon icon-productdetails_shoppingcar">
             <view a:if="{{count > 0}}" class="red-count-view ">
               <text class="single-line">{{count}}</text>
             </view>
@@ -544,15 +547,15 @@
     <view a:else class="bottom-view">
       <view class="regularButton">
         <navigator class="regularItem" url="/pages/shopping/storeInfo/storeInfo?supplierId={{goods.supplierInfo.supplierId}}" hover-class="none">
-          <view class="regularItemIcon icon-store"></view>
+          <view class="regularItemIcon icon-home_ic_black"></view>
           <view class="regularItemText">店铺</view>
         </navigator>
         <view class="regularItem" catchTap="goToWebCall">
-          <view class="regularItemIcon icon-message1"></view>
+          <view class="regularItemIcon icon-productdetails_message"></view>
           <view class="regularItemText">客服</view>
         </view>
         <navigator class="regularItem" hover-class="none" url="/pages/cart/cart" open-type="switchTab">
-          <view class="regularItemIcon icon-shopCar1">
+          <view class="regularItemIcon icon-productdetails_shoppingcar">
             <view a:if="{{count > 0}}" class="red-count-view ">
               <text class="single-line">{{count}}</text>
             </view>
@@ -583,11 +586,11 @@
     <view class="bottom-view">
       <view class="regularButton" style="justify-content: space-around;">
         <navigator class="regularItem" url="/pages/shopping/storeInfo/storeInfo?supplierId={{goods.supplierInfo.supplierId}}" hover-class="none">
-          <view class="regularItemIcon icon-store"></view>
+          <view class="regularItemIcon icon-home_ic_black"></view>
           <view class="regularItemText">店铺</view>
         </navigator>
         <view class="regularItem" catchTap="goToWebCall">
-          <view class="regularItemIcon icon-message1"></view>
+          <view class="regularItemIcon icon-productdetails_message"></view>
           <view class="regularItemText">客服</view>
         </view>
       </view>
@@ -604,6 +607,7 @@
     </view>
   </block>
 </view>
+
 <!-- 规格选择框                                   已完成新接口字段更换 -->
 <template is="goodsSpec" data="{{show:showGoodsSpec,baseLocImgUrl:base64imageUrl,baseImageUrl,bottom,goodsSpecHeight,goods,user_memId,goodsSecondKill,product,goodsSpecMap,optionalProduct,xgCount,specType,selectedSpecsBar,multiformname,quantity,subtractDisabled,addDisabled,type,showInput:true,SFmember}}"></template>
 <!-- 送礼方式选择弹窗，点击‘确定’之后数量大于2的情况下弹出              已完成新接口字段更换 -->

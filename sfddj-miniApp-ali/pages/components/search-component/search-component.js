@@ -165,7 +165,7 @@ Component({
      */
     chooseWord(event) {
       let that = this;
-      let { type, word } = event.currentTarget.dataset
+      let { type, word, miniapplink } = event.currentTarget.dataset
       this.setData({
         inputVal: '',
         // placeholderVal: '',
@@ -173,7 +173,12 @@ Component({
         smSearchShow: false,
         smartSearchList: [],
       });
-      that.props.pageType == 'showSearchPage' ? that.props.onSelectOrEnter(word, 'noGetHistory') : that.goToSearchPage(word, type);
+      console.log(miniapplink)
+      if( type == 'searcHotWord' && miniapplink ) {
+        that.goToPage(miniapplink);
+      } else {
+        that.props.pageType == 'showSearchPage' ? that.props.onSelectOrEnter(word, 'noGetHistory') : that.goToSearchPage(word, type);
+      }
     },
 
     /**
@@ -243,6 +248,24 @@ Component({
       }
     },
 
+    /**
+    *   热词跳转
+    */
+    goToPage( url){
+      let chInfo = constants.UrlConstants.chInfo;
+      let that = this
+      if ( url.indexOf('http') != -1 ) {
+        my.call('startApp', { appId: '20000067', param: { url: url, chInfo: chInfo } })
+      } else {
+        my.navigateTo({
+          url
+        });
+      }
+    },
+
+    /**
+    *   失去焦点
+    */
     setBlur() {
       // 关闭键盘，有些苹果手机会出现输入搜索去到搜索页返回初始页面时，初始页的键盘没有关闭的问题；
 		  my.hideKeyboard();
