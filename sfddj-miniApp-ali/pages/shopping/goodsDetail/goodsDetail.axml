@@ -111,7 +111,7 @@
       <view class="icon-href-right font-24"></view>
     </view>
   </view>
-  <popup show="{{ isShowPopup }}" mask="{{true}}" position="bottom" animation="{{true}}" onClose="onPopupClose" zIndex="100" disableScroll="{{false}}">
+  <popup show="{{ isShowPopup }}" mask="{{true}}" position="bottom" animation="{{true}}" onClose="onPopupClose" zIndex="1001" disableScroll="{{false}}">
       <view class="coupon-popup">
         <view class="flex_view_col all_100">
           <scroll-view class="flex_1" scroll-y="{{true}}" data-type="coupon" onScrollToLower="lowLoadMore">

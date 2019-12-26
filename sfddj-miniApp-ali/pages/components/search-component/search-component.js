@@ -258,7 +258,7 @@ Component({
         my.call('startApp', { appId: '20000067', param: { url: url, chInfo: chInfo } })
       } else {
         my.navigateTo({
-          url: url
+          url
         });
       }
     },

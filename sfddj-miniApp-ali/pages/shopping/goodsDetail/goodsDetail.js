@@ -236,14 +236,16 @@ Page({
       let resData = res.data.data;
       let retData = res.data.ret;
       let webCallParam = null;
-      if(retData.code == '0' && retData.message == 'SUCCESS') {
+			console.log(res)
+      if( retData.code == '0' && retData.message == 'SUCCESS' && resData ) {
         if(resData.uid) {
           webCallParam = resData.webCallParam+"?uid="+resData.uid+"b"+"&uname="+resData.uname+"&goodsSn="+that.data.goodsSn+"&siteId="+resData.siteId+"&settingId="+resData.settingId+"&mark=sf.365webcall.com";
         } else {
           webCallParam = resData.webCallParam+"?goodsSn="+that.data.goodsSn+"&siteId="+resData.siteId+"&settingId="+resData.settingId+"&mark=sf.365webcall.com";
         }
+				console.log(webCallParam)
         that.setData({
-          webCallParam: webCallParam
+          webCallParam
         })
       }
     }, function(err){
@@ -1733,7 +1735,7 @@ Page({
 					that.auto_send();
         },
         fail(err) {
-          // my.hideLoading();
+          my.hideLoading();
           my.showToast({
             content: '定位失败',
             duration: 2000,
