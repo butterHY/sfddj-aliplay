@@ -64,13 +64,13 @@
                 <block a:for="{{fatherItem.values}}" >
                   <view class="goods-spec-view-normal" a:if="{{item.store == 0}}" style="color: #9b9a9a;background: #f2f2f2;">
                     <view class="flex_view_row align_cen justi_around iavValueItem">
-                      <image class="width-40 iavValueImg" mode="widthFix" a:if="{{item.imgPath}}" src="{{baseImageUrl}}{{item.imgPath}}"/>
+                      <!-- <image class="width-40 iavValueImg" mode="widthFix" a:if="{{item.imgPath}}" src="{{baseImageUrl}}{{item.imgPath}}"/> -->
                       <text class="">{{item.valueName}}</text>
                     </view>
                   </view>
                   <view class="goods-spec-view-normal"  a:else style="{{ item.taped ? 'color: rgb(255, 44, 57);background: #fff7f7; border: 1rpx solid rgb(255, 44, 57)' : 'color:#191616; background: #f2f2f2;'}}" data-fatherindex="{{fatherIndex}}"  data-index="{{index}}" a:key="iakValue" catchTap="specItemTap">
                     <view class="flex_view_row align_cen justi_around iavValueItem">
-                      <image class="width-40 iavValueImg" mode="widthFix" a:if="{{item.imgPath}}" src="{{baseImageUrl}}{{item.imgPath}}"/>
+                      <!-- <image class="width-40 iavValueImg" mode="widthFix" a:if="{{item.imgPath}}" src="{{baseImageUrl}}{{item.imgPath}}"/> -->
                       <text class="">{{item.valueName}}</text>
                     </view>
                   </view>

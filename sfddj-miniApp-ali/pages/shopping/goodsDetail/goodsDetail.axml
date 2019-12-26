@@ -47,7 +47,7 @@
         <image a:if="{{priceInfo.isBaoShui}}" class="priceTagImg" src="{{base64imageUrl}}miniappImg/public/goodsDetail/bg_baoshui.png"></image>
       </block>
       <!-- a:elif="{{goods.memberDayPriceStatus}}" -->
-      <block a:elif="{{goods.memberDayPriceStatus}}">
+      <block a:elif="{{goods.memberDayPriceStatus}}" >
         <image class="priceTagImg" src="{{base64imageUrl}}miniappImg/public/goodsDetail/bg_vip.png"></image>
       </block>
     </view>
@@ -97,7 +97,7 @@
       <view class="color-999 font-26">已售 {{goods.salesCount}} 笔</view>
     </view>
   </view>
-  <view a:if="{{couponDataList && couponDataList.length > 0}}" class="receiveCoupon flex_view_row justi_between font-30 single-line" onTap="showPopup">
+  <view a:if="{{couponDataList && couponDataList.length > 0}}" class="receiveCoupon flex_view_row justi_between font-28 single-line" onTap="showPopup">
     <view class="couponNameBox flex_view_row justi_start single-line">
       <view class="single-line couponNameLine">
         <text a:for="{{couponDataList}}" a:if="{{index == 0 || index == 1 }}" class="couponName color-46 " a:key="*this" style="{{ index == 1 ? 'margin-right: 0' : '' }}">满{{item.needPrice}}减{{item.costPrice}}</text>
@@ -188,7 +188,7 @@
         <view class="color-999">送至</view>
         <view class="marLeft_30  single-line flex_view_row">
           <!-- <image class="addressImag marRight_15" mode="scaleToFill" src="{{base64imageUrl}}miniappImg/icon/icon_detail_address.png"/> -->
-          <text class="icon-locate marRight_10 color-a1a0a0 "></text>
+          <text class="icon-locate marRight_5 color-a1a0a0 "></text>
           <block a:for="{{addressList}}" a:if="{{addressList && addressList.length > 0}}" a:key="*this">
             <view a:if="{{item.isDefault}}" class="single-line color-51">
               {{item.province}}
@@ -220,9 +220,9 @@
         <image class="canceImag" mode="scaleToFill" src="{{base64imageUrl}}miniappImg/icon/icon_closeBtn.png"></image>
       </view>
       <scroll-view a:if="{{addressList && addressList.length > 0}}" scroll-y="{{true}}" class="addressBox font-26 flex-1">
-        <view a:for="{{addressList}}" class="addressMessage posi_re" a:key="*this" data-addressId="{{item.id}}" data-index="{{index}}" onTap="selectAddress">
+        <view a:for="{{addressList}}" class="addressMessage posi_re font-30" a:key="*this" data-addressId="{{item.id}}" data-index="{{index}}" onTap="selectAddress">
           <!-- <image class="addressImag posi_ab marTop_5"  mode="scaleToFill" src="{{base64imageUrl}}miniappImg/icon/{{item.isDefault ? 'icon_address_choose.': 'icon_detail_address.'}}png"/> -->
-          <text class="icon-locate font-26 marRight_15 posi_ab marTop_5" style="{{item.isDefault ? 'color: #ff2e2e' : 'color: #8c8a8a'}}"></text>
+          <text class="icon-locate marRight_10 posi_ab" style="{{item.isDefault ? 'color: #ff2e2e;' : 'color: #8c8a8a;'}} margin-top: 2rpx;"></text>
           <view class="{{item.isDefault ? 'color-ff5353': 'color-black'}} address">
             <text class="marRight_10">{{item.province}}</text>
             <text class="marRight_10">{{item.city}}</text>
@@ -522,9 +522,9 @@
           <view class="regularItemText">客服</view>
         </view>
         <navigator class="regularItem" hover-class="none" url="/pages/cart/cart" open-type="switchTab">
-          <view class="regularItemIcon icon-productdetails_shoppingcar">
+          <view class="regularItemIcon icon-productdetails_shoppingcar cartFont">
             <view a:if="{{count > 0}}" class="red-count-view ">
-              <text class="single-line">{{count}}</text>
+              <text class="single-line font-20">{{count}}</text>
             </view>
           </view>
           <view class="regularItemText">购物车</view>
@@ -552,9 +552,9 @@
           <view class="regularItemText">客服</view>
         </view>
         <navigator class="regularItem" hover-class="none" url="/pages/cart/cart" open-type="switchTab">
-          <view class="regularItemIcon icon-productdetails_shoppingcar">
+          <view class="regularItemIcon icon-productdetails_shoppingcar cartFont">
             <view a:if="{{count > 0}}" class="red-count-view ">
-              <text class="single-line">{{count}}</text>
+              <text class="single-line font-20">{{count}}</text>
             </view>
           </view>
           <view class="regularItemText">购物车</view>
