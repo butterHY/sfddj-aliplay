@@ -82,6 +82,54 @@ Page({
     }, function (res) {
       my.hideLoading();
     });
-  }
+  },
+
+
+  // 评价
+  openComments(e){
+    var that = this;
+    var supplierId = e.currentTarget.dataset.supplierId;
+    var workOrderId = e.currentTarget.dataset.workOrderId;
+    var response = {};
+    response.supplierId = supplierId;
+    response.workOrderId = workOrderId;
+    that.setData({
+      showComments: true,
+      response: response
+    })
+  },
+
+  closeComment(e){
+    var that = this;
+    that.setData({
+      showComments: e
+    })
+  },
+
+  submitEnding(e){
+    var that = this;
+    var result = e;
+    // if(result.)
+    that.setData({
+      showComments: result.showComment,
+      // showToast: true,
+      showToastMes: result.showMes
+    })
+    // 如果是成功则刷新下页面更新状态
+    if(result.success){
+      that.getData();
+    }
+
+    my.showToast({
+      content: result.showMes
+    })
+
+    // setTimeout(function(){
+    //   that.setData({
+    //     showToast: false
+    //   })
+    // },2000)
+
+  },
 
 });

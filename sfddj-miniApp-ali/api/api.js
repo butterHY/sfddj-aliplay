@@ -33,6 +33,7 @@ export default {
 		order_search: '/m/o/1.0/order/mySearch',   //订单列表页搜索
 		order_invoice: '/m/o/1.0/orderInvoice/patch',      //补开电子发票，订单详情
 		afterSale_reason: '/m/o/1.0/order/getShowAfterSalesReason',     //获取售后原因
+		aftersale_comment_save: '/m/o/afterSale/comment/1.0/save',    //售后评价提交
 	},
 
 	COUPON: {
