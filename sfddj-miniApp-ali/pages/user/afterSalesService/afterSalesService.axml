@@ -1,18 +1,14 @@
 <import src="/pages/common/wo-status"/>
-
 <!-- 加载中 -->
 <view a:if="{{!loadComplete && !loadFail}}">
-  <loading-now></loading-now>  
+  <loading-now></loading-now>
 </view>
 <!-- 加载失败 -->
 <view a:elif="{{loadFail && wifiAvailable}}">
   <load-fail></load-fail>
 </view>
 <!-- 没有网络提示这个 -->
-<!-- <view a:elif="{{!wifiAvailable}}">
-  <no-wifi></no-wifi>
-</view> -->
-
+<!--<view a:elif="{{!wifiAvailable}}"><no-wifi></no-wifi></view> -->
 <view a:else>
   <block a:for="{{result}}" a:key="result">
     <view class="order-info-view">
@@ -46,7 +42,8 @@
       </view>
     </navigator>
     <view class="action-button-area">
-      <view class="action-button" data-workid="{{item.workOrderId}}" a:if="{{item.workOrderStatus == 'AFTER_SALES_AUDIT'}}" onTap="cancelApply">取消申请
+      <view a:if='{{item.appraise}}' class='action-button redBtn' data-supplierId='{{item.supplierId}}' data-workOrderId='{{item.workOrderId}}' onTap='openComments'>售后评价</view>
+      <view a:if="{{item.workOrderStatus == 'AFTER_SALES_AUDIT'}}" class="action-button" data-workid="{{item.workOrderId}}" a:if="{{item.workOrderStatus == 'AFTER_SALES_AUDIT'}}" onTap="cancelApply">取消申请
       </view>
       <navigator url="/pages/user/afterSalesService/afterSalesDetail/afterSalesDetail?orderId={{item.orderId}}&workOrderId={{item.workOrderId}}" hover-class="none">
         <view class="action-button">查看申请
@@ -61,6 +58,10 @@
   </view>
   <!--没有更多-->
   <view class="loading_view font-24 color-b1b6bb" a:if="{{!hasMore && !isLoadMore}}">  没有更多了
-
   </view>
+</view>
+
+
+<view a:if='{{showComments}}' catchtouchmove='{{showComments ? "preventTMove" : ""}}'>
+  <aftersales-comment onCloseComment='closeComment' response='{{response}}' onSubmitEnding='submitEnding'></aftersales-comment>
 </view>
