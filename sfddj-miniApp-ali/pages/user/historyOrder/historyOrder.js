@@ -1244,7 +1244,7 @@ Page({
   **/
   goToPage: function(e) {
       let that = this;
-      let { type, url} = e.currentTarget.dataset.url;
+      let { type, url} = e.currentTarget.dataset;
       let chInfo = constants.UrlConstants.chInfo;
 
 			if(type == 'banner'){
