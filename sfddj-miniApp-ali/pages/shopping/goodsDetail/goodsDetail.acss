@@ -39,7 +39,7 @@ page {
 .priceView {
   box-sizing: border-box;
   /* padding: 42rpx 30rpx 28rpx 30rpx; */
-  padding: 0 30rpx 30rpx 30rpx;
+  padding: 0 30rpx 20rpx 30rpx;
 }
 
 
@@ -92,11 +92,11 @@ page {
   height: 26rpx;
   width: 66rpx;
   border-radius: 5rpx;
-  margin: 20rpx 5rpx 0 0;
+  margin: 20rpx 10rpx 0 0;
 } 
 
 .priceTagArea {
-  padding-bottom: 30rpx;
+  padding-bottom: 20rpx;
 }
 
 .defaultPrice {
@@ -126,7 +126,7 @@ page {
 .specifications-view {
   margin: 0 30rpx;
   padding: 30rpx 0;
-  border-bottom: 1rpx solid #e6e6e6;
+  border-bottom: 1rpx solid #f5f5f5;
 }
 
 .addressTips {
@@ -301,54 +301,58 @@ page {
   justify-content: space-between;
   align-items: center;
   box-sizing: border-box;
-  padding: 8rpx;
+  padding: 15rpx 8rpx;
   text-align: center;
   color: rgb(102, 102, 102);
 }
 
 .regularItemIcon {
-  font-size: 40rpx;
-  color: #333333;
+  font-size: 36rpx;
+  color: #666;
   position: relative;
+}
 
+.cartFont {
+  font-size: 38rpx;
 }
 
 .regularItemText {
-  font-size: 24rpx;
+  font-size: 22rpx;
+  color: #666;
 }
 
 .buyOrAddCart {
   width: 408rpx;
   height: 100%;
   box-sizing: border-box;
-  padding: 8rpx 0;
+  padding: 10rpx 0;
   font-size: 28rpx;
-  line-height: 70rpx;
+  line-height: 80rpx;
 }
 
 .buyOrAddCarts {
   height: 100%;
-  border-radius: 35rpx;
+  /* border-radius: 35rpx; */
   display: flex;
   flex-direction: row;
   text-align: center;
 }
 
 .addCart {
-  border-radius: 35rpx 0 0 35rpx;
+  border-radius: 45rpx 0 0 45rpx;
   background: rgb(255, 234, 234);
   color: rgb(255, 46, 46);
-  line-height: 82rpx;
+  line-height: 80rpx;
 }
 
 .toBuyNow{
-  border-radius: 0 35rpx 35rpx 0 ;
+  border-radius: 0 45rpx 45rpx 0 ;
   color: rgb(255, 255, 255);
-  line-height: 82rpx;
+  line-height: 80rpx;
 }
 
-.border-radius35 {
-  border-radius: 35rpx;
+.border-radius45 {
+  border-radius: 45rpx;
 }
 
 .toBuyNowBack {
@@ -1040,15 +1044,15 @@ page {
 .shareButton {
   top: 10rpx;
   right: 0;
-  width: 130rpx;
+  width: 120rpx;
   height: 54rpx;
   background: pink;
   box-sizing: border-box;
-  padding: 14rpx 10rpx 14rpx  20rpx;
+  padding: 10rpx 10rpx 10rpx  20rpx;
   border-radius: 25rpx 0 0 25rpx;
   display: flex;
   justify-content: space-between;
-  line-height: 30rpx;
+  line-height: 36rpx;
   background: #f5f5f5;
   vertical-align: middle;
 }
@@ -1115,7 +1119,7 @@ page {
 
 .couponName {
   display: inline-block;
-  margin-right: 20rpx;
+  /* margin-right: 20rpx; */
 }
 
 .getCouponText {
@@ -1139,7 +1143,8 @@ page {
 
 .goodsName {
   color: #333;
-  line-height: 50rpx;
+  /* line-height: 50rpx; */
+  line-height: 40rpx; 
   vertical-align: middle;
 }
 
@@ -1276,10 +1281,11 @@ page {
   padding: 0;
   border-radius: 10rpx;
   margin: 0 20rpx 20rpx 0;
-  max-width: 710rpx;
+  /* max-width: 710rpx; */
   min-width: 80rpx;
-  display: inline-block;
+  /* display: inline-block; */
   font-size: 24rpx;
+  float: left;
 }
 
 .number-pick-view-text {
@@ -1291,7 +1297,7 @@ page {
 }
 
 .iavValueItem {
-  padding: 10rpx;
+  padding: 10rpx 15rpx;
 }
 
 .goodsSpec {
@@ -1373,6 +1379,12 @@ page {
 .alignMiddle {
    vertical-align: middle;
 }
+
+.opacity8 {
+  opacity: 0.8;
+}
+
+
 
 
 

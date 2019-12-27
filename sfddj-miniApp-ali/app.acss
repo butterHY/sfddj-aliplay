@@ -200,19 +200,19 @@ input {
 }
 
 .marLeft_5 {
-  margin-left: 10rpx;
+  margin-left: 5rpx;
 }
 
 .marRight_5 {
-  margin-right: 10rpx;
+  margin-right: 5rpx;
 }
 
 .marBot_5 {
-  margin-bottom: 10rpx;
+  margin-bottom: 5rpx;
 }
 
 .marTop_5 {
-  margin-top: 10rpx;
+  margin-top: 5rpx;
 }
 
 .marLeft_15 {
@@ -932,7 +932,7 @@ input {
   padding: 5rpx 10rpx;
   border-radius: 2rpx;
   margin-right: 20rpx;
-  max-width: 710rpx;
+  /* max-width: 710rpx; 新商详不用最大宽度*/
   margin-top: 20rpx;
   display: inline-block;
   font-size: 24rpx;
