@@ -97,7 +97,7 @@
       <view class="color-999 font-26">已售 {{goods.salesCount}} 笔</view>
     </view>
   </view>
-  <view a:if="{{couponDataList && couponDataList.length > 0}}" class="receiveCoupon flex_view_row justi_between font-28 single-line" onTap="showPopup">
+  <view a:if="{{couponDataList && couponDataList.length > 0}}" class="receiveCoupon flex_view_row justi_between font-26 single-line" onTap="showPopup">
     <view class="couponNameBox flex_view_row justi_start single-line">
       <view class="single-line couponNameLine">
         <text a:for="{{couponDataList}}" a:if="{{index == 0 || index == 1 }}" class="couponName goodsTag color-46 " a:key="*this" style="{{ index == 1 ? 'margin-right: 0' : '' }}">满{{item.needPrice}}减{{item.costPrice}}</text>
@@ -139,7 +139,7 @@
         </view>
         <text class="goodsName font-30 font-weight-600">{{goods.goodsName}}</text>
       </view>
-      <view a:if="{{ goods.goodsViceVO.labelList && goods.goodsViceVO.labelList.length > 0 }}" class="flex_view_row font-28  justi_start labelList">
+      <view a:if="{{ goods.goodsViceVO.labelList && goods.goodsViceVO.labelList.length > 0 }}" class="flex_view_row font-26  justi_start labelList">
           <view a:for="{{goods.goodsViceVO.labelList}}" a:if="{{index == 0 || index == 1 || index == 2}}"  class="goodsTag color-57">{{item}}</view>
       </view>
     </view>

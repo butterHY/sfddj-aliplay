@@ -1269,7 +1269,7 @@ page {
 }
 
 .goods-spec-iakName {
-  padding-bottom: 18rpx;
+  padding-bottom: 20rpx;
 }
 
 .goods-spec-iakValue {
