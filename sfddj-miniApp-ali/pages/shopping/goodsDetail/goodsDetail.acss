@@ -1274,16 +1274,18 @@ page {
 
 .goods-spec-iakValue {
   padding-bottom: 18rpx;
+  /* width: 100%; */
 }
 
 .goods-spec-view-normal {
-  border: 2rpx transparent solid;
+  border: 1rpx transparent solid;
   padding: 0;
   border-radius: 10rpx;
   margin: 0 20rpx 20rpx 0;
   /* max-width: 710rpx; */
   min-width: 80rpx;
   /* display: inline-block; */
+  box-sizing: border-box;
   font-size: 24rpx;
   float: left;
 }
