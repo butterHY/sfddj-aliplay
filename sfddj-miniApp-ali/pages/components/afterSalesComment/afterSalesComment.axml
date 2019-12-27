@@ -1,6 +1,6 @@
 <view class='mark flex_view_row justi_cen align_cen'>
   <view class='whiteBack posi_re commentCom'>
-    <text class='icon-cross color-b1b6bb font-36 posi_ab tex_cen iconCross' catchtap='closeComment'></text>
+    <text class='icon-cross color-b1b6bb font-36 posi_ab tex_cen iconCross' catchTap='closeComment'></text>
     <!-- 上面五个星 --> 
     <view class='fiveStar marBot_60'>
       <view class='flex_view_row align_cen jusi_between lineH_62'>
