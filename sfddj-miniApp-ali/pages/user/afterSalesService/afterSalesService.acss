@@ -34,6 +34,11 @@ page {
   color: #414141;
   margin-left: 20rpx;
 }
+
+.action-button.redBtn {
+  border: 2rpx solid #ff5353;
+  color: #ff5353;
+}
 /*新加   */
 .createDate {
   margin-top: 26rpx;

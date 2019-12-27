@@ -1,0 +1,71 @@
+<view class='mark flex_view_row justi_cen align_cen'>
+  <view class='whiteBack posi_re commentCom'>
+    <text class='icon-cross color-b1b6bb font-36 posi_ab tex_cen iconCross' catchTap='closeComment'></text>
+    <!-- 上面五个星 --> 
+    <view class='fiveStar marBot_60'>
+      <view class='flex_view_row align_cen jusi_between lineH_62'>
+        <view class=" flex_view_row flex_1">
+          <block a:for="{{typeList}}" a:key="typeList">
+            <view class="marRight_16 lineH_62" catchTap='selectStar' data-index='{{index + 1}}'>
+              <text class="icon-star font-56 lineH_62 {{activeIndex - 1>= index ? 'color-ff4e33' : 'color-ededed'}}"></text>
+            </view>
+          </block>
+        </view>
+
+        <!-- 满意的类型 -->
+        <view>
+          <text class="font- color-a7a6a6">{{typeList[activeIndex - 1]}}</text>
+        </view>
+
+
+        <!-- <view class='flex_1 oneStar {{activeIndex >=1 ? "active" : ""}} flex_view_col justi_cen align_cen' catchtap='selectStar' data-index='1'>
+          <view class='botText active font-24 '>
+            <text>非常不满意</text>
+          </view>
+        </view>
+        <view class='flex_1 oneStar {{activeIndex >=2 ? "active" : ""}} flex_view_col justi_cen align_cen' catchtap='selectStar' data-index='2'>
+          <view class='botText  font-24'>
+            <text>不满意</text>
+          </view>
+        </view>
+        <view class='flex_1 oneStar {{activeIndex >=3 ? "active" : ""}} flex_view_col justi_cen align_cen' catchtap='selectStar' data-index='3'>
+          <view class='botText  font-24'>
+            <text>一般</text>
+          </view>
+        </view>
+        <view class='flex_1 oneStar {{activeIndex >=4 ? "active" : ""}} flex_view_col justi_cen align_cen' catchtap='selectStar' data-index='4'>
+          <view class='botText  font-24'>
+            <text>满意</text>
+          </view>
+        </view>
+        <view class='flex_1 oneStar {{activeIndex >=5 ? "active" : ""}} flex_view_col justi_cen align_cen' catchtap='selectStar' data-index='5'>
+          <view class='botText  font-24'>
+            <text>非常满意</text>
+          </view>
+        </view> -->
+      </view>
+    </view>
+
+
+    <!-- 中间输入的 -->
+    <!-- <view class='padd_30rl marBot_60'>
+      <view>
+        <textarea placeholder='您对本次售后有什么建议吗？' fixed='{{true}}' bindinput='getCommentText' class='textArea posi_re'></textarea>
+      </view>
+    </view> -->
+
+    <!-- 下面多选的原因 -->
+    <view class="flex_view_row align_cen reasonList">
+      <block a:for="{{reasonList[activeIndex-1]}}" a:key="reasonList">
+        <view data-status="{{item.status}}" data-index="{{index}}" class="font-26 the-reason {{item.taped ? 'active' : ''}}" catchTap="reasonTap">{{item.text}}</view>
+
+      </block>
+    </view>
+
+    <!-- 底部按钮 -->
+    <view class="botBtnBox">
+      <view class='width_100 font-30 color-white tex_center botBtn' onTap='submit'>提交</view>
+    </view>
+
+  </view>
+</view>
