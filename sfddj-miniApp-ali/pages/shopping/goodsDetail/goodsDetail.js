@@ -1388,13 +1388,13 @@ Page({
       .select('.js_titleView').boundingClientRect()
       .select('.js_titleText').boundingClientRect()
       .exec((ret) => {
-      if (ret[1].top - ret[0].height <= 0 && that.data.flag ) {
+      if ( ret && ret[1] && ret[0] && ret[1].top - ret[0].height <= 0 && that.data.flag ) {
           that.setData({
             suctionTop: 0,
             flag: false,
             isTitleViewClone: true
           })
-      } else if (ret[1].top - ret[0].height >= 0 && !that.data.flag ) {
+      } else if ( ret && ret[1] && ret[0] && ret[1].top - ret[0].height >= 0 && !that.data.flag ) {
           that.setData({
             suctionTop: 1,
             flag: true,
@@ -1560,8 +1560,8 @@ Page({
               // 如果是 ‘二维规格’，则以不为空的为轴，循环拼接另一个父类的所有子规格，拼成规格组合 combinationIavth，如果为空则被拼接的子规格添加属性 store = 0
               if(!isManyEmpty) {
                 // console.log(combinationIavth.toString())
-                var store =  that.data.allProduct.find( allProductVal => allProductVal.iavPath == combinationIavth.toString() ).store;
-                if( store == 0 || store == '' ) {
+								var chooseVal = that.data.allProduct.find( allProductVal => allProductVal.iavPath == combinationIavth.toString() );
+                if( chooseVal && (chooseVal.store == 0 || chooseVal.store == '') ) {
                   that.data.goodsSpecMap[i].values[j].store = 0
                 }
                 // console.log(that.data.goodsSpecMap);

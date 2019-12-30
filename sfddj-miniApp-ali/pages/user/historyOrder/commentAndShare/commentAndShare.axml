@@ -31,7 +31,7 @@
         <view class="font-22 color-bdbdbd">{{starDesc}}
         </view>
       </view>
-      <textarea class="textarea" placeholder-style="color:#bdbdbd;font-size:22rpx" placeholder="宝贝满足你的期待吗？说说它的优点和美中不足的地方吧" onInput="handleInput">
+      <textarea class="textarea" placeholder-style="color:#bdbdbd;font-size:22rpx" placeholder="宝贝满足你的期待吗？说说它的优点和美中不足的地方吧" onInput="handleInput" maxlength="{{500}}">
       </textarea>
       <view class="imgListFa">
         <view class="imgList" a:for="{{imgList}}" a:key="imgList">

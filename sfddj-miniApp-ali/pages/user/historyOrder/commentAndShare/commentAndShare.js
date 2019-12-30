@@ -94,6 +94,7 @@ Page({
    */
   handleInput: function (event) {
     this.data.goodsDesc = event.detail.value;
+    console.log(this.data.goodsDesc)
   },
 
   /**

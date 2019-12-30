@@ -7,11 +7,11 @@
         <!-- 左边 -->
         <view class="myCoupon_couponLeft flex_view_row align_cen justi_cen ">
           <!--价格部分 -->
-          <view class="myCoupon_couponPrice">
+          <view class="myCoupon_couponPrice single-line">
             <text class="myCouopon_sign">￥</text>
             <text class="myCoupon_num">{{item.costPrice}}</text>
-            <view class="myCoupon_term">
-              <text>满{{item.needPrice}}可用</text></view>
+            <view class="myCoupon_term single-line">
+              满{{item.needPrice}}可用</view>
           </view>
         </view>
         <!-- 中间 -->

@@ -163,6 +163,7 @@
 
 .myCoupon_couponPrice {
   width: 100%;
+  height: 84rpx;
   color: #FFFFFF;
   text-align: center;
   margin-top: -7rpx;
@@ -180,8 +181,10 @@
 }
 
 .myCoupon_term {
+  width: 100%;
   color: rgba(255, 255, 255, 0.6);
-  font-size: 21rpx;
+  font-size: 22rpx;
+  /* height: 22rpx; */
 }
 
 .myCoupon_useType {
