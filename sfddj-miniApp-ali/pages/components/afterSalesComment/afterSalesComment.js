@@ -218,12 +218,25 @@ Component({
   didMount() {
     this.setData({
       response: this.props.response,
-      reasonList: Object.assign([],this.data.stableReasonList)
     })
+
+    this.resetData()
   },
   didUpdate() { },
-  didUnmount() { },
+  didUnmount() {
+    // this.resetData()
+  },
   methods: {
+    // 重置数据
+    resetData() {
+      this.setData({
+        reasonList: JSON.parse(JSON.stringify(this.data.stableReasonList)),
+        selectedList: [],
+        activeIndex: 5
+      })
+
+    
+    },
     selectStar(e) {
       var index = e.currentTarget.dataset.index * 1;
       let selectedList = index == this.data.activeIndex ? this.data.selectedList : []
@@ -257,14 +270,15 @@ Component({
           showMes: '提交成功',
           success: true
         }
+        that.resetData()
         that.props.onSubmitEnding(result);
       }, err => {
-        console.log(';;;;---',err)
         let result = {
           showComment: false,
           showMes: err ? err : '提交失败',
           success: false
         }
+        that.resetData()
         that.props.onSubmitEnding(result);
       })
 
@@ -278,6 +292,7 @@ Component({
     },
     closeComment() {
       var showComments = false;
+      this.resetData()
       this.props.onCloseComment(showComments);
     },
 
