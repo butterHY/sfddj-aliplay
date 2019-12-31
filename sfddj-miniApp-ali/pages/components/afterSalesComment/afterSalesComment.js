@@ -110,15 +110,115 @@ Component({
       }]
     ], //售后评价列表
     selectedList: [], //已选中的售后评价列表
+
+    stableReasonList: [
+      [{
+        text: '售后申请不便',
+        statusCode: 1001,
+        status: 'APPLY_BOTHER_NOT_CONVENIENT'
+      }, {
+        text: '处理时间过长',
+        statusCode: 1002,
+        status: 'DISPOSE_TIME_LONG'
+      }, {
+        text: '结果不满意',
+        statusCode: 1003,
+        status: 'RESULT_BAD'
+      }, {
+        text: '关闭售后不合理',
+        statusCode: 1004,
+        status: 'CLOSE_AFTER_SALE_UNREASONABLE'
+      }, {
+        text: '电话联系超过3次',
+        statusCode: 1005,
+        status: 'PHONE_CONNECTION_THREE'
+      }, {
+        text: '服务态度差',
+        statusCode: 1006,
+        status: 'SERVICE_ATTITUDE_BAD'
+      }],
+      [{
+        text: '售后申请不便',
+        statusCode: 1001,
+        status: 'APPLY_BOTHER_NOT_CONVENIENT'
+      }, {
+        text: '处理时间过长',
+        statusCode: 1002,
+        status: 'DISPOSE_TIME_LONG'
+      }, {
+        text: '结果不满意',
+        statusCode: 1003,
+        status: 'RESULT_BAD'
+      }, {
+        text: '关闭售后不合理',
+        statusCode: 1004,
+        status: 'CLOSE_AFTER_SALE_UNREASONABLE'
+      }, {
+        text: '电话联系超过3次',
+        statusCode: 1005,
+        status: 'PHONE_CONNECTION_THREE'
+      }, {
+        text: '服务态度差',
+        statusCode: 1006,
+        status: 'SERVICE_ATTITUDE_BAD'
+      }],
+      [{
+        text: '售后申请不便',
+        statusCode: 1001,
+        status: 'APPLY_BOTHER_NOT_CONVENIENT'
+      }, {
+        text: '处理时间过长',
+        statusCode: 1002,
+        status: 'DISPOSE_TIME_LONG'
+      }, {
+        text: '电话联系超过3次',
+        statusCode: 1005,
+        status: 'PHONE_CONNECTION_THREE'
+      }],
+      [{
+        text: '处理结果满意',
+        statusCode: 2001,
+        status: 'PROCESS_RESULT_GOOD'
+      }, {
+        text: '态度好服务棒',
+        statusCode: 2002,
+        status: 'SERVICE_ATTITUDE_GOOD'
+      }, {
+        text: '申请售后界面便捷',
+        statusCode: 2003,
+        status: 'APPLY_BOTHER_CONVENIENT'
+      }, {
+        text: '处理时间快',
+        statusCode: 2004,
+        status: 'PROCESS_TIME_QUICK'
+      }],
+      [{
+        text: '处理结果满意',
+        statusCode: 2001,
+        status: 'PROCESS_RESULT_GOOD'
+      }, {
+        text: '态度好服务棒',
+        statusCode: 2002,
+        status: 'SERVICE_ATTITUDE_GOOD'
+      }, {
+        text: '申请售后界面便捷',
+        statusCode: 2003,
+        status: 'APPLY_BOTHER_CONVENIENT'
+      }, {
+        text: '处理时间快',
+        statusCode: 2004,
+        status: 'PROCESS_TIME_QUICK'
+      }]
+    ], //保存售后评价列表
   },
   props: {
     showComments: true,
     response: {},
   },
   didMount() {
-    console.log(';;;;----',this.props)
     this.setData({
-      response: this.props.response
+      response: this.props.response,
+      reasonList: Object.assign([],this.data.stableReasonList)
     })
   },
   didUpdate() { },
