@@ -1503,10 +1503,14 @@ Page({
            values.forEach(function(val) {
              combinationIavth[index] = val.valueId + '';
              var iavthString = combinationIavth.toString();
-             var store =  that.data.allProduct.find(allProductVal => allProductVal.iavPath == iavthString).store;
-             if(store == 0 || store == '') {
-               val.store = 0;
-             }
+            //  var store =  that.data.allProduct.find(allProductVal => allProductVal.iavPath == iavthString).store;
+            //  if(store == 0 || store == '') {
+            //    val.store = 0;
+            //  }
+						 var chooseVal = that.data.allProduct.find(allProductVal => allProductVal.iavPath == iavthString);
+						 if( !chooseVal || (chooseVal && (chooseVal.store == 0 || chooseVal.store == '')) ) {
+							 val.store = 0;
+						 }
            })
          }
         })
@@ -1561,7 +1565,9 @@ Page({
               if(!isManyEmpty) {
                 // console.log(combinationIavth.toString())
 								var chooseVal = that.data.allProduct.find( allProductVal => allProductVal.iavPath == combinationIavth.toString() );
-                if( chooseVal && (chooseVal.store == 0 || chooseVal.store == '') ) {
+								console.log(chooseVal)
+								// chooseVal && (chooseVal.store == 0 || chooseVal.store == '')
+                if( (chooseVal && (chooseVal.store == 0 || chooseVal.store == '')) || (!chooseVal) ) {
                   that.data.goodsSpecMap[i].values[j].store = 0
                 }
                 // console.log(that.data.goodsSpecMap);
@@ -1605,8 +1611,11 @@ Page({
     // console.log(addFatherIavth);
     var isHaveStore = false;
     addFatherIavth.forEach(function(value) {
-			let store = that.data.allProduct.find(val => val.iavPath == value).store;
-      store != 0 && store != '' ? isHaveStore = true : '';
+			let chooseVal = that.data.allProduct.find(val => val.iavPath == value);
+			chooseVal && chooseVal.store != 0 && chooseVal.store != '' ? isHaveStore = true : '';
+
+			// let store = that.data.allProduct.find(val => val.iavPath == value).store;
+      // store != 0 && store != '' ? isHaveStore = true : '';
     })
     return isHaveStore;
   },
