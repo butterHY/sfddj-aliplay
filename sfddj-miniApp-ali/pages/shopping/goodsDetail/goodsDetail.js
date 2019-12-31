@@ -363,7 +363,7 @@ Page({
                 that.data.goodsSpecMap.forEach(values => {
                   values.values.forEach(value => {
                     let matching = that.data.allProduct.find(val => value.valueId == parseInt(val.iavPath));
-                    matching && matching.store == 0 ? value.store = 0 : '';
+                    ( matching && (matching.store == 0 || matching.store == '') ) || !matching ? value.store = 0 : '';
 										matching && !matching.imgPath ? matching.imgPath = that.data.goods.goodsImages[0] : '';
                     matching && matching.imgPath ? value.imgPath = matching.imgPath : value.imgPath = that.data.goods.goodsImages[0];
                   })
