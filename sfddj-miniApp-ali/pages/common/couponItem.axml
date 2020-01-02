@@ -9,9 +9,9 @@
           <!--价格部分 -->
           <view class="myCoupon_couponPrice single-line">
             <text class="myCouopon_sign">￥</text>
-            <text class="myCoupon_num">{{item.costPrice}}</text>
+            <text class="myCoupon_num">{{item.costPrice}}{{item.costPrice}}{{item.costPrice}}</text>
             <view class="myCoupon_term single-line">
-              满{{item.needPrice}}可用</view>
+              满{{item.needPrice}}可用 满{{item.needPrice}}可用 满{{item.needPrice}}可用</view>
           </view>
         </view>
         <!-- 中间 -->
