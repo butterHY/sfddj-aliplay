@@ -431,10 +431,10 @@
             <view data-url="/pages/shopping/goodsDetail/goodsDetail?goodsSn={{item.goodsSn}}" data-index="{{index}}" data-type="goods" open-type="redirect" hover-class="none" class="posi_re {{isLoaded ? '' : 'js_goodsList_' + index}}" onTap="goToPage">
               <image a:if="{{item.goodsDefaultImage}}" src="{{baseImageUrl}}{{item.goodsDefaultImage}}" class="guessLikeImg"></image>
               <!-- 小图标 全赔 -->
-              <image a:if="{{filters.strIndexOf(item.afterSaleGuee,'1')}}" src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff1.png" class=" posi_ab" style="width: 50rpx; height: 50rpx; top:10rpx; right: 10rpx;"></image>
-              <image a:elif="{{filters.strIndexOf(item.afterSaleGuee,'2')}}" src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff2.png" class=" posi_ab" style="width: 50rpx; height: 50rpx; top:10rpx; right: 10rpx;"></image>
-              <image a:elif="{{filters.strIndexOf(item.afterSaleGuee,'3')}}" src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff3.png" class=" posi_ab" style="width: 50rpx; height: 50rpx; top:10rpx; right: 10rpx;"></image>
-              <image a:elif="{{filters.strIndexOf(item.afterSaleGuee,'4')}}" src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff4.png?version=2.0" class=" posi_ab" style="width: 50rpx; height: 50rpx; top:10rpx; right: 10rpx;"></image>
+              <image a:if="{{filters.strIndexOf(item.afterSaleGuee,'1')}}" src="{{base64imageUrl}}miniappImg/icon/icon_Payoff1.png" class=" posi_ab" style="width: 50rpx; height: 50rpx; top:10rpx; right: 10rpx;"></image>
+              <image a:elif="{{filters.strIndexOf(item.afterSaleGuee,'2')}}" src="{{base64imageUrl}}miniappImg/icon/icon_Payoff2.png" class=" posi_ab" style="width: 50rpx; height: 50rpx; top:10rpx; right: 10rpx;"></image>
+              <image a:elif="{{filters.strIndexOf(item.afterSaleGuee,'3')}}" src="{{base64imageUrl}}miniappImg/icon/icon_Payoff3.png" class=" posi_ab" style="width: 50rpx; height: 50rpx; top:10rpx; right: 10rpx;"></image>
+              <image a:elif="{{filters.strIndexOf(item.afterSaleGuee,'4')}}" src="{{base64imageUrl}}miniappImg/icon/icon_Payoff4.png?version=2.0" class=" posi_ab" style="width: 50rpx; height: 50rpx; top:10rpx; right: 10rpx;"></image>
               <view class="guessLikeGoodsName">
                 <view a:if="{{item.name}}" class="name single-line">{{item.name}}</view>
                 <view a:if="{{item.goodsName && !name}}" class="name single-line">{{item.goodsName}}</view>
