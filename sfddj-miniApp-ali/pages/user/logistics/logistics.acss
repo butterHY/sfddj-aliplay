@@ -125,7 +125,7 @@
 }
 
 .logisticsTime {
-  width: 136rpx;
+  width: 140rpx;
   display: flex;
   align-items: center;
   /* justify-content: center; */
@@ -189,7 +189,7 @@
 
 .splicingLine {
   height: 38rpx;
-  padding: 0 136rpx;
+  padding-left: 140rpx;
 }
 
 

@@ -137,14 +137,14 @@
 						</view>
 						<view class="orderList_botView font-30 color-a1a0a0" a:if="{{item.orderStatus == 2}}">
 							<view class="flex_view_row">
-								<navigator url="/pages/user/logistics/logistics?orderId={{item.orderId}}&goodsImg={{item.goodsImg}}" class="orderListBtn mindSend_text" open-type="{{needRedirect ? 'redirect' : 'navigate'}}" hover-class="none" a:if="{{item.orderType != 'GIFT' && item.orderType != 'MULTIGIFT'}}">查看物流
+								<navigator url="/pages/user/logistics/logistics?orderId={{item.orderSn}}&goodsImg={{item.goodsImg}}" class="orderListBtn mindSend_text" open-type="{{needRedirect ? 'redirect' : 'navigate'}}" hover-class="none" a:if="{{item.orderType != 'GIFT' && item.orderType != 'MULTIGIFT'}}">查看物流
 								</navigator>
 								<view class="color-ff5353 orderListBtn checkDeli_btnRed marLeft_30" data-index="{{index}}" data-order-id="{{item.orderId}}" onTap="orderReceive">                      确认收货
 								</view>
 							</view>
 						</view>
 						<view class="orderList_botView font-30 color-a1a0a0" a:if="{{item.orderStatus == 3 || item.orderStatus == 4 || item.orderStatus == 6}}">
-							<navigator url="/pages/user/logistics/logistics?orderId={{item.orderId}}&goodsImg={{item.goodsImg}}" class="orderListBtn mindSend_text" open-type="{{needRedirect ? 'redirect' : 'navigate'}}" hover-class="none" a:if="{{item.orderStatus != 4 && item.orderStatus != 5 && item.orderType != 'GIFT' && item.orderType != 'MULTIGIFT'}}">                        查看物流
+							<navigator url="/pages/user/logistics/logistics?orderId={{item.orderSn}}&goodsImg={{item.goodsImg}}" class="orderListBtn mindSend_text" open-type="{{needRedirect ? 'redirect' : 'navigate'}}" hover-class="none" a:if="{{item.orderStatus != 4 && item.orderStatus != 5 && item.orderType != 'GIFT' && item.orderType != 'MULTIGIFT'}}">                        查看物流
 							</navigator>
 							<view class="orderListBtn mindSend_text marLeft_10" data-order-id="{{item.orderId}}" onTap="deleteOrder">删除订单
 							</view>
@@ -223,14 +223,14 @@
 						</view>
 						<view a:if="{{item.orderStatus == 'SHIPPED'}}"class='orderList_botView font-30 color-a1a0a0'>
 							<view class='flex_view_row'>
-								<navigator a:if="{{item.giftOrderShowType !='1' && item.giftOrderShowType !='2'}}" url='/pages/user/logistics/logistics?orderId={{item.id}}&goodsImg={{item.orderItemVOList[0].goodsImage}}' class='orderListBtn mindSend_text' open-type="{{needRedirect?'redirect':'navigate'}}" hover-class='none'>查看物流</navigator>
+								<navigator a:if="{{item.giftOrderShowType !='1' && item.giftOrderShowType !='2'}}" url='/pages/user/logistics/logistics?orderId={{item.orderSn}}&goodsImg={{item.orderItemVOList[0].goodsImage}}' class='orderListBtn mindSend_text' open-type="{{needRedirect?'redirect':'navigate'}}" hover-class='none'>查看物流</navigator>
 								<view class='color-ff5353 orderListBtn checkDeli_btnRed marLeft_30' onTap='orderReceive' data-index='{{index}}' data-order-id='{{item.id}}'>
                   确认收货
 								</view>
 							</view>
 						</view>
 						<view a:if="{{item.orderStatus == 'FINISHED' || item.orderStatus == 'CANCEL' ||item.orderStatus == 'CLOSEED'}}" class='orderList_botView font-30 color-a1a0a0'>
-							<navigator a:if="{{(item.orderStatus != 'CANCEL' && item.orderStatus != 'OVERTIME') && (item.giftOrderShowType !='1' && item.giftOrderShowType !='2')}}" url='/pages/user/logistics/logistics?orderId={{item.id}}&goodsImg={{item.orderItemVOList[0].goodsImage}}' class='orderListBtn mindSend_text' open-type="{{needRedirect?'redirect':'navigate'}}" hover-class='none'>
+							<navigator a:if="{{(item.orderStatus != 'CANCEL' && item.orderStatus != 'OVERTIME') && (item.giftOrderShowType !='1' && item.giftOrderShowType !='2')}}" url='/pages/user/logistics/logistics?orderId={{item.orderSn}}&goodsImg={{item.orderItemVOList[0].goodsImage}}' class='orderListBtn mindSend_text' open-type="{{needRedirect?'redirect':'navigate'}}" hover-class='none'>
                 查看物流
 							</navigator>
 							<view onTap='deleteOrder' class='orderListBtn mindSend_text marLeft_10' data-order-id='{{item.id}}'>删除订单</view>

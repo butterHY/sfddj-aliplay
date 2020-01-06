@@ -30,7 +30,8 @@
 
 <view class="logisticsBox"> 
   <block  a:for="{{logisticsDada}}" a:for-item="fatherItem" a:for-index="fatherIndex" a:key="fatherIndex">
-    <view class="logisticsOrder js_logisticsOrder{{fatherIndex}}" animation='{{fatherItem.move}}' >
+   <!-- animation='{{fatherItem.move}}' -->
+    <view class="logisticsOrder js_logisticsOrder{{fatherIndex}}" style="{{ !fatherItem.isCheckMore ? 'height: 296rpx;overflow: hidden' : '' }}">
       <view class="title">
         <view class="flex_view_row align_cen">
           <image class="heardImg marRight_20" src="{{baseImgLocUrl}}/miniappImg/public/logisticsDetails/tip_point.png"></image>
