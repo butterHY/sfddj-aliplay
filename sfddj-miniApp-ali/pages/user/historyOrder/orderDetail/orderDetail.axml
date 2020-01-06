@@ -33,7 +33,7 @@
 	<navigator url open-type="{{needRedirect ? 'redirect' : 'navigate'}}" class="navExpress" hover-class="none" a:if="{{(order.orderType == 'GIFT' || order.orderType == 'MULTIGIFT') && expressInfo}}">
 		<image class="navCarIcon" src="{{baseImgLocUrl}}miniappImg/icon/icon_car2.png"></image>
 		<view class="navMidCon">
-			<view class="font-26 color-ff5353">已发货包裹：1件</view>
+			<view class="font-26 color-ff5353">已发货包裹：{{result.waybillCount}}件</view>
 			<view class="navMidCon_context font-26 color-b3b3b3">{{expressInfo.context}}</view>
 			<view class="navMidCon_time font-24 color-b3b3b3">{{expressInfo.time}}</view>
 		</view>
@@ -43,7 +43,7 @@
 	<navigator url="/pages/user/logistics/logistics?orderId={{order.orderSn}}&goodsImg={{order.orderItemList[0].goodsImage}}" open-type="{{needRedirect ? 'redirect' : 'navigate'}}" class="navExpress" hover-class="none" a:elif="{{expressInfo}}">
 		<image class="navCarIcon" src="{{baseImgLocUrl}}miniappImg/icon/icon_car2.png"></image>
 		<view class="navMidCon">
-			<view class="font-26 color-ff5353">已发货包裹：1件</view>
+			<view class="font-26 color-ff5353">已发货包裹：{{result.waybillCount}}件</view>
 			<view class="navMidCon_context font-26 color-b3b3b3">{{expressInfo.context}}</view>
 			<view class="navMidCon_time font-24 color-b3b3b3">{{expressInfo.time}}</view>
 		</view>
