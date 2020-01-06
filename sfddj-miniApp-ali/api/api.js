@@ -72,7 +72,13 @@ export default {
 		'SUPPLIERSEARCH': '/m/c/1.0/opensearch/supplierSearch',										// 根据关键字分页搜索店铺接口
 		'SEARCHTEXTMAX': '/m/g/1.0/search/searchTextMax',													//  搜索隐藏文字
 		'SEARCHHOTWORD': '/m/g/1.0/search/hotWordList'														//  热门搜索关键字'
-	}
+	},
+
+	// 物流详情
+  LOGISTICS: {
+    'GETEXPRESS': '/m/c/1.0/express/getExpress',
+    'lISTGOODSBYNAME': '/m/g//1.0/group/listGoodsByName',												// 新的物流详情猜你喜欢接口                                         
+  }
 
 
 }

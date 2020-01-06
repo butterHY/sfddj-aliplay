@@ -1,4 +1,5 @@
-<!--查看物流页面--><view class="logisHead">
+<!--查看物流页面-->
+<!-- <view class="logisHead">
   <image class="goodsImg" src="{{baseImageUrl}}{{goodsImg}}"></image>
   <view class="logisHeadCon">
     <view class="font-26 color-323232">物流状态:
@@ -7,9 +8,9 @@
     <view class="font-24 color-838383">运单编号：{{deliveryNo}}</view>
     <view class="font-24 color-838383">官方号码：95338</view>
   </view>
-</view>
+</view> -->
 <!--物流详情-->
-<view class="logisDet">
+<!-- <view class="logisDet">
   <view class="expressDetail" a:for="{{expressDetail}}" a:key="expressDetailP">
     <view class="expressDetailTop">
       <view class="expressDetailLineT" a:if="{{index == 0}}"></view>
@@ -25,4 +26,78 @@
       <view class="marTop_20 font-24 color-838383">{{item.time}}</view>
     </view>
   </view>
+</view> -->
+
+<view class="logisticsBox"> 
+  <block  a:for="{{logisticsDada}}" a:for-item="fatherItem" a:for-index="fatherIndex" a:key="fatherIndex">
+    <view class="logisticsOrder js_logisticsOrder{{fatherIndex}}" animation='{{fatherItem.move}}' >
+      <view class="title">
+        <view class="flex_view_row align_cen">
+          <image class="heardImg marRight_20" src="{{baseImgLocUrl}}/miniappImg/public/logisticsDetails/tip_point.png"></image>
+          顺丰速运
+        </view>
+        <text>{{fatherItem.waybillNo}}</text>
+      </view> 
+      <view class="logisticsDetail">物流详情</view>
+      <view a:for="{{fatherItem.list}}" a:for-item="childrenItem" a:key="index" class="js_expressDetail{{fatherIndex}}">
+        <view class="logisticsDynamic">
+          <view class="logisticsTime font-24">
+            <view class="tex_center">
+              <view class="dayTime">{{childrenItem.dayTime}}</view>
+              <view class="minuteTime color-999999">{{childrenItem.hoursTime}}</view>
+            </view>
+          </view>
+          <view class="logisticsMessage font-28">
+            <view class="tipRound">
+              <view class="{{ index == 0 ? 'firstLine' : '' }} line"></view>
+              <view class="redPointBox">
+                <view class="icon-dian {{ index == 0 ? 'firstPoint' : '' }}"></view>
+              </view>
+            </view>
+            <view class="flex_1 posi_re">
+              {{childrenItem.remark}}
+            </view>
+          </view>
+        </view>
+        <view class="splicingLine" a:if="{{index != expressDetail.length - 1 }}">
+          <view class="tipRound">
+            <view class="line"></view>
+          </view>
+        </view>
+      </view>
+    </view>  
+    <view class="checkMore font-28" data-num="{{fatherIndex}}" catchTap="checkMore">
+      <text class="{{ fatherItem.isCheckMore ? 'icon-chevron-up' : 'icon-chevron-down' }} checkMoreIcon"></text>
+      点击查看更多物流详情
+    </view>
+  </block>
+
+  <!-- 猜你喜欢                                  已完成新接口字段更换 -->
+  <block a:if="{{ guessLikeGoods && guessLikeGoods.length > 0}}">
+    <view class="js_guessLike">
+      <view class="item-header-title-view font-30">猜你喜欢</view>
+      <view class="padding_30">
+        <scroll-view scroll-x="{{true}}" scroll-with-animation="{{true}}" onScrollToLower="lowLoadMore" class="goods-scrollx-view guessLikeBox" >
+          <block a:for="{{guessLikeGoods}}" a:key="index">
+            <view class="guessLikeList" style="display:inline-block;padding: 0 10rpx">
+              <navigator url="/pages/shopping/goodsDetail/goodsDetail?goodsSn={{item.goodsSn}}" data-index="{{index}}" open-type="redirect" hover-class="none" class="posi_re {{isLoaded ? '' : 'js_goodsList_' + index}}" onTap="goToPage">
+                <image a:if="{{item.goodsDefaultImage}}" src="{{baseImageUrl}}{{item.goodsDefaultImage}}" class="guessLikeImg"></image>
+                <!-- 小图标 全赔 -->
+                <image a:if="{{filters.strIndexOf(item.afterSaleGuee,'1')}}" src="{{baseImgLocUrl}}miniappImg/icon/icon_Payoff1.png" class=" posi_ab" style="width: 50rpx; height: 50rpx; top:10rpx; right: 10rpx;"></image>
+                <image a:elif="{{filters.strIndexOf(item.afterSaleGuee,'2')}}" src="{{baseImgLocUrl}}miniappImg/icon/icon_Payoff2.png" class=" posi_ab" style="width: 50rpx; height: 50rpx; top:10rpx; right: 10rpx;"></image>
+                <image a:elif="{{filters.strIndexOf(item.afterSaleGuee,'3')}}" src="{{baseImgLocUrl}}miniappImg/icon/icon_Payoff3.png" class=" posi_ab" style="width: 50rpx; height: 50rpx; top:10rpx; right: 10rpx;"></image>
+                <image a:elif="{{filters.strIndexOf(item.afterSaleGuee,'4')}}" src="{{baseImgLocUrl}}miniappImg/icon/icon_Payoff4.png?version=2.0" class=" posi_ab" style="width: 50rpx; height: 50rpx; top:10rpx; right: 10rpx;"></image>
+                <view class="guessLikeGoodsName">
+                  <view a:if="{{item.name}}" class="name single-line">{{item.name}}</view>
+                  <view a:if="{{item.goodsName && !name}}" class="name single-line">{{item.goodsName}}</view>
+                  <view class="productName single-line">{{item.productName}}</view>
+                </view>
+                <view class="guessLikeprice single-line">￥{{item.salePrice}}</view>
+              </navigator>
+            </view>
+          </block>
+        </scroll-view>
+      </view>
+    </view>
+  </block>
 </view>

@@ -84,3 +84,273 @@
   box-sizing: border-box;
   flex: 1;
 }
+
+
+
+/* 新物流详情页样式 */
+.logisticsBox {
+  position: relative;
+}
+
+.logisticsOrder {
+  background: #fff;
+  box-sizing: border-box;
+  padding: 0 30rpx;
+  margin-top: 20rpx; 
+  overflow: hidden;
+  width: 100%;
+  height: 296rpx;
+}
+
+
+.title {
+  height: 110rpx;
+  border-bottom: 1rpx solid #e6e6e6;
+  font-size: 36rpx;
+  font-weight: 600;
+  line-height: 110rpx;
+  display: flex;
+  justify-content: space-between;
+}
+
+.logisticsDetail {
+  height: 105rpx;
+  font-size: 28rpx; 
+  color: #999999;
+  line-height: 105rpx;
+}
+
+.logisticsDynamic {
+  display: flex;
+}
+
+.logisticsTime {
+  width: 136rpx;
+  display: flex;
+  align-items: center;
+  /* justify-content: center; */
+}
+
+.dayTime {
+  line-height: 24rpx;
+  box-sizing: border-box;
+  padding-bottom: 8rpx; 
+}
+
+.minuteTime {
+  line-height: 24rpx;
+}
+
+.tipRound {
+  height: 100%;
+  width: 74rpx;
+  text-align: center;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.logisticsMessage {
+  /* min-height: 56rpx; */
+  line-height: 40rpx;
+  flex: 1;
+  display: flex;
+  align-items: center;
+
+}
+
+.line {
+  width: 2rpx;
+  height: 100%;
+  background: #ebebeb;
+  position: absolute;
+  left: 49%;
+  top: 0;
+}
+
+ .firstLine {
+   height: 50%;
+   top: 50%;
+ }
+
+
+.redPointBox {
+  position: absolute;
+  color: #b9b9b9;
+  font-size: 24rpx;
+}
+
+.firstPoint {
+  color: #ff2e2e;
+  font-size: 32rpx;
+}
+
+.splicingLine {
+  height: 38rpx;
+  padding: 0 136rpx;
+}
+
+
+
+.checkMore {
+  height: 120rpx;
+  box-sizing: border-box;
+  line-height: 120rpx;
+  padding: 44rpx 30rpx 50rx 30rpx;
+  color: #989898;
+  text-align: center;
+  background: #fff; 
+}
+
+.checkMoreIcon {
+  margin-right: 18rpx;
+  font-weight: 600;
+}
+
+/* 猜你喜欢样式 */
+
+.guessLike {
+  box-sizing: border-box;
+  padding: 0 30rpx;
+  background: #fff;
+  margin-top: 20rpx;
+  margin-bottom: 100rpx;
+}
+
+.guessLikeItem {
+  float: left;
+  width: 50%;
+  height: 534rpx;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1rpx solid #e6e6e6;
+}
+
+.guessLikeImg {
+  width: 100%;
+  height: 335rpx;
+  background: skyblue;
+}
+
+.guessLikeMessage {
+  flex: 1;
+  box-sizing: border-box;
+  padding: 30rpx 20rpx;
+
+}
+
+.guessLikeName {
+  font-size: 32rpx;
+  line-height: 32rpx;
+}
+
+.guessLikeTitle {
+  margin-top: 20rpx;
+  font-size: 26rpx;
+  line-height: 26rpx;
+}
+
+.guessLikePrice {
+  margin-top: 30rpx;
+  font-size: 32rpx;
+  line-height: 32rpx;
+  display: flex;
+  justify-content: space-between;
+}
+
+.unitPrice {
+    color: #ff2e2e;
+}
+
+.price {
+  font-size: 32rpx;
+}
+
+.sompany {
+  color: #999999;
+}
+
+.addCart {
+  width: 36rpx;
+  height: 32rpx;
+}
+
+
+/* 新猜你喜欢样式 */
+
+.item-header-title-view {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  padding: 30rpx;
+  margin-top: 20rpx;
+  border-bottom: 1rpx solid #e6e6e6;
+  background: #fff;
+}
+
+.goods-scrollx-view {
+  font-size: 26rpx;
+  white-space: nowrap;
+  background-color: white;
+  overflow: auto;
+  width: 690rpx;
+}
+
+.padding_30 {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 30rpx 50rpx 30rpx;
+  background: #fff;
+}
+
+.guessLikeBox {
+  padding: 20rpx 0;
+  /* margin-bottom: 50rpx; */
+}
+
+.guessLikeList {
+  width: 228rpx;
+}
+
+.guessLikeGoodsName {
+  height: 74rpx;
+  margin-top: 10rpx;
+}
+
+.guessLikeImg {
+  width: 228rpx;
+  height: 228rpx;
+  display: block;
+}
+
+.guessLikeGoodsName .name {
+  font-size: 30rpx;
+  line-height: 36rpx;
+  font-weight: 500;
+}
+
+.guessLikeGoodsName .productName {
+  margin-top: 8rpx;
+  font-size: 22rpx;
+  line-height: 24rpx;
+  color: #b3b3b3;
+}
+
+
+.guessLikeprice {
+  margin-top: 6rpx;
+  color: #ff5353;
+  font-weight: 600;
+  font-size: 30rpx;
+  line-height: 30rpx;
+}
+
+
+
+.heardImg {
+  width: 50rpx;
+  height: 50rpx;
+}
