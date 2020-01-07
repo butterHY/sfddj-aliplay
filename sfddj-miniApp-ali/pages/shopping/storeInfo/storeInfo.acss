@@ -1,6 +1,7 @@
-.height_100v {
-  height: 100vh;
-  overflow: hidden;
+@import '../../css-public/itemGoodsCard.acss';
+
+page {
+  background: #f5f5f5;
 }
 
 .info-area {
@@ -72,16 +73,15 @@
 
 .bottom-view {
   width: 100%;
-  height: 90rpx;
-  padding-top: 14rpx;
-  padding-bottom: 16rpx;
+  height: 110rpx;
   background: white;
   position: fixed;
   bottom: 0;
   display: flex;
   flex-direction: row;
   align-items: center;
-  border-top: #e6e6e6 2rpx solid;
+  border-top: #f5f5f5 1rpx solid;
+  box-sizing: border-box;
 }
 
 .bottom-view-button {
@@ -95,7 +95,7 @@
   justify-content: center;
 }
 
-/*头部   */
+/*头部  */
 
 .storeInfo_bg {
   width: 750rpx;
@@ -116,7 +116,7 @@
   height: 30rpx;
 }
 
-/*企业执照   */
+/*企业执照  */
 
 .storeLicense {
   width: 25rpx;
@@ -124,7 +124,7 @@
   margin-right: 10rpx;
 }
 
-/*行业执照   */
+/*行业执照  */
 
 .industryLicense {
   width: 24rpx;
@@ -138,7 +138,7 @@
   margin-right: 10rpx;
 }
 
-/*商家商品   */
+/*商家商品  */
 
 .store_pro {
   display: flex;
@@ -150,8 +150,425 @@
   box-sizing: border-box;
 }
 
-/*底下相当于padding的高度   */
+/*底下相当于padding的高度  */
 
 .padHeight {
-  height: 120rpx;
+  height: 110rpx;
+}
+
+.color_ff2e2e {
+  color: #ff2e2e;
+}
+
+.color_191616 {
+  color: #191616;
+}
+
+/* 新增的底部四图标，选中状态的 */
+
+.icon-store_home_active {
+  width: 47rpx;
+  height: 44rpx;
+}
+
+.icon-store_product_active {
+  width: 42rpx;
+  height: 44rpx;
+}
+
+.icon-store_classify_active {
+  width: 44rpx;
+  height: 44rpx;
+}
+
+.icon-store_service_active {
+  width: 46rpx;
+  height: 44rpx;
+}
+
+.tabText {
+  margin-top: 8rpx;
+  line-height: 28rpx;
+}
+
+/* 新版 */
+
+.backShadow {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.storeHeadInfo {
+  width: 100%;
+  height: 232rpx;
+  background: url('https://img.sfddj.com/miniappImg/store/store_normalHead.jpg') no-repeat;
+  background-size: 100% 100%;
+}
+
+.storeSortBox {
+  width: 100%;
+  height: 90rpx;
+  background: url('https://img.sfddj.com/miniappImg/store/store_sortBg.jpg') no-repeat;
+  background-size: 100% 100%;
+}
+
+.storeSortFix {
+  left: 0;
+  top: 0;
+}
+
+.home_searchBox {
+  height: 80rpx;
+  /* padding: 0 28rpx; */
+  box-sizing: border-box;
+}
+
+.home_search_bar {
+  height: 70rpx;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 45rpx;
+  box-sizing: border-box;
+  padding-left: 50rpx;
+  line-height: 70rpx;
+}
+
+.marRight_28 {
+  margin-right: 28rpx;
+}
+
+.lineH_34 {
+  line-height: 34rpx;
+}
+
+.index_search {
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  position: fixed;
+  top: 0;
+  transform: translate(100%, 0);
+  transition: transform 0.3s;
+  z-index: 10001;
+}
+
+.index_search.show {
+  transform: translate(0, 0);
+}
+
+.storeInfo {
+  /* padding: 0 28rpx; */
+  box-sizing: border-box;
+}
+
+.storeInfo_brand {
+  margin-right: 18rpx;
+  box-sizing: border-box;
+  width: 65%;
+}
+
+.store_headImg {
+  width: 88rpx;
+  height: 88rpx;
+  min-width: 88rpx;
+  border-radius: 20rpx;
+  margin-right: 18rpx;
+  display: block;
+}
+
+.followBtn {
+  width: 166rpx;
+  min-width: 166rpx;
+  height: 64rpx;
+  background: linear-gradient(-107deg, #ff2e2e, #ff8c4d);
+  border-radius: 45rpx;
+  line-height: 64rpx;
+}
+
+.pad_28 {
+  padding: 0 28rpx;
+  box-sizing: border-box;
+}
+
+.marLeft_8 {
+  margin-left: 8rpx;
+}
+
+.followText {
+  margin-left: 8rpx;
+}
+
+.sortBotLine {
+  width: 64rpx;
+  height: 5rpx;
+  border-radius: 45rpx;
+  background: #fff;
+  bottom: 9rpx;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+
+.sortNormal .opac_7 {
+  opacity: 0.7;
+}
+
+.arrBox {
+  right: 22%;
+  /* top: 50%; */
+  margin-top: 4rpx;
+}
+
+.icon_arrUp {
+  width: 0;
+  height: 0;
+  border-width: 8rpx;
+  border-style: solid;
+  border-top-color: transparent;
+  border-right-color: transparent;
+  border-left-color: transparent;
+  border-bottom-color: #fff;
+  /* margin-top: -24rpx; */
+}
+
+.icon_arrDown {
+  width: 0;
+  height: 0;
+  border-width: 8rpx;
+  border-style: solid;
+  border-top-color: #fff;
+  border-right-color: transparent;
+  border-left-color: transparent;
+  border-bottom-color: transparent;
+  margin-top: 5rpx;
+}
+
+.icon_arrUp.opac_7 .icon_arrDown.opac_7 {
+  opacity: 0.7;
+}
+
+.storeGoods {
+  padding: 14rpx 28rpx 0;
+  box-sizing: border-box;
+}
+
+.storeCateLeft {
+  width: 180rpx;
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  /* overflow: hidden; */
+  z-index: 2;
+}
+
+.storeCate_left {
+  background: #f3f3f3;
+  min-height: 100%;
+}
+
+.storeCate_left_item {
+  padding: 0 5rpx;
+  line-height: 98rpx;
+  border-left: 4rpx solid transparent;
+  text-align: center;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  color: #323232;
+  font-size: 26rpx;
+}
+
+.storeCate_left_item.cateLeftActive {
+  border-left-color: #ff2e2e;
+  color: #ff2e2e;
+  background: #fff;
+}
+
+.storeCate_con {
+  /* margin-left: 180rpx; */
+  height: 100%;
+  padding: 40rpx 40rpx 40rpx 220rpx;
+  box-sizing: border-box;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+  flex-wrap: wrap;
+  width: 100%;
+  position: absolute;
+}
+
+.storeCateChild {
+  padding: 0 13rpx;
+  width: 33.33%;
+  margin-bottom: 12rpx;
+  box-sizing: border-box;
+  display: inline-block;
+}
+
+/* 加载方块 */
+
+.storeCateChildbackF5 {
+  width: 136rpx;
+  background: #f5f5f5;
+  border-radius: 5rpx;
+  overflow: hidden;
+}
+
+.storeCateChildImg {
+  width: 136rpx;
+  height: 136rpx;
+  margin: 0 auto;
+  display: block;
+}
+
+.childCateText {
+  text-align: center;
+  padding: 15rpx 0;
+  margin: 0 auto;
+}
+
+/*商家优惠券*/
+
+.storeCoupon {
+  background-color: #fff;
+  padding: 0 0 30rpx 28rpx;
+  box-sizing: border-box;
+}
+
+.storeCouponTit {
+  font-size: 32rpx;
+  padding: 30rpx 0;
+  font-weight: 600;
+}
+
+.couponListScroll {
+  white-space: nowrap;
+}
+
+.sellerCoupon {
+  background-color: #fff;
+  padding: 0rem 0 30rpx 30rpx;
+}
+
+.sellerCoupon .sellerCouponTit {
+  font-size: 32rpx;
+  padding: 30rpx 0;
+}
+
+.sellerCoupon .swiper-slide {
+  width: auto;
+}
+
+/*优惠券 可复用*/
+
+.sellerCon {
+  height: 144rpx;
+  position: relative;
+  margin-right: 24rpx;
+  border-radius: 5px;
+  background: -webkit-linear-gradient(-90deg, #f73d7a, #ff7059);
+  background: -o-linear-gradient(-90deg, #f73d7a, #ff7059);
+  background: -moz-linear-gradient(-90deg, #f73d7a, #ff7059);
+  background: linear-gradient(-90deg, #f73d7a, #ff7059);
+  display: inline-block;
+}
+
+.sellerCon .conpon_po {
+  position: relative;
+  height: 100%;
+  z-index: 10;
+}
+
+.sellerCon .conpon_po .conpon_value {
+  min-width: 144rpx;
+  height: 100%;
+  box-sizing: border-box;
+  text-align: center;
+  padding: 0 13rpx;
+  position: relative;
+}
+
+.storeContain .overScroll {
+  overflow: scroll;
+}
+
+.storeContain .coupon_value .conpon_dollar {
+  font-size: 24rpx;
+  color: #fff;
+  /* display: inline-block; */
+  margin-right: -5rpx;
+}
+
+.storeContain .coupon_value .conpon_num {
+  font-size: 50rpx;
+  color: #fff;
+}
+
+.sellerCon .conpon_po .conpon_saveArea {
+  height: 100%;
+  padding: 0 13rpx 0 30rpx;
+  box-sizing: border-box;
+  min-width: 208rpx;
+  position: relative;
+}
+
+.conpon_po .conpon_saveArea .conpon_term {
+  font-size: 24rpx;
+  color: #fff;
+}
+
+.conpon_po .coupon_receiveArea {
+  padding: 0 20rpx;
+}
+
+.conpon_po .coupon_receiveArea .conpon_receive {
+  color: #fff;
+  font-size: 22rpx;
+  display: inline-block;
+}
+
+.sellerCon .conpon_bg {
+  position: absolute;
+  z-index: auto;
+  /* z-index: 1; */
+  width: 1rem;
+  height: 100%;
+  top: 0;
+  right: 60rpx;
+}
+
+.sellerCon .conpon_bg .topCircle {
+  position: absolute;
+  width: 26rpx;
+  height: 26rpx;
+  background: #fff;
+  border-radius: 50%;
+  top: -16rpx;
+  z-index: 11;
+  left: 0;
+}
+
+.sellerCon .conpon_bg .bottomCircle {
+  position: absolute;
+  width: 26rpx;
+  height: 26rpx;
+  background: #fff;
+  border-radius: 50%;
+  bottom: -16rpx;
+  z-index: 11;
+  left: 0;
+}
+
+.sellerCon .conpon_bg .middleLine {
+  height: 80%;
+  border-left: 1px dashed #e92b6a;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+}
+
+/* 普通店铺首页商家商品 */
+
+.supplierGoods {
+  padding: 0 28rpx;
+  box-sizing: border-box;
 }
