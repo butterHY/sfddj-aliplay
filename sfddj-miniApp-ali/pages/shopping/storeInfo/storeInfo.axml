@@ -1,120 +1,287 @@
 <!-- 带背景图介绍模块 -->
 <import src="/pages/common/item-goods-column"/>
 <import src="/pages/common/store_desc"/>
-
+<import src="/pages/common/item-goods-card" />
 <!-- 加载中 -->
 <view a:if="{{!loadComplete}}">
-  <loading-now></loading-now>  
+  <loading-now></loading-now>
 </view>
 <!-- 加载失败 -->
 <view a:elif="{{loadFail}}">
   <load-fail></load-fail>
 </view>
 <!-- 没有网络提示这个 -->
-<!-- <view a:elif="{{!wifiAvailable}}">
-  <no-wifi></no-wifi>
-</view> -->
-
-<view a:else class="{{cantScroll ? 'height_100v' : ''}}" disable-scroll='{{cantScroll}}'>
-  <view class="info-area">
-    <image src="{{baseLocImgUrl}}miniappImg/bg/bg_store_info.jpg" class="storeInfo_bg">
-    </image>
-    <view class="info-view">
-      <view class="store-image">
-        <image src="{{baseLocImgUrl}}{{supplierDetail.headPortraitPath}}" class="storeInfo_headImg">
-        </image>
-      </view>
-      <view class="info-text-view">
-        <view class="font-28 color-white">{{supplierDetail.nickName}}        
-        </view>
-        <view class="storeInfo_detail font-22 color-white">{{supplierDetail.companyName}}        
-        </view>
-        <view class="storeInfo_detail font-20 color-fefefe">所在地：{{supplierDetail.address}}        
+<!--<view a:elif="{{!wifiAvailable}}"><no-wifi></no-wifi></view> -->
+<view a:else class="storeContain flex_view_col width_100 {{tabIndex == 2 ? 'height_100vh' : ''}}">
+  <!-- 店铺头部 -->
+  <view class="storeHeadInfo">
+    <view class="all_100 backShadow flex_view_col pad_28">
+      <!-- 搜索 -->
+      <view class="storeSearch">
+        <view class="flex_view_row home_searchBox align_cen width_100">
+          <!-- 搜索框 -->
+          <view class="flex_1 home_search_bar flex_view_row align_cen" onTap="showSearch">
+            <view class="flex_view_row align_cen">
+              <!-- 搜索icon -->
+              <text class="icon-search_home font-40 color-white marRight_28"></text>
+              <text class="font-32 color-white">{{placeholder}}</text>
+            </view>
+          </view>
         </view>
       </view>
-    </view>
-    <view class="tested-view">
-      <image src="{{baseLocImgUrl}}miniappImg/icon/icon_tested.png" class="storeInfo_testIcon">
-      </image>
-    </view>
-  </view>
-  <view class="division-area">
-  </view>
-  <!-- 企业执照 -->
-  <navigator url="./businessLicence/businessLicence?images={{supplierDetail.companyImage}}" hover-class="none" a:if="{{supplierDetail.companyImage}}">
-    <view class="item-info-area">
-      <text class="font-24 color-414141">企业执照    
-      </text>
-      <view class="right-icon-with-arrow">
-        <image src="{{baseLocImgUrl}}miniappImg/icon/icon_company_image.png" class="storeLicense">
-        </image>
-        <!-- <image src='{{baseLocImgUrl}}miniappImg/icon/icon_right_arrow.png' class='icon_arrRight'></image> -->
-        <view class="flex_view_row">
-          <text class="icon-href-right font-22 color-c7c7cc marRight_10">
-          </text>
+      <!-- 店铺信息 -->
+      <view class="storeInfo flex_view_row align_cen flex_1 justi_between">
+        <!-- 左边头像与名称 -->
+        <navigator hover-class="none" url="/pages/shopping/storeInfo/storeInfoDetail/storeInfoDetail" class="storeInfo_brand flex_view_row align_cen flex_1">
+          <image src="{{supplierDetail.headPortraitPath ? baseImageUrl + supplierDetail.headPortraitPath : baseLocImgUrl + 'miniappImg/icon/icon_default_head.jpeg'}}" class="store_headImg"></image>
+          <view class="flex_1 color-white single-line">
+            <view class="single-line">{{supplierDetail.nickName}}</view>
+          </view>
+        </navigator>
+        <!-- 关注信息 -->
+        <view class="followBtn flex_view_row align_cen justi_cen" onTap="followStore">
+          <!-- 未关注 -->
+          <view a:if="{{!attentionStatus}}" class="color-white flex_view_row align_cen">
+            <text class="icon-collect font-40"></text>
+            <text class="followText font-32">关注</text>
+          </view>
+          <!-- 已关注 -->
+          <view a:else class="color-white flex_view_row align_cen">
+            <text class="followText font-32">已关注</text>
+          </view>
         </view>
       </view>
     </view>
-  </navigator>
-  <!-- 行业执照 -->
-  <navigator url="./businessLicence/businessLicence?images={{supplierDetail.businesImage}}" hover-class="none" a:if="{{supplierDetail.businesImage}}">
-    <view class="item-info-area">
-      <text class="font-24 color-414141">行业执照    
-      </text>
-      <view class="right-icon-with-arrow">
-        <image src="{{baseLocImgUrl}}miniappImg/icon/icon_business_image.png" class="industryLicense">
-        </image>
-        <!-- <image src='{{baseLocImgUrl}}miniappImg/icon/icon_right_arrow.png' class='icon_arrRight'></image> -->
-        <view class="flex_view_row">
-          <text class="icon-href-right font-22 color-c7c7cc marRight_10">
-          </text>
+  </view>
+  <!-- 店铺首页--普通 -->
+  <view a:if="{{tabIndex == 0}}" class="">
+    <!-- banner -->
+    <view class="storeBanner"></view>
+    <!-- 优惠券部分 -->
+    <view a:if="{{supplierCouponList.length > 0}}" class="storeCoupon width_100">
+      <!-- 标题 -->
+      <view class="storeCouponTit">
+        <text>优惠券</text>
+      </view>
+      <!-- 优惠券列表 -->
+      <view class="width_100">
+        <scroll-view scroll-x="{{true}}" class="width_100 flex_view_row couponListScroll">
+          <view>
+            <block a:for="{{supplierCouponList}}" a:key="supplierCouponList">
+              <view class="sellerCon sellerConNew js_sellerCon" couponId="${coupon.id}">
+                <view class="conpon_po flex_view_row">
+                  <view class="conpon_saveArea flex_1 flex_view_col align_cen justi_cen">
+                    <view class="coupon_price flex_view_col" style="width: 100%;">
+                      <view class="coupon_value flex_view_row">
+                        <text class="conpon_dollar">￥
+                          <text class="conpon_num">{{item.costPrice}}500</text></text>
+                      </view>
+                    </view>
+                    <view class="coupon_des" style="width: 100%;">
+                      <view class="conpon_term">
+                        满{{item.needPrice}}1000减{{item.costPrice}}500
+                      </view>
+                    </view>
+                  </view>
+                  <view class="coupon_receiveArea flex_view_row justi_cen align_cen js_unreceive">
+                    <view class="conpon_receive js_unreceive flex_view_col align_cen justi_cen">
+                      <view>立</view>
+                      <view>即</view>
+                      <view>领</view>
+                      <view>取</view>
+                    </view>
+                    <!-- 中间的分隔-->
+                    <view class="conpon_bg">
+                      <view class="topCircle"></view>
+                      <view class="middleLine"></view>
+                      <view class="bottomCircle"></view>
+                    </view>
+                  </view>
+                </view>
+              </view>
+            </block>
+          </view>
+        </scroll-view>
+      </view>
+    </view>
+    <!-- 商品列表 -->
+    <view class="supplierGoods marTop_15 whiteBack">
+      <!-- 标题 -->
+      <view class="storeCouponTit">
+        <text>商家推荐</text>
+      </view>
+      <!-- 商品列表 -->
+      <view class="suppplierGoodsList flex_view_row width_100">
+        <!-- 左边 -->
+        <view class="storeGoodsLeft flex_1">
+          <!-- 商品列表 -->
+          <block a:for="{{goodslist}}" a:if="{{index % 2 == 0}}" a:key="itemIndex">
+            <template is="itemGoodsCard" data="{{...item,left:true,baseImageUrl:baseImageUrl,baseLocImgUrl,smallImgArg}}"></template>
+          </block>
+        </view>
+        <!-- 右边 -->
+        <view class="storeGoodsLeft flex_1">
+          <!-- 商品列表 -->
+          <block a:for="{{goodslist}}" a:if="{{index % 2 != 0}}" a:key="itemIndex">
+            <template is="itemGoodsCard" data="{{...item,left:false,baseImageUrl:baseImageUrl,baseLocImgUrl,smallImgArg}}"></template>
+          </block>
         </view>
       </view>
     </view>
-  </navigator>
-  <!-- 商家简介 -->
-  <view class="item-info-area-no-border">
-    <text class="font-24 color-414141">商家简介  
-    </text>
-    <view class="right-icon-with-arrow" catchTap="showStoreDesc">
-      <view class="font-24 color-8f8f8f marRight_10">查看更多    
+  </view>
+  <!-- 店铺全部商品页面 -->
+  <view a:if="{{tabIndex == 1}}" class="">
+    <!-- 排序条件 -->
+    <view class="storeSortBox">
+      <view class="all_100 backShadow">
+        <view a:if="{{!sortNavOnTop}}" class="flex_view_row align_cen color-white font-36 height_100">
+          <!-- 综合排序 -->
+          <view class="posi_re flex_1 flex_view_row justi_cen align_cen height_100 sortNormal" data-index="0" onTap="switchSortFn">
+            <text class="{{sortIndex == 0 ? '' : 'opac_7'}}">综合排序</text>
+            <view a:if="{{sortIndex == 0}}" class="posi_ab sortBotLine"></view>
+          </view>
+          <!-- 销量优先 -->
+          <view class="sortNormal posi_re flex_1 flex_view_row justi_cen align_cen height_100" data-index="1" onTap="switchSortFn">
+            <text class="{{sortIndex == 1 ? '' : 'opac_7'}}">销量优先</text>
+            <view a:if="{{sortIndex == 1}}" class="posi_ab sortBotLine"></view>
+          </view>
+          <!-- 价格 -->
+          <view class="sortNormal posi_re flex_1 flex_view_row justi_cen align_cen height_100" data-index="2" onTap="switchSortFn">
+            <text class="{{sortIndex == 2 ? '' : 'opac_7'}}">价格</text>
+            <view class="arrBox marLeft_8 posi_ab">
+              <!-- 向上三角 -->
+              <view class="icon_arrUp {{sortIndex == 2 && sortPriceUp ? '' : 'opac_7'}}"></view>
+              <!-- 向下三角 -->
+              <view class="icon_arrDown {{sortIndex == 2 && !sortPriceUp ? '' : 'opac_7'}}"></view>
+            </view>
+            <view a:if="{{sortIndex == 2}}" class="posi_ab sortBotLine"></view>
+          </view>
+        </view>
       </view>
-      <!-- <image src='{{baseLocImgUrl}}miniappImg/icon/icon_right_arrow.png' class='icon_arrRight'></image> -->
-      <view class="flex_view_row">
-        <text class="icon-href-right font-22 color-c7c7cc marRight_10">
-        </text>
+    </view>
+    <!-- 商品列表 -->
+    <view class="storeGoods flex_view_row">
+      <!-- 左边 -->
+      <view class="storeGoodsLeft flex_1">
+        <!-- 商品列表 -->
+        <block a:for="{{goodslist}}" a:if="{{index % 2 == 0}}" a:key="itemIndex">
+          <template is="itemGoodsCard" data="{{...item,left:true,baseImageUrl:baseImageUrl,baseLocImgUrl,smallImgArg}}"></template>
+        </block>
+      </view>
+      <!-- 右边 -->
+      <view class="storeGoodsLeft flex_1">
+        <!-- 商品列表 -->
+        <block a:for="{{goodslist}}" a:if="{{index % 2 != 0}}" a:key="itemIndex">
+          <template is="itemGoodsCard" data="{{...item,left:false,baseImageUrl:baseImageUrl,baseLocImgUrl,smallImgArg}}"></template>
+        </block>
       </view>
     </view>
   </view>
-  <view class="division-area">
-  </view>
-  <view class="store_pro whiteBack">
-    <view a:if='{{goodsList.length > 0}}' class="store_proOneSide">
-      <block a:for="{{goodsList}}" a:key="itemIndex">
-        <template is="itemGoodsColumn" data="{{...item,left:true,baseImageUrl:baseImageUrl,baseLocImgUrl,smallImgArg}}" a:if="{{index % 2 == 0}}">
-        </template>
-      </block>
+  <!-- 店铺分类部分 -->
+  <view a:if="{{tabIndex == 2}}" class="flex_1 width_100 whiteBack">
+    <view class="height_100 posi_re">
+      <!-- 左边分类 -->
+      <view class="height_100 storeCateLeft overScroll">
+        <view class="storeCate_left">
+          <block a:for="{{categroyList}}" a:key="storeCate">
+            <view class="storeCate_left_item {{cateLeftIndex == index ? 'cateLeftActive' : ''}}" data-index="{{index}}" onTap="switchStoreCate">
+              <text>{{item.name}}</text>
+            </view>
+          </block>
+        </view>
+      </view>
+      <!-- 右边的内容 -->
+      <view class="height_100">
+        <block a:for="{{categroyList}}" a:key="categroyListCon">
+          <view a:if="{{cateLeftIndex == index}}" class="storeCate_con ">
+            <block a:for="{{item.childCategory}}" a:key="childCategory" a:for-item="childItem" a:for-index="childIndex">
+              <view class="storeCateChild">
+                <view class="storeCateChildbackF5">
+                  <image src="{{baseImageUrl + childItem.categoryImgPath}}" class="storeCateChildImg"></image>
+                </view>
+                <view class="font-24 childCateText single-line">{{childItem.name}}</view>
+              </view>
+            </block>
+          </view>
+        </block>
+      </view>
     </view>
-    <view a:if='{{goodsList.length > 0}}' class="store_proOneSide">
-      <block a:for="{{goodsList}}" a:key="itemIndex2">
-        <template is="itemGoodsColumn" data="{{...item,left:false,baseImageUrl:baseImageUrl,baseLocImgUrl,smallImgArg}}" a:if="{{index % 2 != 0}}">
-        </template>
-      </block>
+  </view>
+  <!-- 底部tab栏的高度盒子 -->
+  <view class='padHeight'></view>
+</view>
+<!-- 置顶的排序导航 -->
+<!-- 排序条件 -->
+<view a:if="{{sortNavOnTop && tabIndex == 1}}" class="storeSortBox posi_fix storeSortFix">
+  <view class="all_100 backShadow">
+    <view class="flex_view_row align_cen color-white font-36 height_100">
+      <!-- 综合排序 -->
+      <view class="posi_re flex_1 flex_view_row justi_cen align_cen height_100 sortNormal" data-index="0" onTap="switchSortFn">
+        <text class="{{sortIndex == 0 ? '' : 'opac_7'}}">综合排序</text>
+        <view a:if="{{sortIndex == 0}}" class="posi_ab sortBotLine"></view>
+      </view>
+      <!-- 销量优先 -->
+      <view class="sortNormal posi_re flex_1 flex_view_row justi_cen align_cen height_100" data-index="1" onTap="switchSortFn">
+        <text class="{{sortIndex == 1 ? '' : 'opac_7'}}">销量优先</text>
+        <view a:if="{{sortIndex == 1}}" class="posi_ab sortBotLine"></view>
+      </view>
+      <!-- 价格 -->
+      <view class="sortNormal posi_re flex_1 flex_view_row justi_cen align_cen height_100" data-index="2" onTap="switchSortFn">
+        <text class="{{sortIndex == 2 ? '' : 'opac_7'}}">价格</text>
+        <view class="arrBox marLeft_8 posi_ab">
+          <!-- 向上三角 -->
+          <view class="icon_arrUp {{sortIndex == 2 && sortPriceUp ? '' : 'opac_7'}}"></view>
+          <!-- 向下三角 -->
+          <view class="icon_arrDown {{sortIndex == 2 && !sortPriceUp ? '' : 'opac_7'}}"></view>
+        </view>
+        <view a:if="{{sortIndex == 2}}" class="posi_ab sortBotLine"></view>
+      </view>
     </view>
   </view>
-  <view class="padHeight">
-  </view>
-  <view class="bottom-view">
-    <view class="bottom-view-button font-32 color-white" catchTap="goToWebCall">联系商家 
+</view>
+<!-- 底部tab栏 -->
+<view class='bottom-view'>
+  <!--<view catchtap='goToWebCall' class='bottom-view-button font-32 color-white'>联系客服</view> -->
+  <view class="all_100 flex_view_row">
+    <!-- 首页 -->
+    <view class="flex_view_col flex_1 align_cen justi_cen color" data-index="0" onTap="switchTab">
+      <view class="flex_view_col align_cen">
+        <text a:if="{{tabIndex != 0}}" class="icon-home_ic_black font-44"></text>
+        <image a:if="{{tabIndex == 0}}" src="{{baseLocImgUrl}}miniappImg/icon/icon-store_home_active.png" class="icon-store_home_active"></image>
+        <text class="font-26 tabText {{tabIndex == 0 ? 'color_ff2e2e' : 'color_191616'}}">店铺首页</text>
+      </view>
+    </view>
+    <!-- 全部商品 -->
+    <view class="flex_view_col flex_1 align_cen justi_cen" data-index="1" onTap="switchTab">
+      <text a:if="{{tabIndex != 1}}" class="icon-store_product font-44"></text>
+      <image a:if="{{tabIndex == 1}}" src="{{baseLocImgUrl}}miniappImg/icon/icon-store_product_active.png" class="icon-store_product_active"></image>
+      <text class="font-26 tabText {{tabIndex == 1 ? 'color_ff2e2e' : 'color_191616'}}">全部商品</text>
+    </view>
+    <!-- 商品分类 -->
+    <view class="flex_view_col flex_1 align_cen justi_cen" data-index="2" onTap="switchTab">
+      <text a:if="{{tabIndex != 2}}" class="icon-store_classify font-44"></text>
+      <image a:if="{{tabIndex == 2}}" src="{{baseLocImgUrl}}miniappImg/icon/icon-store_classify_active.png" class="icon-store_classify_active"></image>
+      <text class="font-26 tabText {{tabIndex == 2 ? 'color_ff2e2e' : 'color_191616'}}">商品分类</text>
+    </view>
+    <!-- 联系客服 -->
+    <view class="flex_view_col flex_1 align_cen justi_cen" data-index="3" onTap="switchTab">
+      <text a:if="{{tabIndex != 3}}" class="icon-store_service font-44"></text>
+      <image a:if="{{tabIndex == 3}}" src="{{baseLocImgUrl}}miniappImg/icon/icon-store_service_active.png" class="icon-store_service_active"></image>
+      <text class="font-26 tabText {{tabIndex == 3 ? 'color_ff2e2e' : 'color_191616'}}">联系客服</text>
     </view>
   </view>
 </view>
 <!-- 规格选择框 -->
-<template is="storeDesc" data="{{baseImgUrlLoc: baseLocImgUrl,show:showStoreDesc,introduction:supplierDetail.introduction}}"/>
+<template is="storeDesc" data="{{baseImgUrlLoc: baseLocImgUrl,show:showStoreDesc,introduction:supplierDetail.introduction}}" />
+<!-- 新版搜索热词和历史记录膜层 -->
+<view class="index_search {{isShowSearch ? 'show' : ''}}">
+  <search-component  ref="saveRef" onShowSearch="showSearch" isFocus="{{isFocus}}" placeholderVal="{{placeholder}}" pageType="storeInfo"></search-component>
+</view>
 <!--toast弹窗-->
-<view class="mark flex_view_col align_cen justi_cen" a:if="{{showToast}}">
-  <view class="toastView_wb" catchtouchmove="move">
-    <view class="toastView_wb_con font-26 color-232323">      {{showToastMes}}        
+<view class='mark flex_view_col align_cen justi_cen' a:if="{{showToast}}">
+  <view class='toastView_wb' catchtouchmove='move'>
+    <view class='toastView_wb_con font-26 color-232323'>
+      {{showToastMes}}
     </view>
   </view>
 </view>

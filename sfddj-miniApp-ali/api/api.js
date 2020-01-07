@@ -75,10 +75,18 @@ export default {
 	},
 
 	// 物流详情
-  LOGISTICS: {
-    'GETEXPRESS': '/m/c/1.0/express/getExpress',
-    'lISTGOODSBYNAME': '/m/g//1.0/group/listGoodsByName',												// 新的物流详情猜你喜欢接口                                         
-  }
+	LOGISTICS: {
+		'GETEXPRESS': '/m/c/1.0/express/getExpress',
+		'lISTGOODSBYNAME': '/m/g//1.0/group/listGoodsByName',												// 新的物流详情猜你喜欢接口                                         
+	},
+
+	// 商家店铺
+	SUPPLIER: {
+		'SUPPLIER_GOODS_CATE': '/m/g/1.0/category/supplierGoodsCategory',         //商家的商品分类
+		'SUPPPLIER_CATE_GOODS': '/m/g/1.0/category/supplierCategoryGoods',        //商家分类下的商品
+		'ATTENTION_STATUS': '/m/g/supplier/getAttention/2.0',                     //判断是否关注商家
+		'ATTENT_STORE': '/m/g/supplier/attention',                                //关注店铺
+	},
 
 
 }

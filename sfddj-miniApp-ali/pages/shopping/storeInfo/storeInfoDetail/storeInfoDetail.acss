@@ -1,0 +1,129 @@
+/* pages/shopping/storeInfo/storeInfoDetail/storeInfoDetail.wxss */
+@import '../../../css-public/dialogCommon.acss';
+
+.storeIntroduction .goodStoreMes {
+  padding: 40rpx 24rpx;
+}
+
+.goodStoreMes .goodStoreMesLeft .storeHeadImg {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 50%;
+  margin-right: 15rpx;
+  overflow: hidden;
+}
+
+.goodStoreMesLeft .goodStoreDes {
+  margin-right: 52rpx;
+}
+
+.goodStoreMesLeft .goodStoreDes .goodStoreNickName {
+  font-size: 30rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.goodStoreMesLeft .goodStoreDes .goodStoreScore {
+  font-size: 24rpx;
+}
+
+.goodStoreScore .icon-star {
+  display: block;
+  font-size: 26rpx;
+  margin-right: 5rpx;
+  color: #ebebeb;
+}
+
+.goodStoreMesLeft .goodStoreScoreTit {
+  opacity: 0.5;
+  margin-right: 10rpx;
+}
+
+.storeFavRate {
+  padding: 26rpx 24rpx 30rpx;
+  margin-top: 20rpx;
+}
+
+.storeFavRate .storeFavRateTit {
+  font-size: 30rpx;
+}
+
+.storeFavRate .storeDes {
+  margin-top: 26rpx;
+}
+
+.storeDes .storeDesRate {
+  font-size: 24rpx;
+}
+
+.storeDes .storeServiceRate {
+  margin-top: 18rpx;
+}
+
+.storeDes .storeDesRate .storeDesRateNum {
+  color: #ff4a4a;
+}
+
+.storeDesRate .storeDesProBar {
+  width: 276rpx;
+  height: 20rpx;
+  margin: 0 15rpx;
+  background: linear-gradient(to right, #ffda31, #ff7043);
+  border-radius: 50rpx;
+}
+
+.storeBaseMes {
+  line-height: 80rpx;
+  padding: 0 24rpx 13rpx;
+  margin-top: 20rpx;
+}
+
+.storeBaseMes .storeBaseMesTit {
+  font-size: 30rpx;
+}
+
+.storeBaseMes .storeOwnerNew, .storeBaseMes .storeIntell {
+  font-size: 30rpx;
+}
+
+.storeBaseMes .storeOwnerNew .storeOwnerName {
+  font-size: 24rpx;
+}
+
+.storeBaseMes .storeRegisAddr .storeOwnerTit {
+  width: 50%;
+}
+
+.storeBaseMes .storeRegisAddr .storeOwnerName {
+  width: 50%;
+}
+
+.storeBaseMes .storeRegisAddr .storeOwnerName .oneLineText {
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: right;
+}
+
+.storeBaseMes .icon-href-right {
+  color: #919191;
+  font-size: 24rpx;
+}
+
+.storeIntell .storeIntellIcon .icon_storeIntell {
+  width: 30rpx;
+  height: 32rpx;
+  background: url("https://img.sfddj.com/miniappImg/icon/icon_storeIntell.png") no-repeat;
+  background-size: 100% 100%;
+  display: block;
+}
+
+.storeIntell .storeIntellIcon .icon_storeCerti {
+  width: 30rpx;
+  height: 32rpx;
+  background: url("https://img.sfddj.com/miniappImg/icon/icon_storeCerti.png") no-repeat;
+  background-size: 100% 100%;
+  display: block;
+}
