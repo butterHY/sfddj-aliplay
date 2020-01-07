@@ -4,8 +4,7 @@
   "pullRefresh": false,
   "usingComponents": {
     "loading-now": "../../components/loadingNow/loadingNow",
-    "load-fail": "../../components/loadFail/loadFail",
-    "search-component": "../../components/search-component/search-component"
+    "load-fail": "../../components/loadFail/loadFail"
   }
 
 }
