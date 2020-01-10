@@ -1,0 +1,105 @@
+.dialogMark {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9000;
+}
+
+.dialogMark.hide {
+  display: none;
+}
+
+.dialogCommon_con {
+  position: fixed;
+  max-height: 80%;
+  z-index: 9001;
+  background: #fafafa;
+  min-height: 50%;
+  bottom: 0;
+  left: auto;
+  width: 100%;
+  height: auto;
+  border-radius: 20rpx 20rpx 0 0;
+  overflow-y: visible;
+  /* -webkit-transition: -webkit-transform 0.3s ease-out;
+  transition: -webkit-transform 0.3s ease-out; */
+  transition: all 0.3s ease-out;
+  transform: translateY(0%);
+}
+
+.dialogCommon_con.hide {
+  transform: translateY(100%);
+}
+
+@keyframes skuAnimate {
+  0% {
+    bottom: -760rpx;
+  }
+
+  100% {
+    bottom: 0;
+  }
+}
+
+.marTop_12r {
+  margin-top: 12rpx;
+}
+
+.icon_close {
+  width: 52rpx;
+  height: 52rpx;
+  top: 28rpx;
+  right: 28rpx;
+}
+
+.dialogCommon_body {
+  flex: 1 1 auto;
+}
+
+.padTop_28 {
+  padding-top: 28rpx;
+}
+
+.dialog_body_scroll {
+  padding: 0rpx 30rpx 0 30rpx;
+  box-sizing: border-box;
+}
+
+.dialog_botButton {
+  padding: 15rpx 30rpx;
+  background: #fff;
+}
+
+.dialog_button {
+  height: 86rpx;
+  line-height: 86rpx;
+  text-align: center;
+  font-size: 26rpx;
+  border-radius: 45rpx;
+}
+
+.dialog_botton_danger {
+  background: -webkit-linear-gradient(to right, #fd5b40, #fd4040);
+  background: linear-gradient(to right, #fd5b40, #fd4040);
+}
+
+/* 商家简介部分 start*/
+
+.storeIntroTit {
+  line-height: 80rpx;
+  font-size: 32rpx;
+  text-align: center;
+  font-weight: 600;
+}
+
+.storeIntroCon {
+  /* padding: 0 30rpx; */
+  padding-bottom: 30rpx;
+  text-indent: 2em;
+  overflow-y: auto;
+}
+
+/* 商家简介部分 end*/

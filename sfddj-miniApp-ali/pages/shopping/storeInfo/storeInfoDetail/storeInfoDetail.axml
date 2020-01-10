@@ -1,0 +1,140 @@
+<!--viewages/shoviewviewing/storeInfo/storeInfoDetail/storeInfoDetail.wxml-->
+<import src="/pages/common/common-dialog" />
+
+<view>
+  <view class="storeIntroduction">
+    <!--商家头像-->
+    <view class="goodStoreMes flex_view_row whiteBack">
+      <!--左边-->
+      <view class="goodStoreMesLeft width_100 flex_view_row align_cen">
+        <!--商家头像-->
+        <view class="storeHeadImg">
+          <image src="{{baseLocImgUrl}}miniappImg/icon/icon_default_head.jpeg" class="all_100"></image>
+          <!-- <image src="/static_v4/image/sfddj.jpg"> -->
+        </view>
+        <!--商家昵称和评分-->
+        <view class="goodStoreDes flex_view_col flex_1 single-line">
+          <view class="flex_1 goodStoreNickName">xiazhiqiangAS水产旗舰店</view>
+          <view class="goodStoreScore flex_view_row">
+            <view class="goodStoreScoreTit">综合评分</view>
+            <view class="flex_view_row align_cen justi_cen">
+              <view class=" icon-star star1"></view>
+              <view class=" icon-star star2"></view>
+              <view class=" icon-star star3"></view>
+              <view class=" icon-star star4"></view>
+              <view class=" icon-star star5"></view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!--好评率-->
+    <view class="storeFavRate whiteBack">
+      <!--标题-->
+      <view class="storeFavRateTit">
+        <view class="flex_view_row">
+          <view>店铺好评率</view>
+        
+          <view>98.9%</view>
+        </view>
+      </view>
+      <!--描述和服务态度-->
+      <view class="storeDes">
+        <view class="storeDesRate flex_view_row align_cen">
+          <view class="storeDesRateTxt">描述相符</view>
+          <view class="storeDesProBar"></view>
+          <view class="storeDesRateNum">4.9</view>
+        </view>
+        <view class="storeServiceRate storeDesRate flex_view_row align_cen">
+          <view class="storeDesRateTxt">服务态度</view>
+          <view class="storeDesProBar"></view>
+          <view class="storeDesRateNum">5</view>
+        </view>
+      </view>
+    </view>
+
+    <!--基础信息-->
+    <view class="storeBaseMes whiteBack">
+      <!--标题-->
+      <view class="storeBaseMesTit">
+        <view>基础信息</view>
+      </view>
+      <!--掌柜名-->
+      <view class="storeOwnerNew flex_view_row align_cen justi_between">
+        <view class="storeOwnerTit flex_1">
+          <view>掌柜名</view>
+        </view>
+        <view class="storeOwnerName">
+          <view class="oneLineText">夏先生1SA111</view>
+        </view>
+      </view>
+      <!--客服电话-->
+      <view class="storeOwnerNew flex_view_row align_cen justi_between">
+        <view class="storeOwnerTit flex_1">
+          <view>客服电话</view>
+        </view>
+        <view class="storeOwnerName">
+          <view class="oneLineText">18500000000</view>
+        </view>
+      </view>
+      <!--注册地址-->
+      <view class="storeOwnerNew storeRegisAddr flex_view_row">
+        <view class="storeOwnerTit flex_1">
+          <view>注册地址</view>
+        </view>
+        <view class="storeOwnerName flex_view_row">
+          <view class="oneLineText">华润大家dxZczxd1144455ass酸酸所所所所所所所所所啊啊啊啊啊啊啊啊啊啊啊啊啊啊湖北省鄂州市鄂城区泽林镇金凤煌庭二期5号淘思电商</view>
+        </view>
+      </view>
+      <!--企业资质-->
+      <navigator hover-class="none" class="storeIntell flex_view_row align_cen justi_between">
+        <view class="storeIntellTit flex_1">
+          <view>企业资质</view>
+        </view>
+        <view class="storeIntellIcon">
+          <view class="flex_view_row align_cen justi_cen">
+            <view class="icon_storeIntell marRight_5"></view>
+            <view class="iconStyle icon-href-right"></view>
+          </view>
+        </view>
+      </navigator>
+        <!--行业证照-->
+        <navigator hover-class="none" href="${base}/suviewviewlier/toSuviewviewlierDetail/business/${suviewviewlier.id}" class="storeIntell flex_view_row align_cen justi_between">
+          <view class="storeIntellTit flex_1">
+            <view>行业证照</view>
+          </view>
+          <view class="storeIntellIcon">
+            <view class="flex_view_row align_cen justi_cen">
+              <view class=" icon_storeCerti marRight_5"></view>
+              <view class="iconStyle icon-href-right"></view>
+            </view>
+          </view>
+        </navigator>
+
+      <!--开店时间-->
+      <view class="storeOwnerNew flex_view_row align_cen justi_between">
+        <view class="storeOwnerTit flex_1">
+          <view>开店时间</view>
+        </view>
+        <view class="storeOwnerName">
+          <view class="oneLineText">2018-01-03 15:40:03</view>
+        </view>
+      </view>
+      <!--店铺简介-->
+      <view class="storeOwnerNew flex_view_row js_storeIntro align_cen justi_between" bindtap="tapStoreIntro">
+        <view class="storeOwnerTit flex_1">
+          <view>店铺简介</view>
+        </view>
+        <view class="storeOwnerName">
+          <view>
+            <view class="icon-href-right"></view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+
+<!-- 店铺简介弹窗 -->
+<template is="commonDialog" data="{{show: showIntroduction, dialogType: 'storeIntroduction'}}"></template>

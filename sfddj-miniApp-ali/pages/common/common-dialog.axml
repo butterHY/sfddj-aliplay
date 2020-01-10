@@ -1,0 +1,49 @@
+<import src="./couponItem.axml" />
+<template name='commonDialog'>
+    <view>
+        <view class="flex_view_col dialogMark {{show ? '' : 'hide'}}" catchtouchmove='preventTouchMove'>
+            <view class="flex_1" data-pop-type="{{popType}}" catchTap='colseCommonDialog'></view>
+        </view>
+        <view class="dialogCommon_con flex_view_col posi_re {{show ? '' : 'hide'}}">
+            <!-- 规格 -->
+            <view class="dialogCommon_body flex_view_col">
+                <view class="flex_1 padTop_28">
+                    <scroll-view class="dialog_body_scroll height_100" style="{{setScrollH ? 'height:' + setScrollH + 'px;' : ''}}" scroll-y='true' catchtouchmove='preventTouchMove' bindscrolltolower="{{toLowerFnName}}">
+                        <!-- 商详页优惠券弹窗 -->
+                        <view a:if="{{dialogType == 'coupon'}}">
+                            <block a:for="{{list}}" a:key="couponList1">
+                                <template is="couponItem" data="{{item,isExpired: false, pageFrom: 'goodsDetail', iconSize, fatherIndex, index}}"></template>
+                            </block>
+                            <view class="moreBtnBox">
+                                <view a:if="{{isCouponLoadComplete}}" class="loadingBtn">
+                                    <text class="information">没有更多</text>
+                                </view>
+                                <view a:else class="loadingBtn">
+                                    <text class="icon-spinner3"></text>
+                                    <text class="information">加载中</text>
+                                </view>
+                            </view>
+                        </view>
+                        <!-- 店铺信息详情页商家简介弹窗 -->
+                        <view a:if="{{dialogType == 'storeIntroduction'}}">
+                            <!-- 标题 -->
+                            <view class="storeIntroTit">
+                                <text>商家简介</text>
+                            </view>
+                            <view class="storeIntroCon font-26">
+                                <text>华润万家作为优秀的企业公民，长期坚持并积极参与民生保障、品质改善、环保节能等对社会及生态环境有利的事业，努力成为友善、亲和的社区一员，建立共赢的战略合作伙伴关系，坚持实现员工价值最大化和股东价值合理化。华润万家秉承着“与您携手 改变生活”的企业理念，通过持续的优化与发展，致力成为改善大众生活品质的卓越零售企业。dasd</text>
+                            </view>
+                        </view>
+                    </scroll-view>
+                </view>
+            </view>
+            <view class="dialog_botButton">
+                <block>
+                    <view class='dialog_button dialog_botton_danger font-26 color-white' data-pop-type="{{popType}}" catchTap='{{botBtnFnName ? botBtnFnName : "colseCommonDialog"}}'>{{botText ? botText : '关闭'}}</view>
+                </block>
+            </view>
+            <!-- 关闭按钮 -->
+            <!--<view class="flex_view_row align_cen justi_cen posi_ab  icon_close" catchTap='colseSpecDialog'><text class="icon-cross color-191616 font-28"></text></view> -->
+        </view>
+    </view>
+</template>
