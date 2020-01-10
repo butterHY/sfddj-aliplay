@@ -513,10 +513,10 @@
     <!-- 积分商品和抵扣商品和会员日商品, 不能显示'送他按钮'和'加入购物车按钮'                  memberDeductGoods 会员积分抵扣旧字段， memberDayGoods 与原有接口字段一样 -->
     <view a:if="{{goods.jifenStatus || goods.deductStatus || goods.memberDayPriceStatus}}" class="bottom-view">
       <view class="regularButton">
-        <navigator class="regularItem" url="/pages/shopping/storeInfo/storeInfo?supplierId={{goods.supplierInfo.supplierId}}" hover-class="none">
+        <view data-url="/pages/shopping/storeInfo/storeInfo?supplierId={{goods.supplierInfo.supplierId}}" data-type="supplier" onTap="goToTargetPage" hover-class="none">
           <view class="regularItemIcon icon-home_ic_black"></view>
           <view class="regularItemText">店铺</view>
-        </navigator>
+        </view>
         <view class="regularItem" catchTap="goToWebCall">
           <view class="regularItemIcon icon-productdetails_message"></view>
           <view class="regularItemText">客服</view>
