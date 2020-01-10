@@ -1,68 +1,122 @@
 /* pages/user/historyOrder/commentAndShare/commentAndShare.wxss  */
-.pad_100 {
-  padding-bottom: 100rpx;
+page {
+  position: relative;
 }
+
+.pad_240 {
+  padding-bottom: 240rpx;
+  /* background: #fff; */
+}
+
 .mainView {
   background-color: white;
-  padding: 0 20rpx;
+  padding: 0 30rpx;
 }
+
 .descView {
   display: flex;
   align-items: center;
-  padding: 20rpx 0;
+  box-sizing: border-box;
+  padding: 30rpx 0;
   border-bottom: solid #e6e6e6 2rpx;
+  line-height: 30rpx;
 }
+
 .descView_goodsImg {
-  width: 42rpx;
-  height: 42rpx;
+  width: 60rpx;
+  height: 60rpx; 
+  border-radius: 10rpx;
 }
+
 .descView_staText {
   margin-left: 20rpx;
   color: #6c6c6c;
 }
+
 .starList {
-  padding: 10rpx;
+  /* padding: 10rpx; */
   margin-left: 20rpx;
 }
+
 .icon_star {
   width: 30rpx;
   height: 29rpx;
 }
+
 .color-bdbdbd {
   color: #bdbdbd;
 }
+
 .color-6c6c6c {
   color: #6c6c6c;
 }
+
 .textarea {
   width: 100%;
-  height: 200rpx;
+  height: 260rpx;
   background-color: transparent;
   padding: 16rpx 0;
   color: #232323;
   font-size: 22rpx;
+  position: relative;
+  margin-bottom: 86rpx;
 }
+
+.textCount {
+  /* position: absolute; */
+  /* bottom: 20rpx; */
+  /* right: 20rpx; */
+  font-size: 26rpx;
+  color: #b3b3b3;
+  line-height: 26rpx;
+  margin-bottom: 60rpx ;
+  display: flex;
+  justify-content: flex-end;
+}
+
 .imgListFa {
   border-bottom: solid #e6e6e6 2rpx;
 }
+
 .imgList {
-  width: 220rpx;
-  height: 220rpx;
-  margin-right: 25rpx;
+  width: 156rpx;
+  height: 156rpx;
+  margin-right: 20rpx;
   margin-bottom: 20rpx;
   position: relative;
-  display: inline-block;
+  /* display: inline-block; */
+  float: left;
 }
-.imgList:nth-child(3n) {
+
+.imgList:nth-child(4n) {
   margin-right: 0;
 }
+
 .imgList_img {
-  width: 220rpx;
-  height: 220rpx;
+  width: 156rpx;
+  height: 156rpx;
   position: absolute;
   left: 0;
   top: 0;
 }
+
+.camera_img {
+  width: 44rpx;
+  height: 38rpx;
+  margin-top: 38rpx;
+}
+
+.video_img {
+  width: 50rpx;
+  height: 32rpx;
+  margin-top: 38rpx;
+}
+
+.video_text {
+  margin-top: 26rpx;
+  line-height: 26rpx;
+}
+
 .icon_delete {
   width: 33rpx;
   height: 33rpx;
@@ -70,13 +124,22 @@
   right: -15rpx;
   top: -15rpx;
 }
+
 .imgList_upload {
-  width: 220rpx;
-  height: 220rpx;
+  width: 156rpx;
+  height: 156rpx;
   margin-bottom: 20rpx;
   position: relative;
-  display: inline-block;
+  /* display: inline-block; */
+  border-radius: 15rpx;
+  border: 1rpx dashed #bdbdbd;
+  color: #bdbdbd;
+  float: left;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
+
 .imgList_uploadText {
   position: absolute;
   bottom: 18rpx;
@@ -86,48 +149,68 @@
   color: #bdbdbd;
   text-align: center;
 }
+
 .hideName {
-  padding: 24rpx 0;
+  padding: 30rpx 0;
   display: flex;
   justify-content: space-between;
+  font-size: 30rpx;
+  line-height: 30rpx;
 }
-.icon_sel {
-  width: 24rpx;
-  height: 24rpx;
-  margin-right: 10rpx;
+
+.icon_sel { 
+  width: 34rpx;
+  height: 34rpx;
+  margin-right: 20rpx;
 }
+
 .shopComment {
   display: flex;
   align-items: center;
-  padding: 26rpx 20rpx;
+  padding: 30rpx 0;
   border-bottom: solid #e6e6e6 2rpx;
+  line-height: 30rpx;
 }
+
 .serviceType {
   display: flex;
   align-items: center;
-  padding: 24rpx 0;
+  justify-content: space-between;
+  padding: 30rpx 0;
+  line-height: 30rpx;
 }
+
+.starDesc2 {
+  text-align: right;
+  width: 200rpx;
+}
+
 .marLeft_100 {
   margin-left: 100rpx;
 }
+
 .releaseBtnBox {
-  height: 100rpx;
+  height: 140rpx;
+  box-sizing: border-box;
+  padding: 20rpx 30rpx;
   bottom: 0;
   left: 0;
 }
+
 .releaseBtn {
   /* padding: 20rpx 0;
   position: absolute;
   left: 20rpx;
   bottom: 30rpx;
   right: 20rpx; */
-  background-color: #ff5353;
+  background-image: linear-gradient(to right, rgb(255, 105, 44) , rgb(255, 61, 56));
   text-align: center;
-  border-radius: 5px;
-  line-height: 80rpx;
-  height: 80rpx;
-  width: 90%;
+  border-radius: 60px;
+  line-height: 98rpx;
+  height: 98rpx;
+  width: 100%;
 }
+
 .showToastMark {
   position: fixed;
   top: 350rpx;
@@ -135,4 +218,61 @@
   background-color: rgba(0, 0, 0, 0.7);
   padding: 20rpx 30rpx;
   border-radius: 5px;
+}
+
+/* 规则栏 */
+.ruleBar {
+  height: 100rpx;
+  background: #fff3f0;
+  color: #ff430b; 
+  font-size: 28rpx;
+  box-sizing: border-box;
+  padding: 0 54rpx 0 54rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.checkRule {
+  box-sizing: border-box;
+  width: 168rpx;
+  height: 58rpx;
+  border: 1rpx solid #ff430c;
+  line-height: 55rpx;
+  text-align: center;
+  border-radius: 40rpx;
+}
+
+/* 规则弹窗 */
+.rulesMark {
+  height: 100vh;
+  width: 100%;
+  /* background: #b2b2b2; */
+  background: rgba(0, 0, 0, 0.7);
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 10001;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.rulesBox {
+  width: 562rpx;
+  height: 790rpx;
+  background: #fff;
+  border-radius: 20rpx;
+  box-sizing: border-box;
+  padding: 74rpx 44rpx 44rpx;
+  font-size: 28rpx;
+  line-height: 48rpx;
+  color: #636363; 
+  position: relative; 
+}
+
+.cancel {
+  position: absolute;
+  width: 60rpx;
+  height: 60rpx;
 }

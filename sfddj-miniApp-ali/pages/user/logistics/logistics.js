@@ -53,16 +53,14 @@ Page({
     http.post(api.LOGISTICS.GETEXPRESS, { 'orderSn': options.orderId}, function(res){
       let resData = res.data.data;
       let resRet = res.data.ret;
-      console.log(resData);
-      console.log(resRet);
       if (resRet.code == '0' && resRet.message == "SUCCESS" && resData && resData.length > 0 ) {
         resData.forEach(value => {
           value.isCheckMore = false;
-          value.list.forEach(val => {
-            val.barScanTm = new Date(val.barScanTm);
-            val.dayTime = utils.formatTime(val.barScanTm);
+          value.detail.forEach(val => {
+            val.time = new Date(val.time);
+            val.dayTime = utils.formatTime(val.time);
             
-            val.hoursTime = that.judgementTime(val.barScanTm.getHours()) + ':' + that.judgementTime(val.barScanTm.getMinutes()) + ":" + that.judgementTime(val.barScanTm.getSeconds());
+            val.hoursTime = that.judgementTime(val.time.getHours()) + ':' + that.judgementTime(val.time.getMinutes()) + ":" + that.judgementTime(val.time.getSeconds());
           })
         })
 
@@ -70,9 +68,7 @@ Page({
           logisticsDada: resData
         })
       }
-      console.log(that.data.logisticsDada)
     }, function(err){
-      console.log(err)
     })
 
 
@@ -107,7 +103,6 @@ Page({
 
   checkMore(e) {
     let that = this;
-    console.log(that.data.logisticsDada[e.currentTarget.dataset.num].isCheckMore);
     that.data.logisticsDada[e.currentTarget.dataset.num].isCheckMore = !that.data.logisticsDada[e.currentTarget.dataset.num].isCheckMore;
     that.setData({
       // isCheckMore: !that.data.isCheckMore,
@@ -116,16 +111,10 @@ Page({
     // if (!that.data.logisticsDada[e.currentTarget.dataset.num].isCheckMore) {
     //   let height = 0;
     //   let clas = '.js_expressDetail' + e.currentTarget.dataset.num;
-    //   console.log(e.currentTarget.dataset.num)
-    //   console.log(clas);
     //   my.createSelectorQuery().selectAll(clas).boundingClientRect().exec(function (res) {
-    //     console.log(res)
-    //     console.log(res[0]);
     //     res[0].forEach(value => {
     //       height += value.height;
-    //       console.log(value.height)
     //     })
-    //     console.log(height)
     //     let animation = my.createAnimation({
     //       duration: 1000,
     //       timeFunction: 'linear',
@@ -142,10 +131,6 @@ Page({
     // } else {
     //   let clas = '.js_logisticsOrder' + e.currentTarget.dataset.num;
     //   that.data.move = 'move' + e.currentTarget.dataset.num;
-    //   console.log(e.currentTarget.dataset.num);
-    //   console.log(clas);
-    //   console.log(that.data.move);
-      
     //   let animation = my.createAnimation({
     //     duration: 1000,
     //     timeFunction: 'linear',
@@ -159,7 +144,6 @@ Page({
     //       logisticsDada: that.data.logisticsDada
     //   })
     // }
-    console.log(that.data.logisticsDada)
 
   },
 
@@ -196,8 +180,6 @@ Page({
   // 拖拽优惠券弹窗
   lowLoadMore: function () {
     let that = this;
-    console.log('左滑')
-    console.log(that.data.youLikeHasMore)
     if ( that.data.youLikeHasMore ) {
       that.setData({
         youLikeStart: that.data.guessLikeGoods.length

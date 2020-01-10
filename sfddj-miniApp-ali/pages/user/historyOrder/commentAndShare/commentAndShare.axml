@@ -14,73 +14,86 @@
   </no-wifi>
 </view> -->
 <view a:else>
-  <view class="pad_100">
+  <view class="pad_240">
+    <view class="ruleBar" wx:if="{{rule}}">
+      <view>参加评论有机会获得免单或余额奖励!</view>
+      <view class="checkRule" onTap='checkRules'>查看规则</view> 
+    </view>
     <!--评价晒单页面-->
     <view class="mainView">
       <view class="descView">
-        <image class="descView_goodsImg" src="{{baseImageUrl}}{{goodsPic}}">
-        </image>
-        <view class="descView_staText font-22">描述相符
-        </view>
+        <image class="descView_goodsImg" src="{{baseImageUrl}}{{goodsPic}}"></image>
+        <view class="descView_staText font-30">描述相符</view>
         <view class="starList" data-index="{{index}}" a:for="{{starList}}" a:key="starListCom" onTap="chooseStar">
-          <image src="{{item.select ? baseImgLocUrl+'miniappImg/icon/icon_star_selected.png':baseImgLocUrl+'miniappImg/icon/icon_star_normal.png'}}" class="icon_star">
-          </image>
+          <image src="{{item.select ? baseImgLocUrl+'miniappImg/icon/icon_star_selected.png':baseImgLocUrl+'miniappImg/icon/icon_star_normal.png'}}" class="icon_star"></image>
         </view>
-        <view class="flex_1">
-        </view>
-        <view class="font-22 color-bdbdbd">{{starDesc}}
-        </view>
+        <view class="flex_1"></view>
+        <view class="font-30 color-bdbdbd">{{starDesc}}</view>
       </view>
-      <textarea class="textarea" placeholder-style="color:#bdbdbd;font-size:22rpx" placeholder="宝贝满足你的期待吗？说说它的优点和美中不足的地方吧" onInput="handleInput" maxlength="{{500}}">
-      </textarea>
-      <view class="imgListFa">
-        <view class="imgList" a:for="{{imgList}}" a:key="imgList">
-          <image class="imgList_img marRight_20" src="{{baseImageUrl}}{{item}}">
-          </image>
-          <image class="icon_delete" src="{{baseImgLocUrl}}miniappImg/icon/icon_del_pic.png" data-index="{{index}}" onTap="delPic">
-          </image>
+      <textarea class="textarea" placeholder-style="color:#bdbdbd;font-size:30rpx" placeholder="宝贝满足你的期待吗？说说它的优点和美中不足的地方吧" onInput="handleInput" maxlength="{{500}}"></textarea>
+
+      <view class='imgListFa clearfix'>
+        <view a:for="{{imgList}}" class='imgList' a:key="imgList">
+          <block a:if="{{ item.type == 'video' && item.src }}">
+            <video id="myVideo" src="{{baseImageUrl}}{{item.src}}" class="imgList_img marRight_20"></video>
+            <image class='icon_delete' src='{{baseImgLocUrl}}miniappImg/icon/icon_del_pic.png' onTap='delPic' data-index='{{index}}'></image>
+          </block>
+          <block a:else>
+            <image class='imgList_img marRight_20' src='{{baseImageUrl}}{{item}}'></image>
+            <image class='icon_delete' src='{{baseImgLocUrl}}miniappImg/icon/icon_del_pic.png' onTap='delPic' data-index='{{index}}'></image>
+          </block>
         </view>
-        <view class="imgList_upload" a:if="{{imgList.length < 9}}" onTap="uploadImage">
-          <image class="imgList_img" src="{{baseImgLocUrl}}miniappImg/icon/icon_add_pic.png">
-          </image>
-          <view class="imgList_uploadText">{{imgList.length}}/9
-          </view>
+        <view a:if="{{imgList.length < 9}}" class="imgList_upload marRight_20 font-24"  onTap='uploadImage'>
+          <image class='camera_img ' src='{{baseImgLocUrl}}miniappImg/icon/camera.png'></image>
+          <view class="marTop_10">添加图片</view>
+          <view class="marTop_5">{{imgList.length}}/9</view>
         </view>
+        <view class="imgList_upload font-24" onTap='chooseVideo'>
+          <image class='video_img ' src='{{baseImgLocUrl}}miniappImg/icon/video.png'></image>
+          <view class="video_text">添加视频</view>
+        </view> 
       </view>
+
+
+
       <view class="hideName" onTap="chooseNoName">
         <view class="flex_view_row align_cen">
-          <image class="icon_sel" src="{{noName ? baseImgLocUrl+'miniappImg/icon/icon_sel.png':baseImgLocUrl+'miniappImg/icon/icon_unsel.png'}}">
-          </image>
-          <text class="color-414141 font-22">匿名
-          </text>
+          <image class="icon_sel" src="{{noName ? baseImgLocUrl+'miniappImg/icon/icon_sel.png':baseImgLocUrl+'miniappImg/icon/icon_unsel.png'}}"></image>
+          <text class="color-414141">匿名</text>
         </view>
-        <text hidden="{{!noName}}" class="color-bdbdbd font-22">您写的评价会以匿名的形式展现
-        </text>
+        <text hidden="{{!noName}}" class="color-bdbdbd font-26">您写的评价会以匿名的形式展现</text>
       </view>
     </view>
-    <view class="mainView marTop_30">
-      <view class="shopComment">
-        <image class="icon_sel" src="{{baseImgLocUrl}}miniappImg/icon/icon_shop2.png">
-        </image>
-        <text class="font-22 color-414141">店铺评分
-        </text>
+
+    <view class='mainView marTop_20'>
+      <view class='shopComment'> 
+        <image class='icon_sel' src='{{baseImgLocUrl}}miniappImg/icon/icon_shop2.png'></image>
+        <text class='font-30 color-414141'>店铺评分</text>
       </view>
-      <view class="serviceType">
-        <view class="color-6c6c6c marLeft_20 font-22">服务态度
+      <view class='serviceType'>
+        <view class="flex_view_row align_cen flex_1">
+          <view class='color-6c6c6c  font-30'>服务态度</view>
+          <view a:for="{{starList2}}" class='starList' bindtap='chooseStar2' data-index='{{index}}' wx:key="starListSer">
+            <image src='{{item.select ? baseImgLocUrl+"miniappImg/icon/icon_star_selected.png":baseImgLocUrl+"miniappImg/icon/icon_star_normal.png"}}' class='icon_star'></image>
+          </view>
         </view>
-        <view class="starList" data-index="{{index}}" a:for="{{starList2}}" a:key="starListSer" onTap="chooseStar2">
-          <image src="{{item.select ? baseImgLocUrl+'miniappImg/icon/icon_star_selected.png':baseImgLocUrl+'miniappImg/icon/icon_star_normal.png'}}" class="icon_star">
-          </image>
-        </view>
-        <view class="font-22 color-bdbdbd marLeft_100">{{starDesc2}}
-        </view>
+        <view class='font-30 color-bdbdbd starDesc2'>{{starDesc2}}</view>
       </view>
     </view>
+
   </view>
+
+
   <view class="releaseBtnBox posi_fix width_100 whiteBack flex_view_row align_cen justi_cen">
-    <view class="releaseBtn font-30 color-white" onTap="submit">    发布  
-    </view>
+    <view class="releaseBtn font-36 color-white" onTap="submit">发表</view>
   </view>
 </view>
-<view class="showToastMark font-22 color-white" a:if="{{showToast}}">评论不少于5个字
+<view a:if="{{showToast}}" class="showToastMark font-22 color-white">评论不少于5个字</view>
+<view class="rulesMark" catchtouchmove="move" a:if="{{isShowRules}}">
+  <view class="rulesBox">
+    <view class="icon-cross cancel" catchtap="cancelRule"></view>
+    <scroll-view scroll-y="{{true}}" class="all_100">
+        {{rule}}
+    </scroll-view>
+  </view>
 </view>

@@ -73,6 +73,8 @@ Page({
     });
   },
 
+
+
   /*避免重复提交请求*/
   getToken: function (orderId) {
     var that = this;
@@ -252,5 +254,13 @@ Page({
 
       });
     }
-  }
+  },
+
+  checkRules(){
+    let screenWidth = getApp().globalData.systemInfo.screenWidth;
+    console.log(screenWidth)
+  },
+
+
+  
 });

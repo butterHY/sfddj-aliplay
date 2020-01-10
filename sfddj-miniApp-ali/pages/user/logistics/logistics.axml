@@ -37,10 +37,10 @@
           <image class="heardImg marRight_20" src="{{baseImgLocUrl}}/miniappImg/public/logisticsDetails/tip_point.png"></image>
           顺丰速运
         </view>
-        <text>{{fatherItem.waybillNo}}</text>
+        <text>{{fatherItem.expressNo}}</text>
       </view> 
       <view class="logisticsDetail">物流详情</view>
-      <view a:for="{{fatherItem.list}}" a:for-item="childrenItem" a:key="index" class="js_expressDetail{{fatherIndex}}">
+      <view a:for="{{fatherItem.detail}}" a:for-item="childrenItem" a:key="index" class="js_expressDetail{{fatherIndex}}">
         <view class="logisticsDynamic">
           <view class="logisticsTime font-24">
             <view class="tex_center">
@@ -56,7 +56,7 @@
               </view>
             </view>
             <view class="flex_1 posi_re">
-              {{childrenItem.remark}}
+              {{childrenItem.content}}
             </view>
           </view>
         </view>
