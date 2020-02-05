@@ -165,7 +165,7 @@ Page({
     }
 
 
-    if (url.indexOf('http') > -1) {
+    if (url.substring(0,4).indexOf('http') > -1) {
       my.call('startApp', { appId: '20000067', param: { url: url, chInfo: chInfo } })
     }
     else {
