@@ -230,7 +230,7 @@ Page({
 		clearTimeout(this.data.timeOut);
 		// 重置全局缓存的地址
 		getApp().globalData.NowAddrId = null
-		console.log(';;------0000',getApp().globalData.NowAddrId);
+		// console.log(';;------0000',getApp().globalData.NowAddrId);
 	},
 
 	// 计算中间内容的高度
