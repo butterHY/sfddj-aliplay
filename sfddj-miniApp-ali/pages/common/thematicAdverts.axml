@@ -1,0 +1,11 @@
+<template name="thematicItem">
+  <view class="">
+    <!-- 标题 -->
+    <view a:if="{{}}">
+      <view class="titleMes_set titleMesText js_titleMes_set" style="width: 100%;background: #'+backColor+';" id="tit'+adItems[i].positionId+'">
+        <view style="color: #'+adItems[i].fontColor+'; font-size: '+(adItems[i].fontSize *2/26).toFixed(2)+'rem; text-align: '+adItems[i].titlePosition+'">'+adItems[i].moduleTitle
+        </view>
+      </view>
+    </view>
+  </view>
+</template>
