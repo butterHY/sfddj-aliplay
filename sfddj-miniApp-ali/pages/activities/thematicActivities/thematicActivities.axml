@@ -1,5 +1,7 @@
+<import src="../../common/thematicAdverts"/>
+
 <view>
 
-
+  <template is="thematicItem" data="{{goodsList: childrenCategoryTags}}"></template>
   
 </view>

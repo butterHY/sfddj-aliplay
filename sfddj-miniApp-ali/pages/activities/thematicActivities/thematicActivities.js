@@ -40,21 +40,14 @@ Page({
       goodsList: goodsList,
     })
 
-    that.getAllPintuanProduct(0);
-    that.data.isonLoad = await that.getAdvertsModule();
-
-    my.setNavigationBar({
-      title: '专题活动',
-      backgroundColor: 'red',
-      success() { },
-      fail() { },
-    });
+    // that.getAllPintuanProduct(0);
+    // that.data.isonLoad = await that.getAdvertsModule();
 
     // console.log(this.data.goodsList);
 
   },
 
-  onReady() {
+  onReady1() {
     var that = this;
     var allItemWidth = 0;
     var navigationWidth = 0;

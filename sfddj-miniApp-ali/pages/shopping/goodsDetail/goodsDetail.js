@@ -332,9 +332,9 @@ Page({
               !that.data.addressList.find(value => value.isDefault) ? that.data.addressList[0].isDefault = true : '';
             }
             that.auto_send();
-          }
 
           that.setCategoryData();
+          }
 
           // 判断是否积分商品,积分商品type==3, 判断是否购物返现商品,积分商品type==4
           var type = '';
@@ -1456,10 +1456,15 @@ Page({
     my.getLocation({
       type: 1,
       success(res) {
+        console.log('gpsAddr', res)
         my.hideLoading();
         that.setData({
           address: res
         })
+
+        // 上报定位数据
+        that.collectAddr(res)
+
         that.auto_send();
       },
       fail(err) {
@@ -1471,6 +1476,28 @@ Page({
       }
     }
     )
+  },
+
+  // 定位上报
+  collectAddr(res = {}) {
+    let cid = utils.getCid()
+    let gpsData = { province: res.province, city: res.city, area: res.district, source: 'ALIPAY_MINIAPP', cookieId: cid }
+    return new Promise((reslove, reject) => {
+
+      http.get(api.GOODSDETAIL.GPS_ADDR_COLLECT, gpsData, res => {
+        reslove({
+          'type': true,
+          'result': res
+        });
+      }, err => {
+        reject({
+          'type': false,
+          'result': err
+        });
+      })
+
+    })
+
   },
 
 
@@ -1833,28 +1860,28 @@ Page({
   auto_send() {
     let that = this;
     let defaultAddress = null;
-//     let defaultAddress = {
-// "id":8512355,
-// "createDate":1550651789000,
-// "modifyDate":1579224570000,
-// "memberId":5777,
-// "fullName":"小张张",
-// "province":"",
-// "city":"北京市",
-// "area":"东城区",
-// "address":"厅顶替顶替",
-// "mobile":"13526983698",
-// "isDefault":false,
-// "openId":"2088902907904264",
-// "source":null,
-// "idCardId":null,
-// "idCardNo":null,
-// "frontImage":null,
-// "reverseImage":null,
-// "showMobile":"13526983698",
-// "showFullName":"小张张",
-// "showAddress":"厅顶替顶替"
-// };
+    //     let defaultAddress = {
+    // "id":8512355,
+    // "createDate":1550651789000,
+    // "modifyDate":1579224570000,
+    // "memberId":5777,
+    // "fullName":"小张张",
+    // "province":"",
+    // "city":"北京市",
+    // "area":"东城区",
+    // "address":"厅顶替顶替",
+    // "mobile":"13526983698",
+    // "isDefault":false,
+    // "openId":"2088902907904264",
+    // "source":null,
+    // "idCardId":null,
+    // "idCardNo":null,
+    // "frontImage":null,
+    // "reverseImage":null,
+    // "showMobile":"13526983698",
+    // "showFullName":"小张张",
+    // "showAddress":"厅顶替顶替"
+    // };
     if (that.data.addressList && that.data.addressList.length > 0) {
       defaultAddress = that.data.addressList.find(value => value.isDefault);
     } else if (that.data.address) {
