@@ -333,7 +333,7 @@ Page({
             }
             that.auto_send();
 
-          that.setCategoryData();
+            that.setCategoryData();
           }
 
           // 判断是否积分商品,积分商品type==3, 判断是否购物返现商品,积分商品type==4
