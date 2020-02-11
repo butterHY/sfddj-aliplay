@@ -347,7 +347,7 @@
 .swipe{
   width: 100%;
   box-sizing: border-box;
-  padding: 0 30rpx 5rpx;
+  padding: 0 24rpx 5rpx;
 }
 
 @keyframes mymove
