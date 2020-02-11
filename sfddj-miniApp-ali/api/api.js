@@ -90,5 +90,9 @@ export default {
 		'ATTENT_STORE': '/m/g/supplier/attention',                                //关注店铺
 	},
 
+  THEMATIC: {
+    'GET_THEMATIC_DATA': '/m/a/1.0/subject/getSubjectPage',                    //获取专题页内容
+  },
+
 
 }

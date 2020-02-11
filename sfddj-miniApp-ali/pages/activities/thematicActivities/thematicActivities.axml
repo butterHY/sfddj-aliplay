@@ -1,7 +1,6 @@
 <import src="../../common/thematicAdverts"/>
-
 <view>
-
-  <template is="thematicItem" data="{{goodsList: childrenCategoryTags}}"></template>
-  
+  <block a:for="{{thematicAds.modules}}" a:key="thematicAds">
+    <template is="thematicItem" data="{{item, baseImageUrl, baseLocImgUrl, ossImgStyle}}"></template>
+  </block>
 </view>

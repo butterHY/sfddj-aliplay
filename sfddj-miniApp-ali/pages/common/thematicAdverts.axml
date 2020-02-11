@@ -1,76 +1,148 @@
+<import-sjs name="filters" from="../wxsFile/public.sjs"/>
 <template name="thematicItem">
   <view class="">
     <!-- 标题 -->
-    <view>
-      <!-- 标题 -文字 -->
-      <view class="titleMes_set titleMesText js_titleMes_set width_100" style="background: #1FF231;">
-        <view style="color: #180A44; font-size: 36rpx; text-align: left">无敌大橘子</view>
-      </view>
-      <!-- 标题-图片 -->
-      <view class="titleMes_set js_titleMes_set" id="tit'+adItems[i].positionId+'">
-        <image src="https://img.fx-sf.com/user/admin164/20191223/157708923001984536.jpg" class="width_100 blockBox" mode="widthFix"/>
-      </view>
+    <view a:if="{{item.moduleType == 'TITLE'}}">
+      <block a:for="{{item.parseItem}}" a:key="titleMes" a:for-item="titleItem">
+        <!-- 标题 -文字 -->
+        <view a:if="{{titleItem.titleType == 0}}" class="titleMes_set titleMesText js_titleMes_set width_100" style="background: #{{item.backgroundColor}};">
+          <view style="color: #{{titleItem.fontColor}}; font-size: {{filters.toFix(titleItem.fontSize * 2)}}rpx; text-align: {{titleItem.titlePosition}}">{{titleItem.moduleTitle}}</view>
+        </view>
+        <!-- 标题-图片 -->
+        <view a:elif="{{titleItem.titleType == 1}}" class="titleMes_set js_titleMes_set" id="tit'+adItems[i].positionId+'">
+          <image src="https://img.fx-sf.com/user/admin164/20191223/157708923001984536.jpg" class="width_100 blockBox" mode="widthFix"/>
+        </view>
+      </block>
     </view>
     <!-- 商品- 大图 -->
-    <view a:if="{{goodsListAll}}" class="goodsListOneRow" style="background: #33A7FF;">
-      <view a:for="{{goodsList}}" class=" padTop_20r">
-        <view class="bigGoodsListOne font-26">
-          <navigator url="/pages/shopping/goodsDetail/goodsDetail?goodsSn=" hover-class="none">
-            <!-- 图片 -->
-            <view class="flex_view_row posi_re width_100">
-              <image mode="widthFix" src="https://img.fx-sf.com/goods/20190923/156922261937743121.jpg?x-oss-process=style/goods_webp_3" class="width_100 blockBox"/>
-              <!-- 标签 -->
-              <view class="verpromotionHot flex_view_col">
-                <text class="verPromotionHot_txt">买赠</text>
-                <image mode="widthFix" src="https://img.sfddj.com/miniappImg/more/hotIcon.png" class="width_100"/>
-              </view>
-            </view>
-            <!-- 商品信息 -->
-            <view class="width_100 goodsPriceInfo">
-              <!-- 商品名称 -->
-              <view class="single-line font-30 lineH_40r">测试员运费拼团测试测试员运费拼团测试测试员运费拼团测试测试员运费拼团测试测试员运费拼团测试</view>
-              <!-- 副标题 -->
-              <view class="smallFont-tip">苦村顶替顶替顶替</view>
-              <!-- 价格 -->
-              <view class="flex_view_row goodsPriceBox align_cen">
-                <view class="salePriceBox">￥0.01</view>
-                <view class="flex_1 salePricePoint flex_view_row align_cen">
-                  <text>10斤10斤10斤</text></view>
-              </view>
-            </view>
-          </navigator>
-        </view>
-      </view>
-    </view>
-    <!-- 商品- 详情列表  -->
-    <view class="goodsListOneList width_100" style="background: #f5f5f5;">
-      <view a:for="{{goodsList}}" class="width_100">
-        <view class="goodsListItemBox font-26 width_100">
-          <navigator data-url="/pages/shopping/goodsDetail/goodsDetail?goodsSn={{goodsSn}}" style="width:100%;height:220rpx;display:flex;flex-direction:row;position:relative; border-radius: 5px; background: #fff;" onTap="goToPage">
-            <view style="width:220rpx;height:100%;" class="posi_re">
-              <image src="https://img.fx-sf.com/goods/20190923/156922261937743121.jpg" class="all_100"></image>
-              <!-- 标签 -->
-              <view class="verpromotionHot flex_view_col">
-                <text class="verPromotionHot_txt">买赠</text>
-                <image mode="widthFix" src="https://img.sfddj.com/miniappImg/more/hotIcon.png" class="width_100"/>
-              </view>
-            </view>
-            
-            <view style="display:flex; flex-direction:column;justify-content:space-between;position:absolute;top:10rpx;left:240rpx;bottom:10rpx;right:10rpx;">
-              <view class="single-line flex_view_col">
-                <view class="font-30 color-323232 single-line">{{name}}测试员运费拼团测试测试员运费拼团测试测试员运费拼团测试测试员运费拼团测试测试员运费拼团测试</view>
-                <view style="display:block;margin-top:10rpx;" class="font-26 color-bbbbbb single-line">{{title}}苦村顶替顶替顶替</view>
-              </view>
-              <view style="max-width:350rpx" class="font-30 font-weight-500 single-line color-bbbbbb flex_view_row algin_cen">
-                <view class="color-ff5353 font-34">¥{{salePrice}}0.01</view>
-                <view style="margin-left:10rpx" class="font-24 color-bbbbbb flex_view_col align_cen justi_cen flex_1 overHid">
-                  <view  class="single-line width_100">{{productName}}</view>
+    <view a:if="{{item.moduleType == 'GOODSLIST'}}">
+      <block a:if="{{item.goodsMinVOList && item.goodsMinVOList.length > 0}}" a:for="{{item.parseItem}}" a:for-item="goodsItem">
+        <view a:if="{{goodsItem.listType == 0}}" class="goodsListOneRow" style="background: #{{item.backgroundColor}};">
+          <view a:for="{{item.goodsMinVOList}}" a:for-item="goodsListItem" class=" padTop_20r">
+            <view class="bigGoodsListOne font-26">
+              <view data-url="/pages/shopping/goodsDetail/goodsDetail?goodsSn={{goodsListItem.goodsSn}}" onTap="goToPage" hover-class="none">
+                <!-- 图片 -->
+                <view class="flex_view_row posi_re width_100">
+                  <image mode="widthFix" src="{{baseImageUrl + goodsListItem.goodsDefaultImage + ossImgStyle}}" class="width_100 blockBox"/>
+                  <!-- 标签 -->
+                  <view a:if="{{goodsListItem.goodsLabel}}" class="verpromotionHot flex_view_col">
+                    <text class="verPromotionHot_txt">{{goodsListItem.goodsLabel}}</text>
+                    <image mode="widthFix" src="https://img.sfddj.com/miniappImg/more/hotIcon.png" class="width_100"/>
+                  </view>
+                </view>
+                <!-- 商品信息 -->
+                <view class="width_100 goodsPriceInfo">
+                  <!-- 商品名称 -->
+                  <view class="single-line font-30 lineH_40r">{{goodsListItem.goodsName}}</view>
+                  <!-- 副标题 -->
+                  <view class="smallFont-tip">{{goodsListItem.goodsName}}</view>
+                  <!-- 价格 -->
+                  <view class="flex_view_row goodsPriceBox align_cen">
+                    <view class="salePriceBox">￥{{goodsListItem.salePrice}}</view>
+                    <view class="flex_1 salePricePoint flex_view_row align_cen">
+                      <text>{{goodsListItem.productName}}</text></view>
+                  </view>
                 </view>
               </view>
             </view>
-          </navigator>
+          </view>
         </view>
-      </view>
+        <!-- 商品- 详情列表  -->
+        <view a:if="{{goodsItem.listType == 1}}" class="goodsListOneList width_100" style="background: #{{item.backgroundColor}};">
+          <view a:for="{{item.goodsMinVOList}}" a:for-item="goodsListItem" class="width_100">
+            <view class="goodsListItemBox font-26 width_100">
+              <view data-url="/pages/shopping/goodsDetail/goodsDetail?goodsSn={{goodsListItem.goodsSn}}" style="width:100%;height:220rpx;display:flex;flex-direction:row;position:relative; border-radius: 5px; background: #fff;" onTap="goToPage">
+                <view style="width:220rpx;height:100%;" class="posi_re">
+                  <image src="{{baseImageUrl + goodsListItem.goodsDefaultImage + ossImgStyle}}" class="all_100"></image>
+                  <!-- 标签 -->
+                  <view a:if="{{goodsListItem.goodsLabel}}" class="verpromotionHot flex_view_col">
+                    <text class="verPromotionHot_txt">{{goodsListItem.goodsLabel}}</text>
+                    <image mode="widthFix" src="https://img.sfddj.com/miniappImg/more/hotIcon.png" class="width_100"/>
+                  </view>
+                </view>
+                <view style="display:flex; flex-direction:column;justify-content:space-between;position:absolute;top:10rpx;left:240rpx;bottom:10rpx;right:10rpx;">
+                  <view class="single-line flex_view_col">
+                    <view class="font-30 color-323232 single-line">{{goodsListItem.goodsName}}</view>
+                    <view a:if="{{goodsListItem.goodsTitle}}" style="display:block;margin-top:10rpx;" class="font-26 color-bbbbbb single-line">{{goodsListItem.goodsTitle}}</view>
+                  </view>
+                  <view style="max-width:350rpx" class="font-30 font-weight-500 single-line color-bbbbbb flex_view_row algin_cen">
+                    <view class="color-ff5353 font-34">¥{{goodsListItem.salePrice}}</view>
+                    <view style="margin-left:10rpx" class="font-24 color-bbbbbb flex_view_col align_cen justi_cen flex_1 overHid">
+                      <view class="single-line width_100">{{goodsListItem.productName}}</view>
+                    </view>
+                  </view>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+        <!-- 商品- 小图- 一行两个 -->
+        <view a:if="{{goodsItem.listType == 2}}" class="goodsListColumn flex_view_row width_100" style="background: #{{item.backgroundColor}};">
+          <view class="width_50">
+            <block a:for="{{item.goodsMinVOList}}" a:for-item="goodsListItem" a:if="{{index % 2 == 0}}">
+              <view data-index="{{index}}" data-url="{{'/pages/shopping/goodsDetail/goodsDetail?goodsSn=' + goodsListItem.goodsSn}}" class='itemGoodsCard borBox' style='padding:10rpx 10rpx 10rpx 0;' onTap="goToPage">
+                <view class='posi_re goodsArea'>
+                  <view class='goodsImg posi_re'>
+                    <image src="{{baseImageUrl + goodsListItem.goodsDefaultImage + ossImgStyle}}" class="all_100 goodsDefaultImage"></image>
+                    <!-- 标签 -->
+                    <view a:if="{{goodsListItem.goodsLabel}}" class="verpromotionHot flex_view_col">
+                      <text class="verPromotionHot_txt">{{goodsListItem.goodsLabel}}</text>
+                      <image src="https://img.sfddj.com/miniappImg/more/hotIcon.png" class="blockBox iconHot"/>
+                    </view>
+                  </view>
+                  <view class="goodsInfo height_176r notAtHome">
+                    <view class='single-line2 height_80r'>
+                      <text class='font-26 color-323232 single-line-text lineH_2'>{{goodsListItem.goodsName}}</text>
+                      <text class='font-26 color-bbbbbb single-line-text goods_productName'>{{goodsListItem.productName}}</text>
+                    </view>
+                    <view class="goodsPriceBox">
+                      <text class='font-34 color-ff5353 font-weight-bold'>¥{{goodsListItem.salePrice}}</text>
+                    </view>
+                  </view>
+                </view>
+              </view>
+            </block>
+          </view>
+          <view class="width_50">
+            <block a:for="{{item.goodsMinVOList}}" a:for-item="goodsListItem" a:if="{{index % 2 != 0}}">
+              <view data-index="{{index}}" data-type="{{listType}}" data-url="{{'/pages/shopping/goodsDetail/goodsDetail?goodsSn=' + goodsListItem.goodsSn}}" class='itemGoodsCard borBox' style='padding:10rpx 0 10rpx 10rpx;' onTap="goToPage">
+                <view class='posi_re goodsArea'>
+                  <view class='goodsImg posi_re'>
+                    <image src="{{baseImageUrl + goodsListItem.goodsDefaultImage + ossImgStyle}}" class="all_100 goodsDefaultImage"></image>
+                    <!-- 标签 -->
+                    <view a:if="{{goodsListItem.goodsLabel}}" class="verpromotionHot flex_view_col">
+                      <text class="verPromotionHot_txt">{{goodsListItem.goodsLabel}}</text>
+                      <image mode="widthFix" src="https://img.sfddj.com/miniappImg/more/hotIcon.png" class="width_100 blockBox"/>
+                    </view>
+                  </view>
+                  <view class="goodsInfo height_176r notAtHome">
+                    <view class='single-line2 height_80r'>
+                      <text class='font-26 color-323232 single-line-text lineH_2'>{{goodsListItem.goodsName}}</text>
+                      <text class='font-26 color-bbbbbb single-line-text goods_productName'>{{goodsListItem.productName}}</text>
+                    </view>
+                    <view class="goodsPriceBox">
+                      <text class='font-34 color-ff5353 font-weight-bold'>¥{{goodsListItem.salePrice}}</text>
+                    </view>
+                  </view>
+                </view>
+              </view>
+            </block>
+          </view>
+        </view>
+      </block>
+    </view>
+    <!-- 一行一个 -->
+    <view a:if="{{item.moduleType == 'SINGLEGOODS'}}" class="oneAdsImgBox">
+      <!-- 灰色间条 -->
+      <view a:if="{{item.spacing == 1}}" class="ads_space" style="background: #{{item.topIntervalColor}}"></view>
+      <!-- 图片内容 -->
+      <block a:for="{{item.parseItem}}" a:for-item="oneAdsItem">
+        <view class="oneAds_con" style="background: #{{item.backgroundColor}};">
+          <view class="width_100" data-url="{{oneAdsItem.link}}" onTap="goToPage">
+            <image mode="widthFix" src="{{baseImageUrl + oneAdsItem.imageUrl}}" class="width_100 blockBox"/>
+          </view>
+        </view>
+      </block>
     </view>
   </view>
 </template>
