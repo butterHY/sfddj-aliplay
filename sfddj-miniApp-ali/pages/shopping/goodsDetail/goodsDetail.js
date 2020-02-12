@@ -1456,7 +1456,6 @@ Page({
     my.getLocation({
       type: 1,
       success(res) {
-        console.log('gpsAddr', res)
         my.hideLoading();
         that.setData({
           address: res

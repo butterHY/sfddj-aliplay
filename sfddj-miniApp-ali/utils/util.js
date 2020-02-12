@@ -335,7 +335,7 @@ function getCid() {
   if (!getGuid || getGuid == undefined) {
     getGuid = guid();
     try {
-      my.setStorage({ key: 'ddj_guid', data: fields.cid });
+      my.setStorage({ key: 'ddj_guid', data: getGuid });
     } catch (e) { }
   } 
   return getGuid
