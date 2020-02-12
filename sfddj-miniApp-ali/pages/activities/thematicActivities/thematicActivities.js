@@ -14,54 +14,19 @@ Page({
     baseImageUrl: constants.UrlConstants.baseImageUrl,
     current: 1,
     ossImgStyle: '?x-oss-process=style/goods_img_2',
-    isScroll_x: true,
-    allGoodsList: [],
-    navigationHeight: null,
-    itemId: null,
+    loadComplete: false,   //是否加载完成
+    loadFail: false,       //是否加载失败
   },
   onLoad: async function(options) {
+
+
     var that = this;
     that.setData({
       thematicId: options.id ? options.id : ''
     })
     that.getThematicData();
-    // that.data.isonLoad = await that.getAdvertsModule();
-
-    // console.log(this.data.goodsList);
 
   },
-
-  onReady1() {
-    var that = this;
-    var allItemWidth = 0;
-    var navigationWidth = 0;
-    var navigationHeight = 0;
-    my.createSelectorQuery().selectAll('.all').boundingClientRect().exec((all) => {
-      var allItem = all[0];
-      for (var i = 0; i < allItem.length; i++) {
-        allItemWidth += allItem[i].width;
-      }
-    })
-    my.createSelectorQuery()
-      .selectAll('.navigation').boundingClientRect()
-      .exec((navigation) => {
-        navigationWidth = navigation[0][0].width;
-        navigationHeight = navigation[0][0].height;
-        that.setData({
-          navigationHeight: navigationHeight
-        })
-
-
-
-        if (allItemWidth > navigationWidth) {
-          that.setData({
-            isScroll_x: false
-          })
-        }
-      })
-
-  },
-
 
   /**
  * 获取专题模块
@@ -92,10 +57,16 @@ Page({
       }
 
       that.setData({
-        thematicAds: result
+        thematicAds: result,
+        loadComplete: true,
+        loadFail: false,
       })
 
     }, err => {
+      that.setData({
+        loadComplete: true,
+        loadFail: true,
+      })
     })
 
   },
@@ -124,6 +95,11 @@ Page({
   },
 
 
+  onPullDownRefresh(){
+    
+    // 阻止下拉刷新
+    my.stopPullDownRefresh()
+  },
 
 
 

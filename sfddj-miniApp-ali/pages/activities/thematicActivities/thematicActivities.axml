@@ -1,5 +1,15 @@
 <import src="../../common/thematicAdverts"/>
-<view>
+<!-- 加载中 -->
+<view a:if="{{!loadComplete && !loadFail}}">
+  <loading-now>
+  </loading-now>
+</view>
+<!-- 加载失败 -->
+<view a:elif="{{loadFail}}">
+  <load-fail onRefreshPage="onRefreshPage">
+  </load-fail>
+</view>
+<view a:else>
   <block a:for="{{thematicAds.modules}}" a:key="thematicAds">
     <template is="thematicItem" data="{{item, baseImageUrl, baseLocImgUrl, ossImgStyle}}"></template>
   </block>
