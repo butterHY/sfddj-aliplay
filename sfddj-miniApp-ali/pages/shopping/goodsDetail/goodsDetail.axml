@@ -21,7 +21,7 @@
     <swiper indicator-dots="true" class="swiper_img" indicator-active-color="#ff5353" indicator-color="rgba(0,0,0,.3)" autoplay="{{false}}" circular="true">
       <block a:for="{{goods.goodsImages}}" a:key="*this">
         <swiper-item>
-          <image src="{{baseImageUrl}}{{item}}" class="swiper_img" data-current="{{item}}" data-urls="{{goods.goodsImages}}" onTap="commentViewTap"></image>
+          <image src="{{baseImageUrl}}{{item}}" class="swiper_img" data-current="{{index}}" data-urls="{{goods.goodsImages}}" onTap="commentViewTap"></image>
         </swiper-item>
       </block>
     </swiper>
@@ -208,9 +208,8 @@
       <text class="icon-href-right opacity8 font-24 color-999 "></text>
     </view>
     <view a:if="{{ goods.deliveryTime && goods.viewStatus == 'SALEING' && goods.goodsStore != 0 && !nonDeliveryArea }}" class="addressTips">
-      下单后
-      <text class="color-57">{{goods.deliveryTime}}小时以内</text>
-      发货
+      <block a:if="{{ goods.deliveryTime * 1 > 48 }}">发货时效以商品详情为准</block>
+      <block a:else>下单后<text class="color-57">{{goods.deliveryTime}}小时以内发货</text></block>
     </view>
   </view>
   <!-- a:if="{{addressList && addressList.length > 0}}" -->
@@ -317,15 +316,15 @@
       <text class="font-24 icon-href-right opacity8 color-999 marRight_30"></text>
     </view>
   </navigator>
-  <!-- 商品评价 -->
-  <!-- 评分和评价条数                             已完成新接口字段更换但还没有验图片 -->
-  <view a:if="{{showComment}}" class="division-area"></view>
+
+
+  <!-- 商品评分和评价条数                             已完成新接口字段更换但还没有验图片 -->
+  <!-- <view a:if="{{showComment}}" class="division-area"></view>
   <view a:if="{{showComment}}" data-url="/pages/shopping/comment/comment?goodScore={{goods.commentScore}}&goodsCommentTotal={{goods.commentTotal}}&goodsId={{goods.goodsId}}" data-type="comment" onTap="goToTargetPage" hover-class="none">
     <view class="goods-comment-title">
       <view class="alignMiddle">
         好评率: 
         <text class="marLeft_5 color-57"> {{goods.commentScore}}%</text>
-        <!-- <view class="color-51">买家秀</view> -->
       </view>
       <view class="color-999 alignMiddle">
         <text>评价</text>
@@ -339,7 +338,7 @@
         <text class="icon-href-right opacity8 font-22 marLeft_10 color-999"></text>
       </view>
     </view>
-  </view>
+  </view> -->
   <!-- 评价示例 -->
   <!-- <view a:if="{{showComment && comment.length > 0}}" a:for="{{comment}}" class="goods-comment-area" a:key="*this">
     <view class="comment-line"></view>
@@ -366,7 +365,73 @@
     </scroll-view>
   </view> -->
 
-  <view class="division-area"></view>
+  <navigator a:if="{{buyerShowCount}}" url="/pages/shopping/comment/comment?type=buyerShow&goodsId={{goods.goodsId}}" hover-class="none">
+    <view class="goods-comment-title">
+      <view class="alignMiddle">
+        <text class="marLeft_5 color-57"></text>
+        <text class="color-51">买家秀</text>
+      </view>
+      <view class="color-999 alignMiddle">
+        <text>评价</text>
+        <text class="marLeft_10">
+          <text>(</text>
+          <text>{{buyerShowCount}}</text>
+          <text>)</text>
+        </text>
+        <text class="icon-href-right opacity8 font-22 marLeft_10 color-999"></text>
+      </view>
+    </view>
+  </navigator>
+  <!-- 买家秀示例 -->
+  <view a:if="{{ buyerShowCount && buyerShowList && buyerShowList.length > 0 }}" a:for="{{buyerShowList}}" class="goods-comment-area" a:key="index">
+    <view class="comment-line"></view>
+    <view class="comment-user-area">
+      <view class="flex_view_row align_cen">
+        <view class="comment-user-image">
+          <image src="{{item.headPortraitPath ? item.headPortraitPath : base64imageUrl + 'miniappImg/icon/icon_default_head.jpeg'}}" class="all_100"></image>
+        </view>
+        <view class="height_100 flex_view_col marLeft_20">
+          <view class="comment_nickName font-28 color-999">{{item.nickName}}</view>
+          <view class="flex_view_row align_cen">
+            <image a:for="{{item.star}}" src="{{base64imageUrl}}miniappImg/icon/icon_star_selected.png" class="proComment_star" a:key="index"></image>
+            <image a:for="{{5 - item.star}}" src="{{base64imageUrl}}miniappImg/icon/icon_star_normal.png" class="proComment_star" a:key="index"></image>
+          </view>
+        </view>
+      </view>
+      <view class="font-28 color-999">{{item.createDate}}</view>
+    </view>
+    <view class="proComment_text font-26">
+      <view class="comment-text">{{item.comment}}</view>
+    </view>
+    <scroll-view a:if="{{ item }}" class="commentImgList marTop_20" scroll-x="{{true}}" scroll-with-animation="{{true}}">
+        <view class="proComment_img video_view" a:if="{{ item.videoPath && item.videoPath.length > 0 }}" a:for="{{item.videoPath}}"  a:for-item="videoItem"  a:for-index="videoIndex" wx:key="videoIndex" data-id="myVideo{{videoIndex}}" data-videoSrc="{{videoItem.videoSrc}}" catchTap="playCommeVideo">
+          <image class="proComment_img
+" src="{{baseImageUrl + videoItem.videoCover}}" ></image>
+          <image class="video_playImg" src="{{base64imageUrl + 'miniappImg/public/video/player-play-btn.png'}}"></image>
+        </view>
+        <image a:if="{{ item.imagePath && item.imagePath.length > 0 }}" a:for="{{item.imagePath}}" a:for-item="imgItem"  a:for-index="imgIndex" :key="imgIndex"    data-current="{{imgIndex}}" data-urls="{{item.imagePath}}" src="{{filters.isHttpUrl(imgItem) ? base64imageUrl + 'vueStatic/img/commentErrImg.png' : baseImageUrl + imgItem}}"  class="proComment_img" catchTap="commentViewTap"></image>
+    </scroll-view>
+  </view>
+  <view a:if="{{ buyerShowCount || ( buyerShowCount && buyerShowList && buyerShowList.length > 0 ) }}" class="division-area"></view>
+
+  <navigator a:if="{{goods.commentTotal}}" url="/pages/shopping/comment/comment?type=generalComment&goodsId={{goods.goodsId}}" hover-class="none">
+    <view class="goods-comment-title">
+      <view class="alignMiddle">
+        好评率: 
+        <text class="marLeft_5 color-57"> {{goods.commentScore}}%</text>
+      </view>
+      <view class="color-999 alignMiddle">
+        <text>评价</text>
+        <text class="marLeft_10">
+          <text>(</text>
+          <text>{{goods.commentTotal}}</text>
+          <text>)</text>
+        </text>
+      </view>
+    </view>
+  </navigator>
+  <view a:if="{{goods.commentTotal}}" class="division-area"></view>
+
   <!-- 产品详情和服务售后的选择栏                 已完成新接口字段更换 -->
   <view class="goods-detail-title-view js_titleView whiteBack width_100" style="{{suctionTop == 0 ? 'position: fixed; top: 0; left: 0; z-index: 1000;' : ''}}">
     <view class="goods-detail-title" id="0" onTap="switchDetailShowTap">
@@ -621,3 +686,8 @@
 <template is="cashBackRule" data="{{cashBackRulePopup: cashBackRulePopup}}"></template>
 <!-- 全赔规则 -->
 <template is="compensationRule" data="{{showCompensationRule: showCompensationRule, afterSaleGuee: goods.afterSaleGuee}}"></template>
+
+<!-- 评论视频播放弹层 -->
+<view class="mark background_black" a:if="{{videoShow}}">
+  <video class="all_100" id="{{videoId}}" loop="{{true}}"  show-play-btn="{{false}}" show-fullscreen-btn="{{false}}"  src="{{baseImageUrl}}{{videoSrc}}" onLoading="videoLoading" onFullScreenChange="fullscreenchange"></video>
+</view>

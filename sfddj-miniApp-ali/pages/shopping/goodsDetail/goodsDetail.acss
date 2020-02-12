@@ -539,59 +539,6 @@ page {
   width: 690rpx;
 }
 
-.goods-comment-title {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  margin: 0 30rpx;
-  padding: 30rpx 0;
-  font-size: 30rpx;
-  color: #323232;
-}
-
-.goods-comment-area {
-  display: flex;
-  flex-direction: column;
-  padding: 0 30rpx 40rpx 30rpx;
-}
-
-.comment-line {
-  border-top: 2rpx #e6e6e6 solid;
-}
-
-.comment-user-area {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  box-sizing: border-box;
-  padding: 30rpx 0;
-}
-
-.commentImgList {
-  height: 188rpx;
-  white-space: nowrap;
-  overflow: auto;
-}
-
-.comment-user-image {
-  width: 68rpx;
-  height: 68rpx;
-  border-radius: 50%;
-  overflow: hidden;
-}
-
-.comment-text {
-  font-size: 30rpx;
-  line-height: 48rpx;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-}
-
 
 .red-count-view {
   position: absolute;
@@ -749,20 +696,6 @@ page {
   width: 16rpx;
   height: 26rpx;
   margin-left: 20rpx;
-}
-
-
-.proComment_star {
-  width: 20rpx;
-  height: 20rpx;
-  margin-right: 10rpx;
-}
-
-.proComment_img {
-  width: 188rpx;
-  height: 188rpx;
-  margin-right: 5rpx;
-  border-radius: 15rpx;
 }
 
 .proComment_date {
@@ -1312,9 +1245,6 @@ page {
   z-index:9000;
 }
 
-.division-area {
-  background: rgb(245, 245, 245);
-}
 
 /*  banner  位样式 */
 .bannerImgBox {
@@ -1377,15 +1307,142 @@ page {
   color: #ff5353;
 }
 
-.alignMiddle {
-   vertical-align: middle;
-}
 
 .opacity8 {
   opacity: 0.8;
 }
 
 
+/* 买家秀样式 */
+.division-area {
+  background: rgb(245, 245, 245);
+}
+
+.goods-comment-title {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 30rpx;
+  padding: 30rpx 0;
+  font-size: 28rpx;
+  color: #323232;
+}
+
+
+.alignMiddle {
+   vertical-align: middle;
+}
+
+.goods-comment-area {
+  display: flex;
+  flex-direction: column;
+  padding: 0 30rpx 36rpx 30rpx;
+}
+
+.comment-line {
+  border-top: 2rpx #e6e6e6 solid;
+}
+
+.comment-user-area {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 30rpx 0 20rpx;
+}
+
+
+.comment-user-image {
+  width: 68rpx;
+  height: 68rpx;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.proComment_star {
+  width: 18rpx;
+  height: 18rpx;
+  margin-right: 10rpx;
+}
+
+.comment-text {
+  font-size: 28rpx;
+  line-height: 44rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.commentImgList {
+  height: 188rpx;
+  white-space: nowrap;
+  overflow: auto;
+}
+
+
+.proComment_img {
+  width: 188rpx;
+  height: 188rpx;
+  margin-right: 5rpx;
+  border-radius: 15rpx;
+}
+
+.proComment_text {
+  /* margin-top: 12rpx; */
+}
+
+.comment_nickName {
+  line-height: 30rpx;
+}
+
+
+/* 视频封面图片 */
+.myVideo{ 
+  width:100%;
+  height: calc(9 * 750rpx / 16);
+  background-color: #fff;
+}
+
+
+.video_view {
+  display: inline-block;
+  background: black;
+  position: relative;
+}
+
+.background_black {
+    background: black;
+}
+
+.video_playImg {
+  width: 50rpx; height: 50rpx;
+  position: absolute;
+  top: 50%;left: 50%;
+  margin: -25rpx 0 0 -25rpx;
+}
+
+.controls{
+  position:absolute;
+  z-index:1; 
+  background-color: #fff;    
+   /* height: calc(9 * 750rpx / 16);  */
+  /* margin-top:-430rpx; */
+}
+.play{ 
+    position:absolute;
+    left:50%;
+    margin-top:-300rpx;
+    margin-left:-80rpx;    
+}
+
+
+.videoMark{
+  
+}
 
 
 

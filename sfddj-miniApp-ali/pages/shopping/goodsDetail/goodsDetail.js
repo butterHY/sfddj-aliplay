@@ -96,6 +96,10 @@ Page({
 
     scroll: '',									// 防止页面滚动穿透，固定定位时的高度
 
+    // 买家秀数据
+    videoDirection: 0,          // 买家秀视频播放方向
+    videoShow: false
+
   },
 
   onLoad: async function(query) {
@@ -157,26 +161,56 @@ Page({
 	 */
   getComment(resData) {
     let that = this;
-    let comment = [];
-    if (resData.commentList && resData.commentList.length > 0) {                      // commentList 不为 null 或者 undefied;
-      resData.commentList.forEach(function(value, index) {
-        if (value && (index == 0 || index == 1)) {                                   // commentList 的值不为 null；
-          value.createDate = utils.pointFormatTime(new Date(value.createDate));
-          // value.imagePath && value.imagePath.length > 0 ? value.imagePath = value.imagePath.concat(value.imagePath.concat(value.imagePath)) : '';
-          comment.push(value);
+    // let comment = [];
+    // if (resData.commentList && resData.commentList.length > 0) {                      // commentList 不为 null 或者 undefied;
+    //   resData.commentList.forEach(function(value, index) {
+    //     if (value && (index == 0 || index == 1)) {                                   // commentList 的值不为 null；
+    //       value.createDate = utils.pointFormatTime(new Date(value.createDate));
+    //       // value.imagePath && value.imagePath.length > 0 ? value.imagePath = value.imagePath.concat(value.imagePath.concat(value.imagePath)) : '';
+    //       comment.push(value);
+    //     }
+    //   })
+    // }
+    // if (resData.goodsShowVO.commentTotal > 0) {                                    // 总评论数为空不显示评论模块, 不为空的话且 comment 不为空才渲染评论
+    //   that.setData({
+    //     showComment: true,
+    //     comment,
+    //   });
+    // } else {
+    //   that.setData({
+    //     showComment: false,
+    //   })
+    // }
+
+      let videoPath = [];
+      let buyerShowList = [];
+        if ( resData.buyerShow && resData.buyerShow.buyerShowList && resData.buyerShow.buyerShowList.length > 0 ) {
+          buyerShowList = resData.buyerShow.buyerShowList.map( (value, index) => {
+            if ( value && (index == 0 || index == 1) ) {
+              value.createDate = utils.pointFormatTime(new Date(value.createDate));
+              if ( value.videoPath && value.videoPath.length > 0 ) {
+                value.videoPath.forEach((val, ind) => {
+                  if ( ind % 2 == 0 ) {
+                    let videoValue = {
+                      videoSrc: val,
+                      videoCover: value.videoPath[ind + 1]
+                    }
+                    videoPath.push(videoValue);
+                  }
+                })
+                value.videoPath = videoPath;
+                videoPath = [];
+              }
+              return value;
+            }
+          })
         }
-      })
-    }
-    if (resData.goodsShowVO.commentTotal > 0) {                                    // 总评论数为空不显示评论模块, 不为空的话且 comment 不为空才渲染评论
-      that.setData({
-        showComment: true,
-        comment,
-      });
-    } else {
-      that.setData({
-        showComment: false,
-      })
-    }
+        that.setData({
+          // newGoods: resData.goodsShowVO,
+          buyerShowList,
+          buyerShowCount: resData.buyerShow.buyerShowCount
+        });
+
   },
 
 	/**
@@ -236,14 +270,12 @@ Page({
       let resData = res.data.data;
       let retData = res.data.ret;
       let webCallParam = null;
-      console.log(res)
       if (retData.code == '0' && retData.message == 'SUCCESS' && resData) {
         if (resData.uid) {
           webCallParam = resData.webCallParam + "?uid=" + resData.uid + "b" + "&uname=" + resData.uname + "&goodsSn=" + that.data.goodsSn + "&siteId=" + resData.siteId + "&settingId=" + resData.settingId + "&mark=sf.365webcall.com";
         } else {
           webCallParam = resData.webCallParam + "?goodsSn=" + that.data.goodsSn + "&siteId=" + resData.siteId + "&settingId=" + resData.settingId + "&mark=sf.365webcall.com";
         }
-        console.log(webCallParam)
         that.setData({
           webCallParam
         })
@@ -705,15 +737,21 @@ Page({
     that.data.product = product;
   },
 
-	/**
-	* 查看图片
-	*/
+    /**
+   * 查看图片
+   */
   commentViewTap: function(e) {
-    var urls = e.currentTarget.dataset.urls;
-    my.previewImage({
-      urls: urls.map(value => value = baseImageUrl + value),
-      current: 0
+    let urls = e.currentTarget.dataset.urls;
+    let index = e.currentTarget.dataset.current;
+    // 带有 http 则表示该视频或图片被禁用；
+    let newUrls = urls.map(value => { 
+      return value = value.substring(0, 5).indexOf('http') > -1 ? base64imageUrl + 'vueStatic/img/commentErrImg.png' : baseImageUrl + value 
     });
+
+    my.previewImage({
+      urls: newUrls,
+      current: e.currentTarget.dataset.current
+    })
   },
 
 	/**
@@ -779,7 +817,6 @@ Page({
 
   // 如果活动结束了，那就禁止按钮
   onSpikeOver: function() {
-    // console.log('秒杀结束了')
     this.setData({
       isSpikeOver: true
     })
@@ -832,7 +869,7 @@ Page({
     var that = this;
     var fatherIndex = e.currentTarget.dataset.fatherindex;
     var index = e.currentTarget.dataset.index;
-    console.log('切换事件被触发')
+    // console.log('切换事件被触发')
     if (that.data.specType == 'OPTIONAL') {
       this.updateGoodsSpecMap(fatherIndex, index, 'OPTIONAL');
     } else if (that.data.specType == 'MULTI') {
@@ -869,8 +906,6 @@ Page({
 	 */
   subtractTap: function(e) {
     var that = this;
-    // console.log(that.data.minCount);
-    // console.log(that.data.quantity)
     if (that.data.quantity == that.data.minCount) {
       that.quantityInputTip('该商品起售量不能低于' + that.data.minCount);
       return;
@@ -961,7 +996,6 @@ Page({
       that.quantityInputTip('该商品起售量不能低于' + that.data.minCount);
 
     } else {
-      // console.log(quantity)
       that.data.quantity = quantity;
       that.setStandAlon();
     }
@@ -969,7 +1003,6 @@ Page({
       quantity: that.data.quantity,
       product: that.data.product
     });
-    // console.log(that.data.quantity);
     that.isDisabled(that.data.quantity);
   },
 
@@ -1022,7 +1055,6 @@ Page({
   goodsSpecSubmitTap: function(e) {
     var that = this;
     var noTrueChoose = false;
-    // console.log(this.data.buyType);
 
     // 如果全局的当前规格为多选规格 则 以 iavPath 作为依据，如果 iavPath 存在空的情值则提示“请正确选择”,
     if (that.data.specType == 'MULTI') {
@@ -1435,7 +1467,6 @@ Page({
     //   key: 'swiperUrl',
     //   data: webCallLink,
     // });
-    console.log(webCallLink)
     my.navigateTo({
       url: '/pages/user/webView/webView?link=' + webCallLink + '&newMethod=new'
     });
@@ -1456,6 +1487,7 @@ Page({
     my.getLocation({
       type: 1,
       success(res) {
+        // console.log('gpsAddr', res)
         my.hideLoading();
         that.setData({
           address: res
@@ -1985,5 +2017,40 @@ Page({
     }
   },
 
+
+  /**
+   * 播放买家秀视频，播放时进入全屏
+   */
+  playCommeVideo(e) {
+    this.setData({
+      videoId: e.currentTarget.dataset.id,
+      videoSrc: e.currentTarget.dataset.videoSrc,
+      videoShow: true
+    })
+    var video = my.createVideoContext('this.data.videoId');
+    video.play();
+  },
+
+  /**
+   * 播放买家秀视频，播放时正在缓冲视频即进入全屏；
+   */
+  videoLoading() {
+    var video = my.createVideoContext('this.data.videoId');
+    video.requestFullScreen({direction: 0});
+  },
+
+  // 当前买家秀视频进入全屏以后加锁
+  fullscreenchange(e) {
+    this.data.isFullScreen = e.detail.fullScreen;
+    if ( !this.data.isFullScreen ) {
+      // console.log('退出全屏，停止播放');
+      this.setData({
+        videoShow: false
+      })
+      var video = my.createVideoContext(this.data.videoId);
+      video.pause();
+      video.stop();
+    }
+  },
 
 });
