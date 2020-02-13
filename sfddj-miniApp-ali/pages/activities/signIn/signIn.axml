@@ -36,7 +36,7 @@
     <!--轮播图-->
     <view class="swipe" a:if='{{ signBanner && signBanner.length > 0}}'>
       <block>
-        <template is="swiperItem" data="{{swiperList: signBanner,baseImageUrl:baseImageUrl,radius:'20rpx',height:'173.3rpx'}}"></template>
+        <template is="swiperItem" data="{{swiperList: signBanner,baseImageUrl:baseImageUrl,radius:'20rpx',height:'170.3rpx'}}"></template>
       </block>
     </view>
 

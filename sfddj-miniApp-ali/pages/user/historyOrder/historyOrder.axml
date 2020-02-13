@@ -5,7 +5,7 @@
   <!--轮播图组件-->
   <view class="swipe whiteBack" a:if='{{ OrderSwiperList && OrderSwiperList.length > 0}}'>
     <block>
-      <template is="swiperItem" data="{{swiperList: OrderSwiperList,baseImageUrl:baseImageUrl,radius:'0',height:'224.6rpx'}}"></template> 
+      <template is="swiperItem" data="{{swiperList: OrderSwiperList,baseImageUrl:baseImageUrl,radius:'0',height:'220.8rpx'}}"></template> 
     </block>
   </view>
 

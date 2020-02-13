@@ -363,7 +363,7 @@
 }
 
 .swipe{
-  padding: 32rpx 20rpx 0;
+  padding: 32rpx 0 0;
 }
 
 .couponLoading_view{

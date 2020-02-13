@@ -1250,20 +1250,20 @@ page {
 .bannerImgBox {
   width: 100%;
   box-sizing: border-box;
-  padding: 0 24rpx;
+  padding: 0 30rpx;
   margin: 30rpx 0 44rpx;
   border-radius: 25rpx;
 }
 
 .bannerImgList {
   width: 100%;
-  height: 224.6rpx;
+  height: 220.83rpx;
   border-radius: 25rpx;
 }
 
 .banner_img {
   width: 100%;
-  height: 224.6rpx;
+  height: 220.83rpx;
   border-radius: 25rpx;
 }
 

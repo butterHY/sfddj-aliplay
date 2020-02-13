@@ -104,7 +104,7 @@ page {
 
 .swipe {
   box-sizing: border-box;
-  padding: 20rpx 24rpx;
+  padding: 20rpx 30rpx;
 }
 
 

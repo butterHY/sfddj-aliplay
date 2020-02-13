@@ -19,7 +19,7 @@
       <!--轮播图-->
       <view class="swipe whiteBack" a:if='{{ couponSwiper && couponSwiper.length > 0}}'>
         <block>
-          <template is="swiperItem" data="{{swiperList: couponSwiper,baseImageUrl:baseImageUrl,radius:'13rpx',height:'145rpx'}}"></template>
+          <template is="swiperItem" data="{{swiperList: couponSwiper,baseImageUrl:baseImageUrl,radius:'13rpx',height:'300rpx'}}"></template>
         </block>
       </view>
       <!-- 兑换优惠券部分 -->
