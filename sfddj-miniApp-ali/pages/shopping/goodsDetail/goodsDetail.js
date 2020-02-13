@@ -2027,7 +2027,7 @@ Page({
       videoSrc: e.currentTarget.dataset.videoSrc,
       videoShow: true
     })
-    var video = my.createVideoContext('this.data.videoId');
+    var video = my.createVideoContext(this.data.videoId);
     video.play();
   },
 
@@ -2035,7 +2035,7 @@ Page({
    * 播放买家秀视频，播放时正在缓冲视频即进入全屏；
    */
   videoLoading() {
-    var video = my.createVideoContext('this.data.videoId');
+    var video = my.createVideoContext(this.data.videoId);
     video.requestFullScreen({direction: 0});
   },
 

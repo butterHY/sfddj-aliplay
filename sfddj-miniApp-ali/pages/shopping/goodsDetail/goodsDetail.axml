@@ -365,6 +365,7 @@
     </scroll-view>
   </view> -->
 
+  <view a:if="{{buyerShowCount}}" class="division-area"></view>
   <navigator a:if="{{buyerShowCount}}" url="/pages/shopping/comment/comment?type=buyerShow&goodsId={{goods.goodsId}}" hover-class="none">
     <view class="goods-comment-title">
       <view class="alignMiddle">

@@ -48,33 +48,6 @@ page {
 	-webkit-box-orient: vertical;
 }
 
-/*新加样式   */
-
-.commentUser_img {
-	width: 50rpx;
-	height: 50rpx;
-}
-
-.starIcon {
-	width: 14rpx;
-	height: 13rpx;
-	margin-right: 5rpx;
-}
-
-.commentText {
-	margin: 20rpx 0 0 50rpx;
-}
-
-.blockView {
-	display: block;
-}
-
-.commentTextImg {
-	width: 190rpx;
-	height: 190rpx;
-	margin-right: 12rpx;
-	border-radius: 8rpx;
-}
 
 /* 新版  ---190826 */
 
@@ -114,20 +87,31 @@ page {
 
 .estimateHead {
 	padding: 20rpx 0;
+    line-height: 26rpx;
 }
 
 .estimateNavList {
-	padding: 15rpx 0;
+	/* padding: 15rpx 0; */
+  	padding-bottom: 15rpx;
 }
 
 .estimateNavListCon {
-	text-align: center;
+	/* text-align: center;
 	font-size: 24rpx;
 	padding: 14rpx 24rpx;
 	border-radius: 45rpx;
 	background-color: #FFE4E8;
 	color: #494344;
-	margin-right: 24rpx;
+	margin-right: 24rpx; */
+
+  text-align: center;
+	font-size: 20rpx;
+	padding: 14rpx 20rpx;
+	border-radius: 45rpx;
+	background-color: #FFE4E8;
+	color: #494344;
+	margin: 15rpx 24rpx 0 0;
+  float: left;
 }
 
 .estimateNavListCon.active {
@@ -210,3 +194,50 @@ page {
 	text-align: center;
 	margin-top: 0;
 }
+
+
+/*新加样式   */
+
+.commentUser_img {
+	width: 50rpx;
+	height: 50rpx;
+}
+
+
+.video_view {
+  display: inline-block;
+  background: black;
+  position: relative;
+}
+
+.background_black {
+    background: black;
+}
+
+.video_playImg {
+  width: 50rpx; height: 50rpx;
+  position: absolute;
+  top: 50%;left: 50%;
+  margin: -25rpx 0 0 -25rpx;
+}
+
+.starIcon {
+	width: 14rpx;
+	height: 13rpx;
+	margin-right: 5rpx;
+}
+
+.commentText {
+	margin: 20rpx 0 0 50rpx;
+}
+
+.blockView {
+	display: block;
+}
+
+.commentTextImg {
+	width: 190rpx;
+	height: 190rpx;
+	margin-right: 12rpx;
+}
+
