@@ -10,7 +10,7 @@
         </view>
         <!-- 标题-图片 -->
         <view a:elif="{{titleItem.titleType == 1}}" class="titleMes_set js_titleMes_set" id="tit'+adItems[i].positionId+'">
-          <image src="https://img.fx-sf.com/user/admin164/20191223/157708923001984536.jpg" class="width_100 blockBox" mode="widthFix"/>
+          <image src="{{baseImageUrl + titleItem.titleImage}}" class="width_100 blockBox" mode="widthFix"/>
         </view>
       </block>
     </view>
