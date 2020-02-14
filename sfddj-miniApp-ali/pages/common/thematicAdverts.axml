@@ -144,5 +144,143 @@
         </view>
       </block>
     </view>
+    <!-- 1行2个模块 a:if="{{item.moduleType == 'DOUBLEGOODS'}}"-->
+    <view a:if='{{item.moduleType == "DOUBLEGOODS"}}' class="adsGroup2">
+      <!-- 灰色间条 a:if="{{item.spacing == 1}}"-->
+      <view class="ads_space" style="background: #{{item.topIntervalColor}}"></view>
+      <!-- 1行2个内容 -->
+      <view class="oneAds_con flex_view_row">
+        <!-- 左边 width: 50%;-->
+        <view class="flex_1" style="padding-right: 5rpx; box-sizing: border-box;">
+          <image mode="widthFix" src="https://img.fx-sf.com/user/admin175/20190919/156888525878757892.jpg" class="width_100 blockBox"/>
+        </view>
+        <!-- 右边  width: 50%;-->
+        <view class="flex_1" style="padding-left: 5rpx; box-sizing: border-box;">
+          <image mode="widthFix" src="https://img.fx-sf.com/user/admin175/20190919/156888525878757892.jpg" class="width_100 blockBox"/>
+        </view>
+      </view>
+    </view>
+    <!-- 1+2模块 -->
+    <view a:if='{{item.moduleType == "SHOPWINDOW"}}'>
+      <!-- 灰色间条 a:if="{{item.spacing == 1}}"-->
+      <view class="ads_space" style="background: #{{item.topIntervalColor}}"></view>
+      <!-- 内容 -->
+      <view class='oneAds_con {{item.spacing == 1 ? "marBot_20" : ""}}' style='background-color: {{item.backgroundColor ? "#" + item.backgroundColor : "#ffffff"}}'>
+        <view class="width_100 flex_view_row">
+          <!-- 左边 -->
+          <view class="width_50 marRight_5">
+            <view open-type="navigate" class='height_auto' onTap='goToPage' data-type="oneTwo" data-index="0" data-url="{{item.items[0].link}}">
+              <!-- {{baseImageUrl}}{{item.items[0].imageUrl}} -->
+              <image src="https://img.fx-sf.com/user/admin1/20190712/156291254360021990.jpg" mode="widthFix" class="width_100" />
+            </view>
+          </view>
+          <!-- 右边 -->
+          <view class="flex_1 marLeft_5 flex_view_col">
+            <view class="flex_1 marBot_10">
+              <view class="height_auto" data-url="{{item.items[1].link}}" onTap='goToPage' data-type="oneTwo" data-index="1" open-type='navigate' hover-class="none">
+                <!-- {{baseImageUrl}}{{item.items[1].imageUrl}} -->
+                <image src="https://img.fx-sf.com/user/admin1/20181221/154538512007330068.jpg" mode="widthFix" class="width_100" />
+              </view>
+            </view>
+            <view class="flex_1">
+              <view class="height_auto" data-url="{{item.items[2].link}}" onTap='goToPage' data-type="oneTwo" data-index="2" open-type='navigate' hover-class="none">
+                <!-- {{baseImageUrl}}{{item.items[2].imageUrl}} -->
+                <image src="https://img.fx-sf.com/user/admin1/20181128/154337669064151206.jpg" mode="widthFix" class="width_100" />
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <!-- 1+4模块 -->
+    <view a:if='{{item.moduleType == "ONEFOURADVERT"}}'>
+      <!-- 灰色间条 a:if="{{item.spacing == 1}}"-->
+      <view class="ads_space" style="background: #{{item.topIntervalColor}}"></view>
+      <!-- 内容 -->
+      <view class="flex_view_row oneAds_con {{item.spacing == 1 ? 'marBot_20' : ''}}" style='background-color: {{item.backgroundColor ? "#" + item.backgroundColor : "#ffffff"}}'>
+        <!-- 左边1 个 -->
+        <view class="oneFourLeft">
+          <view data-url="{{item.items[0].link}}" onTap='goToPage' data-type="oneFour" data-index="0" open-type='navigate' hover-class="none" class="height_auto">
+            <!-- {{baseImageUrl}}{{item.items[0].imageUrl}} -->
+            <image src="https://img.fx-sf.com/user/admin174/20190919/156887587939070512.jpg" mode="widthFix" class="width_100"/>
+          </view>
+        </view>
+        <!-- 右边 -->
+        <view class="flex_1 flex_view_col marLeft_3">
+          <!-- 上面 -->
+          <view class="flex_1 flex_view_row marBot_6">
+            <!--<view class="flex_1 marRight_3"> -->
+            <view data-url="{{item.items[1].link}}" onTap='goToPage' data-type="oneFour" data-index="1" open-type="navigate" hover-class="none" class="height_auto flex_1 marRight_3">
+              <!-- {{baseImageUrl}}{{item.items[1].imageUrl}} -->
+              <image src="https://img.fx-sf.com/user/admin1/20180913/153683609097724263.jpg" mode="widthFix" class="width_100" />
+            </view>
+            <!--</view> -->
+            <!--<view class="flex_1" style='margin-left: 3rpx;'> -->
+            <view data-url="{{item.items[2].link}}" onTap='goToPage' data-type="oneFour" data-index="2" open-type="navigate" hover-class="none" class="height_auto flex_1 marLeft_3">
+              <!-- {{baseImageUrl}}{{item.items[2].imageUrl}} -->
+              <image src="https://img.fx-sf.com/user/admin1/20181221/154536641489652650.jpg" mode="widthFix" class="width_100" />
+            </view>
+            <!--</view> -->
+          </view>
+          <!-- 下面 -->
+          <view class="flex_1 flex_view_row">
+            <!--<view class="flex_1" style='margin-right: 3rpx;'> -->
+            <view data-url="{{item.items[3].link}}" onTap='goToPage' data-type="oneFour" data-index="3" open-type="navigate" hover-class="none" class="height_auto flex_1 marRight_3">
+              <!-- {{baseImageUrl}}{{item.items[3].imageUrl}} -->
+              <image src="https://img.fx-sf.com/user/admin1/20181221/154536642699149533.jpg" mode="widthFix" class="width_100" />
+            </view>
+            <!--</view> -->
+            <!--<view class="flex_1" style='margin-left: 3rpx;'> -->
+            <view data-url="{{item.items[4].link}}" onTap='goToPage' data-type="oneFour" data-index="4" open-type="navigate" hover-class="none" class="height_auto flex_1 marLeft_3">
+              <!-- {{baseImageUrl}}{{item.items[4].imageUrl}} -->
+              <image src="https://img.fx-sf.com/user/admin1/20171113/151056159645911249.jpg" mode="widthFix" class="width_100" />
+            </view>
+            <!--</view> -->
+          </view>
+        </view>
+      </view>
+    </view>
+    <!-- 水平滚动产品————商品滚动 -->
+    <view a:if='{{item.moduleType == "GOODSSCROLL"}}'>
+      <!-- 灰色间条 a:if="{{item.spacing == 1}}"-->
+      <view class="ads_space" style="background: #{{item.topIntervalColor}}"></view>
+      <!-- 内容 -->
+      <view class='oneAds_con {{item.spacing == 1 ? "marBot_20" : ""}}' style='background-color: {{item.backgroundColor ? "#" + item.backgroundColor : "#ffffff"}}'>
+        <!-- 标题 -->
+        <view a:if="{{item.items[0].moduleTitle}}" class="goodsScrollTit">
+          <view class='goodsScrollTit_txt'>{{item.items[0].moduleTitle}}</view>
+        </view>
+        <!-- 商品 -->
+        <view class="goodsScroll">
+          <scroll-view scroll-x="{{true}}" class="goods-scrollx-view width_100" scroll-with-animation="true" data-fatherIndex="{{index}}" onScroll="scrollGoods">
+            <block a:for="{{item.goodsMinVOList}}" a:for-index="idx" a:for-item="groupItem">
+              <!--<template is="itemGoodsScrollX" data="{{item: item,baseImageUrl:baseImageUrl,baseLocImgUrl: baseLocImgUrl}}"/> -->
+              <view class='goodsViewBox'>
+                <view data-url="/pages/shopping/goodsDetail/goodsDetail?goodsSn={{groupItem.goodsSn}}&goodsId={{groupItem.id}}" onTap="goToPage" data-type="goodsCount" data-index="{{idx}}" data-fatherIndex="{{index}}" data-title="{{item.items[0].moduleTitle}}" open-type="navigate" hover-class="none" class="posi_re width_260r">
+                  <view class="goodsShowImgBox posi_re">
+                    <image src="{{baseImageUrl}}{{groupItem.goodsDefaultImage}}{{ossImgStyle}}" lazy-load="{{idx > 3 ? true : ''}}" class="width_100 goodsShowImg" mode="widthFix"></image>
+                    <!-- 标签 -->
+                    <view a:if="{{groupItem.goodsLabel}}" class="verpromotionHot flex_view_col">
+                      <text class="verPromotionHot_txt">{{groupItem.goodsLabel}}</text>
+                      <image mode="widthFix" src="https://img.sfddj.com/miniappImg/more/hotIcon.png" class="width_100"/>
+                    </view>
+                  </view>
+                  <!--小图标 全赔  -->
+                  <image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff1.png" class=" posi_ab littleIcon" a:if="{{filters.strIndexOf(groupItem.afterSaleGuee,'1')}}"></image>
+                  <image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff2.png" class=" posi_ab littleIcon" a:elif="{{filters.strIndexOf(groupItem.afterSaleGuee,'2')}}"></image>
+                  <image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff3.png" class=" posi_ab littleIcon" a:elif="{{filters.strIndexOf(groupItem.afterSaleGuee,'3')}}"></image>
+                  <image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff4.png" class=" posi_ab littleIcon" a:elif="{{filters.strIndexOf(groupItem.afterSaleGuee,'4')}}"></image>
+                  <view class="width_100 marTop_15 padRL_10">
+                    <view class="font-30 single-line width_100">{{groupItem.goodsName}}</view>
+                    <view class="font-26 color-a1a0a0 single-line width_100 marTop_5">{{groupItem.productName}}</view>
+                    <view class="font-32 color-ff5353 single-line width_100 font-weight-600">￥{{groupItem.salePrice}}</view>
+                  </view>
+                </view>
+              </view>
+            </block>
+          </scroll-view>
+        </view>
+      </view>
+    </view>
   </view>
 </template>

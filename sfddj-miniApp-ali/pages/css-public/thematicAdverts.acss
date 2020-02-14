@@ -1,5 +1,3 @@
-
-
 .titleMesText {
   padding: 20rpx 30rpx;
   background: #FFFFFF;
@@ -229,4 +227,94 @@
   padding: 0 30rpx 10rpx;
   box-sizing: border-box;
   background: #FFFFFF;
+}
+
+.otherModeCon {
+  /* margin-bottom: 20rpx; */
+  padding: 0 30rpx 10rpx;
+}
+
+.oneFourLeft {
+  width: 42.26%;
+  margin-right: 3rpx;
+}
+
+.marLeft_3 {
+  margin-left: 3rpx;
+}
+
+.marBot_6 {
+  margin-bottom: 6rpx;
+}
+
+.marRight_3 {
+  margin-right: 3rpx;
+}
+
+.marTop_5 {
+  margin-top: 5rpx;
+}
+
+.goodsScrollTit {
+  padding: 14rpx 0 24rpx;
+}
+
+.goodsScrollTit_txt {
+  font-weight: 400;
+  font-size: 36rpx;
+  margin-right: 21rpx;
+  height: 40rpx;
+}
+
+.goodsViewBox {
+  display: inline-block;
+  /* padding-right: 20rpx; */
+  height: 384rpx;
+  border-radius: 10rpx;
+  margin-right: 20rpx;
+  background: #FFFFFF;
+  overflow: hidden;
+}
+
+.goodsScroll .goodsViewBox:last-child {
+  margin-right: 0;
+}
+
+.width_260r {
+  width: 260rpx;
+}
+
+.littleIcon {
+  width: 50rpx;
+  height: 50rpx;
+  top: 10rpx;
+  right: 10rpx;
+}
+
+.goodsListBox {
+  padding: 24rpx 0 0;
+}
+
+.goodsViewBox .goodsShowImgBox {
+  height: 260rpx;
+  width: 100%;
+  /* background-image: url('/image/loadImg.jpg');
+  background-size: 100% 100%;
+  background-repeat: no-repeat; */
+  background: #f3f5fa;
+  /* border-radius: 10rpx; */
+  overflow: hidden;
+}
+
+/* .goodsViewBox .goodsShowImg {
+  border-radius: 10rpx;
+} */
+.padRL_10 {
+  padding: 0 10rpx;
+  box-sizing: border-box;
+}
+
+.goods-scrollx-view {
+  white-space: nowrap;
+  font-size: 0;
 }
