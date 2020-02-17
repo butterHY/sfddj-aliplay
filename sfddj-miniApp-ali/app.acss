@@ -507,6 +507,10 @@ input {
   color: rgb(51, 51, 51);
 }
 
+.color-00ac57 {
+  color: #00ac57;
+}
+
 
 
 /*橙色   */
@@ -620,9 +624,13 @@ input {
 }
 
 .single-line2 {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
+  text-overflow: -o-ellipsis-lastline;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
 .single-line-text {

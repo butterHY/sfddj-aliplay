@@ -48,7 +48,7 @@ Page({
     //     baseImageUrl: constants.UrlConstants.baseImageUrl
     //   });
     // }, function (err) {});
-
+    console.log(options.orderId)
     that.getGuessLike();
     http.post(api.LOGISTICS.GETEXPRESS, { 'orderSn': options.orderId}, function(res){
       let resData = res.data.data;
@@ -56,23 +56,37 @@ Page({
       if (resRet.code == '0' && resRet.message == "SUCCESS" && resData && resData.length > 0 ) {
         resData.forEach(value => {
           value.isCheckMore = false;
+          // console.log(value.expectedDeliveryTime)
+          // value.expectedDeliveryTime = utils.pointFormatTime(new Date(value.expectedDeliveryTime));
+          console.log(value.expectedDeliveryTime)
+          value.expectedDeliveryTime = value.expectedDeliveryTime ? utils.pointFormatTime(new Date(value.expectedDeliveryTime)) : value.expectedDeliveryTime;
+          value.status = value.status == 'SIGNED' ? '已签收' : '未签收';
           value.detail.forEach(val => {
             val.time = new Date(val.time);
             val.dayTime = utils.formatTime(val.time);
-            
-            val.hoursTime = that.judgementTime(val.time.getHours()) + ':' + that.judgementTime(val.time.getMinutes()) + ":" + that.judgementTime(val.time.getSeconds());
+            // + that.judgementTime(val.time.getSeconds()
+            val.hoursTime =  ('' + that.judgementTime(val.time.getHours()) + ':' + that.judgementTime(val.time.getMinutes()) );
           })
         })
 
+        console.log(resData)
+
+        let firstTwoLogisticsDada = JSON.parse(JSON.stringify(resData));
+        firstTwoLogisticsDada.forEach(value => {
+          value.detail = value.detail.length > 2 ?  value.detail.slice(0,2) : value.detail;
+        })
+
+
+
         that.setData({
+          firstTwoLogisticsDada: firstTwoLogisticsDada,
           logisticsDada: resData
         })
+
+
       }
     }, function(err){
     })
-
-
-
   },
 
   /**
@@ -103,11 +117,22 @@ Page({
 
   checkMore(e) {
     let that = this;
-    that.data.logisticsDada[e.currentTarget.dataset.num].isCheckMore = !that.data.logisticsDada[e.currentTarget.dataset.num].isCheckMore;
+    // that.data.logisticsDada[e.currentTarget.dataset.num].isCheckMore = !that.data.logisticsDada[e.currentTarget.dataset.num].isCheckMore;
+    that.data.firstTwoLogisticsDada[e.currentTarget.dataset.num].isCheckMore = !that.data.firstTwoLogisticsDada[e.currentTarget.dataset.num].isCheckMore;
+    
+    if( that.data.firstTwoLogisticsDada[e.currentTarget.dataset.num].isCheckMore ) {
+      that.data.firstTwoLogisticsDada[e.currentTarget.dataset.num].detail = that.data.logisticsDada[e.currentTarget.dataset.num].detail;
+    } else if (  that.data.logisticsDada[e.currentTarget.dataset.num].detail.length > 2 ) {
+      that.data.firstTwoLogisticsDada[e.currentTarget.dataset.num].detail = that.data.logisticsDada[e.currentTarget.dataset.num].detail.slice(0,2);
+    }
+
     that.setData({
-      // isCheckMore: !that.data.isCheckMore,
-      logisticsDada: that.data.logisticsDada
+      // logisticsDada: that.data.logisticsDada
+      firstTwoLogisticsDada: that.data.firstTwoLogisticsDada
     })
+    
+
+
     // if (!that.data.logisticsDada[e.currentTarget.dataset.num].isCheckMore) {
     //   let height = 0;
     //   let clas = '.js_expressDetail' + e.currentTarget.dataset.num;
@@ -167,6 +192,9 @@ Page({
         // 0: 初始化; 1: 每次加载拼接进去的数据;
         type == '0' ? that.data.guessLikeGoods = resData : that.data.guessLikeGoods = that.data.guessLikeGoods.concat(resData);  
 
+        // that.data.guessLikeGoods[0].hasLabel = true;
+        // that.data.guessLikeGoods[2].hasLabel = true;
+
         that.setData({
           guessLikeGoods: that.data.guessLikeGoods,
           youLikeHasMore: that.data.youLikeHasMore,           // 是否还有更多                  
@@ -177,8 +205,27 @@ Page({
   },
 
 
-  // 拖拽优惠券弹窗
-  lowLoadMore: function () {
+  // 猜你喜欢左滑加载更多
+  // lowLoadMore: function () {
+  //   let that = this;
+  //   if ( that.data.youLikeHasMore ) {
+  //     that.setData({
+  //       youLikeStart: that.data.guessLikeGoods.length
+  //     });
+  //     that.data.youLikeHasMore = false;
+  //     that.getGuessLike('1');
+  //   }
+  // },
+
+  // 物流时间
+  judgementTime(data) {
+    let timer = data < 10 ? '0' + data : data;
+    return timer;
+  },
+
+  // 页面上拉加载
+  onReachBottom() {
+    console.log('上拉加载');
     let that = this;
     if ( that.data.youLikeHasMore ) {
       that.setData({
@@ -189,15 +236,42 @@ Page({
     }
   },
 
-  judgementTime(data) {
-    let timer = data < 10 ? '0' + data : data;
-    return timer;
-  }
+  // 复制运单号
+  handleCopy(e) {
+    console.log(e);
+    console.log(e.currentTarget.dataset.expressNo);
+
+    my.setClipboard({
+      text: e.currentTarget.dataset.expressNo,
+      success: function (res) {
+        my.getClipboard({
+          success: function (res) {
+            console.log(res)
+            my.showToast({
+              content: '复制运单号成功',
+            })
+          }
+        })
+      }
+    })
+  },
 
   /**
-   * 用户点击右上角分享
-   */
-  // onShareAppMessage: function () {
-
-  // }
+	 * 添加购物车
+	 */
+	addCart: function(e) {
+    console.log(e)
+		let that = this;
+		let productId = e.currentTarget.dataset.productId;
+    console.log(productId)
+		sendRequest.send(constants.InterfaceUrl.SHOP_ADD_CART, { pId: productId, quantity: '1' }, function(res) {
+			my.showToast({
+				content: '添加购物车成功'
+			});
+		}, function(res) {
+			my.showToast({
+				content: res
+			})
+		});
+	},
 });

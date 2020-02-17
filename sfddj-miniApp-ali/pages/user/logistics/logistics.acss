@@ -1,163 +1,56 @@
 /* pages/user/logistics/logistics.wxss  */
-/*查看物流   */
-.logisHead {
-  width: 100%;
-  height: 200rpx;
-  padding: 30rpx;
-  display: flex;
-  background-color: white;
-  box-sizing: border-box;
-}
-.goodsImg {
-  width: 140rpx;
-  height: 140rpx;
-}
-.logisHeadCon {
-  margin-left: 30rpx;
-  box-sizing: border-box;
-}
-/*物流详情   */
-.logisDet {
-  width: 100%;
-  margin-top: 20rpx;
-  background-color: white;
-}
-.expressDetail {
-  width: 100%;
-  display: flex;
-  position: relative;
-  padding-right: 30rpx;
-  box-sizing: border-box;
-}
-.expressDetailTop {
-  width: 120rpx;
-  text-align: center;
-  position: relative;
-  flex: none;
-}
-.expressDetailLineT {
-  width: 2rpx;
-  height: 50%;
-  background-color: #eee;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-}
-.expressDetailLineL {
-  width: 2rpx;
-  height: 50%;
-  background-color: #eee;
-  position: absolute;
-  left: 50%;
-  bottom: 50%;
-}
-.expressDetailLineLBT {
-  width: 2rpx;
-  background-color: #eee;
-  position: absolute;
-  left: 50%;
-  top: 0;
-  bottom: 0;
-}
-.expressDetailStarView {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: transparent;
-}
-.icon_car {
-  width: 46rpx;
-  height: 32rpx;
-}
-.icon_circle {
-  width: 16rpx;
-  height: 16rpx;
-}
-.expressDetailBot {
-  padding: 30rpx 0;
-  border-bottom: solid #eee 2rpx;
-  box-sizing: border-box;
-  flex: 1;
-}
-
-
 
 /* 新物流详情页样式 */
 .logisticsBox {
   position: relative;
-}
-
-.logisticsOrder {
-  background: #fff;
   box-sizing: border-box;
-  padding: 0 30rpx;
-  margin-top: 20rpx; 
-  /* overflow: hidden; */
-  width: 100%;
-  /* height: 296rpx; */
+  padding: 24rpx  24rpx 0 24rpx;
 }
 
-
-.title {
-  height: 110rpx;
-  border-bottom: 1rpx solid #e6e6e6;
-  font-size: 36rpx;
-  font-weight: 600;
-  line-height: 110rpx;
-  display: flex;
-  justify-content: space-between;
-}
-
-.logisticsDetail {
-  height: 105rpx;
-  font-size: 28rpx; 
-  color: #999999;
-  line-height: 105rpx;
-}
-
-.logisticsDynamic {
-  display: flex;
-}
-
-.logisticsTime {
-  width: 140rpx;
-  display: flex;
-  align-items: center;
-  /* justify-content: center; */
-}
-
-.dayTime {
-  line-height: 24rpx;
+.logisticsOrderBox {
   box-sizing: border-box;
-  padding-bottom: 8rpx; 
+  margin-bottom: 24rpx;
 }
 
-.minuteTime {
-  line-height: 24rpx;
+.logisticsOrderHeard {
+  margin-bottom: 16rpx;
+  padding: 34rpx 40rpx;
+  height: 94rpx;
+  border-radius: 20rpx;
+}
+
+.waybillHeardImg {
+  height: 90rpx;
+  width: 90rpx;
+  background: black;
+}
+
+.waybillTitle {
+  margin-left: 34rpx;
+}
+
+.waybillState {
+  color: #00a958;
+}
+
+.waybillNumber {
+  height: 50rpx;
+  line-height: 50rpx;
+}
+
+.logisticsOrderMain {
+  box-sizing: border-box;
+  padding: 56rpx 40rpx;
+  border-radius: 20rpx;
 }
 
 .tipRound {
-  height: 100%;
-  width: 74rpx;
+  width: 44rpx;
   text-align: center;
   position: relative;
   display: flex;
   justify-content: center;
-  align-items: center;
   box-sizing: border-box;
-}
-
-.logisticsMessage {
-  /* min-height: 56rpx; */
-  line-height: 40rpx;
-  flex: 1;
-  display: flex;
-  align-items: center;
 
 }
 
@@ -175,182 +68,203 @@
    top: 50%;
  }
 
-
-.redPointBox {
+.pointBox {
   position: absolute;
-  color: #b9b9b9;
+  color: #fff;
+  width: 46rpx;
+  height: 46rpx;
   font-size: 24rpx;
+  position: relative;
 }
 
-.firstPoint {
-  color: #ff2e2e;
-  font-size: 32rpx;
+.statusPoint {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  line-height: 46rpx;
+  border-radius: 50%;
+  background-image: linear-gradient(to bottom right, #30c972, #06ae5b);
 }
 
-.splicingLine {
-  height: 38rpx;
-  padding-left: 140rpx;
+.miniPoint {
+  width: 22rpx;
+  height: 22rpx;
+  background: #d6d6d6;
+  border-radius: 50%;
+}
+
+.twoPointBox {
+  position: absolute;
+  bottom: -46rpx;
+  width: 16rpx;
+  height: 36rpx;
+}
+
+.twoPoint_1 {
+  width: 16rpx;
+  height: 16rpx;
+  background: #d6d6d6;
+  border-radius: 50%;
+
+}
+
+.twoPoint_2 {
+  width: 10rpx;
+  height: 10rpx;
+  background: #d6d6d6;
+  border-radius: 50%;
+
 }
 
 
+.waybillDescribe {
+  margin-left: 52rpx;
+
+}
+
+.waybillAddress {
+  line-height: 32rpx;
+}
+
+.waybillNewTime {
+  margin-top: 4rpx;
+}
+
+.clearanceLine {
+  height: 48rpx;
+}
 
 .checkMore {
-  height: 120rpx;
+  height: 74rpx;
   box-sizing: border-box;
-  line-height: 120rpx;
-  padding: 44rpx 30rpx 50rx 30rpx;
-  color: #989898;
+  line-height: 74rpx;
+  border-top: 1rpx solid #f6f6f6;
+  color: #666666;
   text-align: center;
-  background: #fff; 
+  background: #fff;
+  border-radius: 0 0 20rpx 20rpx;
 }
 
 .checkMoreIcon {
-  margin-right: 18rpx;
+  margin-left: 14rpx;
   font-weight: 600;
+  color: #666666;
+  font-size: 22rpx;
 }
 
-/* 猜你喜欢样式 */
 
-.guessLike {
-  box-sizing: border-box;
-  padding: 0 30rpx;
-  background: #fff;
-  margin-top: 20rpx;
-  margin-bottom: 100rpx;
-}
 
-.guessLikeItem {
-  float: left;
-  width: 50%;
-  height: 534rpx;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  border-bottom: 1rpx solid #e6e6e6;
-}
-
-.guessLikeImg {
-  width: 100%;
-  height: 335rpx;
-  background: skyblue;
-}
-
-.guessLikeMessage {
-  flex: 1;
-  box-sizing: border-box;
-  padding: 30rpx 20rpx;
-
-}
-
-.guessLikeName {
-  font-size: 32rpx;
-  line-height: 32rpx;
-}
+/* --------------------------  猜你喜欢自写新样式 --------------------------- */
 
 .guessLikeTitle {
-  margin-top: 20rpx;
-  font-size: 26rpx;
-  line-height: 26rpx;
+  height: 128rpx;
+  text-align: center;
+  line-height: 128rpx;
+  font-size: 34rpx;
 }
 
-.guessLikePrice {
-  margin-top: 30rpx;
-  font-size: 32rpx;
-  line-height: 32rpx;
-  display: flex;
-  justify-content: space-between;
+.guessLikeGoodsBox {
+  width: 50%;
+  float: left;
 }
 
-.unitPrice {
-    color: #ff2e2e;
-}
-
-.price {
-  font-size: 32rpx;
-}
-
-.sompany {
-  color: #999999;
-}
-
-.addCart {
-  width: 36rpx;
-  height: 32rpx;
-}
-
-
-/* 新猜你喜欢样式 */
-
-.item-header-title-view {
-  display: flex;
-  align-items: center;
-  justify-content: start;
-  padding: 30rpx;
-  margin-top: 20rpx;
-  border-bottom: 1rpx solid #e6e6e6;
-  background: #fff;
-}
-
-.goods-scrollx-view {
-  font-size: 26rpx;
-  white-space: nowrap;
-  background-color: white;
-  overflow: auto;
-  width: 690rpx;
-}
-
-.padding_30 {
+.guessLikeGoods {
   width: 100%;
   box-sizing: border-box;
-  padding: 0 30rpx 50rpx 30rpx;
+}
+
+.guessLikeGoods_lef {
+  padding: 9rpx 9rpx 9rpx 0;
+}
+
+.guessLikeGoods_rig {
+  padding: 9rpx 0 9rpx 9rpx;
+}
+
+.guessLikeImgBox {
+  width: 100%;
+  height: 342rpx;
+  border-radius: 30rpx 30rpx 0 0;
+}
+
+
+.guessLikeImg {
+  border-radius: 30rpx 30rpx 0 0;
+}
+
+.guessLikeDescribe {
   background: #fff;
-}
-
-.guessLikeBox {
-  padding: 20rpx 0;
-  /* margin-bottom: 50rpx; */
-}
-
-.guessLikeList {
-  width: 228rpx;
+  box-sizing: border-box;
+  padding: 18rpx 24rpx 0 24rpx;
+  border-radius: 0 0 30rpx 30rpx;
 }
 
 .guessLikeGoodsName {
-  height: 74rpx;
-  margin-top: 10rpx;
-}
-
-.guessLikeImg {
-  width: 228rpx;
-  height: 228rpx;
-  display: block;
-}
-
-.guessLikeGoodsName .name {
-  font-size: 30rpx;
+  font-size: 28rpx;
   line-height: 36rpx;
-  font-weight: 500;
 }
 
-.guessLikeGoodsName .productName {
-  margin-top: 8rpx;
-  font-size: 22rpx;
-  line-height: 24rpx;
-  color: #b3b3b3;
+.guessLikeGoodsSpecs {
+  height: 48rpx;
+  line-height: 48rpx;
+  font-size: 26rpx;
 }
 
-
-.guessLikeprice {
-  margin-top: 6rpx;
-  color: #ff5353;
-  font-weight: 600;
-  font-size: 30rpx;
+.guessLikeGoodsLabel {
+  box-sizing: border-box;
+  padding: 4rpx 18rpx;
+  border: 1px solid #ff7200;
+  text-align: center;
   line-height: 30rpx;
+  margin-top: 6rpx;
+  border-radius: 20rpx;
+  font-size: 20rpx;
+  color: #ff7200;
 }
 
+.priceBox {
+  height: 100%;
+  width: 300rpx;
+  line-height:  92rpx;
+}
 
+.guessLikeGoodsPrice {
+  height: 92rpx;
+  display: flex;
+  align-items: center;
+}
 
-.heardImg {
-  width: 50rpx;
-  height: 50rpx;
+.addCart {
+  width: 48rpx;
+  height: 48rpx;
+  border-radius: 30rpx;
+  text-align: center;
+  line-height: 48rpx;
+}
+
+.currentPrice {
+  color: #ff2c39;
+}
+
+.originalPrice {
+  text-decoration: line-through;
+  margin-left: 12rpx;
+}
+
+.padding_108 {
+  padding-bottom: 108rpx;
+}
+
+.boxShadow {
+  -webkit-box-shadow: 2px 2px 3px #e5e5e5;
+  -moz-shadow: 2px 2px 3px #e5e5e5;
+  box-shadow: 2px 2px 3px #e5e5e5;
+}
+
+.guessLikeView {
+  border-radius: 30rpx;
+}
+
+.backg_fff {
+  background: #fff;
 }
