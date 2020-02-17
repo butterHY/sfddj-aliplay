@@ -149,9 +149,15 @@
 		<view class="loading_view font-24 color-b1b6bb" a:if="{{!hasMore && !isLoadMore && commentList.length > 0}}">
 			<!-- 没有更多了 -->
 			<view class="autoEstimateBox flex_view_col justi_cen align_cen">
-				<image mode="widthFix" src="{{baseLocImgUrl}}miniappImg/loading/autoEstimate.png" class="autoEstimateImg"/>
+				<image a:if="{{commentType != 'buyerShow'}}" mode="widthFix" src="{{baseLocImgUrl}}miniappImg/loading/autoEstimate.png" class="autoEstimateImg"/>
 				<view class="autoEstimateTip flex_view_row align_cen">
-					<text>{{automaticCount ? automaticCount : 0}}</text>个用户默认评价了该商品</view>
+          <block a:if="{{commentType == 'buyerShow'}}">
+               <text>没有更多了</text>
+          </block>
+          <block a:else>
+            <text>{{automaticCount ? automaticCount : 0}}</text>个用户默认评价了该商品
+          </block>
+				</view>
 			</view>
 		</view>
 	</scroll-view>

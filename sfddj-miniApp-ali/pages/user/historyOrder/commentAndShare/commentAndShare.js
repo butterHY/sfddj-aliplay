@@ -3,8 +3,11 @@
 var util = require('../../../../utils/util');
 var sendRequest = require('../../../../utils/sendRequest');
 var constants = require('../../../../utils/constants');
-Page({
 
+import http from '../../../../api/http'
+import api from '../../../../api/api'
+
+Page({
   /**
    * 页面的初始数据
    */
@@ -50,7 +53,10 @@ Page({
     goodsDesc: '',
     baseImgLocUrl: constants.UrlConstants.baseImageLocUrl,
     loadComplete: false,
-    loadFail: false
+    loadFail: false,
+
+    isShowTextarea: true,                                    // 多行文本框显示开关
+    isShowRules: false
   },
 
   /**
@@ -63,13 +69,13 @@ Page({
 	let {goodsPic, orderId, supplierId, goodsSn} = options;
     // util.getNetworkType(this);
     this.getToken(orderId);
+    this.getCommentRule();
     this.setData({
-      goodsPic: goodsPic,
-      orderId: orderId,
-      supplierId: supplierId,
+      goodsPic,
+      orderId,
+      supplierId,
       baseImageUrl: constants.UrlConstants.baseImageUrl,
-	  goodsSn: goodsSn,
-      imgList: [],       //初始化图片列表
+	    goodsSn,
     });
   },
 
@@ -198,6 +204,43 @@ Page({
     });
   },
 
+
+  /**
+   * 获取规则
+   */
+  getCommentRule() {
+    let that = this;
+    http.get(api.UPLOADCOMMENT.GETCOMMENTRULE, {}, function (res) {
+      let resData = res.data.data;
+      let resRet = res.data.ret;
+      if (resRet.code == '0' && resRet.message == "SUCCESS" && resData) {
+        that.setData({
+          rule: resData,
+        })
+      }
+    }, function (err) {
+    })
+  },
+
+  // 查看规则
+  checkRules(){
+    let screenWidth = getApp().globalData.systemInfo.screenWidth;
+    console.log(screenWidth);
+    this.setData({
+      isShowRules: true,
+      isShowTextarea: false
+    })
+  },
+
+  // 关闭规则
+  cancelRule(){
+    this.setData({
+      isShowRules: false,
+      isShowTextarea: true
+    })
+  },
+
+  
   /**
    * 选择是否匿名
    */
@@ -210,56 +253,99 @@ Page({
   /**
    * 提交评价
    */
+  // submit: function () {
+  //   var that = this;
+  //   var goodsDesc = that.data.goodsDesc;
+  //   var imgList = that.data.imgList;
+  //   // 要选将数组传成字符串，不能按数组传过去，只会识别到一张
+  //   imgList = imgList.join(',');
+  //   if (goodsDesc.trim().length < 5) {
+  //     that.setData({
+  //       showToast: true
+  //     });
+  //     setTimeout(function () {
+  //       that.setData({
+  //         showToast: false
+  //       });
+  //     }, 1500);
+  //   } else {
+  //     sendRequest.send(constants.InterfaceUrl.SAVE_COMMENTV2, {
+  //       orderId: that.data.orderId,
+  //       supplierId: that.data.supplierId,
+  //       star: that.data.starLevel,
+  //       serviceStar: that.data.starLevel2,
+  //       fileCode: imgList,
+  //       noName: that.data.noName,
+  //       comment: that.data.goodsDesc,
+  //       channelSource: 'MINIAPP',
+  //       token: that.data.token
+  //     }, function (res) {
+
+	// 	//   达观上报
+	// 	// util.uploadClickData_da('comment',[{goodsSn: that.data.goodsSn}])
+
+  //       my.confirm({
+  //         title: '评价成功',
+  //         content: '您的评价已经提交成功，感谢您的反馈！',
+  //         showCancel: false,
+  //         success: function (res) {
+  //           my.navigateBack({});
+  //         }
+
+  //       });
+  //     }, function (err) {
+
+  //     });
+  //   }
+  // },
+
   submit: function () {
-    var that = this;
-    var goodsDesc = that.data.goodsDesc;
-    var imgList = that.data.imgList;
-    // 要选将数组传成字符串，不能按数组传过去，只会识别到一张
-    imgList = imgList.join(',');
+    var that = this
+    var goodsDesc = that.data.goodsDesc
+    // let videoUrl = '';
+    // let imgUrl = '';
+    let data = {
+      orderId: that.data.orderId,
+      star: that.data.starLevel,
+      serviceStar: that.data.starLevel2,
+      noName: that.data.noName,
+      comment: that.data.goodsDesc,
+      type: 0
+    };
+
+    if (this.data.imgList.length == 0) {                  // 没有图片且没有视频
+      data.type = 0;
+    } else if  (this.data.imgList.length > 0) {            // 没有视频但有图片
+      data.type = 1;
+      data.voucher = this.data.imgList.join(',');
+    }
+
+
     if (goodsDesc.trim().length < 5) {
       that.setData({
         showToast: true
-      });
+      })
       setTimeout(function () {
         that.setData({
           showToast: false
-        });
-      }, 1500);
+        })
+      }, 1500)
     } else {
-      sendRequest.send(constants.InterfaceUrl.SAVE_COMMENTV2, {
-        orderId: that.data.orderId,
-        supplierId: that.data.supplierId,
-        star: that.data.starLevel,
-        serviceStar: that.data.starLevel2,
-        fileCode: imgList,
-        noName: that.data.noName,
-        comment: that.data.goodsDesc,
-        channelSource: 'MINIAPP',
-        token: that.data.token
-      }, function (res) {
-
-		//   达观上报
-		// util.uploadClickData_da('comment',[{goodsSn: that.data.goodsSn}])
-
-        my.confirm({
+      http.post(api.UPLOADCOMMENT.SAVECOMMENt, data, function (res) {
+        wx.showModal({
           title: '评价成功',
           content: '您的评价已经提交成功，感谢您的反馈！',
+          confirmColor: '#ff5353',
           showCancel: false,
           success: function (res) {
-            my.navigateBack({});
+            wx.navigateBack()
           }
-
-        });
+        })
       }, function (err) {
-
-      });
+      }
+      )
     }
-  },
-
-  checkRules(){
-    let screenWidth = getApp().globalData.systemInfo.screenWidth;
-    console.log(screenWidth)
-  },
+  }
 
 
   

@@ -15,7 +15,7 @@
 </view> -->
 <view a:else>
   <view class="pad_240">
-    <view class="ruleBar" wx:if="{{rule}}">
+    <view class="ruleBar" a:if="{{rule}}">
       <view>参加评论有机会获得免单或余额奖励!</view>
       <view class="checkRule" onTap='checkRules'>查看规则</view> 
     </view>
@@ -30,28 +30,29 @@
         <view class="flex_1"></view>
         <view class="font-30 color-bdbdbd">{{starDesc}}</view>
       </view>
-      <textarea class="textarea" placeholder-style="color:#bdbdbd;font-size:30rpx" placeholder="宝贝满足你的期待吗？说说它的优点和美中不足的地方吧" onInput="handleInput" maxlength="{{500}}"></textarea>
+      <textarea a:if="{{isShowTextarea}}" class="textarea" placeholder-style="color:#bdbdbd;font-size:30rpx" placeholder="宝贝满足你的期待吗？说说它的优点和美中不足的地方吧" onInput="handleInput" maxlength="{{600}}"></textarea>
+      <view a:if="{{!isShowTextarea}}" class="textarea"></view>
 
       <view class='imgListFa clearfix'>
         <view a:for="{{imgList}}" class='imgList' a:key="imgList">
-          <block a:if="{{ item.type == 'video' && item.src }}">
+          <!-- <block a:if="{{ item.type == 'video' && item.src }}">
             <video id="myVideo" src="{{baseImageUrl}}{{item.src}}" class="imgList_img marRight_20"></video>
             <image class='icon_delete' src='{{baseImgLocUrl}}miniappImg/icon/icon_del_pic.png' onTap='delPic' data-index='{{index}}'></image>
-          </block>
-          <block a:else>
+          </block> -->
+          <!-- <block a:else> -->
             <image class='imgList_img marRight_20' src='{{baseImageUrl}}{{item}}'></image>
             <image class='icon_delete' src='{{baseImgLocUrl}}miniappImg/icon/icon_del_pic.png' onTap='delPic' data-index='{{index}}'></image>
-          </block>
+          <!-- </block> -->
         </view>
         <view a:if="{{imgList.length < 9}}" class="imgList_upload marRight_20 font-24"  onTap='uploadImage'>
           <image class='camera_img ' src='{{baseImgLocUrl}}miniappImg/icon/camera.png'></image>
           <view class="marTop_10">添加图片</view>
           <view class="marTop_5">{{imgList.length}}/9</view>
         </view>
-        <view class="imgList_upload font-24" onTap='chooseVideo'>
+        <!-- <view class="imgList_upload font-24" onTap='chooseVideo'>
           <image class='video_img ' src='{{baseImgLocUrl}}miniappImg/icon/video.png'></image>
           <view class="video_text">添加视频</view>
-        </view> 
+        </view>  -->
       </view>
 
 
@@ -73,7 +74,7 @@
       <view class='serviceType'>
         <view class="flex_view_row align_cen flex_1">
           <view class='color-6c6c6c  font-30'>服务态度</view>
-          <view a:for="{{starList2}}" class='starList' bindtap='chooseStar2' data-index='{{index}}' wx:key="starListSer">
+          <view a:for="{{starList2}}" class='starList' catchTap='chooseStar2' data-index='{{index}}' wx:key="starListSer">
             <image src='{{item.select ? baseImgLocUrl+"miniappImg/icon/icon_star_selected.png":baseImgLocUrl+"miniappImg/icon/icon_star_normal.png"}}' class='icon_star'></image>
           </view>
         </view>
@@ -88,10 +89,14 @@
     <view class="releaseBtn font-36 color-white" onTap="submit">发表</view>
   </view>
 </view>
+
+<!-- 评论字数提示弹窗 -->
 <view a:if="{{showToast}}" class="showToastMark font-22 color-white">评论不少于5个字</view>
+
+<!-- 规则弹窗 -->
 <view class="rulesMark" catchtouchmove="move" a:if="{{isShowRules}}">
   <view class="rulesBox">
-    <view class="icon-cross cancel" catchtap="cancelRule"></view>
+    <view class="icon-cross cancel" catchTap="cancelRule"></view>
     <scroll-view scroll-y="{{true}}" class="all_100">
         {{rule}}
     </scroll-view>

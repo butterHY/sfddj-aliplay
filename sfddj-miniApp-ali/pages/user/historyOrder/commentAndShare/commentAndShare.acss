@@ -273,6 +273,9 @@ page {
 
 .cancel {
   position: absolute;
-  width: 60rpx;
-  height: 60rpx;
+  width: 40rpx;
+  height: 40rpx;
+  right: 20rpx;
+  top: 20rpx;
+  text-align: right;
 }

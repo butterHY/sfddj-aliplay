@@ -60,7 +60,19 @@ Page({
           // value.expectedDeliveryTime = utils.pointFormatTime(new Date(value.expectedDeliveryTime));
           console.log(value.expectedDeliveryTime)
           value.expectedDeliveryTime = value.expectedDeliveryTime ? utils.pointFormatTime(new Date(value.expectedDeliveryTime)) : value.expectedDeliveryTime;
-          value.status = value.status == 'SIGNED' ? '已签收' : '未签收';
+
+          switch(value.status) {
+            case 'COLLECT': value.status = '揽件'
+                break;
+            case 'TRANSIT': value.status = '运输中'
+                break;
+            case 'DELIVERY': value.status = '派送中'
+                break;
+            case 'SIGNED': value.status = '签收'
+                break;
+            default: value.status = '揽件中'
+          }
+
           value.detail.forEach(val => {
             val.time = new Date(val.time);
             val.dayTime = utils.formatTime(val.time);

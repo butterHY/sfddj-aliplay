@@ -76,7 +76,6 @@ export default {
 	},
 
 	// 物流详情
-
   LOGISTICS: {
     'GETEXPRESS': '/m/o/orderSearch/1.0/getExpress',
     'lISTGOODSBYNAME': '/m/g//1.0/group/listGoodsByName',												// 新的物流详情猜你喜欢接口                                         
@@ -92,6 +91,12 @@ export default {
 
   THEMATIC: {
     'GET_THEMATIC_DATA': '/m/a/1.0/subject/getSubjectPage',                    //获取专题页内容
+  },
+
+  // 评论页接口
+  UPLOADCOMMENT: {
+    'SAVECOMMENt': '/m/g/comment/1.0/saveGoodsComment',                      // 保存发表评论
+    'GETCOMMENTRULE': '/m/g/comment/1.0/getCommentRule',                      // 获取评论规则
   },
 
 

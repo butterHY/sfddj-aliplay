@@ -82,7 +82,9 @@
             <image class="all_100" src="{{baseImgLocUrl}}/miniappImg/public/logisticsDetails/tip_point.png"></image>
           </view>
           <view class="waybillTitle flex_1 height_100 flex_view_col">
-            <view class="waybillState font-24 font-weight-600" a:if="{{fatherItem.status}}">{{fatherItem.status}}</view>
+            <view class="waybillState font-24 font-weight-600" a:if="{{fatherItem.status}}">
+              {{fatherItem.status}}
+            </view>
             <view class="waybillNumber font-22 color-999999" a:if="{{fatherItem.expressNo}}">
               运单编号：{{fatherItem.expressNo}}
               <text class="icon-fuzhi font-26 marLeft_10" data-expressNo="{{fatherItem.expressNo}}" catchTap="handleCopy"></text>
