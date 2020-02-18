@@ -51,8 +51,8 @@ Page({
 		this.getGoodsCommentScore();
 		this.getCommentCount();
 		this.getCommentDataNew();
-		this.getAutomaticGoodsComment()
-
+    options.type == 'buyerShow'  ? '' : this.getAutomaticGoodsComment();
+		
 
     my.setNavigationBar({
       title: options.type == 'buyerShow' ? '买家秀' : '评价详情',

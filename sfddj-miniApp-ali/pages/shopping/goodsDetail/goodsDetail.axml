@@ -406,8 +406,7 @@
     </view>
     <scroll-view a:if="{{ item }}" class="commentImgList marTop_20" scroll-x="{{true}}" scroll-with-animation="{{true}}">
         <view class="proComment_img video_view" a:if="{{ item.videoPath && item.videoPath.length > 0 }}" a:for="{{item.videoPath}}"  a:for-item="videoItem"  a:for-index="videoIndex" wx:key="videoIndex" data-id="myVideo{{videoIndex}}" data-videoSrc="{{videoItem.videoSrc}}" catchTap="playCommeVideo">
-          <image class="proComment_img
-" src="{{baseImageUrl + videoItem.videoCover}}" ></image>
+          <image class="proComment_img" src="{{baseImageUrl + videoItem.videoCover}}" ></image>
           <image class="video_playImg" src="{{base64imageUrl + 'miniappImg/public/video/player-play-btn.png'}}"></image>
         </view>
         <image a:if="{{ item.imagePath && item.imagePath.length > 0 }}" a:for="{{item.imagePath}}" a:for-item="imgItem"  a:for-index="imgIndex" :key="imgIndex"    data-current="{{imgIndex}}" data-urls="{{item.imagePath}}" src="{{filters.isHttpUrl(imgItem) ? base64imageUrl + 'vueStatic/img/commentErrImg.png' : baseImageUrl + imgItem}}"  class="proComment_img" catchTap="commentViewTap"></image>

@@ -78,7 +78,7 @@ export default {
 	// 物流详情
   LOGISTICS: {
     'GETEXPRESS': '/m/o/orderSearch/1.0/getExpress',
-    'lISTGOODSBYNAME': '/m/g//1.0/group/listGoodsByName',												// 新的物流详情猜你喜欢接口                                         
+    'lISTGOODSBYNAME': '/m/g/1.0/group/listGoodsByName',												// 新的物流详情猜你喜欢接口                                         
   },
 
 	// 商家店铺

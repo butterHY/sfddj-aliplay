@@ -32,19 +32,19 @@
             <text>{{countData.allCount}}</text> )
           </view>
         <!-- 有图 -->
-          <view class="estimateNavListCon {{commentFenlei == 2 ? 'active' : ''}}" data-type="2" catchTap="filterCommentList">有图(
+          <view a:if="{{countData.youTuCount}}" class="estimateNavListCon {{commentFenlei == 2 ? 'active' : ''}}" data-type="2" catchTap="filterCommentList">有图(
             <text>{{countData.youTuCount}}</text> )
           </view>
         <!-- 有视频 -->
-          <view class="estimateNavListCon {{commentFenlei == 3 ? 'active' : ''}}" data-type="3" catchTap="filterCommentList">有视频(
+          <view a:if="{{countData.shiPingCount}}" class="estimateNavListCon {{commentFenlei == 3 ? 'active' : ''}}" data-type="3" catchTap="filterCommentList">有视频(
             <text>{{countData.shiPingCount}}</text> )
           </view>
         <!-- 好评 -->
-          <view class="estimateNavListCon {{commentFenlei == 4 ? 'active' : ''}}" data-type="4" catchTap="filterCommentList">好评(
+          <view a:if="{{countData.haoPingCount}}" class="estimateNavListCon {{commentFenlei == 4 ? 'active' : ''}}" data-type="4" catchTap="filterCommentList">好评(
             <text>{{countData.haoPingCount}}</text> )
           </view>
         <!-- 差评 -->
-          <view class="estimateNavListCon {{commentFenlei == 5 ? 'active' : ''}}" style="margin-right: 0;" data-type="5" catchTap="filterCommentList">差评(
+          <view a:if="{{countData.chaPingCount}}" class="estimateNavListCon {{commentFenlei == 5 ? 'active' : ''}}" style="margin-right: 0;" data-type="5" catchTap="filterCommentList">差评(
             <text>{{countData.chaPingCount}}</text> )
           </view>
       </view>
@@ -134,11 +134,12 @@
 		<view a:elif="{{(!commentList || commentList.length == 0) && !isLoadMore}}" class="non_commentList all_100 whiteBack">
 			<!-- 上图部分 -->
 			<view class="height_60 posi_re">
-				<image mode="widthFix" src="{{baseLocImgUrl}}miniappImg/loading/search_none.png" class="posi_ab errImgBox"/>
+				<image mode="widthFix" src="{{automaticCount ? baseLocImgUrl + 'miniappImg/loading/autoEstimate.png' :  baseLocImgUrl + 'miniappImg/loading/search_none.png' }}"  class="posi_ab errImgBox"/>
 			</view>
 			<!-- 提示语部分 -->
 			<view class="flex_1">
-				<view class="errTxt">暂时没有评论~</view>
+        <view class="errTxt" a:if="{{automaticCount}}">{{automaticCount}}个用户默认评价了该商品</view>
+        <view class="errTxt" a:else>暂时没有评论~</view>
 			</view>
 		</view>
 		<!--加载数据进度条-->
