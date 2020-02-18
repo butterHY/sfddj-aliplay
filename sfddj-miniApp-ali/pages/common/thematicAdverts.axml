@@ -147,23 +147,23 @@
     <!-- 1行2个模块 a:if="{{item.moduleType == 'DOUBLEGOODS'}}"-->
     <view a:if='{{item.moduleType == "DOUBLEGOODS"}}' class="adsGroup2">
       <!-- 灰色间条 a:if="{{item.spacing == 1}}"-->
-      <view class="ads_space" style="background: #{{item.topIntervalColor}}"></view>
+      <view a:if="{{item.spacing == 1}}" class="ads_space" style="background: #{{item.topIntervalColor}}"></view>
       <!-- 1行2个内容 -->
       <view class="oneAds_con flex_view_row">
         <!-- 左边 width: 50%;-->
         <view class="flex_1" style="padding-right: 5rpx; box-sizing: border-box;">
-          <image mode="widthFix" src="https://img.fx-sf.com/user/admin175/20190919/156888525878757892.jpg" class="width_100 blockBox"/>
+          <image data-url="{{item.parseItem[0].link}}" onTap="goToPage" mode="widthFix" src="{{baseImageUrl + item.parseItem[0].imageUrl}}" class="width_100 blockBox"/>
         </view>
         <!-- 右边  width: 50%;-->
         <view class="flex_1" style="padding-left: 5rpx; box-sizing: border-box;">
-          <image mode="widthFix" src="https://img.fx-sf.com/user/admin175/20190919/156888525878757892.jpg" class="width_100 blockBox"/>
+          <image data-url="{{item.parseItem[10].link}}" onTap="goToPage" mode="widthFix" src="{{baseImageUrl + item.parseItem[1].imageUrl}}" class="width_100 blockBox"/>
         </view>
       </view>
     </view>
     <!-- 1+2模块 -->
     <view a:if='{{item.moduleType == "SHOPWINDOW"}}'>
       <!-- 灰色间条 a:if="{{item.spacing == 1}}"-->
-      <view class="ads_space" style="background: #{{item.topIntervalColor}}"></view>
+      <view a:if="{{item.spacing == 1}}" class="ads_space" style="background: #{{item.topIntervalColor}}"></view>
       <!-- 内容 -->
       <view class='oneAds_con {{item.spacing == 1 ? "marBot_20" : ""}}' style='background-color: {{item.backgroundColor ? "#" + item.backgroundColor : "#ffffff"}}'>
         <view class="width_100 flex_view_row">
@@ -195,7 +195,7 @@
     <!-- 1+4模块 -->
     <view a:if='{{item.moduleType == "ONEFOURADVERT"}}'>
       <!-- 灰色间条 a:if="{{item.spacing == 1}}"-->
-      <view class="ads_space" style="background: #{{item.topIntervalColor}}"></view>
+      <view a:if="{{item.spacing == 1}}" class="ads_space" style="background: #{{item.topIntervalColor}}"></view>
       <!-- 内容 -->
       <view class="flex_view_row oneAds_con {{item.spacing == 1 ? 'marBot_20' : ''}}" style='background-color: {{item.backgroundColor ? "#" + item.backgroundColor : "#ffffff"}}'>
         <!-- 左边1 个 -->
@@ -243,7 +243,7 @@
     <!-- 水平滚动产品————商品滚动 -->
     <view a:if='{{item.moduleType == "GOODSSCROLL"}}'>
       <!-- 灰色间条 a:if="{{item.spacing == 1}}"-->
-      <view class="ads_space" style="background: #{{item.topIntervalColor}}"></view>
+      <view a:if="{{item.spacing == 1}}" class="ads_space" style="background: #{{item.topIntervalColor}}"></view>
       <!-- 内容 -->
       <view class='oneAds_con {{item.spacing == 1 ? "marBot_20" : ""}}' style='background-color: {{item.backgroundColor ? "#" + item.backgroundColor : "#ffffff"}}'>
         <!-- 标题 -->
