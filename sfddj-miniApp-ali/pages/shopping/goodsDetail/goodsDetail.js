@@ -159,7 +159,7 @@ Page({
 	 * 获取商品评价
 	 * @param goodsId 商品id
 	 */
-  getComment(resData) {
+  getComment(data, type) {
     let that = this;
     // let comment = [];
     // if (resData.commentList && resData.commentList.length > 0) {                      // commentList 不为 null 或者 undefied;
@@ -183,9 +183,12 @@ Page({
     // }
 
       let videoPath = [];
-      let buyerShowList = [];
-        if ( resData.buyerShow && resData.buyerShow.buyerShowList && resData.buyerShow.buyerShowList.length > 0 ) {
-          buyerShowList = resData.buyerShow.buyerShowList.map( (value, index) => {
+      // let buyerShowList = [];
+      // let ordinaryComment = [];
+        //  let commentList = [];
+          console.log('getComment',data)
+
+          let commentList = data.map( (value, index) => {
             if ( value && (index == 0 || index == 1) ) {
               value.createDate = utils.pointFormatTime(new Date(value.createDate));
               if ( value.videoPath && value.videoPath.length > 0 ) {
@@ -204,11 +207,10 @@ Page({
               return value;
             }
           })
-        }
+
         that.setData({
-          // newGoods: resData.goodsShowVO,
-          buyerShowList,
-          buyerShowCount: resData.buyerShow.buyerShowCount
+          buyerShowList:  commentList,
+          // buyerShowCount: resData.buyerShow.buyerShowCount
         });
 
   },
@@ -290,9 +292,10 @@ Page({
       http.get(api.GOODSDETAIL.GET_GOODS_DETAIL, { goodsSn }, function(res) {
         var resData = res.data.data;
         var resRet = res.data.ret
+
         if (resRet.code == '0' && resRet.message == 'SUCCESS' && resData && resData.goodsShowVO) {
           that.data.goods = resData.goodsShowVO;
-
+          console.log('++++++++++++++',that.data.goods.specifications,that.data.goods.specifications.length)
           if (that.data.goods.specifications && that.data.goods.specifications.length >= 4) {
             that.setData({
               loadComplete: true,
@@ -325,12 +328,22 @@ Page({
             getApp().globalData.uma.trackEvent('goodsDetailPage_source', { utm_source: that.data.pageOptions.utm_source, utm_medium: that.data.pageOptions.utm_medium, utm_campaign: that.data.pageOptions.utm_campaign, utm_content: that.data.pageOptions.utm_content, utm_term: that.data.pageOptions.utm_term })
           }
 
-
+        console.log('++++++++++++++',resData.commentList.length)
 
           //当请求返回成功才请求评论和猜你喜欢的数据
           that.data.goodsId = resData.goodsShowVO.goodsId;
           // 处理商品评论；
-          that.getComment(resData);
+          if ( resData.buyerShow && resData.buyerShow.buyerShowList && resData.buyerShow.buyerShowList.length > 0 ) {
+            that.getComment(resData.buyerShow.buyerShowList);
+            that.setData({
+              buyerShowCount: resData.buyerShow.buyerShowCount
+            });
+          } else if ( resData.commentList && resData.commentList.length > 0 ) {
+            that.getComment(resData.commentList);
+          }
+
+          
+          // that.getComment(resData);
           // 请求获取猜你喜欢的数据
           that.getGuessLike('0');
           // 请求获取优惠券数据
