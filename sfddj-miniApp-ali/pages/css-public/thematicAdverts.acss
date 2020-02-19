@@ -1,3 +1,7 @@
+.thematicItem image {
+  display: block;
+}
+
 .titleMesText {
   padding: 20rpx 30rpx;
   background: #FFFFFF;
