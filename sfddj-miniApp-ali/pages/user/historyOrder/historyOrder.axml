@@ -148,7 +148,7 @@
 							</navigator>
 							<view class="orderListBtn mindSend_text marLeft_10" data-order-id="{{item.orderId}}" onTap="deleteOrder">删除订单
 							</view>
-							<view data-index="{{index}}" class="color-ff5353 orderListBtn checkDeli_btnRed marLeft_10" a:if="{{item.orderStatus == 3}}" onTap="gotoComment">评价晒单
+							<view data-index="{{index}}" class="color-ff5353 orderListBtn checkDeli_btnRed marLeft_10" a:if="{{item.orderStatus == 3}}" onTap="gotoComment">评价有礼
 							</view>
 						</view>
 						<!--<view class="orderList_botView font-30 color-a1a0a0" a:if="{{item.orderType == 'GIFT' && item.orderStatus == 9}}"><navigator url="/pages/user/sendGift/sendGift?paymentOrderId={{item.paymentId}}" open-type="{{needRedirect ? 'redirect' : 'navigate'}}" class="font-24 color-ff5353 orderListBtn checkDeli_btnRed marLeft_30" data-payment-id="{{item.paymentId}}" hover-class="none">分享给TA</navigator></view> -->
@@ -234,7 +234,7 @@
                 查看物流
 							</navigator>
 							<view onTap='deleteOrder' class='orderListBtn mindSend_text marLeft_10' data-order-id='{{item.id}}'>删除订单</view>
-							<view a:if="{{item.orderStatus == 'FINISHED'}}" onTap='gotoComment' data-index='{{index}}' class='color-ff5353 orderListBtn checkDeli_btnRed marLeft_10'>评价晒单</view>
+							<view a:if="{{item.orderStatus == 'FINISHED'}}" onTap='gotoComment' data-index='{{index}}' class='color-ff5353 orderListBtn checkDeli_btnRed marLeft_10'>评价有礼</view>
 						</view>
 						<!-- <view a:if="{{item.giftOrderShowType=='1' && item.orderStatus == 'WAITING_FILL_ADDR'}}" class='orderList_botView font-30 color-a1a0a0'>
 							<navigator url='/pages/user/sendGift/sendGift?paymentOrderId={{item.paymentOrderId}}' open-type="{{needRedirect?'redirect':'navigate'}}" class='font-24 color-ff5353 orderListBtn checkDeli_btnRed marLeft_30' data-payment-id='{{item.paymentOrderId}}' hover-class='none'>分享给TA</navigator>
