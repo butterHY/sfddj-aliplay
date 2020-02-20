@@ -11,6 +11,6 @@
 </view>
 <view a:else>
   <block a:for="{{thematicAds.modules}}" a:key="thematicAds">
-    <template is="thematicItem" data="{{item, baseImageUrl, baseLocImgUrl, ossImgStyle}}"></template>
+    <template is="thematicItem" data="{{item, baseImageUrl, baseLocImgUrl, ossImgStyle, countHour, countMinute, countSecond}}"></template>
   </block>
 </view>

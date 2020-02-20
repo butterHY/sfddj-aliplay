@@ -247,8 +247,16 @@
       <!-- 内容 -->
       <view class='oneAds_con {{item.spacing == 1 ? "marBot_20" : ""}}' style='background-color: {{item.backgroundColor ? "#" + item.backgroundColor : "#ffffff"}}'>
         <!-- 标题 -->
-        <view a:if="{{item.parseItem[0].moduleTitle}}" class="goodsScrollTit">
+        <view a:if="{{item.parseItem[0].moduleTitle}}" class="goodsScrollTit flex_view_row align_cen">
           <view class='goodsScrollTit_txt'>{{item.parseItem[0].moduleTitle}}</view>
+          <!-- 倒计时部分 -->
+          <view a:if="{{item.parseItem[0].timerType == 'DAY_TIMER'}}" class="act-timeShow Bflex1 flex_view_row">
+            <view class="timeShow timeBg-black">{{countHour}}</view>
+            <view class="redLine">/</view>
+            <view class="timeShow timeBg-black">{{countMinute}}</view>
+            <view class="redLine">/</view>
+            <view class="timeShow timeBg-red">{{countSecond}}</view>
+          </view>
         </view>
         <!-- 商品 -->
         <view class="goodsScroll">
