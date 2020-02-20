@@ -38,10 +38,16 @@
   line-height: 50rpx;
 }
 
+.copyText {
+  padding: 5rpx 10rpx;
+  border: 1rpx solid #d6d6d6;
+  border-radius: 8rpx;
+}
+
 .logisticsOrderMain {
   box-sizing: border-box;
   padding: 56rpx 40rpx;
-  border-radius: 20rpx;
+  border-radius: 20rpx  20rpx 0 0;
 }
 
 .tipRound {

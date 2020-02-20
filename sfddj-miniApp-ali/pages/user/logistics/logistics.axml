@@ -76,7 +76,7 @@
 
 
     <block>
-      <view class="logisticsOrderBox" a:for="{{firstTwoLogisticsDada}}" a:for-item="fatherItem" a:for-index="fatherIndex" a:key="fatherIndex">
+      <view class="logisticsOrderBox" a:if="{{ firstTwoLogisticsDada && firstTwoLogisticsDada.length > 0 }}" a:for="{{ firstTwoLogisticsDada }}" a:for-item="fatherItem" a:for-index="fatherIndex" a:key="fatherIndex">
         <view class="logisticsOrderHeard flex_view_row align_cen boxShadow backg_fff">
           <view class="waybillHeardImg">
             <image class="all_100" src="{{baseImgLocUrl}}/miniappImg/public/logisticsDetails/tip_point.png"></image>
@@ -87,7 +87,8 @@
             </view>
             <view class="waybillNumber font-22 color-999999" a:if="{{fatherItem.expressNo}}">
               运单编号：{{fatherItem.expressNo}}
-              <text class="icon-fuzhi font-26 marLeft_10" data-expressNo="{{fatherItem.expressNo}}" catchTap="handleCopy"></text>
+              <text class="copyText marLeft_10" data-expressNo="{{fatherItem.expressNo}}" catchTap="handleCopy">复制</text>
+              <!-- <text class="icon-fuzhi font-26 marLeft_10" data-expressNo="{{fatherItem.expressNo}}" catchTap="handleCopy"></text> -->
             </view>
             <view class="waybillTime font-22 color-999999" a:if="{{fatherItem.expectedDeliveryTime}}">预计送达：{{fatherItem.expectedDeliveryTime}}</view>
           </view>
@@ -99,7 +100,14 @@
               <view class="tipRound">
                 <view a:if="{{ index != fatherItem.detail.length -1 }}" class="line"></view>
                 <view class="pointBox flex_view_col align_cen">
-                  <view class="{{ 1 == 1 ? 'statusPoint' : 'miniPoint' }}">签</view>
+                  <view  a:if="{{(index == fatherItem.detail.length - 1 || (index == 0) || (index == 1))}}" class="statusPoint" >
+                    <view class="statusPoint" a:if="{{(index == 0) || (index == fatherItem.detail.length - 1 && fatherItem.isCheckMore)}}" style="{{ index == 0 && fatherItem.status == '已签收' ? '' : 'background:#d6d6d6;' }}">收</view>
+                    <view class="statusPoint" a:elif="{{index == 1}}">
+                      <text a:if="{{fatherItem.status == '已签收'}}">签</text>
+                      <text a:else class="icon-masongwei font-26">
+                    </view>
+                  </view>
+                  <view a:else class="miniPoint"></view>
                   <view class="twoPointBox flex_view_col align_cen justi_between" a:if="{{ !fatherItem.isCheckMore && (index == fatherItem.detail.length - 1) }}">
                     <view class="twoPoint_1"></view>
                     <view class="twoPoint_2"></view>
@@ -107,9 +115,9 @@
                 </view>
               </view>
               <view class="waybillDescribe flex_1">
-                <!-- <view class="waybillStatus font-28">已签收</view> -->
+                <view class="waybillStatus font-26" a:if="{{index == 1 && fatherItem.status}}">{{fatherItem.status}}</view>
                 <view class="waybillAddress font-24">{{childrenItem.content}}</view>
-                <view class="waybillNewTime font-22 color-999999">{{childrenItem.dayTime}}  {{childrenItem.hoursTime}}</view>
+                <view class="waybillNewTime font-22 color-999999" >{{childrenItem.dayTime}}  {{childrenItem.hoursTime}}</view>
               </view>
             </view>
             <view class="clearanceLine" a:if="{{index != (fatherItem.detail.length - 1)}}">
@@ -140,8 +148,7 @@
             </view>
           </block> -->
         </view>
-        
-        <view class="checkMore font-28" data-num="{{fatherIndex}}" catchTap="checkMore">
+        <view a:if="{{ logisticsDada[fatherIndex].detail && logisticsDada[fatherIndex].detail.length > 2 }}" class="checkMore font-28" data-num="{{fatherIndex}}" catchTap="checkMore">
           <view a:if="{{fatherItem.isCheckMore}}" >收起物流详情 <text class="icon-href-up checkMoreIcon"></text></view>
           <view a:else="{{!fatherItem.isCheckMore}}" >点击查看更多物流详情<text class="icon-href-down checkMoreIcon"></text></view>
         </view>

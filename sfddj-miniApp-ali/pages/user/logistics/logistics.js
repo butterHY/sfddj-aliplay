@@ -62,15 +62,15 @@ Page({
           value.expectedDeliveryTime = value.expectedDeliveryTime ? utils.pointFormatTime(new Date(value.expectedDeliveryTime)) : value.expectedDeliveryTime;
 
           switch(value.status) {
-            case 'COLLECT': value.status = '揽件'
+            case 'COLLECT': value.status = '待揽件'
                 break;
             case 'TRANSIT': value.status = '运输中'
                 break;
             case 'DELIVERY': value.status = '派送中'
                 break;
-            case 'SIGNED': value.status = '签收'
+            case 'SIGNED': value.status = '已签收'
                 break;
-            default: value.status = '揽件中'
+            default: value.status = '待揽件'
           }
 
           value.detail.forEach(val => {
@@ -79,6 +79,7 @@ Page({
             // + that.judgementTime(val.time.getSeconds()
             val.hoursTime =  ('' + that.judgementTime(val.time.getHours()) + ':' + that.judgementTime(val.time.getMinutes()) );
           })
+          value.detail.unshift( {content: value.shipAddress } )
         })
 
         console.log(resData)
