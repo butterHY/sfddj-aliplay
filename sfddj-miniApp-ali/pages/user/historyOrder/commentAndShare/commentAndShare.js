@@ -63,23 +63,53 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    // var goodsPic = options.goodsPic;
-    // var orderId = options.orderId;
-    // var supplierId = options.supplierId;
-	let {goodsPic, orderId, supplierId, goodsSn} = options;
-    // util.getNetworkType(this);
-    this.getToken(orderId);
-    this.getCommentRule();
-    this.setData({
-      goodsPic,
-      orderId,
-      supplierId,
-      baseImageUrl: constants.UrlConstants.baseImageUrl,
-	    goodsSn,
+
+    let {goodsPic, orderId, supplierId, goodsSn} = options;
+      // util.getNetworkType(this);
+      this.getToken(orderId);
+      this.getCommentRule();
+      this.data.starList.forEach(value => value.select = true);
+      this.data.starList2.forEach(value => value.select = true);
+      
+      // console.log(this.data.starList)
+      // console.log(this.data.starList2)
+
+      this.setData({
+        goodsPic,
+        orderId,
+        supplierId,
+        baseImageUrl: constants.UrlConstants.baseImageUrl,
+        goodsSn,
+        imgList: [],
+        // starList: this.data.starList,
+        // starList2: this.data.starList2
     });
+
+
+
+
+
+    // console.log('初始化订单ID',this.data.orderId)
+    // console.log('初始化描述',this.data.starLevel)
+    // console.log('初始化店铺',this.data.starLevel2)
+    // console.log('初始化是否匿名',this.data.noName)
+    // console.log('初始化内容',this.data.goodsDesc)
+    // console.log('初始化图片',this.data.imgList)
+    // console.log('初始化描述',this.data.starList)
+    // console.log('初始化店铺评价',this.data.starList2)
   },
 
+  onShow() {
+    // console.log('页面显示');
 
+    // console.log('页面显示订单ID',this.data.orderId)
+    // console.log('页面显示描述',this.data.starLevel)
+    // console.log('页面显示店铺',this.data.starLevel2)
+    // console.log('页面显示是否匿名',this.data.noName)
+    // console.log('页面显示内容',this.data.goodsDesc)
+    // console.log('页面显示图片',this.data.imgList)
+
+  },
 
   /*避免重复提交请求*/
   getToken: function (orderId) {
@@ -332,18 +362,17 @@ Page({
       }, 1500)
     } else {
       http.post(api.UPLOADCOMMENT.SAVECOMMENt, data, function (res) {
-        wx.showModal({
+        my.confirm({
           title: '评价成功',
           content: '您的评价已经提交成功，感谢您的反馈！',
-          confirmColor: '#ff5353',
           showCancel: false,
           success: function (res) {
-            wx.navigateBack()
+            my.navigateBack();
           }
-        })
+
+        });
       }, function (err) {
-      }
-      )
+      })
     }
   }
 
