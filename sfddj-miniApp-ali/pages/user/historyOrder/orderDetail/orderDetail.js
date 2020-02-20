@@ -146,6 +146,7 @@ Page({
 			}
 
 			that.countLeftTime(remainSecond);
+      
 			that.setData({
 				result: res.data.result,
 				goods: res.data.result.goods,
@@ -167,6 +168,8 @@ Page({
 				defaultMobile: imobile ? true : false,
 				initMobile: result.order.shipMobile
 			});
+      console.log(res.data.result.expressInfo);
+      console.log(res.data.result.order.type);
 		}, function(err) {
 			that.setData({
 				loadComplete: true,

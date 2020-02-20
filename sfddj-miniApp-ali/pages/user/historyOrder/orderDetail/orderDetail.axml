@@ -164,7 +164,7 @@
 			<navigator url="/pages/user/afterSalesService/applyForAfterSalesService/applyForAfterSalesService?isRefund={{false}}&orderId={{order.id}}" open-type="{{needRedirect ? 'redirect' : 'navigate'}}" class="bot_normalBtn font-26 color-353535" hover-class="none" a:if="{{(order.orderStatus == 'SHIPPED' || order.orderStatus == 'FINISHED') && !workOrder && !order.isAppealOutTime && !isJifen}}">申请售后</navigator>
 			<navigator url="/pages/user/afterSalesService/applyForAfterSalesService/applyForAfterSalesService?isRefund={{true}}&orderId={{order.id}}" open-type="{{needRedirect ? 'redirect' : 'navigate'}}" class="bot_normalBtn font-26 color-353535" hover-class="none" a:if="{{order.orderStatus == 'PAYFINISH' && !workOrder && !(order.orderType == 'GIFT' && receiverNickName) && !isJifen && (order.platformAmount > 0 || (order.platformAmount == 0 && result.prepaiCardMoney))}}">申请退款</navigator>
 			<navigator url="/pages/user/afterSalesService/afterSalesDetail/afterSalesDetail?orderId={{order.id}}&workOrderId={{workOrder.id}}" class="bot_normalBtn font-26 color-353535" open-type="{{needRedirect ? 'redirect' : 'navigate'}}" hover-class="none" a:if="{{workOrder}}">售后详情</navigator>
-			<view class="bot_normalBtn font-26 color-353535" a:if="{{order.orderStatus == 'FINISHED'}}" onTap="gotoComment">评价晒单</view>
+			<view class="bot_normalBtn font-26 color-353535" a:if="{{order.orderStatus == 'FINISHED'}}" onTap="gotoComment">评价有礼</view>
 		</view>
 	</view>
 </view>

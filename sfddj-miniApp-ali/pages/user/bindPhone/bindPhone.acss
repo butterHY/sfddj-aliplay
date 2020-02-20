@@ -5,6 +5,11 @@
 .indentTwo {
   text-indent: 2em;
 }
+
+.indentOne {
+  text-indent: 1em;
+}
+
 .font-bold {
   font-weight: bold;
 }
@@ -127,4 +132,18 @@ page {
   background: #ff5353;
   line-height: 40px;
   height: 40px;
+}
+
+.color-theme {
+  color: #5d5d5d;
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+.marTop_16 {
+  margin-top: 16rpx;
+}
+
+.text_underline {
+  text-decoration: underline;
 }

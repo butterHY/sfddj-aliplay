@@ -435,7 +435,7 @@
       </view>
     </view>
   </navigator>
-  <view a:if="{{buyerShowCount && goods.commentTotal}}" class="division-area"></view>
+  <view class="division-area"></view>
 
   <!-- 产品详情和服务售后的选择栏                 已完成新接口字段更换 -->
   <view class="goods-detail-title-view js_titleView whiteBack width_100" style="{{suctionTop == 0 ? 'position: fixed; top: 0; left: 0; z-index: 1000;' : ''}}">

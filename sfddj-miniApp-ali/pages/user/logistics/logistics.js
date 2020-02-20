@@ -196,7 +196,7 @@ Page({
     }
     that.setData({ youLikeIsLoadMore: true });
 
-    http.get(api.LOGISTICS.lISTGOODSBYNAME, data, (res) => {
+    http.get(api.GOODSDETAIL.lISTGOODSBYNAME, data, (res) => {
       if (res.data.ret.code == '0' && res.data.ret.message == "SUCCESS") {
         let resData = res.data.data;
         // 如果返回的数据长度等于请求条数说明还有更多数据
