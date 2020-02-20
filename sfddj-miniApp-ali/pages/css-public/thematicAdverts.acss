@@ -1,3 +1,7 @@
+.thematicItem image {
+  display: block;
+}
+
 .titleMesText {
   padding: 20rpx 30rpx;
   background: #FFFFFF;
@@ -309,6 +313,7 @@
 /* .goodsViewBox .goodsShowImg {
   border-radius: 10rpx;
 } */
+
 .padRL_10 {
   padding: 0 10rpx;
   box-sizing: border-box;
@@ -317,4 +322,36 @@
 .goods-scrollx-view {
   white-space: nowrap;
   font-size: 0;
+}
+
+/* 倒计时部分 */
+
+.act-timeShow .timeShow {
+  height: 38rpx;
+  width: 48rpx;
+  font-size: 20rpx;
+  line-height: 40rpx;
+  display: inline-block;
+  text-align: center;
+  color: #FFFFFF;
+  vertical-align: middle
+}
+
+.act-timeShow .redLine {
+  font-size: 20rpx;
+  line-height: 38rpx;
+  color: #ff5353;
+  font-weight: bold;
+  display: inline-block;
+  vertical-align: middle
+}
+
+.timeBg-black {
+  background: url(https://img.sfddj.com/miniappImg/icon/timeBg-black.png) no-repeat center center;
+  background-size: 100% 100%;
+}
+
+.timeBg-red {
+  background: url(https://img.sfddj.com/miniappImg/icon/timeBg-red.png) no-repeat center center;
+  background-size: 100% 100%;
 }
