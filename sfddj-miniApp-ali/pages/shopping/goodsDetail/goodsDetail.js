@@ -426,7 +426,7 @@ Page({
             otherGoods: resData.supplierGoodsList,                                                    // 商家的其他商品，
             goodsId: that.data.goodsId,
           })
-
+console.log( that.data.SFmember ,that.data.goods.jifenStatus, that.data.goods.deductStatus ,that.data.goods.memberDayPriceStatus)
 
           reslove({
             type: true

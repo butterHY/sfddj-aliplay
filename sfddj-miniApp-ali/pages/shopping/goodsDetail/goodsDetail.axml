@@ -523,12 +523,13 @@
   <view a:if="{{goods.viewStatus != 'SALEING'}}" class="goods-soldOut">非常抱歉，该商品已经下架</view>
   <view a:elif="{{goods.viewStatus == 'SALEING' && goods.goodsStore == 0}}" class="goods-soldOut">非常抱歉，该商品已经售罄</view>
   <view a:elif="{{goods.viewStatus == 'SALEING' && goods.goodsStore != 0 && nonDeliveryArea}}" class="goods-soldOut">当前地址不在服务范围，请切换收货地址</view>
+  
   <!-- 不是顺丰会员商品      重构按钮完成 -->
   <block a:if="{{!SFmember}}">
     <!-- 积分商品和抵扣商品和会员日商品, 不能显示'送他按钮'和'加入购物车按钮'                  memberDeductGoods 会员积分抵扣旧字段， memberDayGoods 与原有接口字段一样 -->
     <view a:if="{{goods.jifenStatus || goods.deductStatus || goods.memberDayPriceStatus}}" class="bottom-view">
       <view class="regularButton">
-        <view data-url="/pages/shopping/storeInfo/storeInfo?supplierId={{goods.supplierInfo.supplierId}}" data-type="supplier" onTap="goToTargetPage" hover-class="none">
+        <view class="regularItem" data-url="/pages/shopping/storeInfo/storeInfo?supplierId={{goods.supplierInfo.supplierId}}" data-type="supplier" onTap="goToTargetPage" hover-class="none">
           <view class="regularItemIcon icon-home_ic_black"></view>
           <view class="regularItemText">店铺</view>
         </view>
