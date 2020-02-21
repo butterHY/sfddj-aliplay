@@ -332,11 +332,13 @@ Page({
             globalCross: 0
           });
         } else if (result.globalCross == '1') {
+          that.hasShowIdMes(result.defaultAddress)
           that.setData({
             globalGoods: true,
             globalCross: 1
           });
         } else if (result.globalCross == '2') {
+          that.hasShowIdMes(result.defaultAddress)
           that.setData({
             globalGoods: true,
             globalCross: 2
@@ -353,11 +355,13 @@ Page({
             globalCross: 0
           });
         } else if (result.globalCross == '1') {
+          that.hasShowIdMes(result.defaultAddress)
           that.setData({
             hasGlobalGoods: true,
             globalCross: 1
           });
         } else if (result.globalCross == '2') {
+          that.hasShowIdMes(result.defaultAddress)
           that.setData({
             hasGlobalGoods: true,
             globalCross: 2
@@ -702,11 +706,13 @@ Page({
             globalCross: 0
           });
         } else if (result.globalCross == '1') {
+          that.hasShowIdMes(result.defaultAddress)
           that.setData({
             globalGoods: true,
             globalCross: 1
           });
         } else if (result.globalCross == '2') {
+          that.hasGlobalGoods(result.defaultAddress)
           that.setData({
             globalGoods: true,
             globalCross: 2
@@ -818,6 +824,60 @@ Page({
         timeOut: timeOut
       });
     });
+  },
+
+  // 判断购买全球购商品有无历史身份证号与图片显示
+  hasShowIdMes(data) {
+    var that = this;
+
+    var data = data ? data : {}
+
+    var idCardNo = '';
+    var idSave = false;
+    var idCardImgFront = '';
+    var idCardImgBack = '';
+    var idNumFront = '';
+    var idNumEnd = '';
+    var idCanSave = false;
+    var idCardImgArr = ['', ''];
+    // 如果有返回默认的身份证号要显示
+    if (data) {
+      if (data.idCardNo) {
+        // idCardNo = data.idCardNo;
+        idSave = true;
+        idNumFront = data.idCardNo.substring(0, 4);
+        idNumEnd = data.idCardNo.substring(14, 18);
+        idCanSave = true;
+        idCardNo = utils.Encrypt(data.idCardNo);
+
+      }
+
+      // 如果有返回默认的身份证图片就显示
+      if (data.frontImage) {
+        idCardImgFront = data.frontImage;
+        idCardImgArr[0] = baseImageUrl + data.frontImage;
+
+      }
+      if (data.reverseImage) {
+        idCardImgBack = data.reverseImage;
+        idCardImgArr[1] = baseImageUrl + data.reverseImage;
+      }
+    }
+
+
+
+    that.setData({
+      idCardNo: idCardNo,
+      idSave: idSave,
+      idCardImgFront: idCardImgFront,
+      idCardImgBack: idCardImgBack,
+      idNumFront: idNumFront,
+      idNumEnd: idNumEnd,
+      idCanSave: idCanSave,
+      idCardImgArr: idCardImgArr,
+      idNum: data.idCardNo
+    })
+
   },
 
   chooseImg(e) {
