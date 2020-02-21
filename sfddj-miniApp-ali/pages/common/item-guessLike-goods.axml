@@ -12,7 +12,7 @@
       <image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff3.png" class="allCompensation posi_ab" style="width: 65rpx; height: 65rpx; top: 35rpx; {{left ? 'right: 30rpx;' : 'right: 10rpx;'}}" a:elif="{{filters.strIndexOf(afterSaleGuee,'3')}}"></image>
       <image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff4.png?version=2.0" class="allCompensation posi_ab" style="width: 65rpx; height: 65rpx; top: 35rpx; {{left ? 'right: 30rpx;' : 'right: 10rpx;'}}" a:elif="{{filters.strIndexOf(afterSaleGuee,'4')}}"></image>
       <view style="width:100%;box-sizing:border-box;height:176rpx;padding:0 20rpx 16rpx;">
-        <view class="single-line2" style="height:80rpx;">
+        <view class="single-line flex_view_col" style="height:80rpx;">
           <text class="font-28 color-323232 single-line-text"style='line-heigth:2'>{{name}}</text>
           <text style="margin-top:10rpx" class="font-24 color-bbbbbb single-line-text">{{productName}}</text>
         </view>

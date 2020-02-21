@@ -13,7 +13,7 @@
         <image a:elif='{{filters.strIndexOf(afterSaleGuee,"3")}}' src='{{baseLocImgUrl}}miniappImg/icon/icon_Payoff3.png' class='allCompensation posi_ab' style='{{left ? "right: 30rpx;" : "right: 10rpx;"}}'></image>
         <image a:elif='{{filters.strIndexOf(afterSaleGuee,"4")}}' src='{{baseLocImgUrl}}miniappImg/icon/icon_Payoff4.png?version=2.0' class='allCompensation posi_ab' style='{{left ? "right: 30rpx;" : "right: 10rpx;"}}'></image>
         <view class="goodsInfo height_176r notAtHome">
-          <view class='single-line2 height_80r'>
+          <view class='single-line flex_view_col height_80r'>
             <text class='font-26 color-323232 single-line-text lineH_2'>{{goodsName}}</text>
             <text class='font-26 color-bbbbbb single-line-text goods_productName'>{{productName}}</text>
           </view>
@@ -39,7 +39,7 @@
         <image a:elif='{{filters.strIndexOf(afterSaleGuee,"3")}}' src='{{baseLocImgUrl}}miniappImg/icon/icon_Payoff3.png' class='allCompensation posi_ab' style='{{left ? "right: 30rpx;" : "right: 10rpx;"}}'></image>
         <image a:elif='{{filters.strIndexOf(afterSaleGuee,"4")}}' src='{{baseLocImgUrl}}miniappImg/icon/icon_Payoff4.png?version=2.0' class='allCompensation posi_ab' style='{{left ? "right: 30rpx;" : "right: 10rpx;"}}'></image>
         <view class="goodsInfo height_176r notAtHome">
-          <view class='single-line2 height_80r'>
+          <view class='single-line flex_view_col height_80r'>
             <text class='font-26 color-323232 single-line-text lineH_2'>{{goodsName}}</text>
             <text class='font-26 color-bbbbbb single-line-text goods_productName'>{{productName}}</text>
           </view>

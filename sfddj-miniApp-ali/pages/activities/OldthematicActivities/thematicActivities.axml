@@ -72,10 +72,10 @@
                       <image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff4.png?version=2.0" class="allCompensation posi_ab goodsColumn_liIcon" style="{{index % 2 == 0 ? 'right: 30rpx;' : 'right: 10rpx;'}}" a:elif="{{filters.strIndexOf(item.afterSaleGuee,'4')}}">
                       </image>
                       <view class="goodsColumn_bot flex_view_col justi_around" >
-                        <view class="single-line2">
+                        <view class="single-line flex_view_col">
                           <text class="font-28 color-323232 single-line-text">{{item.name}}
                           </text>
-                          <text class="marTop_10 font-24 color-bbbbbb single-2line-text">{{item.productName}}{{item.productName}}{{item.productName}}{{item.productName}}{{item.productName}}{{item.productName}}{{item.productName}}{{item.productName}}{{item.productName}}{{item.productName}}{{item.productName}}{{item.productName}}{{item.productName}}{{item.productName}}{{item.productName}}{{item.productName}}{{item.productName}}{{item.productName}}{{item.productName}}{{item.productName}}{{item.productName}}{{item.productName}}{{item.productName}}{{item.productName}}{{item.productName}}{{item.productName}}{{item.productName}}{{item.productName}}{{item.productName}}{{item.productName}}
+                          <text class="marTop_10 font-24 color-bbbbbb single-2line-text">{{item.productName}}
                           </text>
                         </view>
                         <view class="goodsColumn_price">
