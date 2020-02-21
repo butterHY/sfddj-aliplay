@@ -91,7 +91,7 @@
                     </view>
                   </view>
                   <view class="goodsInfo height_176r notAtHome">
-                    <view class='single-line2 height_80r'>
+                    <view class='single-line flex_view_col height_80r'>
                       <text class='font-26 color-323232 single-line-text lineH_2'>{{goodsListItem.goodsName}}</text>
                       <text class='font-26 color-bbbbbb single-line-text goods_productName'>{{goodsListItem.productName}}</text>
                     </view>
@@ -116,7 +116,7 @@
                     </view>
                   </view>
                   <view class="goodsInfo height_176r notAtHome">
-                    <view class='single-line2 height_80r'>
+                    <view class='single-line flex_view_col height_80r'>
                       <text class='font-26 color-323232 single-line-text lineH_2'>{{goodsListItem.goodsName}}</text>
                       <text class='font-26 color-bbbbbb single-line-text goods_productName'>{{goodsListItem.productName}}</text>
                     </view>
