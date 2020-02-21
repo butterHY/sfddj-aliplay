@@ -79,9 +79,6 @@
 							</view>
 							<view class="commentText font-24 color-414141">{{item.comment}}</view>
 							<view class="commentText blockView">
-								<!-- <image src="{{filters.isHttpUrl(item2) ? baseLocImgUrl + 'vueStatic/img/commentErrImg.png' : baseImageUrl + item2}}" class="commentTextImg" data-current="{{index}}" data-urls="{{item.imagePath}}" a:for="{{item.imagePath}}" a:for-item="item2" onTap="commentViewTap" a:key="commentImagePath"></image> -->
-
-
                 <view class="commentTextImg video_view" a:if="{{ item.videoPath && item.videoPath.length > 0 }}" a:for="{{item.videoPath}}"  a:for-item="videoItem"  a:for-index="videoIndex" a:key="videoIndex" data-id="video{{videoIndex}}" data-videoSrc="{{videoItem.videoSrc}}" catchTap="playCommeVideo">
                   <image class="all_100" src="{{baseImageUrl + videoItem.videoCover}}" ></image>
                   <image class="video_playImg" src="{{baseLocImgUrl + 'miniappImg/public/video/player-play-btn.png'}}"></image>
@@ -105,10 +102,6 @@
 							<view class="append-comment-date">{{item.appendDateStr}}</view>
 							<view class="commentText font-24 color-414141">{{item.appendComment}}</view>
 							<view class="commentText blockView">
-								<!-- <block a:for="{{item.appendImagePath}}" a:for-item="appendItem">
-									<image src="{{filters.isHttpUrl(appendItem) ? baseLocImgUrl + 'vueStatic/img/commentErrImg.png' : baseImageUrl + appendItem}}" class="commentTextImg" data-current="{{index}}" data-urls="{{item.appendImagePath}}" onTap="commentViewTap" a:key="appendImage"></image>
-								</block> -->
-
                 <view a:if="{{ item.appendVideoPath && item.appendVideoPath.length > 0 }}" class="commentTextImg video_view"  a:for="{{item.appendVideoPath}}"  a:for-item="appendVideoItem"  a:for-index="appendVideoIndex" a:key="appendVideoIndex" data-id="appendVideo{{appendVideoIndex}}" data-videoSrc="{{appendVideoItem.videoSrc}}" catchTap="playCommeVideo">
                   <image class="all_100" src="{{baseImageUrl + appendVideoItem.videoCover}}" ></image>
                   <image class="video_playImg" src="{{baseLocImgUrl + 'miniappImg/public/video/player-play-btn.png'}}"></image>

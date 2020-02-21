@@ -318,53 +318,7 @@
   </navigator>
 
 
-  <!-- 商品评分和评价条数                             已完成新接口字段更换但还没有验图片 -->
-  <!-- <view a:if="{{showComment}}" class="division-area"></view>
-  <view a:if="{{showComment}}" data-url="/pages/shopping/comment/comment?goodScore={{goods.commentScore}}&goodsCommentTotal={{goods.commentTotal}}&goodsId={{goods.goodsId}}" data-type="comment" onTap="goToTargetPage" hover-class="none">
-    <view class="goods-comment-title">
-      <view class="alignMiddle">
-        好评率: 
-        <text class="marLeft_5 color-57"> {{goods.commentScore}}%</text>
-      </view>
-      <view class="color-999 alignMiddle">
-        <text>评价</text>
-        <text class="marLeft_10">
-          <text>(</text>
-          <text decode="true" space="true"></text>
-          <text>{{goods.commentTotal}}</text>
-          <text decode="true" space="true"></text>
-          <text>)</text>
-        </text>
-        <text class="icon-href-right opacity8 font-22 marLeft_10 color-999"></text>
-      </view>
-    </view>
-  </view> -->
-  <!-- 评价示例 -->
-  <!-- <view a:if="{{showComment && comment.length > 0}}" a:for="{{comment}}" class="goods-comment-area" a:key="*this">
-    <view class="comment-line"></view>
-    <view class="comment-user-area">
-      <view class="flex_view_row align_cen">
-        <view class="comment-user-image">
-          <image src="{{item.headPortraitPath ? item.headPortraitPath : base64imageUrl + 'miniappImg/icon/icon_default_head.jpeg'}}" class="all_100"></image>
-        </view>
-        <view class="height_100 flex_view_col marLeft_20">
-          <view class="font-30 color-999 ">{{item.nickName}}</view>
-          <view class="flex_view_row align_cen marTop_5">
-            <image a:for="{{item.star}}" src="{{base64imageUrl}}miniappImg/icon/icon_star_selected.png" class="proComment_star" a:key="*this"></image>
-            <image a:for="{{5 - item.star}}" src="{{base64imageUrl}}miniappImg/icon/icon_star_normal.png" class="proComment_star" a:key="*this"></image>
-          </view>
-        </view>
-      </view>
-      <view class="font-30 color-999">{{item.createDate}}</view>
-    </view>
-    <view class="proComment_text font-26">
-      <view class="comment-text">{{item.comment}}</view>
-    </view>
-    <scroll-view a:if="{{item && item.imagePath.length > 0}}" class="commentImgList marTop_30" scroll-x="{{true}}" scroll-with-animation="{{true}}">
-      <image a:for="{{item.imagePath}}" a:for-item="items" class="proComment_img" a:key="*this" a:for-inex="inexs" src="{{filters.isHttpUrl(items) ? baseImageLocUrl + 'vueStatic/img/commentErrImg.png' : baseImageUrl + items}}" data-current="{{items}}" data-urls="{{item.imagePath}}" style="{{inexs == item.imagePath.length - 1 ? 'margin-right: 0;' : ''}}" onTap="commentViewTap"></image>
-    </scroll-view>
-  </view> -->
-
+  <!-- 商品评分和评价条数                             已完成新接口字段更换 -->
   <view a:if="{{ buyerShowCount || goods.commentTotal }}" class="division-area"></view>
   <navigator a:if="{{ buyerShowCount || goods.commentTotal }}" url="/pages/shopping/comment/comment?type={{buyerShowCount ? 'buyerShow' : 'generalComment'}}&goodsId={{goods.goodsId}}" hover-class="none">
     <view class="goods-comment-title">
@@ -523,16 +477,7 @@
     </view>
   </block>
 
-  <!-- 猜你喜欢 -->
-  <!-- <block a:if="{{guessLikeGoods.length > 0}}">
-    <view class="item-header-title-view font-26 color-b3b3b3">- 猜你喜欢 -        
-    </view>
-    <scroll-view scroll-x class="goods-scrollx-view" scroll-with-animation="true">
-      <block a:for="{{guessLikeGoods}}">
-        <template is="itemGoodsScrollX" data="{{...item,baseImageUrl:baseImageUrl,baseLocImgUrl: base64imageUrl}}"/>
-      </block>
-    </scroll-view>
-  </block> -->
+
   <!-- 当家爆款                                   暂时不要留，后台没有返回数据 -->
   <!-- <block a:if="{{groupNameTopList.length > 0}}">
     <view class="item-header-title-view font-26 color-b3b3b3">- 当家爆款 -        

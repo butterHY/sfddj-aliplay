@@ -1391,10 +1391,6 @@ page {
   border-radius: 15rpx;
 }
 
-.proComment_text {
-  /* margin-top: 12rpx; */
-}
-
 .comment_nickName {
   line-height: 30rpx;
 }
@@ -1429,8 +1425,6 @@ page {
   position:absolute;
   z-index:1; 
   background-color: #fff;    
-   /* height: calc(9 * 750rpx / 16);  */
-  /* margin-top:-430rpx; */
 }
 .play{ 
     position:absolute;
@@ -1438,12 +1432,6 @@ page {
     margin-top:-300rpx;
     margin-left:-80rpx;    
 }
-
-
-.videoMark{
-  
-}
-
 
 
 

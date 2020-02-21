@@ -17,7 +17,6 @@ page {
 	display: flex;
 	flex-direction: column;
 	padding: 30rpx;
-	/* border-bottom: 2rpx #e6e6e6 solid; */
 }
 
 .comment-user-area {
@@ -35,10 +34,6 @@ page {
 }
 
 .comment-text {
-	/* display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  overflow: hidden; */
 	text-overflow: -o-ellipsis-lastline;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -57,11 +52,9 @@ page {
 }
 
 .estimateNav {
-	/* position: absolute; */
 	width: 100%;
 	left: 0;
 	top: 0;
-	/* z-index: 10; */
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
@@ -91,19 +84,10 @@ page {
 }
 
 .estimateNavList {
-	/* padding: 15rpx 0; */
   	padding-bottom: 15rpx;
 }
 
 .estimateNavListCon {
-	/* text-align: center;
-	font-size: 24rpx;
-	padding: 14rpx 24rpx;
-	border-radius: 45rpx;
-	background-color: #FFE4E8;
-	color: #494344;
-	margin-right: 24rpx; */
-
   text-align: center;
 	font-size: 20rpx;
 	padding: 14rpx 20rpx;

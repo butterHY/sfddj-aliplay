@@ -70,9 +70,6 @@ Page({
       this.getCommentRule();
       this.data.starList.forEach(value => value.select = true);
       this.data.starList2.forEach(value => value.select = true);
-      
-      // console.log(this.data.starList)
-      // console.log(this.data.starList2)
 
       this.setData({
         goodsPic,
@@ -81,34 +78,9 @@ Page({
         baseImageUrl: constants.UrlConstants.baseImageUrl,
         goodsSn,
         imgList: [],
-        // starList: this.data.starList,
-        // starList2: this.data.starList2
+        starList: this.data.starList,
+        starList2: this.data.starList2
     });
-
-
-
-
-
-    // console.log('初始化订单ID',this.data.orderId)
-    // console.log('初始化描述',this.data.starLevel)
-    // console.log('初始化店铺',this.data.starLevel2)
-    // console.log('初始化是否匿名',this.data.noName)
-    // console.log('初始化内容',this.data.goodsDesc)
-    // console.log('初始化图片',this.data.imgList)
-    // console.log('初始化描述',this.data.starList)
-    // console.log('初始化店铺评价',this.data.starList2)
-  },
-
-  onShow() {
-    // console.log('页面显示');
-
-    // console.log('页面显示订单ID',this.data.orderId)
-    // console.log('页面显示描述',this.data.starLevel)
-    // console.log('页面显示店铺',this.data.starLevel2)
-    // console.log('页面显示是否匿名',this.data.noName)
-    // console.log('页面显示内容',this.data.goodsDesc)
-    // console.log('页面显示图片',this.data.imgList)
-
   },
 
   /*避免重复提交请求*/
@@ -132,7 +104,6 @@ Page({
    */
   handleInput: function (event) {
     this.data.goodsDesc = event.detail.value;
-    console.log(this.data.goodsDesc)
   },
 
   /**
@@ -254,8 +225,6 @@ Page({
 
   // 查看规则
   checkRules(){
-    let screenWidth = getApp().globalData.systemInfo.screenWidth;
-    console.log(screenWidth);
     this.setData({
       isShowRules: true,
       isShowTextarea: false
@@ -330,8 +299,8 @@ Page({
   // },
 
   submit: function () {
-    var that = this
-    var goodsDesc = that.data.goodsDesc
+    let that = this
+    let goodsDesc = that.data.goodsDesc
     // let videoUrl = '';
     // let imgUrl = '';
     let data = {

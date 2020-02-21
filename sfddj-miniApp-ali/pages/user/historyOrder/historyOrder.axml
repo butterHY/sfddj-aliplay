@@ -151,6 +151,8 @@
 							<view data-index="{{index}}" class="color-ff5353 orderListBtn checkDeli_btnRed marLeft_10" a:if="{{item.orderStatus == 3}}" onTap="gotoComment">评价有礼
 							</view>
 						</view>
+
+            
 						<!--<view class="orderList_botView font-30 color-a1a0a0" a:if="{{item.orderType == 'GIFT' && item.orderStatus == 9}}"><navigator url="/pages/user/sendGift/sendGift?paymentOrderId={{item.paymentId}}" open-type="{{needRedirect ? 'redirect' : 'navigate'}}" class="font-24 color-ff5353 orderListBtn checkDeli_btnRed marLeft_30" data-payment-id="{{item.paymentId}}" hover-class="none">分享给TA</navigator></view> -->
 					</view>
 				</view>

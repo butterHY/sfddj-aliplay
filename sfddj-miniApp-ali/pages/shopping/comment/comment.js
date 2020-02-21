@@ -133,7 +133,6 @@ Page({
 			commentList.forEach(value => {
 				if (value) {
 					value.createDate = util.pointFormatTime(new Date(value.createDate));
-          // console.log(value.videoPath)
           if ( value.videoPath && value.videoPath.length > 0 ) { 
             value.videoPath.forEach((vals, index) => {
               if ( index % 2 == 0) {            // 测试环境有脏数据，做了排除
@@ -144,12 +143,10 @@ Page({
                 videoPath.push(videoValue)
               }
             })
-            // console.log(videoPath)
             value.videoPath = videoPath;
             videoPath = [];
           }
           if ( value.appendVideoPath && value.appendVideoPath.length > 0 ) {
-            // console.log(value.appendVideoPath)
             value.appendVideoPath.forEach((val, ind) => {
               if ( ind % 2 == 0) {                // 测试环境有脏数据，做了排除
                 let videoValue = {
@@ -293,7 +290,6 @@ Page({
    * 播放买家秀视频，播放时进入全屏
    */
   playCommeVideo(e) {
-    console.log('0000000')
     this.setData({
       videoId: e.currentTarget.dataset.id,
       videoSrc: e.currentTarget.dataset.videoSrc,
@@ -307,17 +303,14 @@ Page({
    * 播放买家秀视频，播放时正在缓冲视频即进入全屏；
    */
   videoLoading() {
-    console.log('缓冲中')
     var video = my.createVideoContext(this.data.videoId);
     video.requestFullScreen({direction: 0});
   },
 
   // 当前买家秀视频进入全屏以后加锁
   fullscreenchange(e) {
-    console.log('是否进入全屏')
     this.data.isFullScreen = e.detail.fullScreen;
     if ( !this.data.isFullScreen ) {
-      console.log('退出全屏，停止播放');
       this.setData({
         videoShow: false
       })

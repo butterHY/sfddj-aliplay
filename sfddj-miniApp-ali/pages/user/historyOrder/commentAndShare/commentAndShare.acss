@@ -63,9 +63,6 @@ page {
 }
 
 .textCount {
-  /* position: absolute; */
-  /* bottom: 20rpx; */
-  /* right: 20rpx; */
   font-size: 26rpx;
   color: #b3b3b3;
   line-height: 26rpx;
@@ -84,7 +81,6 @@ page {
   margin-right: 20rpx;
   margin-bottom: 20rpx;
   position: relative;
-  /* display: inline-block; */
   float: left;
 }
 
@@ -198,11 +194,6 @@ page {
 }
 
 .releaseBtn {
-  /* padding: 20rpx 0;
-  position: absolute;
-  left: 20rpx;
-  bottom: 30rpx;
-  right: 20rpx; */
   background-image: linear-gradient(to right, rgb(255, 105, 44) , rgb(255, 61, 56));
   text-align: center;
   border-radius: 60px;

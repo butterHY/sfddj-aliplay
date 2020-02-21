@@ -161,58 +161,30 @@ Page({
 	 */
   getComment(data, type) {
     let that = this;
-    // let comment = [];
-    // if (resData.commentList && resData.commentList.length > 0) {                      // commentList 不为 null 或者 undefied;
-    //   resData.commentList.forEach(function(value, index) {
-    //     if (value && (index == 0 || index == 1)) {                                   // commentList 的值不为 null；
-    //       value.createDate = utils.pointFormatTime(new Date(value.createDate));
-    //       // value.imagePath && value.imagePath.length > 0 ? value.imagePath = value.imagePath.concat(value.imagePath.concat(value.imagePath)) : '';
-    //       comment.push(value);
-    //     }
-    //   })
-    // }
-    // if (resData.goodsShowVO.commentTotal > 0) {                                    // 总评论数为空不显示评论模块, 不为空的话且 comment 不为空才渲染评论
-    //   that.setData({
-    //     showComment: true,
-    //     comment,
-    //   });
-    // } else {
-    //   that.setData({
-    //     showComment: false,
-    //   })
-    // }
-
-      let videoPath = [];
-      // let buyerShowList = [];
-      // let ordinaryComment = [];
-        //  let commentList = [];
-          console.log('getComment',data)
-
-          let commentList = data.map( (value, index) => {
-            if ( value && (index == 0 || index == 1) ) {
-              value.createDate = utils.pointFormatTime(new Date(value.createDate));
-              if ( value.videoPath && value.videoPath.length > 0 ) {
-                value.videoPath.forEach((val, ind) => {
-                  if ( ind % 2 == 0 ) {
-                    let videoValue = {
-                      videoSrc: val,
-                      videoCover: value.videoPath[ind + 1]
-                    }
-                    videoPath.push(videoValue);
-                  }
-                })
-                value.videoPath = videoPath;
-                videoPath = [];
+    let videoPath = [];
+    let commentList = data.map( (value, index) => {
+      if ( value && (index == 0 || index == 1) ) {
+        value.createDate = utils.pointFormatTime(new Date(value.createDate));
+        if ( value.videoPath && value.videoPath.length > 0 ) {
+          value.videoPath.forEach((val, ind) => {
+            if ( ind % 2 == 0 ) {
+              let videoValue = {
+                videoSrc: val,
+                videoCover: value.videoPath[ind + 1]
               }
-              return value;
+              videoPath.push(videoValue);
             }
           })
-
-        that.setData({
-          buyerShowList:  commentList,
-          // buyerShowCount: resData.buyerShow.buyerShowCount
-        });
-
+          value.videoPath = videoPath;
+          videoPath = [];
+        }
+        return value;
+      }
+    })
+    that.setData({
+      buyerShowList:  commentList,
+      // buyerShowCount: resData.buyerShow.buyerShowCount
+    });
   },
 
 	/**
@@ -295,7 +267,6 @@ Page({
 
         if (resRet.code == '0' && resRet.message == 'SUCCESS' && resData && resData.goodsShowVO) {
           that.data.goods = resData.goodsShowVO;
-          console.log('++++++++++++++',that.data.goods.specifications,that.data.goods.specifications.length)
           if (that.data.goods.specifications && that.data.goods.specifications.length >= 4) {
             that.setData({
               loadComplete: true,
@@ -327,8 +298,6 @@ Page({
           if (that.data.pageOptions.utm_source && that.data.pageOptions.utm_source != 'undefined' && that.data.pageOptions.utm_source != 'null') {
             getApp().globalData.uma.trackEvent('goodsDetailPage_source', { utm_source: that.data.pageOptions.utm_source, utm_medium: that.data.pageOptions.utm_medium, utm_campaign: that.data.pageOptions.utm_campaign, utm_content: that.data.pageOptions.utm_content, utm_term: that.data.pageOptions.utm_term })
           }
-
-        console.log('++++++++++++++',resData.commentList.length)
 
           //当请求返回成功才请求评论和猜你喜欢的数据
           that.data.goodsId = resData.goodsShowVO.goodsId;

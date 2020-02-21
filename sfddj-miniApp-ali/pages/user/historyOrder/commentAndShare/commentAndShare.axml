@@ -35,14 +35,8 @@
 
       <view class='imgListFa clearfix'>
         <view a:for="{{imgList}}" class='imgList' a:key="imgList">
-          <!-- <block a:if="{{ item.type == 'video' && item.src }}">
-            <video id="myVideo" src="{{baseImageUrl}}{{item.src}}" class="imgList_img marRight_20"></video>
-            <image class='icon_delete' src='{{baseImgLocUrl}}miniappImg/icon/icon_del_pic.png' onTap='delPic' data-index='{{index}}'></image>
-          </block> -->
-          <!-- <block a:else> -->
             <image class='imgList_img marRight_20' src='{{baseImageUrl}}{{item}}'></image>
             <image class='icon_delete' src='{{baseImgLocUrl}}miniappImg/icon/icon_del_pic.png' onTap='delPic' data-index='{{index}}'></image>
-          <!-- </block> -->
         </view>
         <view a:if="{{imgList.length < 9}}" class="imgList_upload marRight_20 font-24"  onTap='uploadImage'>
           <image class='camera_img ' src='{{baseImgLocUrl}}miniappImg/icon/camera.png'></image>
