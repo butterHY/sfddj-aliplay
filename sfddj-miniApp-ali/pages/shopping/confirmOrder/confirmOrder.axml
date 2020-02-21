@@ -2,610 +2,643 @@
 <import-sjs name='filters' from="../../wxsFile/public.sjs"/>
 <!-- 加载中 -->
 <view a:if="{{!loadComplete}}">
-	<loading-now></loading-now>
+  <loading-now></loading-now>
 </view>
 <!-- 加载失败 -->
 <view a:elif="{{loadFail}}">
-	<load-fail></load-fail>
+  <load-fail></load-fail>
 </view>
 <!-- 没有网络提示这个 -->
 <!--<view a:elif="{{!wifiAvailable}}"><no-wifi></no-wifi></view> -->
 <view a:else>
-	<!-- 地址信息 -->
-	<view class="all_100v overH">
-		<form report-submit="true" onSubmit="buyNowTap" class="all_100 flex_view_col">
-			<scroll-view scroll-y class="flex_1 posi_re {{knockActivityDescribe ? 'confirmScrollView' : ''}}">
-				<view class="height_100 overYScroll">
-					<!--全球购商品的温馨提示  -->
-					<view a:if="{{(globalGoods || hasGlobalGoods) && globalCross != 0}}">
-						<view class="globalGoodsTip flex_view_row align_cen">
-							<!--左边铃  -->
-							<view class="marRight_34">
-								<image src="{{baseLocImgUrl}}miniappImg/icon/icon_notice.png" class="icon_notice">
-								</image>
-							</view>
-							<!--右边提示文字  -->
-							<view class="font-26 globalGoodsTip_text">
-								<text class="font_w600">温馨提示:
-								</text>
-								<text a:if="{{globalCross == 2}}">为保障顺利清关，请确保收货人姓名和身份证号与真实信息保持一致。
-								</text>
-								<text a:if="{{globalCross == 1}}">为保障您的货物顺利清关，请确保收货人姓名和身份证号以及正反面图片真实有效。。
-								</text>
-							</view>
-						</view>
-					</view>
-					<!--全球购商品需要填的身体证信息  -->
-					<view a:if="{{(globalGoods || hasGlobalGoods) && globalCross != 0}}">
-						<!--没保存时的，要输入身份证号  -->
-						<view class="idTestView whiteBack flex_view_row align_cen posi_re" a:if="{{!idSave}}">
-							<input placeholder-class="font-24 color-b3b3b3 " placeholder="因海关清关需要，请填写收货人的身份证号" class="creditIdInput idTest_input font-24 color-323232 posi_re" type="idcard" value="{{idNum}}" onBlur="idPassFn" maxlength="18" onInput="idInputFn"/>
-							<view class="clearView flex_view_row align_cen justi_cen ">
-								<image src="{{baseLocImgUrl}}miniappImg/icon/icon_del_new.png" class="icon_delNew" a:if="{{idNum.length > 0}}" onTap="clearIdNumFn">
-								</image>
-							</view>
-							<view class="saveIdBtn marLeft_20 font-26 {{idCanSave ? 'saveIdBtn_red' : 'saveIdBtn_gray'}}" catchTap="{{idCanSave ? 'saveIdFn' : ''}}">
-								<text>保存
-								</text>
-							</view>
-						</view>
-						<!--保存后，显示已保存的身份证号  -->
-						<view class="afterIdSave whiteBack flex_view_row align_cen justi_between" a:if="{{idSave}}">
-							<!--左边身份证号显示  -->
-							<view class="flex_1 font-30 color-323232">
-								<text>身份证号:
-								</text>
-								<text>{{idNumFront}}**********{{idNumEnd}}
-								</text>
-							</view>
-							<view catchTap="editIdNumFn">
-								<image src="{{baseLocImgUrl}}miniappImg/icon/icon_modify.png" class="icon_modify">
-								</image>
-							</view>
-						</view>
-						<!-- 上传身份证正反面 -->
-						<view class="flex_view_row marTop_10" style="padding: 0 30rpx 22rpx;" a:if="{{globalCross == 1}}">
-							<!--正面  -->
-							<view class="flex_view_row" style="width: 30%;" data-type="0" onTap="chooseImg">
-								<view class="posi_re" style="width: 185rpx; height: 117rpx; border: 1px dashed #B1B6BB; box-sizing: border-box;">
-									<view class="all_100 flex_view_col justi_cen align_cen" a:if="{{!idCardImgFront}}">
-										<text class="icon-camera font-46">
-										</text>
-										<text class="font-16 color-b1b6bb" style="line-height: 36rpx;">上传身份证正面
-										</text>
-									</view>
-									<view class="all_100 posi_ab tex_center" style="top:0;left:0;" a:if="{{idCardImgFront}}">
-										<image class="height_100" style="width: {{imgWidth0}}rpx;" data-index="0" src="{{baseImageUrl}}{{idCardImgFront}}" onLoad="loadImg">
-										</image>
-									</view>
-								</view>
-							</view>
-							<!--反面  -->
-							<view class="flex_view_row" style="width: 30%;" data-type="1" onTap="chooseImg">
-								<view class="posi_re" style="width: 185rpx; height: 117rpx; border: 1px dashed #B1B6BB; box-sizing: border-box;">
-									<view class="all_100 flex_view_col justi_cen align_cen" a:if="{{!idCardImgBack}}">
-										<text class="icon-camera font-46">
-										</text>
-										<text class="font-16 color-b1b6bb" style="line-height: 36rpx;">上传身份证反面
-										</text>
-									</view>
-									<!--<image wx:if='{{idCardImgBack}}' class='all_100 posi_ab' style='top: 0; left: 0;' src='{{baseImageUrl}}{{idCardImgBack}}'></image> -->
-									<view class="all_100 posi_ab tex_center" style="top:0;left:0;" a:if="{{idCardImgBack}}">
-										<image class="height_100" style="width: {{imgWidth1}}rpx;" data-index="1" src="{{baseImageUrl}}{{idCardImgBack}}" onLoad="loadImg">
-										</image>
-									</view>
-								</view>
-							</view>
-						</view>
-					</view>
-					<view class="division-area" a:if="{{(globalGoods || hasGlobalGoods) && globalCross == 1}}">
-					</view>
-					<!-- 不是送礼且不是从速运那边过来的 -->
-					<view a:if="{{!isGiftOrder}}">
-						<!--<navigator url='/pages/user/addressManage/addressManage'> -->
-						<view class="address-view" onTap="addressManage">
-							<view class="addressView_addIcon">
-								<image src="{{baseLocImgUrl}}miniappImg/icon/icon_address.png" class="addressView_addImg">
-								</image>
-							</view>
-							<view class="address-info-view addressView_info">
-								<view class="address-phone-number font-30 color-323232">
-									<view>{{result.defaultAddress.shipName}}
-									</view>
-									<view>{{result.defaultAddress.shipMobile}}
-									</view>
-								</view>
-								<view class="font-26 color-838282">{{result.defaultAddress ? result.defaultAddress.province + result.defaultAddress.city + result.defaultAddress.area + result.defaultAddress.addr : '点击选择地址'}}
-								</view>
-							</view>
-							<view class="addressView_arrow">
-								<!--<image src='{{baseLocImgUrl}}miniappImg/icon/icon_right_arrow.png' class='addressView_arrIcon'></image> -->
-								<text class="icon-href-right font-24 color-c7c7cc addressView_arrIcon">
-								</text>
-							</view>
-						</view>
-						<!--</navigator> -->
-						<view class="addressView_botLine">
-							<image src="{{baseLocImgUrl}}miniappImg/icon/icon_address_line.png" class="addressView_botLineImg">
-							</image>
-						</view>
-					</view>
-					<!-- 送礼信息 -->
-					<view a:if="{{isGiftOrder}}">
-						<image src="{{baseLocImgUrl}}miniappImg/bg/bg_gift_step1.jpg" class="giftOrder_bg">
-						</image>
-						<view class="giftOrder_view font-24 color-b3b3b3">
-							<view class="giftOrder_sigh">!
-							</view>
-							<text class="marLeft_10">若收礼者24小时内未填写地址，将自动退款
-							</text>
-						</view>
-					</view>
-					<view class="division-area">
-					</view>
-					<!-- 应付金额 -->
-					<view class="should-pay-area" a:if="{{!isTuanZhang}}">
-						<view class="should-pay-text">
-							<view class="font-30 color-323232">应付金额：
-							</view>
-							<view class="font-30 color-ff5353">￥{{filters.toFix(totalPrice * 1 + totalPostFee)}}
-							</view>
-						</view>
-						<view class="should-pay-item">
-							<view>总金额
-							</view>
-							<view class="color-ff5353 font-28">￥{{filters.toFix(originalTotalPrice)}}
-							</view>
-						</view>
-						<view class="should-pay-item">
-							<view>总运费
-							</view>
-							<view class="color-ff5353 font-28" a:if="{{fromPage == 'cart'}}">￥{{result.totalPostFee ? filters.toFix(result.totalPostFee) : 0.00}}</view>
-							<view class="color-ff5353 font-28" a:else>￥{{result.goodsInfo.postFee ? filters.toFix(result.goodsInfo.postFee) : 0.00}}</view>
-						</view>
-						<view class="should-pay-item" a:if="{{!isTuangou}}">
-							<view>优惠总额
-							</view>
-							<view>{{totalCouponValue > 0 ? "￥" + filters.toFix(totalCouponValue) : "￥0.00"}}</view>
-						</view>
-						<!-- 假如是秒杀商品则不能使用优惠券 ！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！-->
-						<view class="choice-coupon-view borTop " a:if="{{!isJifen && !isSpike}}">
-							<view class="font-26 color-323232">使用优惠券
-							</view>
-							<view class="coupon-name-view">
-								<view class="font-26 color-ff5353" a:if="{{canUseCouponCount > 0}}" onTap="availableCouponTap">{{result.couponStr}}
-								</view>
-								<view class="font-26 color-b3b3b3" a:else>暂无可用优惠券
-								</view>
-								<!--<image src='{{baseLocImgUrl}}miniappImg/icon/icon_right_arrow.png' class='coupon_arrIcon'></image> -->
-								<text class="coupon_arrIcon icon-href-right color-c7c7cc font-22">
-								</text>
-							</view>
-						</view>
-						<!--积分商品  -->
-						<view class="choice-coupon-view borTop {{isDikou ? '' : 'borTop'}}" a:if="{{isJifen || isDikou}}">
-							<view class="font-26 color-323232">
-								<view class="font-26">
-									<text class="color-323232">积分
-									</text>
-									<text class="color-bababa">(共{{isJifen ? result.goodsInfo.memberPoint : result.memberPoint}}积分)
-									</text>
-								</view>
-								<view class="flex_view_row font-24 marTop_10 align_cen color-f07e19">
-									<text>本次消耗{{isJifen && !isDikou ? result.goodsInfo.pointCost : maxDeductPoint}}积分
-									</text>
-									<text a:if="{{isDikou}}">抵扣{{maxDeductPrice}}元
-									</text>
-									<text class="alipay_catch_img" a:if="{{isDikou}}" catchTap="showUseRule">
-										<image src="{{baseLocImgUrl}}miniappImg/icon/icon_warning_org.png" class="icon_warning_org marLeft_10"/>
-									</text>
-								</view>
-							</view>
-							<view class="coupon-name-view" a:if="{{isJifen && !isDikou}}">
-								<view class="jiFenUseBtn posi_re {{canBuy ? 'jiFenGreenBtn' : 'jiFenGrayBtn'}}">
-									<view class="jiFenUseBtn_cir {{canBuy ? 'jiFenGreenBtn_cir' : 'jiFenGrayBtn_cir'}}">
-									</view>
-								</view>
-							</view>
-							<view class="coupon-name-view" a:if="{{isDikou}}" catchTap="{{canFirstClick ? 'useDikou' : ''}}">
-								<view class="jiFenUseBtn posi_re {{canClick ? 'jiFenGreenBtn' : 'jiFenGrayBtn'}}">
-									<view class="jiFenUseBtn_cir {{canClick ? 'jiFenGreenBtn_cir' : 'jiFenGrayBtn_cir'}}">
-									</view>
-								</view>
-							</view>
-						</view>
-						<!--在速运加那边过来的  -->
-						<view class="choice-coupon-view pad_20 borTop" a:if="{{result.goodsInfo.isSFProduct}}">
-							<view class="font-26 color-323232">
-								<view class="flex_view_row font-24 marTop_10 align_cen color-323232">
-									<text>可用
-									</text>
-									<text class="color-ff5353">{{result.goodsInfo.pointCost ? result.goodsInfo.pointCost : 0}}
-									</text>
-									<text>会员积分抵扣
-									</text>
-									<text class=" color-ff5353">￥{{result.goodsInfo.discount ? result.goodsInfo.discount : 0}}
-									</text>
-								</view>
-							</view>
-							<view class="coupon-name-view">
-								<view class="jiFenUseBtn posi_re {{result.goodsInfo.isShow ? 'jiFenGreenBtn' : 'jiFenGrayBtn'}}">
-									<view class="jiFenUseBtn_cir {{result.goodsInfo.isShow ? 'jiFenGreenBtn_cir' : 'jiFenGrayBtn_cir'}}">
-									</view>
-								</view>
-							</view>
-						</view>
-						<!--返现余额可用  -->
-						<!-- 假如是秒杀商品则不能使用返现余额 ！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！-->
-						<view class="choice-coupon-view borTop {{!isDikou ? '' : 'borTop'}}" a:if="{{result.canUseBalance && result.availableBalance > 0 && !isGiftOrder && !SFmember && !isSpike}}">
-							<view class="font-26 color-323232">
-								<view class="font-26">
-									<text class="color-323232">余额
-									</text>
-									<text class="color-323232">(当前可用余额{{result.availableBalance}}元)
-									</text>
-								</view>
-								<view class="flex_view_row font-26 marTop_10 align_cen color-ff5353">
-									<text>每笔订单最少支付0.01元
-									</text>
-								</view>
-							</view>
-							<!--<view wx:if="{{result.canUseBalance}}" class='coupon-name-view'><view class='jiFenUseBtn posi_re {{canBuy ? "jiFenGreenBtn" : "jiFenGrayBtn"}}'><view class='jiFenUseBtn_cir {{canBuy ? "jiFenGreenBtn_cir" : "jiFenGrayBtn_cir"}}'></view></view></view> -->
-							<view class="coupon-name-view" a:if="{{result.canUseBalance}}" catchTap="{{canFirstClick ? 'useBalanceFn' : ''}}">
-								<view class='jiFenUseBtn posi_re {{canClick ? (isUseBalance ? "jiFenGreenBtn" : "jiFenWhiteBtn" ) : "jiFenGrayBtn"}}'>
-            <view class='jiFenUseBtn_cir {{canClick ? (isUseBalance ? "jiFenGreenBtn_cir" : "jiFenWhiteBtn_cir" ) : "jiFenGrayBtn_cir"}}'></view>
+  <!-- 地址信息 -->
+  <view class="all_100v overH">
+    <form report-submit="true" onSubmit="buyNowTap" class="all_100 flex_view_col">
+      <scroll-view scroll-y class="flex_1 posi_re {{knockActivityDescribe ? 'confirmScrollView' : ''}}">
+        <view class="height_100 overYScroll">
+          <!-- 不是送礼且不是从速运那边过来的 -->
+          <view a:if="{{!isGiftOrder}}">
+            <!--<navigator url='/pages/user/addressManage/addressManage'> -->
+            <view class="address-view" onTap="addressManage">
+              <view class="addressView_addIcon">
+                <image src="{{baseLocImgUrl}}miniappImg/icon/icon_address.png" class="addressView_addImg">
+                </image>
+              </view>
+              <view class="address-info-view addressView_info">
+                <view class="address-phone-number font-30 color-323232">
+                  <view>{{result.defaultAddress.shipName}}
+                  </view>
+                  <view>{{result.defaultAddress.shipMobile}}
+                  </view>
+                </view>
+                <view class="font-26 color-838282">{{result.defaultAddress ? result.defaultAddress.province + result.defaultAddress.city + result.defaultAddress.area + result.defaultAddress.addr : '点击选择地址'}}
+                </view>
+              </view>
+              <view class="addressView_arrow">
+                <!--<image src='{{baseLocImgUrl}}miniappImg/icon/icon_right_arrow.png' class='addressView_arrIcon'></image> -->
+                <text class="icon-href-right font-24 color-c7c7cc addressView_arrIcon">
+                </text>
+              </view>
+            </view>
+            <!--</navigator> -->
+            <view class="addressView_botLine">
+              <image src="{{baseLocImgUrl}}miniappImg/icon/icon_address_line.png" class="addressView_botLineImg">
+              </image>
+            </view>
           </view>
-							</view>
-						</view>
-					</view>
-					<view class="division-area">
-					</view>
-					<block a:for="{{result.supplierList}}" a:key="supplierList">
-						<view class="goods-info-area">
-							<view class="goods-item-title-view">
-								<view class="goods-item-title-part">
-									<image src="{{baseLocImgUrl}}miniappImg/icon/icon_shop.png" class="order_shopImg">
-									</image>
-									<view class="font-24 color-323232 marLeft_20">{{item.supplierName}}
-									</view>
-								</view>
-								<view class="goods-item-title-part">
-									<view class="font-24 color-323232">共{{item.supplierCount}}件商品
-									</view>
-									<view class="font-24 color-323232 marLeft_20">小计
-									</view>
-									<view class="font-30 color-ff5353">￥{{isTuanZhang ? '0.00' :  filters.toFix(item.supplierPrice)}}
-									</view>
-									<view class="font-24 color-323232" a:if="{{isTuanZhang}}">(团长免单)
-									</view>
-								</view>
-							</view>
-							<block a:for="{{item.orderGoodsList}}" a:key="orderGoodsList">
-								<view class="goods-info-view">
-									<image src="{{baseImageUrl}}{{item.goodsImg}}" class="order_proImg">
-									</image>
-									<view class="goods-info-text-view flex_1">
-										<view class="font-26 color-323232">{{item.goodsName}}
-										</view>
-										<view class="font-24 width_100 color-a1a0a0 marTop_10">
-											<view class="width_100 single-line">{{item.productName}}
-											</view>
-										</view>
-										<view class="font-26 color-a1a0a0 price-number-view order_price">
-											<view>￥{{item.salePrice}}
-											</view>
-											<view>x{{item.quantity}}
-											</view>
-										</view>
-									</view>
-								</view>
-							</block>
-							<!-- 商家优惠券 -->
-							<view class='choice-coupon-view borBot ' a:if='{{item.supplierCoupon}}' data-index="{{index}}" onTap='{{item.supplierCoupon? "selectSupplierCoupon" : ""}}'>
-								<view class='font-26 color-323232'>商家优惠</view>
-								<view class='coupon-name-view'>
-									<view class='font-26 color-ff5353' a:if='{{item.supplierCoupon.length>0}}'>{{item.couponStr}}</view>
-									<view class='font-26 color-b3b3b3' a:else>暂无可用优惠券</view>
-									<text class='coupon_arrIcon icon-href-right color-c7c7cc font-22'></text>
-								</view>
-							</view>
-							<!-- 商家优惠券选择框 -->
-							<template a:if="{{item.supplierCoupon}}" is="dialogCoupon" data="{{baseImageUrlLoc:baseLocImgUrl,show:isShowStoreCouponList[index],couponList:item.supplierCoupon,iconSize,type: 'supplier',fatherIndex: index}}" />
-							<input type='text' placeholder="买家留言：选填" maxlength="60" class="font-26 order_leaMes" data-index="{{index}}" disabled="{{isSubmit}}" value="{{bbsData[index]}}" a:if="{{!showDialogCoupon}}" onInput="memoInput"/>
-							<text class="font-24 color-a1a0a0 order_leaMesLeft">剩余：{{item.leftCount}}字
-							</text>
-						</view>
-						<view class="division-area">
-						</view>
-					</block>
-					<!--发票信息  -->
-					<block a:if="{{showInvoiceView || isDikou}}">
-						<view class="invoice flex_view_row justi_between align_cen" onTap="{{globalGoods ? '' : 'showInvoiceFn'}}">
-							<view class="invoice_text font-24 flex_1">
-								<text>发票信息
-								</text>
-							</view>
-							<view class="invoice_add font-22 flex_view_row align_cen">
-								<text class="marRight_10" a:if="{{!globalGoods}}">{{invoiceMes}}
-								</text>
-								<text class="color-b3b3b3" a:if="{{globalGoods}}">全球购商品暂不支持开发票
-								</text>
-								<!--<image wx:if='{{!globalGoods}}' src='{{baseLocImgUrl}}miniappImg/icon/icon_right_arrow32.png' class='icon_arrowRi'></image> -->
-								<text class="icon-href-right font-22 color-323232" a:if="{{!globalGoods}}">
-								</text>
-							</view>
-						</view>
-					</block>
-					<block a:if="{{false}}">
-						<view class="division-area">
-						</view>
-						<view class="to-gift-view">
-							<view class="font-26 color-323232">赠送他人（订单通知购买者，通知收货人）
-							</view>
-							<switch>
-							</switch>
-						</view>
-						<view class="giftOther_view">
-							<input class="name-input-view" type="text" placeholder="必填，购买者姓名（不能以数字开头）"/>
-							<input class="name-input-view" type="number" placeholder="必填，购买者手机号"/>
-						</view>
-					</block>
-					<!--购买全球购商品须同意  -->
-					<block a:if="{{globalGoods || hasGlobalGoods}}">
-						<view class="division-area">
-						</view>
-						<view class="pad_30 flex_view_row align_cen" onTap="chooseNotice">
-							<image src="{{canBuyGlobal ? baseLocImgUrl + 'miniappImg/icon/icon_sel.png' : baseLocImgUrl + 'miniappImg/icon/icon_unsel.png'}}" class="icon_sel">
-							</image>
-							<view class="font-26 color-323232 marLeft_20">
-								<text>购买全球购商品须同意
-								</text>
-								<text class="color-ff5353" catchTap="openGlobalNotice">《用户购买须知》
-								</text>
-							</view>
-						</view>
-					</block>
-					<view class="division-area">
-					</view>
-				</view>
-				<!-- 支付宝小程序确认订单页才显示的提示语 -->
-				<view a:if="{{knockActivityDescribe}}" class="payTip font-26 color-ff5353 flex_view_col justi_cen width_100 posi_ab">
-					<!--<text>温馨提示：支付宝代金券/折扣券将在支付时自动扣减</text> -->
-					<text>{{knockActivityDescribe}}</text>
-				</view>
-			</scroll-view>
-			<!-- 填充bottomView fixed的高度 -->
-			<!--<view class='orderBot'></view><view class="color-ff5353 font-28" a:if="{{fromPage == 'cart'}}">￥{{result.totalPostFee ? filters.toFix(result.totalPostFee) : 0.00}}</view><view class="color-ff5353 font-28" a:else>￥{{result.goodsInfo.postFee ? filters.toFix(result.goodsInfo.postFee) : 0.00}}</view>  -->
-			<view class="bottom-view">
-				<view class="flex_view_row align_cen justi_end flex_1">
-					<block a:if="{{totalPostFee && totalPostFee != '0.00' && totalPostFee != 0}}">
-						<view class="totalPostFee color-a1a0a0 font-26 marRight_10">
-							<text>含运费</text>
-							<text>￥
-								<text class="font-30">{{totalPostFee}}</text></text>
-						</view>
-					</block>
-					<view class="flex_view_row align_cen">
-						<view class="font-26 orderBot_sum">合计:
-						</view>
-						<view class="font-30 color-ff5353 orderBot_price">￥{{isTuanZhang ? '0.00' : filters.toFix(totalPrice * 1 + totalPostFee)}}
-						</view>
-					</view>
-				</view>
-				<button form-type="{{isJifen && !canBuy && !isDikou ? '' : 'submit'}}" class="{{isJifen && !canBuy && !isDikou ? 'bottom-text-gray-bg' : 'bottom-text-red-bg'}} font-32 orderBot_btn orderBot_toPay">{{isTuanZhang ? '提交订单' : '去付款'}}
-				</button>
-			</view>
-		</form>
-	</view>
+          <!-- 送礼信息 -->
+          <view a:if="{{isGiftOrder}}">
+            <image src="{{baseLocImgUrl}}miniappImg/bg/bg_gift_step1.jpg" class="giftOrder_bg">
+            </image>
+            <view class="giftOrder_view font-24 color-b3b3b3">
+              <view class="giftOrder_sigh">!
+              </view>
+              <text class="marLeft_10">若收礼者24小时内未填写地址，将自动退款
+              </text>
+            </view>
+          </view>
+          <view class="division-area">
+          </view>
+          <!--全球购商品的温馨提示  -->
+          <view a:if="{{(globalGoods || hasGlobalGoods) && globalCross != 0}}">
+            <view class="globalGoodsTip flex_view_row align_cen">
+              <!--左边铃  -->
+              <view class="marRight_34">
+                <image src="{{baseLocImgUrl}}miniappImg/icon/icon_notice.png" class="icon_notice">
+                </image>
+              </view>
+              <!--右边提示文字  -->
+              <view class="font-26 globalGoodsTip_text">
+                <text class="font_w600">温馨提示:
+                </text>
+                <text a:if="{{globalCross == 2}}">为保障顺利清关，请确保收货人姓名和身份证号与真实信息保持一致。
+                </text>
+                <text a:if="{{globalCross == 1}}">为保障您的货物顺利清关，请确保收货人姓名和身份证号以及正反面图片真实有效。
+                </text>
+              </view>
+            </view>
+          </view>
+          <!--全球购商品需要填的身体证信息  -->
+          <view a:if="{{(globalGoods || hasGlobalGoods) && globalCross != 0}}">
+            <!--没保存时的，要输入身份证号  -->
+            <view class="idTestView whiteBack flex_view_row align_cen posi_re" a:if="{{!idSave}}">
+              <input placeholder-class="font-24 color-b3b3b3 " placeholder="因海关清关需要，请填写收货人的身份证号" class="creditIdInput idTest_input font-24 color-323232 posi_re" type="idcard" value="{{idNum}}" onBlur="idPassFn" maxlength="18" onInput="idInputFn"/>
+              <view class="clearView flex_view_row align_cen justi_cen ">
+                <image src="{{baseLocImgUrl}}miniappImg/icon/icon_del_new.png" class="icon_delNew" a:if="{{idNum.length > 0}}" onTap="clearIdNumFn">
+                </image>
+              </view>
+              <view class="saveIdBtn marLeft_20 font-26 {{idCanSave ? 'saveIdBtn_red' : 'saveIdBtn_gray'}}" catchTap="{{idCanSave ? 'saveIdFn' : ''}}">
+                <text>保存
+                </text>
+              </view>
+            </view>
+            <!--保存后，显示已保存的身份证号  -->
+            <view class="afterIdSave whiteBack flex_view_row align_cen justi_between" a:if="{{idSave}}">
+              <!--左边身份证号显示  -->
+              <view class="flex_1 font-30 color-323232">
+                <text>身份证号:
+                </text>
+                <text>{{idNumFront}}**********{{idNumEnd}}
+                </text>
+              </view>
+              <view catchTap="editIdNumFn">
+                <image src="{{baseLocImgUrl}}miniappImg/icon/icon_modify.png" class="icon_modify">
+                </image>
+              </view>
+            </view>
+            
+            <!-- 上传身份证正反面 -->
+            <view a:if='{{globalCross == 1}}' class='flex_view_col marTop_10 uploadIdImg'>
+              <!-- 提示语和示例图 -->
+              <view class='marBot_30 color-323232'>
+                <view class='font-28 marBot_40 flex_view_row'>
+                  <text class="flex_view_row">
+                    <text>请上传</text>
+                    <text class='color-ff5353'>清晰</text>
+                    <text>、</text>
+                    <text class='color-ff5353'>完整</text>
+                    <text>、</text>
+                    <text class='color-ff5353'>有效</text>
+                    <text>的身份证正反面照片</text>
+                  </text>
+                </view>
+                <view class='flex_view_row'>
+                  <view>
+                    <text class='font-24'>示例：</text>
+                  </view>
+                  <view class='flex_view_row'>
+                    <image src='{{baseLocImgUrl}}miniappImg/more/photo_id_positive.png' class='marRight_20 id_oppo_exam' data-index='0' onTap='previewExample'></image>
+                    <image src='{{baseLocImgUrl}}miniappImg/more/photo_id_opposite.png' class='id_oppo_exam' data-index='1' onTap='previewExample'></image>
+                  </view>
+                </view>
+              </view>
+              <view>
+                <view class='flex_view_row'>
+                  <!--正面  -->
+                  <view class='flex_view_row flex_1 marRight_18' onTap='chooseImg' data-type='0'>
+                    <view class='posi_re width_100 upload_id_oppo'>
+                      <view a:if='{{!idCardImgFront}}' class='all_100 flex_view_col justi_cen align_cen'>
+                        <image src='{{baseLocImgUrl}}miniappImg/icon/icon_add_id.png' class='icon_add_id'></image>
+                        <text class='font-24 color-323232 lineH_36'>上传身份证正面</text>
+                      </view>
+                      <view a:if='{{idCardImgFront}}' class='all_100 posi_ab tex_center idImg_front'>
+                        <image class='all_100' data-index='0' src='{{baseImageUrl}}{{idCardImgFront}}' bindload='loadImg'></image>
+                      </view>
+                      <image a:if='{{idCardImgFront}}' data-index='0' src='{{baseLocImgUrl}}miniappImg/icon/delIcon.png' class='posi_ab icon_deleteImg' catchTap='deleteIdCardImg'></image>
+                    </view>
+                  </view>
+                  <!--反面  -->
+                  <view class='flex_view_row flex_1' onTap='chooseImg' data-type='1'>
+                    <view class='posi_re width_100 upload_id_oppo'>
+                      <view a:if='{{!idCardImgBack}}' class='all_100 flex_view_col justi_cen align_cen'>
+                        <image src='{{baseLocImgUrl}}miniappImg/icon/icon_add_id.png' class='icon_add_id'></image>
+                        <text class='font-24 color-323232 lineH_36'>上传身份证反面</text>
+                      </view>
+                      <!--<image a:if='{{idCardImgBack}}' class='all_100 posi_ab' style='top: 0; left: 0;' src='{{baseImageUrl}}{{idCardImgBack}}'></image> -->
+                      <view a:if='{{idCardImgBack}}' class='all_100 posi_ab tex_center idImg_front'>
+                        <image class='all_100' data-index='1' src='{{baseImageUrl}}{{idCardImgBack}}' bindload='loadImg'></image>
+                      </view>
+                      <image a:if='{{idCardImgBack}}' data-index='1' src='{{baseLocImgUrl}}miniappImg/icon/delIcon.png' class='posi_ab icon_deleteImg' catchTap='deleteIdCardImg'></image>
+                    </view>
+                  </view>
+                </view>
+                <!--底部预览按钮  -->
+                <view class='flex_view_row marTop_40'>
+                  <view class='flex_1 flex_view_row justi_cen marRight_18'>
+                    <view class='viewIdCard posi_re' onTap='preIdCardImg' data-index='0'>效果预览</view>
+                  </view>
+                  <view class='flex_1 flex_view_row justi_cen'>
+                    <view class='viewIdCard posi_re' onTap='preIdCardImg' data-index='1'>效果预览</view>
+                  </view>
+                </view>
+              </view>
+            </view>
+          </view>
+          <view class="division-area" a:if="{{(globalGoods || hasGlobalGoods) && globalCross == 1}}">
+          </view>
+          <!-- 应付金额 -->
+          <view class="should-pay-area" a:if="{{!isTuanZhang}}">
+            <view class="should-pay-text">
+              <view class="font-30 color-323232">应付金额：
+              </view>
+              <view class="font-30 color-ff5353">￥{{filters.toFix(totalPrice * 1 + totalPostFee)}}
+              </view>
+            </view>
+            <view class="should-pay-item">
+              <view>总金额
+              </view>
+              <view class="color-ff5353 font-28">￥{{filters.toFix(originalTotalPrice)}}
+              </view>
+            </view>
+            <view class="should-pay-item">
+              <view>总运费
+              </view>
+              <view class="color-ff5353 font-28" a:if="{{fromPage == 'cart'}}">￥{{result.totalPostFee ? filters.toFix(result.totalPostFee) : 0.00}}</view>
+              <view class="color-ff5353 font-28" a:else>￥{{result.goodsInfo.postFee ? filters.toFix(result.goodsInfo.postFee) : 0.00}}</view>
+            </view>
+            <view class="should-pay-item" a:if="{{!isTuangou}}">
+              <view>优惠总额
+              </view>
+              <view>{{totalCouponValue > 0 ? "￥" + filters.toFix(totalCouponValue) : "￥0.00"}}</view>
+            </view>
+            <!-- 假如是秒杀商品则不能使用优惠券 ！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！-->
+            <view class="choice-coupon-view borTop " a:if="{{!isJifen && !isSpike}}">
+              <view class="font-26 color-323232">使用优惠券
+              </view>
+              <view class="coupon-name-view">
+                <view class="font-26 color-ff5353" a:if="{{canUseCouponCount > 0}}" onTap="availableCouponTap">{{result.couponStr}}
+                </view>
+                <view class="font-26 color-b3b3b3" a:else>暂无可用优惠券
+                </view>
+                <!--<image src='{{baseLocImgUrl}}miniappImg/icon/icon_right_arrow.png' class='coupon_arrIcon'></image> -->
+                <text class="coupon_arrIcon icon-href-right color-c7c7cc font-22">
+                </text>
+              </view>
+            </view>
+            <!--积分商品  -->
+            <view class="choice-coupon-view borTop {{isDikou ? '' : 'borTop'}}" a:if="{{isJifen || isDikou}}">
+              <view class="font-26 color-323232">
+                <view class="font-26">
+                  <text class="color-323232">积分
+                  </text>
+                  <text class="color-bababa">(共{{isJifen ? result.goodsInfo.memberPoint : result.memberPoint}}积分)
+                  </text>
+                </view>
+                <view class="flex_view_row font-24 marTop_10 align_cen color-f07e19">
+                  <text>本次消耗{{isJifen && !isDikou ? result.goodsInfo.pointCost : maxDeductPoint}}积分
+                  </text>
+                  <text a:if="{{isDikou}}">抵扣{{maxDeductPrice}}元
+                  </text>
+                  <text class="alipay_catch_img" a:if="{{isDikou}}" catchTap="showUseRule">
+                    <image src="{{baseLocImgUrl}}miniappImg/icon/icon_warning_org.png" class="icon_warning_org marLeft_10"/>
+                  </text>
+                </view>
+              </view>
+              <view class="coupon-name-view" a:if="{{isJifen && !isDikou}}">
+                <view class="jiFenUseBtn posi_re {{canBuy ? 'jiFenGreenBtn' : 'jiFenGrayBtn'}}">
+                  <view class="jiFenUseBtn_cir {{canBuy ? 'jiFenGreenBtn_cir' : 'jiFenGrayBtn_cir'}}">
+                  </view>
+                </view>
+              </view>
+              <view class="coupon-name-view" a:if="{{isDikou}}" catchTap="{{canFirstClick ? 'useDikou' : ''}}">
+                <view class="jiFenUseBtn posi_re {{canClick ? 'jiFenGreenBtn' : 'jiFenGrayBtn'}}">
+                  <view class="jiFenUseBtn_cir {{canClick ? 'jiFenGreenBtn_cir' : 'jiFenGrayBtn_cir'}}">
+                  </view>
+                </view>
+              </view>
+            </view>
+            <!--在速运加那边过来的  -->
+            <view class="choice-coupon-view pad_20 borTop" a:if="{{result.goodsInfo.isSFProduct}}">
+              <view class="font-26 color-323232">
+                <view class="flex_view_row font-24 marTop_10 align_cen color-323232">
+                  <text>可用
+                  </text>
+                  <text class="color-ff5353">{{result.goodsInfo.pointCost ? result.goodsInfo.pointCost : 0}}
+                  </text>
+                  <text>会员积分抵扣
+                  </text>
+                  <text class=" color-ff5353">￥{{result.goodsInfo.discount ? result.goodsInfo.discount : 0}}
+                  </text>
+                </view>
+              </view>
+              <view class="coupon-name-view">
+                <view class="jiFenUseBtn posi_re {{result.goodsInfo.isShow ? 'jiFenGreenBtn' : 'jiFenGrayBtn'}}">
+                  <view class="jiFenUseBtn_cir {{result.goodsInfo.isShow ? 'jiFenGreenBtn_cir' : 'jiFenGrayBtn_cir'}}">
+                  </view>
+                </view>
+              </view>
+            </view>
+            <!--返现余额可用  -->
+            <!-- 假如是秒杀商品则不能使用返现余额 ！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！-->
+            <view class="choice-coupon-view borTop {{!isDikou ? '' : 'borTop'}}" a:if="{{result.canUseBalance && result.availableBalance > 0 && !isGiftOrder && !SFmember && !isSpike}}">
+              <view class="font-26 color-323232">
+                <view class="font-26">
+                  <text class="color-323232">余额
+                  </text>
+                  <text class="color-323232">(当前可用余额{{result.availableBalance}}元)
+                  </text>
+                </view>
+                <view class="flex_view_row font-26 marTop_10 align_cen color-ff5353">
+                  <text>每笔订单最少支付0.01元
+                  </text>
+                </view>
+              </view>
+              <!--<view a:if="{{result.canUseBalance}}" class='coupon-name-view'><view class='jiFenUseBtn posi_re {{canBuy ? "jiFenGreenBtn" : "jiFenGrayBtn"}}'><view class='jiFenUseBtn_cir {{canBuy ? "jiFenGreenBtn_cir" : "jiFenGrayBtn_cir"}}'></view></view></view> -->
+              <view class="coupon-name-view" a:if="{{result.canUseBalance}}" catchTap="{{canFirstClick ? 'useBalanceFn' : ''}}">
+                <view class='jiFenUseBtn posi_re {{canClick ? (isUseBalance ? "jiFenGreenBtn" : "jiFenWhiteBtn" ) : "jiFenGrayBtn"}}'>
+                  <view class='jiFenUseBtn_cir {{canClick ? (isUseBalance ? "jiFenGreenBtn_cir" : "jiFenWhiteBtn_cir" ) : "jiFenGrayBtn_cir"}}'></view>
+                </view>
+              </view>
+            </view>
+          </view>
+          <view class="division-area">
+          </view>
+          <block a:for="{{result.supplierList}}" a:key="supplierList">
+            <view class="goods-info-area">
+              <view class="goods-item-title-view">
+                <view class="goods-item-title-part">
+                  <image src="{{baseLocImgUrl}}miniappImg/icon/icon_shop.png" class="order_shopImg">
+                  </image>
+                  <view class="font-24 color-323232 marLeft_20">{{item.supplierName}}
+                  </view>
+                </view>
+                <view class="goods-item-title-part">
+                  <view class="font-24 color-323232">共{{item.supplierCount}}件商品
+                  </view>
+                  <view class="font-24 color-323232 marLeft_20">小计
+                  </view>
+                  <view class="font-30 color-ff5353">￥{{isTuanZhang ? '0.00' :  filters.toFix(item.supplierPrice)}}
+                  </view>
+                  <view class="font-24 color-323232" a:if="{{isTuanZhang}}">(团长免单)
+                  </view>
+                </view>
+              </view>
+              <block a:for="{{item.orderGoodsList}}" a:key="orderGoodsList">
+                <view class="goods-info-view">
+                  <image src="{{baseImageUrl}}{{item.goodsImg}}" class="order_proImg">
+                  </image>
+                  <view class="goods-info-text-view flex_1">
+                    <view class="font-26 color-323232">{{item.goodsName}}
+                    </view>
+                    <view class="font-24 width_100 color-a1a0a0 marTop_10">
+                      <view class="width_100 single-line">{{item.productName}}
+                      </view>
+                    </view>
+                    <view class="font-26 color-a1a0a0 price-number-view order_price">
+                      <view>￥{{item.salePrice}}
+                      </view>
+                      <view>x{{item.quantity}}
+                      </view>
+                    </view>
+                  </view>
+                </view>
+              </block>
+              <!-- 商家优惠券 -->
+              <view class='choice-coupon-view borBot ' a:if='{{item.supplierCoupon}}' data-index="{{index}}" onTap='{{item.supplierCoupon? "selectSupplierCoupon" : ""}}'>
+                <view class='font-26 color-323232'>商家优惠</view>
+                <view class='coupon-name-view'>
+                  <view class='font-26 color-ff5353' a:if='{{item.supplierCoupon.length>0}}'>{{item.couponStr}}</view>
+                  <view class='font-26 color-b3b3b3' a:else>暂无可用优惠券</view>
+                  <text class='coupon_arrIcon icon-href-right color-c7c7cc font-22'></text>
+                </view>
+              </view>
+              <!-- 商家优惠券选择框 -->
+              <template a:if="{{item.supplierCoupon}}" is="dialogCoupon" data="{{baseImageUrlLoc:baseLocImgUrl,show:isShowStoreCouponList[index],couponList:item.supplierCoupon,iconSize,type: 'supplier',fatherIndex: index}}" />
+              <input type='text' placeholder="买家留言：选填" maxlength="60" class="font-26 order_leaMes" data-index="{{index}}" disabled="{{isSubmit}}" value="{{bbsData[index]}}" a:if="{{!showDialogCoupon}}" onInput="memoInput"/>
+              <text class="font-24 color-a1a0a0 order_leaMesLeft">剩余：{{item.leftCount}}字
+              </text>
+            </view>
+            <view class="division-area">
+            </view>
+          </block>
+          <!--发票信息  -->
+          <block a:if="{{showInvoiceView || isDikou}}">
+            <view class="invoice flex_view_row justi_between align_cen" onTap="{{globalGoods ? '' : 'showInvoiceFn'}}">
+              <view class="invoice_text font-24 flex_1">
+                <text>发票信息
+                </text>
+              </view>
+              <view class="invoice_add font-22 flex_view_row align_cen">
+                <text class="marRight_10" a:if="{{!globalGoods}}">{{invoiceMes}}
+                </text>
+                <text class="color-b3b3b3" a:if="{{globalGoods}}">全球购商品暂不支持开发票
+                </text>
+                <!--<image a:if='{{!globalGoods}}' src='{{baseLocImgUrl}}miniappImg/icon/icon_right_arrow32.png' class='icon_arrowRi'></image> -->
+                <text class="icon-href-right font-22 color-323232" a:if="{{!globalGoods}}">
+                </text>
+              </view>
+            </view>
+          </block>
+          <block a:if="{{false}}">
+            <view class="division-area">
+            </view>
+            <view class="to-gift-view">
+              <view class="font-26 color-323232">赠送他人（订单通知购买者，通知收货人）
+              </view>
+              <switch>
+              </switch>
+            </view>
+            <view class="giftOther_view">
+              <input class="name-input-view" type="text" placeholder="必填，购买者姓名（不能以数字开头）"/>
+              <input class="name-input-view" type="number" placeholder="必填，购买者手机号"/>
+            </view>
+          </block>
+          <!--购买全球购商品须同意  -->
+          <block a:if="{{globalGoods || hasGlobalGoods}}">
+            <view class="division-area">
+            </view>
+            <view class="pad_30 flex_view_row align_cen" onTap="chooseNotice">
+              <image src="{{canBuyGlobal ? baseLocImgUrl + 'miniappImg/icon/icon_sel.png' : baseLocImgUrl + 'miniappImg/icon/icon_unsel.png'}}" class="icon_sel">
+              </image>
+              <view class="font-26 color-323232 marLeft_20">
+                <text>购买全球购商品须同意
+                </text>
+                <text class="color-ff5353" catchTap="openGlobalNotice">《用户购买须知》
+                </text>
+              </view>
+            </view>
+          </block>
+          <view class="division-area">
+          </view>
+        </view>
+        <!-- 支付宝小程序确认订单页才显示的提示语 -->
+        <view a:if="{{knockActivityDescribe}}" class="payTip font-26 color-ff5353 flex_view_col justi_cen width_100 posi_ab">
+          <!--<text>温馨提示：支付宝代金券/折扣券将在支付时自动扣减</text> -->
+          <text>{{knockActivityDescribe}}</text>
+        </view>
+      </scroll-view>
+      <!-- 填充bottomView fixed的高度 -->
+      <!--<view class='orderBot'></view><view class="color-ff5353 font-28" a:if="{{fromPage == 'cart'}}">￥{{result.totalPostFee ? filters.toFix(result.totalPostFee) : 0.00}}</view><view class="color-ff5353 font-28" a:else>￥{{result.goodsInfo.postFee ? filters.toFix(result.goodsInfo.postFee) : 0.00}}</view>  -->
+      <view class="bottom-view">
+        <view class="flex_view_row align_cen justi_end flex_1">
+          <block a:if="{{totalPostFee && totalPostFee != '0.00' && totalPostFee != 0}}">
+            <view class="totalPostFee color-a1a0a0 font-26 marRight_10">
+              <text>含运费</text>
+              <text>￥
+                <text class="font-30">{{totalPostFee}}</text></text>
+            </view>
+          </block>
+          <view class="flex_view_row align_cen">
+            <view class="font-26 orderBot_sum">合计:
+            </view>
+            <view class="font-30 color-ff5353 orderBot_price">￥{{isTuanZhang ? '0.00' : filters.toFix(totalPrice * 1 + totalPostFee)}}
+            </view>
+          </view>
+        </view>
+        <button form-type="{{isJifen && !canBuy && !isDikou ? '' : 'submit'}}" class="{{isJifen && !canBuy && !isDikou ? 'bottom-text-gray-bg' : 'bottom-text-red-bg'}} font-32 orderBot_btn orderBot_toPay">{{isTuanZhang ? '提交订单' : '去付款'}}
+        </button>
+      </view>
+    </form>
+  </view>
 </view>
 <!-- 规格选择框 -->
 <template is="dialogCoupon" data="{{baseImageUrlLoc:baseLocImgUrl,show:showDialogCoupon,couponList:result.availableCoupon,iconSize}}"/>
 <!--发票弹框  -->
 <view class="invoiceDialog" a:if="{{showInvoice}}">
-	<view class="blackSpace" catchTap="closeCouponDialog">
-	</view>
-	<view class="totalInvoice ">
-		<scroll-view scroll-y='true' class="invoiceScroll height_100">
-			<!--发票类型  -->
-			<view class="invoiceType">
-				<view class="invoiceHead_tit">
-					<text class="font-28 color-414141 ">发票类型
-					</text>
-					<text class="font-24 color-ff5353 marLeft_20" a:if="{{hasGlobalGoods}}">(全球购商品暂不支持开发票)
-					</text>
-				</view>
-				<view class="invoiceType_con">
-					<view a:if="{{invoiceOff == 'normal' || invoiceOff == 'multi'}}" class="invoiceType_btn {{ itype == 0 ? 'invoiceType_btn_red color-ff5353' : 'invoiceType_btn_gray color-666' }} font-26 marRight_30 {{invoiceOff == 'normal' || invoiceOff == 'multi' ? '' : 'grayBtn'}}" data-index="0" catchTap='{{invoiceOff == "normal" || invoiceOff == "multi" ? "chooseInvoiceType" : ""}}'>普通发票
-					</view>
-					<view a:if='{{invoiceOff == "electronic" || invoiceOff == "multi"}}' class="invoiceType_btn {{ itype == 1 ? 'invoiceType_btn_red color-ff5353' : 'invoiceType_btn_gray color-666' }} font-26 {{invoiceOff == 'electronic' || invoiceOff == 'multi' ? '' : 'grayBtn'}}" data-index="1" catchTap='{{invoiceOff == "electronic" || invoiceOff == "multi" ? "chooseInvoiceType" : ""}}'>电子发票
-					</view>
-				</view>
-				<!-- 选择电子发票显示的提示语 -->
-				<view a:if="{{itype == 1}}" class="color-414141 padBot_24r">
-					<text class="font-24 color-ff5353">电子普通发票与纸质普通发票具备同等法律效力，可支持报销入账。</text>
-				</view>
-				<!--<view class='invoiceType_con'><view class='invoiceType_btn invoiceType_btn_red font-26 color-ff5353'>普通发票</view></view>  -->
-			</view>
-			<!--发票抬头  -->
-			<view class="invoiceHead">
-				<view class="invoiceHead_tit">
-					<text class="font-28 color-414141">发票抬头
-					</text>
-				</view>
-				<view class="flex_view_row invoiceType_con">
-					<view class="invoiceHeadType flex_view_row align_cen" data-index="{{index}}" data-mytype="invoiceHead" a:for="{{invoiceHeadType}}" a:key="invoiceHeadType" catchTap="invoiceTaped">
-						<image src="{{item.taped ? baseLocImgUrl+'miniappImg/icon/icon_sel.png' : baseLocImgUrl+'miniappImg/icon/icon_unsel.png'}}" class="marRight_15 icon_sel" data-taped="{{item.taped}}">
-						</image>
-						<text class="font-26 color-414141">{{item.name}}
-						</text>
-					</view>
-				</view>
-				<!--公司的发票抬头要填写的  -->
-				<view class="marBot_30" a:if="{{companyInvoice}}">
-					<view class="flex_view_row align_cen">
-						<text class="color-ff5353 font-28">*
-						</text>
-						<input type="text" class="invoiceHead_input" placeholder="公司全称" value="{{companyName}}" onInput="companyInput"/>
-					</view>
-					<view class="flex_view_row align_cen marTop_30">
-						<text class="color-ff5353 font-28">*
-						</text>
-						<input type="text" class="invoiceHead_input" placeholder="纳税人识别码" value="{{taxCode}}" onInput="taxCodeInput"/>
-					</view>
-				</view>
-			</view>
-			<!-- 电子发票要填写的邮箱  -->
-			<view class="invoiceHead" a:if="{{itype == 1 &&  (invoiceOff == 'multi' || invoiceOff == 'electronic') }}">
-				<view class="invoiceHead_tit">
-					<text class="font-28 color-414141">收票人信息
-					</text>
-				</view>
-				<view class="flex_view_row align_cen marTop_20">
-					<view class="font-28 color-ff5353 marRight_20 flex_view_row justi_cen">
-						<text>*
-						</text>
-						<text class="color-414141 font-26">手机号：
-						</text>
-					</view>
-					<input type="number" style value="{{imobile}}" placeholder="收票人手机" class="flex_1 marTop_10 marBot_10 eInvoicInput font-26 {{imobile && phoneRight ? 'borGreen' : 'borRed'}}" placeholder-class="font-26" maxlength="11" onInput="checkTakerMoInput"/>
-				</view>
-				<view class="flex_view_row align_cen">
-					<view class="font-28 color-white  marRight_20 flex_view_row justi_cen">
-						<text class="color-ff5353">*
-						</text>
-						<text class="color-414141 font-26">邮
-							<text decode="true" space="true">&emsp;
-							</text>箱：
-						</text>
-					</view>
-					<input type="text" placeholder="用来接收电子发票的邮箱" value="{{iemail}}" class="flex_1 marTop_10 marBot_20 font-26 eInvoicInput {{mailRight ? 'borGreen' : ''}}" placeholder-class="font-26" onInput="checkTakerMailInput"/>
-				</view>
-			</view>
-			<!--普通商品发票内容   -->
-			<view class="invoiceHead">
-				<view class="invoiceHead_tit">
-					<text class="font-28 color-414141">普通商品发票内容
-					</text>
-				</view>
-				<view class="invoiceType_con">
-					<view class="invoiceConType flex_view_row align_cen" data-index="{{index}}" data-mytype="invoiceCon" a:for="{{invoiceConType}}" a:key="invoiceConType" catchTap="invoiceTaped">
-						<image src="{{item.taped ? baseLocImgUrl+'miniappImg/icon/icon_sel.png' : baseLocImgUrl+'miniappImg/icon/icon_unsel.png'}}" class="marRight_15 icon_sel" data-taped="{{item.taped}}">
-						</image>
-						<text class="font-26 color-414141">{{item.name}}
-						</text>
-					</view>
-				</view>
-			</view>
-		</scroll-view>
-	</view>
-	<!--下面使用与不使用按钮  -->
-	<view class="bottom_btn flex_view_row align_cen ">
-		<button class="btnStyle bot_useBtn font-28" catchTap="uselessInvoice">不使用
-		</button>
-		<button class="btnStyle bot_uselessBtn font-28" catchTap="useInvoice">使用
-		</button>
-	</view>
+  <view class="blackSpace" catchTap="closeCouponDialog">
+  </view>
+  <view class="totalInvoice ">
+    <scroll-view scroll-y='true' class="invoiceScroll height_100">
+      <!--发票类型  -->
+      <view class="invoiceType">
+        <view class="invoiceHead_tit">
+          <text class="font-28 color-414141 ">发票类型
+          </text>
+          <text class="font-24 color-ff5353 marLeft_20" a:if="{{hasGlobalGoods}}">(全球购商品暂不支持开发票)
+          </text>
+        </view>
+        <view class="invoiceType_con">
+          <view a:if="{{invoiceOff == 'normal' || invoiceOff == 'multi'}}" class="invoiceType_btn {{ itype == 0 ? 'invoiceType_btn_red color-ff5353' : 'invoiceType_btn_gray color-666' }} font-26 marRight_30 {{invoiceOff == 'normal' || invoiceOff == 'multi' ? '' : 'grayBtn'}}" data-index="0" catchTap='{{invoiceOff == "normal" || invoiceOff == "multi" ? "chooseInvoiceType" : ""}}'>普通发票
+          </view>
+          <view a:if='{{invoiceOff == "electronic" || invoiceOff == "multi"}}' class="invoiceType_btn {{ itype == 1 ? 'invoiceType_btn_red color-ff5353' : 'invoiceType_btn_gray color-666' }} font-26 {{invoiceOff == 'electronic' || invoiceOff == 'multi' ? '' : 'grayBtn'}}" data-index="1" catchTap='{{invoiceOff == "electronic" || invoiceOff == "multi" ? "chooseInvoiceType" : ""}}'>电子发票
+          </view>
+        </view>
+        <!-- 选择电子发票显示的提示语 -->
+        <view a:if="{{itype == 1}}" class="color-414141 padBot_24r">
+          <text class="font-24 color-ff5353">电子普通发票与纸质普通发票具备同等法律效力，可支持报销入账。</text>
+        </view>
+        <!--<view class='invoiceType_con'><view class='invoiceType_btn invoiceType_btn_red font-26 color-ff5353'>普通发票</view></view>  -->
+      </view>
+      <!--发票抬头  -->
+      <view class="invoiceHead">
+        <view class="invoiceHead_tit">
+          <text class="font-28 color-414141">发票抬头
+          </text>
+        </view>
+        <view class="flex_view_row invoiceType_con">
+          <view class="invoiceHeadType flex_view_row align_cen" data-index="{{index}}" data-mytype="invoiceHead" a:for="{{invoiceHeadType}}" a:key="invoiceHeadType" catchTap="invoiceTaped">
+            <image src="{{item.taped ? baseLocImgUrl+'miniappImg/icon/icon_sel.png' : baseLocImgUrl+'miniappImg/icon/icon_unsel.png'}}" class="marRight_15 icon_sel" data-taped="{{item.taped}}">
+            </image>
+            <text class="font-26 color-414141">{{item.name}}
+            </text>
+          </view>
+        </view>
+        <!--公司的发票抬头要填写的  -->
+        <view class="marBot_30" a:if="{{companyInvoice}}">
+          <view class="flex_view_row align_cen">
+            <text class="color-ff5353 font-28">*
+            </text>
+            <input type="text" class="invoiceHead_input" placeholder="公司全称" value="{{companyName}}" onInput="companyInput"/>
+          </view>
+          <view class="flex_view_row align_cen marTop_30">
+            <text class="color-ff5353 font-28">*
+            </text>
+            <input type="text" class="invoiceHead_input" placeholder="纳税人识别码" value="{{taxCode}}" onInput="taxCodeInput"/>
+          </view>
+        </view>
+      </view>
+      <!-- 电子发票要填写的邮箱  -->
+      <view class="invoiceHead" a:if="{{itype == 1 &&  (invoiceOff == 'multi' || invoiceOff == 'electronic') }}">
+        <view class="invoiceHead_tit">
+          <text class="font-28 color-414141">收票人信息
+          </text>
+        </view>
+        <view class="flex_view_row align_cen marTop_20">
+          <view class="font-28 color-ff5353 marRight_20 flex_view_row justi_cen">
+            <text>*
+            </text>
+            <text class="color-414141 font-26">手机号：
+            </text>
+          </view>
+          <input type="number" style value="{{imobile}}" placeholder="收票人手机" class="flex_1 marTop_10 marBot_10 eInvoicInput font-26 {{imobile && phoneRight ? 'borGreen' : 'borRed'}}" placeholder-class="font-26" maxlength="11" onInput="checkTakerMoInput"/>
+        </view>
+        <view class="flex_view_row align_cen">
+          <view class="font-28 color-white  marRight_20 flex_view_row justi_cen">
+            <text class="color-ff5353">*
+            </text>
+            <text class="color-414141 font-26">邮
+              <text decode="true" space="true">&emsp;
+              </text>箱：
+            </text>
+          </view>
+          <input type="text" placeholder="用来接收电子发票的邮箱" value="{{iemail}}" class="flex_1 marTop_10 marBot_20 font-26 eInvoicInput {{mailRight ? 'borGreen' : ''}}" placeholder-class="font-26" onInput="checkTakerMailInput"/>
+        </view>
+      </view>
+      <!--普通商品发票内容   -->
+      <view class="invoiceHead">
+        <view class="invoiceHead_tit">
+          <text class="font-28 color-414141">普通商品发票内容
+          </text>
+        </view>
+        <view class="invoiceType_con">
+          <view class="invoiceConType flex_view_row align_cen" data-index="{{index}}" data-mytype="invoiceCon" a:for="{{invoiceConType}}" a:key="invoiceConType" catchTap="invoiceTaped">
+            <image src="{{item.taped ? baseLocImgUrl+'miniappImg/icon/icon_sel.png' : baseLocImgUrl+'miniappImg/icon/icon_unsel.png'}}" class="marRight_15 icon_sel" data-taped="{{item.taped}}">
+            </image>
+            <text class="font-26 color-414141">{{item.name}}
+            </text>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+  <!--下面使用与不使用按钮  -->
+  <view class="bottom_btn flex_view_row align_cen ">
+    <button class="btnStyle bot_useBtn font-28" catchTap="uselessInvoice">不使用
+    </button>
+    <button class="btnStyle bot_uselessBtn font-28" catchTap="useInvoice">使用
+    </button>
+  </view>
 </view>
 <!--toast弹窗-->
 <view class="mark flex_view_col align_cen justi_cen" a:if="{{showToast}}">
-	<view class="toastView_wb" catchtouchmove="move">
-		<view class="toastView_wb_con font-26 color-232323">      {{showToastMes}}
-		</view>
-	</view>
+  <view class="toastView_wb" catchtouchmove="move">
+    <view class="toastView_wb_con font-26 color-232323">      {{showToastMes}}
+    </view>
+  </view>
 </view>
 <!--积分使用规则  -->
 <view class="mark flex_view_col align_cen justi_cen" a:if="{{showUseRule}}" onTap="closeUseRule">
 </view>
 <view class="useRuleView whiteBack posi_fix" a:if="{{showUseRule}}">
-	<!--标题  -->
-	<view class="useRuleViewTit flex_view_col justi_cen align_cen">
-		<text class="color-323232 font-36">积分使用规则
-		</text>
-	</view>
-	<!--内容  -->
-	<view class="useRuleViewCon">
-		<view>
-			<view class="flex_view_row align_cen">
-				<view class="useRuleView_text marRight_10">
-				</view>
-				<text class="color-323232 font-32">使用条件
-				</text>
-			</view>
-			<view class="font-28 color_a2a2a2 marTop_15 flex_view_col">
-				<text>1.积分数量大于等于500;
-				</text>
-				<text>2.积分支付不得超过每笔订单应付金额的30%;
-				</text>
-			</view>
-		</view>
-		<view class="marTop_30">
-			<view class="flex_view_row align_cen">
-				<view class="useRuleView_text marRight_10">
-				</view>
-				<text class="color-323232 font-32">使用数量
-				</text>
-			</view>
-			<view class="font-28 color_a2a2a2 marTop_15 flex_view_col">
-				<text>1.使用积分数量为100的整数倍;
-				</text>
-				<text>2.100积分抵扣1元;
-				</text>
-			</view>
-		</view>
-	</view>
-	<text class="alipay_catch_img" catchTap="closeUseRule">
-		<image src="{{baseLocImgUrl}}miniappImg/icon/icon_cancel.png" class="icon_cancle posi_ab"/>
-	</text>
+  <!--标题  -->
+  <view class="useRuleViewTit flex_view_col justi_cen align_cen">
+    <text class="color-323232 font-36">积分使用规则
+    </text>
+  </view>
+  <!--内容  -->
+  <view class="useRuleViewCon">
+    <view>
+      <view class="flex_view_row align_cen">
+        <view class="useRuleView_text marRight_10">
+        </view>
+        <text class="color-323232 font-32">使用条件
+        </text>
+      </view>
+      <view class="font-28 color_a2a2a2 marTop_15 flex_view_col">
+        <text>1.积分数量大于等于500;
+        </text>
+        <text>2.积分支付不得超过每笔订单应付金额的30%;
+        </text>
+      </view>
+    </view>
+    <view class="marTop_30">
+      <view class="flex_view_row align_cen">
+        <view class="useRuleView_text marRight_10">
+        </view>
+        <text class="color-323232 font-32">使用数量
+        </text>
+      </view>
+      <view class="font-28 color_a2a2a2 marTop_15 flex_view_col">
+        <text>1.使用积分数量为100的整数倍;
+        </text>
+        <text>2.100积分抵扣1元;
+        </text>
+      </view>
+    </view>
+  </view>
+  <text class="alipay_catch_img" catchTap="closeUseRule">
+    <image src="{{baseLocImgUrl}}miniappImg/icon/icon_cancel.png" class="icon_cancle posi_ab"/>
+  </text>
 </view>
 <!--全球购用户须知  -->
 <view class="mark" onTouchMove="preventTouch" a:if="{{showGlobalNotice}}">
-	<view class="showGlobalNotice posi_ab whiteBack" a:if="{{showGlobalNotice}}">
-		<!--标题  -->
-		<view class="showGlobalNotice_top posi_re">
-			<text class="color-323232 font-32">全球购用户须知
-			</text>
-			<text class="alipay_catch_img" catchTap="closeGlobalNotice">
-				<image src="{{baseLocImgUrl}}miniappImg/icon/icon_close.png" class="icon_close posi_ab"/>
-			</text>
-		</view>
-		<!--内容  -->
-		<view class="showGlobalNotice_con">
-			<view class="showGlobalNotice_conBig color-666 height_100">
-				<!--购买须知  -->
-				<!--<view style='line-height:60rpx;'><text class='font-32'>购买须知</text></view> -->
-				<view class="lineH_46 font-26 flex_view_col">
-					<text>{{globalNotice}}
-					</text>
-				</view>
-			</view>
-		</view>
-		<!--确定按钮  -->
-		<view class="globalSureBtn font-32 color-white width_100 tex_center" data-autosel="true" catchTap="closeGlobalNotice">确定
-		</view>
-	</view>
+  <view class="showGlobalNotice posi_ab whiteBack" a:if="{{showGlobalNotice}}">
+    <!--标题  -->
+    <view class="showGlobalNotice_top posi_re">
+      <text class="color-323232 font-32">全球购用户须知
+      </text>
+      <text class="alipay_catch_img" catchTap="closeGlobalNotice">
+        <image src="{{baseLocImgUrl}}miniappImg/icon/icon_close.png" class="icon_close posi_ab"/>
+      </text>
+    </view>
+    <!--内容  -->
+    <view class="showGlobalNotice_con">
+      <view class="showGlobalNotice_conBig color-666 height_100">
+        <!--购买须知  -->
+        <!--<view style='line-height:60rpx;'><text class='font-32'>购买须知</text></view> -->
+        <view class="lineH_46 font-26 flex_view_col">
+          <text>{{globalNotice}}
+          </text>
+        </view>
+      </view>
+    </view>
+    <!--确定按钮  -->
+    <view class="globalSureBtn font-32 color-white width_100 tex_center" data-autosel="true" catchTap="closeGlobalNotice">确定
+    </view>
+  </view>
 </view>
 <!--必须要同意全球购商品用户购买须知弹窗  -->
 <view class="mark" a:if="{{showChooseAndPay}}">
-	<view class="showChooseBuy whiteBack posi_ab">
-		<!--提示头部  -->
-		<view class="showChooseBuy_ask font-32 color-323232">
-			<text>购买全球购的商品须同意
-				<text class="color-ff5353">《用户购买须知》
-				</text>，确认继续下单?
-			</text>
-		</view>
-		<!--底部按钮  -->
-		<view class="height_100r flex_view_row font-38">
-			<view class="showChooseBuy_needThink color-323232 flex_view_row justi_cen align_cen flex_1 height_100" catchTap="closeChooseAndPay">
-				<text>我再想想
-				</text>
-			</view>
-			<view class="back_red color-white flex_view_row justi_cen align_cen flex_1 height_100" catchTap="confirmAndPay">
-				<text>同意并下单
-				</text>
-			</view>
-		</view>
-	</view>
+  <view class="showChooseBuy whiteBack posi_ab">
+    <!--提示头部  -->
+    <view class="showChooseBuy_ask font-32 color-323232">
+      <text>购买全球购的商品须同意
+        <text class="color-ff5353">《用户购买须知》
+        </text>，确认继续下单?
+      </text>
+    </view>
+    <!--底部按钮  -->
+    <view class="height_100r flex_view_row font-38">
+      <view class="showChooseBuy_needThink color-323232 flex_view_row justi_cen align_cen flex_1 height_100" catchTap="closeChooseAndPay">
+        <text>我再想想
+        </text>
+      </view>
+      <view class="back_red color-white flex_view_row justi_cen align_cen flex_1 height_100" catchTap="confirmAndPay">
+        <text>同意并下单
+        </text>
+      </view>
+    </view>
+  </view>
 </view>
 <!-- 优惠券弹窗 -->
 <!--<view class="mark flex_view_col align_cen justi_cen" a:if="{{couponShow}}"><view class="toastView_wb" style="background-color:rgba(0, 0, 0, 0);"><view class="font-26 confirmorderPop posi_re"><image src="https://img.sfddj.com/miniappImg/couponsPop/backgroundPop.png" class="width_100 height_100" mode="widthFix"></image><view class="couponPrice posi_ab tex_center"><text>￥</text><text class="font-60 font-weight-600">100</text></view><view class="ikonw posi_ab" onTap="closeCouponShow"><image src="https://img.sfddj.com/miniappImg/couponsPop/closeBtn.png" class="width_100 height_100" mode="widthFix"/></image></view></view></view></view> -->
