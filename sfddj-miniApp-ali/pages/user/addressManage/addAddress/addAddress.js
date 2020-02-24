@@ -98,7 +98,6 @@ Page({
     var that = this;
 
     var cityData = this.data.cityData;
-    console.log(cityData)
     if (type == 0) {
       that.setData({
         provinces: cityData,

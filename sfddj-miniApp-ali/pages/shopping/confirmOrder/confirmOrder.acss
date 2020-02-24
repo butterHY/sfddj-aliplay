@@ -911,3 +911,15 @@ button.bottom-text-red-bg::after, button.bottom-text-red-bg::before, button.bott
 }
 
 /* 上传身份证图部分更新  end*/
+
+/* 压缩图片的canvas样式  start*/
+.press-canvas {
+  position: absolute;
+  top: -1000px;
+  background-color: transparent;
+}
+
+.press-canvas.show{
+  top: 0;
+}
+/* 压缩图片的canvas样式  end*/

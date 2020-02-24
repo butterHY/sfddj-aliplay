@@ -643,3 +643,6 @@
 <!-- 优惠券弹窗 -->
 <!--<view class="mark flex_view_col align_cen justi_cen" a:if="{{couponShow}}"><view class="toastView_wb" style="background-color:rgba(0, 0, 0, 0);"><view class="font-26 confirmorderPop posi_re"><image src="https://img.sfddj.com/miniappImg/couponsPop/backgroundPop.png" class="width_100 height_100" mode="widthFix"></image><view class="couponPrice posi_ab tex_center"><text>￥</text><text class="font-60 font-weight-600">100</text></view><view class="ikonw posi_ab" onTap="closeCouponShow"><image src="https://img.sfddj.com/miniappImg/couponsPop/closeBtn.png" class="width_100 height_100" mode="widthFix"/></image></view></view></view></view> -->
 <!-- 上传中提示 -->
+
+<!-- windowWidth为屏幕宽度 -->
+<canvas canvas-id='pressCanvas' class='press-canvas {{canvasShow ? "show" : ""}}' style='width: {{ idImgWidth }}px; height: {{ idImgHeight }}px;'></canvas>
