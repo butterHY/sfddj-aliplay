@@ -116,7 +116,16 @@
               </view>
               <view class="waybillDescribe flex_1">
                 <view class="waybillStatus font-26" a:if="{{index == 1 && fatherItem.status}}">{{fatherItem.status}}</view>
-                <view class="waybillAddress font-24">{{childrenItem.content}}</view>
+                <block  a:if="{{!childrenItem.mobilePhone}}">
+                  <view class="waybillAddress font-24">{{childrenItem.content}}</view>
+                </block>
+                <block a:else>
+                  <view class="waybillAddress font-24">
+                    <text>{{childrenItem.content[0]}}</text>
+                    <text class="waybillState" data-phone="{{childrenItem.mobilePhone}}" catchTap="callPhone">{{childrenItem.mobilePhone}}</text>
+                    <text>{{childrenItem.content[1]}}</text>
+                  </view>
+                </block>
                 <view class="waybillNewTime font-22 color-999999" >{{childrenItem.dayTime}}  {{childrenItem.hoursTime}}</view>
               </view>
             </view>

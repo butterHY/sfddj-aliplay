@@ -116,8 +116,11 @@ App({
     var that = this;
     var canUsesetTab = my.canIUse('setTabBarBadge');
 		var canUsesremoveTab = my.canIUse('removeTabBarBadge');
+    // console.log(canUsesetTab)
+    // console.log(canUsesremoveTab)
     if(canUsesetTab && canUsesremoveTab) {
       sendRequest.send(constants.InterfaceUrl.SHOP_GET_COUNT, {}, function(res) {
+        // console.log(res)
         if(res.data.result.count) {
           my.setTabBarBadge({
             index: 2,

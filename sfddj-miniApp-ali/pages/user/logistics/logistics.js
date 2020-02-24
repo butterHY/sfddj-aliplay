@@ -48,7 +48,7 @@ Page({
     //     baseImageUrl: constants.UrlConstants.baseImageUrl
     //   });
     // }, function (err) {});
-    console.log(options.orderId)
+
     that.getGuessLike();
     http.post(api.LOGISTICS.GETEXPRESS, { 'orderSn': options.orderId}, function(res){
       let resData = res.data.data;
@@ -58,7 +58,7 @@ Page({
           value.isCheckMore = false;
           // console.log(value.expectedDeliveryTime)
           // value.expectedDeliveryTime = utils.pointFormatTime(new Date(value.expectedDeliveryTime));
-          console.log(value.expectedDeliveryTime)
+
           value.expectedDeliveryTime = value.expectedDeliveryTime ? utils.pointFormatTime(new Date(value.expectedDeliveryTime)) : value.expectedDeliveryTime;
 
           switch(value.status) {
@@ -78,11 +78,23 @@ Page({
             val.dayTime = utils.formatTime(val.time);
             // + that.judgementTime(val.time.getSeconds()
             val.hoursTime =  ('' + that.judgementTime(val.time.getHours()) + ':' + that.judgementTime(val.time.getMinutes()) );
+            val.content = '快件正在配送途中，请您准备签收（配送员：热热，电话：17600648717）谢谢';
           })
           value.detail.unshift( {content: value.shipAddress } )
         })
 
-        console.log(resData)
+        let mobilePhone = /1[3456789]\d{9}/g;
+        // let fixedTelephone = /^(\(\d{3,4}\)|\d{3,4}-|\s)?\d{7,14}$/;
+        resData.forEach(value => {
+          value.detail.forEach(val => {
+             let checkMobilePhone = val.content.match(mobilePhone);
+            if( checkMobilePhone ) {
+              val.mobilePhone = checkMobilePhone[0];
+              val.content = val.content.split(mobilePhone);
+            }
+          })
+        })
+
 
         let firstTwoLogisticsDada = JSON.parse(JSON.stringify(resData));
         firstTwoLogisticsDada.forEach(value => {
@@ -238,7 +250,7 @@ Page({
 
   // 页面上拉加载
   onReachBottom() {
-    console.log('上拉加载');
+    // console.log('上拉加载');
     let that = this;
     if ( that.data.youLikeHasMore ) {
       that.setData({
@@ -251,15 +263,11 @@ Page({
 
   // 复制运单号
   handleCopy(e) {
-    console.log(e);
-    console.log(e.currentTarget.dataset.expressNo);
-
     my.setClipboard({
       text: e.currentTarget.dataset.expressNo,
       success: function (res) {
         my.getClipboard({
           success: function (res) {
-            console.log(res)
             my.showToast({
               content: '复制运单号成功',
             })
@@ -273,10 +281,8 @@ Page({
 	 * 添加购物车
 	 */
 	addCart: function(e) {
-    console.log(e)
 		let that = this;
 		let productId = e.currentTarget.dataset.productId;
-    console.log(productId)
 		sendRequest.send(constants.InterfaceUrl.SHOP_ADD_CART, { pId: productId, quantity: '1' }, function(res) {
 			my.showToast({
 				content: '添加购物车成功'
@@ -287,4 +293,11 @@ Page({
 			})
 		});
 	},
+
+  callPhone(e) {
+     if( e.currentTarget.dataset.phone ) {
+      my.makePhoneCall({ number: e.currentTarget.dataset.phone });
+     }
+  }
+
 });

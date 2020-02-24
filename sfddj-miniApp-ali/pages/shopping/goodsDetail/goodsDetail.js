@@ -1900,11 +1900,12 @@ console.log( that.data.SFmember ,that.data.goods.jifenStatus, that.data.goods.de
     } else if (that.data.address) {
       defaultAddress = that.data.address;
     }
+
     that.data.nonDeliveryArea = that.data.goods.nonDeliveryArea.some(value => {
-      if (defaultAddress.province) {
+      if (defaultAddress.province && value) {
         return defaultAddress.province.indexOf(value) != -1 || value.indexOf(defaultAddress.province) != -1
       }
-      else if (defaultAddress.city) {
+      else if (defaultAddress.city && value) {
         return defaultAddress.city.indexOf(value) != -1 || value.indexOf(defaultAddress.city) != -1
       }
       else {
