@@ -84,7 +84,7 @@ Page({
     botBtnH: 102,
     loadComplete: false,
     loadFail: false,
-    iconSize: my.getSystemInfoSync().windowWidth * 34 / 750,  //icon勾选的大小
+    iconSize: 0,  //icon勾选的大小
     da_upload_data: [],        //购买场景的达观上报的数据
     actionType: 'buy',         //达观上报场景类型
     invoiceOff: 'noInvoice',    //可开发票的类型， noInvoice--不可开发票, normal---只可开普通发票， electronic--只可开电子发票， multi---可开普通/电子发票
@@ -104,9 +104,12 @@ Page({
     // 上传身份证新版需要 
     exampleImgArr: ['https://img.sfddj.com/miniappImg/more/photo_opposite_large.png', 'https://img.sfddj.com/miniappImg/more/photo_positive_large.png'], //身份证示例大图
     idCardImgArr: ['', ''], //上传的身份证图
+    idImgWidth: 0,     //选择图片后转base64时画布的宽度
+    idImgHeight: 0,    //选择图片后转base64时画布的高度
   },
 
   onLoad: function(options) {
+    console.log(';[[options', options)
     var that = this;
     that.calcH();
     // 页面重新进来，重置发票信息
@@ -239,13 +242,18 @@ Page({
   // 计算中间内容的高度
   calcH() {
     var that = this;
-    var sysInfo = my.getSystemInfoSync();
+    var sysInfo = getApp().globalData.systemInfo;
     var windowHeight = sysInfo.windowHeight;
     var screenWidth = sysInfo.screenWidth;
     var calcH = windowHeight - (screenWidth * that.data.botBtnH) / 750;
     that.setData({
-      calcH: calcH
+      calcH: calcH,
+      idImgWidth: sysInfo.windowWidth,     //选择图片后转base64时画布的宽度
+      idImgHeight: sysInfo.windowHeight,    //选择图片后转base64时画布的高度
+      iconSize: sysInfo.windowWidth * 34 / 750,  //icon勾选的大小
     })
+
+
   },
 
   addressManage: function(e) {
@@ -712,7 +720,7 @@ Page({
             globalCross: 1
           });
         } else if (result.globalCross == '2') {
-          that.hasGlobalGoods(result.defaultAddress)
+          that.hasShowIdMes(result.defaultAddress)
           that.setData({
             globalGoods: true,
             globalCross: 2
@@ -890,46 +898,52 @@ Page({
         sizeType: ['original', 'compressed'],
         sourceType: ['album', 'camera'],
         success: function(res) {
-
+          let tempFileList = res.apFilePaths[0];
           my.showLoading({
             content: '图片上传中...'
           });
+          var token = ''
+          // let category = index == 0 ? 'front' : 'reverse';
+          
+          try {
+            token = my.getStorageSync({
+              key: constants.StorageConstants.tokenKey, // 缓存数据的key
+            }).data;
+          } catch (e) { }
+          my.uploadFile({
+            url: constants.UrlConstants.baseUrl + constants.InterfaceUrl.UPLOAD_IDCARDIMG, // 开发者服务器地址
+            filePath: res.apFilePaths[0], // 要上传文件资源的本地定位符
+            fileName: 'file', // 文件名，即对应的 key, 开发者在服务器端通过这个 key 可以获取到文件二进制内容
+            fileType: 'image', // 文件类型，image / video / audio
+            header: {
+              "loginToken": token
+            },
+            success: (res) => {
+              var result = JSON.parse(res.data);
+              let setImgName = index == 0 ? 'idCardImgFront' : 'idCardImgBack'
+              let showToastMes = index == 0 ? '上传身份证正面失败' : '上传身份证反面失败'
+              my.hideLoading();
 
-          let tempFile = res.apFilePaths[0];
-          let category = index == 0 ? 'front' : 'reverse';
-          utils.getLessLimitSizeImage('pressCanvas', tempFile, 1.5, that.data.width, (imageFile) => {
-            wx.getFileSystemManager().readFile({
-              filePath: imageFile, //选择图片返回的相对路径
-              encoding: "base64", //这个是很重要的
-              success: res => { //成功的回调
-                //返回base64格式
-                tempFile = res.data
-                // console.log('base64ImgSize', that.showSize(tempFile))
-                sendRequest.send(constants.InterfaceUrl.UPLOAD_IDCARDIMGV2, {
-                  base64Voucher: 'data:image/jpeg;base64,' + tempFile,
-                  category: category,
-                  idCardNo: that.data.idNum,
-                  name: that.data.defaultAddress.shipName
-                }, function(res) {
-                  wx.hideLoading()
-                  let result = res.data ? res.data.result ? res.data.result : {} : {}
-                  if (Object.keys(res.data.result).length > 0) {
-
-                    that.data.idCardImgArr[index] = that.data.baseImageUrl + result.message;
-                    let setImgName = index == 0 ? 'idCardImgFront' : 'idCardImgBack'
-                    that.setData({
-                      [setImgName]: result.picUrl,
-                      idCardImgArr: that.data.idCardImgArr
-                    })
-                  } else {
-                    utils.wxShowToast('上传身份证图片失败，请重新上传', that)
-                  }
-                }, function(err) {
-                  wx.hideLoading()
-                  utils.wxShowToast(err, that)
-                }, 'POST')
+              if (result.status == 'success') {
+                that.setData({
+                  [setImgName]: result.message
+                });
+              } else {
+                // that.setData({
+                //   showToastMes: '',
+                //   showToast: true
+                // });
+                // that.data.timeOut = setTimeout(function() {
+                //   that.setData({
+                //     showToast: false
+                //   });
+                // }, 2000);
+                my.showToast({
+                  content: showToastMes
+                })
               }
-            })
+            },
+            fail(err) { }
           })
         },
 
@@ -949,6 +963,24 @@ Page({
     }
 
 
+  },
+
+  // 在canvas上绘图，并转为base64格式
+  imgToBase64(imgUrl, imgWidth, imgHeight, type) {
+    let canvasTobase = my.createCanvasContext('pressCanvas');
+    canvasTobase.drawImage('https://img.sfddj.com/miniappImg/banner/testImg.jpg', 0, 0, imgWidth, imgHeight)
+    canvasTobase.draw();
+    canvasTobase.toDataURL({
+      x: 0,
+      y: 0,
+      width: imgWidth,
+      height: imgHeight,
+      destWidth: imgWidth,
+      destHeight: imgHeight,
+      type: type,
+    }).then(dataUrl => {
+      console.log('[[[base6400', dataUrl)
+    })
   },
 
   loadImg(e) {
