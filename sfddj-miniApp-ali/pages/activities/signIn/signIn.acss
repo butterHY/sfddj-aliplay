@@ -1,3 +1,5 @@
+@import '../../css-public/itemGoodsCard.acss';
+
 .pageArea {
   overflow-x: hidden;
   overflow-y: auto;
@@ -471,36 +473,6 @@
   overflow: hidden;
 }
 
-.goodsArea {
-  position: relative;
-  display: block;
-  background-color: #FFFFFF;
-  box-shadow: 1px 1px 2px rgba(105, 105, 105, .1), -1px 1px 2px rgba(105, 105, 105, .1);
-  border-radius: 10px;
-  box-sizing: border-box;
-  width: 100%;
-  height: auto;
-  overflow: hidden;
-}
-
-.goodsImg {
-  text-align: center;
-  position: relative;
-  height: 312rpx;
-  width: auto;
-  margin: 0;
-  overflow: hidden;
-  box-sizing: border-box;
-  line-height: 312rpx;
-}
-
-.goodsImg image {
-  display: inline-block;
-  width: 260rpx;
-  height: 260rpx;
-  border-radius: 2px;
-  vertical-align: middle;
-}
 
 /*提示弹窗*/
 

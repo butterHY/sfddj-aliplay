@@ -44,6 +44,14 @@ Page({
 		isShowSearch: false,								// 新版搜索组件显示开关
 		isFocus: false,											// 新版搜索组件焦点开关
 		searchComponent: null,							// 新版搜索组件实例
+
+    // 猜你喜欢数据
+    guessLikeGoods: [],
+    youLikeStart: 0,
+    youLikeLimit: 3,
+    youLikeHasMore: true,
+    youLikeIsLoadMore: false,
+    youLikeLoadComplete: false,
 	},
 
 	/**
@@ -51,20 +59,25 @@ Page({
 	 */
 	onLoad: function(options) {
 		this.setData({
-			inputVal: options.keyWord
+			inputVal: options.keyWord,
+      pageType: options.pageType
 		});
 		// utils.getNetworkType(this);
+    // console.log(getCurrentPages());
+    console.log(options.pageType);
+    console.log(options);
 		this.searchProduct(options.keyWord, 0);
 	},
 
 	onShow: function() {
 		// 关闭键盘，有些苹果手机会出现输入搜索去到搜索页返回初始页面时，初始页的键盘没有关闭的问题；
 		my.hideKeyboard();
-
 		this.setData({
 			placeholder: my.getStorageSync({key: 'searchTextMax'}).data
 		})
+  
 		if( this.searchComponent ) {
+    
 			this.searchComponent.data.pageType = 'showSearchPage';
 		}
 	},
@@ -115,7 +128,8 @@ Page({
 			priceHigher: priceHigher,
 			goodsStart: 0,
 			goodsList: [],
-			hasMore: true
+			hasMore: true,
+      youLikeStart: 0,
 		});
 		
 		this.searchProduct(this.data.inputVal, 0);
@@ -136,7 +150,8 @@ Page({
 				storeStart: 0,
 				goodsList: [],
 				storeList: [],
-				hasMore: true
+				hasMore: true,
+        youLikeStart: 0,
 			});
 			that.searchProduct(this.data.inputVal, 0);
 			// that.data.hasMore = false;
@@ -296,6 +311,7 @@ Page({
 					hasMore: false 
 				})
 				// that.searchProduct(options.keyWord, 0);
+        that.data.pageType == 'home' ? that.getGuessLike('0') : '';
 				return;
 			}
 
@@ -323,6 +339,8 @@ Page({
 			// that.data.goodsOrStore == '1' && upData.storeList && upData.storeList.length > 0  ? upData.storeList.forEach( value => value.star = Math.round(value.star) ) : '';
 
 			// groupList: res.data.result.groupList,		// 推荐商品,新接口没有 "推荐商品"
+      list && list.length <= 3 && that.data.pageType == 'home' ? that.getGuessLike('0') : '';
+
 			that.setData(upData);
 			
 		}, function(err) {
@@ -333,6 +351,36 @@ Page({
 			});
 		});
 	},
+
+  // 获取达观推荐的商品---猜你喜欢
+  getGuessLike(type) {
+    console.log('请求猜你喜欢 type', type)
+    let that = this;
+    let data = {
+      groupName: '支付宝小程序猜你喜欢',
+      start: that.data.youLikeStart,
+      limit: that.data.youLikeLimit
+    }
+    that.setData({ youLikeIsLoadMore: true });
+
+    http.get(api.GOODSDETAIL.lISTGOODSBYNAME, data, (res) => {
+      if (res.data.ret.code == '0' && res.data.ret.message == "SUCCESS") {
+        let resData = res.data.data;
+        // 如果返回的数据长度等于请求条数说明还有更多数据
+        resData && resData.length == that.data.youLikeLimit ? that.data.youLikeHasMore = true : that.data.youLikeHasMore = false;  
+
+        // 0: 初始化; 1: 每次加载拼接进去的数据;
+        type == '0' ? that.data.guessLikeGoods = resData : that.data.guessLikeGoods = that.data.guessLikeGoods.concat(resData);  
+
+        that.setData({
+          guessLikeGoods: that.data.guessLikeGoods,
+          youLikeHasMore: that.data.youLikeHasMore,           // 是否还有更多                  
+        });
+      }
+      that.setData({ youLikeIsLoadMore: false })								// 正在加载中的加载进度条
+    }, (err) => { that.setData({ youLikeIsLoadMore: false }) })
+  },
+
 
 		/**
 	 * 智能搜索数据		--------  搜索改版
@@ -514,12 +562,22 @@ Page({
 	//   }
 	// },
 	
+  /**
+	 * 页面滚动到底部触发
+	 */
 	scrollToLower: function() {
+    let that = this;
 		if (this.data.hasMore) {
 			this.data.goodsOrStore == '0' ? this.setData({goodsStart: this.data.goodsList.length, limit: this.data.limit}) : this.setData({storeStart: this.data.storeList.length, limit: this.data.limit});
 		  this.data.hasMore = false;
 			this.searchProduct(this.data.inputVal, 1);
-		}
+		} else if( (that.data.goodsList.length <= 3 || that.data.storeList.length <= 3) && that.data.youLikeHasMore && that.data.pageType == 'home' ) {
+      that.setData({
+        youLikeStart: that.data.guessLikeGoods.length
+      });
+      that.data.youLikeHasMore = false;
+      that.getGuessLike('1');
+    }
 	},
 
 

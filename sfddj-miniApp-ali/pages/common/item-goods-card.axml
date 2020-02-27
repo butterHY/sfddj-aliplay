@@ -27,26 +27,40 @@
       </view>
     </view>
     <!---->
-    <navigator a:else url="{{tuangou ? '/pages/home/grouping/grouping?goodsSn=' + goodsSn : '/pages/shopping/goodsDetail/goodsDetail?goodsSn=' + goodsSn}}" class='itemGoodsCard borBox' hover-class='none' style='{{left ? "padding:10rpx 10rpx 10rpx 0":"padding:10rpx 0 10rpx 10rpx"}};'>
-      <view class='posi_re goodsArea'>
-        <view class='goodsImg'>
-          <image src='{{baseImageUrl}}{{goodsDefaultImage}}{{smallImgArg}}'></image>
+    <navigator a:else url="{{tuangou ? '/pages/home/grouping/grouping?goodsSn=' + goodsSn : '/pages/shopping/goodsDetail/goodsDetail?goodsSn=' + goodsSn}}" class="{{type == 'newGuessLike' ? 'guessLikeGoods' : 'itemGoodsCard borBox'}}" hover-class='none' style="{{left ? 'padding:10rpx 10rpx 10rpx 0':'padding:10rpx 0 10rpx 10rpx'}};">
+      <view class="{{type == 'newGuessLike' ? 'all_100 boxShadow guessLikeView' : ' goodsArea'}}">
+        <view class="{{type == 'newGuessLike' ? 'guessLikeImgBox' : 'goodsImg'}}" style="{{type == 'newGuessLike' ? 'border-bottom: 0;' : ''}}">
+          <image a:if="{{type == 'newGuessLike'}}" class="guessLikeImg all_100" src="{{baseImageUrl}}{{goodsDefaultImage}}"></image>
+          <image a:else src="{{baseImageUrl}}{{goodsDefaultImage}}{{smallImgArg}}"></image>
           <!--<image style='width:100%;height:250rpx;' src='{{baseImageUrl}}{{showImage}}{{smallImgArg}}'mode='widthFix'></image> -->
         </view>
         <!--小图标 全赔  -->
-        <image a:if='{{filters.strIndexOf(afterSaleGuee,"1")}}' src='{{baseLocImgUrl}}miniappImg/icon/icon_Payoff1.png' class='allCompensation posi_ab' style='{{left ? "right: 30rpx;" : "right: 10rpx;"}}'></image>
-        <image a:elif='{{filters.strIndexOf(afterSaleGuee,"2")}}' src='{{baseLocImgUrl}}miniappImg/icon/icon_Payoff2.png' class='allCompensation posi_ab' style='{{left ? "right: 30rpx;" : "right: 10rpx;"}}'></image>
-        <image a:elif='{{filters.strIndexOf(afterSaleGuee,"3")}}' src='{{baseLocImgUrl}}miniappImg/icon/icon_Payoff3.png' class='allCompensation posi_ab' style='{{left ? "right: 30rpx;" : "right: 10rpx;"}}'></image>
-        <image a:elif='{{filters.strIndexOf(afterSaleGuee,"4")}}' src='{{baseLocImgUrl}}miniappImg/icon/icon_Payoff4.png?version=2.0' class='allCompensation posi_ab' style='{{left ? "right: 30rpx;" : "right: 10rpx;"}}'></image>
-        <view class="goodsInfo height_176r notAtHome">
-          <view class='single-line flex_view_col height_80r'>
-            <text class='font-26 color-323232 single-line-text lineH_2'>{{goodsName}}</text>
-            <text class='font-26 color-bbbbbb single-line-text goods_productName'>{{productName}}</text>
+        <image a:if="{{filters.strIndexOf(afterSaleGuee,"1")}}" src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff1.png" class="allCompensation posi_ab" style="{{left ? 'right: 30rpx;' : 'right: 10rpx;'}}"></image>
+        <image a:elif="{{filters.strIndexOf(afterSaleGuee,"2")}}" src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff2.png" class="allCompensation posi_ab" style="{{left ? 'right: 30rpx;' : 'right: 10rpx;'}}"></image>
+        <image a:elif="{{filters.strIndexOf(afterSaleGuee,"3")}}" src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff3.png" class="allCompensation posi_ab" style="{{left ? 'right: 30rpx;' : 'right: 10rpx;'}}"></image>
+        <image a:elif="{{filters.strIndexOf(afterSaleGuee,"4")}}" src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff4.png?version=2.0" class="allCompensation posi_ab" style="{{left ? 'right: 30rpx;' : 'right: 10rpx;'}}"></image>
+        
+        <view class="{{ type == 'newGuessLike' ? 'guessLikeDescribe' : 'goodsInfo height_176r notAtHome' }}">
+          <view class="{{type == 'newGuessLike' ? 'guessLikeGoodsName single-line2' : 'single-line flex_view_col height_80r'}}">
+            <text class="{{type == 'newGuessLike' ? 'single-line2' : 'font-26 color-323232 single-line-text lineH_2'}}">{{name ? name : goodsName}}</text>
+            <block a:if="{{type == 'newGuessLike'}}">
+              <view class="guessLikeGoodsSpecs color-666 single-line" a:if="{{productName}}">{{productName}}</view>
+              <view class="guessLikeGoodsLabel single-line"  a:if="{{labels.length > 0}}">{{labels[0]}}</view>
+            </block>
+            <block a:else>
+              <text class='font-26 color-bbbbbb single-line-text goods_productName'>{{productName}}</text>
+            </block>
           </view>
-          <view class="goodsPriceBox">
-            <text class='font-34 color-ff5353 font-weight-bold'>¥{{tuangou ? tuangouPrices : salePrice}}</text>
-            <view a:if="{{!hiddenCart}}" catchTap='{{!cannotAdd ? "addCart" : ""}}' data-pid='{{productId}}'>
-              <text class="icon-shopcar_small color-ff5353 font-38"></text>
+
+          <view class="{{type == 'newGuessLike' ? 'guessLikeGoodsPrice' : 'goodsPriceBox'}}">
+            <text class="{{type == 'newGuessLike' ? 'priceBox single-line' : ''}}">
+              <text class="vertical_bottom font-24 color-ff5353">￥</text>
+              <text class="font-weight-bold font-34 {{type == 'newGuessLike' ? 'currentPrice' : ' color-ff5353'}}" >{{tuangou ? tuangouPrices : salePrice}}</text>
+              <text a:if="{{type == 'newGuessLike' && tuangou}}" class="originalPrice font-24 color-999999">￥{{salePrice}}</text>
+            </text>
+            <!-- <text class='font-34 color-ff5353 font-weight-bold'>¥{{tuangou ? tuangouPrices : salePrice}}</text> -->
+            <view a:if="{{!hiddenCart}}" class="{{type == 'newGuessLike' ? 'addCart' : ''}}" catchTap='{{!cannotAdd ? "addCart" : ""}}' data-pid='{{productId}}'>
+              <text  class="{{type == 'newGuessLike' ? 'icon-addCart_index font-50 color-00ac57' : 'icon-shopcar_small color-ff5353 font-38'}}" ></text>
             </view>
           </view>
         </view>

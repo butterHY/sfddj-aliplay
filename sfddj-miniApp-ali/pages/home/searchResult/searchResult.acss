@@ -1,4 +1,7 @@
 /* pages/home/searchResult/searchResult.wxss  */
+
+@import '../../css-public/itemGoodsCard.acss';
+
 .all_100v {
   width: 100%;
   height: 100vh;
@@ -92,8 +95,9 @@ text {
   padding-left: 30rpx;
   box-sizing: border-box;
 }
+
 /*大当家推荐   */
-.dangRecommend {
+/* .dangRecommend {
   background-color: white;
   padding: 0 15rpx;
 }
@@ -110,7 +114,7 @@ text {
   width: 220rpx;
   height: 220rpx;
   border-radius: 3px;
-}
+} */
 
 /* 单列的展示的样式 */
 .itemGoodsList {
@@ -258,10 +262,10 @@ text {
 	padding: 0 30rpx;
 }
 
-.guessLikeView {
+/* .guessLikeView {
 	width: 50%;
 	box-sizing: border-box;
-}
+} */
 
 .activity {
   width: 100%;
@@ -339,7 +343,6 @@ text {
 .storeBox {
   /* width: 100%; */
   background: #fff;
-
 }
 
 .isolationBelt {
@@ -457,8 +460,8 @@ text {
 .supplierGoodsImg {
   border-radius: 20rpx;
 }
-/* 云意氏优多水果店  storeBox*/
 
+/* 云意氏优多水果店  storeBox*/
 /* 新版搜索组件在子分类页的样式 */
 .am-popup-content {
   width: 100%;
@@ -484,4 +487,42 @@ text {
 .index_search.show {
   transform: translateX(0);
 }
+
+/* ---  猜你喜欢样式 --- */
+.guessLikeTitle {
+  /* height: 128rpx; */
+  padding: 30rpx 0;
+  text-align: center;
+  line-height: 32rpx;
+  font-size: 32rpx;
+  font-weight: 600;
+}
+
+.guessLikeGoodsBox {
+  width: 50%;
+  float: left;
+}
+
+.guessLikeGoods .allCompensation {
+  top: 0;  
+  width: 65rpx;
+  height: 65rpx;
+}
+
+.logisticsBox {
+  position: relative;
+  box-sizing: border-box;
+  padding: 0 28rpx;
+}
+
+.noGoodsView {
+  padding: 86rpx 0 122rpx 0;
+}
+
+.noThing {
+  width: 188rpx;
+  height: 158rpx;
+  margin-bottom: 28rpx;
+}
+
 

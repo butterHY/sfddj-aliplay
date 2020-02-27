@@ -55,7 +55,7 @@
 			</view>
 			<view style="" class="addCartBox ">
 				<image class="all_100" src="{{baseLocImgUrl}}miniappImg/icon/icon_redCart.png" data-pid="{{productId}}" catchTap="addCart"></image>
-				<!-- 埋点---快捷绑定手机号 -->
+				<!-- 埋点 ，快捷绑定手机号 -->
 				<button a:if="{{isBing}}" class="btnStyle gpnBtn zIndex100" open-type="getAuthorize" onGetAuthorize="getPhoneNumber" scope='phoneNumber' onError="onAuthError"></button>
 			</view>
 		</view>

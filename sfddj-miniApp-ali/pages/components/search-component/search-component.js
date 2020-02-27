@@ -161,7 +161,7 @@ Component({
     },
 
     	/**
-     * 选择搜索热词 或者 选择智能搜索词
+     * 选择搜索热词 或者 选择智能搜索词 或者 历史记录
      */
     chooseWord(event) {
       let that = this;
@@ -243,7 +243,7 @@ Component({
         that.props.pageType == 'home' ? that.umaTrackEvent(type, keyWord) : '';
 
         my.navigateTo({
-          url: '/pages/home/searchResult/searchResult?keyWord=' + keyWord
+          url: '/pages/home/searchResult/searchResult?keyWord=' + keyWord + '&pageType=' + that.props.pageType
         });
       }
     },

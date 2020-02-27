@@ -29,6 +29,8 @@
 </view> -->
    <!-- animation='{{fatherItem.move}}' -->
 
+<import src="../../common/item-goods-card.axml" />
+
 <view class="logisticsBox clearfix"> 
   <!-- <block  a:for="{{logisticsDada}}" a:for-item="fatherItem" a:for-index="fatherIndex" a:key="fatherIndex">
     <view class="logisticsOrder js_logisticsOrder{{fatherIndex}}" style="{{ !fatherItem.isCheckMore ? 'height: 296rpx;overflow: hidden' : '' }}">
@@ -230,80 +232,81 @@
     </view>
   </block> -->
 
-  <view class="all_100 clearfix padding_108" a:if="{{ guessLikeGoods && guessLikeGoods.length > 0}}">
-    <view class="guessLikeTitle">猜你喜欢</view>
-    <view class="guessLikeGoodsBox ">
-      <navigator class="guessLikeGoods guessLikeGoods_lef" url="/pages/shopping/goodsDetail/goodsDetail?goodsSn={{item.goodsSn}}" a:for="{{ guessLikeGoods }}" a:if="{{ index %2 == 0 }}"> 
-        <view class="all_100 boxShadow guessLikeView">
-          <view class="guessLikeImgBox posi_re" style="border-bottom: 0;">
-            <image src="{{baseImageUrl}}{{item.goodsDefaultImage}}" class="guessLikeImg all_100"></image>
 
+            <!-- <template is="itemGoodsCard" data="{{...item,left:true,baseImageUrl:baseImageUrl,baseLocImgUrl,smallImgArg}}"></template> -->
+    <view class="all_100 clearfix padding_108" a:if="{{ guessLikeGoods && guessLikeGoods.length > 0}}">
+      <view class="guessLikeTitle">猜你喜欢</view>
+      <view class="guessLikeGoodsBox ">
+        <!-- <navigator class="guessLikeGoods guessLikeGoods_lef" url="/pages/shopping/goodsDetail/goodsDetail?goodsSn={{item.goodsSn}}" a:for="{{ guessLikeGoods }}" a:if="{{ index %2 == 0 }}"> 
+          <view class="all_100 boxShadow guessLikeView posi_re">
+            <view class="guessLikeImgBox " style="border-bottom: 0;">
+              <image src="{{baseImageUrl}}{{item.goodsDefaultImage}}" class="guessLikeImg all_100"></image>
+            </view>
             <image a:if="{{filters.strIndexOf(item.afterSaleGuee,'1')}}" src="{{baseImgLocUrl}}miniappImg/icon/icon_Payoff1.png" class=" posi_ab" style="width: 50rpx; height: 50rpx; top:10rpx; right: 10rpx;"></image>
             <image a:elif="{{filters.strIndexOf(item.afterSaleGuee,'2')}}" src="{{baseImgLocUrl}}miniappImg/icon/icon_Payoff2.png" class=" posi_ab" style="width: 50rpx; height: 50rpx; top:10rpx; right: 10rpx;"></image>
             <image a:elif="{{filters.strIndexOf(item.afterSaleGuee,'3')}}" src="{{baseImgLocUrl}}miniappImg/icon/icon_Payoff3.png" class=" posi_ab" style="width: 50rpx; height: 50rpx; top:10rpx; right: 10rpx;"></image>
             <image a:elif="{{filters.strIndexOf(item.afterSaleGuee,'4')}}" src="{{baseImgLocUrl}}miniappImg/icon/icon_Payoff4.png?version=2.0" class=" posi_ab" style="width: 50rpx; height: 50rpx; top:10rpx; right: 10rpx;"></image>
-          </view>
-          <view class="guessLikeDescribe">
-            <view a:if="{{item.name}}" class="guessLikeGoodsName single-line2">{{item.name}}</view>
-            <view a:elif="{{item.goodsName && !item.name}}" class="guessLikeName single-line2">{{item.goodsName}}</view> 
+            <view class="guessLikeDescribe">
+              <view a:if="{{item.name}}" class="guessLikeGoodsName single-line2">{{item.name}}</view>
+              <view a:elif="{{item.goodsName && !item.name}}" class="guessLikeName single-line2">{{item.goodsName}}</view> 
 
-            <view class="guessLikeGoodsSpecs color-666 single-line">{{item.productName}}</view>
-            <text class="guessLikeGoodsLabel" a:if="{{item.labels.length > 0}}">{{item.labels[0]}}</text>
-            <view class="guessLikeGoodsPrice">
-              <view class="priceBox single-line">
-                <block a:if="{{tuangou}}">
-                  <text class="currentPrice font-28" >￥{{item.tuangouPrices}}</text>
-                  <text class="originalPrice font-24 color-999999">￥{{item.salePrice}}</text>
-                </block>
-                <block a:else>
-                  <text class="currentPrice font-28" >￥{{item.salePrice}}</text>
-                </block>
-              </view>
-              <view class="addCart" data-productId="{{item.productId}}" catchTap="addCart">
-                <text class="icon-addCart_index font-50 color-00ac57"></text>
+              <view class="guessLikeGoodsSpecs color-666 single-line">{{item.productName}}</view>
+              <text class="guessLikeGoodsLabel" a:if="{{item.labels.length > 0}}">{{item.labels[0]}}</text>
+              <view class="guessLikeGoodsPrice">
+                <text class="priceBox single-line">
+                    <text class="currentPrice font-28" >￥{{tuangou ? item.tuangouPrices : item.salePrice}}</text>
+                    <text class="originalPrice font-24 color-999999">￥{{item.salePrice}}</text>
+                </text>
+                <view class="addCart" data-productId="{{item.productId}}" catchTap="addCart">
+                  <text class="icon-addCart_index font-50 color-00ac57"></text>
+                </view>
               </view>
             </view>
           </view>
-        </view>
-      </navigator>
-    </view>
-    <view class="guessLikeGoodsBox ">
-      <navigator  class="guessLikeGoods guessLikeGoods_rig"  url="/pages/shopping/goodsDetail/goodsDetail?goodsSn={{item.goodsSn}}" a:for="{{ guessLikeGoods }}" a:if="{{ index %2 != 0 }}"> 
-        <view class="all_100 boxShadow guessLikeView">
-          <view class="guessLikeImgBox posi_re">
-            <image src="{{baseImageUrl}}{{item.goodsDefaultImage}}" class="guessLikeImg all_100"></image>
+        </navigator> -->
+        <block  a:for="{{ guessLikeGoods }}" a:if="{{ index %2 == 0 }}">
+          <template is="itemGoodsCard" data="{{...item,left:true,baseImageUrl,baseLocImgUrl: baseImgLocUrl,type:'newGuessLike'}}"></template>
+        </block>
+      </view>
+      <view class="guessLikeGoodsBox ">
+        <!-- <navigator  class="guessLikeGoods guessLikeGoods_rig"  url="/pages/shopping/goodsDetail/goodsDetail?goodsSn={{item.goodsSn}}" a:for="{{ guessLikeGoods }}" a:if="{{ index %2 != 0 }}"> 
+          <view class="all_100 boxShadow guessLikeView">
+            <view class="guessLikeImgBox posi_re">
+              <image src="{{baseImageUrl}}{{item.goodsDefaultImage}}" class="guessLikeImg all_100"></image>
 
-            <image a:if="{{filters.strIndexOf(item.afterSaleGuee,'1')}}" src="{{baseImgLocUrl}}miniappImg/icon/icon_Payoff1.png" class=" posi_ab" style="width: 50rpx; height: 50rpx; top:10rpx; right: 10rpx;"></image>
-            <image a:elif="{{filters.strIndexOf(item.afterSaleGuee,'2')}}" src="{{baseImgLocUrl}}miniappImg/icon/icon_Payoff2.png" class=" posi_ab" style="width: 50rpx; height: 50rpx; top:10rpx; right: 10rpx;"></image>
-            <image a:elif="{{filters.strIndexOf(item.afterSaleGuee,'3')}}" src="{{baseImgLocUrl}}miniappImg/icon/icon_Payoff3.png" class=" posi_ab" style="width: 50rpx; height: 50rpx; top:10rpx; right: 10rpx;"></image>
-            <image a:elif="{{filters.strIndexOf(item.afterSaleGuee,'4')}}" src="{{baseImgLocUrl}}miniappImg/icon/icon_Payoff4.png?version=2.0" class=" posi_ab" style="width: 50rpx; height: 50rpx; top:10rpx; right: 10rpx;"></image>
-          </view>
-          <view class="guessLikeDescribe">
-            <view a:if="{{item.name}}" class="guessLikeGoodsName single-line2">{{item.name}}</view>
-            <view a:elif="{{item.goodsName && !item.name}}" class="guessLikeName single-line2">{{item.goodsName}}</view> 
+              <image a:if="{{filters.strIndexOf(item.afterSaleGuee,'1')}}" src="{{baseImgLocUrl}}miniappImg/icon/icon_Payoff1.png" class=" posi_ab" style="width: 50rpx; height: 50rpx; top:10rpx; right: 10rpx;"></image>
+              <image a:elif="{{filters.strIndexOf(item.afterSaleGuee,'2')}}" src="{{baseImgLocUrl}}miniappImg/icon/icon_Payoff2.png" class=" posi_ab" style="width: 50rpx; height: 50rpx; top:10rpx; right: 10rpx;"></image>
+              <image a:elif="{{filters.strIndexOf(item.afterSaleGuee,'3')}}" src="{{baseImgLocUrl}}miniappImg/icon/icon_Payoff3.png" class=" posi_ab" style="width: 50rpx; height: 50rpx; top:10rpx; right: 10rpx;"></image>
+              <image a:elif="{{filters.strIndexOf(item.afterSaleGuee,'4')}}" src="{{baseImgLocUrl}}miniappImg/icon/icon_Payoff4.png?version=2.0" class=" posi_ab" style="width: 50rpx; height: 50rpx; top:10rpx; right: 10rpx;"></image>
+            </view>
+            <view class="guessLikeDescribe">
+              <view a:if="{{item.name}}" class="guessLikeGoodsName single-line2">{{item.name}}</view>
+              <view a:elif="{{item.goodsName && !item.name}}" class="guessLikeName single-line2">{{item.goodsName}}</view> 
 
-            <view class="guessLikeGoodsSpecs color-666 single-line">{{item.productName}}</view>
-            <text class="guessLikeGoodsLabel" a:if="{{item.labels.length > 0}}">{{item.labels[0]}}</text>
-            <view class="guessLikeGoodsPrice">
-              <view class="priceBox single-line">
-                <block a:if="{{tuangou}}">
-                  <text class="currentPrice font-28" >￥{{item.tuangouPrices}}</text>
-                  <text class="originalPrice font-24 color-999999">￥{{item.salePrice}}</text>
-                </block>
-                <block a:else>
-                  <text class="currentPrice font-28" >￥{{item.salePrice}}</text>
-                </block>
-              </view>
-              <view class="addCart" data-productId="{{item.productId}}" catchTap="addCart">
-                <text class="icon-addCart_index font-50 color-00ac57" ></text>
+              <view class="guessLikeGoodsSpecs color-666 single-line">{{item.productName}}</view>
+              <text class="guessLikeGoodsLabel" a:if="{{item.labels.length > 0}}">{{item.labels[0]}}</text>
+              <view class="guessLikeGoodsPrice">
+                <view class="priceBox single-line">
+                  <block a:if="{{tuangou}}">
+                    <text class="currentPrice font-28" >￥{{item.tuangouPrices}}</text>
+                    <text class="originalPrice font-24 color-999999">￥{{item.salePrice}}</text>
+                  </block>
+                  <block a:else>
+                    <text class="currentPrice font-28" >￥{{item.salePrice}}</text>
+                  </block>
+                </view>
+                <view class="addCart" data-productId="{{item.productId}}" catchTap="addCart">
+                  <text class="icon-addCart_index font-50 color-00ac57" ></text>
+                </view>
               </view>
             </view>
           </view>
-        </view>
-      </navigator>
+        </navigator> -->
+        <block a:for="{{ guessLikeGoods }}" a:if="{{ index %2 != 0 }}">
+           <template is="itemGoodsCard" data="{{...item,left:false,baseImageUrl,baseLocImgUrl: baseImgLocUrl,type:'newGuessLike'}}"></template>
+        </block>
       </view>
     </view>
 
   </view>
-
 </view>

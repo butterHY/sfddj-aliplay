@@ -1,9 +1,12 @@
 <import src="../../common/item-goods-list"/>
 <import src="../../common/item-store-list"/>
 <import src="../../common/search"/>
-<!-- 以下两个模版已经没有是哟 -->
+<import src="../../common/item-goods-card.axml" />
+
+<!-- 以下两个模版已经没有使用 -->
 <import src="../../common/hotWords"/>
 <import src="../../common/search-goods-list"/>
+
 
 <!-- 加载中 -->
 <view a:if="{{!loadComplete}}">
@@ -23,15 +26,7 @@
 
 <!-- onScrollToUpper="scrollToUpper"  -->
 <scroll-view a:else scroll-y class="flex_view_col flex_1 all_100v" onScrollToLower="scrollToLower" onScroll="scrollPage">
-  <!--搜索框部分-->
-  <!-- <view class="searchFrame">
-    <view class="posi_re">
-      <input class="searchFrame_input font-24 color-323232" value="{{inputVal}}" onConfirm="handleConfirm" onInput="handleInput" onFocus="handleFocus"/>
-      <view class="searchFrame_viewImg">
-        <image src="{{baseLocImgUrl}}miniappImg/icon/icon_search.png" class="searchFrame_img"></image>
-      </view>
-    </view>
-  </view> -->
+
   <!--新版搜索 -->
   <view catchTap="showSearch">
     <template is="search" data="{{baseLocImgUrl, placeholder: inputVal}}"></template>  
@@ -92,15 +87,13 @@
     </view>
 
 
+
     <!--没有更多-->
-    <view a:if="{{!hasMore}}">
-      <view class="loading_view font-24 color-b1b6bb">          没有更多了        
-      </view>
-      <view class="dangRecommend" a:if="{{groupList && groupList.length > 0}}" >
-        <view class="dangRecommend_text font-24 color-232323">            大当家推荐          
-        </view>
-        <view class="division-line">
-        </view>
+    <view a:if="{{ !hasMore && ((goodsOrStore == '0' && goodsList && goodsList.length > 0) || (goodsOrStore == '1' && storeList && storeList.length > 0)) }}">
+      <view class="loading_view font-24 color-b1b6bb">没有更多了</view>
+      <!-- <view class="dangRecommend" a:if="{{groupList && groupList.length > 0}}" >
+        <view class="dangRecommend_text font-24 color-232323">大当家推荐</view>
+        <view class="division-line"></view>
         <view class="marTop_20">
           <navigator open-type="redirect" url="/pages/shopping/goodsDetail/goodsDetail?goodsSn={{item.goodsSn}}" class="dangRecommend_nav {{index % 3 != 2 ? 'ver_line':''}} {{index/3 == groupList.length/3 ? '':'hor_line'}}" hover-class="none" a:for="{{groupList}}" a:key="recommendList">
             <image src="{{baseImageUrl}}{{item.showImage}}" class="dangRecommend_navImg"></image>
@@ -111,6 +104,28 @@
             </view>
           </navigator>
         </view>
+      </view> -->
+    </view>
+    <view a:elif="{{ !hasMore && ((goodsOrStore == '0' && goodsList && goodsList.length <= 0) || (goodsOrStore == '1' && storeList && storeList.length <= 0)) }}" class="noGoodsView">
+      <view class="flex_view_row justi_cen">
+        <view class="noThing">
+          <image class="noThing"  src="{{baseLocImgUrl}}lostPage/noPage.png" mode="aspectFit"></image>
+        </view>
+      </view>
+      <view class="font-28 color-666 tex_center">没有找到你想搜的商品哦</view>
+    </view>
+    <!-- all_100 -->
+    <view a:if="{{ guessLikeGoods && guessLikeGoods.length > 0}}" class=" clearfix logisticsBox padding_108">
+      <view class="guessLikeTitle">猜你喜欢</view>
+      <view class="guessLikeGoodsBox ">
+        <block  a:for="{{ guessLikeGoods }}" a:if="{{ index %2 == 0 }}">
+          <template is="itemGoodsCard" data="{{...item,left:true,baseImageUrl,baseLocImgUrl: baseImgLocUrl,type:'newGuessLike'}}"></template>
+        </block>
+      </view>
+      <view class="guessLikeGoodsBox ">
+        <block a:for="{{ guessLikeGoods }}" a:if="{{ index %2 != 0 }}">
+          <template is="itemGoodsCard" data="{{...item,left:false,baseImageUrl,baseLocImgUrl: baseImgLocUrl,type:'newGuessLike'}}"></template>
+        </block>
       </view>
     </view>
   </view>
@@ -120,10 +135,7 @@
     </image>
   </view>
 </scroll-view>
-<!--搜索热词-->
-<!-- <template is="hotWords" data="{{show:show,baseLocImgUrl,top:'120rpx',hotWords:hotWords,searchWords:searchWords}}"></template> -->
-<!--智能搜索数据列表-->
-<!-- <template is="searchGoodsList" data="{{show:searchShow,top:'120rpx',smartSearchList}}"></template> -->
+
 <!--toast弹窗-->
 <view class="mark flex_view_col align_cen justi_cen" a:if="{{showToast}}">
   <view class="toastView_wb" catchtouchmove="move">

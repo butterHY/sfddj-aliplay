@@ -282,7 +282,7 @@ Page({
 	 */
 	addCart: function(e) {
 		let that = this;
-		let productId = e.currentTarget.dataset.productId;
+		let productId = e.currentTarget.dataset.pid;
 		sendRequest.send(constants.InterfaceUrl.SHOP_ADD_CART, { pId: productId, quantity: '1' }, function(res) {
 			my.showToast({
 				content: '添加购物车成功'
