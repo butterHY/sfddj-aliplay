@@ -369,7 +369,7 @@
                   <image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff2.png" class=" posi_ab littleIcon" a:elif="{{filters.strIndexOf(groupItem.afterSaleGuee,'2')}}"></image>
                   <image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff3.png" class=" posi_ab littleIcon" a:elif="{{filters.strIndexOf(groupItem.afterSaleGuee,'3')}}"></image>
                   <image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff4.png" class=" posi_ab littleIcon" a:elif="{{filters.strIndexOf(groupItem.afterSaleGuee,'4')}}"></image>
-                  <view class="width_100 marTop_15">
+                  <view class="width_100 marTop_15 padRL_10">
                     <view class="font-30 item-goods-scrollx-text width_100">{{groupItem.goodsName}}</view>
                     <view class="font-26 color-a1a0a0 item-goods-scrollx-text width_100 marTop_5">{{itgroupItemem.productName}}</view>
                     <view class="font-32 color-ff5353 item-goods-scrollx-text width_100 font-weight-600">￥{{groupItem.salePrice}}</view>
@@ -387,7 +387,7 @@
       <view a:if="{{item.spacing == 1}}" class="ads_space" style="background: #{{item.topIntervalColor ? item.topIntervalColor : 'FFFFFF'}};"></view>
       <!-- 内容 -->
       <view class='bannerCon' style='background-color: {{item.backgroundColor ? "#" + item.backgroundColor : "#ffffff"}}'>
-        <swiper indicator-dots="{{indicatorDots}}" next-margin="{{banRightMargin}}px" autoplay="" interval="3000" duration="1000" circular="true" data-type="autoplay" data-fatherIndex="{{index}}">
+        <swiper indicator-dots="{{indicatorDots}}" next-margin="{{banRightMargin}}px" autoplay="{{true}}" interval="3000" duration="1000" circular="true" data-type="autoplay" data-fatherIndex="{{index}}">
           <block a:for="{{item.parseItem}}" a:for-index="idx" a:for-item="bannerItem">
             <swiper-item class="bannerSwiper">
               <view class="height_auto" data-url="{{bannerItem.link}}" open-type="navigate" onTap='goToPage' hover-class="width_100 bannerNav">
