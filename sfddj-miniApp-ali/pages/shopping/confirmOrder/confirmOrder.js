@@ -904,7 +904,7 @@ Page({
           });
           var token = ''
           // let category = index == 0 ? 'front' : 'reverse';
-          
+
           try {
             token = my.getStorageSync({
               key: constants.StorageConstants.tokenKey, // 缓存数据的key
