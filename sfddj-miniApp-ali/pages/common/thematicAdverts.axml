@@ -295,21 +295,19 @@
       <!-- 灰色间条 a:if="{{item.spacing == 1}}"-->
       <view a:if="{{item.spacing == 1}}" class="ads_space" style="background: #{{item.topIntervalColor ? item.topIntervalColor : 'FFFFFF'}};"></view>
       <!-- 内容 -->
-      <view class='navigateCon' style='background-color: {{item.backgroundColor ? "#" + item.backgroundColor : "#ffffff"}}'>
-        <swiper class="" indicator-dots="{{item.items.length > 5 ? 'true' : ''}}" indicator-active-color='rgba(255,83,83.1)' interval="{{interval}}" duration="{{duration}}" data-fatherIndex="{{index}}" onChange="adsSwiper">
+      <view class='{{item.parseItem.length < 6 ? "otherModeCon" : "navigateCon"}}' style='background-color: {{item.backgroundColor ? "#" + item.backgroundColor : "#ffffff"}}'>
+        <swiper class="" indicator-dots="{{item.parseItem.length > 5 ? 'true' : ''}}" indicator-active-color='rgba(255,83,83.1)' interval="{{interval}}" duration="{{duration}}" data-fatherIndex="{{index}}" onChange="adsSwiper">
           <swiper-item class="flex_view_row">
-            <block a:for="{{[{},{},{},{},{},{}]}}" a:for-index="idx">
-              <view a:if='{{idx< 5}}' data-url="{{item.link}}" onTap='goToPage' open-type="navigate" hover-class="none" class='{{[{},{},{},{},{},{}].length > 4 ? "width_20" : "width_25"}}' style='height: {{[{},{},{},{},{},{}].length > 4 ? "167rpx" : "187rpx"}}'>
-                <!-- <image src="{{baseImageUrl}}{{item.imageUrl}}" mode="widthFix" class="width_100" /> -->
-                <image src="https://img.fx-sf.com/user/admin164/20200225/158260084631733138.jpg" mode="widthFix" class="width_100" />
+            <block a:for="{{item.parseItem}}" a:for-index="idx" a:for-item="adsItem">
+              <view a:if='{{idx< 5}}' data-url="{{adsItem.link}}" onTap='goToPage' open-type="navigate" hover-class="none" class='{{item.parseItem.length > 4 ? "width_20" : "width_25"}}' style='height: {{item.parseItem.length > 4 ? "167rpx" : "187rpx"}}'>
+                <image src="{{baseImageUrl}}{{adsItem.imageUrl}}" mode="widthFix" class="width_100" />
               </view>
             </block>
           </swiper-item>
-          <swiper-item a:if='{{[{},{},{},{},{},{}].length > 5}}' class="flex_view_row">
-            <block a:for="{{[{},{},{},{},{},{}]}}" a:for-index="idx">
-              <view style='height: 167rpx;' a:if='{{idx > 4}}' data-url="{{item.link}}" onTap='goToPage' open-type="navigate" hover-class="none" class='width_20'>
-                <!-- <image src="{{baseImageUrl}}{{item.imageUrl}}" mode="widthFix" class="width_100" /> -->
-                <image src="https://img.fx-sf.com/user/admin164/20200225/158260084631733138.jpg" mode="widthFix" class="width_100" />
+          <swiper-item a:if='{{item.parseItem.length > 5}}' class="flex_view_row">
+            <block a:for="{{item.parseItem}}" a:for-index="idx" a:for-item="adsItem">
+              <view style='height: 167rpx;' a:if='{{idx > 4}}' data-url="{{adsItem.link}}" onTap='goToPage' open-type="navigate" hover-class="none" class='width_20'>
+                <image src="{{baseImageUrl}}{{adsItem.imageUrl}}" mode="widthFix" class="width_100" />
               </view>
             </block>
           </swiper-item>
@@ -317,24 +315,23 @@
       </view>
     </view>
     <!-- 1行N个 ++ 大 -->
-    <view class="" a:if='{{item.moduleType == "NAVIGATION"}}'>
+    <view a:if='{{item.moduleType == "NAVIGATION"}}'>
        <!-- 灰色间条 a:if="{{item.spacing == 1}}"-->
       <view a:if="{{item.spacing == 1}}" class="ads_space" style="background: #{{item.topIntervalColor ? item.topIntervalColor : 'FFFFFF'}};"></view>
       <!-- 内容 -->
-      <view class='otherModeCon {{item.spacing == 1 ? "marBot_20" : ""}}' style='background-color: {{item.backgroundColor ? "#" + item.backgroundColor : "#ffffff"}};{{item.backgroundImg ? "background: url("+ baseImageUrl + item.backgroundImg+") no-repeat; background-size: 100% 100%;" : ""}}'>
-        <swiper indicator-dots="{{item.items.length > 5 ? 'true' : ''}}" indicator-active-color='rgba(255,83,83.1)' autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" display-multiple-items='5' data-fatherIndex="{{index}}" onChange="adsSwiper">
+      <view class='{{item.parseItem.length < 6 ? "otherModeCon" : "navigateCon"}}' style='background-color: {{item.backgroundColor ? "#" + item.backgroundColor : "#ffffff"}};{{item.backgroundImg ? "background: url("+ baseImageUrl + item.backgroundImg+") no-repeat; background-size: 100% 100%;" : ""}}'>
+        <swiper indicator-dots="{{item.parseItem.length > 5 ? 'true' : ''}}" indicator-active-color='rgba(255,83,83.1)' autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" display-multiple-items='5' data-fatherIndex="{{index}}" onChange="adsSwiper">
           <swiper-item class="flex_view_row">
-            <block a:for="{{[{},{},{},{},{},{}]}}" a:for-index="idx">
-              <view a:if='{{idx< 5}}' data-url="{{item.link}}" onTap='goToPage' open-type="navigate" hover-class="none" class='{{item.items.length > 4 ? "width_20" : "width_25"}}' style='height: {{item.items.length > 4 ? "214rpx" : "160rpx"}}'>
-                <!-- <image src="{{baseImageUrl}}{{item.imageUrl}}" mode="widthFix" class="width_100" /> -->
-                <image src="https://img.fx-sf.com/user/admin164/20200225/158260084631733138.jpg" mode="widthFix" class="width_100" />
+            <block a:for="{{item.parseItem}}" a:for-index="idx" a:for-item="adsItem">
+              <view a:if='{{idx< 5}}' data-url="{{adsItem.link}}" onTap='goToPage' open-type="navigate" hover-class="none" class='{{item.parseItem.length > 4 ? "width_20" : "width_25"}}' style='height: {{item.parseItem.length > 4 ? "167rpx" : "214rpx"}}'>
+                <image src="{{baseImageUrl}}{{adsItem.imageUrl}}" mode="widthFix" class="width_100" />
               </view>
             </block>
           </swiper-item>
-          <swiper-item a:if='{{item.items.length > 5}}' class="flex_view_row">
-            <block a:for="{{item.items}}" a:for-index="idx">
-              <view style='height: 214rpx;' a:if='{{idx > 4}}' data-url="{{item.link}}" onTap='goToPage' open-type="navigate" hover-class="none" class='width_20'>
-                <image src="{{baseImageUrl}}{{item.imageUrl}}" mode="widthFix" class="width_100" />
+          <swiper-item a:if='{{item.parseItem.length > 5}}' class="flex_view_row">
+            <block a:for="{{item.parseItem}}" a:for-index="idx" a:for-item="adsItem">
+              <view style='height: 167rpx;' a:if='{{idx > 4}}' data-url="{{adsItem.link}}" onTap='goToPage' open-type="navigate" hover-class="none" class='width_20'>
+                <image src="{{baseImageUrl}}{{adsItem.imageUrl}}" mode="widthFix" class="width_100" />
               </view>
             </block>
           </swiper-item>
@@ -342,15 +339,15 @@
       </view>
     </view>
     <!--广告图+商品滚动 —————— 1+商品 GOODSGROUP -->
-    <view a:if='{{item.moduleType == "GOODSSCROLL"}}'>
+    <view a:if='{{item.moduleType == "GOODSGROUP"}}'>
        <!-- 灰色间条 a:if="{{item.spacing == 1}}"-->
       <view a:if="{{item.spacing == 1}}" class="ads_space" style="background: #{{item.topIntervalColor ? item.topIntervalColor : 'FFFFFF'}};"></view>
       <!-- 内容 -->
       <view class='otherModeCon {{item.spacing == 1 ? "marBot_20" : ""}}' style='background-color: {{item.backgroundColor ? "#" + item.backgroundColor : "#ffffff"}}'>
         <!-- 1个图 -->
         <view>
-          <view data-url="{{item.items[0].link}}" onTap='goToPage' open-type="navigate" hover-class="none" class="width_100 height_auto">
-            <image src="{{baseImageUrl}}{{item.items[0].imageUrl}}" mode="widthFix" class="width_100" />
+          <view data-url="{{item.parseItem[0].link}}" onTap='goToPage' open-type="navigate" hover-class="none" class="width_100 height_auto">
+            <image src="{{baseImageUrl}}{{item.parseItem[0].imageUrl}}" mode="widthFix" class="width_100" />
           </view>
         </view>
         <!-- 下面商品列表 -->
@@ -390,11 +387,11 @@
       <view a:if="{{item.spacing == 1}}" class="ads_space" style="background: #{{item.topIntervalColor ? item.topIntervalColor : 'FFFFFF'}};"></view>
       <!-- 内容 -->
       <view class='bannerCon' style='background-color: {{item.backgroundColor ? "#" + item.backgroundColor : "#ffffff"}}'>
-        <swiper indicator-dots="{{indicatorDots}}" autoplay="true" interval="3000" duration="1000" circular="true" data-type="autoplay" data-fatherIndex="{{index}}" onChange="{{(pageScrollTop > (item.scrollTop - windowHeight/2) && pageScrollTop< (item.scrollTop + windowHeight/2)) && !item.nonGoods ? 'adsSwiper' : ''}}">
-          <block a:for="{{item.items}}" a:for-index="idx">
-            <swiper-item>
-              <view class="height_auto" data-url="{{item.link}}" open-type="navigate" onTap='goToPage' hover-class="width_100 bannerNav">
-                <image src="{{baseImageUrl}}{{item.imageUrl}}" class="width_100 borderRa_15r" mode="widthFix"/>
+        <swiper indicator-dots="{{indicatorDots}}" next-margin="{{banRightMargin}}px" autoplay="" interval="3000" duration="1000" circular="true" data-type="autoplay" data-fatherIndex="{{index}}">
+          <block a:for="{{item.parseItem}}" a:for-index="idx" a:for-item="bannerItem">
+            <swiper-item class="bannerSwiper">
+              <view class="height_auto" data-url="{{bannerItem.link}}" open-type="navigate" onTap='goToPage' hover-class="width_100 bannerNav">
+                <image src="{{baseImageUrl}}{{bannerItem.imageUrl}}" class="width_100 borderRa_15r" mode="widthFix"/>
               </view>
             </swiper-item>
           </block>
