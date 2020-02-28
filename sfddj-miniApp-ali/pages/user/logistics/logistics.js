@@ -36,19 +36,6 @@ Page({
    */
   onLoad: function (options) {
     var that = this;
-    // var orderId = options.orderId;
-    // var goodsImg = options.goodsImg;
-    // sendRequest.send(constants.InterfaceUrl.USER_EXPRESS, {
-    //   orderId: orderId
-    // }, function (res) {
-    //   that.setData({
-    //     expressDetail: res.data.result.expressDetail,
-    //     deliveryNo: res.data.result.deliveryNo,
-    //     goodsImg: goodsImg,
-    //     baseImageUrl: constants.UrlConstants.baseImageUrl
-    //   });
-    // }, function (err) {});
-
     that.getGuessLike();
     http.post(api.LOGISTICS.GETEXPRESS, { 'orderSn': options.orderId}, function(res){
       let resData = res.data.data;
@@ -155,46 +142,6 @@ Page({
       // logisticsDada: that.data.logisticsDada
       firstTwoLogisticsDada: that.data.firstTwoLogisticsDada
     })
-    
-
-
-    // if (!that.data.logisticsDada[e.currentTarget.dataset.num].isCheckMore) {
-    //   let height = 0;
-    //   let clas = '.js_expressDetail' + e.currentTarget.dataset.num;
-    //   my.createSelectorQuery().selectAll(clas).boundingClientRect().exec(function (res) {
-    //     res[0].forEach(value => {
-    //       height += value.height;
-    //     })
-    //     let animation = my.createAnimation({
-    //       duration: 1000,
-    //       timeFunction: 'linear',
-    //       transformOrigin: '0 50% 100%'
-    //     })
-    //     animation.height(height + 52 + 55.5).step();
-    //     that.data.logisticsDada[e.currentTarget.dataset.num].move = animation.export();
-    //     that.data.logisticsDada[e.currentTarget.dataset.num].isCheckMore = !that.data.logisticsDada[e.currentTarget.dataset.num].isCheckMore;
-    //     that.setData({
-    //       // isCheckMore: !that.data.isCheckMore,
-    //       logisticsDada: that.data.logisticsDada
-    //     })
-    //   })
-    // } else {
-    //   let clas = '.js_logisticsOrder' + e.currentTarget.dataset.num;
-    //   that.data.move = 'move' + e.currentTarget.dataset.num;
-    //   let animation = my.createAnimation({
-    //     duration: 1000,
-    //     timeFunction: 'linear',
-    //     transformOrigin: '100% 50% 0'
-    //   })
-    //   animation.height(148).step();
-    //   that.data.logisticsDada[e.currentTarget.dataset.num].move = animation.export();
-    //   that.data.logisticsDada[e.currentTarget.dataset.num].isCheckMore = !that.data.logisticsDada[e.currentTarget.dataset.num].isCheckMore;
-    //   that.setData({
-    //       // isCheckMore: !that.data.isCheckMore,
-    //       logisticsDada: that.data.logisticsDada
-    //   })
-    // }
-
   },
 
 
@@ -229,18 +176,6 @@ Page({
     }, (err) => { that.setData({ youLikeIsLoadMore: false }) })
   },
 
-
-  // 猜你喜欢左滑加载更多
-  // lowLoadMore: function () {
-  //   let that = this;
-  //   if ( that.data.youLikeHasMore ) {
-  //     that.setData({
-  //       youLikeStart: that.data.guessLikeGoods.length
-  //     });
-  //     that.data.youLikeHasMore = false;
-  //     that.getGuessLike('1');
-  //   }
-  // },
 
   // 物流时间
   judgementTime(data) {

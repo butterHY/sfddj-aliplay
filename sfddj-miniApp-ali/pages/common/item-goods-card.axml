@@ -35,10 +35,10 @@
           <!--<image style='width:100%;height:250rpx;' src='{{baseImageUrl}}{{showImage}}{{smallImgArg}}'mode='widthFix'></image> -->
         </view>
         <!--小图标 全赔  -->
-        <image a:if="{{filters.strIndexOf(afterSaleGuee,"1")}}" src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff1.png" class="allCompensation posi_ab" style="{{left ? 'right: 30rpx;' : 'right: 10rpx;'}}"></image>
-        <image a:elif="{{filters.strIndexOf(afterSaleGuee,"2")}}" src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff2.png" class="allCompensation posi_ab" style="{{left ? 'right: 30rpx;' : 'right: 10rpx;'}}"></image>
-        <image a:elif="{{filters.strIndexOf(afterSaleGuee,"3")}}" src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff3.png" class="allCompensation posi_ab" style="{{left ? 'right: 30rpx;' : 'right: 10rpx;'}}"></image>
-        <image a:elif="{{filters.strIndexOf(afterSaleGuee,"4")}}" src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff4.png?version=2.0" class="allCompensation posi_ab" style="{{left ? 'right: 30rpx;' : 'right: 10rpx;'}}"></image>
+        <image a:if="{{filters.strIndexOf(afterSaleGuee,'1')}}" src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff1.png" class="allCompensation posi_ab" style="{{left ? 'right: 30rpx;' : 'right: 10rpx;'}}"></image>
+        <image a:elif="{{filters.strIndexOf(afterSaleGuee,'2')}}" src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff2.png" class="allCompensation posi_ab" style="{{left ? 'right: 30rpx;' : 'right: 10rpx;'}}"></image>
+        <image a:elif="{{filters.strIndexOf(afterSaleGuee,'3')}}" src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff3.png" class="allCompensation posi_ab" style="{{left ? 'right: 30rpx;' : 'right: 10rpx;'}}"></image>
+        <image a:elif="{{filters.strIndexOf(afterSaleGuee,'4')}}" src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff4.png?version=2.0" class="allCompensation posi_ab" style="{{left ? 'right: 30rpx;' : 'right: 10rpx;'}}"></image>
         
         <view class="{{ type == 'newGuessLike' ? 'guessLikeDescribe' : 'goodsInfo height_176r notAtHome' }}">
           <view class="{{type == 'newGuessLike' ? 'guessLikeGoodsName single-line2' : 'single-line flex_view_col height_80r'}}">
