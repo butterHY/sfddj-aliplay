@@ -311,7 +311,14 @@ Page({
 					hasMore: false 
 				})
 				// that.searchProduct(options.keyWord, 0);
-        that.getGuessLike('0');
+        console.log('没有数据开始请求猜你喜欢')
+        if( (that.data.goodsOrStore == '0' && that.data.goodsList.length <= 3 ) || (that.data.goodsOrStore == '1' && that.data.storeList.length <= 3 ) ) {
+             console.log('开始请求猜你喜欢')
+            that.getGuessLike('0');
+        } else {
+             console.log('没有数据猜你喜欢置空')
+          that.setData({guessLikeGoods: [], youLikeStart: 0});
+        }
 				return;
 			}
 
@@ -340,6 +347,7 @@ Page({
 
 			// groupList: res.data.result.groupList,		// 推荐商品,新接口没有 "推荐商品"
       list && list.length <= 3 ? that.getGuessLike('0') : that.setData({guessLikeGoods: [], youLikeStart: 0});
+      console.log(list)
 
 
 			that.setData(upData);
@@ -568,11 +576,15 @@ Page({
 	 */
 	scrollToLower: function() {
     let that = this;
+    console.log(that.data.goodsList);
+    console.log(that.data.storeList);
+    console.log(this.data.goodsOrStore)
 		if (this.data.hasMore) {
 			this.data.goodsOrStore == '0' ? this.setData({goodsStart: this.data.goodsList.length, limit: this.data.limit}) : this.setData({storeStart: this.data.storeList.length, limit: this.data.limit});
 		  this.data.hasMore = false;
 			this.searchProduct(this.data.inputVal, 1);
-		} else if( ((this.data.goodsOrStore == '0' && that.data.goodsList.length <= 3) || (this.data.goodsOrStore == '1' && that.data.storeList.length <= 3)) && that.data.youLikeHasMore ) {
+		} else if( (this.data.goodsOrStore == '0' && that.data.goodsList.length <= 3  && that.data.youLikeHasMore) || (this.data.goodsOrStore == '1' && that.data.storeList.length <= 3  && that.data.youLikeHasMore) ) {
+      console.log('开始请求猜你喜欢')
       that.setData({
         youLikeStart: that.data.guessLikeGoods.length
       });
