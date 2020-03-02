@@ -243,7 +243,7 @@ Component({
         that.props.pageType == 'home' ? that.umaTrackEvent(type, keyWord) : '';
 
         my.navigateTo({
-          url: '/pages/home/searchResult/searchResult?keyWord=' + keyWord + '&pageType=' + that.props.pageType
+          url: '/pages/home/searchResult/searchResult?keyWord=' + keyWord
         });
       }
     },
