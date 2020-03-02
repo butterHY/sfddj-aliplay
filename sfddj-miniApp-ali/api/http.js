@@ -76,7 +76,20 @@ function post(url, data, sucFunc, errFunc, header = {}) {
 			}
 		},
 		fail: function(err) {
-			errFunc('请求失败，请重试');
+			switch(err.status){
+        case 429://服务器限流
+          my.redirectTo({
+            url: '/pages/limit/limit'
+          })
+        break;
+        case 504:
+          my.redirectTo({
+            url: '/pages/overTime/overTime'
+          })
+          
+        break;
+        default:errFunc('请求错误，请重试');
+      }
 		}
 	}
 	if (my.canIUse('request')) {
@@ -145,7 +158,20 @@ function get(url, data, sucFunc, errFunc, header = {}) {
 			}
 		},
 		fail: function(err) {
-			errFunc('请求失败，请重试');
+			switch(err.status){
+        case 429://服务器限流
+          my.redirectTo({
+            url: '/pages/limit/limit'
+          })
+        break;
+        case 504:
+          my.redirectTo({
+            url: '/pages/overTime/overTime'
+          })
+          
+        break;
+        default:errFunc('请求错误，请重试');
+      }
 		}
 	}
 	if (my.canIUse('request')) {

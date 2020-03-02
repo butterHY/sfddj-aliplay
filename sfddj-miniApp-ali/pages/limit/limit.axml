@@ -1,0 +1,4 @@
+<view class="limitPage">
+  <image class="img" src='{{baseLocImgUrl}}miniappImg/loading/loading_404.png'></image>
+  <view class="txt" >当前访问人数过多，请稍后重试</view>
+</view>

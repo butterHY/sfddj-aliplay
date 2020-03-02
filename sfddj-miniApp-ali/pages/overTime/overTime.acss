@@ -1,0 +1,41 @@
+.mask {
+  width:100%;
+  background: rgba(0,0,0,0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  width: 585rpx;
+  height: 707rpx;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20rpx;
+}
+ 
+.img {
+  width:300rpx;
+  height: 300rpx;
+}
+.txt {
+  font-size: 30rpx;
+  color: #666;
+  margin-top: 55rpx;
+}
+.btn {
+  width:525rpx;
+  height: 98rpx;
+  background: #e8534d;
+  color: #fff;
+  margin-top: 99rpx;
+  border-radius: 49rpx;
+  font-size: 30rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  letter-spacing: 4rpx;
+}

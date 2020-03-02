@@ -43,7 +43,9 @@
     "pages/user/myCoupon/expiredCoupon/expiredCoupon",
     "pages/user/myCoupon/couponInfo/couponInfo",
     "pages/shopping/oldGoodsDetail/goodsDetail",
-    "pages/shopping/storeInfo/storeInfoDetail/storeInfoDetail"
+    "pages/shopping/storeInfo/storeInfoDetail/storeInfoDetail",
+    "pages/limit/limit",
+    "pages/overTime/overTime"
   ],
   "window": {
     "defaultTitle": "顺丰大当家",

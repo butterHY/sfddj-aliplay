@@ -20,13 +20,14 @@ Page({
     countSecond: '00',         //倒计时的秒
     countMinute: '00',         //倒计时的分钟
     countHour: '00',         //倒计时的小时
+    banRightMargin: 0,       //banner图的右边距
   },
   onLoad: async function(options) {
 
 
     var that = this;
     that.setData({
-      thematicId: options.id ? options.id : ''
+      thematicId: options.id ? options.id : '',
     })
     that.getThematicData();
 
@@ -69,9 +70,11 @@ Page({
         thematicAds: result,
         loadComplete: true,
         loadFail: false,
-        hasCountDown
+        hasCountDown,
+
+        banRightMargin: util.rpx2Px(30),
       })
-      if(hasCountDown) {
+      if (hasCountDown) {
         that.CutDataTime()
       }
 

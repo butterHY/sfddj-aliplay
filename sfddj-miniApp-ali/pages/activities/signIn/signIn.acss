@@ -1,4 +1,4 @@
-@import '../../css-public/itemGoodsCard.acss';
+﻿@import '../../css-public/itemGoodsCard.acss';
 
 .pageArea {
   overflow-x: hidden;
