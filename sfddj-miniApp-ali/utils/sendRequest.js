@@ -64,7 +64,20 @@ function send(url, data, sucFunc, errFunc, method, preType, contentType, loginTo
         }
       },
       fail: function (err) {
-        errFunc('请求失败，请重试');
+        switch(err.status){
+          case 429://服务器限流
+            my.redirectTo({
+              url: '/pages/limit/limit'
+            })
+          break;
+          case 504:
+            my.redirectTo({
+              url: '/pages/overTime/overTime'
+            })
+            
+          break;
+          default:errFunc('请求错误，请重试');
+        }
       }
     });
   } catch (e) {}
