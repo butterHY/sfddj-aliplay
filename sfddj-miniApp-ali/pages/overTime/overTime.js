@@ -4,7 +4,9 @@ Page({
   data: {
     baseLocImgUrl: constants.UrlConstants.baseImageLocUrl
   },
-  navigateBack() {
-    my.navigateBack()   
-  }
+  BackToHome() {
+    my.switchTab({
+      url: '/pages/home/home'
+    })
+  },
 });
