@@ -343,7 +343,7 @@
        <!-- 灰色间条 a:if="{{item.spacing == 1}}"-->
       <view class="ads_space" style="background: #{{item.topIntervalColor ? item.topIntervalColor : 'FFFFFF'}};"></view>
       <!-- 内容 -->
-      <view class='otherModeCon {{item.spacing == 1 ? "marBot_20" : ""}}' style='background-color: {{item.backgroundColor ? "#" + item.backgroundColor : "#ffffff"}}'>
+      <view class='goodsAndAdCon {{item.spacing == 1 ? "marBot_20" : ""}}' style='background-color: {{item.backgroundColor ? "#" + item.backgroundColor : "#ffffff"}}'>
         <!-- 1个图 -->
         <view>
           <view data-url="{{item.parseItem[0].link}}" onTap='goToPage' open-type="navigate" hover-class="none" class="width_100 height_auto">
@@ -351,7 +351,7 @@
           </view>
         </view>
         <!-- 下面商品列表 -->
-        <view class='goodsListBox'>
+        <view class='goodsListBox whiteBack'>
           <scroll-view scroll-x class="goods-scrollx-view" scroll-with-animation="true" class="width_100" data-fatherIndex="{{index}}" onScroll="scrollGoods">
             <block a:for="{{item.goodsMinVOList}}" a:for-index="idx" a:for-item="groupItem">
               <view class='goodsViewBox'>

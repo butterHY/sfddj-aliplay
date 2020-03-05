@@ -243,6 +243,10 @@
   padding: 0 30rpx 10rpx;
 }
 
+.goodsAndAdCon {
+  padding: 0 30rpx;
+}
+
 .bannerCon {
   padding: 0 0 10rpx 30rpx;
 }
