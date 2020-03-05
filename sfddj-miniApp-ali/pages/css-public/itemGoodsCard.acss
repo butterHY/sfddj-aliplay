@@ -251,10 +251,7 @@
   color: #ff2c39;
 }
 
-.originalPrice {
-  text-decoration: line-through;
-  margin-left: 12rpx;
-}
+
 
 .padding_108 {
   padding-bottom: 108rpx;
