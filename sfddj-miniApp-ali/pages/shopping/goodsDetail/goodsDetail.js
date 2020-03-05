@@ -426,7 +426,7 @@ Page({
             otherGoods: resData.supplierGoodsList,                                                    // 商家的其他商品，
             goodsId: that.data.goodsId,
           })
-console.log( that.data.SFmember ,that.data.goods.jifenStatus, that.data.goods.deductStatus ,that.data.goods.memberDayPriceStatus)
+// console.log( that.data.SFmember ,that.data.goods.jifenStatus, that.data.goods.deductStatus ,that.data.goods.memberDayPriceStatus)
 
           reslove({
             type: true
@@ -716,6 +716,7 @@ console.log( that.data.SFmember ,that.data.goods.jifenStatus, that.data.goods.de
     })
     product.store = storeArr.sort((a, b) => a - b)[0];
     // console.log(product.store)
+    product.productId = product.productId[0];
     that.data.product = product;
   },
 
@@ -1109,6 +1110,7 @@ console.log( that.data.SFmember ,that.data.goods.jifenStatus, that.data.goods.de
     if (that.data.addressList && that.data.addressList.length && detailAddressId) {
       getApp().globalData.NowAddrId = detailAddressId;
     }
+
     my.navigateTo({
       url: '/pages/shopping/confirmOrder/confirmOrder?&productId=' + that.data.product.productId + '&quantity=' + that.data.quantity + '&SFmember=' + that.data.SFmember
     });
@@ -1607,7 +1609,7 @@ console.log( that.data.SFmember ,that.data.goods.jifenStatus, that.data.goods.de
               if (!isManyEmpty) {
                 // console.log(combinationIavth.toString())
                 var chooseVal = that.data.allProduct.find(allProductVal => allProductVal.iavPath == combinationIavth.toString());
-                console.log(chooseVal)
+                // console.log(chooseVal)
                 // chooseVal && (chooseVal.store == 0 || chooseVal.store == '')
                 if ((chooseVal && (chooseVal.store == 0 || chooseVal.store == '')) || (!chooseVal)) {
                   that.data.goodsSpecMap[i].values[j].store = 0
