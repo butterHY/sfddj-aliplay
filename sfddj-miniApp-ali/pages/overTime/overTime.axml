@@ -2,8 +2,8 @@
   <view class="mask">
     <view class="modal">
       <image class="img" src='{{baseLocImgUrl}}miniappImg/loading/loading_404.png'></image>
-    <view class="txt">访问人数过多，一会再说吧</view>
-    <button class="btn" onTap="navigateBack">我知道了</button>
+    <view class="txt">当前访问人数过多，请稍后重试</view>
+    <button class="btn" onTap="BackToHome">去首页看看</button>
   </view>
 </view>
   
