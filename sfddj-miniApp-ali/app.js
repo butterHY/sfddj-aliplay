@@ -11,8 +11,14 @@ App({
 	//     home_spikeTime: null,
 	//     goodsDetail_spikeTime: null
 	// },
+  umengConfig: {
+    appKey: UrlConstants.umaAppKey, //由友盟分配的APP_KEY
+    debug: true //是否打开调试模式
+  },
+
 	onLaunch: function(options) {
 		uma.init(UrlConstants.umaAppKey, my);   // 务必填入已注册的appKey，不然将无法统计
+    console.log(UrlConstants.umaAppKey)
 		if (options.query) {
 			this.globalData.query = options.query
 		}
@@ -25,7 +31,7 @@ App({
 	},
 
 	onShow: function(options) {
-		uma.resume();                      // 请务必引入
+		// uma.resume();                      // 请务必引入
 		if (options.query) {
 			this.globalData.query = options.query
 		}

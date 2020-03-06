@@ -3,7 +3,7 @@
     "echarts": "^4.2.1",
     "mini-antui": "^0.4.34",
     "regenerator": "^0.14.2",
-    "umtrack-alipay": "^1.0.6-beta.1",
+    "umtrack-alipay": "^2.2.2",
     "underscore": "^1.9.1"
   }
 }

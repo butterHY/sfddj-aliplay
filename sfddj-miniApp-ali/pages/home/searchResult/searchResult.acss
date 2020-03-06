@@ -493,9 +493,10 @@ text {
   /* height: 128rpx; */
   padding: 30rpx 0;
   text-align: center;
-  line-height: 32rpx;
-  font-size: 32rpx;
+  line-height: 36rpx;
+  font-size: 36rpx;
   font-weight: 600;
+  vertical-align: -webkit-baseline-middle;
 }
 
 .guessLikeGoodsBox {
@@ -524,5 +525,12 @@ text {
   height: 158rpx;
   margin-bottom: 28rpx;
 }
+
+.ic_like {
+  width: 25rpx;
+  height: 32rpx;
+  margin-right: 5rpx;
+}
+
 
 

@@ -35,7 +35,9 @@ var UrlConstants = {
 	baseImageUrl: release ? baseImageUrl_pro : baseImageUrl_sit,
 	baseImageLocUrl: baseImageUrl_pro, //存在于服务器端的静态图片前缀
 	chInfo: release ? "ch_2019030863501284" : "ch_2018122562647749",    //外跳的信息  
-	umaAppKey: release ? '5db26b0f570df32c3b000556' : '5da40e8e570df31bcd000ca6',      //友盟+的appkey
+	// umaAppKey: release ? '5db26b0f570df32c3b000556' : '5da40e8e570df31bcd000ca6',      //友盟+的appkey
+  umaAppKey: release ? '5db26b0f570df32c3b000556' : '5e60c6a49f9a0a410a2b15aa',      //友盟+更新测试的appkey
+
 
 
 	/**

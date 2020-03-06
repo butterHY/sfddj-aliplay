@@ -63,9 +63,6 @@ Page({
       pageType: options.pageType
 		});
 		// utils.getNetworkType(this);
-    // console.log(getCurrentPages());
-    console.log(options.pageType);
-    console.log(options);
 		this.searchProduct(options.keyWord, 0);
 	},
 
@@ -81,17 +78,6 @@ Page({
 			this.searchComponent.data.pageType = 'showSearchPage';
 		}
 	},
-
-	// onPageScroll: function (obj) {
-	//   var scrollTop = obj.scrollTop
-	//   if (utils.px2Rpx(scrollTop) >= 120) {
-	//     this.setData({ scrollTop: true })
-	//   } else {
-	//     this.setData({
-	//       scrollTop: false
-	//     })
-	//   }
-	// },
 
 	/**
 	 * 	滚动页面距离 >= 120 的时候排序导航栏 “吸顶效果”，但有问题，没有做节流开关，>= 120 的时候会一直赋值 scrollTop
@@ -157,89 +143,6 @@ Page({
 			// that.data.hasMore = false;
 		}
 	},
-
-	/**
-	 * 输入框聚焦时弹出搜索历史、推荐词	   ------  搜索改版
-	 */
-	// handleFocus: function(event) {
-	// 	var that = this;
-	// 	console.log('输入框聚焦')
-	// 	sendRequest.send(constants.InterfaceUrl.HOT_WORD, {}, function(res) {
-	// 		that.setData({
-	// 			hotWords: res.data.result
-	// 		});
-	// 	}, function(err) {
-	// 	}, 'GET');
-	// 	try {
-	// 		var searchWords = my.getStorageSync({
-	// 			key: constants.StorageConstants.searchWordsKey, // 缓存数据的key
-	// 		}).data;
-	// 		this.setData({
-	// 			searchWords: searchWords.reverse(),
-	// 			show: true
-	// 		});
-	// 	} catch (e) { }
-	// },
-
-
-	/**
-	 * 输入框失焦时隐藏热词模块提示			-------   搜索改版
-	 */
-	// handleBlur: function(event) {
-	// 	console.log('输入框失焦')
-	// 	this.setData({
-	// 		show: false
-	// 	});
-	// },
-
-	/**
-	 * 键盘输入事件			------- 		搜索改版
-	 */
-	// handleInput: function(event) {
-	// 	console.log(event.detail.value.replace(/\s*/g,''))
-	// 	let inputVal = event.detail.value.replace(/\s*/g,'');
-	// 	let hotWordShow = true;
-	// 	let searchShow = true;
-	// 	if( inputVal ) {
-	// 		this.smartSearch(inputVal);
-	// 		hotWordShow = false;
-	// 	} else {
-	// 		searchShow = false;
-	// 	}
-	// 	this.setData({
-	// 		show: hotWordShow,
-	// 		searchShow,
-	// 		inputVal: event.detail.value
-	// 	});
-	// },
-
-	/**
-	 * 键盘确认时搜索，默认排序类型是 0；			------- 		搜索改版
-	 */
-	// handleConfirm: function(event) {
-	// 	// 达观数据上报
-	// 	// utils.uploadClickData_da('search', [{ keyword: event.detail.value }])
-	// 	// 先关闭热门推荐和搜索记录模块以及智能搜索模块
-	// 	this.data.goodsOrStore == '0' ? this.setData({goodsStart: 0, show: false, searchShow: false}) : this.setData({storeStart: 0, show: false, searchShow: false});
-	// 	console.log(event.detail.value)
-	// 	this.searchProduct(event.detail.value, 0);
-	// },
-
-	/**
-	 * 选择搜索热词 或者 选择智能搜索词			 ---------		搜索改版
-	 */
-	// chooseWord: function(event) {
-	// 	let that = this;
-	// 	this.setData({
-	// 		inputVal: event.currentTarget.dataset.word,
-	// 		show: false,
-	// 		searchShow: false,
-	// 	});
-	// 	// 达观数据上报
-	// 	// utils.uploadClickData_da('search', [{ keyword: event.currentTarget.dataset.word }])
-	// 	this.data.goodsOrStore == '0' ? this.setData({goodsStart: 0}) : this.setData({storeStart: 0});
-	// 	this.searchProduct(event.currentTarget.dataset.word, 0);
-	// },
 
 
 	/**
@@ -311,12 +214,9 @@ Page({
 					hasMore: false 
 				})
 				// that.searchProduct(options.keyWord, 0);
-        console.log('没有数据开始请求猜你喜欢')
         if( (that.data.goodsOrStore == '0' && that.data.goodsList.length <= 3 ) || (that.data.goodsOrStore == '1' && that.data.storeList.length <= 3 ) ) {
-             console.log('开始请求猜你喜欢')
             that.getGuessLike('0');
         } else {
-             console.log('没有数据猜你喜欢置空')
           that.setData({guessLikeGoods: [], youLikeStart: 0});
         }
 				return;
@@ -347,8 +247,6 @@ Page({
 
 			// groupList: res.data.result.groupList,		// 推荐商品,新接口没有 "推荐商品"
       list && list.length <= 3 ? that.getGuessLike('0') : that.setData({guessLikeGoods: [], youLikeStart: 0});
-      console.log(list)
-
 
 			that.setData(upData);
 			
@@ -363,7 +261,6 @@ Page({
 
   // 获取达观推荐的商品---猜你喜欢
   getGuessLike(type) {
-    console.log('请求猜你喜欢 type', type)
     let that = this;
     let data = {
       groupName: '支付宝小程序猜你喜欢',
@@ -389,50 +286,6 @@ Page({
       that.setData({ youLikeIsLoadMore: false })								// 正在加载中的加载进度条
     }, (err) => { that.setData({ youLikeIsLoadMore: false }) })
   },
-
-
-		/**
-	 * 智能搜索数据		--------  搜索改版
-	 * 
-	 */
-	// smartSearch(inputVal) {
-	// 	let that = this;
-	// 	console.log(inputVal);
-	// 	let data = {
-	// 		suggestStr: inputVal,
-	// 		showChannel: 0
-	// 	}
-	// 	http.post( api.search.GOODSSUGGEST, data ,(res) => {
-	// 		console.log(res);
-	// 		let resData = res.data.data;
-	// 		let retData = res.data.ret;
-	// 		// let hotWordShow = true;
-	// 		// let searchShow = true;
-
-	// 		if( retData.code == '0' && retData.message == "SUCCESS" ) {
-	// 			that.setData({
-	// 				// show: hotWordShow,
-	// 				// searchShow,
-
-	// 				// .concat(resData)
-	// 				smartSearchList: resData
-	// 			})
-	// 		} else {
-	// 			that.setData({
-	// 				// show: hotWordShow,
-	// 				// searchShow,
-	// 				smartSearchList: []
-	// 			})
-	// 		}
-	// 	}, (err) => {
-	// 		that.setData({
-	// 			// show: hotWordShow,
-	// 			// searchShow,
-	// 			smartSearchList: []
-	// 		})
-	// 		console.log(err)
-	// 	})
-	// },
 
 
 	/**
@@ -494,17 +347,6 @@ Page({
 		}
 	},
 
-	/**
-	 * 清除搜索历史				---- 搜索改版
-	 */
-	// clearHist: function() {
-	// 	try {
-	// 		my.setStorageSync({
-	// 			key: constants.StorageConstants.searchWordsKey, // 缓存数据的key
-	// 			data: [], // 要缓存的数据
-	// 		});
-	// 	} catch (e) { }
-	// },
 
 	/**
 	 * 添加购物车
@@ -545,46 +387,18 @@ Page({
 		that.searchProduct(that.data.inputVal, 0);
 	},
 
-	// onPullDownRefresh:function(){
-	//   return;
-	// },
-	// scrollToUpper: function () {
-	//   this.setData({
-	//     start: 0,
-	//     goodsList: []
-	//   });
-	//   var keyWord = this.data.inputVal;
-	//   this.searchProduct(keyWord, 0);
-	// },
 
-	/**
-	 * 页面上拉触底事件的处理函数
-	 */
-	// onReachBottom: function () {
-	//   if (this.data.hasMore) {
-	//     this.setData({
-	//       start: this.data.goodsList.length,
-	//       limit: this.data.limit
-	//     })
-	//     var keyWord = this.data.inputVal
-	//     this.searchProduct(keyWord, 1);
-	//   }
-	// },
 	
   /**
 	 * 页面滚动到底部触发
 	 */
 	scrollToLower: function() {
     let that = this;
-    console.log(that.data.goodsList);
-    console.log(that.data.storeList);
-    console.log(this.data.goodsOrStore)
 		if (this.data.hasMore) {
 			this.data.goodsOrStore == '0' ? this.setData({goodsStart: this.data.goodsList.length, limit: this.data.limit}) : this.setData({storeStart: this.data.storeList.length, limit: this.data.limit});
 		  this.data.hasMore = false;
 			this.searchProduct(this.data.inputVal, 1);
 		} else if( (this.data.goodsOrStore == '0' && that.data.goodsList.length <= 3  && that.data.youLikeHasMore) || (this.data.goodsOrStore == '1' && that.data.storeList.length <= 3  && that.data.youLikeHasMore) ) {
-      console.log('开始请求猜你喜欢')
       that.setData({
         youLikeStart: that.data.guessLikeGoods.length
       });

@@ -116,7 +116,10 @@
     </view>
     <!-- all_100 -->
     <view a:if="{{ guessLikeGoods && guessLikeGoods.length > 0}}" class=" clearfix logisticsBox padding_108">
-      <view class="guessLikeTitle">猜你喜欢</view>
+      <view class="guessLikeTitle flex_view_row justi_cen align_cen">
+        <image src="{{baseLocImgUrl}}miniappImg/icon/ic_like.png" class='ic_like'></image>
+        <text>猜你喜欢</text>
+      </view>
       <view class="guessLikeGoodsBox ">
         <block  a:for="{{ guessLikeGoods }}" a:if="{{ index %2 == 0 }}">
           <template is="itemGoodsCard" data="{{...item,left:true,baseImageUrl,baseLocImgUrl: baseImgLocUrl,type:'newGuessLike'}}"></template>
