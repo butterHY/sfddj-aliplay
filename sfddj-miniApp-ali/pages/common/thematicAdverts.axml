@@ -295,7 +295,7 @@
       <!-- 灰色间条 a:if="{{item.spacing == 1}}"-->
       <view class="ads_space" style="background: #{{item.topIntervalColor ? item.topIntervalColor : 'FFFFFF'}};"></view>
       <!-- 内容 -->
-      <view class='{{item.parseItem.length < 6 ? "otherModeCon" : "navigateCon"}} {{item.spacing == 1 ? "marBot_20" : ""}}' style='background-color: {{item.backgroundColor ? "#" + item.backgroundColor : "#ffffff"}};{{item.backgroundImg ? "background: url("+ baseImageUrl + item.backgroundImg+") no-repeat; background-size: 100% 100%;" : ""}}'>
+      <view class='navigateCon {{item.spacing == 1 ? "marBot_20" : ""}}' style='background-color: {{item.backgroundColor ? "#" + item.backgroundColor : "#ffffff"}};{{item.backgroundImg ? "background: url("+ baseImageUrl + item.backgroundImg+") no-repeat; background-size: 100% 100%;" : ""}}'>
         <swiper class="" indicator-dots="{{item.parseItem.length > 5 ? 'true' : ''}}" indicator-active-color='rgba(255,83,83.1)' interval="{{interval}}" duration="{{duration}}" data-fatherIndex="{{index}}" onChange="adsSwiper">
           <swiper-item class="flex_view_row">
             <block a:for="{{item.parseItem}}" a:for-index="idx" a:for-item="adsItem">
@@ -319,7 +319,7 @@
        <!-- 灰色间条 a:if="{{item.spacing == 1}}"-->
       <view class="ads_space" style="background: #{{item.topIntervalColor ? item.topIntervalColor : 'FFFFFF'}};"></view>
       <!-- 内容 -->
-      <view class='{{item.parseItem.length < 6 ? "otherModeCon" : "navigateCon"}} {{item.spacing == 1 ? "marBot_20" : ""}}' style='background-color: {{item.backgroundColor ? "#" + item.backgroundColor : "#ffffff"}};{{item.backgroundImg ? "background: url("+ baseImageUrl + item.backgroundImg+") no-repeat; background-size: 100% 100%;" : ""}}'>
+      <view class='navigateCon {{item.spacing == 1 ? "marBot_20" : ""}}' style='background-color: {{item.backgroundColor ? "#" + item.backgroundColor : "#ffffff"}};{{item.backgroundImg ? "background: url("+ baseImageUrl + item.backgroundImg+") no-repeat; background-size: 100% 100%;" : ""}}'>
         <swiper indicator-dots="{{item.parseItem.length > 5 ? 'true' : ''}}" indicator-active-color='rgba(255,83,83.1)' autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" display-multiple-items='5' data-fatherIndex="{{index}}" onChange="adsSwiper">
           <swiper-item class="flex_view_row">
             <block a:for="{{item.parseItem}}" a:for-index="idx" a:for-item="adsItem">

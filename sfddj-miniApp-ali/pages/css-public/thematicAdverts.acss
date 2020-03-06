@@ -228,13 +228,13 @@
 
 .oneAds_con {
   /* margin-bottom: 20rpx; */
-  padding: 0 30rpx 10rpx;
+  padding: 0 30rpx 0rpx;
   box-sizing: border-box;
   background: #FFFFFF;
 }
 
 .navigateCon {
-  padding: 0 0 10rpx;
+  /* padding: 0 0 10rpx; */
   /* margin-bottom: 20rpx; */
 }
 
@@ -248,7 +248,7 @@
 }
 
 .bannerCon {
-  padding: 0 0 10rpx 30rpx;
+  padding: 0 0 0rpx 30rpx;
 }
 
 /* .bannerCon .bannerSwiper {
