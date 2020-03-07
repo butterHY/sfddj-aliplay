@@ -240,7 +240,7 @@
 
 .otherModeCon {
   /* margin-bottom: 20rpx; */
-  padding: 0 30rpx 10rpx;
+  padding: 0 30rpx 0rpx;
 }
 
 .goodsAndAdCon {
@@ -416,4 +416,8 @@
 
 .goodsViewBox .goodsShowImg {
   border-radius: 10rpx;
+}
+
+.bannerTypeSwiper {
+  height: 260rpx;
 }
