@@ -283,7 +283,7 @@ Page({
 
       // 友盟+统计--确认订单页浏览
       let myDefaultAddress = result.defaultAddress ? result.defaultAddress : {}
-      getApp().globalData.uma.trackEvent('orderConfirmView', { channel_source: 'mini_alipay', order_city: myDefaultAddress.city, order_province: myDefaultAddress.province });
+      my.uma.trackEvent('orderConfirmView', { channel_source: 'mini_alipay', order_city: myDefaultAddress.city, order_province: myDefaultAddress.province });
 
       // 判断电子发票显不显示
       var invoiceOff = 'noInvoice';
@@ -536,7 +536,7 @@ Page({
 
       // 友盟+统计--确认订单页浏览
       let myDefaultAddress = result.defaultAddress ? result.defaultAddress : {}
-      getApp().globalData.uma.trackEvent('orderConfirmView', { channel_source: 'mini_alipay', order_city: myDefaultAddress.city, order_province: myDefaultAddress.province });
+      my.uma.trackEvent('orderConfirmView', { channel_source: 'mini_alipay', order_city: myDefaultAddress.city, order_province: myDefaultAddress.province });
 
       // 判断电子发票显不显示
       var invoiceOff = 'noInvoice';
@@ -1228,7 +1228,7 @@ Page({
 
             // 友盟+统计--支付成功后订单的总价
             let totalPrice = that.data.totalPostFee ? (that.data.totalPrice * 1 + that.data.totalPostFee).toFixed(2) : that.data.totalPrice
-            getApp().globalData.uma.trackEvent('orderSuccessAmount', { order_totalPrice: totalPrice, order_city: that.data.defaultAddress.city, order_province: that.data.defaultAddress.province, order_sn: orderSn });
+            my.uma.trackEvent('orderSuccessAmount', { order_totalPrice: totalPrice, order_city: that.data.defaultAddress.city, order_province: that.data.defaultAddress.province, order_sn: orderSn });
             let isTrackDone = false
             // 友盟+统计--支付成功后单个商品的总价
             if (that.data.fromPage == 'cart') {
@@ -1238,7 +1238,7 @@ Page({
                 for (var j = 0; j < orderGoodsList.length; j++) {
                   let goodsItem = orderGoodsList[j]
                   // 友盟+统计--支付成功后单个商品的总价
-                  getApp().globalData.uma.trackEvent('orderSuccessAmountByProduct', { order_goods_quantity: goodsItem.quantity, order_city: that.data.defaultAddress.city, order_province: that.data.defaultAddress.province, order_sn: orderSn, order_goods_totalPrice: goodsItem.salePrice * goodsItem.quantity, order_goods_price: goodsItem.salePrice, order_goods_name: goodsItem.goodsName, order_goods_id: goodsItem.goodsSn, order_goods_productName: goodsItem.productName });
+                  my.uma.trackEvent('orderSuccessAmountByProduct', { order_goods_quantity: goodsItem.quantity, order_city: that.data.defaultAddress.city, order_province: that.data.defaultAddress.province, order_sn: orderSn, order_goods_totalPrice: goodsItem.salePrice * goodsItem.quantity, order_goods_price: goodsItem.salePrice, order_goods_name: goodsItem.goodsName, order_goods_id: goodsItem.goodsSn, order_goods_productName: goodsItem.productName });
                   // 如果已上报完成则跳转页面
                   if (i == (supplierList.length - 1) && j == (orderGoodsList.length - 1)) {
                     if (that.data.isGiftOrder) {
@@ -1509,13 +1509,13 @@ Page({
     }
 
     // 友盟+去支付按钮点击
-    // getApp().globalData.uma.trackEvent('orderConfirm_toPay', { channel_source: 'mini_alipay', order_city: myDefaultAddress.city, order_province: myDefaultAddress.province });
+    // my.uma.trackEvent('orderConfirm_toPay', { channel_source: 'mini_alipay', order_city: myDefaultAddress.city, order_province: myDefaultAddress.province });
 
     if (that.data.isGiftOrder) {
       sendRequest.send(constants.InterfaceUrl.PAY_GIFT_PAY, data2, function(res) {
         // 友盟+埋点 --点击去付款
         let umaData = { channel_source: 'mini_alipay', order_city: data2.city, order_province: data2.province, orderSn: res.data.orderSn }
-        getApp().globalData.uma.trackEvent('orderConfirm_toPay', umaData);
+        my.uma.trackEvent('orderConfirm_toPay', umaData);
         that.showWxPayment(res);
       }, function(res) {
         my.hideLoading();
@@ -1538,7 +1538,7 @@ Page({
         my.hideLoading();
         var result = res.data.result;
         let umaData = { channel_source: 'mini_alipay', order_city: data.city, order_province: data.province, orderSn: res.data.orderSn }
-        getApp().globalData.uma.trackEvent('orderConfirm_toPay', umaData);
+        my.uma.trackEvent('orderConfirm_toPay', umaData);
         if (result.orderStr) {
           if (result.orderStr.trade_no) {
             that.showWxPayment(res);
@@ -1723,7 +1723,7 @@ Page({
       var result = res.data.result;
       // 友盟+埋点 --点击去付款
       let umaData = { channel_source: 'mini_alipay', order_city: data.city, order_province: data.province, orderSn: result.orderSn }
-      getApp().globalData.uma.trackEvent('orderConfirm_toPay', umaData);
+      my.uma.trackEvent('orderConfirm_toPay', umaData);
       // that.showWxPayment(res);
       if (result.orderStr.trade_no) {
         that.showWxPayment(res);

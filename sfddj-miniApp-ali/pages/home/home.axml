@@ -7,7 +7,7 @@
 <!-- <import src="../common/home-hotWords"/>  -->
 <!-- 新的搜索模块 -->
 <import src="../common/search"/>
-
+<view catchTap="you" style="height: 200rpx ;background: blue;">dinawo</view>
 <view a:if="{{true}}" class="width_100 flex_view_col posi_re" style="{{ isShowSearch || showToast ? 'height: 100vh; overflow-y: scroll;' : '' }}" disable-scroll="{{isShowSearch || show || showToast ? true : false}}">
 	<!-- <favorite type="tips" bottom="0rpx">收藏小程序，下次使用更方便</favorite> -->
 	<!-- 搜索模块 -->

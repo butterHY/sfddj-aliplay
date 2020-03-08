@@ -235,10 +235,10 @@ Page({
 
 				// 友盟+统计
 				//进来就统计的
-				getApp().globalData.uma.trackEvent('goodsDetailPageView', { channel_source: 'mini_alipay', supplierName: result.nickName, supplierId: result.supplierId, goodsName: result.name, goodsSn: result.goodSn, goodsCategoryId: result.goodsCategoryId });
+				my.uma.trackEvent('goodsDetailPageView', { channel_source: 'mini_alipay', supplierName: result.nickName, supplierId: result.supplierId, goodsName: result.name, goodsSn: result.goodSn, goodsCategoryId: result.goodsCategoryId });
 				// 如果是从别的广告进来的则统计s
 				if (that.data.pageOptions.utm_source && that.data.pageOptions.utm_source != 'undefined' && that.data.pageOptions.utm_source != 'null') {
-					getApp().globalData.uma.trackEvent('goodsDetailPage_source', { utm_source: that.data.pageOptions.utm_source, utm_medium: that.data.pageOptions.utm_medium, utm_campaign: that.data.pageOptions.utm_campaign, utm_content: that.data.pageOptions.utm_content, utm_term: that.data.pageOptions.utm_term })
+					my.uma.trackEvent('goodsDetailPage_source', { utm_source: that.data.pageOptions.utm_source, utm_medium: that.data.pageOptions.utm_medium, utm_campaign: that.data.pageOptions.utm_campaign, utm_content: that.data.pageOptions.utm_content, utm_term: that.data.pageOptions.utm_term })
 				}
 
 				//当请求返回成功才请求评论
@@ -1211,21 +1211,21 @@ Page({
 		if (type == 'buyNow') {
 
 			// 友盟+统计  ----商详立即购买点击
-			getApp().globalData.uma.trackEvent('goodsDetail_buyNow', umaData);
+			my.uma.trackEvent('goodsDetail_buyNow', umaData);
 		}
 		else if (type == 'addCart') {
 			// 友盟+统计  ----商详加入购物车点击
-			getApp().globalData.uma.trackEvent('goodsDetail_addCart', umaData);
+			my.uma.trackEvent('goodsDetail_addCart', umaData);
 
 		}
 		else if (type == 'supplier') {
 
 			// 友盟+统计  ----商详商家点击
-			getApp().globalData.uma.trackEvent('goodsDetail_custService', umaData);
+			my.uma.trackEvent('goodsDetail_custService', umaData);
 		}
 		else if (type == 'comment') {
 			// 友盟+统计  ----商详评论点击
-			getApp().globalData.uma.trackEvent('goodsDetail_comment', umaData);
+			my.uma.trackEvent('goodsDetail_comment', umaData);
 
 		}
 	},

@@ -170,7 +170,7 @@ Page({
 		});
 
 		// 友盟+统计  ----搜索页面浏览
-		getApp().globalData.uma.trackEvent('searchResPageView', {keyWord: keyWord});
+		my.uma.trackEvent('searchResPageView', {keyWord: keyWord});
 
 		// 先缓存搜索记录；排序字段,综合排序:order_list,价格排序:sale_price,销量排序:sales_count,好评排序:praise_rate
 		that.saveSearchHist(keyWord);
@@ -303,7 +303,7 @@ Page({
 		let goodsList = this.data.goodsList
 
 		// 友盟+统计  ----搜索页面浏览
-		getApp().globalData.uma.trackEvent('searchResListClck', {keyWord: this.data.inputVal, goodsName: goodsList[index].name, goodsId: goodsList[index].id, goodsSn: goodsList[index].goodsSn, goodsCategoryId: goodsList[index].goodsCategoryId});
+		my.uma.trackEvent('searchResListClck', {keyWord: this.data.inputVal, goodsName: goodsList[index].name, goodsId: goodsList[index].id, goodsSn: goodsList[index].goodsSn, goodsCategoryId: goodsList[index].goodsCategoryId});
 
 		my.navigateTo({
 			url: url

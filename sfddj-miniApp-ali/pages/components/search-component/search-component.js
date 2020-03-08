@@ -60,7 +60,7 @@ Component({
     handleFocus(event) {
       let that = this;
       if(that.props.pageType == 'home') {
-        getApp().globalData.uma.trackEvent('homepage_searchClick'); 
+        my.uma.trackEvent('homepage_searchClick'); 
       }
     },
 
@@ -278,15 +278,15 @@ Component({
       var keyWord = keyWord;
       if (type == 'searcHotWord') {
         // 友盟+统计--首页搜索热词点击
-        getApp().globalData.uma.trackEvent('homepage_searchHotWord', { keyWord: keyWord });
+        my.uma.trackEvent('homepage_searchHotWord', { keyWord: keyWord });
       }
       else if (type == 'searchHist') {
         // 友盟+统计--首页搜索历史点击
-        getApp().globalData.uma.trackEvent('homepage_searchHist', { keyWord: keyWord });
+        my.uma.trackEvent('homepage_searchHist', { keyWord: keyWord });
       }
       else if (type == 'searchValue') {
         // 友盟+统计--首页搜索输入
-        getApp().globalData.uma.trackEvent('homepage_searchValue', { keyWord: keyWord });
+        my.uma.trackEvent('homepage_searchValue', { keyWord: keyWord });
       }
     },
 

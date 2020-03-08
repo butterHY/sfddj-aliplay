@@ -177,10 +177,10 @@ Page({
 
   umaTrackEvent(type, data) {
     if (type == 'goods') {
-      getApp().globalData.uma.trackEvent('paySucceed_guessLikeGoods', data)
+      my.uma.trackEvent('paySucceed_guessLikeGoods', data)
     }
     else if (type == 'banner') {
-      getApp().globalData.uma.trackEvent('paySucceed_banner', data)
+      my.uma.trackEvent('paySucceed_banner', data)
     }
   },
   // 上拉加载

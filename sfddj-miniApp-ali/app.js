@@ -1,5 +1,6 @@
 // var _myShim = require('..my.shim');
-import uma from 'umtrack-alipay';
+// import uma from 'umtrack-alipay';
+import 'umtrack-alipay';
 import {UrlConstants} from './utils/constants';
 let sendRequest = require('./utils/sendRequest');
 let constants = require('./utils/constants');
@@ -17,7 +18,7 @@ App({
   },
 
 	onLaunch: function(options) {
-		uma.init(UrlConstants.umaAppKey, my);   // 务必填入已注册的appKey，不然将无法统计
+		// uma.init(UrlConstants.umaAppKey, my);   // 务必填入已注册的appKey，不然将无法统计
     console.log(UrlConstants.umaAppKey)
 		if (options.query) {
 			this.globalData.query = options.query
@@ -50,14 +51,14 @@ App({
 	},
 
 	onHide: function() {
-		uma.pause();                       // 请务必引入
+		// uma.pause();                       // 请务必引入
 		clearTimeout(this.globalData.home_spikeTime);
 		clearTimeout(this.globalData.goodsDetail_spikeTime);
 
 	},
 
 	globalData: {
-		uma,                                // 请将uma模块绑定在gloabalData下，以便后续使用
+		// uma,                                // 请将uma模块绑定在gloabalData下，以便后续使用
 		userInfo: null,
 		systemInfo: null,
 		comeFrom: null,

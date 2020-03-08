@@ -66,7 +66,7 @@ Page({
 
 
 		// 友盟+统计  ----购物车页浏览
-		getApp().globalData.uma.trackEvent('myCartView');
+		my.uma.trackEvent('myCartView');
 		// 猜你喜欢
 		this.getGuessLike(0)
 
@@ -907,7 +907,7 @@ Page({
 		if (type == 'recommond') {
 			let data = { channel_source: 'mini_alipay', supplierName: recommondList[index].supplierNickName, supplierId: recommondList[index].supplierId, goodsName: recommondList[index].goodsName, goodsSn: recommondList[index].goodsSn, goodsCategoryId: recommondList[index].goodsCategoryId }
 			// shopCart_guessLikeGoods
-			getApp().globalData.uma.trackEvent('shopCart_guessLikeGoods', data);
+			my.uma.trackEvent('shopCart_guessLikeGoods', data);
 		}
 		if (url.indexOf('http') > -1) {
 			my.call('startApp', { appId: '20000067', param: { url: url, chInfo: chInfo } })

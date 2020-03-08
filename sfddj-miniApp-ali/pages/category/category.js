@@ -31,7 +31,7 @@ Page({
 	onLoad: function(options) {
 
 		// 友盟+统计  ----分类页浏览
-		getApp().globalData.uma.trackEvent('categoryView');
+		my.uma.trackEvent('categoryView');
 		this.getCateData();
 		
 	},

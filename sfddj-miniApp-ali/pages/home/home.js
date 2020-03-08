@@ -83,8 +83,8 @@ Page({
 			pageOptions = Object.assign(options, globalQuery)
 		}
 		// 友盟+统计--首页浏览
-		getApp().globalData.uma.trackEvent('homepage_show', pageOptions);
-
+		my.uma.trackEvent('homepage_show', pageOptions);
+    // console.log(pageOptions)
 		var that = this;
 
 
@@ -1025,7 +1025,7 @@ Page({
 		// linkType为2代表跳收藏有礼
 		if (linkType == '2') {
 
-			getApp().globalData.uma.trackEvent('homepage_popup_click')
+			my.uma.trackEvent('homepage_popup_click')
 			my.navigateToMiniProgram({
 				appId: '2018122562686742',//收藏有礼小程序的appid，固定值请勿修改
 				path: url,//收藏有礼跳转地址和参数
@@ -1045,17 +1045,17 @@ Page({
 			// 友盟+统计--首页浏览
 			// type = banner banner轮播 type = oneFour 1+4模块 type = oneTwo 1+2模块
 			if (type == 'banner') {
-				getApp().globalData.uma.trackEvent('homepage_banner_click', { title: title });
+				my.uma.trackEvent('homepage_banner_click', { title: title });
 			}
 			if (type == 'oneFour') {
-				getApp().globalData.uma.trackEvent('homepage_oneFour_click', { index: index });
+				my.uma.trackEvent('homepage_oneFour_click', { index: index });
 			}
 			if (type == 'oneTwo') {
-				getApp().globalData.uma.trackEvent('homepage_oneTwo_click', { index: index });
+				my.uma.trackEvent('homepage_oneTwo_click', { index: index });
 			}
 
 			if (type == 'popup') {
-				getApp().globalData.uma.trackEvent('homepage_popup_click')
+				my.uma.trackEvent('homepage_popup_click')
 			}
 
 			// 如果是当家爆款、新品上架、原产好物的统计
@@ -1163,7 +1163,7 @@ Page({
 	// handleFocus: function() {
 	// 	var that = this;
 	// 	// 友盟+统计--首页搜索点击
-	// 	getApp().globalData.uma.trackEvent('homepage_searchClick');
+	// 	my.uma.trackEvent('homepage_searchClick');
 
 	// 	sendRequest.send(constants.InterfaceUrl.HOT_WORD, {}, function(res) {
 	// 		that.setData({
@@ -1191,21 +1191,21 @@ Page({
 
 		if (type == 'searcHotWord') {
 			// 友盟+统计--首页搜索热词点击
-			getApp().globalData.uma.trackEvent('homepage_searchHotWord', { keyWord: keyWord });
+			my.uma.trackEvent('homepage_searchHotWord', { keyWord: keyWord });
 		}
 		else if (type == 'searchHist') {
 
 			// 友盟+统计--首页搜索历史点击
-			getApp().globalData.uma.trackEvent('homepage_searchHist', { keyWord: keyWord });
+			my.uma.trackEvent('homepage_searchHist', { keyWord: keyWord });
 		}
 		else if (type == 'searchValue') {
 			// 友盟+统计--首页搜索输入
-			getApp().globalData.uma.trackEvent('homepage_searchValue', { keyWord: keyWord });
+			my.uma.trackEvent('homepage_searchValue', { keyWord: keyWord });
 
 		}
 		else if (type == 'goodsCount'){
 			// 友盟+统计--广告模块当家爆款/原产好物/新品上架  --- eventName = homepage_ddjHotSale , homepage_ddjBestGoods, homepage_ddjNewGoods
-			getApp().globalData.uma.trackEvent(eventName, data);
+			my.uma.trackEvent(eventName, data);
 		}
 
 	},
@@ -1353,7 +1353,7 @@ Page({
 
 
 			// 友盟+统计--弹窗曝光
-			getApp().globalData.uma.trackEvent('homepage_popup_visibility');
+			my.uma.trackEvent('homepage_popup_visibility');
 
 			my.setStorageSync({
 				key: 'popImgData', // 缓存数据的key
@@ -1374,7 +1374,7 @@ Page({
 
 
 				// 友盟+统计--弹窗曝光
-				getApp().globalData.uma.trackEvent('homepage_popup_visibility');
+				my.uma.trackEvent('homepage_popup_visibility');
 
 				my.setStorageSync({
 					key: 'popImgData', // 缓存数据的key
@@ -1390,7 +1390,7 @@ Page({
 
 
 				// 友盟+统计--弹窗曝光
-				getApp().globalData.uma.trackEvent('homepage_popup_visibility');
+				my.uma.trackEvent('homepage_popup_visibility');
 
 
 			} else if (localPopType == 'ONCE_DAY_SHOW') {
@@ -1403,7 +1403,7 @@ Page({
 
 
 					// 友盟+统计--弹窗曝光
-					getApp().globalData.uma.trackEvent('homepage_popup_visibility');
+					my.uma.trackEvent('homepage_popup_visibility');
 
 					my.setStorageSync({
 						key: 'popImgData', // 缓存数据的key
@@ -1715,6 +1715,10 @@ Page({
 			isFocus: !this.data.isFocus,
 		})
 		// this.searchComponent.setIsFocus();
-	}
+	},
+
+  you() {
+    	my.uma.trackEvent('homepage_show');
+  }
 
 });

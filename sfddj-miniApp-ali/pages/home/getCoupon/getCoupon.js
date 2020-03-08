@@ -35,7 +35,7 @@ Page({
 
 
 		// 友盟+统计  ----领券中心浏览
-		getApp().globalData.uma.trackEvent('couponCenterView');
+		my.uma.trackEvent('couponCenterView');
 
 		this.getCouponList();
 		this.getGuessLike(0);
@@ -106,7 +106,7 @@ Page({
 		var couponList = this.data.couponList;
 
 		// 友盟+统计  ----领券中心点击
-		getApp().globalData.uma.trackEvent('couponCenterClick', { codeSign: couponList[index].codeSign });
+		my.uma.trackEvent('couponCenterClick', { codeSign: couponList[index].codeSign });
 
 		if (that.data.isBing) {
 			//兑换优惠券

@@ -1217,7 +1217,7 @@ Page({
 				break;
 		}
 
-		getApp().globalData.uma.trackEvent('myOrderListView', {orderType: orderTypeString})
+		my.uma.trackEvent('myOrderListView', {orderType: orderTypeString})
 	},
 
 	// closeCouponShow() {
@@ -1249,7 +1249,7 @@ Page({
 
 			if(type == 'banner'){
 				let data = {targetUrl: url}
-				getApp().globalData.uma.trackEvent('myOrder_banner', data);
+				my.uma.trackEvent('myOrder_banner', data);
 			}
       
       if (url.substring(0,4).indexOf('http') > -1) {

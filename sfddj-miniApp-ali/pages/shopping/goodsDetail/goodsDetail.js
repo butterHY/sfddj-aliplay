@@ -293,10 +293,10 @@ Page({
 
           // 友盟+统计
           //进来就统计的
-          getApp().globalData.uma.trackEvent('goodsDetailPageView', { channel_source: 'mini_alipay', supplierName: supplierInfo.nickName, supplierId: supplierInfo.supplierId, goodsName: that.data.goods.goodsName, goodsSn: that.data.goods.goodsSn, goodsCategoryId: that.data.goods.goodsCategoryId });
+          my.uma.trackEvent('goodsDetailPageView', { channel_source: 'mini_alipay', supplierName: supplierInfo.nickName, supplierId: supplierInfo.supplierId, goodsName: that.data.goods.goodsName, goodsSn: that.data.goods.goodsSn, goodsCategoryId: that.data.goods.goodsCategoryId });
           // 如果是从别的广告进来的则统计
           if (that.data.pageOptions.utm_source && that.data.pageOptions.utm_source != 'undefined' && that.data.pageOptions.utm_source != 'null') {
-            getApp().globalData.uma.trackEvent('goodsDetailPage_source', { utm_source: that.data.pageOptions.utm_source, utm_medium: that.data.pageOptions.utm_medium, utm_campaign: that.data.pageOptions.utm_campaign, utm_content: that.data.pageOptions.utm_content, utm_term: that.data.pageOptions.utm_term })
+            my.uma.trackEvent('goodsDetailPage_source', { utm_source: that.data.pageOptions.utm_source, utm_medium: that.data.pageOptions.utm_medium, utm_campaign: that.data.pageOptions.utm_campaign, utm_content: that.data.pageOptions.utm_content, utm_term: that.data.pageOptions.utm_term })
           }
 
           //当请求返回成功才请求评论和猜你喜欢的数据
@@ -1691,38 +1691,38 @@ Page({
 
     if (type == 'buyNow') {
       // 友盟+统计  ----商详立即购买点击
-      getApp().globalData.uma.trackEvent('goodsDetail_buyNow', umaData);
+      my.uma.trackEvent('goodsDetail_buyNow', umaData);
     }
     else if (type == 'addCart') {
       // 友盟+统计  ----商详加入购物车点击
-      getApp().globalData.uma.trackEvent('goodsDetail_addCart', umaData);
+      my.uma.trackEvent('goodsDetail_addCart', umaData);
 
     }
     else if (type == 'supplier') {
 
       // 友盟+统计  ----商详商家点击
-      getApp().globalData.uma.trackEvent('goodsDetail_custService', umaData);
+      my.uma.trackEvent('goodsDetail_custService', umaData);
     }
     else if (type == 'comment') {
       // 友盟+统计  ----商详评论点击
-      getApp().globalData.uma.trackEvent('goodsDetail_comment', umaData);
+      my.uma.trackEvent('goodsDetail_comment', umaData);
 
     }
     else if (type == 'goods') {
       // 友盟+统计  ----猜你喜欢点击
-      getApp().globalData.uma.trackEvent('goodsDetail_guessLikeGoods', data);
+      my.uma.trackEvent('goodsDetail_guessLikeGoods', data);
     }
     else if (type == 'banner') {
       // 友盟+统计  ----banner点击
-      getApp().globalData.uma.trackEvent('goodsDetail_banner', data);
+      my.uma.trackEvent('goodsDetail_banner', data);
     }
     else if (type == 'contactSupplier') {
       // 友盟+统计  ----banner点击
-      getApp().globalData.uma.trackEvent('goodsDetail_contactSupplier', umaData);
+      my.uma.trackEvent('goodsDetail_contactSupplier', umaData);
     }
     else if (type == 'supplierGoods') {
       // 友盟+统计  ----banner点击
-      getApp().globalData.uma.trackEvent('goodsDetail_supplierGoods', data);
+      my.uma.trackEvent('goodsDetail_supplierGoods', data);
     }
   },
 

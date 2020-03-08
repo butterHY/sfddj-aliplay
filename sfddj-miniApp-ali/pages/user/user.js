@@ -39,7 +39,7 @@ Page({
 		// that.judgeAuthorize();
 
 		// 友盟+统计  ----个人中心页浏览
-		getApp().globalData.uma.trackEvent('myInfoView');
+		my.uma.trackEvent('myInfoView');
 	},
 
 	bindPhone: function(e) {
@@ -444,15 +444,15 @@ Page({
 	umaTrackEvent(type) {
 		if (type == 'signIn') {
 			// 友盟+统计--签到页浏览
-			getApp().globalData.uma.trackEvent('signInView');
+			my.uma.trackEvent('signInView');
 		}
 		else if (type == 'coupon') {
 			// 友盟+统计--签到页浏览
-			getApp().globalData.uma.trackEvent('myCouponView');
+			my.uma.trackEvent('myCouponView');
 		}
 		else if (type == 'webViewCall') {
 			// 友盟+统计--签到页浏览
-			getApp().globalData.uma.trackEvent('customerServiceView');
+			my.uma.trackEvent('customerServiceView');
 		}
 	},
 
