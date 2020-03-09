@@ -251,10 +251,10 @@
   padding: 0 0 0rpx 30rpx;
 }
 
-/* .bannerCon .bannerSwiper {
-  width: 96%;
+.bannerCon .bannerSwiper {
+  height: 260rpx;
   box-sizing: border-box;
-} */
+}
 
 .oneFourLeft {
   width: 42.26%;
