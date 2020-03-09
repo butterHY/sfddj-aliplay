@@ -903,7 +903,6 @@ Page({
 	goToPage(e) {
 		let { index, type, url } = e.currentTarget.dataset
 		let { recommondList } = this.data
-
 		if (type == 'recommond') {
 			let data = { channel_source: 'mini_alipay', supplierName: recommondList[index].supplierNickName, supplierId: recommondList[index].supplierId, goodsName: recommondList[index].goodsName, goodsSn: recommondList[index].goodsSn, goodsCategoryId: recommondList[index].goodsCategoryId }
 			// shopCart_guessLikeGoods
