@@ -1186,7 +1186,6 @@ Page({
 
 	// 友盟+ 统计 --搜索
 	
-
 	// umaTrackEvent(type, keyWord, eventName,data) {
 
 	// 	var keyWord = keyWord
