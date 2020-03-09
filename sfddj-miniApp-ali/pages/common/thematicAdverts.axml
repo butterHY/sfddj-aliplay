@@ -382,16 +382,16 @@
       </view>
     </view>
     <!--图片滚动轮播 -->
-    <view a:if='{{item.moduleType == "BANNER_TYPE_2"}}'>
+    <view a:if='{{item.moduleType == "BANNER_TYPE_2" && item.parseItem && item.parseItem.length > 0}}'>
        <!-- 灰色间条 a:if="{{item.spacing == 1}}"-->
       <view class="ads_space" style="background: #{{item.topIntervalColor ? item.topIntervalColor : 'FFFFFF'}};"></view>
       <!-- 内容 -->
-      <view class="bannerCon {{item.spacing == 1 ? 'marBot_20' : ''}}" style='background-color: {{item.backgroundColor ? "#" + item.backgroundColor : "#ffffff"}}; height: 260rpx;'>
+      <view class="bannerCon {{item.spacing == 1 ? 'marBot_20' : ''}}" style='background-color: {{item.backgroundColor ? "#" + item.backgroundColor : "#ffffff"}};'>
         <swiper style="heigth: 260rpx;" indicator-dots="{{indicatorDots}}" next-margin="{{banRightMargin}}px" autoplay="{{true}}" interval="3000" duration="1000" circular="true" data-type="autoplay" data-fatherIndex="{{index}}">
           <block a:for="{{item.parseItem}}" a:for-index="idx" a:for-item="bannerItem">
             <swiper-item class="bannerSwiper">
-              <view class="height_auto" data-url="{{bannerItem.link}}" open-type="navigate" onTap='goToPage' hover-class="width_100 bannerNav">
-                <image src="{{baseImageUrl}}{{bannerItem.imageUrl}}" class="width_100 borderRa_15r" mode="widthFix"/>
+              <view class="bannerSwiper" data-url="{{bannerItem.link}}" open-type="navigate" onTap='goToPage' hover-class="width_100 bannerNav">
+                <image src="{{baseImageUrl}}{{bannerItem.imageUrl}}" class="width_100 bannerSwiper"/>
               </view>
             </swiper-item>
           </block>
