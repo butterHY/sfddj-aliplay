@@ -65,7 +65,6 @@ Page({
             val.dayTime = utils.formatTime(val.time);
             // + that.judgementTime(val.time.getSeconds()
             val.hoursTime =  ('' + that.judgementTime(val.time.getHours()) + ':' + that.judgementTime(val.time.getMinutes()) );
-            val.content = '快件正在配送途中，请您准备签收（配送员：热热，电话：17600648717）谢谢';
           })
           value.detail.unshift( {content: value.shipAddress } )
         })
