@@ -1015,6 +1015,7 @@ Page({
 	},
 
 	goToPage: function(e) {
+    					my.uma.trackEvent('homepage_popup_visibility');
 		let that = this;
 		let url = e.currentTarget.dataset.url;
 		let chInfo = constants.UrlConstants.chInfo;

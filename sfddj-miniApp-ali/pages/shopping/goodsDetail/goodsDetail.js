@@ -161,9 +161,26 @@ Page({
 	 */
   getComment(data, type) {
     let that = this;
+    let hasImg = [];
+    let noImg = [];
+
+     data.forEach( value => {
+       if( (value.videoPath && value.videoPath.length > 0) || (value.imagePath && value.imagePath.length > 0) ) {
+         let hasImg = new Array([], value)
+         hasImg.push(value)
+       } else {
+         noImg.push(value)
+       }
+     })
+
+    hasImg.sort((a, b) => a.createDate - b.createDate);
+    noImg.sort((a, b) => a.createDate - b.createDate);
+
+    data = hasImg.concat(noImg)
+
     let videoPath = [];
     let commentList = data.map( (value, index) => {
-      if ( value && (index == 0 || index == 1) ) {
+      if ( value ) {
         value.createDate = utils.pointFormatTime(new Date(value.createDate));
         if ( value.videoPath && value.videoPath.length > 0 ) {
           value.videoPath.forEach((val, ind) => {
@@ -185,9 +202,11 @@ Page({
       buyerShowList:  commentList,
       // buyerShowCount: resData.buyerShow.buyerShowCount
     });
+
+    console.log(that.data.buyerShowList)
   },
 
-	/**
+	/**f
 	 * 获取购物车数量
 	 */
   getCartNumber: function() {
@@ -303,12 +322,12 @@ Page({
           that.data.goodsId = resData.goodsShowVO.goodsId;
           // 处理商品评论；
           if ( resData.buyerShow && resData.buyerShow.buyerShowList && resData.buyerShow.buyerShowList.length > 0 ) {
-            that.getComment(resData.buyerShow.buyerShowList);
+            that.getComment(resData.buyerShow.buyerShowList, 'buyerShow');
             that.setData({
               buyerShowCount: resData.buyerShow.buyerShowCount
             });
           } else if ( resData.commentList && resData.commentList.length > 0 ) {
-            that.getComment(resData.commentList);
+            that.getComment(resData.commentList, 'generalComment');
           }
 
           
@@ -1978,7 +1997,6 @@ Page({
     let chInfo = constants.UrlConstants.chInfo;
     let { type, url, index } = e.currentTarget.dataset
     let that = this
-
     if (type == 'goods') {
       let data = { channel_source: 'mini_alipay', supplierName: that.data.guessLikeGoods[index].nickName, supplierId: that.data.guessLikeGoods[index].supplierId, goodsName: that.data.guessLikeGoods[index].goodsName, goodsSn: that.data.guessLikeGoods[index].goodsSn, goodsCategoryId: that.data.guessLikeGoods[index].goodsCategoryId }
       this.umaTrackEvent(type, data)
