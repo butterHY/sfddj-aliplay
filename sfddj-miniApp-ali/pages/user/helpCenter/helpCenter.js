@@ -1,5 +1,5 @@
 // var _myShim = require('........my.shim');
-// pages/user/helpCenter/helpCenter.js var constants = require('../../utils/constants');
+// pages/user/helpCenter/helpCenter.js 
 var sendRequest = require('../../../utils/sendRequest');
 var utils = require('../../../utils/util');
 
