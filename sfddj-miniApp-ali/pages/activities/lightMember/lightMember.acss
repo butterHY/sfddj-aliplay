@@ -1,0 +1,187 @@
+.page {
+  background: #f5f5f5;
+}
+
+/* 已注册轻会员样式 */
+.heade {
+  height: 446rpx;
+  background: #2b2d3e;
+  box-sizing: border-box;
+  background: url(../../../image/lightMemberHeard.png) top center no-repeat;
+  background-size:cover;
+  /* padding: 80rpx 30rpx 0; */
+}
+
+.headMessage {
+  height: 100%;
+  box-sizing: border-box;
+  padding: 124rpx 72rpx 0;
+}
+
+.userPersonal {
+  height: 90rpx;
+  margin-bottom: 66rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.userNameAndRul {
+  height: 100%;
+  width: 372rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.headImg {
+  width: 90rpx;
+  height: 90rpx;
+  background: blue;
+  border-radius: 50%;
+}
+
+.nameBox {
+  height: 100%;
+  width: 264rpx;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.name {
+  line-height: 42rpx;
+}
+
+.lightMemberDate {
+  line-height: 32rpx;
+}
+
+.administration {
+  width: 114rpx;
+  height: 52rpx;
+  line-height: 52rpx;
+  border-radius: 40rpx;
+  background: #b6fce8;
+  color: #1e9271;
+}
+
+.userEquity {
+  height: 166rpx;
+  display: flex;
+  flex-direction: row;
+}
+
+.existEquity {
+}
+
+.cumulativeEquity {
+}
+
+.couponModular {
+  padding: 0 30rpx;
+}
+
+.couponTitle {
+  height: 74rpx;
+}
+
+.couponConnent {
+  height: 190rpx;
+}
+
+.couponBox {
+  width: 50%;
+  height: 100%;
+  float: left;
+  box-sizing: border-box;
+}
+
+.coupon {
+  height: 100%;
+  background: skyblue;
+  border-radius: 20rpx;
+}
+
+.couponMessage {
+  background: #ffe6a1;
+  border-radius: 20rpx 0 0 20rpx;
+  padding-left: 20rpx;
+}
+
+.couponDescribe {
+  margin-top: 18rpx;
+}
+
+.couponButton {
+  width: 78rpx;
+  background: #e4c672;
+  border-radius: 0 20rpx 20rpx 0;
+
+}
+
+.dottedLine {
+  height: 190rpx;
+  width: 4rpx;
+  left: -2rpx;
+}
+
+.litlePoint {
+  width: 4rpx;
+  height: 4rpx;
+  background: #f5f5f5;
+}
+
+.litlePointTop {
+  top: -2rpx;
+  left: -2rpx;
+}
+
+.litlePointBot {
+  bottom: -2rpx;
+  left: -2rpx;
+}
+
+.couponButtonText {
+  width: 30rpx;
+}
+
+
+/* 未注册轻会员样式 */
+.activity .userPersonal {
+  height: 70rpx;
+  margin-bottom: 44rpx;
+  justify-content: center;
+  position: relative;
+}
+
+
+.activity .userNameAndRul {
+  width: auto;
+  max-width: 256rpx;
+  justify-content: start;
+}
+
+.activity .administration {
+  width: 36rpx;
+  height: 36rpx;
+  position: absolute;
+  right: 0;
+  border-radius: 50%;
+}
+
+.activity .headImg {
+  width: 68rpx;
+  height: 68rpx;
+}
+
+.activity .nameBox {
+  width: auto;
+  max-width: 168rpx;
+  margin-left: 20rpx;
+}
+
+.activity .name {
+  line-height: 70rpx;
+}
