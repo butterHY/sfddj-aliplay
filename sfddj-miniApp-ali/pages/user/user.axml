@@ -138,15 +138,20 @@
           <text class="font-24 marTop_20 color-323232">地址</text>
           <button class="btnStyle gpnBtn zIndex100" open-type="getAuthorize" onGetAuthorize="getPhoneNumber" scope='phoneNumber' onError="onAuthError" a:if="{{!isMember}}"></button>
         </view>
-        <view data-url="/pages/user/helpCenter/helpCenter" data-type="rightHere" class="user_myHome_one flex_view_col align_cen justi_cen posi_re" onTap="{{isMember ? 'goToTargetPage' : ''}}">
+        <!-- <view data-url="/pages/user/helpCenter/helpCenter" data-type="rightHere" class="user_myHome_one flex_view_col align_cen justi_cen posi_re" onTap="{{isMember ? 'goToTargetPage' : ''}}">
           <text class="iconfont icon-changjianwenti font-52 color_ff2a54_08"></text>
           <text class="font-24 marTop_20 color-323232">常见问题</text>
           <button class="btnStyle gpnBtn zIndex100" open-type="getAuthorize" onGetAuthorize="getPhoneNumber" scope='phoneNumber' onError="onAuthError" a:if="{{!isMember}}"></button>
-        </view>
-        <view class="user_myHome_one flex_view_col align_cen justi_cen posi_re" catchTap="{{isMember ? 'goToWebCall' : ''}}">
+        </view> -->
+        <!-- <view class="user_myHome_one flex_view_col align_cen justi_cen posi_re" catchTap="{{isMember ? 'goToWebCall' : ''}}">
           <text class="iconfont icon-kefu font-56 color_ff2a54_08"></text>
           <text class="font-24 marTop_20 color-323232">客服</text>
           <button class="btnStyle gpnBtn zIndex100" open-type="getAuthorize" onGetAuthorize="getPhoneNumber" scope='phoneNumber' onError="onAuthError" a:if="{{!isMember}}"></button>
+        </view> -->
+        <view data-url="/pages/user/helpCenter/helpCenter" data-type="rightHere" class="user_myHome_one flex_view_col align_cen justi_cen posi_re" catchTap="goToTargetPage" >
+          <text class="iconfont icon-kefu font-56 color_ff2a54_08"></text>
+          <text class="font-24 marTop_20 color-323232">客服</text>
+          <!-- <button class="btnStyle gpnBtn zIndex100" open-type="getAuthorize" onGetAuthorize="getPhoneNumber" scope='phoneNumber' onError="onAuthError" a:if="{{!isMember}}"></button> -->
         </view>
       </view>
     </view>
