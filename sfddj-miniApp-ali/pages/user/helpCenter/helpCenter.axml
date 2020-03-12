@@ -1,14 +1,34 @@
-<!--常见问题、帮助中心--><view class="normalQue font-28">
-  <view class="{{selectItem == 0 ? 'selected' : ''}} eachQue" data-select-index="0" onTap="select">
-    订单问题
+
+<view class="serviceArea">
+  <!-- 客服联系 -->
+  <view class="quickService">快捷服务</view>
+  <view class="serviceWrap">
+    <view class="serviceItem" onTap="goToWebCall">
+      <text>在线客服</text>
+      <text>9:00-21:00</text>
+    </view>
+    <view class="serviceItem" onTap="goToPhone">
+      <text>电话客服</text>
+      <text>0755-9533861</text>
+      <text>9:00-21:00</text>
+    </view>
   </view>
-  <view class="{{selectItem == 1 ? 'selected' : ''}} eachQue" data-select-index="1" onTap="select">
-    售后服务
+
+
+  <!--常见问题、帮助中心-->
+  <view class="normalQuestion">常见问题</view>
+  <view class="normalQue font-28">
+    <view class="{{selectItem == 0 ? 'selected' : ''}} eachQue" data-select-index="0" onTap="select">
+      订单问题
+    </view>
+    <view class="{{selectItem == 1 ? 'selected' : ''}} eachQue" data-select-index="1" onTap="select">
+      售后服务
+    </view>
+    <view class="{{selectItem == 2 ? 'selected' : ''}} eachQue" data-select-index="2" onTap="select">
+      其他
+    </view>
   </view>
-  <view class="{{selectItem == 2 ? 'selected' : ''}} eachQue" data-select-index="2" onTap="select">
-    其他
-  </view>
-</view>
+
 
 <!--订单问题-->
 <view class="eachBlock" a:if="{{selectItem == 0}}">
@@ -59,4 +79,5 @@
       <text>{{item.content}}</text>
     </view>
   </view>
+</view>
 </view>
