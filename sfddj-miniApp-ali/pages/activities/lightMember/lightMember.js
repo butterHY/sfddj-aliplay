@@ -1,6 +1,7 @@
 Page({
   data: {
-    isLightMember: false
+    isLightMember: true,
+    showRuleStatus: false
   },
   onLoad() {
     my.setNavigationBar({
@@ -10,4 +11,10 @@ Page({
       // image,
     })
   },
+  isShowRule() {
+    console.log(this.data.showRuleStatus)
+    this.setData({
+      showRuleStatus: !this.data.showRuleStatus
+    })
+  }
 });

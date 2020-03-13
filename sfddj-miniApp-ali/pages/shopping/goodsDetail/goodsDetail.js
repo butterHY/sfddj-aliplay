@@ -2002,6 +2002,7 @@ Page({
       this.umaTrackEvent(type, data)
     }
     else if (type == 'banner') {
+      console.log('data-type="banner" ')
       let data = { targetUrl: url }
       this.umaTrackEvent(type, data)
     }

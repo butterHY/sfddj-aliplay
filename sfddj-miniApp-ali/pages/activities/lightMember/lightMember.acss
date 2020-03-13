@@ -88,14 +88,15 @@
 }
 
 .couponConnent {
-  height: 190rpx;
+  /* height: 190rpx; */
 }
 
 .couponBox {
   width: 50%;
-  height: 100%;
+  height: 190rpx; 
   float: left;
   box-sizing: border-box;
+  margin-bottom: 20rpx;
 }
 
 .coupon {
@@ -115,15 +116,22 @@
 }
 
 .couponButton {
+  height: 100%;
   width: 78rpx;
   background: #e4c672;
   border-radius: 0 20rpx 20rpx 0;
-
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  
 }
 
 .dottedLine {
-  height: 190rpx;
-  width: 4rpx;
+  height: 100%;
+  border-style: none none none dotted;
+  border-color: #fff;
+  width: 2rpx;
   left: -2rpx;
 }
 
@@ -184,4 +192,52 @@
 
 .activity .name {
   line-height: 70rpx;
+}
+
+.activity .couponBox {
+  width: 100%;
+  height: 160rpx;
+}
+
+.activity .couponButton {
+  width: 188rpx;
+  background: #e4c672;
+  border-radius: 0 20rpx 20rpx 0;
+}
+
+.activity .couponButtonText {
+    width: auto;
+}
+
+.activity .couponMessage {
+  padding-left: 32rpx;
+}
+
+.rulePopup {
+  width: 602rpx;
+  height: 848rpx;
+  background: #fff;
+  border-radius: 30rpx;
+}
+
+.ruleConnnet {
+  overflow: auto;
+  box-sizing: border-box;
+  padding: 52rpx 46rpx 0;
+  line-height: 42rpx;
+  border-radius: 30rpx 30rpx 0 0;
+}
+
+.checkButton {
+  height: 152rpx;
+}
+
+.button {
+  width: 542rpx;
+  height: 98rpx;
+  background: #ff5332;
+  border-radius: 50rpx;
+  text-align: center;
+  line-height: 98rpx;
+  color: #fff;
 }
