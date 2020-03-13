@@ -69,7 +69,7 @@
         <view>
           <scroll-view scroll-x class="goods-scrollx-view width_100" scroll-with-animation="true" data-fatherIndex="{{index}}" onScroll="scrollGoods">
             <block a:for="{{item.groupGoodsVoList}}" a:for-index="idx" a:for-item="groupItem">
-              <!--<template is="itemGoodsScrollX" data="{{item: item,baseImageUrl:baseImageUrl,baseLocImgUrl: baseLocImgUrl}}"/> -->
+              <!--<template is="itemGoodsScrollX" data="{{item: item,baseImageUrl:baseImageUrl,baseLocImgUrl: baseLocImgUrl}}"/> {{item.items[0].moduleTitle}}-->
               <view class='goodsViewBox'>
                 <view data-url="/pages/shopping/goodsDetail/goodsDetail?goodsSn={{groupItem.goodsSn}}&goodsId={{groupItem.id}}" onTap="goToPage" data-type="goodsCount" data-index="{{idx}}" data-fatherIndex="{{index}}" data-title="{{item.items[0].moduleTitle}}" open-type="navigate" hover-class="none" class="posi_re width_260r {{!groupItem.isLoaded ? 'js_adsGoodsList' + index + '_' + idx  : ''}}">
                   <view class="goodsShowImgBox">

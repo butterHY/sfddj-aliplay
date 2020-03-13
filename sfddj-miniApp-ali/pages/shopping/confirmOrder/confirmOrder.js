@@ -109,7 +109,7 @@ Page({
   },
 
   onLoad: function(options) {
-    console.log(';[[options', options)
+    // console.log(';[[options', options)
     var that = this;
     that.calcH();
     // 页面重新进来，重置发票信息
@@ -527,7 +527,7 @@ Page({
     }
     sendRequest.send(constants.InterfaceUrl.PAY_TO_BUY_NOW, data, function(res) {
       my.hideLoading();
-      console.log(res)
+      // console.log(res)
       var result = res.data.result;
 
       // =================================================================
@@ -979,7 +979,7 @@ Page({
       destHeight: imgHeight,
       type: type,
     }).then(dataUrl => {
-      console.log('[[[base6400', dataUrl)
+      // console.log('[[[base6400', dataUrl)
     })
   },
 
@@ -1181,7 +1181,7 @@ Page({
     }
     result.couponValue = '￥0.00';
 
-    console.log(result.availableCoupon)
+    // console.log(result.availableCoupon)
   },
 	/**
 	 * 拼团订单支付成功后，通过订单sn查询recordId跳转拼团成功页面

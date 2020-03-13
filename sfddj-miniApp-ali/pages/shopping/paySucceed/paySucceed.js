@@ -160,7 +160,7 @@ Page({
     }
 
     if (type == 'banner') {
-      // let data = 
+      let data = {targetUrl: url};
       that.umaTrackEvent(type, data)
     }
 

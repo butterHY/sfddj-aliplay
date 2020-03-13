@@ -1,0 +1,69 @@
+<view class="page {{!isLightMember ? 'activity' : ''}}">
+  <view class="heade">
+    <view class="headMessage">
+      <!-- flex_view_row justi_between align_cen -->
+      <view class="userPersonal" >
+        <view class="userNameAndRul ">
+          <view class="headImg"></view>
+          <view class="nameBox  font-weight-600">
+            <view class="name single-line font-38 ">笑笑笑</view>
+            <view a:if="{{isLightMember}}" class="lightMemberDate font-26">2020-03-22到期<text class="icon-changjianwenti font-34 marLeft_5" catchTap="isShowRule"></text></view>
+          </view>
+        </view>
+        <view class="administration font-26 tex_center font-weight-600">
+          <text a:if="{{isLightMember}}">管理</text>
+        </view>
+      </view>
+      <view class="userEquity font-weight-600 tex_center">
+        <view class="existEquity flex_1 single-line ">
+          <view class="existDay {{isLightMember ? 'font-38' : 'font-56'}}  single-line">11天</view>
+          <view class="font-26 {{isLightMember ? 'marTop_20' : 'marTop_10'}} single-line">你已享受会员权益</view>
+        </view>
+        <view a:if="{{isLightMember}}" class="cumulativeEquity flex_1 single-line">
+          <view class="existMoney font-38 single-line">0元</view>
+          <view class="font-26 marTop_20 single-line">累计已省</view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="couponModular">
+    <view class="couponTitle font-38 font-weight-600">天天送券</view>
+    <view class="couponConnent clearfix">
+      <view class="couponBox" a:for="{{5}}" a:key="index" style="{{isLightMember ? (index %2 == 0 ? 'padding-right: 5rpx;' : 'padding-left: 5rpx;') : ''}}">
+        <view class="coupon flex_view_row" >
+          <view class="couponMessage flex_1 flex_view_col justi_cen">
+            <view class="couponPrice single-line font-26  font-weight-600">￥<text class="font-50">5</text></view>
+            <view class="couponDescribe single-line font-26">全平台无门槛</view>
+          </view>
+          <view class="couponButton font-30 posi_re ">
+            <view class="litlePoint posi_ab litlePointTop"></view>
+            <view class="dottedLine posi_ab">
+              <!-- <view class="litlePoint" a:for="{{16}}"></view> -->
+            </view>
+            <view class="litlePoint posi_ab litlePointBot"></view>
+            <view class="couponButtonText">立即领取</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+<popup show="{{showRuleStatus}}" disableScroll="{{false}}">
+  <view class="height_100vh flex_view_row justi_cen align_cen">
+    <view class="rulePopup flex_view_col">
+      <scroll-view scroll-y="{{true}}" class="ruleConnnet flex_1  font-28">
+        为更好的满足广大支付宝小程序用户的需求，友盟+于年前上线U-MiniProgram小程序统计平台，与U-App支付宝小程序统计相比，现在支持微信、支付宝两大主流平台，全新产品以用户增长模型各阶段的数据分析为出发，为小程序开发者提供“获客-激活-留存-分享-转化”的全链路分析路径，更能满足您的小程序统计需求。后续我们还将支持更多的小程序平台以及提供更多的数据监测功能。
+        为更好的满足广大支付宝小程序用户的需求，友盟+于年前上线U-MiniProgram小程序统计平台，与U-App支付宝小程序统计相比，现在支持微信、支付宝两大主流平台，全新产品以用户增长模型各阶段的数据分析为出发，为小程序开发者提供“获客-激活-留存-分享-转化”的全链路分析路径，更能满足您的小程序统计需求。后续我们还将支持更多的小程序平台以及提供更多的数据监测功能。
+        为更好的满足广大支付宝小程序用户的需求，友盟+于年前上线U-MiniProgram小程序统计平台，与U-App支付宝小程序统计相比，现在支持微信、支付宝两大主流平台，全新产品以用户增长模型各阶段的数据分析为出发，为小程序开发者提供“获客-激活-留存-分享-转化”的全链路分析路径，更能满足您的小程序统计需求。后续我们还将支持更多的小程序平台以及提供更多的数据监测功能。
+        为更好的满足广大支付宝小程序用户的需求，友盟+于年前上线U-MiniProgram小程序统计平台，与U-App支付宝小程序统计相比，现在支持微信、支付宝两大主流平台，全新产品以用户增长模型各阶段的数据分析为出发，为小程序开发者提供“获客-激活-留存-分享-转化”的全链路分析路径，更能满足您的小程序统计需求。后续我们还将支持更多的小程序平台以及提供更多的数据监测功能。
+        为更好的满足广大支付宝小程序用户的需求，友盟+于年前上线U-MiniProgram小程序统计平台，与U-App支付宝小程序统计相比，现在支持微信、支付宝两大主流平台，全新产品以用户增长模型各阶段的数据分析为出发，为小程序开发者提供“获客-激活-留存-分享-转化”的全链路分析路径，更能满足您的小程序统计需求。后续我们还将支持更多的小程序平台以及提供更多的数据监测功能。
+        为更好的满足广大支付宝小程序用户的需求，友盟+于年前上线U-MiniProgram小程序统计平台，与U-App支付宝小程序统计相比，现在支持微信、支付宝两大主流平台，全新产品以用户增长模型各阶段的数据分析为出发，为小程序开发者提供“获客-激活-留存-分享-转化”的全链路分析路径，更能满足您的小程序统计需求。后续我们还将支持更多的小程序平台以及提供更多的数据监测功能。
+        为更好的满足广大支付宝小程序用户的需求，友盟+于年前上线U-MiniProgram小程序统计平台，与U-App支付宝小程序统计相比，现在支持微信、支付宝两大主流平台，全新产品以用户增长模型各阶段的数据分析为出发，为小程序开发者提供“获客-激活-留存-分享-转化”的全链路分析路径，更能满足您的小程序统计需求。后续我们还将支持更多的小程序平台以及提供更多的数据监测功能。
+        为更好的满足广大支付宝小程序用户的需求，友盟+于年前上线U-MiniProgram小程序统计平台，与U-App支付宝小程序统计相比，现在支持微信、支付宝两大主流平台，全新产品以用户增长模型各阶段的数据分析为出发，为小程序开发者提供“获客-激活-留存-分享-转化”的全链路分析路径，更能满足您的小程序统计需求。后续我们还将支持更多的小程序平台以及提供更多的数据监测功能。
+      </scroll-view> 
+      <view class="checkButton flex_view_col justi_cen align_cen">
+        <view class="button font-32" catchTap="isShowRule">知道了</view>
+      </view>
+    </view>
+  </view>
+</popup>

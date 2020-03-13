@@ -214,9 +214,8 @@ Page({
 	goToTargetPage: function(e) {
 		var that = this;
 		var type = e.currentTarget.dataset.type;
-
+      console.log('coupon')
 		if (e.currentTarget.dataset.url == '/pages/user/myCoupon/myCoupon') {
-
 			// 友盟+统计--签到页浏览
 			this.umaTrackEvent('coupon')
 		}

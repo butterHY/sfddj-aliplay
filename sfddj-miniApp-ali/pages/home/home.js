@@ -102,7 +102,6 @@ Page({
 
 
 
-
 		that.setData({
 			materialArr: materialArr ? materialArr : [],
 			advertsArr: advertsArr ? advertsArr : [],
@@ -1016,6 +1015,7 @@ Page({
 	},
 
 	goToPage: function(e) {
+    					my.uma.trackEvent('homepage_popup_visibility');
 		let that = this;
 		let url = e.currentTarget.dataset.url;
 		let chInfo = constants.UrlConstants.chInfo;
@@ -1065,13 +1065,16 @@ Page({
 				}
 				// homepage_ddjHotSale , homepage_ddjBestGoods, homepage_ddjNewGoods
 				if (title.indexOf('爆款') > -1) {
-					that.umaTrackEvent(type, 'homepage_ddjHotSale', data)
+					// that.umaTrackEvent(type, 'homepage_ddjHotSale', data);
+          my.uma.trackEvent('homepage_ddjHotSale', data);
 				}
 				else if(title.indexOf('新品') > -1) {
-					that.umaTrackEvent(type, 'homepage_ddjNewGoods', data)
+					// that.umaTrackEvent(type, 'homepage_ddjNewGoods', data);
+          my.uma.trackEvent('homepage_ddjNewGoods', data);
 				}
 				else if(title.indexOf('原产') > -1) {
-					that.umaTrackEvent(type, 'homepage_ddjBestGoods', data)
+					// that.umaTrackEvent(type, 'homepage_ddjBestGoods', data);
+          my.uma.trackEvent('homepage_ddjBestGoods', data);
 				}
 			}
 
@@ -1184,31 +1187,30 @@ Page({
 
 	// 友盟+ 统计 --搜索
 	
-	
-	umaTrackEvent(type, keyWord, eventName,data) {
+	// umaTrackEvent(type, keyWord, eventName,data) {
 
-		var keyWord = keyWord
+	// 	var keyWord = keyWord
 
-		if (type == 'searcHotWord') {
-			// 友盟+统计--首页搜索热词点击
-			my.uma.trackEvent('homepage_searchHotWord', { keyWord: keyWord });
-		}
-		else if (type == 'searchHist') {
+	// 	if (type == 'searcHotWord') {
+	// 		// 友盟+统计--首页搜索热词点击
+	// 		my.uma.trackEvent('homepage_searchHotWord', { keyWord: keyWord });
+	// 	}
+	// 	else if (type == 'searchHist') {
 
-			// 友盟+统计--首页搜索历史点击
-			my.uma.trackEvent('homepage_searchHist', { keyWord: keyWord });
-		}
-		else if (type == 'searchValue') {
-			// 友盟+统计--首页搜索输入
-			my.uma.trackEvent('homepage_searchValue', { keyWord: keyWord });
+	// 		// 友盟+统计--首页搜索历史点击
+	// 		my.uma.trackEvent('homepage_searchHist', { keyWord: keyWord });
+	// 	}
+	// 	else if (type == 'searchValue') {
+	// 		// 友盟+统计--首页搜索输入
+	// 		my.uma.trackEvent('homepage_searchValue', { keyWord: keyWord });
 
-		}
-		else if (type == 'goodsCount'){
-			// 友盟+统计--广告模块当家爆款/原产好物/新品上架  --- eventName = homepage_ddjHotSale , homepage_ddjBestGoods, homepage_ddjNewGoods
-			my.uma.trackEvent(eventName, data);
-		}
+	// 	}
+	// 	else if (type == 'goodsCount'){
+	// 		// 友盟+统计--广告模块当家爆款/原产好物/新品上架  --- eventName = homepage_ddjHotSale , homepage_ddjBestGoods, homepage_ddjNewGoods
+	// 		my.uma.trackEvent(eventName, data);
+	// 	}
 
-	},
+	// },
 
 	//---------- 获取倒计时时间 -----------
 	getTimes: async function(isFirstTime) {
@@ -1717,8 +1719,6 @@ Page({
 		// this.searchComponent.setIsFocus();
 	},
 
-  you() {
-    	my.uma.trackEvent('homepage_show');
-  }
+
 
 });
