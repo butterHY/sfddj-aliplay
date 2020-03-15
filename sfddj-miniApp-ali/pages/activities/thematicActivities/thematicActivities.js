@@ -42,7 +42,6 @@ Page({
     http.get(url, {}, res => {
       let result = res.data ? res.data.data : {}
       let hasCountDown = false
-
       // 模块数据--转换数据
       if (result.modules) {
         if (Object.keys(result.modules).length > 0) {
@@ -71,9 +70,9 @@ Page({
         loadComplete: true,
         loadFail: false,
         hasCountDown,
-
         banRightMargin: util.rpx2Px(30),
       })
+
       if (hasCountDown) {
         that.CutDataTime()
       }

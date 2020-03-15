@@ -2002,8 +2002,9 @@ Page({
       this.umaTrackEvent(type, data)
     }
     else if (type == 'banner') {
-      console.log('data-type="banner" ')
+      // console.log('data-type="banner" goodsSn=YWECC1A9A93A2D')
       let data = { targetUrl: url }
+      // let data = { targetUrl: 'pages/shopping/goodsDetail/goodsDetail?goodsSn=YWECC1A9A93A2D' }
       this.umaTrackEvent(type, data)
     }
     else if (type == 'supplierGoods') {
