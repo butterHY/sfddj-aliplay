@@ -45,3 +45,30 @@
   width: 697rpx;
   height: 560rpx;
 }
+/* 改版 */
+.serviceArea {
+  height: 300rpx;
+  background: #fff;
+  font-size: 28rpx;
+  padding: 20rpx 20rpx 0 20rpx;
+}
+.serviceWrap {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0 100rpx;
+  margin-top: 20rpx;
+}
+.serviceItem {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 10rpx;
+  padding: 20rpx;
+}
+.normalQuestion {
+  margin-top: 20rpx;
+}
+

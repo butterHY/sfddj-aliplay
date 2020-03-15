@@ -226,7 +226,8 @@ Page({
 		if (that.data.isMember || type == 'rightHere') {
 			if (that.data.goToUrl != 'pages/user/user') {
 				my.navigateTo({
-					url: that.data.goToUrl
+					// url: that.data.goToUrl
+          url: `${that.data.goToUrl}?webCallParam=${that.data.webCallParam}`
 				});
 			} else {
 				return;

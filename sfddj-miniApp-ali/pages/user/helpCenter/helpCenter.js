@@ -1,5 +1,10 @@
 // var _myShim = require('........my.shim');
 // pages/user/helpCenter/helpCenter.js 
+var sendRequest = require('../../../utils/sendRequest');
+var utils = require('../../../utils/util');
+
+
+
 Page({
 
   /**
@@ -153,6 +158,14 @@ Page({
   //   open: false
   // }
 
+  onLoad: function(options) {
+		var that = this;
+		that.setData({
+      webCallParam: options.webCallParam
+    })
+		//console.log(111,options)
+	},
+
   //0:订单问题 1:售后问题 2:其他
   select: function (event) {
     var index = event.currentTarget.dataset.selectIndex;
@@ -207,5 +220,35 @@ Page({
     this.setData({
       list3: list
     });
+  },
+
+  // 友盟+埋点
+	umaTrackEvent(type) {
+		if (type == 'webViewCall') {
+			// 友盟+统计--签到页浏览
+			my.uma.trackEvent('customerServiceView');
+    }
+	},
+
+  // 跳去客服网页版
+	goToWebCall: function() {
+		var that = this;
+		var webCallLink = that.data.webCallParam;
+		//友盟+统计--签到页浏览
+		this.umaTrackEvent('webViewCall')
+
+		try {
+			my.setStorageSync({
+				key: 'webCallLink', // 缓存数据的key
+				data: webCallLink, // 要缓存的数据
+			});
+		} catch (e) { }
+		my.navigateTo({
+			url: '/pages/user/webCallView/webCallView?link=' + webCallLink + '&newMethod=new'
+		});
+	},
+  // 跳去客服电话
+  goToPhone: function(){
+    my.makePhoneCall({ number: '0755-9533861' });
   }
 });
