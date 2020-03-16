@@ -1,83 +1,88 @@
-
 <view class="serviceArea">
-  <!-- 客服联系 -->
-  <view class="quickService">快捷服务</view>
-  <view class="serviceWrap">
-    <view class="serviceItem" onTap="goToWebCall">
-      <text>在线客服</text>
-      <text>9:00-21:00</text>
-    </view>
-    <view class="serviceItem" onTap="goToPhone">
-      <text>电话客服</text>
-      <text>0755-9533861</text>
-      <text>9:00-21:00</text>
-    </view>
-  </view>
-
-
-  <!--常见问题、帮助中心-->
-  <view class="normalQuestion">常见问题</view>
-  <view class="normalQue font-28">
-    <view class="{{selectItem == 0 ? 'selected' : ''}} eachQue" data-select-index="0" onTap="select">
-      订单问题
-    </view>
-    <view class="{{selectItem == 1 ? 'selected' : ''}} eachQue" data-select-index="1" onTap="select">
-      售后服务
-    </view>
-    <view class="{{selectItem == 2 ? 'selected' : ''}} eachQue" data-select-index="2" onTap="select">
-      其他
-    </view>
-  </view>
-
-
-<!--订单问题-->
-<view class="eachBlock" a:if="{{selectItem == 0}}">
-  <view data-index="{{index}}" a:for="{{list1}}" a:key="questionList1" onTap="openList1">
-    <view class="eachBlock_view">
-      <view class="font-28 {{item.open ? 'color-fa4444':'color-232323'}}">{{item.title}}</view>
-      <view class="flex_view_row" a:if="{{item.open}}"><text class="icon-href-up color-fa4444 font-22"></text></view>
-      <view class="flex_view_row" a:else><text class="icon-href-down font-22 color-8f8f8f"></text></view>
-    </view>
-    <view class="eachBlock_open font-24 color-414141" a:if="{{item.open}}">
-      <text>{{item.content}}</text>
-    </view>
-  </view>
-</view>
-
-<!--售后问题-->
-<view class="eachBlock" a:elif="{{selectItem == 1}}">
-  <view data-index="{{index}}" a:for="{{list2}}" a:key="questionList2" onTap="openList2">
-    <view class="eachBlock_view">
-      <view class="font-28 {{item.open ? 'color-fa4444':'color-232323'}}">{{item.title}}</view>
-      <view class="flex_view_row" a:if="{{item.open}}"><text class="icon-href-up color-fa4444 font-22"></text></view>
-      <view class="flex_view_row" a:else><text class="icon-href-down font-22 color-8f8f8f"></text></view>
-    </view>
-    <view class="eachBlock_open font-24 color-414141" a:if="{{item.open}}">
-      <view class="flex_view_col" a:if="{{index == 3 || index == 4}}">
-        <text a:if="{{index == 3}}">客户提出的商品退换货要求需符合国家法律规定的7天无理由退换货品类：</text>
-        <text a:if="{{index == 4}}">跨境商品原则上不支持7天无理由退换货，如出现以下情况，自客户收到商品之日起7天内可以退货，具体退货标准如下（退货时请保持商品完好、附件期权，并将商品的赠品一并退回，不支持部分退货）：</text>
-        <image src="{{item.image}}" class="returnImg_7day" a:if="item.image"></image>
-        <text a:if="{{index == 3}}"> 存在以下情形之一的，不予办理退换货：\n1、签收次日算起超过7天；\n2、商品吊牌、配件、赠品（需要和主商品一起退换）、发票缺失或涂改、有明显使用痕迹等影响二次销售的商品；\n3、基于安全及健康考虑，已拆封的食品、药品、保健品、化妆品、贴身用品等；\n4、一经激活或者试用后价值贬损较大的商品，如手机、电脑、数码产品等；\n5、拆封后影响人身安全或者生命健康的商品，或者拆封后易导致商品品质发生改变的商品；\n6、礼包或者套装中商品不可以部分退换货；\n7、销售时已明示的临近保质期的商品、有瑕疵的商品；\n8、消法规定的不可退换商品及其他依法不应办理退换货的情形。</text>
-        <text a:if="{{index == 4}}">{{item.content}}</text>
+  <view class="serviceTop">
+    <view class="serviceTitle">快捷服务</view>
+    <view class="serviceWrap">
+      <view onTap="goToWebCall" class="serviceOnline">
+        <image src='{{baseLocImgUrl}}miniappImg/user/online_service.png' alt="" class="service_Img"></image>
+        <view class="serviceText">
+          <text>在线客服</text>
+          <text class="textSmall">9:00-21:00</text>
+        </view>
       </view>
-      <view a:else>
+      <view onTap="goToPhone" class="servicePhone">
+        <image src='{{baseLocImgUrl}}miniappImg/user/service_telephone.png' alt="" class="service_Img"></image>
+        <view class="serviceText">
+          <text>电话客服 9533861</text>
+          <text class="textSmall">9:00-21:00</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!--常见问题 订单、售后、其他 -->
+  <view class="serviceBody">
+    <view class="serviceTitle">常见问题</view>
+    <view class="normalQue font-28">
+      <view data-select-index="0" onTap="select" class="{{selectItem == 0 ? 'selected' : ''}} eachQue">
+        订单问题 <text class="eachQueAfter"></text>
+      </view>
+      <view data-select-index="1" onTap="select" class="{{selectItem == 1 ? 'selected' : ''}} eachQue">
+        售后服务 <text class="eachQueAfter"></text>
+      </view>
+      <view data-select-index="2" onTap="select" class="{{selectItem == 2 ? 'selected' : ''}} eachQue">
+        其他  <text class="eachQueAfter1"></text>
+      </view>
+    </view>
+  </view>
+
+  <!--订单问题-->
+  <view class="eachBlock" a:if="{{selectItem == 0}}">
+    <view data-index="{{index}}" a:for="{{list1}}" a:key="questionList1" onTap="openList1">
+      <view class="eachBlock_view">
+        <view class="font-28 {{item.open ? 'color-fa4444':'color-232323'}}">{{item.title}}</view>
+        <view class="flex_view_row" a:if="{{item.open}}"><text class="icon-href-up color-fa4444 font-22"></text></view>
+        <view class="flex_view_row" a:else><text class="icon-href-down font-22 color-8f8f8f"></text></view>
+      </view>
+      <view class="eachBlock_open font-24 color-414141" a:if="{{item.open}}">
         <text>{{item.content}}</text>
       </view>
     </view>
   </view>
-</view>
 
-<!--其他-->
-<view class="eachBlock" a:else>
-  <view data-index="{{index}}" a:for="{{list3}}" a:key="questionList3" onTap="openList3">
-    <view class="eachBlock_view">
-      <view class="font-28 {{item.open ? 'color-fa4444':'color-232323'}}">{{item.title}}</view>
-      <view class="flex_view_row" a:if="{{item.open}}"><text class="icon-href-up color-fa4444 font-22"></text></view>
-      <view class="flex_view_row" a:else><text class="icon-href-down font-22 color-8f8f8f"></text></view>
-    </view>
-    <view class="eachBlock_open font-24 color-414141" a:if="{{item.open}}">
-      <text>{{item.content}}</text>
+    <!--售后问题-->
+  <view class="eachBlock" a:elif="{{selectItem == 1}}">
+    <view data-index="{{index}}" a:for="{{list2}}" a:key="questionList2" onTap="openList2">
+      <view class="eachBlock_view">
+        <view class="font-28 {{item.open ? 'color-fa4444':'color-232323'}}">{{item.title}}</view>
+        <view class="flex_view_row" a:if="{{item.open}}"><text class="icon-href-up color-fa4444 font-22"></text></view>
+        <view class="flex_view_row" a:else><text class="icon-href-down font-22 color-8f8f8f"></text></view>
+      </view>
+      <view class="eachBlock_open font-24 color-414141" a:if="{{item.open}}">
+        <view class="flex_view_col" a:if="{{index == 3 || index == 4}}">
+          <text a:if="{{index == 3}}">客户提出的商品退换货要求需符合国家法律规定的7天无理由退换货品类：</text>
+          <text a:if="{{index == 4}}">跨境商品原则上不支持7天无理由退换货，如出现以下情况，自客户收到商品之日起7天内可以退货，具体退货标准如下（退货时请保持商品完好、附件期权，并将商品的赠品一并退回，不支持部分退货）：</text>
+          <image src="{{item.image}}" class="returnImg_7day" a:if="item.image"></image>
+          <text a:if="{{index == 3}}"> 存在以下情形之一的，不予办理退换货：\n1、签收次日算起超过7天；\n2、商品吊牌、配件、赠品（需要和主商品一起退换）、发票缺失或涂改、有明显使用痕迹等影响二次销售的商品；\n3、基于安全及健康考虑，已拆封的食品、药品、保健品、化妆品、贴身用品等；\n4、一经激活或者试用后价值贬损较大的商品，如手机、电脑、数码产品等；\n5、拆封后影响人身安全或者生命健康的商品，或者拆封后易导致商品品质发生改变的商品；\n6、礼包或者套装中商品不可以部分退换货；\n7、销售时已明示的临近保质期的商品、有瑕疵的商品；\n8、消法规定的不可退换商品及其他依法不应办理退换货的情形。</text>
+          <text a:if="{{index == 4}}">{{item.content}}</text>
+        </view>
+        <view a:else>
+          <text>{{item.content}}</text>
+        </view>
+      </view>
     </view>
   </view>
-</view>
+
+  <!--其他-->
+  <view class="eachBlock" a:else>
+    <view data-index="{{index}}" a:for="{{list3}}" a:key="questionList3" onTap="openList3">
+      <view class="eachBlock_view">
+        <view class="font-28 {{item.open ? 'color-fa4444':'color-232323'}}">{{item.title}}</view>
+        <view class="flex_view_row" a:if="{{item.open}}"><text class="icon-href-up color-fa4444 font-22"></text></view>
+        <view class="flex_view_row" a:else><text class="icon-href-down font-22 color-8f8f8f"></text></view>
+      </view>
+      <view class="eachBlock_open font-24 color-414141" a:if="{{item.open}}">
+        <text>{{item.content}}</text>
+      </view>
+    </view>
+  </view>
 </view>
