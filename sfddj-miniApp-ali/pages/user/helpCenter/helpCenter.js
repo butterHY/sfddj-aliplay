@@ -2,6 +2,7 @@
 // pages/user/helpCenter/helpCenter.js 
 var sendRequest = require('../../../utils/sendRequest');
 var utils = require('../../../utils/util');
+let constants = require('../../../utils/constants');
 
 
 
@@ -12,6 +13,7 @@ Page({
    */
   data: {
     selectItem: 0,
+    baseLocImgUrl: constants.UrlConstants.baseImageLocUrl,
     list1: [{
       title: '发货时间',
       content: '一般在您下单后24小时内发货，部分商品发货时间会有所差异（如现采现摘、进口清关等），以商品页面描述为准，预售商品下单前请仔细阅读商家发货说明，如遇客观原因影响发货时间商家会在商品页面公告。\r\n注：特殊发货需求请您在下单前联系商家确认，否则商家将按页面描述时间安排发货。',

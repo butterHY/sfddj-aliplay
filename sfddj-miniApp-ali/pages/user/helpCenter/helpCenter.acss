@@ -1,25 +1,29 @@
 /* pages/user/helpCenter/helpCenter.wxss  */
 .selected {
   color: #ff5353;
-  border-bottom: solid #ff5353 5rpx;
+  /* border-bottom: solid #ff5353 5rpx; */
 }
 /*新加   */
 .eachBlock {
-  margin-top: 10rpx;
+  /* margin-top: 10rpx; */
   background-color: white;
-  padding: 0 20rpx;
+  padding: 0 20rpx 20rpx ;
 }
 .eachBlock_view {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 20rpx 0;
-  border-bottom: solid #e6e6e6 2rpx;
-}
+  border-top: 1rpx solid #e5e5e5;  
+}    
 .eachBlock_open {
-  background-color: white;
-  padding: 32rpx 0 38rpx 0;
-  border-bottom: solid #e6e6e6 2rpx;
+  background-color: #f6f6f6;
+  border-radius: 8rpx;
+  padding: 20rpx;
+  line-height: 1.8;
+  margin-bottom: 30rpx;
+  /* padding: 32rpx 0 38rpx 0; */
+  /* border-bottom: solid #e6e6e6 2rpx; */
 }
 .normalQue {
   width: 100%;
@@ -27,11 +31,22 @@
   height: 80rpx;
   color: #8f8f8f;
   display: flex;
+  border-top: 1px solid #e5e5e5;
+  box-sizing: border-box;
+  padding-left: 40rpx;
 }
 .eachQue {
   flex: 1;
   text-align: center;
   line-height: 80rpx;
+  box-sizing: border-box;
+}
+.eachQueAfter {
+  border-right:1px solid #e5e5e5;
+  padding-left: 55rpx;
+}
+.eachQueAfter1 {
+  padding-right: 100rpx;
 }
 .icon_arrUp {
   width: 20rpx;
@@ -42,33 +57,59 @@
   height: 20rpx;
 }
 .returnImg_7day {
-  width: 697rpx;
-  height: 560rpx;
+  /* width: 697rpx;
+  height: 560rpx; */
+  width: 634rpx;
+  height: 511rpx;
 }
-/* 改版 */
+/* 客服问题中心整合样式新添加 */
 .serviceArea {
-  height: 300rpx;
-  background: #fff;
+  height: 100%;
   font-size: 28rpx;
   padding: 20rpx 20rpx 0 20rpx;
 }
-.serviceWrap {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  padding: 0 100rpx;
-  margin-top: 20rpx;
+.serviceTop,.serviceBody {
+  background-color: #fff;
+  border-radius: 10rpx;
 }
-.serviceItem {
+.serviceTop {
+  margin-bottom: 20rpx;
+}
+.serviceWrap {
+  width: 100%;
+  display: flex;
+  box-sizing: border-box;
+  padding: 0rpx 20rpx;
+  border-top: 1px solid #e5e5e5;
+}
+.serviceText{
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  line-height: 1.5
+}
+.textSmall {
+  color: #A9A9A9;
+  font-size: 22rpx;
+}
+.service_Img {
+  width: 84rpx;
+  height: 84rpx;
+}
+.serviceOnline {
+  width: 42%;
+  display: flex;
   align-items: center;
-  border: 1px solid #ccc;
-  border-radius: 10rpx;
-  padding: 20rpx;
+  justify-content: space-between;
+  padding:25rpx 50rpx 25rpx 0;
 }
-.normalQuestion {
-  margin-top: 20rpx;
+.servicePhone {
+  width: 58%;
+  display: flex;
+  align-items: center;
+  border-left: 1px solid #e5e5e5;
+  justify-content: space-between;
+  padding:25rpx 20rpx 25rpx 30rpx;
 }
-
+.serviceTitle {
+  padding:30rpx 0 30rpx 20rpx;
+}
