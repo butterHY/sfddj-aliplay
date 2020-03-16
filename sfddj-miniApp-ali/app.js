@@ -127,12 +127,13 @@ App({
     // console.log(canUsesremoveTab)
     if(canUsesetTab && canUsesremoveTab) {
       sendRequest.send(constants.InterfaceUrl.SHOP_GET_COUNT, {}, function(res) {
-        // console.log(res)
         if(res.data.result.count) {
           my.setTabBarBadge({
             index: 2,
             text: (res.data.result.count).toString()
-          })
+          },function success(res) {
+					},function fail(res) {
+					})
         } else {
 					my.removeTabBarBadge({
 						index: 2

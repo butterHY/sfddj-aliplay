@@ -33,7 +33,6 @@ Page({
 	onLoad: function (options) {
 		// utils.getNetworkType(this)
 
-
 		// 友盟+统计  ----领券中心浏览
 		my.uma.trackEvent('couponCenterView');
 
