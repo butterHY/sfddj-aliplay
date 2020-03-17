@@ -440,7 +440,7 @@
         <block a:for="{{bannerImgList}}" a:key="*this">
           <swiper-item>
              <!-- data-type="banner"  -->
-            <image src="{{baseImageUrl}}{{item.imageUrl}}" class="banner_img"  data-current="{{item.imageUrl}}" data-url="{{item.url}}" onTap="goToPage"></image>
+            <image src="{{baseImageUrl}}{{item.imageUrl}}" class="banner_img"   data-current="{{item.imageUrl}}" data-url="{{item.url}}" onTap="goToPage"></image>
           </swiper-item>
         </block>
       </swiper>

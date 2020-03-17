@@ -1015,7 +1015,6 @@ Page({
 	},
 
 	goToPage: function(e) {
-    					my.uma.trackEvent('homepage_popup_visibility');
 		let that = this;
 		let url = e.currentTarget.dataset.url;
 		let chInfo = constants.UrlConstants.chInfo;
@@ -1040,8 +1039,6 @@ Page({
 			});
 		}
 		else {
-
-
 			// 友盟+统计--首页浏览
 			// type = banner banner轮播 type = oneFour 1+4模块 type = oneTwo 1+2模块
 			if (type == 'banner') {

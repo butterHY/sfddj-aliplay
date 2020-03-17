@@ -1715,17 +1715,14 @@ Page({
     else if (type == 'addCart') {
       // 友盟+统计  ----商详加入购物车点击
       my.uma.trackEvent('goodsDetail_addCart', umaData);
-
     }
     else if (type == 'supplier') {
-
       // 友盟+统计  ----商详商家点击
       my.uma.trackEvent('goodsDetail_custService', umaData);
     }
     else if (type == 'comment') {
       // 友盟+统计  ----商详评论点击
       my.uma.trackEvent('goodsDetail_comment', umaData);
-
     }
     else if (type == 'goods') {
       // 友盟+统计  ----猜你喜欢点击
