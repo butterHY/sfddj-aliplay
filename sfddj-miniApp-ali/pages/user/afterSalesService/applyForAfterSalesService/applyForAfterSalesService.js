@@ -169,23 +169,50 @@ Page({
 			content: '确定要删除图片',
 			success: function(res) {
 				if (res.confirm) {
-					that.deleteImageWorkOrder(that.data.imageList[index]);
-					that.data.imageList.splice(index, 1);
-					that.setData({
-						imageList: that.data.imageList
-					});
+					// that.deleteImageWorkOrder(that.data.imageList[index]);
+					// that.data.imageList.splice(index, 1);
+					// that.setData({
+					// 	imageList: that.data.imageList
+					// });
+          that.deleteImageWorkOrder(that.data.imageList[index],index)
 				} else if (res.cancel) {
 				}
 			}
 		});
 	},
-	deleteImageWorkOrder: function(imgUrl) {
-		sendRequest.send(constants.InterfaceUrl.DELETE_IMAGE, { imgUrl: imgUrl }, function(res) {
-			my.showToast({
-				content: '删除成功'
-			});
-		}, function(res) { });
-	},
+	// deleteImageWorkOrder: function(imgUrl) {
+	// 	sendRequest.send(constants.InterfaceUrl.DELETE_IMAGE, { imgUrl: imgUrl }, function(res) {
+	// 		my.showToast({
+	// 			content: '删除成功'
+	// 		});
+	// 	}, function(res) { });
+	// },
+  deleteImageWorkOrder: function (imgUrl,index) {
+   let that=this
+   let data={imgUrl: imgUrl}
+    var imageList = this.data.imageList;
+      http.post(api.DELETE_IMAGE, data, function (res) {
+        //console.log(res)
+        if (res.data) {
+          my.showToast({
+            content: '删除成功'
+          });
+          imageList.splice(index, 1)
+          that.setData({
+            imageList: imageList
+          })
+        } else {
+          my.showToast({
+            content: '删除失败，未找到图片',
+          })
+        }
+      }, function (err) {
+        my.showToast({
+          content: '删除失败',
+        })
+      })
+  },
+
 	switchStatus: function(e) {
 		let that = this;
 		let {index} = e.currentTarget.dataset;

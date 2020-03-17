@@ -98,6 +98,7 @@ export default {
     'SAVECOMMENt': '/m/g/comment/1.0/saveGoodsComment',                      // 保存发表评论
     'GETCOMMENTRULE': '/m/g/comment/1.0/getCommentRule',                      // 获取评论规则
   },
+  DELETE_IMAGE: '/m/u/1.0/user/deleteImgPro',                                //加强安全性-图片删除
 
 
 }
