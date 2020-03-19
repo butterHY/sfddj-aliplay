@@ -285,8 +285,7 @@ Page({
         var resRet = res.data.ret
 
         if (resRet.code == '0' && resRet.message == 'SUCCESS' && resData && resData.goodsShowVO) {
-          that.data.goods = resData.goodsShowVO;
-          if (that.data.goods.specifications && that.data.goods.specifications.length >= 4) {
+          if (resData.goodsShowVO.specifications && resData.goodsShowVO.specifications.length >= 4) {
             that.setData({
               loadComplete: true,
               loadFail: true,
@@ -312,14 +311,26 @@ Page({
 
           // 友盟+统计
           //进来就统计的
-          my.uma.trackEvent('goodsDetailPageView', { channel_source: 'mini_alipay', supplierName: supplierInfo.nickName, supplierId: supplierInfo.supplierId, goodsName: that.data.goods.goodsName, goodsSn: that.data.goods.goodsSn, goodsCategoryId: that.data.goods.goodsCategoryId });
+          my.uma.trackEvent('goodsDetailPageView', { channel_source: 'mini_alipay', supplierName: supplierInfo.nickName, supplierId: supplierInfo.supplierId, goodsName: resData.goodsShowVO.goodsName, goodsSn: resData.goodsShowVO.goodsSn, goodsCategoryId: resData.goodsShowVO.goodsCategoryId });
           // 如果是从别的广告进来的则统计
           if (that.data.pageOptions.utm_source && that.data.pageOptions.utm_source != 'undefined' && that.data.pageOptions.utm_source != 'null') {
             my.uma.trackEvent('goodsDetailPage_source', { utm_source: that.data.pageOptions.utm_source, utm_medium: that.data.pageOptions.utm_medium, utm_campaign: that.data.pageOptions.utm_campaign, utm_content: that.data.pageOptions.utm_content, utm_term: that.data.pageOptions.utm_term })
           }
 
-          //当请求返回成功才请求评论和猜你喜欢的数据
+          //提前判断默认规格
           that.data.goodsId = resData.goodsShowVO.goodsId;
+          if( !resData.goodsShowVO.defaultProd || !resData.goodsShowVO.defaultProd.store ) {
+            resData.goodsShowVO.products.forEach(value => {value.isDefault = false})
+            let allProductIndex = resData.goodsShowVO.products.findIndex(value => {return value.store && value.store > 0 });
+            resData.goodsShowVO.products[allProductIndex].isDefault = true;
+            resData.goodsShowVO.defaultProd = resData.goodsShowVO.products[allProductIndex];
+            console.log(allProductIndex)
+            console.log(resData.goodsShowVO.defaultProd)
+            console.log(resData.goodsShowVO.products)
+          }
+
+          that.data.goods = resData.goodsShowVO;
+
           // 处理商品评论；
           if ( resData.buyerShow && resData.buyerShow.buyerShowList && resData.buyerShow.buyerShowList.length > 0 ) {
             that.getComment(resData.buyerShow.buyerShowList, 'buyerShow');
@@ -339,9 +350,9 @@ Page({
           // 请求联系商家的 webCallParam
           that.getWebCallParam(resData.goodsShowVO.supplierInfo.supplierId);
 
-          that.data.goods.supplierInfo.headImage = that.data.goods.supplierInfo.headImage ? that.data.goods.supplierInfo.headImage : that.data.baseImageLocUrl + 'miniappImg/icon/icon_default_head.jpeg'; // 商家头像
+          resData.goodsShowVO.supplierInfo.headImage = resData.goodsShowVO.supplierInfo.headImage ? resData.goodsShowVO.supplierInfo.headImage : that.data.baseImageLocUrl + 'miniappImg/icon/icon_default_head.jpeg'; // 商家头像
 
-          var article = that.data.goods.introduction;                                           // 商详的富文本字符串
+          var article = resData.goodsShowVO.introduction;                                           // 商详的富文本字符串
           that.data.minCount = resData.goodsShowVO.minCount ? resData.goodsShowVO.minCount : 1; //最少起售数
           that.data.specType = resData.goodsShowVO.specType;
           that.data.allProduct = resData.goodsShowVO.products;
@@ -349,7 +360,8 @@ Page({
           that.data.SFmember = resData.goodsShowVO.memberGoods ? true : false;                  // 判断是否是顺丰会员商品
           that.data.addressList = resData.addressList;
 
-          that.data.goods.nonDeliveryArea = that.data.goods.nonDeliveryArea.split(',');					// 不发货的地址
+          resData.goodsShowVO.nonDeliveryArea = resData.goodsShowVO.nonDeliveryArea.split(',');					// 不发货的地址
+          console.log(resData.goodsShowVO)
           if (!that.data.addressList || that.data.addressList.length <= 0) {										// 如果是没有收货地址说明用户没有登录 ， 调用 API 获取当前用户地址，没有登录在下单的时候就是快捷下单，需手动填写收货地址；
             that.getAddress();
           } else if (that.data.addressList && that.data.addressList.length > 0) {
@@ -373,23 +385,26 @@ Page({
           var type = '';
           resData.goodsShowVO.jifenStatus ? type = 3 : (resData.goodsShowVO.returnMoneyStatus ? type = 4 : type = '');
 
-          if (resData.goodsShowVO.defaultProd) {																	// 如果有返回默认规格的数据
-            // let defaultProducts = that.data.allProduct.find(value => value.isDefault == true);
+
+
+
+        
             that.data.theMemberPoint = resData.goodsShowVO.defaultProd.memberPoint;                         // 默认会员积分（也是用于积分商品的积分）
             that.data.theCostMemberScore = resData.goodsShowVO.defaultProd.costMemberScore;                 // 默认兑换会员积分
             that.data.theAwardMemberScore = resData.goodsShowVO.defaultProd.awardMemberScore;               // 默认奖励会员积分
-            that.data.specType == 'SINGLE' ? that.data.iavPath = resData.goodsShowVO.defaultProd.iavPath : that.data.iavPath = [];	// 单选商品设置默认规格
-          }
+
+            that.data.specType == 'SINGLE' || that.data.specType == 'MULTI' ? that.data.iavPath = resData.goodsShowVO.defaultProd.iavPath : that.data.iavPath = [];	// 单选和多选商品设置默认规格
 
           // 测试用的，让库存为 0
           // that.data.allProduct[2].store = 10;
           // specType 规格类型,  MULTI 多规格, SINGLE 单规格, OPTIONAL 任选规格；
           that.data.goodsSpecMap = JSON.parse(JSON.stringify(that.data.goods.specifications));
+          console.log(that.data.goodsSpecMap)
           if (that.data.specType == 'MULTI') {
-            that.data.goodsSpecMap.forEach(values => that.data.iavPath.push(''));
-            that.data.iavPath = that.data.iavPath.toString();
+            // that.data.goodsSpecMap.forEach(values => that.data.iavPath.push(''));   --- 调试多选规格需要注释
+            // that.data.iavPath = that.data.iavPath.toString();                       --- 调试多选规格需要注释
+
             that.data.multiDimension = that.data.goodsSpecMap.length;
-            that.data.allProduct.forEach(value => !value.imgPath ? value.imgPath = that.data.goods.goodsImages[0] : '');
             that.multiFormName();
             that.setGoodsSpecMapAllStore();
           } else {
@@ -397,12 +412,13 @@ Page({
               values.values.forEach(value => {
                 let matching = that.data.allProduct.find(val => value.valueId == parseInt(val.iavPath));
                 (matching && (matching.store == 0 || matching.store == '')) || !matching ? value.store = 0 : '';
-                matching && !matching.imgPath ? matching.imgPath = that.data.goods.goodsImages[0] : '';
-                matching && matching.imgPath ? value.imgPath = matching.imgPath : value.imgPath = that.data.goods.goodsImages[0];
+                // matching && !matching.imgPath ? matching.imgPath = that.data.goods.goodsImages[0] : '';
+                // matching && matching.imgPath ? value.imgPath = matching.imgPath : value.imgPath = that.data.goods.goodsImages[0];
               })
             })
           }
-
+          that.data.allProduct.forEach(value => !value.imgPath ? value.imgPath = that.data.goods.goodsImages[0] : '');
+          console.log(that.data.allProduct)
 
           // that.data.iavPath 在多选和单选的规格中是字符串，在任选规格中需要是数组;
           that.data.specType == 'OPTIONAL' ? that.data.optionalProduct = [] : '';
@@ -538,15 +554,23 @@ Page({
 	 */
   setGoodsSpecMap: function() {
     let that = this;
-    if (that.data.specType == 'OPTIONAL' || that.data.specType == 'MULTI') {
-      this.setProduct('firstTime');
+    if ( that.data.specType == 'OPTIONAL' ) {
+      that.setProduct('firstTime');
+      console.log(that.data.product)
     } else {
       let iavPathArr = that.data.iavPath.split(',');
       that.data.goodsSpecMap.forEach(function(mapValue) {
         mapValue.values.forEach(value => iavPathArr.includes(value.valueId.toString()) ? value.taped = true : '');
       })
-      that.setProduct();
+      if( that.data.specType == 'MULTI' ) {
+        that.upMultiGoodsSpecMap()
+        that.setProduct('firstTime');
+      } else {
+        that.setProduct();
+      }      
     }
+    console.log(that.data.allProduct)
+    console.log(that.data.goodsSpecMap)
   },
 
 	/**
@@ -555,7 +579,7 @@ Page({
   updateGoodsSpecMap: function(fatherIndex, index, specType) {
     var that = this;
     var values = that.data.goodsSpecMap[fatherIndex].values;
-    if (that.data.specType == 'OPTIONAL' || that.data.specType == 'MULTI') {                     // 任选规格 和 多选规格
+    if (that.data.specType == 'OPTIONAL' || that.data.specType == 'MULTI') {
       values.forEach(function(value, i) {
         // 找到当前的子类规格, 如果当前的子类规格 taped 为 false 或不存在就让它 为 true 否则让它为 false; 如果是任选： 不是当前的子类规格该怎样就怎样，如果是多选：当前父类的其他子类规格则都为 false;
         if (i == index) {
@@ -608,7 +632,8 @@ Page({
 
     } else if (specType == 'MULTI') {
       var arr = that.data.iavPath.split(',');
-      values[id].taped ? arr[index] = values[id].valueId + '' : arr[index] = '';
+      arr[index] = values[id].taped ? values[id].valueId + '' : '';
+      // values[id].taped ? arr[index] = values[id].valueId + '' : arr[index] = '';
 
       // console.log('更新之后的 that.data.iavPath', arr);
 
@@ -627,6 +652,7 @@ Page({
 
       that.setGoodsSpecMapAllStore();
       that.upMultiGoodsSpecMap();
+
 
     } else {
       // 设置默认子类规格（按照父类规格顺序排列），iavPath 可以包含多个 iavPath，以‘,’隔开，按父类规格顺序排列；
@@ -886,6 +912,11 @@ Page({
       optionalProduct: that.data.optionalProduct,       // 任选规格被选中的数组 ; 
       quantity: that.data.minCount,                     // 再次初始化为最低起售数 ;
     });
+
+    console.log(that.data.iavPath)
+    console.log(that.data.goodsSpecMap)
+    console.log(that.data.product)
+    console.log(that.data.allProduct)
 
     // 如果当前选中的规格的库存为 0 那就提示库存不足, 最新的修改是切换的时候库存为 0 不提醒，只有点击确定按钮的时候如果库存为 0 再提醒；
     // if (that.data.product.store != 0) {
@@ -1540,7 +1571,7 @@ Page({
     var that = this;
     var fatherIndexArr = that.data.iavPath.split(',');
     var tapNum = 0
-
+    console.log(that.data.goodsSpecMap)
     that.data.goodsSpecMap.forEach(function(value) {
       value.values.forEach(values => values.taped ? tapNum += 1 : '');
     })
@@ -1688,6 +1719,7 @@ Page({
     var that = this;
     var multiformnames = [];
     var iavPathArr = that.data.iavPath.split(',');
+    
     iavPathArr.forEach(function(value, index) {
       value == '' ? multiformnames[index] = that.data.goodsSpecMap[index].specName : multiformnames[index] = that.data.goodsSpecMap[index].values.find(val => val.valueId == value).valueName;
     })
@@ -1918,7 +1950,7 @@ Page({
     } else if (that.data.address) {
       defaultAddress = that.data.address;
     }
-
+    console.log(that.data.goods)
     that.data.nonDeliveryArea = that.data.goods.nonDeliveryArea.some(value => {
       if (defaultAddress.province && value) {
         return defaultAddress.province.indexOf(value) != -1 || value.indexOf(defaultAddress.province) != -1

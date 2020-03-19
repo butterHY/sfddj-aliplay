@@ -1,3 +1,5 @@
+<import src="../../common/thematicAdverts"/>
+
 <view class="page {{!isLightMember ? 'activity' : ''}}">
   <view class="heade">
     <view class="headMessage">
@@ -10,8 +12,13 @@
             <view a:if="{{isLightMember}}" class="lightMemberDate font-26">2020-03-22到期<text class="icon-changjianwenti font-34 marLeft_5" catchTap="isShowRule"></text></view>
           </view>
         </view>
-        <view class="administration font-26 tex_center font-weight-600">
-          <text a:if="{{isLightMember}}">管理</text>
+        <view  class="administration font-26 tex_center font-weight-600">
+          <view a:if="{{isLightMember}}">
+            <image class="administration" mode="scaleToFill" src="{{baseImageUrl + headData.parseItem[0].activityImageUrl}}"/>
+          </view>
+          <view a:else class="all_100" catchTap="isShowRule">
+            <image class="administration" mode="scaleToFill" src="{{baseImageUrl + headData.parseItem[0].iconImageUrl}}"/>
+          </view>
         </view>
       </view>
       <view class="userEquity font-weight-600 tex_center">
@@ -26,7 +33,7 @@
       </view>
     </view>
   </view>
-  <view class="couponModular">
+  <!-- <view class="couponModular">
     <view class="couponTitle font-38 font-weight-600">天天送券</view>
     <view class="couponConnent clearfix">
       <view class="couponBox" a:for="{{5}}" a:key="index" style="{{isLightMember ? (index %2 == 0 ? 'padding-right: 5rpx;' : 'padding-left: 5rpx;') : ''}}">
@@ -38,13 +45,26 @@
           <view class="couponButton font-30 posi_re ">
             <view class="litlePoint posi_ab litlePointTop"></view>
             <view class="dottedLine posi_ab">
-              <!-- <view class="litlePoint" a:for="{{16}}"></view> -->
             </view>
             <view class="litlePoint posi_ab litlePointBot"></view>
             <view class="couponButtonText">立即领取</view>
           </view>
         </view>
       </view>
+    </view>
+  </view> -->
+
+  <block a:for="{{thematicAds.modules}}" a:key="thematicAds">
+    <template is="thematicItem" data="{{item, baseImageUrl, baseLocImgUrl, ossImgStyle, countHour, countMinute, countSecond,banRightMargin, isLightMember}}"></template>
+  </block>
+  
+  <view class="openingButton posi_ab">
+    <view class="openingBox all_100 flex_view_row tex_center">
+      <view class="openingCost flex_1 flex_view_col justi_cen">
+        <view class="membershipFees font-34">限时开通仅需￥4.9</view>
+        <view class="font-26">享受会员特权</view>
+      </view>
+      <view class="openingText font-36 color-white">立即开通</view>
     </view>
   </view>
 </view>

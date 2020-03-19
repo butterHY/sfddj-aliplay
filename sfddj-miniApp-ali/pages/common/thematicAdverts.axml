@@ -398,5 +398,55 @@
         </swiper>
       </view>
     </view>
+
+    <view a:if="{{item.moduleType == 'COUPON'}}" class="couponModular">
+      <!-- <view class="ads-white-interval" style="background: #{{item.topIntervalColor}};"></view> -->
+        <view class="couponTitle font-38 font-weight-600">天天送券</view>
+        <view class="couponConnent clearfix">
+          <view class="couponBox" a:for="{{5}}" a:key="index" style="{{isLightMember ? (index %2 == 0 ? 'padding-right: 5rpx;' : 'padding-left: 5rpx;') : ''}}">
+            <view class="coupon flex_view_row" >
+              <view class="couponMessage flex_1 flex_view_col justi_cen">
+                <view class="couponPrice single-line font-26  font-weight-600">￥<text class="font-50">5</text></view>
+                <view class="couponDescribe single-line font-26">全平台无门槛</view>
+              </view>
+              <view class="couponButton font-30 posi_re ">
+                <view class="litlePoint posi_ab litlePointTop"></view>
+                <view class="dottedLine posi_ab">
+                </view>
+                <view class="litlePoint posi_ab litlePointBot"></view>
+                <view class="couponButtonText">立即领取</view>
+              </view>
+            </view>
+          </view>
+        </view>
+
+      <!-- <view class="AdsImgMain" style="background: #{{item.backgroundColor}};">
+        <view a:if="{{item.parseItem %2 != 0}}" class="AdsImgShowBox">
+          <view class="flex_view_row">
+            <view class="flex_1" a:for="{{item.parseItem}}" a:for-item="goodsItem" a:key="index"  catchTap="getCoupon()">
+              <view dataset-growing-title="{{item.moduleName}}" class="VBox flex_view_row align_cen justi_cen">
+                <image lazy-load="{{true}}" src="{{baseImageUrl + goodsItem.imageUrl}}">
+              </view>
+            </view>
+          </view>
+        </view>
+
+
+        <view a:if="{{item.parseItem %2 == 0}}" class="AdsImgShowBox">
+            <view>
+                <view class="HBox">
+                    <view class="Bflex1 twoCoupon" v-for="(list, index) in couponArr" :key="index" @click.stop="getCoupon(list.couponSign)">
+                        <view :data-growing-title="advertItem.moduleName" class="VBox BoxCenter">
+                            <image v-lazy="httpImageUrl + list.imageUrl + smallImg200" alt="">
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </view>
+      </view> -->
+    </view>
+
+
+    
   </view>
 </template>

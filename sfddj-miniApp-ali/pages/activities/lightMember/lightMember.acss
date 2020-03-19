@@ -1,5 +1,9 @@
+@import '../../css-public/thematicAdverts.acss';
+
 .page {
   background: #f5f5f5;
+  /* position: relative; */
+  padding-bottom: 106rpx;
 }
 
 /* 已注册轻会员样式 */
@@ -63,7 +67,9 @@
   height: 52rpx;
   line-height: 52rpx;
   border-radius: 40rpx;
-  background: #b6fce8;
+  /* background: #b6fce8; */
+  /* background: url(../../../image/lightMemberHeard.png) top center no-repeat; */
+  /* background-size:cover; */
   color: #1e9271;
 }
 
@@ -218,12 +224,13 @@
   height: 848rpx;
   background: #fff;
   border-radius: 30rpx;
+  padding-top: 52rpx;
 }
 
 .ruleConnnet {
   overflow: auto;
   box-sizing: border-box;
-  padding: 52rpx 46rpx 0;
+  padding: 0 46rpx;
   line-height: 42rpx;
   border-radius: 30rpx 30rpx 0 0;
 }
@@ -241,3 +248,36 @@
   line-height: 98rpx;
   color: #fff;
 }
+
+.openingButton {
+  height: 106rpx;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 30rpx;
+  bottom: 0;
+  left: 0;
+}
+
+.openingBox {
+  background: url(../../../image/openingButton.png) top center no-repeat;
+  background-size:cover;
+}
+.openingCost {
+  color: #82838a;
+}
+
+.membershipFees {
+  margin-bottom: 10rpx;
+  color: #ffecbc;
+}
+
+.openingText {
+  width: 270rpx;
+  height: 100%;
+  line-height: 106rpx;
+}
+
+
+
+
+

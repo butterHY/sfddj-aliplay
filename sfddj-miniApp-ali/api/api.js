@@ -99,5 +99,10 @@ export default {
     'GETCOMMENTRULE': '/m/g/comment/1.0/getCommentRule',                      // 获取评论规则
   },
 
+	  // 轻会员页接口
+  LIGHTMEMBER: {
+    'GETLIGHTMEMBER': '/m/a/1.0/subject/getLightMember',                      // 广告模块
+  },
+
 
 }

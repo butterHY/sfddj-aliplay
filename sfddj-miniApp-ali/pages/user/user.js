@@ -103,7 +103,6 @@ Page({
 			if ('不是会员' == res.data.result.message) {
 				isMember = false;
 			}
-      console.log(isMember)
 			try {
 				my.setStorageSync({ key: constants.StorageConstants.isMember, data: isMember });
 			} catch (e) { }
@@ -243,6 +242,8 @@ Page({
   
 	// 跳转去原生的优惠券页
   goToCoupon() {
+		// 友盟+统计--签到页浏览
+		this.umaTrackEvent('coupon')
     my.navigateTo({ url: './myCoupon/myCoupon' })
   },
 
