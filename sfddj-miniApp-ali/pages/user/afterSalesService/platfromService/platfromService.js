@@ -8,6 +8,8 @@ var util = require('../../../../utils/util');
 var sendRequest = require('../../../../utils/sendRequest');
 var baseImageUrl = constants.UrlConstants.baseImageUrl; //图片资源地址前缀
 var wordsList = [{ str: '对商家售后结果有异议' }, { str: '商家服务态度不好' }, { str: '未收到退款/补发' }, { str: '投诉商品' }, { str: '其他' }]; //申请退款
+import api from '../../../../api/api';
+import http from '../../../../api/http';
 
 Page({
 
@@ -60,22 +62,50 @@ Page({
       content: '确定要删除图片',
       success: function (res) {
         if (res.confirm) {
-          that.deleteImageWorkOrder(that.data.imageList[index]);
-          that.data.imageList.splice(index, 1);
-          that.setData({
-            imageList: that.data.imageList
-          });
+          // that.deleteImageWorkOrder(that.data.imageList[index]);
+          // that.data.imageList.splice(index, 1);
+          // that.setData({
+          //   imageList: that.data.imageList
+          // });
+          that.deleteImageWorkOrder(that.data.imageList[index],index)
         } else if (res.cancel) {
         }
       }
     });
   },
-  deleteImageWorkOrder: function (imgUrl) {
-    sendRequest.send(constants.InterfaceUrl.DELETE_IMAGE, { imgUrl: imgUrl }, function (res) {
-      my.showToast({
-        content: '删除成功'
-      });
-    }, function (res) {});
+  // deleteImageWorkOrder: function (imgUrl) {
+  //   console.log("hahahah")
+  //   sendRequest.send(constants.InterfaceUrl.DELETE_IMAGE, { imgUrl: imgUrl }, function (res) {
+  //     console.log(111)
+  //     my.showToast({
+  //       content: '删除成功'
+  //     });
+  //   }, function (res) {});
+  // },
+  deleteImageWorkOrder: function (imgUrl,index) {
+   let that=this
+   let data={imgUrl: imgUrl}
+    var imageList = this.data.imageList;
+      http.post(api.DELETE_IMAGE, data, function (res) {
+        //console.log(res)
+        if (res.data) {
+          my.showToast({
+            content: '删除成功'
+          });
+          imageList.splice(index, 1)
+          that.setData({
+            imageList: imageList
+          })
+        } else {
+          my.showToast({
+            content: '删除失败，未找到图片',
+          })
+        }
+      }, function (err) {
+        my.showToast({
+          content: '删除失败',
+        })
+      })
   },
   resonTap: function (e) {
     var that = this;

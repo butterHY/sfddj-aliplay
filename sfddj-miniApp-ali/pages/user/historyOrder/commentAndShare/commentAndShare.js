@@ -178,28 +178,44 @@ Page({
       content: '是否删除？',
       success: function (res) {
         if (res.confirm) {
-          sendRequest.send(constants.InterfaceUrl.DELETE_IMAGE, {
-            imgUrl: url
-          }, function (res) {
-            if (res.data.result.deleteResult) {
-              my.showToast({
-                content: '删除成功'
-              });
+          // sendRequest.send(constants.InterfaceUrl.DELETE_IMAGE, {
+          //   imgUrl: url
+          // }, function (res) {
+          //   if (res.data.result.deleteResult) {
+          //     my.showToast({
+          //       content: '删除成功'
+          //     });
 
-              imgList.splice(index, 1);
-              that.setData({
-                imgList: imgList
-              });
-            } else {
-              my.showToast({
-                content: '删除失败，未找到图片'
-              });
-            }
-          }, function (err) {
+          //     imgList.splice(index, 1);
+          //     that.setData({
+          //       imgList: imgList
+          //     });
+          //   } else {
+          //     my.showToast({
+          //       content: '删除失败，未找到图片'
+          //     });
+          //   }
+          // }, function (err) {
+          let data={imgUrl: url}
+         http.post(api.DELETE_IMAGE, data, function (res) {
+          if (res.data) {
             my.showToast({
-              content: '删除失败，' + err
-            });
-          });
+              content: '删除成功',
+            })
+            imgList.splice(index, 1)
+             that.setData({
+               imgList: imgList
+             })
+           } else {
+              my.showToast({
+                content: '删除失败，未找到图片',
+              })
+           }
+          }),function(err){
+              my.showToast({
+                  content: '删除失败，未找到图片',
+                });
+          }
         }
       }
     });

@@ -224,8 +224,8 @@ Page({
 		if (that.data.isMember || type == 'rightHere') {
 			if (that.data.goToUrl != 'pages/user/user') {
 				my.navigateTo({
-					// url: that.data.goToUrl
-          url: `${that.data.goToUrl}?webCallParam=${that.data.webCallParam}`
+					url: that.data.goToUrl
+          // url: `${that.data.goToUrl}?webCallParam=${that.data.webCallParam}`
 				});
 			} else {
 				return;
@@ -421,7 +421,8 @@ Page({
 			});
 		} catch (e) { }
 		my.navigateTo({
-			url: '/pages/user/webCallView/webCallView?link=' + webCallLink + '&newMethod=new'
+			// url: '/pages/user/webCallView/webCallView?link=' + webCallLink + '&newMethod=new'
+      url: `/pages/user/helpCenter/helpCenter?webCallParam=${that.data.webCallParam}`
 		});
 	},
 
