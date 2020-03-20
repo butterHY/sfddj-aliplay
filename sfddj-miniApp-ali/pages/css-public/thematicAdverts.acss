@@ -581,22 +581,22 @@
   left: -2rpx;
 }
 
-.activity .couponBox {
+.onLine .couponBox {
   width: 100%;
   height: 160rpx;
 }
 
-.activity .couponButton {
+.onLine .couponButton {
   width: 188rpx;
   background: #e4c672;
   border-radius: 0 20rpx 20rpx 0;
 }
 
-.activity .couponButtonText {
+.onLine .couponButtonText {
     width: auto;
 }
 
-.activity .couponMessage {
+.onLine .couponMessage {
   padding-left: 32rpx;
 }
 

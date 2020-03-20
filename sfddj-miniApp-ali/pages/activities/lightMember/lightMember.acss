@@ -11,8 +11,8 @@
   height: 446rpx;
   background: #2b2d3e;
   box-sizing: border-box;
-  background: url(../../../image/lightMemberHeard.png) top center no-repeat;
-  background-size:cover;
+  /* background: url(../../../image/lightMemberHeard.png) top center no-repeat; */
+  /* background-size:cover; */
   /* padding: 80rpx 30rpx 0; */
 }
 
@@ -20,6 +20,9 @@
   height: 100%;
   box-sizing: border-box;
   padding: 124rpx 72rpx 0;
+  /* background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: top center; */
 }
 
 .userPersonal {
@@ -55,11 +58,14 @@
 }
 
 .name {
-  line-height: 42rpx;
+  height: 36rpx;
+  /* line-height: 36rpx; */
 }
 
 .lightMemberDate {
-  line-height: 32rpx;
+  height: 34rpx;
+  line-height: 34rpx;
+  margin-top: 18rpx;
 }
 
 .administration {
@@ -71,6 +77,14 @@
   /* background: url(../../../image/lightMemberHeard.png) top center no-repeat; */
   /* background-size:cover; */
   color: #1e9271;
+}
+
+.iconImg {
+  width: 34rpx;
+  height: 34rpx;
+  border-radius: 50%;
+  margin-left: 15rpx;
+  margin-bottom: -6rpx;
 }
 
 .userEquity {
@@ -259,9 +273,9 @@
 }
 
 .openingBox {
-  background: url(../../../image/openingButton.png) top center no-repeat;
-  background-size:cover;
+  border-radius: 60rpx;
 }
+
 .openingCost {
   color: #82838a;
 }

@@ -1,19 +1,34 @@
 <import src="../../common/thematicAdverts"/>
+<!-- 加载中 -->
+<view a:if="{{!loadComplete && !loadFail}}">
+  <loading-now>
+  </loading-now>
+</view>
+<!-- 加载失败 -->
+<view a:elif="{{loadFail}}">
+  <load-fail onRefreshPage="onRefreshPage">
+  </load-fail>
+</view>
 
-<view class="page {{!isLightMember ? 'activity' : ''}}">
+<view a:else class="page {{!isLightMember ? 'activity' : ''}}">
   <view class="heade">
-    <view class="headMessage">
+  <!-- center center cover  -->
+    <view class="headMessage" style="background-image: url({{baseImageUrl + headData.parseItem[0].titleImageUrl}}) ;background-size: 100% 100%; ">
       <!-- flex_view_row justi_between align_cen -->
       <view class="userPersonal" >
         <view class="userNameAndRul ">
           <view class="headImg"></view>
           <view class="nameBox  font-weight-600">
             <view class="name single-line font-38 ">笑笑笑</view>
-            <view a:if="{{isLightMember}}" class="lightMemberDate font-26">2020-03-22到期<text class="icon-changjianwenti font-34 marLeft_5" catchTap="isShowRule"></text></view>
+            <!-- class="icon-changjianwenti font-34 marLeft_5" -->
+            <view a:if="{{isLightMember}}" class="lightMemberDate font-26">
+              2020-03-22到期
+              <image class="iconImg " mode="scaleToFill" src="{{baseImageUrl + headData.parseItem[0].iconImageUrl}}"  catchTap="isShowRule"></image >
+            </view>
           </view>
         </view>
         <view  class="administration font-26 tex_center font-weight-600">
-          <view a:if="{{isLightMember}}">
+          <view a:if="{{isLightMember}}" data-url="{{headData.parseItem[0].activityLink}}" catchTap="goToPage">
             <image class="administration" mode="scaleToFill" src="{{baseImageUrl + headData.parseItem[0].activityImageUrl}}"/>
           </view>
           <view a:else class="all_100" catchTap="isShowRule">
@@ -57,9 +72,9 @@
   <block a:for="{{thematicAds.modules}}" a:key="thematicAds">
     <template is="thematicItem" data="{{item, baseImageUrl, baseLocImgUrl, ossImgStyle, countHour, countMinute, countSecond,banRightMargin, isLightMember}}"></template>
   </block>
-  
+  <!-- openingButtonData -->
   <view class="openingButton posi_ab">
-    <view class="openingBox all_100 flex_view_row tex_center">
+    <view class="openingBox all_100 flex_view_row tex_center" style="background-image: url({{baseImageUrl + openingButtonData.parseItem[0].imageUrl}}) ;background-size: 100% 100%; ">
       <view class="openingCost flex_1 flex_view_col justi_cen">
         <view class="membershipFees font-34">限时开通仅需￥4.9</view>
         <view class="font-26">享受会员特权</view>

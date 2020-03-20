@@ -150,7 +150,6 @@ Page({
 		that.setData({
       webCallParam: options.webCallParam
     })
-		//console.log(111,options)
 	},
 
   //0:订单问题 1:售后问题 2:其他

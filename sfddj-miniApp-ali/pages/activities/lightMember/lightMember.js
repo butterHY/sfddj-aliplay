@@ -19,16 +19,10 @@ Page({
     banRightMargin: 0,        //banner图的右边距
     isLightMember: false,
     showRuleStatus: false,
-    headData: [],
+
+    openingButtonData: {},     // 底部按钮数据
   },
   onLoad() {
-    my.setNavigationBar({
-      title: '会员中心',
-      backgroundColor: '#2b2d3e',
-      // borderBottomColor,
-      // image,
-    })
-
     this.getAdvertisingModule();
   },
 
@@ -50,48 +44,57 @@ Page({
             value.parseItem = JSON.parse(value.items);
 
             value.parseItem = that.replaceFields(value.parseItem);
-            
-            if( value.moduleType == "SINGLE" || value.moduleType == "DOUBLE" ) {
-              value.moduleType = value.moduleType == "SINGLE" ? "SINGLEGOODS" : "DOUBLEGOODS";
-              value.topIntervalColor ? value.topIntervalColor = value.topIntervalColor.replace('#', '') : '';
-              value.backgroundColor ? value.backgroundColor = value.backgroundColor.replace('#', '') : '';
+            value.topIntervalColor ? value.topIntervalColor = value.topIntervalColor.replace('#', '') : '';
+            value.backgroundColor ? value.backgroundColor = value.backgroundColor.replace('#', '') : '';
+
+            switch(value.moduleType) {
+              case "SINGLE":
+                value.moduleType = "SINGLEGOODS"
+              break;
+              case "DOUBLE":
+                value.moduleType = "DOUBLEGOODS"
+              break;
+              case "GOODS":
+                value.moduleType = "GOODSLIST"
+              break;
+              case "SET_LOW_BUTTON":
+                that.data.openingButtonData = value
+              break;
+              default:
+              break;
             }
 
-            if( value.moduleType == "TITLE" &&  value.backgroundColor ) {
-              value.backgroundColor ? value.backgroundColor = value.backgroundColor.replace('#', '') : '';
+            // 设置标题
+            if (resData.pageName) {
+              my.setNavigationBar({
+                title: resData.pageName,
+                success() { },
+                fail() { },
+              });
             }
-
-            if( value.moduleType == "GOODS" ) {
-              value.moduleType = "GOODSLIST"; 
-              value.topIntervalColor ? value.topIntervalColor = value.topIntervalColor.replace('#', '') : '';
-              value.backgroundColor ? value.backgroundColor = value.backgroundColor.replace('#', '') : '';
-            }
-
-            if( value.moduleType == 'COUPON' ) {
-              value.topIntervalColor ? value.topIntervalColor = value.topIntervalColor.replace('#', '') : '';
-              value.backgroundColor ? value.backgroundColor = value.backgroundColor.replace('#', '') : '';
-            }
-
-            // console.log(value)
-            // console.log(value.moduleType == "REGISTERED" && resData.classify == "已注册")
-            // that.data.headData = (value.moduleType == "REGISTERED" && resData.classify == "已注册") ? value : (value.moduleType == "UNREGISTERED" && resData.classify != "已注册" ? value : []);
-
 
           })
 
           console.log(resData)
           that.setData({
+            loadComplete: true,
+            loadFail: false,
             thematicAds: resData,
             headData: resData.classify == "已注册" ? resData.modules.find(value => value.moduleType == "REGISTERED") : resData.modules.find(value => value.moduleType == "UNREGISTERED"),
-            isLightMember: resData.classify == "为注册" ? true : false,
+            openingButtonData: that.data.openingButtonData,
+            isLightMember: resData.classify == "已注册" ? true : false,
           })
           console.log(that.data.thematicAds);
           console.log(that.data.headData);
           console.log(that.data.isLightMember);
+          console.log(that.data.openingButtonData)
         }
       }
-    }, () => {
-      console.log(res)
+    }, (res) => {
+      that.setData({
+        loadComplete: true,
+        loadFail: true,
+      })
     }) 
   },
 
@@ -104,9 +107,59 @@ Page({
       val.fontSize ?  val.fontSize = parseInt(val.fontSize) : '';
       val.fontSizeColor ? val.fontColor = val.fontSizeColor.replace('#', '') : '';
       val.titleImage = val.imageUrl;
-      
     })
     return data
-  }
+  },
+
+
+  // 管理按钮的跳转
+  goToPage(data){
+    let chInfo = constants.UrlConstants.chInfo;
+    let url = data.currentTarget.dataset.url;
+    let that = this
+    if ( url.substring(0,4).indexOf('http') != -1 ) {
+      my.call('startApp', { appId: '20000067', param: { url: url, chInfo: chInfo } })
+    } else {
+      my.navigateTo({
+        url
+      });
+    }
+  },
+
+  // 轻会员跳转
+  goToLightMember() {
+    my.navigateToMiniService({
+      serviceId: "2019072365974237", // 插件id,固定值勿改
+      servicePage: "pages/hz-enjoy/main/index", // 插件页面地址,固定值勿改
+      extraData: {
+        "alipay.huabei.hz-enjoy.templateId": "2020021100020903830004581133",
+        "alipay.huabei.hz-enjoy.partnerId": "2088821129681837",
+      },
+      success: (res) => {},
+      fail: (res) => {},
+      complete: (res) => {},
+    });
+
+    
+    // my.navigateToMiniService({
+    //   serviceId: "2019072365974237", // 插件id,固定值勿改
+    //   servicePage: "pages/hz-enjoy/main/index", // 插件页面地址,固定值勿改
+    //   extraData: {
+    //     "alipay.huabei.hz-enjoy.templateId": "2020021900020903320004673545",
+    //     "alipay.huabei.hz-enjoy.partnerId": "2088421251942323",
+    //   },
+    //   success: (res) => {},
+    //   fail: (res) => {},
+    //   complete: (res) => {},
+    // });
+  
+  },
+
+  
+
+  // 阻止下拉刷新
+  onPullDownRefresh() {
+    my.stopPullDownRefresh()
+  },
   
 });
