@@ -202,8 +202,6 @@ Page({
       buyerShowList:  commentList,
       // buyerShowCount: resData.buyerShow.buyerShowCount
     });
-
-    console.log(that.data.buyerShowList)
   },
 
 	/**f
@@ -324,9 +322,10 @@ Page({
             let allProductIndex = resData.goodsShowVO.products.findIndex(value => {return value.store && value.store > 0 });
             resData.goodsShowVO.products[allProductIndex].isDefault = true;
             resData.goodsShowVO.defaultProd = resData.goodsShowVO.products[allProductIndex];
-            console.log(allProductIndex)
-            console.log(resData.goodsShowVO.defaultProd)
-            console.log(resData.goodsShowVO.products)
+            
+            console.log('没有默认规格，下一个规格 index', allProductIndex)
+            console.log('没有默认规格，下一个规格作为默认', resData.goodsShowVO.defaultProd)
+            console.log('没有默认规格，更改后的全部规格', resData.goodsShowVO.products)
           }
 
           that.data.goods = resData.goodsShowVO;
@@ -360,8 +359,7 @@ Page({
           that.data.SFmember = resData.goodsShowVO.memberGoods ? true : false;                  // 判断是否是顺丰会员商品
           that.data.addressList = resData.addressList;
 
-          resData.goodsShowVO.nonDeliveryArea = resData.goodsShowVO.nonDeliveryArea.split(',');					// 不发货的地址
-          console.log(resData.goodsShowVO)
+          resData.goodsShowVO.nonDeliveryArea = resData.goodsShowVO.nonDeliveryArea.split(',');					// 不发货的地址)
           if (!that.data.addressList || that.data.addressList.length <= 0) {										// 如果是没有收货地址说明用户没有登录 ， 调用 API 获取当前用户地址，没有登录在下单的时候就是快捷下单，需手动填写收货地址；
             that.getAddress();
           } else if (that.data.addressList && that.data.addressList.length > 0) {
@@ -418,7 +416,7 @@ Page({
             })
           }
           that.data.allProduct.forEach(value => !value.imgPath ? value.imgPath = that.data.goods.goodsImages[0] : '');
-          console.log(that.data.allProduct)
+
 
           // that.data.iavPath 在多选和单选的规格中是字符串，在任选规格中需要是数组;
           that.data.specType == 'OPTIONAL' ? that.data.optionalProduct = [] : '';
@@ -627,15 +625,11 @@ Page({
       } else {
         that.data.iavPath.splice(that.data.iavPath.findIndex(value => value == values[id].valueId), 1);
       }
-      // console.log('更新之后的 that.data.iavPath', that.data.iavPath);
       that.setProduct('modifyOptional');
 
     } else if (specType == 'MULTI') {
       var arr = that.data.iavPath.split(',');
       arr[index] = values[id].taped ? values[id].valueId + '' : '';
-      // values[id].taped ? arr[index] = values[id].valueId + '' : arr[index] = '';
-
-      // console.log('更新之后的 that.data.iavPath', arr);
 
       that.data.iavPath = arr.toString();
       that.multiFormName();
