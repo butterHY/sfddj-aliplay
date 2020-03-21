@@ -1,115 +1,107 @@
 <view class="loadingTop font-24 color-b1b6bb" a:if="{{!loadComplete}}">数据加载中...</view>
-<view class="loadingTop font-24 color-b1b6bb" a:elif="{{loadFail}}">加载失败：<text class="color-ff5353">{{errMsg}}</text></view>
- 
+<view class="loadingTop font-24 color-b1b6bb" a:elif="{{loadFail}}">加载失败：
+    <text class="color-ff5353">{{errMsg}}</text></view>
 <!--内容  -->
 <view class="all_100 flex_view_col" a:else>
-  <!--头部  -->
-  <view class="topBanner posi_re flex_view_row justi_cen">
-    <image src="{{baseImgLocUrl}}miniappImg/bg/bg_memberIntegra.jpg" class="topBannerImg posi_ab "></image>
-    <!--积分展示  -->
-    <view class="marTop_43">
-      <view class="flex_view_row posi_re justi_cen">
-        <image src="{{baseImgLocUrl}}miniappImg/icon/icon_integralNum.png" class="icon_integralNum marRight_10"></image>
-        <view class="memberPoint">{{memberPoint}}</view>
-        <navigator url="/pages/user/jifenDetail/jifenDescription/jifenDescription" hover-class="none">
-          <image src="{{baseImgLocUrl}}miniappImg/icon/icon_layerTip.png" class="icon_layerTip"></image>
-        </navigator>
-        
-      </view>
-      <!--打败多少用户  -->
-      <view class="marTop_5 flex_view_row posi_re align_cen">
-        <image src="{{baseImgLocUrl}}miniappImg/icon/icon_horn.png" class="icon_horn marRight_10"></image>
-        <view class="color-ffb172 font-24">
-          打败了<text>{{rate}}%</text>的大当家用户
-        </view>
-      </view>
-    </view>
-    
-  </view>
-
-  <!--中间各导航  -->
-  <view class="height_250 whiteBack width_100 flex_view_row">
-    <!--第一个  -->
-    <navigator url="/pages/user/jifenDetail/earnIntegral/earnIntegral" class="width_250 height_100 flex_view_col align_cen justi_cen" hover-class="none">
-      <text class="font-30 color-323232">赚积分</text>
-      <image src="{{baseImgLocUrl}}miniappImg/icon/icon_getIntegral.png" class="icon_jifenNav"></image>
-    </navigator>
-
-    <!--第二个  -->
-    <navigator url="/pages/user/integralStore/integralStore" class="width_250 height_100 flex_view_col align_cen justi_cen" hover-class="none">
-      <text class="font-30 color-323232">积分商城</text>
-      <image src="{{baseImgLocUrl}}miniappImg/icon/icon_integralShop.png" class="icon_jifenNav"></image>
-    </navigator>
-
-    <!--第三个  -->
-    <navigator url="/pages/user/historyOrder/historyOrder?index=0" class="width_250 height_100 flex_view_col align_cen justi_cen" hover-class="none">
-      <text class="font-30 color-323232">查订单</text>
-      <image src="{{baseImgLocUrl}}miniappImg/icon/icon_findOrder.png" class="icon_jifenNav"></image>
-    </navigator>
-
-   
-  </view>
-   <!--间隙  -->
-  <view class="division-area"></view>
-  <!--标题  -->
-  <view class="jifenInAndExTit flex_view_row align_cen justi_cen width_100 whiteBack">
-    <text class="font-32">- 积分收支明细 -</text>
-  </view>
-
-  <!--底下积分收支明细  -->
-  <view class="flex_1 flex_view_col">
-    
-    <!--收支明细  -->
-    <view class="jifenInAndEx whiteBack flex_1 flex_view_col">
-      
-      <view class="jifenDetail flex_1">
-        <!--表头  -->
-        <view class="sheetHead font-28 flex_view_row">
-          <view class="sheetHeadOne sheetLeft height_100 flex_view_row justi_cen align_cen"><text>项目</text></view>
-          <view class="sheetCenter height_100 flex_view_row justi_cen align_cen"><text>明细</text></view>
-          <view class="sheetRight height_100 flex_view_row justi_cen align_cen"><text>创建时间</text></view>
-        </view>
-
-        <!--表里面的内容  -->
-        <view class="sheetCon">
-          <block>
-            <view class="eachSheetRow flex_view_row" a:for="{{recordsList}}" a:for-item="item" a:key="records">
-              <view class="sheetLeft">
-                <view class="flex_view_col justi_cen align_cen height_100">
-                  <text class="color-4f4f4f font-28">{{item.operationName}}</text>
-                  <text class="color-afb2b4 font-22" a:if="{{item.orderSn}}">{{item.orderSn}}</text>
-                </view> 
-              </view>
-              <view class="sheetCenter">
-                <view class="flex_view_row justi_cen align_cen height_100">
-                  <text class="font-30 color-ff791f">{{item.negative ? "" : "+"}}</text>
-                   <text class="font-32 color-ff791f">{{item.detail}}</text> 
-                </view> 
-              </view>
-              <view class="sheetRight">
-                <view class="flex_view_row justi_cen align_cen height_100">
-                  <text class="font-22 color-afb2b4">{{item.createDate}}</text>
-                   <!-- <text class='font-32' style='color: #ff791f;'>{{orderNum}}300</text>  -->
-                </view> 
-              </view>
+    <!--头部  -->
+    <view class="topBanner posi_re flex_view_row justi_cen">
+        <image src="{{baseImgLocUrl}}miniappImg/bg/bg_memberIntegra.jpg" class="topBannerImg posi_ab "></image>
+        <!--积分展示  -->
+        <view class="marTop_43">
+            <view class="flex_view_row posi_re justi_cen">
+                <image src="{{baseImgLocUrl}}miniappImg/icon/icon_integralNum.png" class="icon_integralNum marRight_10"></image>
+                <view class="memberPoint">{{memberPoint}}</view>
+                <navigator url="/pages/user/jifenDetail/jifenDescription/jifenDescription" hover-class="none">
+                    <image src="{{baseImgLocUrl}}miniappImg/icon/icon_layerTip.png" class="icon_layerTip"></image>
+                </navigator>
             </view>
-          </block>
-          <!--加载更多  -->
-          <view class="botLine width_100 tex_center font-28 color-bbbbbb ">
-            <view class="color-323232" a:if="{{!endPage && recordsList.length > 0}}" catchTap="getMoreDet">加载更多</view>
-            <view a:if="{{endPage || recordsList.length == 0}}">没有更多</view>
-          </view>
+            <!--打败多少用户  -->
+            <!-- <view class="marTop_5 flex_view_row posi_re align_cen">
+                <image src="{{baseImgLocUrl}}miniappImg/icon/icon_horn.png" class="icon_horn marRight_10"></image>
+                <view class="color-ffb172 font-24">
+          打败了
+                    <text>{{rate}}%</text>的大当家用户
+                </view>
+            </view> -->
         </view>
-      </view>
     </view>
-  </view>
+    <!--中间各导航  -->
+    <view a:if="{{showMidTab}}" class="height_250 whiteBack width_100 flex_view_row">
+        <!--第一个  -->
+        <navigator url="/pages/user/jifenDetail/earnIntegral/earnIntegral" class="width_250 height_100 flex_view_col align_cen justi_cen" hover-class="none">
+            <text class="font-30 color-323232">赚积分</text>
+            <image src="{{baseImgLocUrl}}miniappImg/icon/icon_getIntegral.png" class="icon_jifenNav"></image>
+        </navigator>
+        <!--第二个  -->
+        <navigator url="/pages/user/integralStore/integralStore" class="width_250 height_100 flex_view_col align_cen justi_cen" hover-class="none">
+            <text class="font-30 color-323232">积分商城</text>
+            <image src="{{baseImgLocUrl}}miniappImg/icon/icon_integralShop.png" class="icon_jifenNav"></image>
+        </navigator>
+        <!--第三个  -->
+        <navigator url="/pages/user/historyOrder/historyOrder?index=0" class="width_250 height_100 flex_view_col align_cen justi_cen" hover-class="none">
+            <text class="font-30 color-323232">查订单</text>
+            <image src="{{baseImgLocUrl}}miniappImg/icon/icon_findOrder.png" class="icon_jifenNav"></image>
+        </navigator>
+    </view>
+    <!--间隙  -->
+    <view class="division-area"></view>
+    <!--标题  -->
+    <view class="jifenInAndExTit flex_view_row align_cen justi_cen width_100 whiteBack">
+        <text class="font-32">- 积分收支明细 -</text>
+    </view>
+    <!--底下积分收支明细  -->
+    <view class="flex_1 flex_view_col">
+        <!--收支明细  -->
+        <view class="jifenInAndEx whiteBack flex_1 flex_view_col">
+            <view class="jifenDetail flex_1">
+                <!--表头  -->
+                <view class="sheetHead font-28 flex_view_row">
+                    <view class="sheetHeadOne sheetLeft height_100 flex_view_row justi_cen align_cen">
+                        <text>项目</text></view>
+                    <view class="sheetCenter height_100 flex_view_row justi_cen align_cen">
+                        <text>明细</text></view>
+                    <view class="sheetRight height_100 flex_view_row justi_cen align_cen">
+                        <text>创建时间</text></view>
+                </view>
+                <!--表里面的内容  -->
+                <view class="sheetCon">
+                    <block>
+                        <view class="eachSheetRow flex_view_row" a:for="{{recordsList}}" a:for-item="item" a:key="records">
+                            <view class="sheetLeft">
+                                <view class="flex_view_col justi_cen align_cen height_100">
+                                    <text class="color-4f4f4f font-28">{{item.operationName}}</text>
+                                    <text class="color-afb2b4 font-22" a:if="{{item.orderSn}}">{{item.orderSn}}</text>
+                                </view>
+                            </view>
+                            <view class="sheetCenter">
+                                <view class="flex_view_row justi_cen align_cen height_100">
+                                    <text class="font-30 color-ff791f">{{item.negative ? "" : "+"}}</text>
+                                    <text class="font-32 color-ff791f">{{item.detail}}</text>
+                                </view>
+                            </view>
+                            <view class="sheetRight">
+                                <view class="flex_view_row justi_cen align_cen height_100">
+                                    <text class="font-22 color-afb2b4">{{item.createDate}}</text>
+                                    <!--<text class='font-32' style='color: #ff791f;'>{{orderNum}}300</text>  -->
+                                </view>
+                            </view>
+                        </view>
+                    </block>
+                    <!--加载更多  -->
+                    <view class="botLine width_100 tex_center font-28 color-bbbbbb ">
+                        <view class="color-323232" a:if="{{!endPage && recordsList.length > 0}}" catchTap="getMoreDet">加载更多</view>
+                        <view a:if="{{endPage || recordsList.length == 0}}">没有更多</view>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
 </view>
-
 <!--toast弹窗-->
 <view class="mark_none flex_view_col align_cen justi_cen" a:if="{{showToast}}">
-  <view class="toastView_bb" catchtouchmove="move">
-    <view class="toastView_bb_con font-24 color-232323">
+    <view class="toastView_bb" catchtouchmove="move">
+        <view class="toastView_bb_con font-24 color-232323">
       {{errMsg}}
+        </view>
     </view>
-  </view>
 </view>

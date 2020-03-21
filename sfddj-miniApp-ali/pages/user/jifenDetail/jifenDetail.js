@@ -17,7 +17,8 @@ Page({
     limit: 8,
     end: 0,
     endPage: false, //收支明细是否显示完
-    showToast: false //提示
+    showToast: false, //提示
+    showMidTab: false,    //中间tab入口是否显示
   },
 
   /**

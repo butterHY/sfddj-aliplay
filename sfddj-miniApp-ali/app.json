@@ -46,7 +46,8 @@
     "pages/shopping/storeInfo/storeInfoDetail/storeInfoDetail",
     "pages/limit/limit",
     "pages/overTime/overTime",
-    "pages/activities/lightMember/lightMember"
+    "pages/activities/lightMember/lightMember",
+    "pages/user/jifenDetail/jifenDetail"
   ],
   "window": {
     "defaultTitle": "顺丰大当家",

@@ -56,7 +56,7 @@
             <text class="font-24 marTop_14">余额</text>
             <view class="posi_ab middleLine"></view>
           </view>
-          <view hover-class="none" url="jifenDetail/jifenDetail" class="user_balance flex_view_col justi_cen align_cen">
+          <view hover-class="none" data-url="/pages/user/jifenDetail/jifenDetail" class="user_balance flex_view_col justi_cen align_cen" onTap="goToTargetPage">
             <text class="font-30">{{memberPoint}}</text>
             <text class="font-24 marTop_14">积分</text>
           </view>
