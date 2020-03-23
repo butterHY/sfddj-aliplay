@@ -147,31 +147,18 @@ Page({
 
   // 轻会员跳转
   goToLightMember() {
+    console.log('goToLightMember')
     my.navigateToMiniService({
       serviceId: "2019072365974237", // 插件id,固定值勿改
       servicePage: "pages/hz-enjoy/main/index", // 插件页面地址,固定值勿改
       extraData: {
-        "alipay.huabei.hz-enjoy.templateId": "2020021100020903830004581133",
-        "alipay.huabei.hz-enjoy.partnerId": "2088821129681837",
+        "alipay.huabei.hz-enjoy.templateId": "2020021900020903320004673545",
+        "alipay.huabei.hz-enjoy.partnerId": "2088421251942323",
       },
       success: (res) => {},
       fail: (res) => {},
       complete: (res) => {},
     });
-
-    
-    // my.navigateToMiniService({
-    //   serviceId: "2019072365974237", // 插件id,固定值勿改
-    //   servicePage: "pages/hz-enjoy/main/index", // 插件页面地址,固定值勿改
-    //   extraData: {
-    //     "alipay.huabei.hz-enjoy.templateId": "2020021900020903320004673545",
-    //     "alipay.huabei.hz-enjoy.partnerId": "2088421251942323",
-    //   },
-    //   success: (res) => {},
-    //   fail: (res) => {},
-    //   complete: (res) => {},
-    // });
-  
   },
 
 
@@ -182,7 +169,6 @@ Page({
     let fatherIndex = e.currentTarget.dataset.fatherIndex;
 
     console.log(index, fatherIndex, ruleSign)
-
     console.log(that.data.thematicAds.modules[fatherIndex].parseItem[index]);
 
     https.post(api.GOODSDETAIL.GOODS_DETAIL_DRAWCOUPON, { ruleSign }, function(res) {

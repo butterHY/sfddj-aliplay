@@ -172,8 +172,8 @@ Page({
        }
      })
 
-    hasImg.sort((a, b) => a.createDate - b.createDate);
-    noImg.sort((a, b) => a.createDate - b.createDate);
+    hasImg.sort((a, b) => b.createDate - a.createDate);
+    noImg.sort((a, b) => b.createDate - a.createDat);
 
     data = hasImg.concat(noImg)
 
@@ -201,6 +201,8 @@ Page({
       buyerShowList:  commentList,
       // buyerShowCount: resData.buyerShow.buyerShowCount
     });
+
+    console.log(that.data.buyerShowList)
   },
 
 	/**f
@@ -328,14 +330,16 @@ Page({
           }
 
           that.data.goods = resData.goodsShowVO;
-
+            console.log(resData)
           // 处理商品评论；
           if ( resData.buyerShow && resData.buyerShow.buyerShowList && resData.buyerShow.buyerShowList.length > 0 ) {
+            console.log(resData)
             that.getComment(resData.buyerShow.buyerShowList, 'buyerShow');
             that.setData({
               buyerShowCount: resData.buyerShow.buyerShowCount
             });
           } else if ( resData.commentList && resData.commentList.length > 0 ) {
+            console.log(resData)
             that.getComment(resData.commentList, 'generalComment');
           }
 

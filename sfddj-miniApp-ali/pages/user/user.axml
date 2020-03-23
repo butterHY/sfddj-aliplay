@@ -22,7 +22,7 @@
           <button class="btnStyle gpnBtn zIndex100" open-type="getAuthorize" onGetAuthorize="getPhoneNumber" scope='phoneNumber' onError="onAuthError" a:if="{{!isMember}}"></button>
           <navigator url="/pages/user/member/myInfoList/myInfoList" hover-class="none">
             <!-- 使用open-data   -->
-            <!--<image a:if='{{avatarUrl}}' src="{{avatarUrl}}" class='user_header_bg2'></image>   -->
+            <!-- <image a:if='{{avatarUrl}}' src="{{avatarUrl}}" class='user_header_bg2'></image>   -->
             <image class="user_avatar" src="{{avatarUrl ? avatarUrl : baseLocImgUrl + 'miniappImg/icon/icon_default_head.jpeg'}}"></image>
           </navigator>
         </view>
