@@ -401,7 +401,7 @@
 <!-- couponType -->
     <view a:if="{{item.moduleType == 'COUPON'}}" class="couponModular {{item.couponType == 0 ? 'onLine' : ''}}">
       <!-- <view class="ads-white-interval" style="background: #{{item.topIntervalColor}};"></view> -->
-        <view class="couponTitle font-38 font-weight-600">{{item.moduleName}}</view>
+        <!-- <view class="couponTitle font-38 font-weight-600">{{item.moduleName}}</view> -->
         <view class="couponConnent clearfix">
           <view class="couponBox" a:for="{{item.parseItem}}" a:for-item="couponItem" a:key="index" style="{{isLightMember ? (index %2 == 0 ? 'padding-right: 5rpx;' : 'padding-left: 5rpx;') : ''}}">
             <view class="coupon flex_view_row" >
@@ -409,12 +409,12 @@
                 <view class="couponPrice single-line font-26  font-weight-600 ">￥<text class="font-50">{{couponItem.costPrice}}</text></view>
                 <view class="couponDescribe single-line font-26">{{couponItem.couponName}}</view>
               </view>
-              <view class="couponButton font-30 posi_re ">
+              <view class="couponButton font-30 posi_re" data-fatherIndex="{{fatherIndex}}" data-index="{{index}}" data-ruleSign="{{couponItem.couponShowRuleSign}}" catchTap="getCoupon">
                 <view class="litlePoint posi_ab litlePointTop"></view>
                 <view class="dottedLine posi_ab">
                 </view>
                 <view class="litlePoint posi_ab litlePointBot"></view>
-                <view class="couponButtonText">立即领取</view>
+                <view class="couponButtonText">{{couponItem.couponText}}</view>
               </view>
             </view>
           </view>

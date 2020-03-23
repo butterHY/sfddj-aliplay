@@ -40,6 +40,11 @@ Page({
 		this.getGuessLike(0);
 	},
 
+	onShow: function () {
+		// 友盟+统计  ----领券中心浏览
+		my.uma.trackEvent('couponCenterView');
+	},
+
 	/**
 	 * 获取优惠券列表
 	 */

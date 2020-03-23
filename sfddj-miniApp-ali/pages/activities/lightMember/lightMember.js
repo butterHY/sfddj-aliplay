@@ -46,6 +46,8 @@ Page({
             value.parseItem = that.replaceFields(value.parseItem);
             value.topIntervalColor ? value.topIntervalColor = value.topIntervalColor.replace('#', '') : '';
             value.backgroundColor ? value.backgroundColor = value.backgroundColor.replace('#', '') : '';
+            
+            
 
             switch(value.moduleType) {
               case "SINGLE":
@@ -59,6 +61,23 @@ Page({
               break;
               case "SET_LOW_BUTTON":
                 that.data.openingButtonData = value
+              break;
+              case "COUPON":
+                value.parseItem.forEach(couponVal => {
+                  switch(couponVal.couponStatus) {
+                    case "NO_RECEIVE":
+                      couponVal.couponText = "立即领取"
+                    break;
+                    case "NORMAR":
+                      couponVal.couponText = "去使用"
+                    break;
+                    case "USED":
+                      couponVal.couponText = "已使用"
+                    break;
+                    default:
+                    break;
+                  }
+                })
               break;
               default:
               break;
@@ -114,9 +133,9 @@ Page({
 
   // 管理按钮的跳转
   goToPage(data){
+    let that = this;
     let chInfo = constants.UrlConstants.chInfo;
     let url = data.currentTarget.dataset.url;
-    let that = this
     if ( url.substring(0,4).indexOf('http') != -1 ) {
       my.call('startApp', { appId: '20000067', param: { url: url, chInfo: chInfo } })
     } else {
@@ -153,6 +172,54 @@ Page({
     //   complete: (res) => {},
     // });
   
+  },
+
+
+  getCoupon: function(e) {
+    let that = this;
+    let index = e.currentTarget.dataset.index;
+    let ruleSign = e.currentTarget.dataset.ruleSign;
+    let fatherIndex = e.currentTarget.dataset.fatherIndex;
+
+    console.log(index, fatherIndex, ruleSign)
+
+    console.log(that.data.thematicAds.modules[fatherIndex].parseItem[index]);
+
+    https.post(api.GOODSDETAIL.GOODS_DETAIL_DRAWCOUPON, { ruleSign }, function(res) {
+      let resData = res.data.data;
+      if (resData && resData.length > 0) {
+        resData[0].beginDateStr = utils.pointFormatTime(new Date(resData[0].beginDate));
+        resData[0].endDateStr = utils.pointFormatTime(new Date(resData[0].endDate));
+        switch(resData[0].couponStatus) {
+          case "NO_RECEIVE":
+            couponVal.couponText = "立即领取"
+          break;
+          case "NORMAR":
+            couponVal.couponText = "去使用"
+          break;
+          case "USED":
+            couponVal.couponText = "已使用"
+          break;
+          default:
+          break;
+        }
+
+        that.data.thematicAds.modules[fatherIndex].parseItem[index] = resData[0];
+
+        that.setData({
+          thematicAds: that.data.thematicAds
+        })
+        console.log(resData[0]);
+        console.log(that.data.thematicAds);
+      }
+    }, function(err) {
+      my.showToast({
+        content: err,
+        duration: 2000,
+      })
+    })
+
+    
   },
 
   
