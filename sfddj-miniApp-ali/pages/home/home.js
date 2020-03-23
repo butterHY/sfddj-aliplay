@@ -84,7 +84,7 @@ Page({
 		}
 		// 友盟+统计--首页浏览
 		my.uma.trackEvent('homepage_show', pageOptions);
-    // console.log(pageOptions)
+    console.log(pageOptions)
 		var that = this;
 
 

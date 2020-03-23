@@ -166,7 +166,6 @@ Page({
 
      data.forEach( value => {
        if( (value.videoPath && value.videoPath.length > 0) || (value.imagePath && value.imagePath.length > 0) ) {
-         let hasImg = new Array([], value)
          hasImg.push(value)
        } else {
          noImg.push(value)
@@ -1406,6 +1405,7 @@ Page({
     let ruleSign = e.currentTarget.dataset.ruleSign;
     http.post(api.GOODSDETAIL.GOODS_DETAIL_DRAWCOUPON, { ruleSign }, function(res) {
       let resData = res.data.data;
+      console.log(resData)
       if (resData && resData.length > 0) {
         resData[0].beginDateStr = utils.pointFormatTime(new Date(resData[0].beginDate));
         resData[0].endDateStr = utils.pointFormatTime(new Date(resData[0].endDate));
