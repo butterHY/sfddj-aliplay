@@ -24,6 +24,25 @@ Page({
   },
   onLoad() {
     this.getAdvertisingModule();
+    console.log('+++++++++++++++++++++++++')
+    // my.getAuthCode({
+    //   scopes: ['auth_user'],
+    //   success: (res) => {
+    //     console.log(res)
+    //   },
+    // });
+    my.getOpenUserInfo({
+      success: (res) => {
+        let userInfo = JSON.parse(res.response).response // 以下方的报文格式解析两层 response
+        console.log(userInfo)
+      },
+      fail: (res) => {
+      }
+    })
+  },
+
+  onShow() {
+
   },
 
   isShowRule() {
@@ -152,7 +171,7 @@ Page({
       serviceId: "2019072365974237", // 插件id,固定值勿改
       servicePage: "pages/hz-enjoy/main/index", // 插件页面地址,固定值勿改
       extraData: {
-        "alipay.huabei.hz-enjoy.templateId": "2020021900020903320004673545",
+        "alipay.huabei.hz-enjoy.templateId": "2020032300020903320005126479",
         "alipay.huabei.hz-enjoy.partnerId": "2088421251942323",
       },
       success: (res) => {},
@@ -206,6 +225,18 @@ Page({
     })
 
     
+  },
+
+
+  onGetAuthorize(res) {
+    my.getOpenUserInfo({
+      success: (res) => {
+        let userInfo = JSON.parse(res.response).response // 以下方的报文格式解析两层 response
+        console.log(userInfo)
+      },
+      fail: (res) => {
+      }
+    });
   },
 
   
