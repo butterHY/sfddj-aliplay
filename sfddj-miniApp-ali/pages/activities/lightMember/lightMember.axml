@@ -48,30 +48,28 @@
   <block a:for="{{thematicAds.modules}}" a:key="thematicAds">
     <template is="thematicItem" data="{{item, fatherIndex: index, baseImageUrl, baseLocImgUrl, ossImgStyle, countHour, countMinute, countSecond,banRightMargin, isLightMember}}"></template>
   </block>
-  <!-- <view class="openingButton posi_ab">
+  <view class="openingButton posi_ab">
     <view class="openingBox all_100 flex_view_row tex_center" style="background-image: url({{baseImageUrl + openingButtonData.parseItem[0].imageUrl}}) ;background-size: 100% 100%;" catchTap="goToLightMember">
+      <!-- <view class="openingCost flex_1 flex_view_col justi_cen">
+         <view class="membershipFees font-34">限时开通仅需￥4.9</view>
+         <view class="font-26">享受会员特权</view>
+      </view>
+      <view class="openingText font-36 color-white">立即开通</view> -->
     </view>
-  </view> -->
+  </view>
 </view>
 
 <view class="openingButton posi_ab">
-  <button class="openingBox all_100 flex_view_row tex_center"  open-type="getAuthorize" onGetAuthorize="onGetAuthorize" onError="onAuthError" scope='userInfo'>会员基础信息授权</button>
-  <!-- <view class="openingBox all_100 flex_view_row tex_center" style="background: black" catchTap="getUserInfo">
-  </view> -->
+  <!-- <button class="openingBox all_100 flex_view_row tex_center"  open-type="getAuthorize" onGetAuthorize="onGetAuthorize" onError="onAuthError" scope='userInfo'>会员基础信息授权</button> -->
+  <view class="openingBox all_100 flex_view_row tex_center" style="background: black" catchTap="goToLightMember">
+  </view>
 </view>
 
 <popup show="{{showRuleStatus}}" disableScroll="{{false}}">
   <view class="height_100vh flex_view_row justi_cen align_cen">
     <view class="rulePopup flex_view_col">
       <scroll-view scroll-y="{{true}}" class="ruleConnnet flex_1  font-28">
-        为更好的满足广大支付宝小程序用户的需求，友盟+于年前上线U-MiniProgram小程序统计平台，与U-App支付宝小程序统计相比，现在支持微信、支付宝两大主流平台，全新产品以用户增长模型各阶段的数据分析为出发，为小程序开发者提供“获客-激活-留存-分享-转化”的全链路分析路径，更能满足您的小程序统计需求。后续我们还将支持更多的小程序平台以及提供更多的数据监测功能。
-        为更好的满足广大支付宝小程序用户的需求，友盟+于年前上线U-MiniProgram小程序统计平台，与U-App支付宝小程序统计相比，现在支持微信、支付宝两大主流平台，全新产品以用户增长模型各阶段的数据分析为出发，为小程序开发者提供“获客-激活-留存-分享-转化”的全链路分析路径，更能满足您的小程序统计需求。后续我们还将支持更多的小程序平台以及提供更多的数据监测功能。
-        为更好的满足广大支付宝小程序用户的需求，友盟+于年前上线U-MiniProgram小程序统计平台，与U-App支付宝小程序统计相比，现在支持微信、支付宝两大主流平台，全新产品以用户增长模型各阶段的数据分析为出发，为小程序开发者提供“获客-激活-留存-分享-转化”的全链路分析路径，更能满足您的小程序统计需求。后续我们还将支持更多的小程序平台以及提供更多的数据监测功能。
-        为更好的满足广大支付宝小程序用户的需求，友盟+于年前上线U-MiniProgram小程序统计平台，与U-App支付宝小程序统计相比，现在支持微信、支付宝两大主流平台，全新产品以用户增长模型各阶段的数据分析为出发，为小程序开发者提供“获客-激活-留存-分享-转化”的全链路分析路径，更能满足您的小程序统计需求。后续我们还将支持更多的小程序平台以及提供更多的数据监测功能。
-        为更好的满足广大支付宝小程序用户的需求，友盟+于年前上线U-MiniProgram小程序统计平台，与U-App支付宝小程序统计相比，现在支持微信、支付宝两大主流平台，全新产品以用户增长模型各阶段的数据分析为出发，为小程序开发者提供“获客-激活-留存-分享-转化”的全链路分析路径，更能满足您的小程序统计需求。后续我们还将支持更多的小程序平台以及提供更多的数据监测功能。
-        为更好的满足广大支付宝小程序用户的需求，友盟+于年前上线U-MiniProgram小程序统计平台，与U-App支付宝小程序统计相比，现在支持微信、支付宝两大主流平台，全新产品以用户增长模型各阶段的数据分析为出发，为小程序开发者提供“获客-激活-留存-分享-转化”的全链路分析路径，更能满足您的小程序统计需求。后续我们还将支持更多的小程序平台以及提供更多的数据监测功能。
-        为更好的满足广大支付宝小程序用户的需求，友盟+于年前上线U-MiniProgram小程序统计平台，与U-App支付宝小程序统计相比，现在支持微信、支付宝两大主流平台，全新产品以用户增长模型各阶段的数据分析为出发，为小程序开发者提供“获客-激活-留存-分享-转化”的全链路分析路径，更能满足您的小程序统计需求。后续我们还将支持更多的小程序平台以及提供更多的数据监测功能。
-        为更好的满足广大支付宝小程序用户的需求，友盟+于年前上线U-MiniProgram小程序统计平台，与U-App支付宝小程序统计相比，现在支持微信、支付宝两大主流平台，全新产品以用户增长模型各阶段的数据分析为出发，为小程序开发者提供“获客-激活-留存-分享-转化”的全链路分析路径，更能满足您的小程序统计需求。后续我们还将支持更多的小程序平台以及提供更多的数据监测功能。
+        {{headData.parseItem[0].copyWriting}}
       </scroll-view> 
       <view class="checkButton flex_view_col justi_cen align_cen">
         <view class="button font-32" catchTap="isShowRule">知道了</view>
@@ -80,8 +78,3 @@
   </view>
 </popup>
 
-<!-- <view class="openingCost flex_1 flex_view_col justi_cen">
-  <view class="membershipFees font-34">限时开通仅需￥4.9</view>
-  <view class="font-26">享受会员特权</view>
-</view> -->
-<!-- <view class="openingText font-36 color-white">立即开通</view> -->

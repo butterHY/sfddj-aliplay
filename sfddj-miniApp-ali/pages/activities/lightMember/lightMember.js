@@ -24,21 +24,21 @@ Page({
   },
   onLoad() {
     this.getAdvertisingModule();
-    console.log('+++++++++++++++++++++++++')
+    // console.log('+++++++++++++++++++++++++')
     // my.getAuthCode({
     //   scopes: ['auth_user'],
     //   success: (res) => {
     //     console.log(res)
     //   },
     // });
-    my.getOpenUserInfo({
-      success: (res) => {
-        let userInfo = JSON.parse(res.response).response // 以下方的报文格式解析两层 response
-        console.log(userInfo)
-      },
-      fail: (res) => {
-      }
-    })
+    // my.getOpenUserInfo({
+    //   success: (res) => {
+    //     let userInfo = JSON.parse(res.response).response // 以下方的报文格式解析两层 response
+    //     console.log(userInfo)
+    //   },
+    //   fail: (res) => {
+    //   }
+    // })
   },
 
   onShow() {
@@ -61,27 +61,28 @@ Page({
         if (Object.keys(resData.modules).length > 0) {
           resData.modules.forEach( value => {
             value.parseItem = JSON.parse(value.items);
-
             value.parseItem = that.replaceFields(value.parseItem);
             value.topIntervalColor ? value.topIntervalColor = value.topIntervalColor.replace('#', '') : '';
             value.backgroundColor ? value.backgroundColor = value.backgroundColor.replace('#', '') : '';
             
-            
-
             switch(value.moduleType) {
-              case "SINGLE":
-                value.moduleType = "SINGLEGOODS"
-              break;
-              case "DOUBLE":
-                value.moduleType = "DOUBLEGOODS"
-              break;
-              case "GOODS":
-                value.moduleType = "GOODSLIST"
-              break;
+              // case "SINGLE":
+              //   value.moduleType = "SINGLEGOODS"  
+              // break;
+              // case "DOUBLE":
+              //   value.moduleType = "DOUBLEGOODS"
+              // break;
+              // case "GOODS":
+              //   value.moduleType = "GOODSLIST"
+              // break;
               case "SET_LOW_BUTTON":
                 that.data.openingButtonData = value
               break;
-              case "COUPON":
+              case "EASY_MEMBER_TITLE":
+                value.moduleType = "TITLE"
+              break;
+
+              case "EASY_MEMBER_COUPON":
                 value.parseItem.forEach(couponVal => {
                   switch(couponVal.couponStatus) {
                     case "NO_RECEIVE":
@@ -101,19 +102,18 @@ Page({
               default:
               break;
             }
-
-            // 设置标题
-            if (resData.pageName) {
-              my.setNavigationBar({
-                title: resData.pageName,
-                success() { },
-                fail() { },
-              });
-            }
-
           })
 
+          // 设置标题
+          if (resData.pageName) {
+            my.setNavigationBar({
+              title: resData.pageName,
+              success() { },
+              fail() { },
+            });
+          }
           console.log(resData)
+
           that.setData({
             loadComplete: true,
             loadFail: false,
@@ -187,7 +187,7 @@ Page({
     let ruleSign = e.currentTarget.dataset.ruleSign;
     let fatherIndex = e.currentTarget.dataset.fatherIndex;
 
-    console.log(index, fatherIndex, ruleSign)
+    console.log(fatherIndex, index, ruleSign)
     console.log(that.data.thematicAds.modules[fatherIndex].parseItem[index]);
 
     https.post(api.GOODSDETAIL.GOODS_DETAIL_DRAWCOUPON, { ruleSign }, function(res) {
@@ -228,16 +228,16 @@ Page({
   },
 
 
-  onGetAuthorize(res) {
-    my.getOpenUserInfo({
-      success: (res) => {
-        let userInfo = JSON.parse(res.response).response // 以下方的报文格式解析两层 response
-        console.log(userInfo)
-      },
-      fail: (res) => {
-      }
-    });
-  },
+  // onGetAuthorize(res) {
+  //   my.getOpenUserInfo({
+  //     success: (res) => {
+  //       let userInfo = JSON.parse(res.response).response // 以下方的报文格式解析两层 response
+  //       console.log(userInfo)
+  //     },
+  //     fail: (res) => {
+  //     }
+  //   });
+  // },
 
   
 

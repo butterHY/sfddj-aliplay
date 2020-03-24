@@ -398,12 +398,12 @@
         </swiper>
       </view>
     </view>
-<!-- couponType -->
-    <view a:if="{{item.moduleType == 'COUPON'}}" class="couponModular {{item.couponType == 0 ? 'onLine' : ''}}">
+    <!-- couponType -->
+    <view a:if="{{item.moduleType == 'EASY_MEMBER_COUPON'}}" class="couponModular {{item.couponType == 0 ? 'onLine' : ''}}">
       <!-- <view class="ads-white-interval" style="background: #{{item.topIntervalColor}};"></view> -->
-        <!-- <view class="couponTitle font-38 font-weight-600">{{item.moduleName}}</view> -->
+        <!-- <view class="couponTitle font-38 font-weight-600">{{item.moduleName}}</view>               isLightMember ? -->
         <view class="couponConnent clearfix">
-          <view class="couponBox" a:for="{{item.parseItem}}" a:for-item="couponItem" a:key="index" style="{{isLightMember ? (index %2 == 0 ? 'padding-right: 5rpx;' : 'padding-left: 5rpx;') : ''}}">
+          <view class="couponBox" a:for="{{item.parseItem}}" a:for-item="couponItem" a:key="index" style="{{item.couponType == 1 ? (index %2 == 0 ? 'padding-right: 5rpx;' : 'padding-left: 5rpx;') : ''}}">
             <view class="coupon flex_view_row" >
               <view class="couponMessage flex_1 flex_view_col justi_cen single-line">
                 <view class="couponPrice single-line font-26  font-weight-600 ">￥<text class="font-50">{{couponItem.costPrice}}</text></view>
@@ -419,31 +419,6 @@
             </view>
           </view>
         </view>
-
-      <!-- <view class="AdsImgMain" style="background: #{{item.backgroundColor}};">
-        <view a:if="{{item.parseItem %2 != 0}}" class="AdsImgShowBox">
-          <view class="flex_view_row">
-            <view class="flex_1" a:for="{{item.parseItem}}" a:for-item="goodsItem" a:key="index"  catchTap="getCoupon()">
-              <view dataset-growing-title="{{item.moduleName}}" class="VBox flex_view_row align_cen justi_cen">
-                <image lazy-load="{{true}}" src="{{baseImageUrl + goodsItem.imageUrl}}">
-              </view>
-            </view>
-          </view>
-        </view>
-
-
-        <view a:if="{{item.parseItem %2 == 0}}" class="AdsImgShowBox">
-            <view>
-                <view class="HBox">
-                    <view class="Bflex1 twoCoupon" v-for="(list, index) in couponArr" :key="index" @click.stop="getCoupon(list.couponSign)">
-                        <view :data-growing-title="advertItem.moduleName" class="VBox BoxCenter">
-                            <image v-lazy="httpImageUrl + list.imageUrl + smallImg200" alt="">
-                        </view>
-                    </view>
-                </view>
-            </view>
-        </view>
-      </view> -->
     </view>
 
 

@@ -1684,7 +1684,7 @@ Page({
 		let that = this;
 		 http.get( api.search.SEARCHTEXTMAX, {}, (res) => {
 			 let resData = res.data;
-			if(resData.ret.code == '0' && resData.ret.message == "SUCCESS" && resData.data && resData.data.name) {
+			if(resData.ret.code == "0" && resData.ret.message == "SUCCESS" && resData.data && resData.data.name) {
 				try {
 					my.setStorageSync({ key: constants.StorageConstants.searchTextMax, data: resData.data.name});
 				} catch (e) { }
