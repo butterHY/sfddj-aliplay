@@ -49,6 +49,14 @@
     "pages/activities/lightMember/lightMember",
     "pages/user/jifenDetail/jifenDetail"
   ],
+  "subPackages": [
+    {
+      "root": "community",
+      "pages": [
+        "pages/index/index"
+      ]
+    }
+  ],
   "window": {
     "defaultTitle": "顺丰大当家",
     "titleBarColor": "#ffffff"
