@@ -1,0 +1,5 @@
+*　{
+    font-family: "SourceHanSansCN-Medium";
+    font-size: 26rpx;
+    box-sizing: border-box;
+}

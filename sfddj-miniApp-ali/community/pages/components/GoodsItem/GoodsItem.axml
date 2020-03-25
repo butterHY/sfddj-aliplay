@@ -1,0 +1,9 @@
+<view class="goodsitem">
+  <view>
+    <image mode="widthFix" src="/community/assets/images/a.png"/>
+  </view>
+  <view>AAAAA</view>
+  <view>
+    BBBBB
+  </view>
+</view>
