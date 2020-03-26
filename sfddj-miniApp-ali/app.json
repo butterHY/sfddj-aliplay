@@ -53,7 +53,8 @@
     {
       "root": "community",
       "pages": [
-        "pages/index/index"
+        "pages/index/index",
+		"pages/communalOrderDetail/communalOrderDetail"
       ]
     }
   ],
