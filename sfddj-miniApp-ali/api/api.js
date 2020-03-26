@@ -106,4 +106,10 @@ export default {
 		'GETEASYMEMBERINFO': '/m/a/aliPayEasyMember/1.0/getEasyMemberInfo',				// 获取用户和活动信息 参数outSignNo
   },
 
+	// O2O 商家店铺
+	Shop: {
+		search: '/m/oto//otoShop/vicinityShop' // 查找指定经纬度附近的商家店铺
+	}
+
+
 }

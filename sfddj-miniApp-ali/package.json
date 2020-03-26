@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "alipay-miniapp-service": "0.0.8",
     "echarts": "^4.2.1",
     "mini-antui": "^0.4.34",
     "regenerator": "^0.14.2",
