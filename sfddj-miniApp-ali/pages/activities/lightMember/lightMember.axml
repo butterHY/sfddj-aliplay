@@ -15,11 +15,13 @@
     <view class="headMessage" style="background-image: url({{baseImageUrl + headData.parseItem[0].titleImageUrl}}) ;background-size: 100% 100%; ">
       <view class="userPersonal" >
         <view class="userNameAndRul ">
-          <view class="headImg"></view>
+          <view class="headImg">
+            <image class="headImg" mode="scaleToFill" src="{{headData.headImage}}"/>
+          </view>
           <view class="nameBox  font-weight-600">
-            <view class="name single-line font-38 ">笑笑笑</view>
+            <view class="name single-line font-38 ">{{headData.nikeName}}</view>
             <view a:if="{{isLightMember}}" class="lightMemberDate font-26">
-              2020-03-22到期
+              {{headData.gmtUnSign}}到期
               <image class="iconImg " mode="scaleToFill" src="{{baseImageUrl + headData.parseItem[0].iconImageUrl}}"  catchTap="isShowRule"></image >
             </view>
           </view>
@@ -35,11 +37,11 @@
       </view>
       <view class="userEquity font-weight-600 tex_center">
         <view class="existEquity flex_1 single-line ">
-          <view class="existDay {{isLightMember ? 'font-38' : 'font-56'}}  single-line">11天</view>
+          <view class="existDay {{isLightMember ? 'font-38' : 'font-56'}}  single-line">{{headData.gmtSign}}天</view>
           <view class="font-26 {{isLightMember ? 'marTop_20' : 'marTop_10'}} single-line">你已享受会员权益</view>
         </view>
         <view a:if="{{isLightMember}}" class="cumulativeEquity flex_1 single-line">
-          <view class="existMoney font-38 single-line">0元</view>
+          <view class="existMoney font-38 single-line">{{headData.totalDiscountAmount}}元</view>
           <view class="font-26 marTop_20 single-line">累计已省</view>
         </view>
       </view>

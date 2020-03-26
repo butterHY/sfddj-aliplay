@@ -320,8 +320,7 @@
 
   <!-- 商品评分和评价条数                             已完成新接口字段更换 -->
   <view a:if="{{ buyerShowCount || goods.commentTotal }}" class="division-area"></view>
-  <!-- url="/pages/shopping/comment/comment?type={{buyerShowCount ? 'buyerShow' : 'generalComment'}}&goodsId={{goods.goodsId}}"  -->
-  <view a:if="{{ buyerShowCount || goods.commentTotal }}"  data-url="/pages/shopping/comment/comment?type={{buyerShowCount ? 'buyerShow' : 'generalComment'}}&goodsId={{goods.goodsId}}" hover-class="none" data-type="comment" catchTap="goToTargetPage">
+  <view a:if="{{ buyerShowCount || goods.commentTotal }}"  data-url="/pages/shopping/comment/comment?type={{buyerShowCount ? 'buyerShow' : 'generalComment'}}&goodsId={{goods.goodsId}}" data-type="comment" catchTap="goToTargetPage">
     <view class="goods-comment-title">
       <view class="alignMiddle">
         <block  a:if="{{!buyerShowCount}}">
@@ -374,8 +373,7 @@
   </view>
 
   <view  a:if="{{ buyerShowCount && goods.commentTotal }}" class="division-area"></view>
-  <!-- data-url="/pages/shopping/comment/comment?type=generalComment&goodsId={{goods.goodsId}}" hover-class="none" data-type="comment" catchTap="goToTargetPage" -->
-  <view a:if="{{ buyerShowCount && goods.commentTotal }}" data-url="/pages/shopping/comment/comment?type=generalComment&goodsId={{goods.goodsId}}" hover-class="none" data-type="comment" catchTap="goToTargetPage">
+  <view a:if="{{ buyerShowCount && goods.commentTotal }}" data-url="/pages/shopping/comment/comment?type=generalComment&goodsId={{goods.goodsId}}" data-type="comment" catchTap="goToTargetPage">
     <view class="goods-comment-title">
       <view class="alignMiddle">
         好评率: 
