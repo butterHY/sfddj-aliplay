@@ -320,7 +320,8 @@
 
   <!-- 商品评分和评价条数                             已完成新接口字段更换 -->
   <view a:if="{{ buyerShowCount || goods.commentTotal }}" class="division-area"></view>
-  <navigator a:if="{{ buyerShowCount || goods.commentTotal }}" url="/pages/shopping/comment/comment?type={{buyerShowCount ? 'buyerShow' : 'generalComment'}}&goodsId={{goods.goodsId}}" hover-class="none">
+  <!-- url="/pages/shopping/comment/comment?type={{buyerShowCount ? 'buyerShow' : 'generalComment'}}&goodsId={{goods.goodsId}}"  -->
+  <view a:if="{{ buyerShowCount || goods.commentTotal }}"  data-url="/pages/shopping/comment/comment?type={{buyerShowCount ? 'buyerShow' : 'generalComment'}}&goodsId={{goods.goodsId}}" hover-class="none" data-type="comment" catchTap="goToTargetPage">
     <view class="goods-comment-title">
       <view class="alignMiddle">
         <block  a:if="{{!buyerShowCount}}">
@@ -341,7 +342,7 @@
         <text class="icon-href-right opacity8 font-22 marLeft_10 color-999"></text>
       </view>
     </view>
-  </navigator>
+  </view>
   <!-- 买家秀示例 -->
   <view a:if="{{ buyerShowList && buyerShowList.length > 0 }}" a:for="{{buyerShowList}}" class="goods-comment-area" a:key="index">
     <view class="comment-line"></view>
@@ -373,7 +374,8 @@
   </view>
 
   <view  a:if="{{ buyerShowCount && goods.commentTotal }}" class="division-area"></view>
-  <navigator a:if="{{ buyerShowCount && goods.commentTotal }}" url="/pages/shopping/comment/comment?type=generalComment&goodsId={{goods.goodsId}}" hover-class="none">
+  <!-- data-url="/pages/shopping/comment/comment?type=generalComment&goodsId={{goods.goodsId}}" hover-class="none" data-type="comment" catchTap="goToTargetPage" -->
+  <view a:if="{{ buyerShowCount && goods.commentTotal }}" data-url="/pages/shopping/comment/comment?type=generalComment&goodsId={{goods.goodsId}}" hover-class="none" data-type="comment" catchTap="goToTargetPage">
     <view class="goods-comment-title">
       <view class="alignMiddle">
         好评率: 
@@ -388,7 +390,7 @@
         </text>
       </view>
     </view>
-  </navigator>
+  </view>
   <view class="division-area"></view>
 
   <!-- 产品详情和服务售后的选择栏                 已完成新接口字段更换 -->
@@ -440,7 +442,7 @@
         <block a:for="{{bannerImgList}}" a:key="*this">
           <swiper-item>
              <!-- data-type="banner"  -->
-            <image src="{{baseImageUrl}}{{item.imageUrl}}" class="banner_img"   data-current="{{item.imageUrl}}" data-url="{{item.url}}" onTap="goToPage"></image>
+            <image src="{{baseImageUrl}}{{item.imageUrl}}" class="banner_img" data-type="banner"  data-current="{{item.imageUrl}}" data-url="{{item.url}}" onTap="goToPage"></image>
           </swiper-item>
         </block>
       </swiper>

@@ -31,7 +31,7 @@ Page({
     //     console.log(res)
     //   },
     // });
-    // my.getOpenUserInfo({
+    // my.d({
     //   success: (res) => {
     //     let userInfo = JSON.parse(res.response).response // 以下方的报文格式解析两层 response
     //     console.log(userInfo)
@@ -167,17 +167,16 @@ Page({
   // 轻会员跳转
   goToLightMember() {
     console.log('goToLightMember')
-    my.navigateToMiniService({
-      serviceId: "2019072365974237", // 插件id,固定值勿改
-      servicePage: "pages/hz-enjoy/main/index", // 插件页面地址,固定值勿改
-      extraData: {
-        "alipay.huabei.hz-enjoy.templateId": "2020032300020903320005126479",
-        "alipay.huabei.hz-enjoy.partnerId": "2088421251942323",
-      },
-      success: (res) => {},
-      fail: (res) => {},
-      complete: (res) => {},
-    });
+    my.navigateToMiniService({ 
+      serviceId: "2019072365974237", // 插件id,固定值勿改 
+      servicePage: "pages/hz-enjoy/main/index", // 插件页面地址,固定值勿改 
+      extraData: { 
+      "alipay.huabei.hz-enjoy.templateId": "2020032500020903320005146418", 
+      "alipay.huabei.hz-enjoy.partnerId": "2088421251942323", 
+    }, success: (res) => {
+    }, fail: (res) => {
+    }, complete: (res) => {
+    }, }); 
   },
 
 
@@ -223,9 +222,9 @@ Page({
         duration: 2000,
       })
     })
-
-    
   },
+
+
 
 
   // onGetAuthorize(res) {
@@ -239,11 +238,17 @@ Page({
   //   });
   // },
 
-  
+getEasyMemberInfo() {
+  https.get(api.LIGHTMEMBER.GETEASYMEMBERINFO, {outSignNo: ss}, function(){
 
-  // 阻止下拉刷新
-  onPullDownRefresh() {
-    my.stopPullDownRefresh()
-  },
+  }, function() {
+
+  })
+},
+
+// 阻止下拉刷新
+onPullDownRefresh() {
+  my.stopPullDownRefresh()
+},
   
 });

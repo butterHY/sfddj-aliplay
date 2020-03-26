@@ -26,7 +26,7 @@
     </navigator>
   </view>
 </view>
-<view class="swipe whiteBack" a:if='{{ succeedSwiperList && succeedSwiperList.length > 0}}'>
+<view a:if='{{ succeedSwiperList && succeedSwiperList.length > 0}}' class="swipe whiteBack">
   <block>
     <template is="swiperItem" data="{{swiperList: succeedSwiperList,baseImageUrl:baseImageUrl,radius:'20rpx',height:'220.8rpx'}}"></template>
   </block>
