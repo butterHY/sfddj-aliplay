@@ -1,3 +1,6 @@
 /sfddj-miniApp-ali/node_modules
 /sfddj-miniApp-ali/.tea
 /.idea
+/sfddj-miniApp-ali/package-lock.json
+.DS_Store
+*.iml
