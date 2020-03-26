@@ -3,12 +3,41 @@
 
 Component({
   mixins: [],
-  data: {},
-  props: {
-    data: {}
+  data: {
+    
   },
-  didMount() {},
+  props: {
+    data: {},
+    canclick: true,
+    spacingClass: 'spacing'
+  },
+  didMount() {
+    if(!this.constructor.idx) {
+      this.constructor.idx = 1;
+    }
+    this.setData({
+      'imgidx': this.constructor.idx++
+    });
+    my.createSelectorQuery().select('#goodsitemimgbox_' + this.data.imgidx).boundingClientRect().exec((ret) => {
+      this.setData({
+        styleHeight: 'height:' + ret[0].width
+      });
+    });
+    
+  },
   didUpdate() {},
   didUnmount() {},
-  methods: {},
+  methods: {
+    onTap(e) {
+      if(this.props.canclick) {
+        console.log('fffffff', e);
+        my.navigateTo({ url: '../goodsdetail/goodsdetail?id=' + e.target.dataset.id });
+      }
+    },
+    onCartClick() {
+      if(this.props.canclick) {
+        console.log('ggggggg');
+      }
+    }
+  }
 });

@@ -105,5 +105,10 @@ export default {
     'GETLIGHTMEMBER': '/m/a/1.0/subject/getLightMember',                      // 广告模块
   },
 
+	// O2O 商家店铺
+	Shop: {
+		search: '/m/oto//otoShop/vicinityShop' // 查找指定经纬度附近的商家店铺
+	}
+
 
 }
