@@ -11,6 +11,7 @@ export default {
 	baseUrl: env === 'production' ? 'https://m.sfddj.com' : 'https://shop.fx-sf.com',     //主干  https://shop.fx-sf.com  , https://shop.fx-sf.com
 	// 其他资源地址配置
 	baseImageUrl: env === 'production' ? 'https://img.sfddj.com/' : 'https://img.fx-sf.com/',
+	staticsImageUrl: 'https://img.sfddj.com/',
 	appId: env === 'production' ? '2019050764321917' : '2018073160767891',
 	DDJAppId: env === 'production' ? '2019030863501284' : '2018122562647749',
 	mapKey: env === 'production' ? '' : '2ceddac70ce9cc37325dec6398e5a4c7',

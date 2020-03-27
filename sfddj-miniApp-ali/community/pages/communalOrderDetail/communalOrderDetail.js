@@ -1,4 +1,9 @@
+
+import api from '/api/api';
+
 Page({
-  data: {},
+  data: {
+	  staticsImageUrl: api.staticsImageUrl
+  },
   onLoad() {},
 });

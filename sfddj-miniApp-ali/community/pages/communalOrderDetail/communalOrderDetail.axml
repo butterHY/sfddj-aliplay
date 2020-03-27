@@ -1,3 +1,22 @@
-<view>
-  New Page
+<view class="commuOrderDetail">
+	<!-- 顶部订单状态信息模块  -->
+	<view class="orderStatusBox">
+		<!-- 订单状态 -->
+		<view class="orderStatus">
+			<!-- 左边状态 -->
+			<view class="orderStatusInfo flex_view_col justi_cen flex_1">
+				<!-- 状态 -- 待付款 、 支付成功、 取消 等 -->
+				<view class="orderStatusItem ">
+					<!-- 待付款 -->
+					<view>待付款，剩余{{orderLeftTime}}14:09</view>
+				</view>
+				<!--提示 -->
+				<view class="orderStatusTip">{{}}请尽快支付</view>
+			</view>
+			<!-- 右边图标 -->
+			<view class="orderStatusIcon">
+				<image class="orderStatusIcon_img" src="{{staticsImageUrl}}miniappImg/community/order/com_status_wait.png"/>
+			</view>
+		</view>
+	</view>
 </view>
