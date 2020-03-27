@@ -54,7 +54,8 @@
       "root": "community",
       "pages": [
         "pages/index/index",
-		"pages/communalOrderDetail/communalOrderDetail"
+        "pages/communalOrderDetail/communalOrderDetail",
+        "pages/shop/shop"
       ]
     }
   ],
