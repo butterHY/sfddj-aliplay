@@ -1,0 +1,173 @@
+.addressLocPage {
+   height: 100vh;
+   display: flex;
+   flex-direction: column;
+   background-color: #f3f3f3;
+}
+
+.searchBox {
+    background-color: #ffffff;
+    padding: 12rpx 45rpx;
+
+}
+.searchBox .citySearch {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 25rpx;
+}
+
+.searchBox .citySearch .cityName {
+    display: flex; 
+    font-size: 30rpx;
+    align-items: center;
+    justify-content: center;
+}
+
+.searchBox .citySearch .nowCity {
+    display: block; 
+    width: 90rpx;
+    color: #333333;
+    overflow: hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis; 
+}
+.searchBox .citySearch .iconStyle {
+    font-size: 24rpx;
+    margin-left: 10rpx;
+}
+
+
+.searchBox .citySearch .searchInput {
+    display: flex; 
+} 
+
+.searchBox .citySearch .searchInput input {
+   background-color: #f3f3f3;
+   margin-left: 10rpx;
+}
+
+.searchBox .citySearch .searchInput .iconStyle {
+    font-size: 45rpx;
+    color: #999999;
+}
+
+.searchBox .citySearch .searchInput .am-input-label {
+    width: 45rpx;
+    min-width: 45rpx;
+}
+
+.searchBox .citySearch .searchInput .am-input-line { 
+    background-color: #f3f3f3;
+    border-radius: 12rpx;
+    min-height: 84rpx;
+    padding-left: 20rpx;
+}
+
+.searchBox .citySearch .searchInput .am-input-line-bottom { background-color: transparent; }
+.searchBox .citySearch .searchInput .placeholderColor { color: #999999; font-size: 26rpx; }
+
+
+.searchBox .reLoc {
+    display: flex;
+    align-items: center;
+    padding: 18rpx 0;
+}
+
+.searchBox .reLoc .reLoc_addr{
+    flex: 1; 
+    display: flex;
+    align-items: center; 
+    overflow: hidden; 
+}
+
+.searchBox .reLoc .reLoc_addr .iconStyle {
+    color: #ff0532
+}
+
+.searchBox .reLoc .nowCity {   
+    box-sizing: border-box;
+    margin-left: 10rpx;
+    display: inline-block; 
+    color: #333333;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+ 
+
+.searchBox .reLoc .reLoc_btn {
+    font-size: 30rpx;
+    width: 125rpx;
+    color: #ff0532;
+    margin-left: 10rpx;
+}
+
+.nearList {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin: 16rpx 20rpx;
+    background-color: #ffffff;
+    border-radius: 8rpx;
+    padding: 30rpx;
+    min-height: 600rpx;
+}
+.nearList .title {
+    font-size: 34rpx;
+    position: relative;
+    padding-left: 30rpx;
+    padding-bottom: 30rpx;
+}
+
+.nearList .title::before {
+    content:' ';
+    position: absolute;
+    left: 0;
+    border-radius: 6rpx; 
+    width: 8rpx; 
+    height: 36rpx;
+    background-color: #ff0032;
+}
+
+.nearList .listBox {
+    flex: 1;
+    height: 100%;
+    overflow: hidden;
+}
+
+.scrollView {
+    height: 100%;
+}
+
+.nearList .listBox .list {
+    margin-bottom: 40rpx;
+}
+.nearList .listBox .list .row {
+    display: block;
+    font-size: 30rpx;
+    color: #333333;
+    margin-bottom: 10rpx;
+}
+.nearList .listBox .list .rowDetail {
+    display: block;
+    color: #999999;
+    font-size: 26rpx;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+
+.addBtn {
+    padding: 0 20rpx;
+    margin: 100rpx 0 50rpx;
+}
+
+.addBtn button {
+    background-color: #ff0032;
+    color: #ffffff;
+    border-radius: 50px;
+    font-size: 36rpx;
+    height: 104rpx;
+    line-height: 104rpx;
+}

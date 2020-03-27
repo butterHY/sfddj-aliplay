@@ -1,0 +1,10 @@
+{
+  "defaultTitle": "选择城市",
+  "allowsBounceVertical": "NO",
+  "usingComponents":{
+    "list": "mini-ali-ui/es/list/index",
+    "list-item": "mini-ali-ui/es/list/list-item/index",
+    "alphabet": "mini-ali-ui/es/list/alphabet/index",
+    "am-icon": "mini-ali-ui/es/am-icon/index"
+  }
+}
