@@ -46,7 +46,6 @@
 .headImg {
   width: 90rpx;
   height: 90rpx;
-  background: blue;
   border-radius: 50%;
 }
 
@@ -58,8 +57,8 @@
 }
 
 .name {
-  height: 36rpx;
-  /* line-height: 36rpx; */
+  height: 38rpx;
+  line-height: 38rpx;
 }
 
 .lightMemberDate {

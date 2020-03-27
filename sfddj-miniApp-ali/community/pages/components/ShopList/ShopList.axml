@@ -1,0 +1,3 @@
+<view class="shoplist">
+  <shop a:for="{{list}}" data="{{item}}"></shop>
+</view>

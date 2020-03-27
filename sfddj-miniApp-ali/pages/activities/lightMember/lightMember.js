@@ -22,8 +22,12 @@ Page({
 
     openingButtonData: {},     // 底部按钮数据
   },
-  onLoad() {
-    this.getAdvertisingModule();
+  onLoad: async function() {
+    let returnBack = await this.getAdvertisingModule();
+    console.log(returnBack)
+    returnBack.type == "SUCCESS" ? this.getEasyMemberInfo() : ''
+
+    
     // console.log('+++++++++++++++++++++++++')
     // my.getAuthCode({
     //   scopes: ['auth_user'],
@@ -31,7 +35,7 @@ Page({
     //     console.log(res)
     //   },
     // });
-    // my.getOpenUserInfo({
+    // my.d({
     //   success: (res) => {
     //     let userInfo = JSON.parse(res.response).response // 以下方的报文格式解析两层 response
     //     console.log(userInfo)
@@ -41,9 +45,7 @@ Page({
     // })
   },
 
-  onShow() {
-
-  },
+  onShow() {},
 
   isShowRule() {
     console.log(this.data.showRuleStatus)
@@ -54,86 +56,96 @@ Page({
 
   getAdvertisingModule() {
     let that = this;
-    https.get(api.LIGHTMEMBER.GETLIGHTMEMBER, {}, (res) => {
-      let resData = res.data.data;
-      let resRet = res.data.ret;
-      if( resRet && resRet.code == '0' && resRet.message == "SUCCESS" && resData ) {
-        if (Object.keys(resData.modules).length > 0) {
-          resData.modules.forEach( value => {
-            value.parseItem = JSON.parse(value.items);
-            value.parseItem = that.replaceFields(value.parseItem);
-            value.topIntervalColor ? value.topIntervalColor = value.topIntervalColor.replace('#', '') : '';
-            value.backgroundColor ? value.backgroundColor = value.backgroundColor.replace('#', '') : '';
-            
-            switch(value.moduleType) {
-              // case "SINGLE":
-              //   value.moduleType = "SINGLEGOODS"  
-              // break;
-              // case "DOUBLE":
-              //   value.moduleType = "DOUBLEGOODS"
-              // break;
-              // case "GOODS":
-              //   value.moduleType = "GOODSLIST"
-              // break;
-              case "SET_LOW_BUTTON":
-                that.data.openingButtonData = value
-              break;
-              case "EASY_MEMBER_TITLE":
-                value.moduleType = "TITLE"
-              break;
+    return new Promise((reslove, reject) => {
+      https.get(api.LIGHTMEMBER.GETLIGHTMEMBER, {}, (res) => {
+        let resData = res.data.data;
+        let resRet = res.data.ret;
+        if( resRet && resRet.code == '0' && resRet.message == "SUCCESS" && resData ) {
+          if (Object.keys(resData.modules).length > 0) {
+            resData.modules.forEach( value => {
+              value.parseItem = JSON.parse(value.items);
+              value.parseItem = that.replaceFields(value.parseItem);
+              value.topIntervalColor ? value.topIntervalColor = value.topIntervalColor.replace('#', '') : '';
+              value.backgroundColor ? value.backgroundColor = value.backgroundColor.replace('#', '') : '';
+              
+              switch(value.moduleType) {
+                // case "SINGLE":
+                //   value.moduleType = "SINGLEGOODS"  
+                // break;
+                // case "DOUBLE":
+                //   value.moduleType = "DOUBLEGOODS"
+                // break;
+                // case "GOODS":
+                //   value.moduleType = "GOODSLIST"
+                // break;
+                case "SET_LOW_BUTTON":
+                  that.data.openingButtonData = value
+                break;
+                case "EASY_MEMBER_TITLE":
+                  value.moduleType = "TITLE"
+                break;
 
-              case "EASY_MEMBER_COUPON":
-                value.parseItem.forEach(couponVal => {
-                  switch(couponVal.couponStatus) {
-                    case "NO_RECEIVE":
-                      couponVal.couponText = "立即领取"
-                    break;
-                    case "NORMAR":
-                      couponVal.couponText = "去使用"
-                    break;
-                    case "USED":
-                      couponVal.couponText = "已使用"
-                    break;
-                    default:
-                    break;
-                  }
-                })
-              break;
-              default:
-              break;
+                case "EASY_MEMBER_COUPON":
+                  value.parseItem.forEach(couponVal => {
+                    switch(couponVal.couponStatus) {
+                      case "NO_RECEIVE":
+                        couponVal.couponText = "立即领取"
+                      break;
+                      case "NORMAR":
+                        couponVal.couponText = "去使用"
+                      break;
+                      case "USED":
+                        couponVal.couponText = "已使用"
+                      break;
+                      default:
+                      break;
+                    }
+                  })
+                break;
+                default:
+                break;
+              }
+            })
+
+            // 设置标题
+            if (resData.pageName) {
+              my.setNavigationBar({
+                title: resData.pageName,
+                success() { },
+                fail() { },
+              });
             }
-          })
+            console.log(resData)
 
-          // 设置标题
-          if (resData.pageName) {
-            my.setNavigationBar({
-              title: resData.pageName,
-              success() { },
-              fail() { },
-            });
+            that.setData({
+              loadComplete: true,
+              loadFail: false,
+              thematicAds: resData,
+              headData: resData.classify == "已注册" ? resData.modules.find(value => value.moduleType == "REGISTERED") : resData.modules.find(value => value.moduleType == "UNREGISTERED"),
+              openingButtonData: that.data.openingButtonData,
+              isLightMember: resData.classify == "已注册" ? true : false,
+            })
+            console.log(that.data.thematicAds);
+            console.log(that.data.headData);
+            console.log(that.data.isLightMember);
+            console.log(that.data.openingButtonData);
+
+            reslove({
+              type: 'SUCCESS'
+            })
           }
-          console.log(resData)
-
-          that.setData({
-            loadComplete: true,
-            loadFail: false,
-            thematicAds: resData,
-            headData: resData.classify == "已注册" ? resData.modules.find(value => value.moduleType == "REGISTERED") : resData.modules.find(value => value.moduleType == "UNREGISTERED"),
-            openingButtonData: that.data.openingButtonData,
-            isLightMember: resData.classify == "已注册" ? true : false,
-          })
-          console.log(that.data.thematicAds);
-          console.log(that.data.headData);
-          console.log(that.data.isLightMember);
-          console.log(that.data.openingButtonData)
         }
-      }
-    }, (res) => {
-      that.setData({
-        loadComplete: true,
-        loadFail: true,
-      })
-    }) 
+      }, (res) => {
+        that.setData({
+          loadComplete: true,
+          loadFail: true,
+        })
+
+        reject({
+          type: 'FAIL'
+        })
+      }) 
+    })
   },
 
   replaceFields(data) {
@@ -167,17 +179,16 @@ Page({
   // 轻会员跳转
   goToLightMember() {
     console.log('goToLightMember')
-    my.navigateToMiniService({
-      serviceId: "2019072365974237", // 插件id,固定值勿改
-      servicePage: "pages/hz-enjoy/main/index", // 插件页面地址,固定值勿改
-      extraData: {
-        "alipay.huabei.hz-enjoy.templateId": "2020032300020903320005126479",
-        "alipay.huabei.hz-enjoy.partnerId": "2088421251942323",
-      },
-      success: (res) => {},
-      fail: (res) => {},
-      complete: (res) => {},
-    });
+    my.navigateToMiniService({ 
+      serviceId: "2019072365974237", // 插件id,固定值勿改 
+      servicePage: "pages/hz-enjoy/main/index", // 插件页面地址,固定值勿改 
+      extraData: { 
+      "alipay.huabei.hz-enjoy.templateId": "2020032500020903320005146418", 
+      "alipay.huabei.hz-enjoy.partnerId": "2088421251942323", 
+    }, success: (res) => {
+    }, fail: (res) => {
+    }, complete: (res) => {
+    }, }); 
   },
 
 
@@ -223,9 +234,9 @@ Page({
         duration: 2000,
       })
     })
-
-    
   },
+
+
 
 
   // onGetAuthorize(res) {
@@ -239,7 +250,33 @@ Page({
   //   });
   // },
 
-  
+  getEasyMemberInfo() {
+    let that = this;
+    let data = that.data.isLightMember ? {outSignNo: that.data.thematicAds.lightMemberId} : {}
+    console.log(that.data.isLightMember);
+    console.log(data);
+
+    https.get(api.LIGHTMEMBER.GETEASYMEMBERINFO, data, function(res){
+      let resData = res.data.data;
+      let resRet = res.data.ret;
+
+      if(resRet.code == '0' && resRet.message == "SUCCESS" && resData) {
+        console.log(that.data.headData);
+        resData.headImage = resData.headImage ? that.data.baseImageUrl + resData.headImage : that.data.baseLocImgUrl + 'miniappImg/icon/icon_default_head.jpeg';
+        resData.gmtSign = Math.round((new Date().getTime() - resData.gmtSign) / 1000 /60 /60 /24) // 签约时间
+        resData.gmtUnSign = utils.formatTime(new Date(resData.gmtUnSign));
+        console.log(Math.round((new Date().getTime() - resData.gmtSign) / 1000 /60 /60 /24));
+        that.data.headData = Object.assign(that.data.headData, resData);
+        console.log(that.data.headData);
+        that.setData({
+          headData: that.data.headData
+        })
+        console.log(that.data.headData);
+      }
+    }, function(res) {
+      console.log(res);
+    })
+  },
 
   // 阻止下拉刷新
   onPullDownRefresh() {

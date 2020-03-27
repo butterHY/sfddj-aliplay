@@ -8,17 +8,13 @@ let constants = require('./utils/constants');
 
 
 App({
-	// data: {
-	//     home_spikeTime: null,
-	//     goodsDetail_spikeTime: null
-	// },
   umengConfig: {
     appKey: UrlConstants.umaAppKey, //由友盟分配的APP_KEY
     debug: true //是否打开调试模式
   },
 
 	onLaunch: function(options) {
-		// uma.init(UrlConstants.umaAppKey, my);   // 务必填入已注册的appKey，不然将无法统计
+		// uma.init(UrlConstants.umaAppKey, my);   // 务必填入已注册的appKey，不然将无法统计	（友盟小程序应用引入不需要此操作）
     console.log(UrlConstants.umaAppKey)
 		if (options.query) {
 			this.globalData.query = options.query
@@ -32,7 +28,7 @@ App({
 	},
 
 	onShow: function(options) {
-		// uma.resume();                      // 请务必引入
+		// uma.resume();                      // 请务必引入	（友盟小程序应用引入不需要此操作）
 		if (options.query) {
 			this.globalData.query = options.query
 		}
@@ -51,14 +47,13 @@ App({
 	},
 
 	onHide: function() {
-		// uma.pause();                       // 请务必引入
+		// uma.pause();                       // 请务必引入（友盟小程序应用引入不需要此操作）
 		clearTimeout(this.globalData.home_spikeTime);
 		clearTimeout(this.globalData.goodsDetail_spikeTime);
-
 	},
 
 	globalData: {
-		// uma,                                // 请将uma模块绑定在gloabalData下，以便后续使用
+		// uma,                                // 请将uma模块绑定在gloabalData下，以便后续使用 （友盟小程序应用引入不需要此操作）
 		userInfo: null,
 		systemInfo: null,
 		comeFrom: null,
@@ -80,7 +75,6 @@ App({
 
 	getNewUserInfoFn: function(fn) {
 		var that = this;
-
 		my.getSetting({
 			success: function(res) {
 
@@ -119,12 +113,9 @@ App({
 	},
 
   getCartNumber: function() {
-    // console.log('我在 app.js 的公共方法');
     var that = this;
     var canUsesetTab = my.canIUse('setTabBarBadge');
 		var canUsesremoveTab = my.canIUse('removeTabBarBadge');
-    // console.log(canUsesetTab)
-    // console.log(canUsesremoveTab)
     if(canUsesetTab && canUsesremoveTab) {
       sendRequest.send(constants.InterfaceUrl.SHOP_GET_COUNT, {}, function(res) {
         if(res.data.result.count) {

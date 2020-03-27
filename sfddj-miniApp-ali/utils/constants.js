@@ -15,15 +15,6 @@ var baseImageUrl_sit = "https://img.fx-sf.com/"; //图片前缀测试环境https
 var baseImageUrl_pro = "https://img.sfddj.com/"; //图片前缀生产环境
 var appPre = '/app/v1';      //跟app调用同一个接口
 
-// var  
-
-
-// wx.request({
-//   url: constants.UrlConstants.baseUrlOnly + constants.InterfaceUrl.POST_ORDER_INVOICE + '?companyName=' + invoiceDatas.companyName + '&taxCode=' + invoiceDatas.taxCode + '&mobile=' + invoiceDatas.phoneNumber,
-//   header: {
-//     "loginToken": token,
-//   },
-//   method: 'POST',
 
 /**0
  * BaseUrl地址
@@ -36,7 +27,7 @@ var UrlConstants = {
 	baseImageLocUrl: baseImageUrl_pro, //存在于服务器端的静态图片前缀
 	chInfo: release ? "ch_2019030863501284" : "ch_2018122562647749",    //外跳的信息  
 	// umaAppKey: release ? '5db26b0f570df32c3b000556' : '5da40e8e570df31bcd000ca6',      //友盟+的appkey
-  umaAppKey: release ? '5db26b0f570df32c3b000556' : '5e60c6a49f9a0a410a2b15aa',      //友盟+更新测试的appkey
+  	umaAppKey: release ? '5e79cc54dbc2ec076bd61c66' : '5e60c6a49f9a0a410a2b15aa',      //友盟+更新的appkey
 
 
 

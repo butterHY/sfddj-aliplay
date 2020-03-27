@@ -1,0 +1,7 @@
+.index {
+    background-color: #ddd;
+}
+
+.index_shoplist {
+    padding: 20rpx 20rpx;
+}

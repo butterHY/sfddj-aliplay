@@ -129,7 +129,6 @@ Page({
     let defaultAddress = my.getStorageSync({
       key: 'defaultAddress', // 缓存数据的默认地址
     });
-    // console.log('全局的 ID',getApp().globalData.NowAddrId);
 
     // 新的写法，如果显示，只要不是页面初始化，那就重新执行倒计时，因为我得判断活动是否过期；
     // 最新的写法，如果是从确认订单页返回再返回，应该重新请求数据以更新库存，还有如果现在还不是秒杀商品，但返回后刚好这个商品正处于秒杀活动时间内，这就得重新请求数据获取时间进行倒计时
@@ -201,8 +200,6 @@ Page({
       buyerShowList:  commentList,
       // buyerShowCount: resData.buyerShow.buyerShowCount
     });
-
-    console.log(that.data.buyerShowList)
   },
 
 	/**f
@@ -323,23 +320,16 @@ Page({
             let allProductIndex = resData.goodsShowVO.products.findIndex(value => {return value.store && value.store > 0 });
             resData.goodsShowVO.products[allProductIndex].isDefault = true;
             resData.goodsShowVO.defaultProd = resData.goodsShowVO.products[allProductIndex];
-            
-            console.log('没有默认规格，下一个规格 index', allProductIndex)
-            console.log('没有默认规格，下一个规格作为默认', resData.goodsShowVO.defaultProd)
-            console.log('没有默认规格，更改后的全部规格', resData.goodsShowVO.products)
           }
 
           that.data.goods = resData.goodsShowVO;
-            console.log(resData)
           // 处理商品评论；
           if ( resData.buyerShow && resData.buyerShow.buyerShowList && resData.buyerShow.buyerShowList.length > 0 ) {
-            console.log(resData)
             that.getComment(resData.buyerShow.buyerShowList, 'buyerShow');
             that.setData({
               buyerShowCount: resData.buyerShow.buyerShowCount
             });
           } else if ( resData.commentList && resData.commentList.length > 0 ) {
-            console.log(resData)
             that.getComment(resData.commentList, 'generalComment');
           }
 
@@ -397,14 +387,9 @@ Page({
             that.data.specType == 'SINGLE' || that.data.specType == 'MULTI' ? that.data.iavPath = resData.goodsShowVO.defaultProd.iavPath : that.data.iavPath = [];	// 单选和多选商品设置默认规格
 
           // 测试用的，让库存为 0
-          // that.data.allProduct[2].store = 10;
           // specType 规格类型,  MULTI 多规格, SINGLE 单规格, OPTIONAL 任选规格；
           that.data.goodsSpecMap = JSON.parse(JSON.stringify(that.data.goods.specifications));
-          console.log(that.data.goodsSpecMap)
           if (that.data.specType == 'MULTI') {
-            // that.data.goodsSpecMap.forEach(values => that.data.iavPath.push(''));   --- 调试多选规格需要注释
-            // that.data.iavPath = that.data.iavPath.toString();                       --- 调试多选规格需要注释
-
             that.data.multiDimension = that.data.goodsSpecMap.length;
             that.multiFormName();
             that.setGoodsSpecMapAllStore();
@@ -557,7 +542,6 @@ Page({
     let that = this;
     if ( that.data.specType == 'OPTIONAL' ) {
       that.setProduct('firstTime');
-      console.log(that.data.product)
     } else {
       let iavPathArr = that.data.iavPath.split(',');
       that.data.goodsSpecMap.forEach(function(mapValue) {
@@ -570,8 +554,6 @@ Page({
         that.setProduct();
       }      
     }
-    console.log(that.data.allProduct)
-    console.log(that.data.goodsSpecMap)
   },
 
 	/**
@@ -675,7 +657,6 @@ Page({
       value.tuanPrice = value.tuangouPrices;        // 价格和积分不变 （新版，价格/积分 不随着数量和起购数量变化，只是显示单位价格, 奖励积分和兑换积分除外）                     
       value.goodsPrice = value.salePrice;
       that.data.goods.secKillStatus ? value.secondKillPrice = value.activityPrice : '';
-      //  value.memberDayPrice
       that.data.goods.jifenStatus ? value.thisMemberPoint = value.memberPoint : '';
       that.data.goods.returnMoneyStatus ? value.thisReturnMoneyPrice = (value.returnMoney * that.data.minCount).toFixed(2) : '';
       that.data.goods.globalStatus && that.data.goods.goodsViceVO.crossBorderPattern == 3 ? value.calGlobalFeeAll = (value.calGlobalFee * that.data.minCount).toFixed(2) : '';
@@ -684,17 +665,11 @@ Page({
         value.costMemberScoreAll = value.costMemberScore * that.data.minCount;
         value.awardMemberScoreAll = value.awardMemberScore * that.data.minCount;
       }
-
       // ----- 修改规格的价格，改为直接使用后台返回的单位价格和单位积分 , 不再 * 起购数量       end;
 
-
-      // 任选规格, 第一次渲染的时候也是使用默认规格来展示；goodsSpecMap 父类规格里的字子规格不用带 tape = true，同时，全局的任选规格 optionalProduct 为 [];
       if (specType == 'firstTime' && value.isDefault == true) {
-        // console.log('任选规格或多选规格的第一次默认渲染')
         that.data.product = value;
       } else if (specType != 'firstTime' && specType != 'modifyOptional' && that.data.iavPath == value.iavPath) {
-        // console.log('多选规格和单选规格修改规格')
-        // 多选规格和单选规格，如果当前这条子类规格的 iavPath 与 全局默认子类规格的 iavPath 相等，那让全局的默认规格等于这条子类规格；
         that.data.product = value;
       }
     });
@@ -706,13 +681,11 @@ Page({
       that.data.iavPath.forEach(function(value) {
         allOptionalProduct.push(that.data.allProduct.find(val => val.iavPath == value))
       })
-      // console.log('that.data.iavPath 长度大于 0 ，任选规格 push 结束了，开始合并 optionalProduct， 我要调用了')
       that.data.optionalProduct = allOptionalProduct;
       that.mergeOptionalProduct();
     } else if (specType == 'modifyOptional' && that.data.iavPath.length <= 0) {
       // 如果 that.data.iavPath 为 []，则找 that.data.allProduct 原有的为 isDefault 的子类规格，把全局的 that.data.product 设置为改子类规格；
       that.data.product = that.data.allProduct.find(val => val.isDefault == true);
-      // console.log('that.data.iavPath 长度等于 0 ，任选规格 不push  ,不合并 optionalProduct 且为 []')
       that.data.optionalProduct = allOptionalProduct;
     }
 
@@ -724,7 +697,6 @@ Page({
 	*/
   mergeOptionalProduct() {
     var that = this;
-    // console.log('我要开始合并任选规格数组了 ')
     var product = {
       "productId": [],
       "productSn": [],
@@ -757,7 +729,6 @@ Page({
       storeArr.push(value.store)
     })
     product.store = storeArr.sort((a, b) => a - b)[0];
-    // console.log(product.store)
     product.productId = product.productId[0];
     that.data.product = product;
   },
@@ -910,10 +881,6 @@ Page({
       quantity: that.data.minCount,                     // 再次初始化为最低起售数 ;
     });
 
-    console.log(that.data.iavPath)
-    console.log(that.data.goodsSpecMap)
-    console.log(that.data.product)
-    console.log(that.data.allProduct)
 
     // 如果当前选中的规格的库存为 0 那就提示库存不足, 最新的修改是切换的时候库存为 0 不提醒，只有点击确定按钮的时候如果库存为 0 再提醒；
     // if (that.data.product.store != 0) {
@@ -1409,7 +1376,6 @@ Page({
     let ruleSign = e.currentTarget.dataset.ruleSign;
     http.post(api.GOODSDETAIL.GOODS_DETAIL_DRAWCOUPON, { ruleSign }, function(res) {
       let resData = res.data.data;
-      console.log(resData)
       if (resData && resData.length > 0) {
         resData[0].beginDateStr = utils.pointFormatTime(new Date(resData[0].beginDate));
         resData[0].endDateStr = utils.pointFormatTime(new Date(resData[0].endDate));
@@ -1519,7 +1485,6 @@ Page({
     my.getLocation({
       type: 1,
       success(res) {
-        // console.log('gpsAddr', res)
         my.hideLoading();
         that.setData({
           address: res
@@ -1569,7 +1534,6 @@ Page({
     var that = this;
     var fatherIndexArr = that.data.iavPath.split(',');
     var tapNum = 0
-    console.log(that.data.goodsSpecMap)
     that.data.goodsSpecMap.forEach(function(value) {
       value.values.forEach(values => values.taped ? tapNum += 1 : '');
     })
@@ -1948,7 +1912,6 @@ Page({
     } else if (that.data.address) {
       defaultAddress = that.data.address;
     }
-    console.log(that.data.goods)
     that.data.nonDeliveryArea = that.data.goods.nonDeliveryArea.some(value => {
       if (defaultAddress.province && value) {
         return defaultAddress.province.indexOf(value) != -1 || value.indexOf(defaultAddress.province) != -1
@@ -1981,7 +1944,6 @@ Page({
   // 当 specType != 'OPTIONAL' 时 xgCount 为限购数
   isDisabled(num) {
     let that = this;
-    // console.log('我进来设置了');
     num <= that.data.minCount ? that.data.subtractDisabled = true : that.data.subtractDisabled = false;
     if (that.data.specType != 'OPTIONAL' && that.data.goods.xgCount > 0 && that.data.goods.xgCount <= that.data.product.store) {
       (num >= 99 || num >= that.data.goods.xgCount) ? that.data.addDisabled = true : that.data.addDisabled = false;
@@ -2075,7 +2037,6 @@ Page({
   fullscreenchange(e) {
     this.data.isFullScreen = e.detail.fullScreen;
     if ( !this.data.isFullScreen ) {
-      // console.log('退出全屏，停止播放');
       this.setData({
         videoShow: false
       })
