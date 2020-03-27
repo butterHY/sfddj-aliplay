@@ -31,6 +31,14 @@ Page({
 	onUnload() {
 	},
 
+	onReachBottom() {
+		if(this.shopList) {
+			this.shopList.loadMore();
+		}
+	},
 
+	shopListSave(ref) {
+		this.shopList = ref;
+	}
 
 });

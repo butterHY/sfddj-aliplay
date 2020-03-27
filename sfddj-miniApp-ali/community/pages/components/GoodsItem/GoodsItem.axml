@@ -5,8 +5,8 @@
       <view class="goodsitemtit" data-id="{{data.id}}" onTap="onTap">{{data.title}}</view>
       <view class="goodsitemcontrol">
         <view>
-          <text class="goodsitemprice">￥{{data.priceShow}}</text>
-          <text class="goodsitemsprice">￥{{data.priceShow}}</text>
+          <text class="goodsitemprice">￥{{data.shopGoodsSkuList[0].isDiscount ? data.shopGoodsSkuList[0].discountPrice : data.shopGoodsSkuList[0].salePrice}}</text>
+          <text class="goodsitemsprice" a:if="{{data.shopGoodsSkuList[0].isDiscount}}">￥{{data.shopGoodsSkuList[0].salePrice}}</text>
         </view>
         <view>
           <view class="cart" catchTap="onCartClick" data-item="{{data}}"></view>
