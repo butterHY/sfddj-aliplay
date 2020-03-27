@@ -1,3 +1,8 @@
 {
-  "titleBarColor": "#ffffff"
+    "defaultTitle": "社区",
+    "titleBarColor": "#ffffff",
+    "allowsBounceVertical": "NO",
+    "usingComponents": {
+        "shop-list":  "/community/pages/components/ShopList/ShopList"
+    }
 }

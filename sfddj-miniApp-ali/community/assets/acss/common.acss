@@ -1,0 +1,20 @@
+*　{
+    font-family: "SourceHanSansCN-Medium";
+    box-sizing: border-box;
+}
+
+page {
+    font-size: 26rpx;
+    line-height: 1.2em;
+}
+
+.cart {
+    display: inline-block;
+    width: 44rpx;
+    height: 44rpx;
+    border-radius: 50%;
+    background-image: url('/community/assets/images/cart.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}

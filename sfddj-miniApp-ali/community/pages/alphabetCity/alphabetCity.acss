@@ -1,0 +1,24 @@
+.dyt-list {
+  margin-top: 0;
+  position: relative; 
+  height: 100vh;
+  
+}
+ 
+.am-alphabet-letter {
+  font-size: 26rpx;
+  color: #ff0028;
+  margin-bottom: 10rpx;
+  margin-right: 10rpx;
+  font-weight: bold;
+
+}
+
+.am-alphabet-letter-chosen {
+  background: rgba(255, 0, 40, .2);
+}
+
+.am-alphabet-bubble {
+  background: #ff0028;
+  right: 80rpx;
+}

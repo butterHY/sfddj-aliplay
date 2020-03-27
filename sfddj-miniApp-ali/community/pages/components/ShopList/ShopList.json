@@ -1,0 +1,6 @@
+{
+  "component": true,
+  "usingComponents": {
+    "shop":  "/community/pages/components/Shop/Shop"
+  }
+}
