@@ -315,11 +315,13 @@ Page({
 
           //提前判断默认规格
           that.data.goodsId = resData.goodsShowVO.goodsId;
-          if( !resData.goodsShowVO.defaultProd || !resData.goodsShowVO.defaultProd.store ) {
+          if( (!resData.goodsShowVO.defaultProd || !resData.goodsShowVO.defaultProd.store) && resData.goodsShowVO.products ) {
             resData.goodsShowVO.products.forEach(value => {value.isDefault = false})
             let allProductIndex = resData.goodsShowVO.products.findIndex(value => {return value.store && value.store > 0 });
-            resData.goodsShowVO.products[allProductIndex].isDefault = true;
-            resData.goodsShowVO.defaultProd = resData.goodsShowVO.products[allProductIndex];
+            if( allProductIndex != -1 ) {
+              resData.goodsShowVO.products[allProductIndex].isDefault = true;
+              resData.goodsShowVO.defaultProd = resData.goodsShowVO.products[allProductIndex];
+            }
           }
 
           that.data.goods = resData.goodsShowVO;
@@ -376,10 +378,6 @@ Page({
           var type = '';
           resData.goodsShowVO.jifenStatus ? type = 3 : (resData.goodsShowVO.returnMoneyStatus ? type = 4 : type = '');
 
-
-
-
-        
             that.data.theMemberPoint = resData.goodsShowVO.defaultProd.memberPoint;                         // 默认会员积分（也是用于积分商品的积分）
             that.data.theCostMemberScore = resData.goodsShowVO.defaultProd.costMemberScore;                 // 默认兑换会员积分
             that.data.theAwardMemberScore = resData.goodsShowVO.defaultProd.awardMemberScore;               // 默认奖励会员积分
