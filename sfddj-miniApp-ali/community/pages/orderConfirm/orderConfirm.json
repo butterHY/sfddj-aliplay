@@ -1,0 +1,11 @@
+{
+	"titleBarColor": "#ffffff",
+  	"defaultTitle": "确认订单",
+  	"pullRefresh": false,
+  	"usingComponents": {
+        "multi-liner": "mini-ali-ui/es/multi-liner/index",
+        "order-goods": "/community/pages/components/orderGoods/orderGoods",
+        "payable-sum": "/community/pages/components/payableSum/payableSum",
+        "write-info": "/community/pages/components/writeShipperInfo/writeShipperInfo"
+    }
+}

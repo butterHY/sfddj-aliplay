@@ -1,0 +1,47 @@
+<view class="orderConfirmPage">
+    <scroll-view scroll-y="{{true}}" class="orderConfirmScroll">
+        <!--配送方式  -->
+        <view class="deliverType">
+            <!-- 门店自提 -->
+            <view class="deliverTypeItem {{typeIndex == 0 ? 'typeActive' : ''}}" data-index="0" onTap="switchType">
+                <image a:if="{{ typeIndex == 0 }}" class="deliverTypeIcon" src="{{staticsImageUrl}}miniappImg/community/order/confirm_selfTake_sel.png"/>
+                <image a:else class="deliverTypeIcon" src="{{staticsImageUrl}}miniappImg/community/order/confirm_selfTake.png"/>
+                <view class="marLeft_20">门店自提</view>
+            </view>
+            <!-- 商家配送 -->
+            <view class="marLeft_20 deliverTypeItem {{typeIndex == 1 ? 'typeActive' : ''}}" data-index="1" onTap="switchType">
+                <image a:if="{{ typeIndex == 1 }}" class="deliverTypeIcon" src="{{staticsImageUrl}}miniappImg/community/order/confirm_storeDeliver_sel.png"/>
+                <image a:else class="deliverTypeIcon" src="{{staticsImageUrl}}miniappImg/community/order/confirm_storeDeliver.png"/>
+                <view class="marLeft_20">商家配送</view>
+            </view>
+        </view>
+        <!-- 填写个人信息 -->
+        <write-info></write-info>
+        <!-- 商品信息 -->
+        <order-goods goodsList="{{goodsList}}"></order-goods>
+        <!-- 应付金额 -->
+        <payable-sum></payable-sum>
+        <!-- 留言 -->
+        <view class="userMessage">
+            <!-- 标题 -->
+            <view class="userMessage_tit">买家留言</view>
+            <!-- 写留言 -->
+            <multi-liner data-field="userMessage" placeholder="给卖家留言，最多60字哦～" type="text" value="{{userMessage}}" onInput="onInput" last="{{true}}" controlled="{{controlled}}" maxlength="60" show-count="{{false}}"></multi-liner>
+        </view>
+        <!-- 发票 -->
+        <view class="order_invoice">
+            <view class="order_invoice_tit">发票信息</view>
+            <view class="order_invoice_tip">店家不支持线上开发票，请联系店家开票</view>
+        </view>
+    </scroll-view>
+    <!-- 底部去支付 -->
+    <view class="payNowBox">
+        <!-- 价格 -->
+        <view class="payNowPriceBox">
+            <view class="payNowPrice">￥59.8</view>
+            <view class="discountPrice">￥69.9</view>
+        </view>
+        <!-- 去结算按钮 -->
+        <view class="payNowBtn">去结算</view>
+    </view>
+</view>

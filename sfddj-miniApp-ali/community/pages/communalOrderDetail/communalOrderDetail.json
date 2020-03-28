@@ -2,5 +2,9 @@
 	"titleBarColor": "#ffffff",
   	"defaultTitle": "订单详情",
   	"pullRefresh": false,
-  	"usingComponents": {}
+  	"usingComponents": {
+          "contacts": "/community/pages/components/contacts/contacts",
+          "order-goods": "/community/pages/components/orderGoods/orderGoods",
+          "payable-sum": "/community/pages/components/payableSum/payableSum"
+    }
 }
