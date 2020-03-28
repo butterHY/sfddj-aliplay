@@ -1,3 +1,8 @@
-<view>
-    <shop-list></shop-list>
+<view class="index">
+    <view>
+        <!-- TODO: 这里放最上面的“定位” -->
+    </view>
+    <view class="index_shoplist">
+        <shop-list ref="shopListSave"></shop-list>
+    </view>
 </view>

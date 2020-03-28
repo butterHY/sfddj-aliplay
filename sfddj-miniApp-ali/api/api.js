@@ -109,7 +109,10 @@ export default {
 
 	// O2O 商家店铺
 	Shop: {
-		search: '/m/oto//otoShop/vicinityShop' // 查找指定经纬度附近的商家店铺
+		SEARCH: '/m/oto/otoShop/vicinityShop', // 查找指定经纬度附近的商家店铺
+		GETBYID: '/m/oto/otoShop/shopInfo/', // 根据ID取得商家店铺
+		GETCATEGORIES: '/m/oto/otoShopCategory/categoryList/', // 取指定店铺的所有商品类别
+		GETGOODSOFSHOP: '/m/oto/otoShopGoods/shopGoods/', // 获取指定店铺的商品列表
 	}
 
 

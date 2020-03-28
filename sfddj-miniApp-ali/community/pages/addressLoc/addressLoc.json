@@ -1,0 +1,10 @@
+{
+    "defaultTitle": "选择定位",
+    "backgroundColor": "#f3f3f3",
+    "allowsBounceVertical": "NO",
+    "usingComponents":{ 
+      "list": "mini-ali-ui/es/list/index",
+      "input-item": "mini-ali-ui/es/input-item/index",
+      "am-icon": "mini-ali-ui/es/am-icon/index"
+    }
+}

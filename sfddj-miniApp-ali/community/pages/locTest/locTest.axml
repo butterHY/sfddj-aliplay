@@ -1,0 +1,21 @@
+<view>
+    <view class="page">
+        <view class="page-section">
+            <view class="page-section-demo">
+                <text>经度:</text>
+                <input value="{{longitude}}"></input>
+            </view>
+
+            <view class="page-section-demo">
+                <text>维度:</text>
+                <input value="{{latitude}}"></input>
+            </view>
+             
+            <view class="">
+                <button size="default" type="primary" onTap="getLocation">重新获取</button> 
+
+                <button size="default" type="warn" onTap="chooseLocation">选择地址</button>  
+            </view>
+        </view>
+    </view>
+</view>

@@ -54,7 +54,10 @@
       "root": "community",
       "pages": [
         "pages/index/index",
-		"pages/communalOrderDetail/communalOrderDetail"
+		    "pages/shop/shop",
+        "pages/alphabetCity/alphabetCity",
+        "pages/addressLoc/addressLoc",
+        "pages/locTest/locTest"
       ]
     }
   ],

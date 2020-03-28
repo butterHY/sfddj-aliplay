@@ -1,0 +1,16 @@
+<view class="citySelect">
+	<view class="dyt-list">
+		<alphabet alphabet="{{alphabet}}" onClick="onAlphabetClick">
+		</alphabet>
+		<view class="">
+			<scroll-view class="scrollView" scroll-y="{{true}}">
+				<list>
+					<list-item >
+						<text class="letter">当前定位城市</text>
+						<text class="cityName">深圳市</text>>
+					</list-item>
+				</list>
+			</scroll-view>
+		</view>
+	</view>
+</view>

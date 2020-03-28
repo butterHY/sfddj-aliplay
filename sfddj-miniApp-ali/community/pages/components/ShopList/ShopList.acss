@@ -1,0 +1,3 @@
+.shoplist > .shop {
+    margin-bottom: 20rpx;
+}

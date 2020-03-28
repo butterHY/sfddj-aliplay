@@ -1,0 +1,8 @@
+{
+    "defaultTitle": "社区团购",
+    "titleBarColor": "#ffffff",
+    "allowsBounceVertical": "NO",
+    "usingComponents": {
+        "goods-item":  "/community/pages/components/GoodsItem/GoodsItem"
+    }
+}
