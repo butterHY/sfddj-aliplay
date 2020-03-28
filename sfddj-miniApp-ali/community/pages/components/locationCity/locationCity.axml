@@ -1,0 +1,13 @@
+<view class="locCityShow">
+  <view class="cityInfo" onTap="goLocationCity">
+    <text class="city">{{ locAddress.city }}</text>
+
+    <text class="address">
+      <view class="line"></view>
+      <am-icon class="iconStyle" type="location"   />
+      {{ locAddress.address }}
+    </text>
+  </view>
+
+  <view class="titleInfo"> {{ title }} </view> 
+</view>

@@ -1,7 +1,61 @@
+/* 页面布局 */
+.citySelect {
+  height: 100vh; 
+  padding: 0 20rpx; 
+}
+
+.cityList {
+  height: 100Vh;
+}
+
+.scrollView {
+  height: 100%;
+}
+ 
+.am-list-body::after {
+  background-color: transparent;
+}
+
+.listShow {}
+
+.listShow .listName {  
+  color: #666666;
+  font-size: 26rpx;
+  padding: 8rpx 30rpx;
+}
+
+.listShow .listBox { 
+  border-radius: 16rpx;
+  overflow: hidden;
+}
+
+.listShow .am-list-item {
+  font-size: 30rpx;
+}
+ 
+
+.listShow .am-list-line {
+  padding: 26rpx 30rpx;
+}
+.listShow .am-list-line::after {
+  left: 30rpx;
+  right: 30rpx;  
+}
+
+.listShow .am-list-item:last-child .am-list-line::after  {
+  background-color: transparent;
+}
+
+.listShow .am-list-prefix {
+  padding: 0;
+}
+ 
+
+/* 指示器 */
 .dyt-list {
   margin-top: 0;
   position: relative; 
-  height: 100vh;
+  height: 100%;
   
 }
  

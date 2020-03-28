@@ -1,0 +1,42 @@
+.locCityShow {
+	background-color: #ffffff;
+	padding: 0 20rpx 30rpx;
+}
+
+.locCityShow .cityInfo {
+	padding: 0 30rpx 18rpx;
+	color: #333333;
+	font-size: 30rpx;
+}
+
+.locCityShow .cityInfo .city {
+	margin-left: 12rpx;
+}
+
+.locCityShow .cityInfo .address { 
+	position: relative;
+	margin-left: 10rpx; 
+}
+
+.locCityShow .cityInfo .line {
+	position: absolute;  
+	width: 1px;
+	top: 0; 
+	bottom: 0;
+	background-color: rgba(219, 219, 219, .5);
+	left: 0;
+}
+
+.locCityShow .cityInfo .iconStyle {
+	font-size: 26rpx;
+	color: #999999;
+	margin: 0 10rpx; 
+}
+
+
+.locCityShow .titleInfo {
+	font-size: 24rpx;
+	color: #999999;
+	padding: 0 30rpx;
+	margin-left: 12rpx;
+}

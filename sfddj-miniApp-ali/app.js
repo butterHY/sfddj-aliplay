@@ -10,7 +10,7 @@ let constants = require('./utils/constants');
 App({
   umengConfig: {
     appKey: UrlConstants.umaAppKey, //由友盟分配的APP_KEY
-    debug: true //是否打开调试模式
+    debug: false //是否打开调试模式
   },
 
 	onLaunch: function(options) {
