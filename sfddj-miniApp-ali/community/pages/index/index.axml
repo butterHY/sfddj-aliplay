@@ -1,6 +1,7 @@
 <view class="index">
-    <view>
+    <view class="locationBox">
         <!-- TODO: 这里放最上面的“定位” -->
+        <location-city></location-city>
     </view>
     <view class="index_shoplist">
         <shop-list ref="shopListSave"></shop-list>

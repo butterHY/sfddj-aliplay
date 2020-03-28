@@ -3,6 +3,7 @@
     "titleBarColor": "#ffffff",
     "allowsBounceVertical": "NO",
     "usingComponents": {
-        "shop-list":  "/community/pages/components/ShopList/ShopList"
+        "shop-list":  "/community/pages/components/ShopList/ShopList",
+        "location-city":  "/community/pages/components/locationCity/locationCity"
     }
 }
