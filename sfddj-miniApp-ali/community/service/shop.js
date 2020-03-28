@@ -69,8 +69,13 @@ class Shop extends MiniAppService {
 
 
     // 取指定店铺的商品列表
-    getGoodsOfShop(shopId, pageIdx, callbackFun) {
-        http.get(api.Shop.GETGOODSOFSHOP + shopId, {}, (res) => {
+    getGoodsOfShop(shopId, categoryId, pageIdx, callbackFun) {
+        let pageSize = 20;
+        http.get(api.Shop.GETGOODSOFSHOP + shopId, {
+            categoryId: categoryId,
+            start: pageIdx * pageSize,
+            limit: pageSize
+        }, (res) => {
             if(res.data && res.data.data) {
                 res.data.data.forEach((T) => {
                     if(T.goodsImagePath) {
@@ -85,6 +90,49 @@ class Shop extends MiniAppService {
             }
             if(callbackFun) {
                 callbackFun(res);
+            }
+        });
+    }
+
+
+    // 用关键字搜索店铺内的商品
+    searchGoodsOfShop(shopId, keyword, callbackFun) {
+        http.get(api.Shop.GETGOODSOFSHOP + shopId, {
+            keyword: keyword,
+            start: 0,
+            limit: 50
+        }, (res) => {
+            if(res.data && res.data.data) {
+                res.data.data.forEach((T) => {
+                    if(T.goodsImagePath) {
+                        T.goodsImagePath = JSON.parse(T.goodsImagePath);
+                        for(let i = 0; i < T.goodsImagePath.length; i++) {
+                            T.goodsImagePath[i] = api.baseImageUrl + T.goodsImagePath[i];
+                        }
+                    } else {
+                        T.goodsImagePath = [];
+                    }
+                });
+            }
+            if(callbackFun) {
+                callbackFun(res);
+            }
+        });
+    }
+
+
+    // 关注或取消关注指定的店铺
+    like(shopId, isLike, callbackFun) {
+        http.post(api.Shop.LIKE, {
+            shopId: shopId,
+            attention: isLike
+        }, (res) => {
+            if(callbackFun) {
+                callbackFun(res);
+            }
+        }, (err) => {
+            if(callbackFun) {
+                callbackFun(err);
             }
         });
     }

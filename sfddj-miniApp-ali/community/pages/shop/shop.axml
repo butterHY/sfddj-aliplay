@@ -6,40 +6,47 @@
         <view>
           <view>
             <text class="shop_name">{{shop.shopName}}</text>
-            <text class="shop_distance">距您{{shop.distance || '-'}}米</text>
+            <text class="shop_distance">距您{{distance || '-'}}米</text>
           </view>
           <view class="shop_addr">{{shop.address}}</view>
         </view>
       </view>
       <view>
         <view>
-          <button class="shop_like" onTap="onLikeClick">关注</button>
+          <button class="shop_like" onTap="onLikeClick">{{shop.like ? '取消' : ''}}关注</button>
         </view>
       </view>
     </view>
     <view class="shop_search">
-      <input placeholder="搜索店内商品" onConfirm="onSearchConfirm" onInput="onSearchInput"/>
+      <input type="search" placeholder="搜索店内商品" onConfirm="onSearchConfirm" onInput="onSearchInput"/>
     </view>
     <view a:if="{{shop.notice}}" class="shop_info">公告：{{shop.notice}}</view>
   </view>
 
   <view class="shop_goods">
-    <view class="shop_categories">
-      <view a:for="{{categories}}">
+    <view a:if="{{!isSearch}}" class="shop_categories">
+      <view a:for="{{categories}}" a:key="*this" class="{{item.id == selectedCategoryId ? 'actived' : ''}}" data-id="{{item.id}}" onTap="onCategoryClick">
         <view><view></view></view>
         <view>{{item.name}}</view>
       </view>
     </view>
     <view class="shop_goodsitems">
-      <goods-item a:for="{{items}}" data="{{item}}"></goods-item>
+      <view a:if="{{!isSearch}}" class="shop_selectedcategoryname">{{selectedCategoryName}}</view>
+      <view class="shop_goodslist">
+        <scroll-view scroll-y="{{true}}" lower-threshold="{{120}}" style="height:{{itemsheight}}" onScrollToLower="onScrollToLower">
+          <goods-item a:for="{{items}}" data="{{item}}"></goods-item>
+          <view class="shop_more"></view>
+        </scroll-view>
+      </view>
     </view>
   </view>
 
-  <!-- 购物车 -->
+
+      <!-- 购物车 -->
   <view class="shop_cartbox">
     <view class="shop_cart">
       <view onTap="onShowDetailClick">
-        <view style="background-image:url(/community/assets/images/cart1{{cartitems.length ? '' : '_1'}}.png)"></view>
+        <view style="background-image:url('/community/assets/images/cart1{{cartitems.length ? '' : '_1'}}.png')"></view>
         <view>
           <block a:if="{{cartitems.length}}">
             <text>￥100</text>
