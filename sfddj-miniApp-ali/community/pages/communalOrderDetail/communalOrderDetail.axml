@@ -1,3 +1,5 @@
+
+
 <view class="commuOrderDetail">
 	<!-- 顶部订单状态信息模块  -->
 	<view class="orderStatusBox">
@@ -18,5 +20,66 @@
 				<image class="orderStatusIcon_img" src="{{staticsImageUrl}}miniappImg/community/order/com_status_wait.png"/>
 			</view>
 		</view>
+        <!-- 订单地址信息 -->
+        <view class="orderAddrInfo">
+            <!-- 收货方式 -->
+            <view class="flex_view_row align_cen">
+                <image class="shopIcon" src="{{staticsImageUrl}}miniappImg/community/order/icon-store.png"/>
+                <view class="color-ff0532 font-30 marLeft_20 font-weight-600">门店自提</view>
+            </view>
+            <!-- 地址信息 -->
+            <view class="orderAddr">
+                <view class="flex_view_col">
+                    <view class="font-30 color-333">刘女士</view>
+                    <view class="font-24 color-999999 marTop_12">店家地址</view>
+                </view>
+                <view class="marLeft_30 flex_view_col flex_1">
+                    <view class="font-30 color-333">18888888888</view>
+                    <view class="font-24 color-999999 marTop_12">深圳市南山区桃源路海岸城B1楼308号宋小食美食天地</view>
+                </view>
+            </view>
+        </view>
+
+        <!-- 按钮 -->
+        <view class="orderStatusBtnBox flex_view_row flex_end">
+            <!-- 取消订单 -->
+            <view class="cancleOrderBtn orderStatusBtn" onTap="cancleOrder">取消订单</view>
+            <!-- 联系客服 -->
+            <!-- <view class="contactsBtn orderStatusBtn">联系客服</view> -->
+            <contacts contactsTel="{{contactsTel}}"></contacts>
+            <!-- 去支付 -->
+            <!-- <view class="toPayBtn orderStatusBtn">去支付</view> -->
+            <!-- 退款 -->
+            <view class="returnBtn orderStatusBtn" onTap="returnTap">退款</view>
+        </view>
 	</view>
+
+    <!-- 商品信息 -->
+    <order-goods goodsList="{{goodsList}}"></order-goods>
+
+    <!-- 应付金额 -->
+    <payable-sum></payable-sum>
+
+    <!-- 订单信息 -->
+    <view class="orderInfo">
+        <!-- 标题 -->
+        <view class="orderInfoTit">订单信息</view>
+        <!-- 信息内容 -->
+        <view class="orderInfo_con">
+            <!-- 左边信息说明  -->
+            <view class="orderInfo_des single-line">
+                <view>订单号</view>
+                <view>支付方式</view>
+                <view>下单时间</view>
+                <view>交易号</view>
+            </view>
+            <!-- 右边信息明细 -->
+            <view class="flex_1 orderInfo_mes single-line">
+                <view>29283940274849</view>
+                <view>在线支付</view>
+                <view>2020-03-07 12:45</view>
+                <view>3892038373628293038</view>
+            </view>
+        </view>
+    </view>
 </view>

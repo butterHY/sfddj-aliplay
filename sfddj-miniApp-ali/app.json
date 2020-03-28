@@ -54,10 +54,12 @@
       "root": "community",
       "pages": [
         "pages/index/index",
-		    "pages/shop/shop",
+        "pages/shop/shop",
         "pages/alphabetCity/alphabetCity",
         "pages/addressLoc/addressLoc",
-        "pages/locTest/locTest"
+        "pages/locTest/locTest",
+        "pages/communalOrderDetail/communalOrderDetail",
+        "pages/orderConfirm/orderConfirm"
       ]
     }
   ],
