@@ -41,8 +41,8 @@ var UrlConstants = {
 	childrenCategoryKey: "childrenCategoryKey",
 	searchWordsKey: 'searchWordsKey',						// 搜索历史记录
 	searchTextMax: 'searchTextMax',							// input 的 placeholder value
-	fatherCategoryId: "fatherCategoryId",				// 分类父类 ID
-	detfatherCategory: "detfatherCategory",			// 商详商品对应父类的 ID
+	fatherCategoryId: "fatherCategoryId",					// 分类父类 ID
+	detfatherCategory: "detfatherCategory",					// 商详商品对应父类的 ID
 	isMember: 'isMebmer',
 	myPhone: 'myPhone'
 

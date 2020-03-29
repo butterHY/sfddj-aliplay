@@ -5,7 +5,7 @@
     "mini-ali-ui": "^1.0.5",
     "mini-antui": "^0.4.34",
     "regenerator": "^0.14.2",
-    "umtrack-alipay": "^2.2.2",
+    "umtrack-alipay": "^2.2.2-0",
     "underscore": "^1.9.1"
   },
   "devDependencies": {}
