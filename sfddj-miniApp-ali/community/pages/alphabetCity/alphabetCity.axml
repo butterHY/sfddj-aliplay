@@ -2,14 +2,26 @@
 	<view class="dyt-list">
 		<alphabet alphabet="{{alphabet}}" onClick="onAlphabetClick">
 		</alphabet>
-		<view class="">
+		<view class="cityList">
 			<scroll-view class="scrollView" scroll-y="{{true}}">
-				<list>
-					<list-item >
-						<text class="letter">当前定位城市</text>
-						<text class="cityName">深圳市</text>>
-					</list-item>
-				</list>
+				<view class="listShow">
+					<view class="listName">当前定位城市</view>
+					<view class="listBox">
+						<list-item onClick="select" data-cityName="深圳市">深圳市</list-item>
+					</view>
+					
+				</view>
+				<view class="listShow">
+					<block>
+						<list>
+							<view class="listName">A</view>
+							<view class="listBox">
+								<list-item onClick="select" data-cityName="广州市">广州市</list-item>
+								<list-item onClick="select" data-cityName="深圳市">深圳市</list-item>
+							</view>
+						</list>
+					</block>
+				</view>
 			</scroll-view>
 		</view>
 	</view>

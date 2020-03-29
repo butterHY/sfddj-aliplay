@@ -1,0 +1,12 @@
+<template name="itemOrderGoods">
+    <view class="flex_view_row align_cen marTop_30">
+        <!-- 商品图片 -->
+        <image class="orderGoodsImg" src="{{baseImageUrl + item.goodsImg}}"/>
+        <!-- 商品名称 -->
+        <view class="orderGoodsName single-line2">正宗新疆阿克酥梨-2斤装（果径75mm阿克酥梨酥梨梨梨梨梨</view>
+        <!-- 数量  -->
+        <view class="orderGoodsNum flex_1 tex_center">×2</view>
+        <!-- 价格 -->
+        <view class="orderGoodsPrice">￥29.9</view>
+    </view>
+</template>

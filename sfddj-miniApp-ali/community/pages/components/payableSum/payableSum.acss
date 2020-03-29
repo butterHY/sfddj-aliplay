@@ -1,0 +1,23 @@
+
+
+.payableBox {
+    height: 100rpx;
+    width: 100%;
+    background: #fff;
+    border-radius: 10rpx;
+    box-sizing: border-box;
+    padding: 0 30rpx;
+    margin-top: 20rpx;
+}
+
+.payableBox .payableSum {
+    font-size: 30rpx;
+    color: #ff0532;
+    font-weight: 500; 
+}
+
+.payableTit {
+    font-size: 30rpx;
+    color: #333333;
+    font-weight: 500;
+}

@@ -5,7 +5,7 @@ Page({
   onLoad() {
     const charCode = 65;
     const charList = [];
-    for (let i = 0; i < 26; i++) {
+    for (let i = 0; i < 10; i++) {
       charList.push(String.fromCharCode(charCode + i));
     }
     this.setData({
@@ -17,4 +17,10 @@ Page({
     //   content: JSON.stringify(ev.data),
     // });
   },
+
+
+  select(e) {
+    // console.log(e)
+    my.navigateTo({ url: '../addressLoc/addressLoc' });
+  }
 });

@@ -30,7 +30,6 @@ Component({
   methods: {
     onTap(e) {
       if(this.props.canclick) {
-        console.log('fffffff', e);
         my.navigateTo({ url: '../goodsdetail/goodsdetail?id=' + e.target.dataset.id });
       }
     },

@@ -11,7 +11,7 @@
       <button class="btnEnter" onTap="onEnterClick" data-id="{{data.id}}">进店</button>
     </view>
   </view>
-  <view>
+  <view onTap="onEnterClick" data-id="{{data.id}}">
     <goods-item a:for="{{data.shopGoodsList}}" canclick="{{false}}" spacingClass="adjacent" data="{{item}}"></goods-item>
   </view>
 </view>

@@ -1,0 +1,26 @@
+.orderGoodsImg {
+    width: 80rpx;
+    height: 80rpx;
+    border: 1px solid #e6e6e6;
+    box-sizing: border-box;
+    border-radius: 8rpx;
+}
+
+.orderGoodsName {
+    width: 250rpx;
+    margin-left: 24rpx;
+    font-size: 30rpx;
+    font-family: "SourceHanSansCN";
+}
+
+.orderGoodsPrice {
+    color: #333;
+    /* font-weight: 600; */
+    font-size: 32rpx;
+    font-family: "SourceHanSansCN-Medium";
+}
+
+.orderGoodsNum {
+    color: #666666;
+    font-size: 26rpx;
+}

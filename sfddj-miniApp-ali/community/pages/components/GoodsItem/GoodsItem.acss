@@ -61,7 +61,7 @@ view > .goodsitem.adjacent:last-child > view {
 }
 
 .goodsitemprice {
-    font-size: 30rpx;
+    font-size: 33rpx;
     color: red;
 }
 
