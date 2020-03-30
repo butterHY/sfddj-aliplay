@@ -9,7 +9,7 @@ import http from '../../../api/http'
 let constants = require('../../../utils/constants');
 let dateformat = require('../../../utils/dateformat');
 let util = require('../../../utils/util');
-let baseImageUrl = constants.UrlConstants.baseImageUrl; //图片资源地址前缀
+
 
 Page({
 
@@ -24,12 +24,14 @@ Page({
     hasMore: true,
     isLoadMore: false,
     baseLocImgUrl: constants.UrlConstants.baseImageLocUrl,
+    baseImageUrl: constants.UrlConstants.baseImageUrl,
     showToast: false,
     loadComplete: false,
     loadFail: false,
     activityStatus: '',
-    tapedItem: null,
-    requestKey: false
+    tapedItemIndex: null,
+    requestKey: false,
+    user_memId: '默认是会员'
   },
 
   onLoad: async function (options) {
@@ -37,24 +39,19 @@ Page({
     let fatherCategory = {};
     // 设置页面头部的 title
     console.log(options);
-    // 原有用于缓存父分类 id，暂时注释掉;
-    // my.setStorageSync({
-    //   key: constants.StorageConstants.fatherCategoryId, // 缓存数据的key
-    //     data: {
-    //       // id: 76,
-    //       name: '限时秒杀'
-    //     }
-    // })
       if (options) {
         this.setData({
           categoryId: Number(options.goodsSn),
           activitysDetailId: options.activitysDetailId ? options.activitysDetailId : 0
         })
       }
+
+
       let isSuccess = await that.getActivityVenue();
       if (isSuccess.type) {
-        this.setData({
-          tapedItem: this.data.childrenCategoryTags.findIndex(value => {return value.taped == true})
+        console.log('isSuccess 为 true')
+        that.setData({
+          tapedItemIndex: that.data.childrenCategoryTags.findIndex(value => {return value.taped == true})
         })
         that.getGoodsData(0);            
       }
@@ -63,8 +60,9 @@ Page({
   /**
    * 获取头部活动场次
    */
-  async getActivityVenue () {
+  getActivityVenue () {
       let that = this;
+      console.log('开始请求')
       return new Promise((reslove, reject) => {
         http.post(constants.InterfaceUrl.POST_SPIKE_ACTIVITY_VENUE, {activitysId: that.data.categoryId, channel: 'ALIPAY_MINIAPP'} ,(res) => {
           console.log(res);
@@ -129,7 +127,15 @@ Page({
               type: true
             })
           }
+          that.setData({
+              loadComplete: true,
+              loadFail: false
+          });
         }, (res) => {
+          that.setData({
+              loadComplete: true,
+              loadFail: true
+          });
           reject({
             type: false
           })
@@ -144,6 +150,7 @@ Page({
    */
   getGoodsData: function (type) {
     let that = this;
+    console.log('我开始请求商品数据')
     this.setData({
       isLoadMore: true,
       requestKey: false         // 添加一个钥匙，一开始请求即关掉 如果执行成功再打开
@@ -157,7 +164,7 @@ Page({
     http.post(constants.InterfaceUrl.POST_SPIKE_GOODSLIST, data, (res) => {
       let resDate = res.data.data;
       let resRet = res.data.ret;
-      
+      console.log(res)
       if( resRet.code == "0" && resRet.message == "SUCCESS" && resDate ) {
         let goodsList = that.data.goodsList;
         let hasMore = resDate && resDate.length == that.data.limit ? true : false;
@@ -211,11 +218,7 @@ Page({
       limit: 10
       // goodsList: []
     });
-    // that.data.start = 0;
-
-    // 重新请求数据
     that.getGoodsData(0);
-
     //滚动到屏幕顶部
     // my.pageScrollTo({
     //   scrollTop: 0
@@ -229,15 +232,6 @@ Page({
   * 页面上拉触底事件的处理函数
   */
   lowLoadMore: function () {
-    // if (this.data.hasMore) {
-    //   this.data.start = this.data.goodsList.length
-    //   this.getGoodsData(1)
-    // } else {
-    //   wx.showToast({
-    //     title: '没有更多了',
-    //   })
-    // }
-
     if (this.data.hasMore && this.data.requestKey) {
       this.setData({
         start: this.data.goodsList.length
@@ -256,6 +250,5 @@ Page({
       sticky: height >= 120
     });
   },
-
 
 });

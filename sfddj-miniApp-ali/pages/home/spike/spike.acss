@@ -184,3 +184,14 @@ page {
   margin-left: 10rpx;
 }
 
+/* .noActivity {
+
+} */
+
+.noThing {
+  width: 300rpx;
+  height: 240rpx;
+  margin-bottom: 100rpx;
+}
+
+
