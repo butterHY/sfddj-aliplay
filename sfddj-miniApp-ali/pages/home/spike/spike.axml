@@ -13,11 +13,6 @@
   </load-fail>
 </view>
 
-<!-- 没有网络提示这个 -->
-<!-- <view a:elif="{{!wifiAvailable}}">
-  <no-wifi>
-  </no-wifi>
-</view> -->
 
 <scroll-view class="all_100v" scroll-y="true" a:else onScrollToLower="lowLoadMore" onScroll="scrollingFn" scroll-top='{{scrollTop}}'>
 

@@ -15,6 +15,16 @@ Component({
   didUnmount() {},
   methods: {
     loadMore() {
+      my.getStorage({ 
+        key: 'locationInfo',  
+        success: function(loc) {
+          if(loc && loc.data && loc.data.latitude && loc.data.longitude) {
+            // TODO: 
+          }
+        } 
+      });
+
+
       this.shop.gets(11, 22, this.nextPageIdx, (res) => {
         if(res.data && res.data.data) {
           if(res.data.data.length) {

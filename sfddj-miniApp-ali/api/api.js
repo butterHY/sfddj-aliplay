@@ -11,6 +11,7 @@ export default {
 	baseUrl: env === 'production' ? 'https://m.sfddj.com' : 'https://shop.fx-sf.com',     //主干  https://shop.fx-sf.com  , https://shop.fx-sf.com
 	// 其他资源地址配置
 	baseImageUrl: env === 'production' ? 'https://img.sfddj.com/' : 'https://img.fx-sf.com/',
+	staticsImageUrl: 'https://img.sfddj.com/',
 	appId: env === 'production' ? '2019050764321917' : '2018073160767891',
 	DDJAppId: env === 'production' ? '2019030863501284' : '2018122562647749',
 	mapKey: env === 'production' ? '' : '2ceddac70ce9cc37325dec6398e5a4c7',
@@ -109,9 +110,10 @@ export default {
 	// O2O 商家店铺
 	Shop: {
 		SEARCH: '/m/oto/otoShop/vicinityShop', // 查找指定经纬度附近的商家店铺
-		GETBYID: '/m/oto/otoShop/shopInfo/', // 根据ID取得商家店铺
-		GETCATEGORIES: '/m/oto/otoShopCategory/categoryList/', // 取指定店铺的所有商品类别
-		GETGOODSOFSHOP: '/m/oto/otoShopGoods/shopGoods/', // 获取指定店铺的商品列表
+		GETBYID: '/m/oto/otoShop/info/', // 根据ID取得商家店铺
+		GETCATEGORIES: '/m/oto/otoShopCategory/list/', // 取指定店铺的所有商品类别
+		GETGOODSOFSHOP: '/m/oto/otoShopGoods/list/', // 获取指定店铺的商品列表
+		LIKE: '/m/oto/otoShopAttention/1.0/attention', // 关注店铺
 	}
 
 
