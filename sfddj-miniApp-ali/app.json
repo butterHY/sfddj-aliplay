@@ -47,16 +47,17 @@
     "pages/limit/limit",
     "pages/overTime/overTime",
     "pages/activities/lightMember/lightMember",
-    "pages/user/jifenDetail/jifenDetail"
+    "pages/user/jifenDetail/jifenDetail" 
   ],
   "subPackages": [
     {
       "root": "community",
       "pages": [
         "pages/index/index",
-		    "pages/shop/shop",
+        "pages/shop/shop",
         "pages/alphabetCity/alphabetCity",
         "pages/addressLoc/addressLoc",
+        "pages/goodsDetail/goodsDetail",
         "pages/locTest/locTest"
       ]
     }

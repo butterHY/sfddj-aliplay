@@ -16,7 +16,20 @@ Page({
     
   },
   onLoad() {
-    this.getLocation();
+    const _this = this; 
+    my.getStorage({
+      key: 'locationInfo', 
+      success: function(res) {
+        if(res.data) {
+          _this.setData({
+            locInfo: res.data
+          })
+        }
+        else {
+          _this.getLocation();
+        }
+      }
+    });  
   },
 
   getLocation() {
@@ -28,7 +41,7 @@ Page({
         my.hideLoading();
         let _area = `${res.province}${res.city}${res.district}`;
         let _name = `${res.streetNumber.street}${res.streetNumber.number}`;
-        console.log('getLocation',res) 
+        // console.log('getLocation',res) 
 
         _this.setData({
           'locInfo.longitude': res.longitude,
@@ -63,11 +76,17 @@ Page({
 
   setCity(e) {
     let _name = e.target.dataset.name; 
+    let _address = e.target.dataset.address; 
+    // console.log(e)
     this.setData({ 
       'locInfo.name': _name, 
+      'locInfo.address': _address
     });
-    this.setLocStorage(); 
+    this.setLocStorage(function() {
+      my.navigateTo({ url: '../index/index' });
+    }); 
   },
+
 
   chooseLocation() {
     const _this = this 
@@ -87,12 +106,13 @@ Page({
     });
   },
 
-  setLocStorage() {
+  setLocStorage(fn) {
     const _this = this; 
+    // console.log(_this.data.locInfo)
     my.setStorage({
       key: 'locationInfo',
       data: _this.data.locInfo,
-      success: function() { }
+      success: function() { if(fn)fn(); }
     });  
   },
 
