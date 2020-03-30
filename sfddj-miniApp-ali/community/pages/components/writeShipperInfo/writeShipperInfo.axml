@@ -1,0 +1,48 @@
+<!-- 用户个人信息 -->
+<view class="userData" onTap="writeUserData">
+    <view>请填写您的个人信息</view>
+    <view>
+        <text class="icon-chevron-right"></text>
+    </view>
+</view>
+<!-- 填写信息弹窗 -->
+<view a:if="{{userInfoPop}}" class="writeUserInfoPop">
+    <!-- 内容 -->
+    <view class="userInfoPopCon">
+        <!-- 标题 -->
+        <view class="userPop_state">
+            <view class="height_100">填写个人信息</view>
+            <!-- 关闭的叉号 -->
+            <view class="userCloseBtn" onTap="closeUserPop">
+                <text class="icon-cross"></text>
+            </view>
+        </view>
+        <!-- 填写内容 -->
+        <view class="userInfoPop_write">
+            <!-- 姓名输入框 -->
+            <view class="userNameBox width_100">
+                <input-item disabled="{{false}}" data-field="userName" clear="{{true}}" value="{{userName}}" className="" placeholder="姓名" onInput="onItemInput" onClear="onClear" placeholderStyle="color: #666; font-size: 30rpx;"></input-item>
+            </view>
+            <!-- 选择性别 -->
+            <view class="userSexuality">
+                <!-- 女士/男士 -->
+                <block a:for="{{sexualList}}">
+                    <view class="{{index == sexualIndex ? 'sexActive' : 'sexNormal'}} flex_view_row align_cen flex_1" data-index="{{index}}" catchTap="sexualTap">
+                        <text class="icon_circle {{index == sexualIndex ? 'icon_actCircle' : 'icon_empCircle'}}"><text a:if="{{index == sexualIndex}}" class="icon-check"></text></text>
+                        <text class="marLeft_30">{{item.text}}</text>
+                    </view>
+                </block>
+            </view>
+            
+            <!-- 手机号输入框 -->
+            <view class="userNameBox width_100">
+                <!-- <input-item disabled="{{false}}" data-field="userMobile" clear="{{true}}" value="{{userMobile}}" placeholder="电话" onInput="onItemInput" onClear="onClear" placeholderStyle="color: #666; font-size: 30rpx;"></input-item> -->
+                <input-item type="number" data-field="userMobile" clear="{{true}}" value="{{userMobile}}" placeholderStyle="color: #666; font-size: 30rpx;" placeholder="电话" onInput="onItemInput" onClear="onClear"></input-item>
+            </view>
+        </view>
+        <!-- 查看更多按钮 跳转去更多包裹动态页 -->
+        <view class="userInfo_sure" onTap="toLogisticsPage">
+            <text>确定</text>
+        </view>
+    </view>
+</view>
