@@ -114,6 +114,12 @@ export default {
 		GETCATEGORIES: '/m/oto/otoShopCategory/list/', // 取指定店铺的所有商品类别
 		GETGOODSOFSHOP: '/m/oto/otoShopGoods/list/', // 获取指定店铺的商品列表
 		LIKE: '/m/oto/otoShopAttention/1.0/attention', // 关注店铺
+	},
+
+	// O2O商家店铺购物车
+	O2OCart: {
+		ADD: '/m/oto/otoShoppingCart/1.0/addCart', // 添加商品到购物车,
+		GETS: '/m/oto/otoShoppingCart/1.0/showCart', // 取得指定店铺购物车中的所有商品
 	}
 
 

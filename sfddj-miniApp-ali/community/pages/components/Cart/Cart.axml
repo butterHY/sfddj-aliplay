@@ -1,0 +1,31 @@
+<view class="shop_cartbox {{isShowed ? 'isshow' : ''}}">
+  <view class="shop_cartitemsbox">
+    <view onTap="onHideClick"></view>
+    <view a:if="{{isShowed}}" class="shop_cartitems {{itemsshow ? 'isshow' : ''}}">
+      <view a:for="{{cartitems}}">
+        {{item.name}}
+      </view>
+    </view>
+  </view>
+  <view class="shop_cartcontrol">
+      <view class="shop_cart">
+        <view onTap="onShowDetailClick">
+          <view class="{{(cartitems && cartitems.length) ? 'notempty' : 'isempty'}}">
+            <badge a:if="{{cartitems && cartitems.length}}" text="{{obj.cartTotalNumb}}" overflowCount="{{99}}"></badge>
+          </view>
+          <view>
+            <block a:if="{{cartitems.length}}">
+              <text>￥{{obj.discountPrice}}</text>
+              <text a:if={{obj.discountPrice != obj.salePrice}}>￥{{obj.salePrice}}</text>
+            </block>
+            <block a:else>
+              <text class="cart_null">未选购商品</text>
+            </block>
+          </view>
+        </view>
+        <view a:if="{{cartitems && cartitems.length}}">
+          <view class="shop_cart_topay" onTap="onToPayClick">去结算</view>
+        </view>
+      </view>
+  </view>
+</view>

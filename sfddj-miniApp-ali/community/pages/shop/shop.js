@@ -2,7 +2,6 @@ import Shop from '/community/service/shop';
 
 Page({
   data: {
-    cartitems: [],
     items: []
   },
   onLoad(options) {
@@ -15,6 +14,7 @@ Page({
     });
     this.shop.get(this.shopId, (res) => {
       if(res && res.data && res.data.data) {
+        console.log('ssssssss', res.data.data);
         this.setData({
           shop: res.data.data
         });
@@ -34,17 +34,32 @@ Page({
             key: 'locationInfo',  
             success: function(loc) {
               if(loc && loc.data && loc.data.latitude && loc.data.longitude) {
-                my.calculateRoute({
-                  startLat: loc.data.latitude,
-                  startLng: loc.data.longitude,
-                  endLat: res.data.data.latitude,
-                  endLng: res.data.data.longitude,
-                  success:(e)=>{
-                    if(e.success && e.distance) {
-                      this.setData({distance: e.distance});
+                if(my.calculateRoute) {
+                  my.calculateRoute({
+                    startLat: loc.data.latitude,
+                    startLng: loc.data.longitude,
+                    endLat: res.data.data.latitude,
+                    endLng: res.data.data.longitude,
+                    success:(e)=>{
+                      if(e.success && e.distance) {
+                        this.setData({distance: e.distance});
+                      }
                     }
-                  }
-                });
+                  });
+                } else {
+                  my.ap.updateAlipayClient({
+                    success: () => {
+                      my.alert({
+                        title: '升级成功',
+                      });
+                    },
+                    fail: () => {
+                      my.alert({
+                        title: '升级失败',
+                      });
+                    },
+                  });
+                }
               }
             } 
         });
@@ -79,7 +94,8 @@ Page({
     }
   },
   onLikeClick(e) {
-    if(this.data.shop) {
+    if(this.data.shop && !this._liking) {
+      this._liking = true;
       this.shop.like(this.shopId, !this.data.shop.like, (res) => {
         if(res && res.data) {
           this.setData({
@@ -93,6 +109,7 @@ Page({
             });
           }
         }
+        this._liking = false;
       });
     }
   },
