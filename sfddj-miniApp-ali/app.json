@@ -59,7 +59,8 @@
         "pages/addressLoc/addressLoc",
         "pages/locTest/locTest",
         "pages/communalOrderDetail/communalOrderDetail",
-        "pages/orderConfirm/orderConfirm"
+        "pages/orderConfirm/orderConfirm",
+        "pages/addressList/addressList"
       ]
     }
   ],

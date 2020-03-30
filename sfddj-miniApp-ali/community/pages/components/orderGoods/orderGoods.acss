@@ -32,3 +32,24 @@
     color: #ff0532;
     font-weight: 500; 
 }
+
+.deliveryFee {
+    display: flex;
+    flex-direction: row; 
+    align-items: center;
+    justify-content: space-between;
+    font-size: 30rpx;
+    color: #333333;
+    height: 100rpx;
+    border-top: 1rpx solid #e6e6e6;
+}
+
+.deliveryFee_term {
+    color: #ff0532;
+    margin-left: 20rpx;
+}
+
+.deliveryFee_sum {
+    font-size: 32rpx;
+    color: #ff0532;
+}

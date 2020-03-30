@@ -1,0 +1,26 @@
+<view class="addressList">
+    <!-- 新增地址按钮 -->
+    <view class="addAddrPart">
+        <view class="flex_1">新增地址</view>
+        <view class="marLeft_30">
+          <text class="icon-chevron-right font-30 color-bdbdbd"></text>
+        </view>
+    </view>
+
+    <!-- 可选地址模块 -->
+    <view class="optionalList">
+        <view class="addrListItem">
+            <view class="addrListItem_left">
+                <!-- 省市区 -->
+                <view>广东省深圳市南山区</view>
+                <!-- 详细地址 -->
+                <view></view>
+            </view>
+            <!-- 编辑按钮 -->
+            <view class="addrListItem_edit">
+              <text class="icon-yijianfankui"></text>
+            </view>
+        </view>
+    </view>
+
+</view>

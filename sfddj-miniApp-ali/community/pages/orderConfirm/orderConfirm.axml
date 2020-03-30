@@ -1,7 +1,7 @@
 <view class="orderConfirmPage">
     <scroll-view scroll-y="{{true}}" class="orderConfirmScroll">
-        <!--配送方式  -->
-        <view class="deliverType">
+        <!--配送方式 --选择完就不显示了  -->
+        <view a:if="{{!deliveryTypeTaped}}" class="deliverType">
             <!-- 门店自提 -->
             <view class="deliverTypeItem {{typeIndex == 0 ? 'typeActive' : ''}}" data-index="0" onTap="switchType">
                 <image a:if="{{ typeIndex == 0 }}" class="deliverTypeIcon" src="{{staticsImageUrl}}miniappImg/community/order/confirm_selfTake_sel.png"/>
@@ -15,8 +15,20 @@
                 <view class="marLeft_20">商家配送</view>
             </view>
         </view>
-        <!-- 填写个人信息 -->
-        <write-info></write-info>
+        <!-- 填写个人信息 -- 只有是门店自提时才显示 -->
+        <block a:if="{{typeIndex == 0}}">
+            <write-info></write-info>
+        </block>
+
+        <!-- 选地址栏-- 当选择了商家配送后 -->
+        <block a:if="{{typeIndex == 1}}">
+          
+        </block>
+
+        <!-- 选地址栏  --- 只有选商家配送时才显示 -->
+        <block a:if="{{typeIndex == 1}}">
+            <choose-addr></choose-addr>
+        </block>
         <!-- 商品信息 -->
         <order-goods goodsList="{{goodsList}}"></order-goods>
         <!-- 应付金额 -->
@@ -26,12 +38,28 @@
             <!-- 标题 -->
             <view class="userMessage_tit">买家留言</view>
             <!-- 写留言 -->
-            <multi-liner data-field="userMessage" placeholder="给卖家留言，最多60字哦～" type="text" value="{{userMessage}}" onInput="onInput" last="{{true}}" controlled="{{controlled}}" maxlength="60" show-count="{{false}}"></multi-liner>
+            <multi-liner data-field="userMessage" placeholder="给卖家留言，最多60字哦～" type="text" value="{{userMessage}}" onInput="userMesInput" last="{{true}}" controlled="{{controlled}}" maxlength="60" show-count="{{false}}"></multi-liner>
         </view>
         <!-- 发票 -->
         <view class="order_invoice">
             <view class="order_invoice_tit">发票信息</view>
             <view class="order_invoice_tip">店家不支持线上开发票，请联系店家开票</view>
+        </view>
+        <!-- 支付方式 -->
+        <view class="payType">
+            <!-- 标题 -->
+            <view class="payType_tit">支付方式</view>
+            <!-- 方式 -->
+            <view class="flex_view_row align_cen justi_between">
+                <view class="payTypeSel flex_view_row align_cen font-28 flex_1">
+                    <image class="payType_icon" src="/community/assets/images/icon_aliPay.png"/>
+                    <text class="marLeft_30">支付宝</text>
+                </view>
+                <view>
+                    <text class="icon_circle icon_actCircle">
+                        <text class="icon-check"></text></text>
+                </view>
+            </view>
         </view>
     </scroll-view>
     <!-- 底部去支付 -->

@@ -4,9 +4,10 @@ Page({
     data: {
             staticsImageUrl: api.staticsImageUrl,
             baseImageUrl: api.baseImageUrl,
-            typeIndex: 0,
+            typeIndex: 2,
             goodsList: [{},{},{},{}],
             userMessage: '',
+            deliveryTypeTaped: false,
     },
     onLoad() {},
 
@@ -15,8 +16,16 @@ Page({
         let {index} = e.currentTarget.dataset;
         if(this.data.typeIndex != index) {
             this.setData({
-                typeIndex: index
+                typeIndex: index,
+                deliveryTypeTaped: true
             })
         }
     },
+
+    // 留言输入
+    userMesInput(e){
+        this.setData({
+            [e.target.dataset.field] : e.detail.value
+        })
+    }
 });
