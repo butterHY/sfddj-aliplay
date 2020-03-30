@@ -3,6 +3,7 @@
     "titleBarColor": "#ffffff",
     "allowsBounceVertical": "NO",
     "usingComponents": {
-        "goods-item":  "/community/pages/components/GoodsItem/GoodsItem"
+        "goods-item":  "/community/pages/components/GoodsItem/GoodsItem",
+        "cart":  "/community/pages/components/Cart/Cart"
     }
 }
