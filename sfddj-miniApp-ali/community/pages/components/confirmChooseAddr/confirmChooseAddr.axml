@@ -2,7 +2,7 @@
     <!-- 提醒 -->
     <view class="communalTip">店家会以最快的速度送达，请耐心等待~</view>
     <!-- 选地址部分 -->
-    <view class="chooseAddrBox">
+    <navigator url="/community/pages/addressList/addressList" class="chooseAddrBox">
         <!-- 有地址时显示 -->
         <view a:if="{{hasAddr}}" class="flex_1 single-line">
             <view class="chooseAddr_det single-line">南山中小学附小17栋403</view>
@@ -16,5 +16,5 @@
         <view class="marLeft_30">
           <text class="icon-chevron-right font-30"></text>
         </view>
-    </view>
+    </navigator>
 </view>

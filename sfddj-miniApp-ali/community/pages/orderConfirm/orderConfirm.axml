@@ -20,11 +20,6 @@
             <write-info></write-info>
         </block>
 
-        <!-- 选地址栏-- 当选择了商家配送后 -->
-        <block a:if="{{typeIndex == 1}}">
-          
-        </block>
-
         <!-- 选地址栏  --- 只有选商家配送时才显示 -->
         <block a:if="{{typeIndex == 1}}">
             <choose-addr></choose-addr>

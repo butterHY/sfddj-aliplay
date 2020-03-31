@@ -1,0 +1,83 @@
+@import '/community/templates/item-order-list/item-order-list.acss';
+
+.orderListPage {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 20rpx 20rpx 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.orderListNav {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    height: 100rpx;
+    /* margin-top: 20rpx; */
+    font-size: 30rpx;
+    color: #666666;
+    font-weight: 500; 
+    border-radius: 10rpx;
+    background-color: #fff;
+    padding: 0 10rpx;
+}
+
+.orderListNav .orderListNavItem {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.orderListNav .orderListNavItem.orderActive {
+    color: #ff0532;
+}
+
+/* 空白页 */
+
+.errImgBox {
+    padding: 30rpx 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.errImg {
+    width: 80%;
+}
+
+.errTextBox {
+    margin-bottom: 40rpx;
+}
+
+.errText {
+    font-size: 28rpx;
+    color: #B1B6BB;
+    text-align: center;
+}
+
+.errBtn {
+    display: block;
+    line-height: 78rpx;
+    width: 60%;
+    margin: 0 auto;
+    border: 1px solid #B3B3B3;
+    border-radius: 45px;
+    font-size: 28rpx;
+    margin-top: 50rpx;
+    color: #B3B3B3;
+    text-align: center;
+}
+
+.loading_view{
+  font-size: 26rpx;
+  color: #323232;
+}
+
+.loading_gif{
+  width: 26rpx;
+  height: 26rpx;
+  margin-right: 8rpx;
+}

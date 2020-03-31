@@ -1,0 +1,73 @@
+.itemOrderList {
+    padding: 30rpx 0 0;
+    box-sizing: border-box;
+    background-color: #fff;
+    border-radius: 10rpx;
+    margin-top: 20rpx;
+}
+
+.orderListInfo {
+    padding: 0 30rpx;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.orderListInfo_top {
+    padding-left: 100rpx;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.orderList_goodsImg {
+    width: 80rpx;
+    height: 80rpx;
+    border-radius: 10rpx;
+    margin-right: 20rpx;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.storeMes {
+    width: 68%;
+}
+
+.storeMes .iconChevron {
+    margin-left: 40rpx;
+}
+
+.orderList_goodsInfo {
+    padding: 30rpx 0 30rpx 100rpx;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.orderListBtnBox {
+    height: 100rpx;
+    border-top: 1px solid #e6e6e6;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 30rpx;
+    box-sizing: border-box;
+}
+
+.orderList_btn {
+    width: 168rpx;
+    height: 60rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    border: 1px solid #999999;
+    color: #333333;
+    font-size: 30rpx;
+    border-radius: 45px;
+    margin-left: 30rpx;
+}
+
+.orderList_btn.redBtn {
+    color: #ff0532;
+    border-color: #ff0532;
+}

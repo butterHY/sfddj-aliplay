@@ -1,3 +1,5 @@
+@import '/community/templates/item-address/item-address.acss';
+
 .addressList {
     width: 100%;
     box-sizing: border-box;
@@ -26,4 +28,20 @@
     width: 100%;
     /* padding: 0 30rpx; */
     box-sizing: border-box;
+    padding-top: 10rpx;
+    padding-bottom: 10rpx;
+}
+
+.unusableList {
+    padding-bottom: 10rpx;
+    margin-top: 20rpx;
+    background-color: #fff;
+    border-radius: 10rpx;
+    width: 100%;
+    /* padding: 0 30rpx; */
+    box-sizing: border-box;
+}
+
+.unusableList_tit {
+    padding: 30rpx;
 }
