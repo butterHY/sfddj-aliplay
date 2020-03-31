@@ -2,37 +2,40 @@
 
 @import '../../css-public/adverts.acss';
 /* 秒杀价格 */
-
-.secondkill-price {
+.secondkillModule {
   box-sizing: border-box;
-  padding-left: 30rpx;
-  padding-right: 30rpx;
-  height: 100rpx;
+  padding: 0 30rpx;
+  height: 136rpx;
   width: 100%;
 }
 
-.color_fff {
+.activityPrice {
+  line-height: 40rpx;
+  font-size: 52rpx;
+}
+
+.secondkillModule .color_fff {
   color: #fff;
 }
 
-.padding_left_6 {
+.secondkillModule .padding_left_6 {
   padding-left: 6rpx;
 }
 
-.padding_left_10 {
+.secondkillModule .padding_left_10 {
   padding-left: 10rpx;
   
 }
 
 
-.font_45 {
+.secondkillModule .font_45 {
   font-size: 55rpx;
 }
 
 
 /* 进度条 */
 /* 添加了兼容写法 */
-.flex-1 {
+.secondkillModule .flex-1 {
   flex: 1;
   box-flex: 1;
   -webkit-box-flex: 1;
@@ -40,12 +43,7 @@
   -webkit-flex: 1;
 }
 
-/* .price {
-  line-height:  95rpx;
-
-} */
-
-.progress_line {
+.secondkillModule .progress_line {
   background:  #ffa9a5;
   display: inline-block;
   width: 275rpx;
@@ -56,7 +54,7 @@
   color: #fff;
 }
 
-.progress_fill {
+.secondkillModule .progress_fill {
     display: inline-block;
     height: 100%;
     width: 60%;
@@ -66,7 +64,7 @@
     background: #ff7832;
 }
 /* 做了兼容处理 */
-.progress_message {
+.secondkillModule .progress_message {
   left: 0;
   top: 0;
   display: flex;
@@ -77,14 +75,51 @@
   background: transparent;
 }
 
-.inline_block {
+.secondkillModule .inline_block {
    display: inline-block;
 }
 
-.font_italic {
+.secondkillModule .font_italic {
   font-style: italic;
 }
 
-.backgroiund_orange {
+.secondkillModule .backgroiund_orange {
   background: #FF4500;
+}
+
+.secondkillModule .alarmClock {
+  width: 30rpx;
+  height: 40rpx;
+}
+
+.secondkillModule .countDown {
+  text-align: center;
+  /* width: 150rpx; */
+  height: 42rpx;
+  margin-top: 14rpx;
+}
+
+.secondkillModule .timeView {
+  display: inline-block;
+  /* width: 40rpx; */
+  /* height: 100%; */
+  font-size: 24rpx;
+  color: #483a00;
+  padding: 8rpx;
+  background: #ffed2a;
+  border-radius: 6rpx;
+}
+
+.colon {
+  display: inline-block;
+  height: 100%;
+  margin-top: -3rpx;
+  margin: 0 6rpx;
+}
+
+.sellOut {
+  width: 286rpx;
+  height: 44rpx;
+  border-radius: 30rpx;
+  background:rgba(255,255,255,0.5);
 }

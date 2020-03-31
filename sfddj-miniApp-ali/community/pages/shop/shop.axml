@@ -18,7 +18,8 @@
       </view>
     </view>
     <view class="shop_search">
-      <input type="search" placeholder="搜索店内商品" onConfirm="onSearchConfirm" onInput="onSearchInput"/>
+      <!-- <input type="search" placeholder="搜索店内商品" onConfirm="onSearchConfirm" onInput="onSearchInput"/> -->
+      <search-bar value="{{searchVal}}" maxLength="{{30}}" placeholder="搜索店内商品" onInput="onSearchInput" onClear="onSearchClear" onCancel="onSearchCancel" onSubmit="onSearchConfirm" showCancelButton="{{false}}"/>
     </view>
     <view a:if="{{shop.notice}}" class="shop_info">公告：{{shop.notice}}</view>
   </view>
@@ -42,24 +43,6 @@
   </view>
 
 
-      <!-- 购物车 -->
-  <view class="shop_cartbox">
-    <view class="shop_cart">
-      <view onTap="onShowDetailClick">
-        <view style="background-image:url('/community/assets/images/cart1{{cartitems.length ? '' : '_1'}}.png')"></view>
-        <view>
-          <block a:if="{{cartitems.length}}">
-            <text>￥100</text>
-            <text>￥120</text>
-          </block>
-          <block a:else>
-            <text class="cart_null">未选购商品</text>
-          </block>
-        </view>
-      </view>
-      <view a:if="{{cartitems.length}}">
-        <view class="shop_cart_topay" onTap="onToPayClick">去结算</view>
-      </view>
-    </view>
-  </view>
+  <!-- 购物车 -->
+  <cart shopid="{{shop.id}}"></cart>
 </view>

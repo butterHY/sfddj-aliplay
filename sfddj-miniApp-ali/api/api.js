@@ -16,6 +16,7 @@ export default {
 	DDJAppId: env === 'production' ? '2019030863501284' : '2018122562647749',
 	mapKey: env === 'production' ? '' : '2ceddac70ce9cc37325dec6398e5a4c7',
 	lifestyleId: env === 'production' ? '2014051200005722' : '2014070200006769',
+	provinceLevelMunicipalityCode: ['010', '020', '021', '022', '023', '400'], // 直辖市座机区号:北京市、上海市、天津市、重庆市
 
 	// 接口
 	// v1.1.0
@@ -114,6 +115,14 @@ export default {
 		GETCATEGORIES: '/m/oto/otoShopCategory/list/', // 取指定店铺的所有商品类别
 		GETGOODSOFSHOP: '/m/oto/otoShopGoods/list/', // 获取指定店铺的商品列表
 		LIKE: '/m/oto/otoShopAttention/1.0/attention', // 关注店铺
+	},
+
+	// O2O商家店铺购物车
+	O2OCart: {
+		ADD: '/m/oto/otoShoppingCart/1.0/addCart', // 添加商品到购物车,
+		GETS: '/m/oto/otoShoppingCart/1.0/showCart', // 取得指定店铺购物车中的所有商品
+		CLEAR: '/m/oto/otoShoppingCart/1.0/removeCartAll', // 清空店铺购物车
+		CHANGE: '/m/oto/otoShoppingCart/1.0/changeProduct', // 改变店铺购物车中某个商品的数量
 	},
 
 	// O2O 商品详情

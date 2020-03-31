@@ -1,0 +1,49 @@
+<view class="afterSalesPage">
+    <!-- 申请原因 -->
+    <view class="afterSalesItem">
+        <view class="flex_1 font-30 color-333 font-weight-500">申请原因</view>
+        <view class="flex_1 font-30 color-666 tex_right">拍错/多拍</view>
+    </view>
+    <!-- 退款金额-->
+    <view class="afterSalesItem">
+        <view class="flex_1 font-30 color-333 font-weight-500">退款金额</view>
+        <view class="flex_1 font-30 color-666 tex_right">
+            <input placeholder="" class="all_100 tex_right" />
+        </view>
+    </view>
+    <!-- 联系手机-->
+    <view class="afterSalesItem">
+        <view class="flex_1 font-30 color-333 font-weight-500">联系手机</view>
+        <view class="flex_1 font-30 color-666 tex_right">
+            <input placeholder="18888888888" class="all_100 tex_right" />
+        </view>
+    </view>
+    <!-- 问题描述 -->
+    <view class="afterSalesItem_col">
+        <!-- 标题 -->
+        <view class="afterSalesTit">问题描述</view>
+        <!-- 输入框 -->
+        <view class="">
+            <multi-liner data-field="userMessage" placeholder="给卖家留言，最多60字哦～" type="text" value="{{userMessage}}" onInput="userMesInput" last="{{true}}" controlled="{{controlled}}" maxlength="60" show-count="{{false}}"></multi-liner>
+        </view>
+    </view>
+    <!-- 上传凭证 -->
+    <view class="afterSalesItem_col">
+        <!-- 标题 -->
+        <view class="afterSalesTit">上传凭证</view>
+        <!-- 输入框 -->
+        <view class="flex_view_row">
+            <view class="flex_view_col align_cen justi_cen" style="width: 204rpx; height: 204rpx; border-radius: 10rpx; background-color: #f3f3f3;">
+                <view class="flex_view_col">
+                    <text class="icon-camera color-999999 tex_center" style="font-size: 40rpx;"></text>
+                    <view class="font-20 color-999999 marTop_20">上传凭证(最多9张)</view>
+                </view>
+            </view>
+        </view>
+    </view>
+
+    <!-- 底部提交按钮 -->
+    <view class="flex_view_row align_cen justi_cen">
+        <view class="submitBtn">提交</view>
+    </view>
+</view>

@@ -48,6 +48,7 @@
     "pages/overTime/overTime",
     "pages/activities/lightMember/lightMember",
     "pages/user/jifenDetail/jifenDetail"
+
   ],
   "subPackages": [
     {
@@ -60,7 +61,10 @@
         "pages/locTest/locTest",
         "pages/goodsDetail/goodsDetail",
         "pages/communalOrderDetail/communalOrderDetail",
-        "pages/orderConfirm/orderConfirm"
+        "pages/orderConfirm/orderConfirm",
+        "pages/addressList/addressList",
+        "pages/orderList/orderList",
+        "pages/afterSales/afterSales"
       ]
     }
   ],

@@ -148,3 +148,48 @@
     line-height: 80rpx;
     font-size: 36rpx;
 }
+
+.payType {
+    background-color: #fff;
+    border-radius: 10rpx;
+    margin-top: 20rpx;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 30rpx 30rpx;
+}
+
+.payType .payType_tit {
+    color: #333333;
+    font-weight: 500;
+    font-size: 30rpx;
+    padding: 30rpx 0;
+}
+
+.payType .payType_icon {
+    width: 40rpx;
+    height: 40rpx;
+}
+
+.payType .icon_circle {
+    font-size: 30rpx;
+    box-sizing: border-box;
+    width: 30rpx;
+    height: 30rpx;
+    border-radius: 50%;
+    /* line-height: 30rpx; */
+    /* text-align: center; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+}
+
+.payType .icon_circle.icon_empCircle {
+    border: 1px solid #dbdbdb;
+}
+
+.payType .icon_circle.icon_actCircle {
+    background-color: #ff0532;
+    font-size: 18rpx;
+    color: #fff;
+}

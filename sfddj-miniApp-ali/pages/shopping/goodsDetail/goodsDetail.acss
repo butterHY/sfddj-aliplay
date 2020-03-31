@@ -775,10 +775,15 @@ page {
 /* 秒杀价格 */
 .secondkill-price {
   box-sizing: border-box;
-  padding-left: 30rpx;
-  padding-right: 30rpx;
-  height: 112rpx;
+  padding: 0 30rpx;
+  height: 136rpx;
   width: 100%;
+}
+
+.secKillPriceView {
+  height: 100%;
+  box-sizing: border-box;
+  padding: 18rpx 0 28rpx;
 }
 
 .color_fff {
@@ -800,13 +805,17 @@ page {
 }
 
 
-/* 进度条 */
+/* 秒杀进度条 */
 .flex-1 {
   flex: 1;
 }
 
 .price {
   line-height:  95rpx;
+}
+
+.progress {
+  padding: 24rpx 0;
 }
 
 .progress_line {

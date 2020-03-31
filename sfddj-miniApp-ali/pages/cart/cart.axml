@@ -95,7 +95,7 @@
 			<!--加载数据进度条-->
 			<view a:if="{{!isLoadComplete}}" class='loading_view flex_view_row align_cen justi_cen'>
 				<image src='{{baseLocImgUrl}}miniappImg/loading/loading.gif' class='loading_gif'></image>
-				<text>加载中</text>
+				<text class="font-26 color-323232">加载中</text>
 			</view>
 			<!--没有更多-->
 			<view a:if="{{isLoadComplete}}" class='loading_view font-26 color-323232'>

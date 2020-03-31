@@ -1,0 +1,48 @@
+.communalChooseAddr .communalTip {
+    width: 100%;
+    font-size: 24rpx;
+    text-align: center;
+    height: 46rpx;
+    font-size: 22rpx;
+    background: #f4dbdf;
+    color: #ff0532;
+    line-height: 46rpx;
+    border-radius: 45px;
+    position: relative;
+    top: -20rpx;
+}
+
+.communalChooseAddr .chooseAddrBox {
+    background-color: #fff;
+    /* margin-top: 20rpx; */
+    padding: 30rpx;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    color: #dbdbdb;
+    font-size: 26rpx;
+    border-radius: 10rpx;
+    min-height: 100rpx;
+}
+
+.communalChooseAddr .chooseAddrBox .chooseAddr_det {
+    font-size: 30rpx;
+    color: #333333;
+}
+
+.communalChooseAddr .chooseAddrBox .chooseAddr_mes {
+    font-size: 24rpx;
+    color: #999999;
+    margin-top: 20rpx;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.communalChooseAddr .notAddr{
+    font-size: 30rpx;
+    color: #333333;
+}

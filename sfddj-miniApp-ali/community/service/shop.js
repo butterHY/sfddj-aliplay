@@ -42,6 +42,10 @@ class Shop extends MiniAppService {
             if(callbackFun) {
                 callbackFun(res);
             }
+        }, (err) => {
+            if(callbackFun) {
+                callbackFun(undefined, err);
+            }
         });
     }
 
@@ -53,6 +57,10 @@ class Shop extends MiniAppService {
             }
             if(callbackFun) {
                 callbackFun(res);
+            }
+        }, (err) => {
+            if(callbackFun) {
+                callbackFun(undefined, err);
             }
         });
     }

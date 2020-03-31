@@ -1,0 +1,7 @@
+{
+	"titleBarColor": "#ffffff",
+  	"defaultTitle": "社区订单",
+  	"pullRefresh": false,
+  	"usingComponents": {
+    }
+}

@@ -2,7 +2,6 @@ import Shop from '/community/service/shop';
 
 Page({
   data: {
-    cartitems: [],
     items: []
   },
   onLoad(options) {
@@ -34,17 +33,32 @@ Page({
             key: 'locationInfo',  
             success: function(loc) {
               if(loc && loc.data && loc.data.latitude && loc.data.longitude) {
-                my.calculateRoute({
-                  startLat: loc.data.latitude,
-                  startLng: loc.data.longitude,
-                  endLat: res.data.data.latitude,
-                  endLng: res.data.data.longitude,
-                  success:(e)=>{
-                    if(e.success && e.distance) {
-                      this.setData({distance: e.distance});
+                if(my.calculateRoute) {
+                  my.calculateRoute({
+                    startLat: loc.data.latitude,
+                    startLng: loc.data.longitude,
+                    endLat: res.data.data.latitude,
+                    endLng: res.data.data.longitude,
+                    success:(e)=>{
+                      if(e.success && e.distance) {
+                        this.setData({distance: e.distance});
+                      }
                     }
-                  }
-                });
+                  });
+                } else {
+                  my.ap.updateAlipayClient({
+                    success: () => {
+                      my.alert({
+                        title: '升级成功',
+                      });
+                    },
+                    fail: () => {
+                      my.alert({
+                        title: '升级失败',
+                      });
+                    },
+                  });
+                }
               }
             } 
         });
@@ -79,7 +93,8 @@ Page({
     }
   },
   onLikeClick(e) {
-    if(this.data.shop) {
+    if(this.data.shop && !this._liking) {
+      this._liking = true;
       this.shop.like(this.shopId, !this.data.shop.like, (res) => {
         if(res && res.data) {
           this.setData({
@@ -93,35 +108,49 @@ Page({
             });
           }
         }
+        this._liking = false;
       });
     }
   },
-  onSearchInput(e) {
-    this.setData({searchVal: e.detail.value});
-    if(!e.detail.value) {
-      if(this.data.categories && this.data.categories.length > 0 && this.data.isSearch) {
-        setTimeout(() => {
-          if(!this.data.searchVal) {
-            this.setData({isSearch: false});
-            this.onCategoryClick({target: {dataset: {id: this.data.categories[0].id}}});
-          }
-        }, 800);
-      }
-    }
+  onSearchInput(val) {
+    this.setData({searchVal: val});
+    // if(!e.detail.value) {
+    //   if(this.data.categories && this.data.categories.length > 0 && this.data.isSearch) {
+    //     setTimeout(() => {
+    //       if(!this.data.searchVal) {
+    //         this.setData({isSearch: false});
+    //         this.onCategoryClick({target: {dataset: {id: this.data.categories[0].id}}});
+    //       }
+    //     }, 800);
+    //   }
+    // }
   },
   onSearchConfirm(e) {
     if(this.data.shop && this.data.searchVal) {
       my.hideKeyboard();
       this.$spliceData({items: [0]});
       this.setData({
-        isSearch: true
-      });
-      this.shop.searchGoodsOfShop(this.shopId, this.data.searchVal, (res) => {
-        if(res && res.data && res.data.data) {
-          if(res.data.data.length > 0) {
-            this.$spliceData({items: [0, 0, ...res.data.data]});
+        isSearch: true,
+        selectedCategoryId: -1
+      }, () => {
+        this.shop.searchGoodsOfShop(this.shopId, this.data.searchVal, (res) => {
+          if(res && res.data && res.data.data) {
+            if(res.data.data.length > 0) {
+              this.$spliceData({items: [0, 0, ...res.data.data]});
+            }
           }
-        }
+        });
+      });
+    }
+  },
+  onSearchClear() {
+    this.onSearchCancel();
+  },
+  onSearchCancel() {
+    this.setData({searchVal: ''});
+    if(this.data.categories && this.data.categories.length > 0 && this.data.isSearch) {
+      this.setData({isSearch: false}, () => {
+        this.onCategoryClick({target: {dataset: {id: this.data.categories[0].id}}});
       });
     }
   },
@@ -129,11 +158,5 @@ Page({
     if(!this.data.isSearch) {
       this.loadGoods();
     }
-  },
-  onShowDetailClick(e) {
-
-  },
-  onToPayClick(e) {
-    // TODO:
   }
 });

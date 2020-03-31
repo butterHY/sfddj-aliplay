@@ -1,0 +1,27 @@
+.addrListItem {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 30rpx 0;
+}
+
+.addrListItem .addrListItem_left {
+    flex: 1;
+    padding-left: 30rpx;
+    color: #999999;
+}
+
+.addrListItem.usefulList .addrListItem_left {
+    color: #333;
+}
+
+.addrListItem .addrListItem_edit {
+    padding: 30rpx;
+    margin-left: 20rpx;
+    color: #dbdbdb;
+}
+
+.addrListItem.usefulList .addrListItem_edit {
+    color: #333;
+}
