@@ -1,0 +1,6 @@
+{
+  "component": true,
+  "usingComponents": {
+    "badge": "mini-ali-ui/es/badge/index"
+  }
+}

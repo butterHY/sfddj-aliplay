@@ -32,7 +32,7 @@
     <image src="{{base64imageUrl}}miniappImg/icon/icon_Payoff4.png?version=2.0" class="allCompensation posi_ab" a:elif="{{filters.strIndexOf(goods.afterSaleGuee,'4')}}"></image>
   </view>
   <!-- 秒杀商品的价格                       已完成新接口字段更换 -->
-  <view class="{{goods.secKillStatus ? 'marBot_20' : ''}}">
+  <view class="{{goods.secKillStatus ? 'marBot_30' : ''}}">
     <!-- goodsSecondKill 应该放置一个默认价格，因为这样在改动规格的时候倒计时模块展示的价格才不会跟着规格改变，原有版本并没有这个效果 -->
     <spike-price secKillStatus="{{goods.secKillStatus}}" goodsSecondKill="{{goodsSecondKill}}" viewStatus="{{goods.viewStatus}}" isFirstTime="{{true}}" oldPrice="{{goods.defaultPrice}}" onSpikeOver="onSpikeOver"></spike-price>
   </view>
@@ -97,6 +97,7 @@
       <view class="color-999 font-26">已售 {{goods.salesCount}} 笔</view>
     </view>
   </view>
+  <!-- 优惠券栏 -->
   <view a:if="{{couponDataList && couponDataList.length > 0}}" class="receiveCoupon flex_view_row justi_between font-26 single-line" onTap="showPopup">
     <view class="couponNameBox flex_view_row justi_start single-line">
       <view class="single-line couponNameLine">

@@ -31,7 +31,7 @@
     <view class="listBox">
       <scroll-view class="scrollView" scroll-y="{{true}}">
         <block a:for="{{ locInfo.pois }}">
-          <view class="list" onTap="setCity" data-name="{{ item.name }}" data-city="{{ item.city }}">
+          <view class="list" onTap="setCity" data-name="{{ item.name }}" data-address="{{ item.address }}">
             <text class="row">{{ item.name }}</text>  
             <text class="rowDetail">{{ locInfo.area + item.address }}</text>  
           </view>  

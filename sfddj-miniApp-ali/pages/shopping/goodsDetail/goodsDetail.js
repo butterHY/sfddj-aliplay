@@ -116,9 +116,9 @@ Page({
       this.setData({
         goodsSn: that.data.goodsSn
       })
-      // that.getGoodsDetail(that.data.goodsSn);                              // 旧的商品详情数据请求------原有的写法，因调试新接口暂时注释掉
+      // that.getGoodsDetail(that.data.goodsSn);        // 旧的商品详情数据请求------原有的写法，因调试新接口暂时注释掉
 
-      that.getNewGoodsDetail(that.data.goodsSn)                             // 新的获取商品详情数据，现主要是用来替换旧的商详数据；
+      that.getNewGoodsDetail(that.data.goodsSn)         // 新的获取商品详情数据，现主要是用来替换旧的商详数据；
     }
     that.getCartNumber();
     that.getListMaterialByName();
@@ -130,11 +130,10 @@ Page({
       key: 'defaultAddress', // 缓存数据的默认地址
     });
 
-    // 新的写法，如果显示，只要不是页面初始化，那就重新执行倒计时，因为我得判断活动是否过期；
-    // 最新的写法，如果是从确认订单页返回再返回，应该重新请求数据以更新库存，还有如果现在还不是秒杀商品，但返回后刚好这个商品正处于秒杀活动时间内，这就得重新请求数据获取时间进行倒计时
+    // 如果是从确认订单页返回再返回，应该重新请求数据以更新库存，还有如果现在还不是秒杀商品，但返回后刚好这个商品正处于秒杀活动时间内，这就得重新请求数据获取时间进行倒计时
     if (!that.data.isonLoad) {
       clearTimeout(getApp().globalData.goodsDetail_spikeTime);
-      var isSuccess = await that.getNewGoodsDetail(that.data.goodsSn);           // 旧的商品详情数据请求 
+      var isSuccess = await that.getNewGoodsDetail(that.data.goodsSn);
       if (isSuccess.type && that.data.goods.secKillStatus) {
         that.spikePrice.getTimes(true)
       }
@@ -1883,28 +1882,6 @@ Page({
   auto_send() {
     let that = this;
     let defaultAddress = null;
-    //     let defaultAddress = {
-    // "id":8512355,
-    // "createDate":1550651789000,
-    // "modifyDate":1579224570000,
-    // "memberId":5777,
-    // "fullName":"小张张",
-    // "province":"",
-    // "city":"北京市",
-    // "area":"东城区",
-    // "address":"厅顶替顶替",
-    // "mobile":"13526983698",
-    // "isDefault":false,
-    // "openId":"2088902907904264",
-    // "source":null,
-    // "idCardId":null,
-    // "idCardNo":null,
-    // "frontImage":null,
-    // "reverseImage":null,
-    // "showMobile":"13526983698",
-    // "showFullName":"小张张",
-    // "showAddress":"厅顶替顶替"
-    // };
     if (that.data.addressList && that.data.addressList.length > 0) {
       defaultAddress = that.data.addressList.find(value => value.isDefault);
     } else if (that.data.address) {
@@ -1989,9 +1966,7 @@ Page({
       this.umaTrackEvent(type, data)
     }
     else if (type == 'banner') {
-      // console.log('data-type="banner" goodsSn=YWECC1A9A93A2D')
       let data = { targetUrl: url }
-      // let data = { targetUrl: 'pages/shopping/goodsDetail/goodsDetail?goodsSn=YWECC1A9A93A2D' }
       this.umaTrackEvent(type, data)
     }
     else if (type == 'supplierGoods') {

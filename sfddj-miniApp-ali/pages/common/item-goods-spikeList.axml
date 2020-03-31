@@ -28,10 +28,10 @@
                 <view a:if='{{ totalSalesVolume != totalStock }}' class="progress_percentage  inline_block" >{{((totalSalesVolume/totalStock) * 100).toFixed(0)}}%</view>
             </view>
           </view>
-         <view a:if='{{ totalSalesVolume == totalStock }}' class="font-24 color-bbbbbb overHid sold_out">已抢光{{totalStock}}件</view>
+         <view a:if='{{ totalSalesVolume == totalStock }}' class="font-20 color-bbbbbb overHid sold_out">已抢光{{totalStock}}件</view>
       </view>
       <!-- 价格 -->
-      <view style="max-width:350rpx;" class="relative font-30 font-weight-500 single-line color-bbbbbb flex_view_row algin_end">
+      <view style="max-width:250rpx;" class="relative font-30 font-weight-500 single-line color-bbbbbb flex_view_row algin_end">
         <view class="height_35 line_height35 color-ff5353  flex_view_row algin_end">
           <view class="price_symbol line_height25">¥</view>
           <view class="sale_price">{{activitysPrice}}</view>
@@ -46,25 +46,12 @@
     <!-- <progress percent="{{80}}" show-info active stroke-width="{{30}}" background-color="{{red}}" active-color="{{red}}" background-color="black"> -->
 
  
-    <text a:if='{{activityStatus == "抢购中" || activityStatus == "已开抢"}}' style="width:160rpx;height:60rpx;position:absolute;right:30rpx;bottom:30rpx" data-pid="{{productId}}" class="alipay_catch_img flex_view_row align_cen justi_cen">
-      <!-- <image class="all_100" src="{{baseLocImgUrl}}miniappImg/icon/icon_redCart.png"/> -->
-      <text>立即购买</text>
-    </text>
-
-    <text a:elif='{{activityStatus == "即将开抢"}}' style="width:160rpx;height:60rpx;position:absolute;right:30rpx;bottom:30rpx" data-pid="{{productId}}" class="alipay_catch_img flex_view_row align_cen justi_cen">
-      <!-- <image class="all_100" src="{{baseLocImgUrl}}miniappImg/icon/icon_redCart.png"/> -->
-      <text>即将开抢</text>
-    </text>
-
-    <text a:elif='{{totalSalesVolume == totalStock }}' style="width:160rpx;height:60rpx;position:absolute;right:30rpx;bottom:30rpx;background: #999" data-pid="{{productId}}" class="alipay_catch_img flex_view_row align_cen justi_cen">
-      <!-- <image class="all_100" src="{{baseLocImgUrl}}miniappImg/icon/icon_redCart.png"/> -->
-      <text>已售罄</text>
-    </text>
-
-    <text a:elif='{{activityStatus == "已结束"}}' style="width:160rpx;height:60rpx;position:absolute;right:30rpx;bottom:30rpx;background: #999" data-pid="{{productId}}" class="alipay_catch_img flex_view_row align_cen justi_cen">
-      <!-- <image class="all_100" src="{{baseLocImgUrl}}miniappImg/icon/icon_redCart.png"/> -->
-      <text>已结束</text>
-    </text>
+    <view style="width:160rpx;height:60rpx;position:absolute;right:30rpx;bottom:30rpx; {{activityStatus == '已结束' || totalSalesVolume == totalStock ? 'background: #999' : ''}}" data-pid="{{productId}}" class="alipay_catch_img flex_view_row align_cen justi_cen">
+      <view a:if='{{totalSalesVolume == totalStock}}'>抢光了</view>
+      <view a:elif='{{activityStatus == "抢购中" || activityStatus == "已开抢"}}'>马上抢</view>
+      <view a:elif='{{activityStatus == "即将开抢"}}'>即将开抢</view>
+      <view a:elif='{{activityStatus == "已结束"}}'>已结束</view>
+    </view>
 
   </navigator>
 </template>

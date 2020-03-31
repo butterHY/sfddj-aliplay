@@ -10,8 +10,8 @@ Component({
 
   // 设置默认属性
   props: {
-    goodsSecondKill: null,                            //  秒杀商品的数据
-    isFirstTime: null,                                //  是否是第一次执行 getTime()，页面初始化后组件才挂载到页面上，所以在组件挂载和页面显示都是第一次获取时间
+    goodsSecondKill: null, //  秒杀商品的数据
+    isFirstTime: null,//是否是第一次执行 getTime()，页面初始化后组件才挂载到页面上，所以在组件挂载和页面显示都是第一次获取时间
     starTime: null,
     endTime: null,
     oldPrice: '',
