@@ -1,33 +1,43 @@
   <!-- 秒杀价格 -->
-  <view class="backgroiund_orange secondkill-price font-weight flex_view_row color_fff" a:if="{{secKillStatus}}">
-    <view class="flex-1 flex_view_row align_cen">
+  <view class="backgroiund_orange secondkillModule font-weight flex_view_row color_fff" a:if="{{secKillStatus}}">
+    <view class="flex-1 single-line">
       <view class="secKillPriceView">
         <view a:if="{{viewStatus != 'SALEING'}}" class="font-50 font-weight-600">暂无报价</view>
         <view a:else>
-          <view class="font_52">
+          <view class="activityPrice single-line">
             <text class="font-32">¥ </text>
-            {{goodsSecondKill.secKillPrice}}
+            <text class="font-weight-600">{{product.activityPrice}}</text>
           </view>
-          <view class="font-24 color-bbbbbb line_through inline_block marTop_30">¥ {{oldPrice}}</view>
+          <view class="font-28 inline_block marTop_20 single-line {{product.activityStock == product.activitysSalesVolumn ? 'sellOut' : ''}}" style="max-width: 100%;">
+            <text class="line_through single-line marRight_20" >¥ {{product.salePrice}}</text>
+            仅剩{{product.activityStock - product.activitysSalesVolumn}}件
+          </view>
         </view>
       </view>
     </view>
     <!-- 进度条 -->
-    <view class="progress flex-1 flex_view_col  justi_around align_cen" >
-         <view class="tex_center width_100">
-           <text>距离结束 </text> 
-           <text class="padding_left_10"><block>{{hours}}:</block><block>{{minute}}:</block><block>{{second}}.{{mSecond}}</block></text>
+    <view class="progress flex-1 flex_view_col  align_end" >
+         <view class="font-30 flex_view_row  align_cen">
+          <image class="alarmClock" mode="aspectFit" src="{{baseImageLocUrl}}miniappImg/goodsDetail/alarmClock.png"/>
+          <text>限时秒杀</text>
          </view>
-         <!-- 8:10:30.3 -->
-         <view class="progress_line posi_re">
+         <view class="countDown font-weight-600">
+           <!-- <text>距离结束 </text>  -->
+            <text class="timeView">{{hours}}</text> 
+            <text class="colon"> :</text>
+            <text class="timeView">{{minute}}</text>
+            <text class="colon">:</text>
+            <text class="timeView">{{second}}</text>
+           <!-- <text class="padding_left_10"><block>{{minute}}:</block><block>{{minute}}:</block><block>{{second}}.{{mSecond}}</block></text> -->
+         </view>
+         <!-- <view class="progress_line posi_re">
             <label class="progress_fill" style="width: {{((goodsSecondKill.totalSaleVolume/goodsSecondKill.totalStock) * 100).toFixed(0)}}%"></label>
             <view class="flex_view_row posi_ab justi_around align_cen progress_line progress_message ">
                 <view class="progress_soldNow inline_block " a:if="{{goodsSecondKill.totalSaleVolume != goodsSecondKill.totalStock}}">已售{{goodsSecondKill.totalSaleVolume}}件</view>
                 <view class="progress_soldSoon inline_block font_italic " a:if="{{goodsSecondKill.totalSaleVolume == goodsSecondKill.totalStock}}">已售罄</view>
                 <view class="progress_percentage  inline_block " a:if="{{goodsSecondKill.totalSaleVolume != goodsSecondKill.totalStock}}">{{((goodsSecondKill.totalSaleVolume/goodsSecondKill.totalStock) * 100).toFixed(0)}}%</view>
             </view>
-          </view>
-         <!-- <view class="font-28 color-bbbbbb overHid sold_out" >已抢光{{goodsSecondKill.totalStock}}10件</view> -->
+         </view> -->
     </view>
   </view>
 

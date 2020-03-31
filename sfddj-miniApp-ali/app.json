@@ -48,6 +48,7 @@
     "pages/overTime/overTime",
     "pages/activities/lightMember/lightMember",
     "pages/user/jifenDetail/jifenDetail"
+
   ],
   "subPackages": [
     {

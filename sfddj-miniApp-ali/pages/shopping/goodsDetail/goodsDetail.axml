@@ -34,7 +34,7 @@
   <!-- 秒杀商品的价格                       已完成新接口字段更换 -->
   <view class="{{goods.secKillStatus ? 'marBot_30' : ''}}">
     <!-- goodsSecondKill 应该放置一个默认价格，因为这样在改动规格的时候倒计时模块展示的价格才不会跟着规格改变，原有版本并没有这个效果 -->
-    <spike-price secKillStatus="{{goods.secKillStatus}}" goodsSecondKill="{{goodsSecondKill}}" viewStatus="{{goods.viewStatus}}" isFirstTime="{{true}}" oldPrice="{{goods.defaultPrice}}" onSpikeOver="onSpikeOver"></spike-price>
+    <spike-price secKillStatus="{{goods.secKillStatus}}" goodsSecondKill="{{goodsSecondKill}}" product="{{product}}" viewStatus="{{goods.viewStatus}}"  isFirstTime="{{true}}" onSpikeOver="onSpikeOver"></spike-price>
   </view>
   <!-- 商品价格、销量 -->
   <view a:if="{{!goods.secKillStatus}}" class="priceView">

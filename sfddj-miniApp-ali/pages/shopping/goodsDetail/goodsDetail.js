@@ -9,8 +9,6 @@ let WxParse = require('../../../wxParse/wxParse');
 let sendRequest = require('../../../utils/sendRequest');
 let constants = require('../../../utils/constants');
 let utils = require('../../../utils/util');
-let baseImageUrl = constants.UrlConstants.baseImageUrl;         //  测试环境/生产环境 图片资源地址前缀
-let base64imageUrl = constants.UrlConstants.baseImageLocUrl;    //  生产环境图片资源地址前缀
 let app = getApp();
 
 import http from '../../../api/http'
@@ -32,9 +30,9 @@ Page({
     loadComplete: false,                    // 页面加载完成
     loadFail: false,                        // 页面加载失败
     errMsg: '',
-    base64imageUrl: base64imageUrl,
-    baseImageLocUrl: constants.UrlConstants.baseImageLocUrl,
-    baseImageUrl: baseImageUrl,
+    base64imageUrl: constants.UrlConstants.baseImageLocUrl,    //  生产环境图片资源地址前缀
+    baseImageLocUrl: constants.UrlConstants.baseImageLocUrl,   //  生产环境图片资源地址前缀
+    baseImageUrl: constants.UrlConstants.baseImageUrl,         //  测试环境图片资源地址前缀
     showToast: false,
     cashBackRulePopup: false,
     wifiAvailable: true,
@@ -411,10 +409,15 @@ Page({
           that.setGoodsSpecMap();
 
           that.data.goods.secKillStatus == null ? that.data.goods.secKillStatus = false : '';
-          var activityList = that.data.goods.activity ? that.data.goods.activity : {};  // 秒杀数据
-          activityList.totalStock = that.data.goods.secKillTotalCount;
-          activityList.totalSaleVolume = that.data.goods.secKillTotalSale;
-          activityList.secKillPrice = that.data.goods.products.activityPrice;
+          // let activityList = that.data.goods.activity ? that.data.goods.activity : {};  // 秒杀数据
+          // activityList.totalStock = that.data.goods.secKillTotalCount;
+          // activityList.totalSaleVolume = that.data.goods.secKillTotalSale;
+          // activityList.secKillPrice = that.data.product.activityPrice;
+
+          let activityList = Object.assign({}, that.data.goods.activity);   // 新秒杀数据
+
+
+          console.log(that.data.product)
 
           // 测试用  
           // console.log('是否已售罄总库存，goodsStore', that.data.goods.goodsStore);

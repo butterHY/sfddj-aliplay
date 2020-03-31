@@ -1,7 +1,9 @@
+let constants = require('../../../utils/constants');
 my.canIUse('component2');
 Component({
   mixins: [],
   data: {
+    baseImageLocUrl: constants.UrlConstants.baseImageLocUrl,   //  生产环境图片资源地址前缀
     hours: '00',
     minute: '00',
     second: '00',
@@ -11,16 +13,22 @@ Component({
   // 设置默认属性
   props: {
     goodsSecondKill: null, //  秒杀商品的数据
-    isFirstTime: null,//是否是第一次执行 getTime()，页面初始化后组件才挂载到页面上，所以在组件挂载和页面显示都是第一次获取时间
+    product: null,         //  秒杀规格的数据
+    isFirstTime: null,     //是否是第一次执行 getTime()，页面初始化后组件才挂载到页面上，所以在组件挂载和页面显示都是第一次获取时间
     starTime: null,
     endTime: null,
-    oldPrice: '',
-    spikePrice: '',
+    // oldPrice: '',
+    // spikePrice: '',
     onSpikeOver: (data) => console.log(data),
 
   },
 
   onInit() {
+    this.props.product.activityStock = 3;
+    this.setData({
+      product: this.props.product
+    })
+    console.log(this.props.product)
   },
 
   deriveDataFromProps(nextProps) {
