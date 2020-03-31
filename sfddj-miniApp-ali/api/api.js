@@ -120,6 +120,8 @@ export default {
 	O2OCart: {
 		ADD: '/m/oto/otoShoppingCart/1.0/addCart', // 添加商品到购物车,
 		GETS: '/m/oto/otoShoppingCart/1.0/showCart', // 取得指定店铺购物车中的所有商品
+		CLEAR: '/m/oto/otoShoppingCart/1.0/removeCartAll', // 清空店铺购物车
+		CHANGE: '/m/oto/otoShoppingCart/1.0/changeProduct', // 改变店铺购物车中某个商品的数量
 	}
 
 

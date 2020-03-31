@@ -43,6 +43,51 @@ Component({
           this.setData({isShowed: false});
         }, 380);
       });
+    },
+    clear() {
+      if(this.data.cartitems) {
+        this.$spliceData({
+          cartitems: [0]
+        });
+      } else {
+        this.setData({
+          cartitems: []
+        });
+      }
+      this.setData({obj: {}});
+    },
+    onClearClick() {
+      my.confirm({
+        content: '确定清空购物车？',
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        success: (result) => {
+          if(result.confirm) {
+            this.cart.clear(this.props.shopid, (res) => {
+
+            });
+          }
+        },
+      });
+    },
+    onReduceClick(e) {
+      if(!this._changing) {
+        this._changing = true;
+        this.cart.changeNum(this.props.shopid, e.target.dataset.skuid, -1, (res) => {
+          this._changing = false;
+        });
+      }
+    },
+    onPlusClick(e) {
+      if(!this._changing) {
+        this._changing = true;
+        this.cart.changeNum(this.props.shopid, e.target.dataset.skuid, 1, (res) => {
+          this._changing = false;
+        });
+      }
+    },
+    onToPayClick() {
+      my.navigateTo({ url: '../orderConfirm/orderConfirm?shopid=' + this.props.shopid });
     }
   },
 });
