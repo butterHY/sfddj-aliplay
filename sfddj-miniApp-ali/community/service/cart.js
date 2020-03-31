@@ -46,28 +46,51 @@ class Cart extends MiniAppService {
                 */
                 let obj = this.shops[shopId];
                 if(!obj) {
-                    obj = this.shops[shopId] = {cartList: [], cartTotalNumb: 0};
+                    obj = this.shops[shopId] = {cartList: [], cartTotalNumb: 0, salePrice: 0, discountPrice: 0};
                 }
-                obj.cartList.push({
-                    "defaultGoodsImage": goods.goodsImagePath,
-                    "discountPrice": sku.discountPrice,
-                    "discountStatus": sku.isDiscount,
-                    "goodsId": sku.goodsId,
-                    "goodsImagePath": goods.goodsImagePath,
-                    "goodsSn": goods.goodsSn,
-                    "id": shopId,
-                    "name": goods.title,
-                    "quantity": cnt,
-                    "salePrice": sku.salePrice,
-                    "skuId": sku.id
-                });
-                obj.cartTotalNumb += cnt;
-                if(this.$cmps) {
+                obj.cnt += cnt;
+                obj.salePrice += sku.salePrice * cnt;
+                if(sku.isDiscount) {
+                    obj.discountPrice += sku.discountPrice * cnt;
+                } else {
+                    obj.discountPrice += sku.salePrice * cnt;
+                }
+                let idx = obj.cartList.findIndex((T) => T.skuId == sku.id);
+                if(idx >= 0) {
+                    obj.cartList[idx].quantity += cnt;
+                    if(this.$cmps) {
+                        this.$cmps.forEach((T) => {
+                            if(T.selfName == 'cart' && T.props.shopid == shopId) {
+                                T.setData({
+                                    'obj.cnt': obj.cnt,
+                                    'obj.salePrice': obj.salePrice,
+                                    'obj.discountPrice': obj.discountPrice,
+                                    [`cartitems[${idx}].quantity`]: obj.cartList[idx].quantity
+                                });
+                            }
+                        });
+                    }
+                } else {
+                    obj.cartList.push({
+                        "defaultGoodsImage": goods.goodsImagePath,
+                        "discountPrice": sku.discountPrice,
+                        "discountStatus": sku.isDiscount,
+                        "goodsId": sku.goodsId,
+                        "goodsImagePath": goods.goodsImagePath,
+                        "goodsSn": goods.goodsSn,
+                        "id": res.data.data.id,
+                        "name": goods.title,
+                        "quantity": cnt,
+                        "salePrice": sku.salePrice,
+                        "skuId": sku.id
+                    });
                     this.$cmps.forEach((T) => {
                         if(T.selfName == 'cart' && T.props.shopid == shopId) {
-                            // T.setData({
-
-                            // });
+                            T.setData({
+                                'obj.cnt': obj.cnt,
+                                'obj.salePrice': obj.salePrice,
+                                'obj.discountPrice': obj.discountPrice
+                            });
                         }
                     });
                 }
@@ -96,25 +119,28 @@ class Cart extends MiniAppService {
             }, (res) => {
                 if(res.data && res.data.data) {
                     let salePrice = 0,
-                        discountPrice = 0;
+                        discountPrice = 0,
+                        cnt = 0;
                     if(res.data.data.cartList) {
                         res.data.data.cartList.forEach((T) => {
                             if(T.defaultGoodsImage) {
-                                T.defaultGoodsImage = JSON.parse(T.defaultGoodsImage)[0];
+                                T.defaultGoodsImage = api.baseImageUrl + JSON.parse(T.defaultGoodsImage)[0];
                             }
                             if(T.goodsImagePath) {
-                                T.goodsImagePath = JSON.parse(T.goodsImagePath)[0];
+                                T.goodsImagePath = api.baseImageUrl + JSON.parse(T.goodsImagePath)[0];
                             }
                             if(T.discountStatus) {
-                                discountPrice += T.discountPrice;
+                                discountPrice += T.discountPrice * T.quantity;
                             } else {
-                                discountPrice += T.salePrice;
+                                discountPrice += T.salePrice * T.quantity;
                             }
-                            salePrice += T.salePrice;
+                            salePrice += T.salePrice * T.quantity;
+                            cnt += T.quantity;
                         });
                     }
                     res.data.data.salePrice = salePrice;
                     res.data.data.discountPrice = discountPrice;
+                    res.data.data.cnt = cnt;
                     this.shops[shopId] = res.data.data;
                     if(callbackFun) {
                         callbackFun(this.shops[shopId]);
@@ -125,6 +151,101 @@ class Cart extends MiniAppService {
                     }
                 }
             });
+        }
+    }
+
+
+    clear(shopId, callbackFun) {
+        http.post(api.O2OCart.CLEAR, {
+            shopId: shopId
+        }, (res) => {
+            if(res.data && res.data.ret && res.data.ret.code == 0) {
+                delete this.shops[shopId];
+                if(this.$cmps) {
+                    this.$cmps.forEach((T) => {
+                        if(T.selfName == 'cart' && T.props.shopid == shopId && T.clear) {
+                            T.clear();
+                        }
+                    });
+                }
+                if(callbackFun) {
+                    callbackFun(this.shops[shopId]);
+                }
+            } else {
+                if(callbackFun) {
+                    callbackFun(undefined);
+                }
+            }
+        });
+    }
+
+    changeNum(shopId, skuId, addNum, callbackFun) {
+        let shop = this.shops[shopId];
+        if(shop) {
+            let cartList = shop.cartList;
+            if(cartList) {
+                let idx = cartList.findIndex((T) => T.skuId == skuId);
+                if(idx >= 0) {
+                    let item = cartList[idx];
+                    let newNum = item.quantity + addNum;
+                    if(newNum >= 0 && newNum <= 999) {
+                        http.post(api.O2OCart.CHANGE, {
+                            cartId: item.id,
+                            quantity: newNum
+                        }, (res) => {
+                            if(res.data && res.data.ret && res.data.ret.code == 0) {
+                                item.quantity = newNum;
+                                shop.cnt += addNum;
+                                shop.salePrice += item.salePrice * addNum;
+                                if(item.discountStatus) {
+                                    shop.discountPrice += item.discountPrice * addNum;
+                                } else {
+                                    shop.discountPrice += item.salePrice * addNum;
+                                }
+                                if(this.$cmps) {
+                                    this.$cmps.forEach((T) => {
+                                        if(T.selfName == 'cart' && T.props.shopid == shopId) {
+                                            T.setData({
+                                                [`cartitems[${idx}].quantity`]: newNum,
+                                                'obj.cnt': shop.cnt,
+                                                'obj.salePrice': shop.salePrice,
+                                                'obj.discountPrice': shop.discountPrice
+                                            });
+                                        }
+                                    });
+                                }
+                                if(callbackFun) {
+                                    callbackFun(shop);
+                                }
+                            } else {
+                                if(callbackFun) {
+                                    callbackFun(undefined);
+                                }
+                            }
+                        }, (err) => {
+                            if(callbackFun) {
+                                callbackFun(undefined, err);
+                            }
+                        });
+                    } else {
+                        if(callbackFun) {
+                            callbackFun(undefined);
+                        }
+                    }
+                } else {
+                    if(callbackFun) {
+                        callbackFun(undefined);
+                    }
+                }
+            } else {
+                if(callbackFun) {
+                    callbackFun(undefined);
+                }
+            }
+        } else {
+            if(callbackFun) {
+                callbackFun(undefined);
+            }
         }
     }
 }

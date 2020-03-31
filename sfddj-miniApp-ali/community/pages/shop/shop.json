@@ -4,6 +4,7 @@
     "allowsBounceVertical": "NO",
     "usingComponents": {
         "goods-item":  "/community/pages/components/GoodsItem/GoodsItem",
-        "cart":  "/community/pages/components/Cart/Cart"
+        "cart":  "/community/pages/components/Cart/Cart",
+        "search-bar": "mini-ali-ui/es/search-bar/index"
     }
 }
