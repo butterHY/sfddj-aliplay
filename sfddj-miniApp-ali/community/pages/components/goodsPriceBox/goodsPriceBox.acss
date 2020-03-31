@@ -1,0 +1,67 @@
+.goodsPriceBox {
+	padding: 30rpx 50rpx 25rpx;
+	background-color: #ffffff;
+}
+
+.goodsName {}
+
+.goodsName .nameShow {
+	color: #010101;
+	font-size: 38rpx;
+	margin-bottom: 15rpx; 
+	overflow: hidden;  
+	text-overflow: ellipsis; 
+	display: -webkit-box;  
+	-webkit-box-orient: vertical; 
+	-webkit-line-clamp: 3;  
+}
+
+
+.goodsName .nameTip {
+	color: #999999;
+	font-size: 24rpx;
+}
+
+ 
+.goodsPrice {
+	width: 100%;
+	
+	display: flex;
+	justify-content: space-between;
+    align-items: center;
+}
+
+.goodsPrice .priceBox {
+	flex: 1;
+	max-width: 70%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+  	white-space: nowrap;
+}
+  
+
+.goodsPrice .priceBox .now_price {
+	color: #ff0032;
+	font-size: 32rpx;
+	margin-right: 10rpx;
+}
+
+.goodsPrice .priceBox .old_price {
+	color: #999999;
+	font-size: 24rpx;
+	text-decoration: line-through;
+
+}
+
+.goodsPrice .addCarBtn {
+	
+}
+.goodsPrice .addCarBtn button {
+	display: block;
+	width: 190rpx;
+	height: 65rpx;
+	line-height: 65rpx;
+	background-color: #ff0032;
+	border-radius: 50px;
+	font-size: 28rpx; 
+} 

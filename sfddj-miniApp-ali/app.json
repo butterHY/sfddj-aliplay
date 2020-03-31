@@ -58,6 +58,7 @@
         "pages/alphabetCity/alphabetCity",
         "pages/addressLoc/addressLoc",
         "pages/locTest/locTest",
+        "pages/goodsDetail/goodsDetail",
         "pages/communalOrderDetail/communalOrderDetail",
         "pages/orderConfirm/orderConfirm"
       ]

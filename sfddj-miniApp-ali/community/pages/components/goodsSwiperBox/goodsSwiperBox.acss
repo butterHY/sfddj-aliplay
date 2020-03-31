@@ -1,0 +1,34 @@
+.goodsSwiperBox {
+	position: relative;
+	overflow: hidden;
+}
+
+.dotsTip {
+	position: absolute;
+	right: 50rpx;
+	bottom: 35rpx; 
+	color: #ffffff;
+	font-size: 30rpx;
+	background-color: rgba(0, 0, 0, .5);
+	border-radius: 25px;
+	padding: 8rpx 20rpx;
+}
+
+.swiperBox {
+	position: relative; 
+	overflow: hidden;
+}
+
+
+.swiper-item {
+	display: block;
+  	height: 100%;  
+  	overflow: hidden;
+}
+
+.swiper-item image {
+	display: block;
+	height: 100%;
+	width: 100%;
+}
+ 

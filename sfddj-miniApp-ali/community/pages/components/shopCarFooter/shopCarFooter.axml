@@ -1,0 +1,82 @@
+<view class="goodsAction">
+  <view class="cartShow" onTap="onButtomBtnTap">
+    <text class="cartNum">99999</text>
+  </view>
+  <view class="priceBox">
+    <text class="now">￥59.8</text>
+    <text class="old">￥69.9</text>
+  </view>
+
+  <view class="tipInfo">
+    <text>未选购商品</text>
+  </view>
+
+  <view class="actionBtn isDisabled" >
+    <button class="settleBtn" size="default" type="warn" >去结算</button>
+  </view> 
+</view>
+<popup class="goodsAction_popup" show="{{ showBottom }}" position="bottom" onClose="onPopupClose">
+  <view class="listTitle">
+    <view class="title_left">
+      共2件商品
+    </view>
+    <view class="title_right">
+      全部清空
+    </view>
+  </view>
+  <scroll-view class="cartListShow" scroll-y="{{ true }}" >
+    <block>
+      <view class="cartList">
+        <view class="figureImg">
+          <image src="https://img.fx-sf.com/goods/20200219/158208060759538912.jpg?x-oss-process=style/goods_webp" lazy-load="{{ true }}" />
+        </view>
+        <view class="asideInfo">
+          <view class="nameShow">
+            <text>【1.5斤】广西沃柑/袋</text>
+          </view>
+          <view class="tipInfo">
+            <text class="discounts">特价 限1份</text>
+          </view>
+          <view class="priceShow">
+            <text class="now">￥59.8</text>
+            <text class="old">￥69.9</text>
+          </view>
+  
+        </view> 
+
+        <view class="amountBox">
+          <text class="stepper stepper_minus"></text>
+          <text class="stepper_val">1</text>
+          <text class="stepper stepper_plus"></text>
+        </view>
+      </view>
+
+      <view class="cartList">
+        <view class="figureImg">
+          <image src="https://img.fx-sf.com/goods/20200219/158208060759538912.jpg?x-oss-process=style/goods_webp" lazy-load="{{ true }}" />
+        </view>
+        <view class="asideInfo">
+          <view class="nameShow">
+            <text>【1.5斤】广西沃柑/袋</text>
+          </view>
+          <view class="tipInfo">
+            <text class="discounts">特价 限1份</text>
+          </view>
+          <view class="priceShow">
+            <text class="now">￥59.8</text>
+            <text class="old">￥69.9</text>
+          </view>
+  
+        </view> 
+
+        <view class="amountBox">
+          <text class="stepper stepper_minus"></text>
+          <text class="stepper_val">1</text>
+          <text class="stepper stepper_plus"></text>
+        </view>
+      </view>
+    
+    </block>
+    
+  </scroll-view>
+</popup>

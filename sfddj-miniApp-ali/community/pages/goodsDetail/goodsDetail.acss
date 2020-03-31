@@ -1,0 +1,11 @@
+.goodsDetailBox { 
+	position: relative; 
+}
+
+.layoutGroup {
+	margin-bottom: 15rpx;
+}
+
+.layoutGroup:last-child {
+	margin-bottom: 0;
+}

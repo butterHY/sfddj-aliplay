@@ -1,0 +1,60 @@
+.goodsIntroBox {
+	margin-bottom: 135rpx; 
+}
+
+.goodsInfo {  
+	margin-bottom: 16rpx;
+	background-color: #ffffff;
+}
+.goodsInfo .infoShow {
+	padding: 0 50rpx;
+	font-size: 28rpx;
+	line-height: 52rpx;
+	padding-bottom: 30rpx;
+	
+} 
+.goodsInfo .infoShow .info_title {
+	color: #333333; 
+} 
+.goodsInfo .infoShow .info_section {
+	color: #666666; 
+} 
+
+.goodsIntro {   
+	background-color: #ffffff;
+}
+.goodsIntro .introShow { 
+}
+
+.goodsIntro .introShow .imageShow,
+.goodsIntro .introShow .textShow  {
+	display: block;
+	width: 100%;
+	box-sizing: border-box;
+} 
+
+.goodsIntro .introShow .textShow {
+	margin-bottom: 10rpx;
+	line-height: 48rpx;
+	padding: 0 50rpx;
+}
+ 
+ 
+.titleStyle {
+    font-size: 32rpx;
+    position: relative;
+    padding-left: 70rpx;
+    padding-top: 30rpx;
+    padding-bottom: 30rpx;
+	box-sizing: border-box;
+}
+
+.titleStyle::before {
+    content:' ';
+    position: absolute;
+    left: 50rpx;
+    border-radius: 6rpx; 
+    width: 8rpx; 
+    height: 36rpx;
+    background-color: #ff0032;
+}

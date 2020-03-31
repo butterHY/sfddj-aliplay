@@ -1,0 +1,20 @@
+<view class="goodsSwiperBox"> 
+  <swiper class="swiperBox" style="height: {{ wrapWidth }}"
+      indicator-dots="{{ indicatorDots }}"
+      circular="{{ circular }}"
+      autoplay="{{ autoplay }}"
+      onChange="swiperChange" > 
+      <block key="swiper-item-{{ index }}" a:for="{{ imgList }}">
+        <swiper-item >
+          <view class="swiper-item" onTap="previewImage" data-imgIndex="{{ index }}">
+            <image class="imageShow"  
+              src="{{ item }}" 
+              lazy-load="{{ true }}" />
+          </view> 
+        </swiper-item> 
+      </block>
+  </swiper>
+  <view class="dotsTip">
+    <text>{{ dot_current }}/{{ dot_count }}</text>
+  </view>
+</view>
