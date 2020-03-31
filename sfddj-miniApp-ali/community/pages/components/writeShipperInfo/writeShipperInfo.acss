@@ -1,17 +1,17 @@
 
 
 .userData {
-    margin-top: 20rpx;
+    /* margin-top: 20rpx; */
     background-color: #fff;
     border-radius: 10rpx;
     box-sizing: border-box;
-    padding: 0 30rpx;
+    padding: 30rpx 30rpx;
     display: flex;
     align-items: center;
     justify-content: space-between;
     font-size: 30rpx;
     color: #999999;
-    height: 100rpx;
+    /* height: 100rpx; */
 }
 
 /* 弹窗 */
@@ -131,4 +131,10 @@
     background-color: #ff0532;
     font-size: 18rpx;
     color: #fff;
+}
+
+.writeCompletely {
+  font-size: 30rpx;
+  font-weight: 500;
+  color: #333333;
 }

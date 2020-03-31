@@ -60,7 +60,10 @@
         "pages/addressLoc/addressLoc",
         "pages/locTest/locTest",
         "pages/communalOrderDetail/communalOrderDetail",
-        "pages/orderConfirm/orderConfirm"
+        "pages/orderConfirm/orderConfirm",
+        "pages/addressList/addressList",
+        "pages/orderList/orderList",
+        "pages/afterSales/afterSales"
       ]
     }
   ],

@@ -1,0 +1,7 @@
+{
+	"titleBarColor": "#ffffff",
+  	"defaultTitle": "地址列表",
+  	"pullRefresh": false,
+  	"usingComponents": {
+    }
+}

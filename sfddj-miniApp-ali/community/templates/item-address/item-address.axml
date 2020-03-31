@@ -1,0 +1,19 @@
+<template name="itemAddress">
+    <view class="addrListItem {{canUse ? 'usefulList' : ''}}">
+        <view class="addrListItem_left single-line">
+            <!-- 省市区 -->
+            <view class="single-line font-30">广东省深圳市南山区</view>
+            <!-- 详细地址 -->
+            <view class="single-line font-26 marTop_20">南山区外科部住院楼8楼3号病房3床</view>
+            <!-- 电话和姓名 -->
+            <view class="single-line font-26 marTop_20">
+                <text>Wendy(女士)</text>
+                <text class="marLeft_20">18293874328</text>
+            </view>
+        </view>
+        <!-- 编辑按钮 -->
+        <view class="addrListItem_edit">
+            <text class="icon-yijianfankui font-40"></text>
+        </view>
+    </view>
+</template>

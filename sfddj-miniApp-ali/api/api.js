@@ -16,6 +16,7 @@ export default {
 	DDJAppId: env === 'production' ? '2019030863501284' : '2018122562647749',
 	mapKey: env === 'production' ? '' : '2ceddac70ce9cc37325dec6398e5a4c7',
 	lifestyleId: env === 'production' ? '2014051200005722' : '2014070200006769',
+	provinceLevelMunicipalityCode: ['010', '020', '021', '022', '023', '400'], // 直辖市座机区号:北京市、上海市、天津市、重庆市
 
 	// 接口
 	// v1.1.0

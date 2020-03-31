@@ -1,0 +1,8 @@
+{
+	"titleBarColor": "#ffffff",
+  	"defaultTitle": "售后申请",
+  	"pullRefresh": false,
+  	"usingComponents": {
+        "multi-liner": "mini-ali-ui/es/multi-liner/index"
+    }
+}

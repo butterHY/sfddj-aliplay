@@ -1,0 +1,77 @@
+.afterSalesPage {
+    width: 100%;
+    padding: 20rpx 20rpx 0;
+    box-sizing: border-box;
+}
+
+.afterSalesItem {
+    width: 100%;
+    padding: 0 30rpx;
+    height: 100rpx;
+    background-color: #fff;
+    border-radius: 10rpx;
+    margin-top: 20rpx;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+}
+
+.afterSalesItem:first-child {
+    margin-top: 0;
+}
+
+.afterSalesItem input {
+    font-size: 30rpx;
+}
+
+.afterSalesItem_col {
+    width: 100%;
+    padding: 0 30rpx 30rpx;
+    background-color: #fff;
+    border-radius: 10rpx;
+    margin-top: 20rpx;
+    box-sizing: border-box;
+}
+
+.afterSalesTit {
+    padding: 30rpx 0;
+    font-size: 30rpx;
+    font-weight: 500;
+}
+
+
+
+.am-multi-liner-item  {
+    background: #f3f3f3;
+    height: 140rpx;
+    border-radius: 10rpx;
+    overflow: hidden;
+}
+
+.am-multi-liner-item .am-multi-liner-line {
+    height: 100%;
+}
+
+.am-multi-liner-item .am-multi-liner-content  {
+    background-color: #f3f3f3;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 20rpx;
+    font-size: 26rpx;
+}
+
+.submitBtn {
+    width: 648rpx;
+    height: 100rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ff0532;
+    color: #fff;
+    border-radius: 45px;
+    font-size: 36rpx;
+    font-weight: 500;
+    margin-top: 60rpx;
+    margin-bottom: 30rpx;
+}

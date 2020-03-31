@@ -53,7 +53,7 @@ function login(suc, fail) {
         data: {
           authCode: jsCode
         },
-        success: function(res) {
+        success: function (res) {
           if (res.data.errorCode == '0001') {
             my.setStorageSync({ key: constants.StorageConstants.tokenKey, data: res.data.result.loginToken });
 
@@ -86,7 +86,7 @@ function tapToAuthorize() {
     success: res => {
       if (res.authSetting["scope.userInfo"] === true) {
         var that = this;
-        app.getUserInfo(function(userInfo) {
+        app.getUserInfo(function (userInfo) {
           that.setData({
             userInfo: userInfo,
             noAuthorized: false
@@ -97,7 +97,7 @@ function tapToAuthorize() {
           title: '用户未授权',
           content: '如需正常使用小程序，请点击授权按钮，勾选用户信息并点击确定。',
           showCancel: false,
-          success: function(res) {
+          success: function (res) {
             if (res.confirm) {
             }
           }
@@ -116,12 +116,12 @@ function uploadImage(pathType, suc, fail) {
   var that = this;
   my.chooseImage({
     count: 1,
-    success: function(res) {
+    success: function (res) {
       var imageArr = res.apFilePaths;
 
       _upLoadImage(imageArr[0], pathType, suc, fail);
     },
-    fail: function(res) {
+    fail: function (res) {
       if (fail) fail('取消上传');
     }
   });
@@ -159,7 +159,7 @@ function _upLoadImage(image, pathType, suc, fail) {
         "path": path
       },
       name: 'file',
-      success: function(res) {
+      success: function (res) {
 
         my.hideLoading();
 
@@ -171,7 +171,7 @@ function _upLoadImage(image, pathType, suc, fail) {
           if (fail) fail('上传失败');
         }
       },
-      fail: function(res) {
+      fail: function (res) {
 
         my.hideLoading();
 
@@ -337,7 +337,7 @@ function getCid() {
     try {
       my.setStorage({ key: 'ddj_guid', data: getGuid });
     } catch (e) { }
-  } 
+  }
   return getGuid
 }
 
@@ -365,10 +365,37 @@ function da_upload_dataOld(actionType, otherData) {
 
 // guid 设置
 function guid() {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
     let r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
     return v.toString(16);
   });
+}
+
+// 电话号码检验
+function checkPhoneVal(val) {
+
+  // 0.3版
+  if (!val) {
+    return false
+  }
+  let isMobile = /^1[3456789]\d{9}$/
+  // let tel = /(^0\d{2,3}-\d{7,8}-\d{1,6}$)|(^0\d{2,3}-\d{7,8}$)|(^0\d|^2\d|^3\d|^4\d|^5\d|^6\d|^7\d|^8\d|^9\d{7,8}$)/
+  let tel = /^0\d{2,3}-\d{7,8}$/
+  let tel2 = /^\d{7,8}$/
+  let tel3 = /^0\d{6,11}$/
+  // let com = /^(400)\d{1}-(\d{3})-(\d{3})/
+  // let com = /^((400?-(\d{7}|\d{6})-\d{3})|(800?-(\d{7}|\d{6})))$/
+  let com = /^(400|800)?\d{7}$/
+  let com2 = /^(400|800)(\-)?\d{7}$/
+  let preNumber = val && val.charAt(0)
+  let isMobiePhone = preNumber && (preNumber === '1')
+
+  if (isMobiePhone) {
+    return isMobile.test(val)
+  } else {
+    let check = tel.test(val) ? true : tel2.test(val) ? true : com.test(val) ? true : com2.test(val) ? true : tel3.test(val)
+    return check
+  }
 }
 
 module.exports = {
@@ -386,5 +413,6 @@ module.exports = {
   uploadClickData_da,
   guid,
   da_upload_data,
-  getCid
+  getCid,
+  checkPhoneVal
 };

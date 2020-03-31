@@ -1,0 +1,42 @@
+<template name="itemOrderList">
+    <view class="itemOrderList">
+        <!-- 头部商品信息 -->
+        <navigator url="/community/pages/communalOrderDetail/communalOrderDetail" hover-class="none" class="flex_view_col orderListInfo">
+            <!-- 上部分 -->
+            <view class="flex_view_row align_cen orderListInfo_top">
+                <view class="orderList_goodsImg">
+                    <image class="all_100 blockBox" src="{{staticsImageUrl}}miniappImg/icon/icon_default_head.jpeg"/>
+                </view>
+                <view class="flex_view_col justi_cen width_100">
+                    <view class="flex_view_row align_cen justi_between">
+                        <view class="storeMes flex_view_row align_cen">
+                            <!-- 店铺名 -->
+                            <view class="flex_1 single-line font-30 color-333">宋小食美食天地 （南方厅顶替顶替）</view>
+                            <!-- 箭头 -->
+                            <view class="iconChevron">
+                                <text class="icon-chevron-right font-30 color-bdbdbd"></text>
+                            </view>
+                        </view>
+                        <!-- 订单状态 -->
+                        <view class=" font-30 color-333 tex_right">已取消</view>
+                    </view>
+                    <!-- 订单时间 -->
+                    <view class="font-24 color-999999 marTop_15">2020-02-03 12:45</view>
+                </view>
+            </view>
+            <!-- 商品信息 -->
+            <view class="orderList_goodsInfo">
+                <view class="storeMes flex_view_row align_cen font-26 color333">
+                    <view class="flex_1 single-line">宋小食美食天地 （南方厅顶替</view>
+                    <view class="">等1件商品</view>
+                </view>
+                <!-- 商品 -->
+                <view class="font-26 color-333">￥196.25</view>
+            </view>
+        </navigator>
+        <!-- 底部按钮 -->
+        <view class="orderListBtnBox">
+            <view class="orderList_btn">删除订单</view>
+        </view>
+    </view>
+</template>
