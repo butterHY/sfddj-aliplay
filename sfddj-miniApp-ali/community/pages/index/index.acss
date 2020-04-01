@@ -1,5 +1,10 @@
 .index {
-    background-color: #ddd;
+    background-color: #f3f3f3;
+}
+
+.locationBox {
+    padding-top: 8rpx;
+    background-color: #fff;
 }
 
 .index_shoplist {

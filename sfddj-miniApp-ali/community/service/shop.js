@@ -9,7 +9,7 @@ class Shop extends MiniAppService {
         super();
     }
 
-    static get name() {
+    static get Name() {
         return 'Shop';
     }
 
@@ -54,6 +54,15 @@ class Shop extends MiniAppService {
         http.get(api.Shop.GETBYID + id, {}, (res) => {
             if(res.data && res.data.data) {
                 res.data.data.shopLogo = api.baseImageUrl + res.data.data.shopLogo;
+                if(res.data.data.businessTime) {
+                    let ary = res.data.data.businessTime.split('~');
+                    if(ary.length == 2) {
+                        let timeStart = ary[0],
+                            timeEnd = ary[1];
+                        res.data.data.timeStart = timeStart;
+                        res.data.data.timeEnd = timeEnd;
+                    }
+                }
             }
             if(callbackFun) {
                 callbackFun(res);
