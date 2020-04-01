@@ -11,7 +11,7 @@ let baseUrl = constants.UrlConstants.baseUrl;
 let ERR_CODE = {
 	SUCCESS: '0', //成功
 	RE_LOGIN: '00100', //需要登录
-	BIND_PHONE: '00128', //绑定手机
+	BIND_PHONE: '00128', //绑定手机 
 };
 
 
@@ -30,13 +30,13 @@ function post(url, data, sucFunc, errFunc, header = {}) {
 	}
 	headers = Object.assign(headers, header);
 	let options = {
-		url: constants.UrlConstants.baseUrlOnly + url,
+		url: url.indexOf('https:') == 0 ? url : constants.UrlConstants.baseUrlOnly + url,
 		method: 'POST',
 		data: data,
 		headers: headers,
-		success: function(res) {
+		success: function (res) {
 			if (res.status == 200) {
-				let retCode = res.data.ret ? res.data.ret.code : ''
+				let retCode = res.data.ret ? res.data.ret.code : '';  
 
 				if (retCode == ERR_CODE.SUCCESS) {
 					sucFunc(res);
@@ -47,11 +47,11 @@ function post(url, data, sucFunc, errFunc, header = {}) {
 					//   mask: true
 					// });
 
-					util.login(function() {
+					util.login(function () {
 						my.hideLoading();
 
 						post(url, data, sucFunc, errFunc, header);
-					}, function() {
+					}, function () {
 						my.hideLoading();
 
 						// my.showToast({
@@ -59,7 +59,12 @@ function post(url, data, sucFunc, errFunc, header = {}) {
 						// });
 					});
 				} else if (retCode == ERR_CODE.BIND_PHONE) {
-					errFunc(res.data.ret.message);
+					// errFunc(res.data.ret.message);
+					if (errFunc) {
+						let _msg = '';
+						res.data.ret ? _msg = res.data.ret.message : _msg = res;
+						errFunc(_msg);
+					}
 
 					if (url != '/coupon/exchangeCoupon') {
 						my.redirectTo({
@@ -68,28 +73,38 @@ function post(url, data, sucFunc, errFunc, header = {}) {
 					} else {
 						return;
 					}
-				} else {
-					errFunc(res.data.ret.message);
+				} 
+				// 高德地图 
+				else if (res.data.infocode == '10000') {
+					sucFunc(res);
+				}
+				else {
+					// errFunc(res.data.ret.message);
+					if (errFunc) {
+						let _msg = '';
+						res.data.ret ? _msg = res.data.ret.message : _msg = res;
+						errFunc(_msg);
+					}
 				}
 			} else {
-				errFunc('请求错误，请重试');
+				if (errFunc) errFunc('请求错误，请重试');
 			}
 		},
-		fail: function(err) {
-			switch(err.status){
-        case 429://服务器限流
-          my.redirectTo({
-            url: '/pages/limit/limit'
-          })
-        break;
-        case 504:
-          my.redirectTo({
-            url: '/pages/overTime/overTime'
-          })
-          
-        break;
-        default:errFunc('请求错误，请重试');
-      }
+		fail: function (err) {
+			switch (err.status) {
+				case 429://服务器限流
+					my.redirectTo({
+						url: '/pages/limit/limit'
+					})
+					break;
+				case 504:
+					my.redirectTo({
+						url: '/pages/overTime/overTime'
+					})
+
+					break;
+				default: if (errFunc) errFunc('请求错误，请重试');
+			}
 		}
 	}
 	if (my.canIUse('request')) {
@@ -114,11 +129,11 @@ function get(url, data, sucFunc, errFunc, header = {}) {
 	}
 	headers = Object.assign(headers, header);
 	let options = {
-		url: constants.UrlConstants.baseUrlOnly + url,
+		url: url.indexOf('https:') == 0 ? url : constants.UrlConstants.baseUrlOnly + url,
 		method: 'GET',
 		data: data,
 		headers: headers,
-		success: function(res) {
+		success: function (res) { 
 			if (res.status == 200) {
 				let retCode = res.data.ret ? res.data.ret.code : ''
 				if (retCode == ERR_CODE.SUCCESS) {
@@ -129,11 +144,11 @@ function get(url, data, sucFunc, errFunc, header = {}) {
 					//   mask: true
 					// });
 
-					util.login(function() {
+					util.login(function () {
 						my.hideLoading();
 
 						get(url, data, sucFunc, errFunc, header);
-					}, function() {
+					}, function () {
 						my.hideLoading();
 
 						// my.showToast({
@@ -141,7 +156,11 @@ function get(url, data, sucFunc, errFunc, header = {}) {
 						// });
 					});
 				} else if (retCode == ERR_CODE.BIND_PHONE) {
-					errFunc(res.data.ret.message);
+					if (errFunc) {
+						let _msg = '';
+						res.data.ret ? _msg = res.data.ret.message : _msg = res;
+						errFunc(_msg);
+					}
 
 					if (url != '/coupon/exchangeCoupon') {
 						my.redirectTo({
@@ -150,28 +169,36 @@ function get(url, data, sucFunc, errFunc, header = {}) {
 					} else {
 						return;
 					}
-				} else {
-					errFunc(res.data.ret.message);
+				}
+				// 高德地图 
+				else if (res.data.infocode == '10000') {
+					sucFunc(res);
+				}
+				else {
+					if (errFunc) {
+						let _msg = '';
+						res.data.ret ? _msg = res.data.ret.message : _msg = res;
+						errFunc(_msg);
+					}
 				}
 			} else {
-				errFunc('请求错误，请重试');
+				if (errFunc) errFunc('请求错误，请重试');
 			}
 		},
-		fail: function(err) {
-			switch(err.status){
-        case 429://服务器限流
-          my.redirectTo({
-            url: '/pages/limit/limit'
-          })
-        break;
-        case 504:
-          my.redirectTo({
-            url: '/pages/overTime/overTime'
-          })
-          
-        break;
-        default:errFunc('请求错误，请重试');
-      }
+		fail: function (err) {
+			switch (err.status) {
+				case 429://服务器限流
+					my.redirectTo({
+						url: '/pages/limit/limit'
+					})
+					break;
+				case 504:
+					my.redirectTo({
+						url: '/pages/overTime/overTime'
+					}) 
+					break;
+				default: if (errFunc) errFunc('请求错误，请重试');
+			}
 		}
 	}
 	if (my.canIUse('request')) {

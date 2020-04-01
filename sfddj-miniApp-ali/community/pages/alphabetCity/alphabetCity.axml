@@ -1,23 +1,26 @@
 <view class="citySelect">
 	<view class="dyt-list">
-		<alphabet alphabet="{{alphabet}}" onClick="onAlphabetClick">
+		<alphabet alphabet="{{ alphabet }}" onClick="onAlphabetClick">
 		</alphabet>
 		<view class="cityList">
 			<scroll-view class="scrollView" scroll-y="{{true}}">
 				<view class="listShow">
 					<view class="listName">当前定位城市</view>
 					<view class="listBox">
-						<list-item onClick="select" data-cityName="深圳市">深圳市</list-item>
+						<list-item onClick="selectCity" data-cityName="{{ locCity }}">{{ locCity.city }}</list-item>
 					</view>
 					
 				</view>
 				<view class="listShow">
-					<block>
+					<block a:for="{{ cityList }}" a:key="{{ index }}">
 						<list>
-							<view class="listName">A</view>
+							<view class="listName">{{ item.letter }}</view> 
 							<view class="listBox">
-								<list-item onClick="select" data-cityName="广州市">广州市</list-item>
-								<list-item onClick="select" data-cityName="深圳市">深圳市</list-item>
+								<block a:for="{{ item.list }}" a:key="{{ idx }}" a:for-index="idx" a:for-item="itemName">
+									<list-item onClick="selectCity"
+										data-listIndex="{{ index }}"
+										data-cityName="{{ itemName }}">{{ itemName.name }}</list-item> 
+								</block> 
 							</view>
 						</list>
 					</block>

@@ -5,10 +5,10 @@
         <text class="nowCity">{{ locInfo.city }}</text>
         <am-icon class="iconStyle" type="down_"  />
       </view>
-      <view class="searchInput" onTap="chooseLocation">
-        
-        <input-item data-field="searchCity" type="text" value="{{searchCity}}"  disabled="{{true}}"
-          placeholder="{{placeholderTxt}}" 
+      <!-- 搜索城市 -->
+      <view class="searchInput" onTap="chooseLocation"> 
+        <input-item data-field="searchCity" type="text" value="{{searchCity}}" disabled="{{ true }}"
+          placeholder="{{ placeholderTxt }}" 
           placeholderClass="placeholderColor" 
           clear="{{true}}" onInput="onItemInput" onClear="onClear" >
           <am-icon class="iconStyle" type="search"  />
@@ -18,10 +18,10 @@
     <view class="reLoc">
       <view class="reLoc_addr">
         <am-icon class="iconStyle" type="location"   />
-        <text class="nowCity">{{ locInfo.name }}</text> 
+        <text class="nowCity">{{ locInfo.streetShow }}</text> 
       </view>
        
-      <text class="reLoc_btn" onTap="getLocation">重新定位</button>
+      <text class="reLoc_btn" onTap="reLocation">重新定位</button>
     </view>
   </view>
   <view class="nearList">
@@ -31,9 +31,9 @@
     <view class="listBox">
       <scroll-view class="scrollView" scroll-y="{{true}}">
         <block a:for="{{ locInfo.pois }}">
-          <view class="list" onTap="setCity" data-name="{{ item.name }}" data-address="{{ item.address }}">
+          <view class="list"  data-itemData="{{ item }}" onTap="selectCity">
             <text class="row">{{ item.name }}</text>  
-            <text class="rowDetail">{{ locInfo.area + item.address }}</text>  
+            <text class="rowDetail">{{ locInfo.district + item.address }}</text>  
           </view>  
         </block> 
       </scroll-view> 

@@ -1,123 +1,140 @@
+import locAddr from '/community/service/locAddr.js';
 
 Page({
   data: {
     searchCity: '',
-    placeholderTxt: '请输入要搜索的地址', 
+    placeholderTxt: '请输入要搜索的地址',
 
     locInfo: {
+      loading: false,
       longitude: '',
       latitude: '',
-      area: '',
       city: '',
-      name: '',
-      address: '',
-      pois: []
-    }
-    
+      addressAll: '',
+      addressJson: {},
+      pois: [],
+      streetShow: '',
+      streetLoc: ''
+    },
+
+    reLocOff: true,
+    timer_reLoc: null,
+
   },
   onLoad() {
-    const _this = this; 
+    const _this = this;
     my.getStorage({
-      key: 'locationInfo', 
-      success: function(res) {
-        if(res.data) {
-          _this.setData({
-            locInfo: res.data
-          })
+      key: 'locationInfo',
+      success: function (res) {
+        if (JSON.stringify(res.data).length > 2) {
+          locAddr.GDCity(res.data, (data) => {
+            _this.setData({
+              locInfo: data
+            });
+          });
         }
         else {
-          _this.getLocation();
+          locAddr.location((res) => {
+            _this.setData({
+              locInfo: res
+            })
+          });
         }
       }
-    });  
+    });
   },
 
-  getLocation() {
-    const _this = this; 
-    my.showLoading();
-    my.getLocation({
-      type: 3,
-      success(res) {
-        my.hideLoading();
-        let _area = `${res.province}${res.city}${res.district}`;
-        let _name = `${res.streetNumber.street}${res.streetNumber.number}`;
-        // console.log('getLocation',res) 
+  // 地址栏选择的方法
+  chooseLocation() {
+    const _this = this
+    my.chooseLocation({
 
+      success: (res) => {
+        // console.log('chooseLocation', res)
         _this.setData({
           'locInfo.longitude': res.longitude,
           'locInfo.latitude': res.latitude,
-          'locInfo.area': _area,
-          'locInfo.city': res.city,
-          'locInfo.name': _name,
-          'locInfo.address': _area + _name,
-          'locInfo.pois': res.pois, 
+          'locInfo.streetShow': res.name,
+          'locInfo.streetLoc': res.longitude + ',' + res.latitude
         });
 
-        _this.setLocStorage(); 
+        locAddr.GDCity(_this.data.locInfo, (data) => {
+          my.reLaunch({ url: '../index/index' });
+        });
       },
-      fail() {
-        my.hideLoading();
-        my.alert({ title: '定位失败' });
-      },
-    })
+      fail: (error) => { },
+    });
+  },
+
+  // 选择地址方法
+  selectCity(e) {
+    const _this = this;
+    let selectCity = e.target.dataset.itemData;
+    let _location = selectCity.location.split(',');
+    // console.log(selectCity)  
+    this.setData({
+      'locInfo.streetShow': selectCity.name,
+      'locInfo.streetLoc': selectCity.location,
+      'locInfo.longitude': _location[0] * 1,
+      'locInfo.latitude': _location[1] * 1,
+    });
+
+    // 更新locAddr 地址成最新的
+    locAddr.locInfo = _this.data.locInfo;
+
+    this.setLocStorage(function () {
+      my.reLaunch({ url: '../index/index' });
+    });
+  },
+
+  // 设置缓存
+  setLocStorage(fn) {
+    const _this = this;
+    // console.log(_this.data.locInfo)
+    my.setStorage({
+      key: 'locationInfo',
+      data: _this.data.locInfo,
+      success: function () { if (fn) fn(); }
+    });
+  },
+
+  // 到城市列表
+  goToCityList() {
+    my.navigateTo({ url: '../alphabetCity/alphabetCity' });
+  },
+
+  // 重新定位
+  reLocation() {
+    const _this = this;
+    let reLocOff = this.data.reLocOff;
+    let _timer = this.data.timer_reLoc;
+
+    if (!reLocOff) return;
+
+    _this.setData({ reLocOff: false });
+
+    locAddr.location((res) => {
+      _this.setData({
+        locInfo: res
+      })
+    });
+
+    clearTimeout(_timer);
+    _timer = setTimeout(() => {
+      _this.setData({ reLocOff: true })
+    }, 1000);
+
   },
 
   onItemInput(e) {
     this.setData({
       [e.target.dataset.field]: e.detail.value,
     });
-  }, 
+  },
 
   onClear(e) {
     this.setData({
       [e.target.dataset.field]: '',
     });
   },
-
-  setCity(e) {
-    let _name = e.target.dataset.name; 
-    let _address = e.target.dataset.address; 
-    // console.log(e)
-    this.setData({ 
-      'locInfo.name': _name, 
-      'locInfo.address': _address
-    });
-    this.setLocStorage(function() {
-      my.navigateTo({ url: '../index/index' });
-    }); 
-  },
-
-
-  chooseLocation() {
-    const _this = this 
-    my.chooseLocation({
-      
-      success: (res) => {
-        console.log('chooseLocation', res)
-        _this.setData({
-          'locInfo.longitude': res.longitude,
-          'locInfo.latitude': res.latitude,  
-          'locInfo.name': res.name,
-          'locInfo.address': res.address
-        })
-        _this.setLocStorage(); 
-      },
-      fail: (error) => {},
-    });
-  },
-
-  setLocStorage(fn) {
-    const _this = this; 
-    // console.log(_this.data.locInfo)
-    my.setStorage({
-      key: 'locationInfo',
-      data: _this.data.locInfo,
-      success: function() { if(fn)fn(); }
-    });  
-  },
-
-  goToCityList() {
-    my.navigateTo({ url: '../alphabetCity/alphabetCity' });
-  }
-  
 });

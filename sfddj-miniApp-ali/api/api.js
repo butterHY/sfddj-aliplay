@@ -133,5 +133,13 @@ export default {
 	// O2O 购物车
 	O2O_SHOPCAR: {
 		addCar: `/m/oto/otoShoppingCart/1.0/addCart`,		// 加入购物车
+	},
+
+	// 高德地图api -- https://lbs.amap.com/api/webservice/gettingstarted
+	GDMap: {
+		KEY: 'd68d967fdbeba970a72653b52e5e4404',
+		REGEO: 'https://restapi.amap.com/v3/geocode/regeo',	// 逆地理编码API服务地址
+		SEARCH: 'https://restapi.amap.com/v3/assistant/inputtips', // 输入提示
+		POI: 'https://restapi.amap.com/v3/place/text'
 	}
 }

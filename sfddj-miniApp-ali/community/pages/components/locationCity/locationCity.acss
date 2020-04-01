@@ -7,6 +7,9 @@
 	padding: 0 30rpx 18rpx;
 	color: #333333;
 	font-size: 30rpx;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 }
 
 .locCityShow .cityInfo .city {
@@ -14,8 +17,13 @@
 }
 
 .locCityShow .cityInfo .address { 
-	position: relative;
+	position: relative; 
+	overflow: hidden;
 	margin-left: 10rpx; 
+	flex: 1; 
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
 .locCityShow .cityInfo .line {
