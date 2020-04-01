@@ -26,7 +26,7 @@ Page({
     my.getStorage({
       key: 'locationInfo',
       success: function (res) {
-        if (JSON.stringify(res.data).length > 2) {
+         if( res.data ) {
           locAddr.GDCity(res.data, (data) => {
             _this.setData({
               locInfo: data

@@ -69,7 +69,7 @@ Page({
     my.getStorage({ 
       key: 'locationInfo',  
       success: function(res) { 
-        if( JSON.stringify(res.data).length > 2 ) {
+        if( res.data ) {
           _this.setData({
             locCity: res.data
           });

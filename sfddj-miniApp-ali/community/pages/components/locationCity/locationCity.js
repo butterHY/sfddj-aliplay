@@ -23,8 +23,8 @@ Component({
 
     my.getStorage({
       key: 'locationInfo', 
-      success: function(res) {  
-        if( JSON.stringify(res.data).length > 2 ) {
+      success: function(res) {   
+        if( res.data ) {
           _this.setData({
             locInfo: res.data
           })
