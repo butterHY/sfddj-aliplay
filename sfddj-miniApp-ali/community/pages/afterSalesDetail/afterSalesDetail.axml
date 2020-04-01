@@ -1,0 +1,77 @@
+<view class="afterDetailPage">
+    <!-- 售后状态 -->
+    <view class="orderStatusBox">
+        <view class="orderStatus">
+            <!-- 左边状态 -->
+            <view class="orderStatusInfo flex_view_col justi_cen flex_1">
+                <!-- 状态 -- 待付款 、 支付成功、 取消 等 -->
+                <view class="orderStatusItem ">
+                    <!-- 待付款 -->
+                    <view>待付款，剩余{{orderLeftTime}}14:09</view>
+                </view>
+                <!--提示 -->
+                <view class="orderStatusTip flex_view_col justi_cen">
+                    <text>商家将在24小时内处理您的申请</text>
+                    <text class="marTop_10">申请退款金额为25.50元</text>
+                </view>
+            </view>
+            <!-- 右边图标 -->
+            <view class="orderStatusIcon">
+                <image class="orderStatusIcon_img" src="{{staticsImageUrl}}miniappImg/community/order/com_status_wait.png"/>
+            </view>
+        </view>
+    </view>
+    <!-- 详情 -->
+    <view class="afterDetailBox">
+        <!-- 标题0 -->
+        <view class="afterDetail_tit">申请售后详情</view>
+        <!-- 商详内容 -->
+        <view>
+            <!-- 店铺 -->
+            <view class="afterDetail_item">
+                <view class="color-999999">商家名称</view>
+                <view class="flex_1 color-333 marLeft_60">宋小食店宋小食店宋小食店</view>
+            </view>
+            <!-- 收货状态 -->
+            <view class="afterDetail_item">
+                <view class="color-999999">收货状态</view>
+                <view class="flex_1 color-333 marLeft_60">未收到商品</view>
+            </view>
+            <!-- 售后原因 -->
+            <view class="afterDetail_item">
+                <view class="color-999999">售后原因</view>
+                <view class="flex_1 color-333 marLeft_60">未收到商品</view>
+            </view>
+            <!-- 售后说明 -->
+            <view class="afterDetail_item">
+                <view class="color-999999">售后说明</view>
+                <view class="flex_1 color-333 marLeft_60">未收到商品</view>
+            </view>
+            <!-- 申请编号 -->
+            <view class="afterDetail_item">
+                <view class="color-999999">申请编号</view>
+                <view class="flex_1 color-333 marLeft_60">2856954582566988</view>
+            </view>
+            <!-- 申请时间 -->
+            <view class="afterDetail_item">
+                <view class="color-999999">申请时间</view>
+                <view class="flex_1 color-333 marLeft_60">2020-02-30 15：45</view>
+            </view>
+            <!-- 售后凭证 -->
+            <view class="afterDetail_item">
+                <view class="color-999999">售后凭证</view>
+                <view class="flex_1 color-333 marLeft_60"></view>
+            </view>
+        </view>
+    </view>
+
+    <!-- 底部按钮 -->
+    <view class="bottomBtn">
+        <!-- 联系客服 -->
+        <contacts  contactsTel="18823451312"></contacts>
+        <!-- 修改申请 -->
+        <view class="orderStatusBtn">修改申请</view>
+        <!-- 取消申请 -->
+        <view class="orderStatusBtn redStatusBtn">取消申请</view>
+    </view>
+</view>

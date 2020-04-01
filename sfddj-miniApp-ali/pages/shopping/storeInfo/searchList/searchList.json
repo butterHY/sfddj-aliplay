@@ -1,0 +1,8 @@
+{
+  "pullRefresh": false,
+  "usingComponents": {
+    "loading-now": "../../../components/loadingNow/loadingNow",
+    "load-fail": "../../../components/loadFail/loadFail"
+  },
+  "popup": "mini-antui/es/popup/index"
+}

@@ -39,10 +39,22 @@
         <image a:elif="{{filters.strIndexOf(afterSaleGuee,'2')}}" src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff2.png" class="allCompensation posi_ab" style="{{left ? 'right: 30rpx;' : 'right: 10rpx;'}}"></image>
         <image a:elif="{{filters.strIndexOf(afterSaleGuee,'3')}}" src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff3.png" class="allCompensation posi_ab" style="{{left ? 'right: 30rpx;' : 'right: 10rpx;'}}"></image>
         <image a:elif="{{filters.strIndexOf(afterSaleGuee,'4')}}" src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff4.png?version=2.0" class="allCompensation posi_ab" style="{{left ? 'right: 30rpx;' : 'right: 10rpx;'}}"></image>
+
+        <!-- i活动标签 普通页面需添加标签的-->
+      <block a:if="{{type == 'normal' && goodsLabel}}">
+        <view class="verpromotionHot posi_ab">
+          <view class="color-white font-24 iconHot">
+            <text>{{goodsLabel}}</text>
+          </view>
+          <view class="iconHotBg">
+            <image src="https://img.sfddj.com/miniappImg/public/goodsInfo/hotIcon.png" />
+          </view>
+        </view>
+      </block>
         
-        <view class="{{ type == 'newGuessLike' ? 'guessLikeDescribe' : 'goodsInfo height_176r notAtHome' }}">
-          <view class="{{type == 'newGuessLike' ? 'guessLikeGoodsName single-line2' : 'single-line flex_view_col height_80r'}}">
-            <text class="{{type == 'newGuessLike' ? 'single-line2' : 'font-26 color-323232 single-line-text lineH_2'}}">{{name ? name : goodsName}}</text>
+        <view class="{{ type == 'newGuessLike' ? 'guessLikeDescribe' : 'goodsInfo height_176r notAtHome' }} {{type == 'normal'?'normalTextHeiht':''}}">
+          <view class="{{type == 'newGuessLike' ? 'guessLikeGoodsName single-line2' : 'single-line flex_view_col height_80r'}} {{type == 'normal'?'normalDel':''}}">
+            <text class="{{type == 'newGuessLike' ? 'single-line2' : 'font-26 color-323232 single-line-text lineH_2'}} {{type == 'normal'?'normalTit twoLineShow lineH_40r':''}}"><text a:if="{{type == 'normal'&& goodsLabel}}" class="promotionHotIcon">{{goodsLabel}}</text>{{name ? name : goodsName}}</text>
             <block a:if="{{type == 'newGuessLike'}}">
               <view class="guessLikeGoodsSpecs color-666 single-line" a:if="{{productName}}">{{productName}}</view>
               <view class="guessLikeGoodsLabel single-line"  a:if="{{labels.length > 0}}">{{labels[0]}}</view>
@@ -60,7 +72,8 @@
             </text>
             <!-- <text class='font-34 color-ff5353 font-weight-bold'>¥{{tuangou ? tuangouPrices : salePrice}}</text> -->
             <view a:if="{{!hiddenCart}}" class="{{type == 'newGuessLike' ? 'addCart' : ''}}" catchTap='{{!cannotAdd ? "addCart" : ""}}' data-pid='{{productId}}'>
-              <text  class="{{type == 'newGuessLike' ? 'icon-addCart_index font-50 color-00ac57' : 'icon-shopcar_small color-ff5353 font-38'}}" ></text>
+              <text a:if="{{type == 'normal'}}" class="icon-addCart_index font-50 color-ff2e2e"></text>
+              <text a:else class="{{type == 'newGuessLike' ? 'icon-addCart_index font-50 color-00ac57' : 'icon-shopcar_small color-ff5353 font-38'}}" ></text>
             </view>
           </view>
         </view>

@@ -24,7 +24,7 @@ Component({
   },
 
   onInit() {
-    this.props.product.activityStock = 3;
+    // this.props.product.activityStock = 3;
     this.setData({
       product: this.props.product
     })
@@ -36,6 +36,7 @@ Component({
 
   didMount() {
     this.$page.spikePrice = this; // 通过此操作可以将组件实例挂载到所属页面实例上
+    console.log(this.props.secKillStatus)
     if (this.props.secKillStatus) {
       this.getTimes(this.props.isFirstTime);
     };
@@ -81,10 +82,12 @@ Component({
         mSecond: ms
       })
 
-
       if (nowTime - endTime >= 0) {
         clearTimeout(getApp().globalData.goodsDetail_spikeTime);
-        this.props.onSpikeOver();
+        this.props.onSpikeOver('isSpikeOver');
+      } else if (nowTime < starTime) {
+        clearTimeout(getApp().globalData.goodsDetail_spikeTime);
+        this.props.onSpikeOver('noStart');
       } else if (isFirstTime) {
         this.countDown();
       }

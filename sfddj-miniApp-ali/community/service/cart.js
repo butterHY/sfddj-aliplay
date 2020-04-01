@@ -10,7 +10,7 @@ class Cart extends MiniAppService {
         this.shops = {};
     }
 
-    static get name() {
+    static get Name() {
         return 'Cart';
     }
 

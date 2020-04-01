@@ -274,3 +274,63 @@
 .vertical_bottom {
   vertical-align: -0.5%;
 }
+
+/* normal类型 带标签样式 */
+.verpromotionHot{
+  top: 0;
+  left: 7rpx;
+  color: #ffffff;
+  width: 30rpx;
+  text-align: center;
+  font-size: 0;
+}
+
+.verpromotionHot .iconHot{
+  padding: 7rpx 0;
+  margin-bottom: -2rpx;
+  width: 30rpx;
+  background: linear-gradient(135deg,#f97d7b,#fd4764);
+  box-sizing: border-box;
+}
+
+.verpromotionHot .iconHot text{
+  line-height: 1.5;
+}
+
+.verpromotionHot .iconHotBg{
+  width: 30rpx;
+}
+.verpromotionHot .iconHotBg image{
+  width: 100%;
+  height: 10rpx;
+  margin-top: 0;
+}
+
+.itemGoodsCard .goodsInfo.normalTextHeiht{
+  height: 200rpx;
+}
+
+.itemGoodsCard .goodsInfo .normalDel{
+  height: 116rpx;
+  font-size: 0;
+}
+
+.goodsInfo .normalDel .normalTit{
+  height: 80rpx;
+  white-space: pre-wrap;
+}
+
+.itemGoodsCard .normalTextHeiht .goodsPriceBox{
+  margin-top: 18rpx;
+}
+
+.promotionHotIcon{
+    background-color: #ff2746;
+    color: #fff;
+    font-size: 22rpx;
+    display: inline-block;
+    border-radius: 5PX;
+    line-height: 18rpx;
+    padding: 7rpx;
+    margin-right: 7rpx;
+}

@@ -2,6 +2,7 @@ import Shop from '/community/service/shop';
 
 Page({
   data: {
+    searchVal: '',
     items: []
   },
   onLoad(options) {
@@ -62,6 +63,20 @@ Page({
               }
             } 
         });
+
+        if(res.data.data.nowTime && res.data.data.startBusinessTime && res.data.data.endBusinessTime) {
+          let msg = undefined;
+          if(res.data.data.nowTime < res.data.data.startBusinessTime || res.data.data.nowTime > res.data.data.endBusinessTime) {
+            msg = '本店还未到营业时间哦~';
+          } else if(res.data.data.timeEnd && res.data.data.endBusinessTime - res.data.data.nowTime < 3600000) {
+            msg = `本店将于${res.data.data.timeEnd}休息，请尽快下单`;
+          }
+          if(msg) {
+            this.setData({
+              msg: msg
+            });
+          }
+        }
       }
     });
   },
@@ -98,7 +113,7 @@ Page({
       this.shop.like(this.shopId, !this.data.shop.like, (res) => {
         if(res && res.data) {
           this.setData({
-            'shop.like': !this.data.shop.like
+            'shop.attention': !this.data.shop.attention
           });
         } else {
           if(res && res.ret && res.ret.message) {

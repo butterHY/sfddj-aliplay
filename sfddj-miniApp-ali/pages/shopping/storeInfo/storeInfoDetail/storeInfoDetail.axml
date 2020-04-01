@@ -9,20 +9,17 @@
       <view class="goodStoreMesLeft width_100 flex_view_row align_cen">
         <!--商家头像-->
         <view class="storeHeadImg">
-          <image src="{{baseLocImgUrl}}miniappImg/icon/icon_default_head.jpeg" class="all_100"></image>
-          <!-- <image src="/static_v4/image/sfddj.jpg"> -->
+          <image a:if="{{supplierDetail.headPortraitPath}}" src="{{baseImageUrl}}{{supplierDetail.headPortraitPath}}" class="all_100"></image>
+          <image a:else src="{{baseLocImgUrl}}miniappImg/icon/icon_default_head.jpeg" class="all_100"></image>
         </view>
         <!--商家昵称和评分-->
         <view class="goodStoreDes flex_view_col flex_1 single-line">
-          <view class="flex_1 goodStoreNickName">xiazhiqiangAS水产旗舰店</view>
+          <view class="flex_1 goodStoreNickName">{{supplierDetail.nickName}}</view>
           <view class="goodStoreScore flex_view_row">
             <view class="goodStoreScoreTit">综合评分</view>
             <view class="flex_view_row align_cen justi_cen">
-              <view class=" icon-star star1"></view>
-              <view class=" icon-star star2"></view>
-              <view class=" icon-star star3"></view>
-              <view class=" icon-star star4"></view>
-              <view class=" icon-star star5"></view>
+              <view a:if="{{starYew && starYew.length>0}}" a:for="{{starYew}}" a:key="starYew" class=" icon-star yellowSart"></view>
+              <view a:if="{{startGray && startGray.length>0}}" a:for="{{startGray}}" a:key="startGray" class=" icon-star"></view>
             </view>
           </view>
         </view>
@@ -36,7 +33,7 @@
         <view class="flex_view_row">
           <view>店铺好评率</view>
         
-          <view>98.9%</view>
+          <view>{{supplierDetail.goodRate}}%</view>
         </view>
       </view>
       <!--描述和服务态度-->
@@ -44,12 +41,12 @@
         <view class="storeDesRate flex_view_row align_cen">
           <view class="storeDesRateTxt">描述相符</view>
           <view class="storeDesProBar"></view>
-          <view class="storeDesRateNum">4.9</view>
+          <view class="storeDesRateNum">{{supplierDetail.star}}</view>
         </view>
         <view class="storeServiceRate storeDesRate flex_view_row align_cen">
           <view class="storeDesRateTxt">服务态度</view>
           <view class="storeDesProBar"></view>
-          <view class="storeDesRateNum">5</view>
+          <view class="storeDesRateNum">{{supplierDetail.serviceStar}}</view>
         </view>
       </view>
     </view>
@@ -66,7 +63,7 @@
           <view>掌柜名</view>
         </view>
         <view class="storeOwnerName">
-          <view class="oneLineText">夏先生1SA111</view>
+          <view class="oneLineText">{{supplierDetail.realName}}</view>
         </view>
       </view>
       <!--客服电话-->
@@ -75,7 +72,7 @@
           <view>客服电话</view>
         </view>
         <view class="storeOwnerName">
-          <view class="oneLineText">18500000000</view>
+          <view class="oneLineText">{{supplierDetail.mobile}}</view>
         </view>
       </view>
       <!--注册地址-->
@@ -84,11 +81,11 @@
           <view>注册地址</view>
         </view>
         <view class="storeOwnerName flex_view_row">
-          <view class="oneLineText">华润大家dxZczxd1144455ass酸酸所所所所所所所所所啊啊啊啊啊啊啊啊啊啊啊啊啊啊湖北省鄂州市鄂城区泽林镇金凤煌庭二期5号淘思电商</view>
+          <view class="oneLineText">{{supplierDetail.showAddress}}</view>
         </view>
       </view>
       <!--企业资质-->
-      <navigator hover-class="none" class="storeIntell flex_view_row align_cen justi_between">
+      <navigator hover-class="none" a:if="{{supplierDetail.companyImages}}" url='../businessLicence/businessLicence?images={{supplierDetail.companyImages}}' class="storeIntell flex_view_row align_cen justi_between">
         <view class="storeIntellTit flex_1">
           <view>企业资质</view>
         </view>
@@ -100,7 +97,7 @@
         </view>
       </navigator>
         <!--行业证照-->
-        <navigator hover-class="none" href="${base}/suviewviewlier/toSuviewviewlierDetail/business/${suviewviewlier.id}" class="storeIntell flex_view_row align_cen justi_between">
+        <navigator hover-class="none" a:if="{{supplierDetail.businesImages}}" url='../businessLicence/businessLicence?images={{supplierDetail.businesImages}}' class="storeIntell flex_view_row align_cen justi_between">
           <view class="storeIntellTit flex_1">
             <view>行业证照</view>
           </view>
@@ -118,11 +115,11 @@
           <view>开店时间</view>
         </view>
         <view class="storeOwnerName">
-          <view class="oneLineText">2018-01-03 15:40:03</view>
+          <view class="oneLineText">{{openTime}}</view>
         </view>
       </view>
       <!--店铺简介-->
-      <view class="storeOwnerNew flex_view_row js_storeIntro align_cen justi_between" bindtap="tapStoreIntro">
+      <view class="storeOwnerNew flex_view_row js_storeIntro align_cen justi_between" a:if="{{supplierDetail.introduction}}" catchTap="tapStoreIntro">
         <view class="storeOwnerTit flex_1">
           <view>店铺简介</view>
         </view>
@@ -137,4 +134,4 @@
 </view>
 
 <!-- 店铺简介弹窗 -->
-<template is="commonDialog" data="{{show: showIntroduction, dialogType: 'storeIntroduction'}}"></template>
+<template is="commonDialog" data="{{show: showIntroduction, dialogType: 'storeIntroduction',content: supplierDetail.introduction,botText:'确定'}}"></template>

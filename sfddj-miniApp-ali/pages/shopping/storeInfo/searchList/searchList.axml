@@ -1,0 +1,58 @@
+<import src="../../../common/item-goods-card.axml" />
+<!-- 加载中 -->
+<view a:if="{{!loadComplete && !loadFail}}" class="loadBg">
+  <loading-now></loading-now>
+</view>
+<!-- 加载失败 -->
+<view a:elif="{{loadFail}}" class="loadBg">
+  <load-fail></load-fail>
+</view>
+<view a:else>
+  <view a:if="{{goodsList && goodsList.length>0}}" class="listArea">
+    <view class="suppplierGoodsList flex_view_row width_100">
+      <!-- 左边 -->
+      <view class="introGoods">
+        <!-- 商品列表 -->
+        <block a:for="{{goodsList}}" a:if="{{index % 2 == 0}}" a:key="itemIndexLeft">
+          <template is="itemGoodsCard" data="{{...item,left:true,baseImageUrl:baseImageUrl,type:'normal',baseLocImgUrl,smallImgArg}}"></template>
+        </block>
+      </view>
+      <!-- 右边 -->
+      <view class="introGoods">
+        <!-- 商品列表 -->
+        <block a:for="{{goodsList}}" a:if="{{index % 2 != 0}}" a:key="itemIndexRight">
+          <template is="itemGoodsCard" data="{{...item,left:false,baseImageUrl:baseImageUrl,type:'normal',baseLocImgUrl,smallImgArg}}"></template>
+        </block>
+      </view>
+    </view>
+    <!--加载数据进度条-->
+    <view a:if="{{goodsContinue}}" class='loading_view'>
+      <image src='{{baseLocImgUrl}}miniappImg/loading/loading.gif' class='loading_gif'></image>
+      <text>加载中</text>
+    </view>
+
+    <!--没有更多-->
+    <view a:if="{{!goodsContinue}}" class='loading_view font-26 color-323232'>
+      没有更多了
+    </view>
+  </view>
+</view>
+
+<!--toast弹窗-->
+<view class='mark flex_view_col align_cen justi_cen' a:if="{{showToast}}">
+  <view class='toastView_wb' catchtouchmove='move'>
+    <view class='toastView_wb_con font-26 color-232323'>
+      {{showToastMes}}
+    </view>
+  </view>
+</view>
+
+<!--返回顶部按钮-->
+<view class="goTop {{isGoTop? 'showTop': ''}}">
+  <view class="sideBox botLine" catchTap="goHome">
+    <text class="icon-home sideIcon"></text> 
+  </view>
+  <view class="sideBox" catchTap="goTop">
+    <text class="icon-goTop sideIcon"></text>  
+  </view>
+</view>

@@ -193,7 +193,15 @@ Page({
 
 
   getCoupon: function(e) {
+    // 如果没有开通轻会员应先弹窗提示不请求接口
     let that = this;
+    if( !that.data.isLightMember ) {
+      my.showToast({
+        content: '注册成为轻会员才可以领取！',
+        duration: 2000,
+      })
+      return;
+    }
     let index = e.currentTarget.dataset.index;
     let ruleSign = e.currentTarget.dataset.ruleSign;
     let fatherIndex = e.currentTarget.dataset.fatherIndex;

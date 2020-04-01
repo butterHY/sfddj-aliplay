@@ -2,15 +2,15 @@
 <!-- 商品信息 -->
 <view class="orderGoodsInfo">
     <!-- 店铺 -->
-    <view class="order_shop_name">宋小食美食天地</view>
+    <view class="order_shop_name">{{shopName}}</view>
     <!-- 商品 -->
     <view class="order_goods_list">
         <block a:for="{{goodsList}}">
-            <template is="itemOrderGoods" data="{{item,baseImageUrl}}"></template>
+            <template is="itemOrderGoods" data="{{item}}"></template>
         </block>
     </view>
     <!-- 配送费 -->
-    <view class="deliveryFee">
+    <view a:if="{{typeIndex == 1}}" class="deliveryFee">
         <!-- 配送 -->
         <view class="flex_view_row align_cen flex_1">
             <view>配送费</view>
@@ -23,6 +23,6 @@
     <!--商品小计  -->
     <view class="order_goods_sum">
         <text>小记：</text>
-        <text>￥135.6</text>
+        <text>￥{{shopTotalPrice}}</text>
     </view>
 </view>

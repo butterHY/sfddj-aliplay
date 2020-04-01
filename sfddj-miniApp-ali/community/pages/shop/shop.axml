@@ -1,5 +1,6 @@
 <view class="shop">
   <view class="shop_head">
+    <view a:if="{{msg}}" class="shop_msg">{{msg}}</view>
     <view class="shop_tit">
       <view>
         <view style="background-image:url({{shop.shopLogo}})"></view>
@@ -13,7 +14,7 @@
       </view>
       <view>
         <view>
-          <button class="shop_like" onTap="onLikeClick">{{shop.like ? '取消' : ''}}关注</button>
+          <button class="shop_like" onTap="onLikeClick">{{shop.attention ? '取消' : ''}}关注</button>
         </view>
       </view>
     </view>
