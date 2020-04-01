@@ -47,7 +47,8 @@
     "pages/limit/limit",
     "pages/overTime/overTime",
     "pages/activities/lightMember/lightMember",
-    "pages/user/jifenDetail/jifenDetail"
+    "pages/user/jifenDetail/jifenDetail",
+    "pages/shopping/storeInfo/searchList/searchList"
   ],
   "subPackages": [
     {

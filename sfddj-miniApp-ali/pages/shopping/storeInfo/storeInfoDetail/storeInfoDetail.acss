@@ -19,6 +19,7 @@
 
 .goodStoreMesLeft .goodStoreDes .goodStoreNickName {
   font-size: 30rpx;
+  line-height: 1.7;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -33,6 +34,10 @@
   font-size: 26rpx;
   margin-right: 5rpx;
   color: #ebebeb;
+}
+
+.goodStoreScore .icon-star.yellowSart{
+  color: rgb(255, 193, 74);
 }
 
 .goodStoreMesLeft .goodStoreScoreTit {

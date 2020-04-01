@@ -1,6 +1,7 @@
 let app = getApp();
 let sendRequest = require('../../../utils/sendRequest');
 let constants = require('../../../utils/constants');
+var stringUtils = require('../../../utils/stringUtils');
 import api from '../../../api/api';
 import http from '../../../api/http';
 
@@ -21,6 +22,7 @@ Component({
     isFocus: false,                           // 是否获取焦点
     onShowSearch: (data) => console.log(data),
     placeholderVal: '',                       // 输入框隐藏词。
+    supplierId: '',                           // 所属商家的id
   },
   
   didMount() {
@@ -31,7 +33,10 @@ Component({
     this.$page.searchComponent = this;  // 页面 onLoad 后的 onShow 获取不到，因为有时差，但之后页面的 onShow 都能获取到，而 saveRef(ref) 只在页面 onLoad 后自动触发，之后不会再触发；
     this.data.pageType = this.props.pageType;
 
-    this.getHotWord();
+    // 在非商家搜索页面获取热门搜索
+    if(this.data.pageType != 'storeSearch'){
+      this.getHotWord();
+    }
   },
 
   didUpdate() {},
@@ -73,11 +78,11 @@ Component({
         let resData = res.data.data;
         let resRet = res.data.ret;
         if(resRet.code == '0' && resRet.message == "SUCCESS" && resData ) {
-          console.log(resData)
+          // console.log(resData)
           that.setData({
             hotWords: resData
           });
-          console.log(that.data.hotWords)
+          // console.log(that.data.hotWords)
         }
       },(err) => { })
       that.getHistory();
@@ -89,9 +94,16 @@ Component({
     getHistory() {
       let that = this;
       try {
-        var searchWords = my.getStorageSync({
-          key: constants.StorageConstants.searchWordsKey, // 缓存数据的key
-        }).data;
+        var searchWords = '';
+        if(that.props.pageType == 'storeSearch'){
+          searchWords = my.getStorageSync({
+            key: constants.StorageConstants.searchStoreWords, // 商家搜索页缓存数据的key
+          }).data;
+        }else{
+          searchWords = my.getStorageSync({
+            key: constants.StorageConstants.searchWordsKey, // 缓存数据的key
+          }).data;
+        }
         that.setData({
           searchWords: searchWords && searchWords.length > 0 ? searchWords.reverse() : [],
         });
@@ -173,7 +185,11 @@ Component({
         smSearchShow: false,
         smartSearchList: [],
       });
-      console.log(miniapplink)
+      if(that.props.pageType == 'storeSearch'){
+        // 保存商家搜索页面历史记录
+        that.saveSearchHist(word);
+      }
+      // console.log(miniapplink)
       if( type == 'searcHotWord' && miniapplink ) {
         that.goToPage(miniapplink);
       } else {
@@ -190,6 +206,10 @@ Component({
       let confirmValue = value;
       if( !value.replace(/\s*/g,'') ) {
         confirmValue = that.props.placeholderVal;
+      }
+      if(that.props.pageType == 'storeSearch'){
+        // 保存商家搜索页面历史记录
+        that.saveSearchHist(confirmValue);
       }
       this.setData({
         inputVal: '',
@@ -212,7 +232,13 @@ Component({
               searchWords: [],
             })
             try {
-              my.setStorageSync({ key: constants.StorageConstants.searchWordsKey, data: [] });
+              if(this.props.pageType == 'storeSearch'){
+                // 清除商家搜索页面历史记录
+                my.setStorageSync({ key: constants.StorageConstants.searchStoreWords, data: [] });
+              }else{
+                my.setStorageSync({ key: constants.StorageConstants.searchWordsKey, data: [] });
+              }
+              
             } catch (e) { }
           }
         }
@@ -242,9 +268,16 @@ Component({
         // 友盟+ 统计  输入框输入探索
         that.props.pageType == 'home' ? that.umaTrackEvent(type, keyWord) : '';
 
-        my.navigateTo({
-          url: '/pages/home/searchResult/searchResult?keyWord=' + keyWord
-        });
+        if(that.props.pageType == 'storeSearch'){
+          // 商家搜索页跳转
+          my.navigateTo({
+            url: '/pages/shopping/storeInfo/searchList/searchList?keyWord=' + keyWord+'&supplierId='+that.props.supplierId
+          });
+        }else{
+          my.navigateTo({
+            url: '/pages/home/searchResult/searchResult?keyWord=' + keyWord
+          });
+        }
       }
     },
 
@@ -290,7 +323,34 @@ Component({
       }
     },
 
-
+    /**
+	 * 保存搜索词 searchStoreWords 是商家搜索页面的历史记录缓存
+	 */
+	saveSearchHist: function(keyWord) {
+		if ( stringUtils.isNotEmpty(keyWord) ) {
+			try {
+				var searchWords = my.getStorageSync({ key: constants.StorageConstants.searchStoreWords }).data || [];
+				// 搜索记录去重
+				let keyWordIndex = searchWords.findIndex(val => keyWord == val);
+				if( keyWordIndex != -1 ) {
+					searchWords.splice(keyWordIndex, 1);
+					searchWords.push(keyWord);
+				} else {
+					// 小于 8 个则直接插入，大于 8 个则删除时间最远的一个，然后按照时间从远到近排序同时插入最新的一个词；
+					if (searchWords.length < 5) {
+						searchWords.push(keyWord);
+					} else {
+						searchWords.reverse().pop();
+						searchWords.reverse().push(keyWord);
+					}
+				}
+				my.setStorageSync({
+					key: constants.StorageConstants.searchStoreWords, // 缓存数据的key
+					data: searchWords, // 要缓存的数据
+				});
+			} catch (e) { }
+		}
+	}
 
   }
 });

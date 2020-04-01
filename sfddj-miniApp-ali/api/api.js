@@ -85,10 +85,18 @@ export default {
 
 	// 商家店铺
 	SUPPLIER: {
-		'SUPPLIER_GOODS_CATE': '/m/g/1.0/category/supplierGoodsCategory',         //商家的商品分类
-		'SUPPPLIER_CATE_GOODS': '/m/g/1.0/category/supplierCategoryGoods',        //商家分类下的商品
 		'ATTENTION_STATUS': '/m/g/supplier/getAttention/2.0',                     //判断是否关注商家
-		'ATTENT_STORE': '/m/g/supplier/attention',                                //关注店铺
+    'ATTENT_STORE': '/m/g/supplier/attention',                                //关注店铺
+    'GET_SUPPLIER_DETAIL': '/m/g/supplier/1.0/getSupplierDetail',             //获取商家详情信息
+    'GET_SUPPLIER_MATERIAL': '/m/a/material/1.0/getSupplierMaterial',         //获取轮播图
+    'GET_SUPPLIER_COUPON': '/m/o/coupon/1.0/getSupplierCouponList',           //获取商家优惠券列表
+    'SUPPLIER_DRAW_COUPON': '/m/o/coupon/1.0/drawCoupon',                     //领取优惠券的接口
+    'SUPPLIER_RECOMMEND': '/m/g/1.0/goodsView/supplierRecommend',             //商家推荐数据
+    'GOODS_SEARCH': '/m/c/1.0/opensearch/goodsSearch',                        //商家全部商品列表
+    'SUPPLIER_GOODS_CATE': '/m/g/1.0/category/supplierGoodsCategory',         //商家的商品分类
+    'SUPPPLIER_CATE_GOODS': '/m/g/1.0/category/supplierCategoryGoods',        //商家分类下的商品
+    'XN_CUSTOMER': '/m/c/m/customer/service/1.0/xnCustomer',                  //联系商家
+    'SEARCH_TEXT_MAX': '/m/g/1.0/search/1.0/supplier/searchTextMax',          // 搜索框内默认的词
 	},
 
   THEMATIC: {
