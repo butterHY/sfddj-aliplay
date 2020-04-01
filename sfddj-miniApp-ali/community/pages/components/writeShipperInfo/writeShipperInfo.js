@@ -102,6 +102,8 @@ Component({
                 userInfoPop: false
             })
 
+            this.props.onWriteInfo({shipperName: completeUserName, shipperMobile})
+
         },
 
         // 验证手机号
@@ -163,7 +165,7 @@ Component({
             telePhoneNuber = telePhoneNuber && telePhoneNuber.replace(/\-/g, '')
             let isWrongPhone = utils.checkPhoneVal(this.data.userMobile);
 
-            let isWrongArea = this.data.isWrongArea
+            // let isWrongArea = this.data.isWrongArea
             this.setData({
                 isWrongPhone: isWrongPhone
             })

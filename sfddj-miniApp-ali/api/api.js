@@ -133,5 +133,11 @@ export default {
 	// O2O 购物车
 	O2O_SHOPCAR: {
 		addCar: `/m/oto/otoShoppingCart/1.0/addCart`,		// 加入购物车
-	}
+	},
+
+    // o2o确认订单页
+    O2O_ORDERCONFIRM: {
+        toOrderPay: '/m/oto/otoOrderPay/1.0/confirm',     //去确认订单页
+        payNow: '/m/oto/otoOrderPay/1.0/order'
+    }
 }

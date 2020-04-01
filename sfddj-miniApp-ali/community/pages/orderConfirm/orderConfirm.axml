@@ -17,7 +17,7 @@
         </view>
         <!-- 填写个人信息 -- 只有是门店自提时才显示 -->
         <block a:if="{{typeIndex == 0}}">
-            <write-info></write-info>
+            <write-info onWriteInfo="confirmWriteInfo"></write-info>
         </block>
 
         <!-- 选地址栏  --- 只有选商家配送时才显示 -->
@@ -25,15 +25,15 @@
             <choose-addr></choose-addr>
         </block>
         <!-- 商品信息 -->
-        <order-goods goodsList="{{goodsList}}"></order-goods>
+        <order-goods goodsList="{{shopCartList}}" shopName="{{shopName}}" typeIndex="{{typeIndex}}" shopTotalPrice="{{shopTotalPrice}}"></order-goods>
         <!-- 应付金额 -->
-        <payable-sum></payable-sum>
+        <payable-sum shopTotalPrice="{{shopTotalPrice}}"></payable-sum>
         <!-- 留言 -->
         <view class="userMessage">
             <!-- 标题 -->
             <view class="userMessage_tit">买家留言</view>
             <!-- 写留言 -->
-            <multi-liner data-field="userMessage" placeholder="给卖家留言，最多60字哦～" type="text" value="{{userMessage}}" onInput="userMesInput" last="{{true}}" controlled="{{controlled}}" maxlength="60" show-count="{{false}}"></multi-liner>
+            <multi-liner data-field="memo" placeholder="给卖家留言，最多60字哦～" type="text" value="{{memo}}" onInput="userMesInput" last="{{true}}" controlled="{{controlled}}" maxlength="60" show-count="{{false}}"></multi-liner>
         </view>
         <!-- 发票 -->
         <view class="order_invoice">
@@ -61,10 +61,10 @@
     <view class="payNowBox">
         <!-- 价格 -->
         <view class="payNowPriceBox">
-            <view class="payNowPrice">￥59.8</view>
-            <view class="discountPrice">￥69.9</view>
+            <view class="payNowPrice">￥{{shopTotalPrice}}</view>
+            <!-- <view class="discountPrice">￥69.9</view> -->
         </view>
         <!-- 去结算按钮 -->
-        <view class="payNowBtn">去结算</view>
+        <view class="payNowBtn" onTap="submitPay">去结算</view>
     </view>
 </view>

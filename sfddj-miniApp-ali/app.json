@@ -64,7 +64,8 @@
         "pages/addressList/addressList",
         "pages/orderList/orderList",
         "pages/afterSales/afterSales",
-        "pages/afterSalesDetail/afterSalesDetail"
+        "pages/afterSalesDetail/afterSalesDetail",
+        "pages/addressEdit/addressEdit"
       ]
     }
   ],
