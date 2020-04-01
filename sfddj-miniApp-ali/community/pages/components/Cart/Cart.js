@@ -6,7 +6,9 @@ Component({
     isShowed: false
   },
   props: {
-    canShowDetails: false
+    canShowDetails: true,
+    nextText: '',
+    nextPath: ''
   },
   didMount() {
     this.selfName = 'cart';
@@ -30,11 +32,13 @@ Component({
       if(this.data.isShowed) {
         this.onHideClick();
       } else {
-        this.setData({isShowed: true}, () => {
-          setTimeout(() => {
-            this.setData({itemsshow: true});
-          }, 0);
-        });
+        if(this.props.canShowDetails && this.data.cartitems && this.data.cartitems.length) {
+          this.setData({isShowed: true}, () => {
+            setTimeout(() => {
+              this.setData({itemsshow: true});
+            }, 0);
+          });
+        }
       }
     },
     onHideClick() {
@@ -87,7 +91,7 @@ Component({
       }
     },
     onToPayClick() {
-      my.navigateTo({ url: '../orderConfirm/orderConfirm?shopid=' + this.props.shopid });
+      my.navigateTo({ url: (this.props.nextPath || '../orderConfirm/orderConfirm') + '?shopid=' + this.props.shopid });
     }
   },
 });

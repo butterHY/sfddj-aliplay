@@ -33,7 +33,7 @@ Component({
   methods: {
     onTap(e) {
       if(this.props.canclick) {
-        my.navigateTo({ url: '../goodsdetail/goodsdetail?id=' + e.target.dataset.id });
+        my.navigateTo({ url: '../goodsDetail/goodsDetail?id=' + e.target.dataset.id });
       }
     },
     onCartClick() {

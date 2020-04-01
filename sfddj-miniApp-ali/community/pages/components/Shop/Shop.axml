@@ -1,6 +1,6 @@
 <view class="shop">
   <view>
-    <view>
+    <view onTap="onEnterClick" data-id="{{data.id}}">
       <view style="background-image: url({{data.shopLogo}})"></view>
       <view>
         <view>{{data.shopName}}</view>

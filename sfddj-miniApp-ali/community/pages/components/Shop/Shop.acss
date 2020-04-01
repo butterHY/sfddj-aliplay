@@ -7,7 +7,7 @@
 
 .shop > view:first-child {
     padding: 30rpx 30rpx 18rpx 30rpx;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid #e6e6e6;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -32,10 +32,12 @@
 .shop > view:first-child > view:first-child > view:last-child > view:first-child {
     font-size: 32rpx;
     padding-bottom: 12rpx;
+    color: rgb(51,51,51);
 }
 
 .shop > view:first-child > view:first-child > view:last-child > view:last-child {
-    color: #bbb;
+    color: rgb(153,153,153);
+    font-size: 24rpx;
 }
 
 .btnEnter {
