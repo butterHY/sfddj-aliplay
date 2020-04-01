@@ -48,7 +48,6 @@
     "pages/overTime/overTime",
     "pages/activities/lightMember/lightMember",
     "pages/user/jifenDetail/jifenDetail"
-
   ],
   "subPackages": [
     {
@@ -64,7 +63,8 @@
         "pages/orderConfirm/orderConfirm",
         "pages/addressList/addressList",
         "pages/orderList/orderList",
-        "pages/afterSales/afterSales"
+        "pages/afterSales/afterSales",
+        "pages/afterSalesDetail/afterSalesDetail"
       ]
     }
   ],
