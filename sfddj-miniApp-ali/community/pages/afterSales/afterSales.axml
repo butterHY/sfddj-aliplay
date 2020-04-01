@@ -1,21 +1,21 @@
 <view class="afterSalesPage">
     <!-- 申请原因 -->
-    <view class="afterSalesItem">
+    <view class="afterSalesItem" onTap="showReasonFn">
         <view class="flex_1 font-30 color-333 font-weight-500">申请原因</view>
-        <view class="flex_1 font-30 color-666 tex_right">拍错/多拍</view>
+        <view class="flex_1 font-30 {{reasonItem ? 'color-666' : 'color-bdbdbd'}} tex_right">{{reasonItem ? reasonItem : '请选择原因'}}</view>
     </view>
     <!-- 退款金额-->
     <view class="afterSalesItem">
         <view class="flex_1 font-30 color-333 font-weight-500">退款金额</view>
         <view class="flex_1 font-30 color-666 tex_right">
-            <input placeholder="" class="all_100 tex_right" />
+            <input placeholder="" class="all_100 tex_right" value="{{refoundSum}}" />
         </view>
     </view>
     <!-- 联系手机-->
     <view class="afterSalesItem">
         <view class="flex_1 font-30 color-333 font-weight-500">联系手机</view>
         <view class="flex_1 font-30 color-666 tex_right">
-            <input placeholder="18888888888" class="all_100 tex_right" />
+            <input placeholder="18888888888" value="{{contactMobile}}" class="all_100 tex_right color-666" />
         </view>
     </view>
     <!-- 问题描述 -->
@@ -24,7 +24,7 @@
         <view class="afterSalesTit">问题描述</view>
         <!-- 输入框 -->
         <view class="">
-            <multi-liner data-field="userMessage" placeholder="给卖家留言，最多60字哦～" type="text" value="{{userMessage}}" onInput="userMesInput" last="{{true}}" controlled="{{controlled}}" maxlength="60" show-count="{{false}}"></multi-liner>
+            <multi-liner data-field="problemMes" onInput="problemInput" placeholder="问题描述（选填）" type="text" value="{{problemMes}}" last="{{true}}" controlled="{{controlled}}" maxlength="60" show-count="{{false}}"></multi-liner>
         </view>
     </view>
     <!-- 上传凭证 -->
@@ -41,9 +41,22 @@
             </view>
         </view>
     </view>
-
     <!-- 底部提交按钮 -->
     <view class="flex_view_row align_cen justi_cen">
-        <view class="submitBtn">提交</view>
+        <view class="submitBtn" onTap="submit">提交</view>
     </view>
 </view>
+<popup show="{{showReason}}" position="bottom" disableScroll="{{false}}" onClose="reasonSure">
+    <view class="whiteBack reasonPop">
+        <!-- top -->
+        <view class="reasonTit">申请原因</view>
+        <!-- 原因列表 -->
+        <scroll-view scroll-y="{{true}}" class="flex_1" style="height: 500rpx;">
+            <view a:for="{{reasonList}}">
+                <list-item class="{{reasonIndex == index ? 'activeTab' : ''}}" arrow="{{false}}" index="{{index}}" onClick="tapReason">{{item}}</list-item>
+            </view>
+        </scroll-view>
+        <!-- 底部按钮 -->
+        <button onTap="reasonSure" showLoading="{{showLoading}}" dataName="{{dataName}}" type="warn">关闭</button>
+    </view>
+</popup>
