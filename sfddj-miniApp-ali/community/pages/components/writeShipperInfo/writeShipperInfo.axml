@@ -30,7 +30,7 @@
         <view class="userInfoPop_write">
             <!-- 姓名输入框 -->
             <view class="userNameBox width_100">
-                <input-item disabled="{{false}}" data-field="userName" clear="{{true}}" value="{{userName}}" className="" placeholder="姓名" onInput="onItemInput" onClear="onClear" placeholderStyle="color: #666; font-size: 30rpx;" maxLength="20"></input-item>
+                <input-item disabled="{{false}}" data-field="userName" clear="{{true}}" value="{{userName}}" placeholder="姓名" onInput="onItemInput" onClear="onClear" placeholderStyle="color: #666; font-size: 30rpx;" maxLength="20"></input-item>
             </view>
             <!-- 选择性别 -->
             <view class="userSexuality">
