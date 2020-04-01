@@ -36,10 +36,15 @@ Page({
     showToast: false,
     cashBackRulePopup: false,
     wifiAvailable: true,
+
+    // 秒杀
     goodsSecondKill: null,                    // 秒杀数据
     isonLoad: false,                          // 页面是否是初始化
     spikePrice: null,                         // 秒杀价格
     isSpikeOver: false,                       // 秒杀倒计时是否完毕
+    noStart: false,                           // 秒杀活动是否未开始
+    isJustBuNow: false,                       // 是否‘马上抢’‘立即购买’
+
     showGuessPosition: 10000,
     lastShowGuessPosition: 11000,
     floatVal: 50,
@@ -91,8 +96,6 @@ Page({
     youLikeHasMore: true,
     youLikeIsLoadMore: false,
     youLikeLoadComplete: false,
-
-    scroll: '',									// 防止页面滚动穿透，固定定位时的高度
 
     // 买家秀数据
     videoDirection: 0,          // 买家秀视频播放方向
@@ -310,11 +313,21 @@ Page({
             my.uma.trackEvent('goodsDetailPage_source', { utm_source: that.data.pageOptions.utm_source, utm_medium: that.data.pageOptions.utm_medium, utm_campaign: that.data.pageOptions.utm_campaign, utm_content: that.data.pageOptions.utm_content, utm_term: that.data.pageOptions.utm_term })
           }
 
-          //提前判断默认规格
+          
           that.data.goodsId = resData.goodsShowVO.goodsId;
-          if( (!resData.goodsShowVO.defaultProd || !resData.goodsShowVO.defaultProd.store) && resData.goodsShowVO.products ) {
+          if( resData.goodsShowVO.secKillStatus && !that.data.noStart && !that.data.isSpikeOver ) {
+            console.log(resData.goodsShowVO.secKillStatus)
+            if( (resData.goodsShowVO.defaultProd.activityStock > 0) || (resData.goodsShowVO.defaultProd.store > 0) ) {
+              that.data.isJustBuNow = true;
+            }
+          } else {
+          }
+
+          //提前判断是否有默认规格且有库存
+          if( !that.data.isJustBuNow && (!resData.goodsShowVO.defaultProd || !resData.goodsShowVO.defaultProd.store) && resData.goodsShowVO.products ) {
             resData.goodsShowVO.products.forEach(value => {value.isDefault = false})
             let allProductIndex = resData.goodsShowVO.products.findIndex(value => {return value.store && value.store > 0 });
+            console.log(allProductIndex)
             if( allProductIndex != -1 ) {
               resData.goodsShowVO.products[allProductIndex].isDefault = true;
               resData.goodsShowVO.defaultProd = resData.goodsShowVO.products[allProductIndex];
@@ -414,11 +427,10 @@ Page({
           // activityList.totalSaleVolume = that.data.goods.secKillTotalSale;
           // activityList.secKillPrice = that.data.product.activityPrice;
 
+          
           let activityList = Object.assign({}, that.data.goods.activity);   // 新秒杀数据
-
-
-          console.log(that.data.product)
-
+          // that.data.product.activityStock = 1;                              // 秒杀测试数据
+ 
           // 测试用  
           // console.log('是否已售罄总库存，goodsStore', that.data.goods.goodsStore);
           // console.log('是否已下架，如果是 SALEING 则是正销售中',that.data.goods.viewStatus)
@@ -447,6 +459,7 @@ Page({
             otherGoods: resData.supplierGoodsList,                                                    // 商家的其他商品，
             goodsId: that.data.goodsId,
           })
+
 // console.log( that.data.SFmember ,that.data.goods.jifenStatus, that.data.goods.deductStatus ,that.data.goods.memberDayPriceStatus)
 
           reslove({
@@ -812,10 +825,12 @@ Page({
   },
 
   // 如果活动结束了，那就禁止按钮
-  onSpikeOver: function() {
+  onSpikeOver: function(e) {
     this.setData({
-      isSpikeOver: true
+      [e]: true
     })
+    console.log('isSpikeOver====',this.data.isSpikeOver)
+    console.log('noStart====',this.data.noStart)
   },
 
 	/**

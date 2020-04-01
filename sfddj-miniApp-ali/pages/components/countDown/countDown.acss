@@ -84,7 +84,7 @@
 }
 
 .secondkillModule .backgroiund_orange {
-  background: #FF4500;
+  background: #ff5a30;
 }
 
 .secondkillModule .alarmClock {
@@ -118,8 +118,12 @@
 }
 
 .sellOut {
-  width: 286rpx;
-  height: 44rpx;
+  /* width: 286rpx; */
+  height: 42rpx;
+  box-sizing: border-box;
+  padding: 6rpx 14rpx;
+  font-size: 26rpx;
+  /* line-height: 42rpx; */
   border-radius: 30rpx;
-  background:rgba(255,255,255,0.5);
+  background: #ec4f26;
 }
