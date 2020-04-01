@@ -1,0 +1,8 @@
+{
+	"titleBarColor": "#ffffff",
+  	"defaultTitle": "售后详情",
+  	"pullRefresh": false,
+  	"usingComponents": {
+          "contacts": "/community/pages/components/contacts/contacts"
+      }
+}
