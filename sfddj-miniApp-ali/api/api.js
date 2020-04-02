@@ -138,17 +138,13 @@ export default {
 		GET_GOODS_INFOR: `/m/oto/otoShopGoods/info/`,		// 获取商品详情的信心
 	},
 
-	// O2O 购物车
-	O2O_SHOPCAR: {
-		addCar: `/m/oto/otoShoppingCart/1.0/addCart`,		// 加入购物车
-	},
-
-    // o2o确认订单页
-    O2O_ORDERCONFIRM: {
-        toOrderPay: '/m/oto/otoOrderPay/1.0/confirm',     //去确认订单页
-        createPayOrder: '/m/oto/otoOrderPay/1.0/order',     //获取订单编码
-				payNow: '/m/oto/otoOrderPay/1.0/payOrder',           //去支付
-				queryPayType: '/m/oto/otoOrderPay/1.0/payQuery',       //检测是否支付成功的
+ 
+	// o2o确认订单页
+	O2O_ORDERCONFIRM: {
+		toOrderPay: '/m/oto/otoOrderPay/1.0/confirm',     //去确认订单页
+		createPayOrder: '/m/oto/otoOrderPay/1.0/order',     //获取订单编码
+		payNow: '/m/oto/otoOrderPay/1.0/payOrder',           //去支付
+		queryPayType: '/m/oto/otoOrderPay/1.0/payQuery',       //检测是否支付成功的
 	},
 
 	// 高德地图api -- https://lbs.amap.com/api/webservice/gettingstarted

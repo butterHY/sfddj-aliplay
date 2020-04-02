@@ -30,7 +30,7 @@ Component({
         goodsInfo: _this.props.godosPriceInfo
       })
 
-      console.log(this.data.goodsInfo)
+      // console.log(this.data.goodsInfo)
     },
 
     addCar(e) {
@@ -47,7 +47,7 @@ Component({
       // 参数3：skuID
       // 参数4：数量
       // 参数5：回调函数
-      _this.cart.add(addData.shopId, _goodsInfo, addData.skuId, addData.num, (res) => {
+      _this.cart.add(addData.shopId, _goodsInfo.allData, addData.skuId, addData.num, (res) => {
           // do somthing
           console.log(res)
       }); 

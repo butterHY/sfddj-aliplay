@@ -12,5 +12,5 @@
   </view>
 
 
-  <cart shopid="{{ 2 }}"></cart> 
+  <cart shopid="{{ shopId }}"></cart> 
 </view>

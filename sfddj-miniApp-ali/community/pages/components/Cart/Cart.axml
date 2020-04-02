@@ -32,7 +32,7 @@
 </view>
 
 <!-- 弹出层  -->
-<popup class="goodsAction_popup" show="{{ isShowed }}" position="bottom" onClose="onPopupClose">
+<popup class="goodsAction_popup" show="{{ isShowed }}" zIndex="{{ 8 }}" disableScroll="{{ false }}" position="bottom" onClose="onHideClick">
   <view class="listTitle">
     <view class="title_left">共{{obj && obj.cnt || 0}}件商品</view>
     <view class="title_right" onTap="onClearClick">全部清空</view>
