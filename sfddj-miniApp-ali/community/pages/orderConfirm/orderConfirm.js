@@ -33,25 +33,48 @@ Page({
             this.setData({
                 shopid
             })
-            // 参数1：店铺ID
-            this.cart.gets(shopid, (res) => {
-                // console.log('[[]]]--', res);
-                let result = res && Object.keys(res).length > 0 ? res : {};
-                if (Object.keys(result).length > 0) {
-                    let shopCartList = result.cartList ? result.cartList : [];
 
-                    this.setData({
-                        shopTotalPrice: result.discountPrice < result.salePrice ? result.discountPrice : result.salePrice,     //整个商店商品的总价格
-                        originalTotalPrice: result.discountPrice < result.salePrice ? result.discountPrice : result.salePrice,    //最原始商品的总价
-                        shopCartList: Object.assign([], shopCartList),
-                        totalPrice: result.discountPrice < result.salePrice ? result.discountPrice : result.salePrice,
-                    })
-                }
-            });
+            this.getCartService(shopid);
 
             this.getOrderData(shopid);
         }
 
+    },
+
+    onShow() {
+        // let defaultAddress = {
+        //     shipName: '123',
+        //     shipPhone: 18823451312,
+        //     province: '广东省',
+        //     city: '深圳市',
+        //     district: '宝安区',
+        //     street: '西乡街道',
+        //     detail: '你猜不到的地址，哈哈哈哈哈哈'
+        // }
+        let communalAddr = getApp().globalData.communalAddr;
+        if(communalAddr && Object.keys(communalAddr).length > 0) {
+            this.setData({
+                defaultAddress: Object.assign({}, communalAddr)
+            })
+        }
+    },
+
+    // 获取购物车中的数据
+    getCartService(shopid) {
+        // 参数1：店铺ID
+        this.cart.gets(shopid, (res) => {
+            let result = res && Object.keys(res).length > 0 ? res : {};
+            if (Object.keys(result).length > 0) {
+                let shopCartList = result.cartList ? result.cartList : [];
+
+                this.setData({
+                    shopTotalPrice: result.discountPrice < result.salePrice ? result.discountPrice : result.salePrice,     //整个商店商品的总价格
+                    originalTotalPrice: result.discountPrice < result.salePrice ? result.discountPrice : result.salePrice,    //最原始商品的总价
+                    shopCartList: Object.assign([], shopCartList),
+                    totalPrice: result.discountPrice < result.salePrice ? result.discountPrice : result.salePrice,
+                })
+            }
+        });
     },
 
     // 获取进入确认订单页的数据
@@ -70,7 +93,7 @@ Page({
                 this.setData({
                     confirmToken: result.confirmToken,
                     shopTotalPrice: this.data.shopTotalPrice > 0 ? this.data.shopTotalPrice : result.price,
-                    // shopCartList: this.data.shopCartList.length > 0 ? this.data.shopCartList : shopCartList,
+                    shopCartList: this.data.shopCartList.length > 0 ? this.data.shopCartList : shopCartList,
                     shopName: result.name,
                     deliveryFee: result.deliveryFee ? result.deliveryFee : 0,
                     deliveryOutGratis: result.deliveryOutGratis ? result.deliveryOutGratis : 0,
@@ -131,8 +154,8 @@ Page({
                     let defaultAddress = this.data.defaultAddress
                     data = Object.assign(data, {
                         deliveryType: 'LOGISTICS',
-                        shipName: defaultAddress.shipperName,
-                        shipPhone: defaultAddress.shipperMobile,
+                        shipName: defaultAddress.shipName,
+                        shipPhone: defaultAddress.shipPhone,
                         province: defaultAddress.province,
                         city: defaultAddress.city,
                         district: defaultAddress.district,
