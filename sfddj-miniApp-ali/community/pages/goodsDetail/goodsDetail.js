@@ -1,6 +1,5 @@
 import http from '/api/http';
-import api from '/api/api';
-
+import api from '/api/api'; 
 Page({
   data: {
     goodsId: 2,
@@ -64,6 +63,10 @@ Page({
     _price.monthSaleCount = _data.monthSaleCount;
     // 商品id
     _price.goodsId = _data.id; 
+
+    // 商家Id
+    _price.shopId = _data.shopId; 
+    
     // 商品编码
     _price.goodsSn = _data.goodsSn;
 

@@ -59,9 +59,8 @@
 
 .shop_cartcontrol {
     flex-grow: 0;
-    flex-shrink: 0;
-    height: 115rpx;
-    padding: 0 20rpx 20rpx 20rpx;
+    flex-shrink: 0; 
+	padding: 10rpx 20rpx 30rpx;   
 }
 
 .shop_cartbox.isshow .shop_cartcontrol {
@@ -104,10 +103,14 @@
     position: relative;
 }
 
-.shop_cart > view:first-child > view:first-child.notempty > view {
+.shop_cart .cartNum {
     position: absolute;
     top: -10rpx;
-    left: 98%;
+    right: -20rpx; 
+}
+
+.cartNum .am-badge-text {
+    background-color: #ff0532; 
 }
 
 .shop_cart > view:first-child > view:nth-child(2) {
@@ -115,31 +118,26 @@
     line-height: normal;
 }
 
-.shop_cart > view:first-child > view:nth-child(2) > text:first-child {
-    font-size: 46rpx;
-}
 
 .shop_cart > view:first-child > view:nth-child(2) > text:first-child.cart_null {
-    font-size: 38rpx;
-    color: #bbb;
+    font-size: 30rpx;
+    color: #999999;
 }
 
-.shop_cart > view:first-child > view:nth-child(2) > text:nth-child(2) {
-    margin-left: 10rpx;
+.shop_cart > view:first-child > view:nth-child(2) > text:nth-child(2) { 
     font-size: 28rpx;
-    color: #bbb;
+    color: #999999;
     text-decoration: line-through;
 }
 
-.shop_cart_topay {
-    height: 74rpx;
-    padding: 0 32rpx;
-    background-color: red;
-    border-radius: 37rpx;
-    font-size: 38rpx;
-    text-align: center;
-    display: flex;
-    align-items: center;
+.shop_cart_topay {    
+    text-align: center;  
+    height: 80rpx;
+	width: 200rpx;
+	line-height: 80rpx;
+	background-color: #ff0032;
+	font-size: 36rpx;
+	border-radius: 50px;
 }
 
 .shop_cartitem {
@@ -217,4 +215,16 @@
     line-height: 44rpx;
     width: 100rpx;
     font-size: 32rpx;
+}
+
+.priceShow .now {
+	color: #ffffff;
+	font-size: 36rpx;
+	margin-right: 5rpx;
+    font-weight: bold;
+}
+
+.priceShow .old {
+	color: #999999;
+	font-size: 24rpx;
 }

@@ -7,7 +7,7 @@ Component({
     totalPrice: 0,
     totalPrice_old: 0,
     disabledOff: false,
-    showBottom: true,
+    showBottom: false,
   },
   props: {},
   didMount() {},
