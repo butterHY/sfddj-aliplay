@@ -146,9 +146,11 @@ Page({
   // }
 
   onLoad: function(options) {
+    console.log(options)
 		var that = this;
 		that.setData({
-      webCallParam: options.webCallParam
+      webCallParam: options.webCallParam,
+      uname: options.uname
     })
 	},
 
@@ -229,9 +231,13 @@ Page({
 				data: webCallLink, // 要缓存的数据
 			});
 		} catch (e) { }
-		my.navigateTo({
-			url: '/pages/user/webCallView/webCallView?link=' + webCallLink + '&newMethod=new'
+		// my.navigateTo({
+		// 	url: '/pages/user/webCallView/webCallView?link=' + webCallLink + '&newMethod=new'
+		// });
+    my.navigateTo({
+			url: '/pages/user/webView/webView?uname=' + that.data.uname
 		});
+
 	},
   // 跳去客服电话
   goToPhone: function(){
