@@ -3,7 +3,10 @@
 .page {
   background: #f5f5f5;
   /* position: relative; */
-  padding-bottom: 106rpx;
+  /* box-sizing: border-box; */
+  /* padding-bottom: 106rpx; */
+  height: 100vh;
+  overflow: auto;
 }
 
 /* 已注册轻会员样式 */
@@ -269,6 +272,7 @@
   padding: 0 30rpx;
   bottom: 0;
   left: 0;
+  background: #f5f5f5;
 }
 
 .openingBox {

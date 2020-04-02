@@ -60,6 +60,7 @@ Page({
       https.get(api.LIGHTMEMBER.GETLIGHTMEMBER, {}, (res) => {
         let resData = res.data.data;
         let resRet = res.data.ret;
+        console.log(res);
         if( resRet && resRet.code == '0' && resRet.message == "SUCCESS" && resData ) {
           if (Object.keys(resData.modules).length > 0) {
             resData.modules.forEach( value => {
@@ -133,7 +134,7 @@ Page({
             reslove({
               type: 'SUCCESS'
             })
-          }
+          } 
         }
       }, (res) => {
         that.setData({
