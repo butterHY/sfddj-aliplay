@@ -1,15 +1,19 @@
 Component({
   mixins: [],
   data: {
-      shopTotalPrice: 0
+      totalPrice: 0
   },
   props: {},
   didMount() {
       this.setData({
-          shopTotalPrice: this.props.shopTotalPrice
+          totalPrice: this.props.totalPrice
       })
   },
-  didUpdate() {},
+  didUpdate() {
+      this.setData({
+          totalPrice: this.props.totalPrice
+      })
+  },
   didUnmount() {},
   methods: {},
 });

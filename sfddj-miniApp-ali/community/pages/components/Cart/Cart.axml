@@ -8,7 +8,7 @@
       </view>
       <view a:for="{{cartitems}}" class="shop_cartitem">
         <view>
-          <view style="background-image:url('{{item.goodsImagePath}}')"></view>
+          <view style="background-image:url('{{item.defaultGoodsImage}}')"></view>
           <view>
             <view>{{item.name}}</view>
             <view>

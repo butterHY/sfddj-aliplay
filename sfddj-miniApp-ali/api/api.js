@@ -146,7 +146,9 @@ export default {
     // o2o确认订单页
     O2O_ORDERCONFIRM: {
         toOrderPay: '/m/oto/otoOrderPay/1.0/confirm',     //去确认订单页
-        payNow: '/m/oto/otoOrderPay/1.0/order'
+        createPayOrder: '/m/oto/otoOrderPay/1.0/order',     //获取订单编码
+				payNow: '/m/oto/otoOrderPay/1.0/payOrder',           //去支付
+				queryPayType: '/m/oto/otoOrderPay/1.0/payQuery',       //检测是否支付成功的
 	},
 
 	// 高德地图api -- https://lbs.amap.com/api/webservice/gettingstarted

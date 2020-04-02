@@ -45,6 +45,7 @@ Component({
       this.setData({itemsshow: false}, () => {
         setTimeout(() => {
           this.setData({isShowed: false});
+          this.cart.filter(this.props.shopid);
         }, 380);
       });
     },
