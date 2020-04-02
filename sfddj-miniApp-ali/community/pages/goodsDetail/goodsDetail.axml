@@ -11,5 +11,6 @@
     <goods-intro goodsInfo="{{ goodsInfo }}"></goods-intro>
   </view>
 
-  <shop-car-footer ></shop-car-footer>
+
+  <cart shopid="{{ shopId }}"></cart> 
 </view>

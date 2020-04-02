@@ -5,10 +5,10 @@
     <navigator url="/community/pages/addressList/addressList" class="chooseAddrBox">
         <!-- 有地址时显示 -->
         <view a:if="{{hasAddr}}" class="flex_1 single-line">
-            <view class="chooseAddr_det single-line">南山中小学附小17栋403</view>
+            <view class="chooseAddr_det single-line">{{defaultAddress.detail}}</view>
             <view class="chooseAddr_mes single-line">
-              <view>孙女士</view>
-              <view>18239048769</view>
+              <view>{{defaultAddress.shipName}}</view>
+              <view class="marLeft_30">{{defaultAddress.shipPhone}}</view>
             </view>
         </view>
         <!-- 无地址时显示 -->

@@ -1,9 +1,22 @@
 Component({
   mixins: [],
-  data: {},
+  data: {
+    hasAddr: false,
+    defaultAddress: {}
+  },
   props: {},
-  didMount() {},
-  didUpdate() {},
-  didUnmount() {},
+  didMount() {
+    this.setData({
+      defaultAddress: this.props.defaultAddress,
+      hasAddr: this.props.defaultAddress && Object.keys(this.props.defaultAddress).length > 0 ? true : false
+    })
+  },
+  didUpdate() {
+    this.setData({
+      defaultAddress: this.props.defaultAddress,
+      hasAddr: this.props.defaultAddress && Object.keys(this.props.defaultAddress).length > 0 ? true : false
+    })
+  },
+  didUnmount() { },
   methods: {},
 });

@@ -1,3 +1,4 @@
+import {getDistance} from '/community/assets/common';
 import Shop from '/community/service/shop';
 
 Page({
@@ -32,34 +33,40 @@ Page({
 
         my.getStorage({ 
             key: 'locationInfo',  
-            success: function(loc) {
+            success: (loc) => {
               if(loc && loc.data && loc.data.latitude && loc.data.longitude) {
-                if(my.calculateRoute) {
-                  my.calculateRoute({
-                    startLat: loc.data.latitude,
-                    startLng: loc.data.longitude,
-                    endLat: res.data.data.latitude,
-                    endLng: res.data.data.longitude,
-                    success:(e)=>{
-                      if(e.success && e.distance) {
-                        this.setData({distance: e.distance});
-                      }
-                    }
-                  });
-                } else {
-                  my.ap.updateAlipayClient({
-                    success: () => {
-                      my.alert({
-                        title: '升级成功',
-                      });
-                    },
-                    fail: () => {
-                      my.alert({
-                        title: '升级失败',
-                      });
-                    },
-                  });
-                }
+                let distance = getDistance(loc.data.latitude, loc.data.longitude, res.data.data.latitude, res.data.data.longitude);
+                this.setData({
+                  distance: distance
+                });
+
+
+                // if(my.calculateRoute) {
+                //   my.calculateRoute({
+                //     startLat: loc.data.latitude,
+                //     startLng: loc.data.longitude,
+                //     endLat: res.data.data.latitude,
+                //     endLng: res.data.data.longitude,
+                //     success:(e)=>{
+                //       if(e.success && e.distance) {
+                //         this.setData({distance: e.distance});
+                //       }
+                //     }
+                //   });
+                // } else {
+                //   my.ap.updateAlipayClient({
+                //     success: () => {
+                //       my.alert({
+                //         title: '升级成功',
+                //       });
+                //     },
+                //     fail: () => {
+                //       my.alert({
+                //         title: '升级失败',
+                //       });
+                //     },
+                //   });
+                // }
               }
             } 
         });

@@ -27,26 +27,19 @@ Component({
     }
   },
   didUnmount() {},
-  methods: {
-    onShowDetailClick() {
-      if(this.data.isShowed) {
-        this.onHideClick();
-      } else {
-        if(this.props.canShowDetails && this.data.cartitems && this.data.cartitems.length) {
-          this.setData({isShowed: true}, () => {
-            setTimeout(() => {
-              this.setData({itemsshow: true});
-            }, 0);
-          });
-        }
+  methods: { 
+    onShowDetailClick() { 
+      if(this.props.canShowDetails && this.data.cartitems && this.data.cartitems.length) {
+        this.setData({ 
+          isShowed: true,
+        });
       }
     },
-    onHideClick() {
-      this.setData({itemsshow: false}, () => {
-        setTimeout(() => {
-          this.setData({isShowed: false});
-        }, 380);
+    onHideClick() { 
+      this.setData({ 
+        isShowed: false,
       });
+      this.cart.filter(this.props.shopid); 
     },
     clear() {
       if(this.data.cartitems) {

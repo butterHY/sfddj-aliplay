@@ -20,9 +20,7 @@
       
     </view>
     <view class="addCarBtn">
-      <button size="default"  type="warn" onTap="addCar" 
-        data-skuId="{{ goodsInfo.skuData.id }}"
-        data-goodsId="{{ goodsInfo.goodsId }}">加入购物车</button>
+      <button size="default"  type="warn" onTap="addCar" >加入购物车</button>
     </view>
   </view>
 </view>

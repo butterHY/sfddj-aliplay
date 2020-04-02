@@ -1,49 +1,68 @@
 <view class="shop_cartbox {{isShowed ? 'isshow' : ''}}">
-  <view class="shop_cartitemsbox">
-    <view onTap="onHideClick"></view>
-    <view a:if="{{isShowed}}" class="shop_cartitems {{itemsshow ? 'isshow' : ''}}">
-      <view class="shop_cartitemstit">
-        <view>共{{obj && obj.cnt || 0}}件商品</view>
-        <view onTap="onClearClick">全部清空</view>
-      </view>
-      <view a:for="{{cartitems}}" class="shop_cartitem">
-        <view>
-          <view style="background-image:url('{{item.goodsImagePath}}')"></view>
-          <view>
-            <view>{{item.name}}</view>
-            <view>
-              <text>￥{{item.discountStatus && item.discountPrice || item.salePrice}}</text>
-              <text a:if="{{item.discountStatus}}">￥{{item.salePrice}}</text>
-            </view>
-          </view>
-        </view>
-        <view>
-          <view onTap="onReduceClick" data-skuid="{{item.skuId}}"></view>
-          <view>{{item.quantity}}</view>
-          <view onTap="onPlusClick" data-skuid="{{item.skuId}}"></view>
-        </view>
-      </view>
-    </view>
-  </view>
+  <!-- 控制区域 -->
   <view class="shop_cartcontrol">
       <view class="shop_cart">
-        <view onTap="onShowDetailClick">
-          <view class="{{(cartitems && cartitems.length) ? 'notempty' : 'isempty'}}">
-            <badge a:if="{{cartitems && cartitems.length}}" text="{{obj && obj.cnt || 0}}" overflowCount="{{99}}"></badge>
+ 
+        <view class="shop_priceShow" onTap="onShowDetailClick">
+          <view class="cartShow {{(cartitems && cartitems.length) ? 'notempty' : 'isempty'}}">
+            <badge class="cartNum"  
+              a:if="{{cartitems && cartitems.length}}" 
+              text="{{obj && obj.cnt || 0}}"
+              overflowCount="{{ 99 }}">
+            </badge>
           </view>
-          <view>
+          <view class="priceBox">
             <block a:if="{{cartitems.length}}">
-              <text>￥{{obj.discountPrice.toFixed(2)}}</text>
-              <text a:if={{obj.discountPrice != obj.salePrice}}>￥{{obj.salePrice.toFixed(2)}}</text>
+              <text class="now">￥{{ obj.discountPrice.toFixed(2) }}</text> 
+              <text class="old" 
+                a:if={{ obj.discountPrice != obj.salePrice }}>￥{{ obj.salePrice.toFixed(2) }}</text>
             </block>
+            
             <block a:else>
               <text class="cart_null">未选购商品</text>
             </block>
           </view>
         </view>
-        <view a:if="{{cartitems && cartitems.length}}">
+ 
+        <view class="actionBtn" a:if="{{cartitems && cartitems.length}}">
           <view class="shop_cart_topay" onTap="onToPayClick">{{nextText || '去结算'}}</view>
         </view>
       </view>
   </view>
 </view>
+ 
+<!-- 弹出层  -->
+<popup class="goodsAction_popup" show="{{ isShowed }}" zIndex="{{ 8 }}" disableScroll="{{ false }}" position="bottom" onClose="onHideClick">
+  <view class="listTitle">
+    <view class="title_left">共{{obj && obj.cnt || 0}}件商品</view>
+    <view class="title_right" onTap="onClearClick">全部清空</view>
+  </view>
+  <scroll-view class="cartListShow" scroll-y="{{ true }}" >
+    <block a:for="{{ cartitems }}">
+      <view class="cartList">
+        <view class="figureImg">
+          <image src="{{ item.defaultGoodsImage }}" lazy-load="{{ false }}" />
+        </view>
+        <view class="asideInfo">
+          <view class="nameShow">
+            <text>{{ item.name }}/{{item.skuValue}}</text>
+          </view>
+          <!-- <view class="tipInfo">
+            <text class="discounts">特价 限1份</text>
+          </view> -->
+          <view class="priceShow">
+            <text class="now">￥{{ item.discountStatus && item.discountPrice || item.salePrice }}</text>
+            <text class="old" a:if="{{item.discountStatus}}">￥{{ item.salePrice }}</text>
+          </view> 
+        </view> 
+ 
+        <view class="amountBox">
+          <text class="stepper stepper_minus" onTap="onReduceClick" data-skuid="{{ item.skuId }}"></text>
+          <text class="stepper_val">{{ item.quantity }}</text>
+          <text class="stepper stepper_plus" onTap="onPlusClick" data-skuid="{{ item.skuId }}"></text>
+        </view>
+      </view>  
+    </block>
+    
+  </scroll-view>
+</popup>

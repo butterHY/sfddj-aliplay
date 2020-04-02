@@ -1,6 +1,5 @@
 import http from '/api/http';
-import api from '/api/api';
-
+import api from '/api/api'; 
 Page({
   data: {
     goodsId: 2,
@@ -8,6 +7,7 @@ Page({
     godosPriceInfo: null,
     goodsInfo: null,
     skuList: null,
+    shopId: '',
   },
   onLoad(e) { 
     this.setData({
@@ -24,7 +24,7 @@ Page({
       const _ret = res.data.ret;
 
       if ( _ret.code == '0') {
-        console.log(_data)
+        // console.log(_data)
         let _goodsImagePath = JSON.parse( _data.goodsImagePath );  
         let _goodsInfo = {}
         let _skuList = {} 
@@ -39,7 +39,8 @@ Page({
         _this.setData({
           goodsImagePath: _goodsImagePath, 
           goodsInfo: _goodsInfo,
-          skuList: _skuList
+          skuList: _skuList,
+          shopId: _data.shopId
         });
       }
 
@@ -64,8 +65,15 @@ Page({
     _price.monthSaleCount = _data.monthSaleCount;
     // 商品id
     _price.goodsId = _data.id; 
+
+    // 商家Id
+    _price.shopId = _data.shopId; 
+    
     // 商品编码
     _price.goodsSn = _data.goodsSn;
+
+    // 全部数据
+    _price.allData = data;
 
     _this.setData({ 
       godosPriceInfo: _price, 
