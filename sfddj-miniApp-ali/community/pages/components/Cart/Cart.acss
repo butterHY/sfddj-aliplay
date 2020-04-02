@@ -174,15 +174,15 @@
 }
 
 .shop_cartitem > view:first-child > view:nth-child(2) > view > text:first-child {
-    color: red;
+    color: #ff0032;
     font-size: 35rpx;
 }
 
 .shop_cartitem > view:first-child > view:nth-child(2) > view > text:nth-child(2) {
-    color: #888;
-    font-size: 28rpx;
-    text-decoration: line-through;
+    color: #999999;
+    font-size: 28rpx; 
     padding-left: 16rpx; 
+    text-decoration: line-through;
 }
 
 .shop_cartitem > view:last-child {
@@ -227,4 +227,5 @@
 .priceShow .old {
 	color: #999999;
 	font-size: 24rpx;
+    text-decoration: line-through;
 }

@@ -29,14 +29,19 @@
       <view class="shop_cart">
         <view onTap="onShowDetailClick">
           <view class="{{(cartitems && cartitems.length) ? 'notempty' : 'isempty'}}">
-            <badge class="cartNum"  a:if="{{cartitems && cartitems.length}}" text="{{obj && obj.cnt || 0}}"
-              overflowCount="{{ 99 }}"></badge>
+            <badge class="cartNum"  
+              a:if="{{cartitems && cartitems.length}}" 
+              text="{{obj && obj.cnt || 0}}"
+              overflowCount="{{ 99 }}">
+            </badge>
           </view>
           <view class="priceShow">
             <block a:if="{{cartitems.length}}">
-              <text class="now">￥{{obj.discountPrice.toFixed(2)}}</text>
-              <text class="old" a:if={{obj.discountPrice != obj.salePrice}}>￥{{obj.salePrice.toFixed(2)}}</text>
+              <text class="now">￥{{ obj.discountPrice.toFixed(2) }}</text>
+              <text class="old" 
+                a:if={{ obj.discountPrice != obj.salePrice }}>￥{{ obj.salePrice.toFixed(2) }}</text>
             </block>
+            
             <block a:else>
               <text class="cart_null">未选购商品</text>
             </block>

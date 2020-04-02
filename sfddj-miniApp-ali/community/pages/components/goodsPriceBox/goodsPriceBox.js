@@ -37,8 +37,7 @@ Component({
       const _this = this; 
       let _goodsInfo = this.data.goodsInfo;  
       let addData = {
-        shopId: _goodsInfo.shopId,
-        goodsId: _goodsInfo.goodsId,
+        shopId: _goodsInfo.shopId, 
         skuId: _goodsInfo.skuData.id,
         num: 1
       }   
@@ -48,7 +47,7 @@ Component({
       // 参数3：skuID
       // 参数4：数量
       // 参数5：回调函数
-      _this.cart.add(addData.shopId, addData.goodsId, addData.skuId, addData.num, (res) => {
+      _this.cart.add(addData.shopId, _goodsInfo, addData.skuId, addData.num, (res) => {
           // do somthing
           console.log(res)
       }); 
