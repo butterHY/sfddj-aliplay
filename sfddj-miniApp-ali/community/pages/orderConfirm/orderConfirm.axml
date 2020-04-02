@@ -25,9 +25,9 @@
             <choose-addr></choose-addr>
         </block>
         <!-- 商品信息 -->
-        <order-goods goodsList="{{shopCartList}}" shopName="{{shopName}}" typeIndex="{{typeIndex}}" shopTotalPrice="{{shopTotalPrice}}"></order-goods>
+        <order-goods goodsList="{{shopCartList}}" shopName="{{shopName}}" typeIndex="{{typeIndex}}" shopTotalPrice="{{shopTotalPrice.toFixed(2)}}" deliveryOutGratis="{{deliveryOutGratis}}" deliveryFee="{{deliveryFee}}" totalPrice="{{totalPrice.toFixed(2)}}"></order-goods>
         <!-- 应付金额 -->
-        <payable-sum shopTotalPrice="{{shopTotalPrice}}"></payable-sum>
+        <payable-sum totalPrice="{{totalPrice.toFixed(2)}}"></payable-sum>
         <!-- 留言 -->
         <view class="userMessage">
             <!-- 标题 -->
@@ -61,7 +61,7 @@
     <view class="payNowBox">
         <!-- 价格 -->
         <view class="payNowPriceBox">
-            <view class="payNowPrice">￥{{shopTotalPrice}}</view>
+            <view class="payNowPrice">￥{{totalPrice.toFixed(2)}}</view>
             <!-- <view class="discountPrice">￥69.9</view> -->
         </view>
         <!-- 去结算按钮 -->
