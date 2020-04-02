@@ -17,6 +17,7 @@ Component({
     godosPriceInfo: 'godosPriceInfo'
   },
   didMount() {
+    this.cart = Cart.init('cart', this);
     this.init();
   },
   didUpdate() {},
@@ -24,7 +25,6 @@ Component({
   methods: {
     init() {
       const _this = this;
-      this.cart = Cart.init('cart', this);
 
       this.setData({
         goodsInfo: _this.props.godosPriceInfo
