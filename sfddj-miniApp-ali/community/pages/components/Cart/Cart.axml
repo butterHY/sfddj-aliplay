@@ -10,7 +10,7 @@
         <view>
           <view style="background-image:url('{{item.defaultGoodsImage}}')"></view>
           <view>
-            <view>{{item.name}}</view>
+            <view>{{item.name}}/{{item.skuValue}}</view>
             <view>
               <text>￥{{item.discountStatus && item.discountPrice || item.salePrice}}</text>
               <text a:if="{{item.discountStatus}}">￥{{item.salePrice}}</text>

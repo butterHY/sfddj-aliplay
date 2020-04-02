@@ -58,6 +58,7 @@ class Cart extends MiniAppService {
                 let idx = obj.cartList.findIndex((T) => T.skuId == sku.id);
                 if(idx >= 0) {
                     obj.cartList[idx].quantity += cnt;
+                    obj.cartList[idx].id = res.data.data.id;
                     if(this.$cmps) {
                         this.$cmps.forEach((T) => {
                             if(T.selfName == 'cart' && T.props.shopid == shopId) {
@@ -65,6 +66,7 @@ class Cart extends MiniAppService {
                                     'obj.cnt': obj.cnt,
                                     'obj.salePrice': obj.salePrice,
                                     'obj.discountPrice': obj.discountPrice,
+                                    [`cartitems[${idx}].id`]: obj.cartList[idx].id,
                                     [`cartitems[${idx}].quantity`]: obj.cartList[idx].quantity
                                 });
                             }
@@ -82,7 +84,8 @@ class Cart extends MiniAppService {
                         "name": goods.title,
                         "quantity": cnt,
                         "salePrice": sku.salePrice,
-                        "skuId": sku.id
+                        "skuId": sku.id,
+                        "skuValue": sku.iavValue
                     });
                     this.$cmps.forEach((T) => {
                         if(T.selfName == 'cart' && T.props.shopid == shopId) {
@@ -189,49 +192,71 @@ class Cart extends MiniAppService {
                 let idx = cartList.findIndex((T) => T.skuId == skuId);
                 if(idx >= 0) {
                     let item = cartList[idx];
-                    let newNum = item.quantity + addNum;
-                    if(newNum >= 0 && newNum <= 999) {
-                        http.post(api.O2OCart.CHANGE, {
-                            cartId: item.id,
-                            addCount: addNum
-                        }, (res) => {
-                            if(res.data && res.data.ret && res.data.ret.code == 0) {
-                                item.quantity = newNum;
-                                shop.cnt += addNum;
-                                shop.salePrice += item.salePrice * addNum;
-                                if(item.discountStatus) {
-                                    shop.discountPrice += item.discountPrice * addNum;
-                                } else {
-                                    shop.discountPrice += item.salePrice * addNum;
-                                }
-                                if(this.$cmps) {
-                                    this.$cmps.forEach((T) => {
-                                        if(T.selfName == 'cart' && T.props.shopid == shopId) {
-                                            T.setData({
-                                                [`cartitems[${idx}].quantity`]: newNum,
-                                                'obj.cnt': shop.cnt,
-                                                'obj.salePrice': shop.salePrice,
-                                                'obj.discountPrice': shop.discountPrice
-                                            });
-                                        }
-                                    });
-                                }
-                                if(callbackFun) {
-                                    callbackFun(shop);
-                                }
-                            } else {
-                                if(callbackFun) {
-                                    callbackFun(undefined);
-                                }
-                            }
-                        }, (err) => {
+                    if(item.quantity == 0) {
+                        if(addNum > 0) {
+                            this.add(shopId, {
+                                goodsImagePath: [item.defaultGoodsImage],
+                                goodsSn: item.goodsSn,
+                                title: item.name,
+                                shopGoodsSkuList: [{
+                                    id: item.skuId,
+                                    discountPrice: item.discountPrice,
+                                    isDiscount: item.discountStatus,
+                                    goodsId: item.goodsId,
+                                    salePrice: item.salePrice,
+                                    iavValue: item.skuValue
+                                }]
+                            }, skuId, addNum, callbackFun);
+                        } else {
                             if(callbackFun) {
-                                callbackFun(undefined, err);
+                                callbackFun(undefined);
                             }
-                        });
+                        }
                     } else {
-                        if(callbackFun) {
-                            callbackFun(undefined);
+                        let newNum = item.quantity + addNum;
+                        if(newNum >= 0 && newNum <= 999) {
+                            http.post(api.O2OCart.CHANGE, {
+                                cartId: item.id,
+                                addCount: addNum
+                            }, (res) => {
+                                if(res.data && res.data.ret && res.data.ret.code == 0) {
+                                    item.quantity = newNum;
+                                    shop.cnt += addNum;
+                                    shop.salePrice += item.salePrice * addNum;
+                                    if(item.discountStatus) {
+                                        shop.discountPrice += item.discountPrice * addNum;
+                                    } else {
+                                        shop.discountPrice += item.salePrice * addNum;
+                                    }
+                                    if(this.$cmps) {
+                                        this.$cmps.forEach((T) => {
+                                            if(T.selfName == 'cart' && T.props.shopid == shopId) {
+                                                T.setData({
+                                                    [`cartitems[${idx}].quantity`]: newNum,
+                                                    'obj.cnt': shop.cnt,
+                                                    'obj.salePrice': shop.salePrice,
+                                                    'obj.discountPrice': shop.discountPrice
+                                                });
+                                            }
+                                        });
+                                    }
+                                    if(callbackFun) {
+                                        callbackFun(shop);
+                                    }
+                                } else {
+                                    if(callbackFun) {
+                                        callbackFun(undefined);
+                                    }
+                                }
+                            }, (err) => {
+                                if(callbackFun) {
+                                    callbackFun(undefined, err);
+                                }
+                            });
+                        } else {
+                            if(callbackFun) {
+                                callbackFun(undefined);
+                            }
                         }
                     }
                 } else {
