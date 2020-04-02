@@ -28,6 +28,11 @@ Component({
   },
   didUnmount() {},
   methods: {
+    onPopupClose() {
+      this.setData({ 
+        isShowed: false,
+      });
+    },
     onShowDetailClick() {
       if(this.data.isShowed) {
         this.onHideClick();

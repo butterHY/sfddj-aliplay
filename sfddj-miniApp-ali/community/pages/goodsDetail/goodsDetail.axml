@@ -12,7 +12,5 @@
   </view>
 
 
-  <cart shopid="{{ 2 }}"></cart>
-
-  <!-- <shop-car-footer ></shop-car-footer> -->
+  <cart shopid="{{ 2 }}"></cart> 
 </view>

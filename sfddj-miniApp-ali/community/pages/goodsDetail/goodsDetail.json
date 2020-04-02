@@ -7,7 +7,6 @@
         "goods-swiper-box":  "/community/pages/components/goodsSwiperBox/goodsSwiperBox", 
         "goods-price-box":  "/community/pages/components/goodsPriceBox/goodsPriceBox",
         "goods-intro":  "/community/pages/components/goodsIntro/goodsIntro",
-        "cart":  "/community/pages/components/Cart/Cart",
-        "shop-car-footer":  "/community/pages/components/shopCarFooter/shopCarFooter"
+        "cart":  "/community/pages/components/Cart/Cart"
     }
 }
