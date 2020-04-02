@@ -9,6 +9,7 @@ Component({
         shopName: '',
         typeIndex: 0,
         shopTotalPrice: 0,
+        totalPrice: 0,
   },
   props: {},
   didMount() {
@@ -16,7 +17,8 @@ Component({
             goodsList: this.props.goodsList,
             shopName: this.props.shopName,
             typeIndex: this.props.typeIndex,
-            shopTotalPrice: this.props.shopTotalPrice
+            shopTotalPrice: this.props.shopTotalPrice,
+            totalPrice: this.props.totalPrice
         })
   },
   didUpdate() {
@@ -24,7 +26,8 @@ Component({
           goodsList: this.props.goodsList,
           shopName: this.props.shopName,
           typeIndex: this.props.typeIndex,
-          shopTotalPrice: this.props.shopTotalPrice
+          shopTotalPrice: this.props.shopTotalPrice,
+          totalPrice: this.props.totalPrice
       })
   },
   didUnmount() {},

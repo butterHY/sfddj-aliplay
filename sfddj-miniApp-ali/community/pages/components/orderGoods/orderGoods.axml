@@ -10,19 +10,19 @@
         </block>
     </view>
     <!-- 配送费 -->
-    <view a:if="{{typeIndex == 1}}" class="deliveryFee">
+    <view a:if="{{typeIndex == 1 && deliveryFee > 0}}" class="deliveryFee">
         <!-- 配送 -->
         <view class="flex_view_row align_cen flex_1">
             <view>配送费</view>
             <!-- 满多少免配送费 -->
-            <view class="deliveryFee_term">(订单满68元，免配送费)</view>
+            <view a:if="{{deliveryOutGratis > 0}}" class="deliveryFee_term">(订单满{{deliveryOutGratis}}元，免配送费)</view>
         </view>
         <!-- 配送费金额 -->
-        <view class="deliveryFee_sum">￥20</view>
+        <view class="deliveryFee_sum">￥{{deliveryFee}}</view>
     </view>
     <!--商品小计  -->
     <view class="order_goods_sum">
         <text>小记：</text>
-        <text>￥{{shopTotalPrice}}</text>
+        <text>￥{{totalPrice}}</text>
     </view>
 </view>
