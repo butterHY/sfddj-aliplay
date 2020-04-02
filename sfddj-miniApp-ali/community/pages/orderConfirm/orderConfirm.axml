@@ -22,7 +22,7 @@
 
         <!-- 选地址栏  --- 只有选商家配送时才显示 -->
         <block a:if="{{typeIndex == 1}}">
-            <choose-addr></choose-addr>
+            <choose-addr defaultAddress="{{defaultAddress}}"></choose-addr>
         </block>
         <!-- 商品信息 -->
         <order-goods goodsList="{{shopCartList}}" shopName="{{shopName}}" typeIndex="{{typeIndex}}" shopTotalPrice="{{shopTotalPrice.toFixed(2)}}" deliveryOutGratis="{{deliveryOutGratis}}" deliveryFee="{{deliveryFee}}" totalPrice="{{totalPrice.toFixed(2)}}"></order-goods>

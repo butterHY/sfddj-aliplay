@@ -70,6 +70,7 @@ App({
 		NowAddrId: null,   //用于保存临时选中的地址
 		detailNowAddrId: null,	// 用于商详页保存用户选择的地址；
 
+		communalAddr: {},      //社区购选择的地址
 
 	},
 
