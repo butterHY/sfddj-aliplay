@@ -72,11 +72,11 @@ class Cart extends MiniAppService {
                     }
                 } else {
                     obj.cartList.push({
-                        "defaultGoodsImage": goods.goodsImagePath,
+                        "defaultGoodsImage": goods.goodsImagePath[0],
                         "discountPrice": sku.discountPrice,
                         "discountStatus": sku.isDiscount,
                         "goodsId": sku.goodsId,
-                        "goodsImagePath": goods.goodsImagePath,
+                        "goodsImagePath": goods.goodsImagePath[0],
                         "goodsSn": goods.goodsSn,
                         "id": res.data.data.id,
                         "name": goods.title,
@@ -128,6 +128,8 @@ class Cart extends MiniAppService {
                             }
                             if(T.goodsImagePath) {
                                 T.goodsImagePath = api.baseImageUrl + JSON.parse(T.goodsImagePath)[0];
+                            } else {
+                                T.goodsImagePath = T.defaultGoodsImage;
                             }
                             if(T.discountStatus) {
                                 discountPrice += T.discountPrice * T.quantity;
@@ -191,7 +193,7 @@ class Cart extends MiniAppService {
                     if(newNum >= 0 && newNum <= 999) {
                         http.post(api.O2OCart.CHANGE, {
                             cartId: item.id,
-                            quantity: newNum
+                            addCount: addNum
                         }, (res) => {
                             if(res.data && res.data.ret && res.data.ret.code == 0) {
                                 item.quantity = newNum;
@@ -245,6 +247,24 @@ class Cart extends MiniAppService {
         } else {
             if(callbackFun) {
                 callbackFun(undefined);
+            }
+        }
+    }
+
+
+    filter(shopId) {
+        let shop = this.shops[shopId];
+        if(shop) {
+            let cartList = shop.cartList;
+            if(cartList) {
+                while(true) {
+                    let idx = cartList.findIndex((T) => T.quantity <= 0);
+                    if(idx >= 0) {
+                        cartList.splice(idx, 1);
+                    } else {
+                        break;
+                    }
+                }
             }
         }
     }
