@@ -22,6 +22,7 @@ let LocAddr = {
 
 				// 高德api定位
 				_this.GDCity('', function(addr) {
+					console.log('逆地址', addr); 
 					if(fn) fn(addr);
 				});
 			},
@@ -47,32 +48,46 @@ let LocAddr = {
 			location: _location,
 			extensions: 'all'
 		}, (res) => {
-			// console.log('逆向地理',res.data.regeocode)
+			console.log('逆向地理',res.data.regeocode)
 			
 			let regeo = res.data.regeocode; 
 			let _addressComponent = regeo.addressComponent;
+			// 省市区数据
 			let _area = _addressComponent.province + _addressComponent.city + _addressComponent.district;
-			let _streetNumber = _addressComponent.streetNumber;
-			let _building = _addressComponent.building;
-			let _streetShow = regeo.formatted_address.split( _area )[1];
+			// 街道数据
+			let _street = _addressComponent.township;
+			// 含有街道地址
+			let addr_hasStreeet = regeo.formatted_address.split( _area )[1]; 
+			// 不含有街道地址
+			let addr_noStreeet = addr_hasStreeet.split( _street )[1];
+
+			let _streetNumber = _addressComponent.streetNumber; 
+			let _streetShow = addr_noStreeet;
 			let _streetLoc = _streetNumber.location;
 			let _city = _addressComponent.city.length > 0 ? _addressComponent.city : _addressComponent.province;
 
 			_locInfo.loading = true;
+			// 保存全部数据 备用
 			_locInfo.addressJson = _addressComponent;
-			_locInfo.district = _addressComponent.district;
-			_locInfo.addressAll = regeo.formatted_address;
-			_locInfo.pois = regeo.pois;
-
-			_locInfo.streetShow = _streetShow;
+			// 附件1000米地址
+			_locInfo.pois = regeo.pois; 
+			// 经纬度
 			_locInfo.streetLoc = _streetLoc;
-			_locInfo.city = _city;   
-
-			_this.setLocStorage(_locInfo, function() { 
-				// console.log('缓存好了', _locInfo); 
-				my.hideLoading();
-				if (fn) fn(_locInfo);
-			}); 
+			// 省
+			_locInfo.province = _addressComponent.province;   
+			// 市
+			_locInfo.city = _city;    
+			// 区
+			_locInfo.district = _addressComponent.district;
+			// 街道
+			_locInfo.street = _street;    
+			// 全部地址
+			_locInfo.addressAll = regeo.formatted_address; 
+			// 详细地址
+			_locInfo.streetShow = _streetShow;
+ 
+			my.hideLoading();
+			if (fn) fn(_locInfo);
 
 		}, (err) => {
 			my.hideLoading();

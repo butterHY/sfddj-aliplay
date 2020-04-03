@@ -174,7 +174,7 @@ class Cart extends MiniAppService {
                     });
                 }
                 if(callbackFun) {
-                    callbackFun(this.shops[shopId]);
+                    callbackFun(res.data);
                 }
             } else {
                 if(callbackFun) {

@@ -1,4 +1,5 @@
 import locAddr from '/community/service/locAddr.js';
+const myApp = getApp();
 
 Page({
   data: {
@@ -31,6 +32,9 @@ Page({
             _this.setData({
               locInfo: data
             });
+
+            // 设置缓存并设置全部变量的值 globalData.userLocInfo 
+            myApp.setLocStorage(_this.data.locInfo);
           });
         }
         else {
@@ -38,6 +42,9 @@ Page({
             _this.setData({
               locInfo: res
             })
+            
+            // 设置缓存并设置全部变量的值 globalData.userLocInfo 
+            myApp.setLocStorage(_this.data.locInfo);
           });
         }
       }
@@ -58,8 +65,10 @@ Page({
           'locInfo.streetLoc': res.longitude + ',' + res.latitude
         });
 
-        locAddr.GDCity(_this.data.locInfo, (data) => {
-          my.reLaunch({ url: '../index/index' });
+        locAddr.GDCity(_this.data.locInfo, (data) => { 
+          myApp.setLocStorage(data, function () {
+            my.reLaunch({ url: '../index/index' });
+          });
         });
       },
       fail: (error) => { },
@@ -81,23 +90,11 @@ Page({
 
     // 更新locAddr 地址成最新的
     locAddr.locInfo = _this.data.locInfo;
-
-    this.setLocStorage(function () {
+    myApp.setLocStorage(_this.data.locInfo, function () {
       my.reLaunch({ url: '../index/index' });
     });
   },
-
-  // 设置缓存
-  setLocStorage(fn) {
-    const _this = this;
-    // console.log(_this.data.locInfo)
-    my.setStorage({
-      key: 'locationInfo',
-      data: _this.data.locInfo,
-      success: function () { if (fn) fn(); }
-    });
-  },
-
+ 
   // 到城市列表
   goToCityList() {
     my.navigateTo({ url: '../alphabetCity/alphabetCity' });

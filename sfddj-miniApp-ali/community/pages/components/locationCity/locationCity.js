@@ -1,4 +1,5 @@
 import locAddr from '/community/service/locAddr.js';
+const myApp = getApp();
 
 Component({
   mixins: [],
@@ -19,7 +20,7 @@ Component({
   props: {},
 
   didMount() { 
-    const _this = this; 
+    const _this = this;  
 
     my.getStorage({
       key: 'locationInfo', 
@@ -33,7 +34,10 @@ Component({
           locAddr.location((res)=> {
             _this.setData({
               locInfo: res
-            })
+            }); 
+            
+            // 设置缓存并设置全部变量的值 globalData.userLocInfo 
+            myApp.setLocStorage(_this.data.locInfo);
           });
         }
       }
@@ -47,6 +51,6 @@ Component({
   methods: {
     goLocationCity() {
       my.reLaunch({ url: '../addressLoc/addressLoc' });
-    }
+    }, 
   },
 });
