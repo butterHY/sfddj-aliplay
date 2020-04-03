@@ -48,7 +48,8 @@
     "pages/overTime/overTime",
     "pages/activities/lightMember/lightMember",
     "pages/user/jifenDetail/jifenDetail",
-    "pages/shopping/storeInfo/searchList/searchList"
+    "pages/shopping/storeInfo/searchList/searchList",
+    "pages/user/zcWebView/zcWebView"
   ],
   "subPackages": [
     {

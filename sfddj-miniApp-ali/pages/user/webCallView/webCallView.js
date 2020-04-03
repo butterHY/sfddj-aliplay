@@ -14,6 +14,7 @@ Page({
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: function(options) {
+		console.log("options",options)
 		try {
 			var link = my.getStorageSync({
 				key: 'webCallLink', // 缓存数据的key
@@ -54,6 +55,7 @@ Page({
 		that.setData({
 			link: getApp().globalData.systemInfo.platform == 'iOS' ?  newLink + '&ddjTimestamp=' + new Date().getTime() : newLink
 		});
+		console.log("link",that.data.link)
  
 	},
 
