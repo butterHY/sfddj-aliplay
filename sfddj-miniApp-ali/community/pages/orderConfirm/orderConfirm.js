@@ -7,7 +7,7 @@ Page({
         staticsImageUrl: api.staticsImageUrl,
         baseImageUrl: api.baseImageUrl,
         typeIndex: 2,
-        shopCartList: [],
+        // shopCartList: [],
         memo: '',
         deliveryTypeTaped: false,
         shopTotalPrice: 0,     //整个商店商品的总价格
@@ -20,7 +20,7 @@ Page({
             shipperName: '',
             shipperMobile: '',
         },
-        deliveryFee: 0,       //配送费
+        // deliveryFee: 0,       //配送费
         deliveryOutGratis: 0,      //满多少可免邮的价格
         totalPrice: 0,           //总价格
         defaultAddress: {},      //商家配送时的地址
