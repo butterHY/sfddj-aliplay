@@ -197,7 +197,8 @@ var InterfaceUrl = {
 	GET_ORDER_IDENTIFY: "/order/identify", //身份证与姓名验证
 	GET_GLOBAL_NOTICE: '/order/toKnow', //查看全球购用户须知
 	UPLOAD_IDCARDIMG: '/upload/saveIDCardImg', //上传身份证图片
-  UPLOAD_IDCARDIMGV2: '/upload/saveIDCardImgV2',   //上传身份证图片第2版，带OCR验证
+	UPLOAD_IDCARDIMGV2: '/upload/saveIDCardImgV2',   //上传身份证图片第2版，带OCR验证
+	UPLOAD_IDCARDIMGV3: '/upload/saveIDCardImgV3',   //上传身份证图片第2版 --- 支付宝小程序，带OCR验证
 
 	//    ----------------获取jsticket和id传给365那边 -------------//
 	GET_TICKET_ID: '/getWeixinData', //获取公众号的jsticket和appid
