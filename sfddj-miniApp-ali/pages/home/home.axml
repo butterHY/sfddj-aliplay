@@ -10,7 +10,6 @@
 <view a:if="{{true}}" class="width_100 flex_view_col posi_re" style="{{ isShowSearch || showToast ? 'height: 100vh; overflow-y: scroll;' : '' }}" disable-scroll="{{isShowSearch || show || showToast ? true : false}}">
 	<!-- <favorite type="tips" bottom="0rpx">收藏小程序，下次使用更方便</favorite> -->
 	<!-- 搜索模块 -->
-
 	<!-- 关注公众号组件 和搜索的组件 -->
 	<view>
 		<lifestyle a:if="{{canUseLife}}" publicId='2016071501623328'/>
@@ -23,6 +22,7 @@
 			</view>
 		</view>
 	</view>
+	<navigator url="/pages/activities/lightMember/lightMember" calss="font-50">轻会员入口</navigator>
 	<!-- 搜索热词和历史记录膜层 -->
 	<!-- <template is="hotWords" data="{{show:show,baseLocImgUrl,hotWords:hotWords,searchWords:searchWords,top: (canUseLife && !hideLifeStyle) ? hotWordTop-2 + 'px' : '120rpx'}}"></template> -->
 	<view class="flex_1 width_100 overHid">

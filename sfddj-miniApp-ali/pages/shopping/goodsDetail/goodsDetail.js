@@ -315,13 +315,9 @@ Page({
 
           
           that.data.goodsId = resData.goodsShowVO.goodsId;
-          if( resData.goodsShowVO.secKillStatus && !that.data.noStart && !that.data.isSpikeOver ) {
-            console.log(resData.goodsShowVO.secKillStatus)
-            if( (resData.goodsShowVO.defaultProd.activityStock > 0) || (resData.goodsShowVO.defaultProd.store > 0) ) {
-              that.data.isJustBuNow = true;
-            }
-          } else {
-          }
+          that.setSecKillDate(resData.goodsShowVO);
+          console.log(resData.goodsShowVO)
+
 
           //提前判断是否有默认规格且有库存
           if( !that.data.isJustBuNow && (!resData.goodsShowVO.defaultProd || !resData.goodsShowVO.defaultProd.store) && resData.goodsShowVO.products ) {
@@ -357,11 +353,11 @@ Page({
           resData.goodsShowVO.supplierInfo.headImage = resData.goodsShowVO.supplierInfo.headImage ? resData.goodsShowVO.supplierInfo.headImage : that.data.baseImageLocUrl + 'miniappImg/icon/icon_default_head.jpeg'; // 商家头像
 
           var article = resData.goodsShowVO.introduction;                                           // 商详的富文本字符串
-          that.data.minCount = resData.goodsShowVO.minCount ? resData.goodsShowVO.minCount : 1; //最少起售数
+          that.data.minCount = resData.goodsShowVO.minCount ? resData.goodsShowVO.minCount : 1;     //最少起售数
           that.data.specType = resData.goodsShowVO.specType;
           that.data.allProduct = resData.goodsShowVO.products;
           that.data.xgCount = resData.goodsShowVO.xgCount;
-          that.data.SFmember = resData.goodsShowVO.memberGoods ? true : false;                  // 判断是否是顺丰会员商品
+          that.data.SFmember = resData.goodsShowVO.memberGoods ? true : false;                     // 判断是否是顺丰会员商品
           that.data.addressList = resData.addressList;
 
           resData.goodsShowVO.nonDeliveryArea = resData.goodsShowVO.nonDeliveryArea.split(',');					// 不发货的地址)
@@ -394,6 +390,7 @@ Page({
 
             that.data.specType == 'SINGLE' || that.data.specType == 'MULTI' ? that.data.iavPath = resData.goodsShowVO.defaultProd.iavPath : that.data.iavPath = [];	// 单选和多选商品设置默认规格
 
+          console.log(that.data.specType);
           // 测试用的，让库存为 0
           // specType 规格类型,  MULTI 多规格, SINGLE 单规格, OPTIONAL 任选规格；
           that.data.goodsSpecMap = JSON.parse(JSON.stringify(that.data.goods.specifications));
@@ -421,7 +418,7 @@ Page({
 
           that.setGoodsSpecMap();
 
-          that.data.goods.secKillStatus == null ? that.data.goods.secKillStatus = false : '';
+          
           // let activityList = that.data.goods.activity ? that.data.goods.activity : {};  // 秒杀数据
           // activityList.totalStock = that.data.goods.secKillTotalCount;
           // activityList.totalSaleVolume = that.data.goods.secKillTotalSale;
@@ -461,7 +458,8 @@ Page({
           })
 
 // console.log( that.data.SFmember ,that.data.goods.jifenStatus, that.data.goods.deductStatus ,that.data.goods.memberDayPriceStatus)
-
+          console.log(that.data.product)
+          console.log(that.data.goodsSpecMap)
           reslove({
             type: true
           })
@@ -816,11 +814,13 @@ Page({
         showGoodsSpec: false,
       });
       this.goodsSpecSubmitTap();
+    } else if( this.data.goods.secKillStatus && this.data.isJustBuNow ) {
+      this.toBuyNow();
     } else {
       this.setData({
         showGoodsSpec: true,
         selectedSpecsBar: false,
-      });
+      }); 
     }
   },
 
@@ -859,13 +859,21 @@ Page({
 	 */
   selectedSpecs: function() {
     let that = this;
-    if (that.data.goods.secKillStatus) {
-      if (that.data.goods.viewStatus != 'SALEING' || that.data.goodsSecondKill.totalSaleVolume == that.data.goodsSecondKill.totalStock) {
-        return;
-      }
-    } else if (that.data.goods.viewStatus != 'SALEING' || that.data.goods.goodsStore == 0) {
+    if(that.data.goods.viewStatus != 'SALEING') {
+      return;
+    } else if( that.data.goods.secKillStatus && (that.data.isJustBuNow || (!that.data.isJustBuNow && that.data.goods.goodsStore == 0)) ) {
+      return;
+    } else if( !that.data.goods.secKillStatus && that.data.goods.goodsStore == 0 ) {
       return;
     }
+
+    // if (that.data.goods.secKillStatus) {
+    //   if (that.data.goods.viewStatus != 'SALEING' || that.data.goodsSecondKill.totalSaleVolume == that.data.goodsSecondKill.totalStock ) {
+    //     return;
+    //   }
+    // } else if (that.data.goods.viewStatus != 'SALEING' || that.data.goods.goodsStore == 0) {
+    //   return;
+    // }
 
     that.setData({
       selectedSpecsBar: true,
@@ -1343,18 +1351,27 @@ Page({
   // 领券弹窗打开
   showPopup: function() {
     let that = this;
-    if (that.data.goods.secKillStatus) {
-      if (that.data.goods.viewStatus != 'SALEING' || that.data.goodsSecondKill.totalSaleVolume == that.data.goodsSecondKill.totalStock) {
-        return;
-      }
-    } else if (that.data.goods.viewStatus != 'SALEING' || that.data.goods.goodsStore == 0) {
+    if(!that.isCantOpen()) {
       return;
     }
+
+
+    // if (that.data.goods.secKillStatus) {
+    //   if (that.data.goods.viewStatus != 'SALEING' || that.data.goodsSecondKill.totalSaleVolume == that.data.goodsSecondKill.totalStock) {
+    //     return;
+    //   }
+    // } else if (that.data.goods.viewStatus != 'SALEING' || that.data.goods.goodsStore == 0) {
+    //   return;
+    // }
+
+
+
 
     that.setData({
       isShowPopup: true
     })
   },
+
   // 领券弹窗关闭
   onPopupClose: function() {
     var that = this;
@@ -1362,16 +1379,21 @@ Page({
       isShowPopup: false,
     })
   },
+
   // 地址弹窗打开
   showAddressPop: function() {
     let that = this;
-    if (that.data.goods.secKillStatus) {
-      if (that.data.goods.viewStatus != 'SALEING' || that.data.goodsSecondKill.totalSaleVolume == that.data.goodsSecondKill.totalStock) {
-        return;
-      }
-    } else if (that.data.goods.viewStatus != 'SALEING' || that.data.goods.goodsStore == 0) {
+    if(!that.isCantOpen()) {
       return;
     }
+
+    // if (that.data.goods.secKillStatus) {
+    //   if (that.data.goods.viewStatus != 'SALEING' || that.data.goodsSecondKill.totalSaleVolume == that.data.goodsSecondKill.totalStock) {
+    //     return;
+    //   }
+    // } else if (that.data.goods.viewStatus != 'SALEING' || that.data.goods.goodsStore == 0) {
+    //   return;
+    // }
 
     that.setData({
       isShowAddressPop: true
@@ -2036,5 +2058,32 @@ Page({
       video.stop();
     }
   },
+
+  setSecKillDate(data) {
+    data.secKillStatus != true ? data.secKillStatus = false : '';
+    console.log('secKillStatus',data.secKillStatus,'noStart',this.data.noStart,'isSpikeOver',this.data.isSpikeOver)
+    if( data.secKillStatus && !this.data.noStart && !this.data.isSpikeOver ) {
+      data.secKillStatus = true;
+      if( data.defaultProd.activityStock > 0 || data.defaultProd.store > 0 ) {
+        this.data.isJustBuNow = true;
+      }
+    }
+    console.log('isJustBuNow',this.data.isJustBuNow)
+  },
+
+  // 如果是秒杀商品且有秒杀库存或者常规库存，则不能打开规格、地址、领券弹窗；如果不是秒杀商品，则 goodsStore == 0 不能打开弹窗；
+  isCantOpen() {
+    if(this.data.goods.viewStatus != 'SALEING') {
+      return false;
+    } else if( this.data.goods.secKillStatus && !this.data.isJustBuNow && this.data.goods.goodsStore == 0) {
+      return false;
+    } else if( !this.data.goods.secKillStatus && this.data.goods.goodsStore == 0 ) {
+      return false;
+    } else {
+      return true;
+    }
+  },
+
+  
 
 });

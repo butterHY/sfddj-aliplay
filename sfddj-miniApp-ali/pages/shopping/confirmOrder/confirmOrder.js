@@ -108,7 +108,7 @@ Page({
     idImgHeight: 0,    //选择图片后转base64时画布的高度
   },
 
-  onLoad: function(options) {
+  onLoad: function (options) {
     // console.log(';[[options', options)
     var that = this;
     that.calcH();
@@ -210,7 +210,7 @@ Page({
       isTuangou: that.data.isTuangou
     });
   },
-  onShow: function() {
+  onShow: function () {
     var that = this;
     my.hideLoading();
     var nowAddrId = getApp().globalData.NowAddrId ? getApp().globalData.NowAddrId : that.data.NowAddrId;
@@ -256,7 +256,7 @@ Page({
 
   },
 
-  addressManage: function(e) {
+  addressManage: function (e) {
     var that = this;
     that.data.needLoad = true;
     // if(getApp().globalData.comeFrom == 'fengxian'){
@@ -269,7 +269,7 @@ Page({
 	/**
 	 * 获取购物车订单数据
 	 */
-  getCartData: function(cartIdArray, nowAddrId) {
+  getCartData: function (cartIdArray, nowAddrId) {
     var that = this;
     var data = {
       cartIdArray: cartIdArray
@@ -277,7 +277,7 @@ Page({
     if (nowAddrId) {
       data.addressId = nowAddrId
     }
-    sendRequest.send(constants.InterfaceUrl.PAY_TO_CART_PAY, data, function(res) {
+    sendRequest.send(constants.InterfaceUrl.PAY_TO_CART_PAY, data, function (res) {
       var result = res.data.result;
       var da_upload_data = [];   //达观上报
 
@@ -411,7 +411,7 @@ Page({
       var goodsAmount = 0;
       that.data.result = res.data.result;
       that.data.totalPrice = 0;
-      that.data.result.supplierList.forEach(function(v1, i1, arr1) {
+      that.data.result.supplierList.forEach(function (v1, i1, arr1) {
         v1.leftCount = '60';
         // 多少个商家则有多少个留言信息
         goodsAmount += v1.orderGoodsList.length
@@ -483,7 +483,7 @@ Page({
       });
 
       that.resetTotalPrice('', 'init')
-    }, function(res) {
+    }, function (res) {
       // wx.showToast({
       //   title: res,
       // })
@@ -492,7 +492,7 @@ Page({
         showToastMes: res,
         loadFail: true
       });
-      that.data.timeOut = setTimeout(function() {
+      that.data.timeOut = setTimeout(function () {
         that.setData({
           showToast: false
         });
@@ -501,7 +501,7 @@ Page({
     });
   },
 
-  onUnload: function() {
+  onUnload: function () {
     var that = this;
     clearTimeout(that.data.timeOut);
   },
@@ -511,7 +511,7 @@ Page({
 	 * 
 	 * 积分商品下单的接口要加上版本2.0
 	 */
-  getNowPayData: function(productId, quantity, nowAddrId) {
+  getNowPayData: function (productId, quantity, nowAddrId) {
     my.showLoading({
       content: '加载中',
     });
@@ -525,7 +525,7 @@ Page({
     if (nowAddrId) {
       data.addressId = nowAddrId
     }
-    sendRequest.send(constants.InterfaceUrl.PAY_TO_BUY_NOW, data, function(res) {
+    sendRequest.send(constants.InterfaceUrl.PAY_TO_BUY_NOW, data, function (res) {
       my.hideLoading();
       // console.log(res)
       var result = res.data.result;
@@ -783,8 +783,8 @@ Page({
         var data = app.globalData.defaultAddress.contactName + '|' + app.globalData.defaultAddress.contactTel + '|1|' + app.globalData.defaultAddress.province + '|' + app.globalData.defaultAddress.city + '|' + app.globalData.defaultAddress.county + '|' + app.globalData.defaultAddress.address;
         sendRequest.send(constants.InterfaceUrl.SAVE_ADDRESS_SF, {
           data: data
-        }, function(res) {
-        }, function(err) {
+        }, function (res) {
+        }, function (err) {
         });
       } else {
         that.data.defaultAddress = that.data.result.defaultAddress;
@@ -796,7 +796,7 @@ Page({
           showToastMes: '抱歉，该商品兑换须' + result.goodsInfo.pointCost + '分，您的积分暂未达到兑换条件，请继续努力哦！'
         });
         clearTimeout(that.data.timeOut);
-        var timeOut = setTimeout(function() {
+        var timeOut = setTimeout(function () {
           that.setData({
             showToast: false
           });
@@ -811,7 +811,7 @@ Page({
           showInvoiceView: false
         });
       }
-    }, function(res) {
+    }, function (res) {
       my.hideLoading();
       // wx.showToast({
       //   title: res,
@@ -822,7 +822,7 @@ Page({
         loadFail: true
       });
       clearTimeout(that.data.timeOut);
-      var timeOut = setTimeout(function() {
+      var timeOut = setTimeout(function () {
         that.setData({
           showToast: false
         });
@@ -897,54 +897,14 @@ Page({
         count: 1,
         sizeType: ['original', 'compressed'],
         sourceType: ['album', 'camera'],
-        success: function(res) {
+        success: function (res) {
           let tempFileList = res.apFilePaths[0];
           my.showLoading({
             content: '图片上传中...'
           });
-          var token = ''
-          // let category = index == 0 ? 'front' : 'reverse';
 
-          try {
-            token = my.getStorageSync({
-              key: constants.StorageConstants.tokenKey, // 缓存数据的key
-            }).data;
-          } catch (e) { }
-          my.uploadFile({
-            url: constants.UrlConstants.baseUrl + constants.InterfaceUrl.UPLOAD_IDCARDIMG, // 开发者服务器地址
-            filePath: res.apFilePaths[0], // 要上传文件资源的本地定位符
-            fileName: 'file', // 文件名，即对应的 key, 开发者在服务器端通过这个 key 可以获取到文件二进制内容
-            fileType: 'image', // 文件类型，image / video / audio
-            header: {
-              "loginToken": token
-            },
-            success: (res) => {
-              var result = JSON.parse(res.data);
-              let setImgName = index == 0 ? 'idCardImgFront' : 'idCardImgBack'
-              let showToastMes = index == 0 ? '上传身份证正面失败' : '上传身份证反面失败'
-              my.hideLoading();
+          that.upLoadImg(res,index);
 
-              if (result.status == 'success') {
-                that.setData({
-                  [setImgName]: result.message
-                });
-              } else {
-                // that.setData({
-                //   showToastMes: '',
-                //   showToast: true
-                // });
-                // that.data.timeOut = setTimeout(function() {
-                //   that.setData({
-                //     showToast: false
-                //   });
-                // }, 2000);
-                my.showToast({
-                  content: showToastMes
-                })
-              }
-            },
-            fail(err) { }
-          })
         },
 
         fail(err) {
@@ -963,6 +923,57 @@ Page({
     }
 
 
+  },
+
+  // 上传图片
+  upLoadImg(res, index) {
+    let that = this;
+    let token = ''
+    // let category = index == 0 ? 'front' : 'reverse';
+
+    try {
+      token = my.getStorageSync({
+        key: constants.StorageConstants.tokenKey, // 缓存数据的key
+      }).data;
+    } catch (e) { }
+    let data = {
+      category: index == 0 ? 'front' : 'reverse',
+      idCardNo: that.data.idNum,
+      name: that.data.defaultAddress.shipName
+    }
+    my.uploadFile({
+      url: constants.UrlConstants.baseUrl + constants.InterfaceUrl.UPLOAD_IDCARDIMGV3, // 开发者服务器地址
+      filePath: res.apFilePaths[0], // 要上传文件资源的本地定位符
+      fileName: 'file', // 文件名，即对应的 key, 开发者在服务器端通过这个 key 可以获取到文件二进制内容
+      fileType: 'image', // 文件类型，image / video / audio
+      formData: data,
+      header: {
+        "loginToken": token
+      },
+      success: (res) => {
+        let data = res.data ? JSON.parse(res.data) : {};
+        let showToastMes = index == 0 ? '上传身份证正面失败' : '上传身份证反面失败';
+        let setImgName = index == 0 ? 'idCardImgFront' : 'idCardImgBack';
+        let setIdImgArr = 'idCardImgArr[' + index + ']';
+        // my.hideLoading();
+
+        if (data.errorCode == '0001' && data.result && Object.keys(data.result).length > 0) {
+          that.setData({
+            [setImgName]: data.result.picUrl,
+            [setIdImgArr]: that.data.baseImageUrl + data.result.picUrl
+          });
+        } else {
+          my.showToast({
+            content: data.message ? data.message : showToastMes
+          })
+        }
+      },
+      fail(err) {
+        my.showToast({
+          content: err
+        })
+      }
+    })
   },
 
   // 在canvas上绘图，并转为base64格式
@@ -1089,14 +1100,14 @@ Page({
 	/**
 	 * 初始化优惠券参数
 	 */
-  setCoupon: function(result) {
+  setCoupon: function (result) {
     var that = this;
     // 且不是秒杀商品
     if (!that.data.result.isActivitys && result.availableCoupon && result.availableCoupon.length > 0) {
       var max = result.availableCoupon[0].costPrice;
       var index = 0;
       var endDateStr = new Date(result.availableCoupon[0].endDate);
-      result.availableCoupon.forEach(function(item, i, arr) {
+      result.availableCoupon.forEach(function (item, i, arr) {
         item.beginDateStr = that.formatTime(item.beginDate);
         item.endDateStr = that.formatTime(item.endDate);
         item.taped = false;
@@ -1186,11 +1197,11 @@ Page({
 	/**
 	 * 拼团订单支付成功后，通过订单sn查询recordId跳转拼团成功页面
 	 */
-  getRecordId: function(orderSn) {
+  getRecordId: function (orderSn) {
     var that = this;
     sendRequest.send(constants.InterfaceUrl.ORDER_DETAIL, {
       orderSn: orderSn
-    }, function(res) {
+    }, function (res) {
       var recordId = res.data.result.order.recordId;
       if (that.data.lotPintuan) {
         my.redirectTo({
@@ -1201,7 +1212,7 @@ Page({
           url: '/pages/user/pintuanOrderDetail/pintuanOrderDetail?recordId=' + recordId
         });
       }
-    }, function(res) {
+    }, function (res) {
       my.showToast({
         content: res
       });
@@ -1211,7 +1222,7 @@ Page({
 	/**
 	 * 调起支付
 	 */
-  showWxPayment: function(res) {
+  showWxPayment: function (res) {
     var that = this;
     if (res.data.errorCode = "0001") {
       // conso
@@ -1220,7 +1231,7 @@ Page({
       var paymentOrderId = res.data.result.paymentOrderId;
       my.tradePay({
         tradeNO: res.data.result.orderStr.trade_no,
-        success: function(res) {
+        success: function (res) {
           that.controllPayment(paymentOrderId, 'success');
 
           if (res.resultCode == '9000') {
@@ -1321,7 +1332,7 @@ Page({
 
 
         },
-        fail: function(res) {
+        fail: function (res) {
           that.controllPayment(paymentOrderId, 'cancel');
 
           if (res.errMsg == 'requestPayment:fail cancel') { }
@@ -1337,19 +1348,19 @@ Page({
 	/**
 	 * 监控用户付款行为 success(成功)/cancel（取消）/sysBreak（异常）
 	 */
-  controllPayment: function(paymentId, type) {
+  controllPayment: function (paymentId, type) {
     sendRequest.send(constants.InterfaceUrl.CONTROL_PAYMENT, {
       paymentId: paymentId,
       type: type
-    }, function(res) {
-    }, function(err) {
+    }, function (res) {
+    }, function (err) {
     });
   },
 
 	/**
 	 * 跳转地址管理选择地址
 	 */
-  chooseAddress: function(e) {
+  chooseAddress: function (e) {
     my.navigateTo({
       url: '/pages/user/addressManage/addressManage?comeFrom=confirmOrder'
     });
@@ -1357,7 +1368,7 @@ Page({
 	/**
 	 * 立即下单购买
 	 */
-  buyNow: function(formId) {
+  buyNow: function (formId) {
     my.showLoading({
       content: '下单中'
     });
@@ -1465,7 +1476,7 @@ Page({
             showToastMes: '请先填写并保存收货人的身份证信息'
           });
           clearTimeout(that.data.timeOut);
-          var timeOut = setTimeout(function() {
+          var timeOut = setTimeout(function () {
             that.setData({
               showToast: false
             });
@@ -1486,7 +1497,7 @@ Page({
               showToast: true,
               showToastMes: '请您重新上传身份证正反面照片!'
             });
-            setTimeout(function() {
+            setTimeout(function () {
               that.setData({
                 showToast: false
               });
@@ -1512,19 +1523,19 @@ Page({
     // my.uma.trackEvent('orderConfirm_toPay', { channel_source: 'mini_alipay', order_city: myDefaultAddress.city, order_province: myDefaultAddress.province });
 
     if (that.data.isGiftOrder) {
-      sendRequest.send(constants.InterfaceUrl.PAY_GIFT_PAY, data2, function(res) {
+      sendRequest.send(constants.InterfaceUrl.PAY_GIFT_PAY, data2, function (res) {
         // 友盟+埋点 --点击去付款
         let umaData = { channel_source: 'mini_alipay', order_city: data2.city, order_province: data2.province, orderSn: res.data.orderSn }
         my.uma.trackEvent('orderConfirm_toPay', umaData);
         that.showWxPayment(res);
-      }, function(res) {
+      }, function (res) {
         my.hideLoading();
         that.setData({
           showToast: true,
           showToastMes: res
         });
         clearTimeout(that.data.timeOut);
-        var timeOut = setTimeout(function() {
+        var timeOut = setTimeout(function () {
           that.setData({
             showToast: false
           });
@@ -1534,7 +1545,7 @@ Page({
         });
       });
     } else {
-      sendRequest.send(constants.InterfaceUrl.PAY_BUY_NOW_2, data, function(res) {
+      sendRequest.send(constants.InterfaceUrl.PAY_BUY_NOW_2, data, function (res) {
         my.hideLoading();
         var result = res.data.result;
         let umaData = { channel_source: 'mini_alipay', order_city: data.city, order_province: data.province, orderSn: res.data.orderSn }
@@ -1547,7 +1558,7 @@ Page({
               showToast: true,
               showToastMes: result.orderStr.message
             })
-            setTimeout(function() {
+            setTimeout(function () {
               that.setData({
                 showToast: false
               })
@@ -1566,7 +1577,7 @@ Page({
               showToast: true,
               showToastMes: result.orderStr.message
             })
-            setTimeout(function() {
+            setTimeout(function () {
               that.setData({
                 showToast: false
               })
@@ -1588,7 +1599,7 @@ Page({
         //     that.showWxPayment(res);
         //   }
         // }
-      }, function(res) {
+      }, function (res) {
         my.hideLoading();
         // wx.showToast({
         //   title: res,
@@ -1598,7 +1609,7 @@ Page({
           showToastMes: res
         });
         clearTimeout(that.data.timeOut);
-        var timeOut = setTimeout(function() {
+        var timeOut = setTimeout(function () {
           that.setData({
             showToast: false
           });
@@ -1613,15 +1624,15 @@ Page({
 	/**
 	 * 购物车购买 
 	 */
-  cartBuy: function(formId) {
+  cartBuy: function (formId) {
     my.showLoading({
       content: '下单中'
     });
     var that = this;
     var cartArray = [];
-    that.data.result.supplierList.forEach(function(v1, i1, arr1) {
+    that.data.result.supplierList.forEach(function (v1, i1, arr1) {
       var orderGoodsList = v1.orderGoodsList;
-      orderGoodsList.forEach(function(value, index, arr) {
+      orderGoodsList.forEach(function (value, index, arr) {
         var item = {};
         item.cartId = value.cartId;
         item.memo = v1.memo;
@@ -1677,7 +1688,7 @@ Page({
           showToastMes: '请先填写并保存收货人的身份证信息'
         });
         clearTimeout(that.data.timeOut);
-        var timeOut = setTimeout(function() {
+        var timeOut = setTimeout(function () {
           that.setData({
             showToast: false
           });
@@ -1697,7 +1708,7 @@ Page({
             showToast: true,
             showToastMes: '请您重新上传身份证正反面照片!'
           });
-          setTimeout(function() {
+          setTimeout(function () {
             that.setData({
               showToast: false
             });
@@ -1718,7 +1729,7 @@ Page({
       }
     }
 
-    sendRequest.send(constants.InterfaceUrl.PAY_CART_PAY, data, function(res) {
+    sendRequest.send(constants.InterfaceUrl.PAY_CART_PAY, data, function (res) {
       my.hideLoading();
       var result = res.data.result;
       // 友盟+埋点 --点击去付款
@@ -1732,13 +1743,13 @@ Page({
           showToast: true,
           showToastMes: result.orderStr.message
         })
-        setTimeout(function() {
+        setTimeout(function () {
           that.setData({
             showToast: false
           })
         }, 2000)
       }
-    }, function(res) {
+    }, function (res) {
       my.hideLoading();
       // wx.showToast({
       //   title: res,
@@ -1748,7 +1759,7 @@ Page({
         showToastMes: res
       });
       clearTimeout(that.data.timeOut);
-      var timeOut = setTimeout(function() {
+      var timeOut = setTimeout(function () {
         that.setData({
           showToast: false
         });
@@ -1762,7 +1773,7 @@ Page({
 	/**
 	 * 点击去付款，根据入口页面（fromPage）调用立即购买（buyNow）或购物车购买
 	 */
-  buyNowTap: function(e) {
+  buyNowTap: function (e) {
     var formId = e.detail.formId;
     var that = this;
     if (!that.data.isGiftOrder && !that.data.defaultAddress) {
@@ -1789,7 +1800,7 @@ Page({
 	/**
 	 * 输入身份证号
 	 * */
-  idInputFn: function(e) {
+  idInputFn: function (e) {
     var that = this;
     that.setData({
       idNum: e.detail.value
@@ -1808,7 +1819,7 @@ Page({
 	/**
 	 * 输入身份证离开焦点，判断是否够18位
 	 * */
-  idPassFn: function(e) {
+  idPassFn: function (e) {
     // var that = this
     // if(e.detail.value.length < 18){
     //   that.setData({
@@ -1826,7 +1837,7 @@ Page({
 	/**
 	 * 清空身份证号
 	 * */
-  clearIdNumFn: function() {
+  clearIdNumFn: function () {
     var that = this;
     that.setData({
       idNum: '',
@@ -1839,7 +1850,7 @@ Page({
 	 * 全球购商品需要填的身份证
 	 * 点保存身份证号
 	 * */
-  saveIdFn: function() {
+  saveIdFn: function () {
     var that = this;
     var idNumFront = that.data.idNum.substring(0, 5);
     var idNumEnd = that.data.idNum.substring(14, 18);
@@ -1850,7 +1861,7 @@ Page({
     sendRequest.send(constants.InterfaceUrl.GET_ORDER_IDENTIFY, {
       name: name,
       idCardNo: idCardNo
-    }, function(res) {
+    }, function (res) {
       if (res.data.message == 'success') {
         that.setData({
           idSave: true,
@@ -1860,14 +1871,14 @@ Page({
         });
       } else {
       }
-    }, function(err) {
+    }, function (err) {
 
       that.setData({
         showToast: true,
         showToastMes: err
       });
       clearTimeout(that.data.timeOut);
-      var timeOut = setTimeout(function() {
+      var timeOut = setTimeout(function () {
         that.setData({
           showToast: false
         });
@@ -1881,7 +1892,7 @@ Page({
 	/**
 	 * 修改id
 	 * */
-  editIdNumFn: function(e) {
+  editIdNumFn: function (e) {
     var that = this;
     that.setData({
       idSave: false
@@ -1891,7 +1902,7 @@ Page({
 	/**
 	 * 选择勾选用户须知
 	 * */
-  chooseNotice: function() {
+  chooseNotice: function () {
     var that = this;
 
     that.setData({
@@ -1902,23 +1913,23 @@ Page({
 	/**
 	 * 打开全球购用户须知
 	 * */
-  openGlobalNotice: function() {
+  openGlobalNotice: function () {
     var that = this;
     sendRequest.send(constants.InterfaceUrl.GET_GLOBAL_NOTICE, {
       name: "购买须知App"
-    }, function(res) {
+    }, function (res) {
       that.setData({
         globalNotice: res.data.result.content,
         showGlobalNotice: true
       });
-    }, function(err) {
+    }, function (err) {
     });
   },
 
 	/**
 	 * 关闭全球购用户须知
 	 * */
-  closeGlobalNotice: function(e) {
+  closeGlobalNotice: function (e) {
     var that = this;
     if (e.currentTarget.dataset.autosel) {
       that.setData({
@@ -1935,7 +1946,7 @@ Page({
 	/**
 	 * 同意用户须知并立即下单
 	 * */
-  confirmAndPay: function() {
+  confirmAndPay: function () {
     var that = this;
 
     that.setData({
@@ -1944,10 +1955,10 @@ Page({
     });
 
     if (that.data.fromPage == 'cart') {
-      sendRequest.send(constants.InterfaceUrl.PAY_CART_PAY, that.data.globalData, function(res) {
+      sendRequest.send(constants.InterfaceUrl.PAY_CART_PAY, that.data.globalData, function (res) {
         my.hideLoading();
         that.showWxPayment(res);
-      }, function(res) {
+      }, function (res) {
         my.hideLoading();
         // wx.showToast({
         //   title: res,
@@ -1957,7 +1968,7 @@ Page({
           showToastMes: res
         });
         clearTimeout(that.data.timeOut);
-        var timeOut = setTimeout(function() {
+        var timeOut = setTimeout(function () {
           that.setData({
             showToast: false
           });
@@ -1967,7 +1978,7 @@ Page({
         });
       }, 'POST', false, 'application/json');
     } else {
-      sendRequest.send(constants.InterfaceUrl.PAY_BUY_NOW_2, that.data.globalData, function(res) {
+      sendRequest.send(constants.InterfaceUrl.PAY_BUY_NOW_2, that.data.globalData, function (res) {
         my.hideLoading();
         if (res.data.result.recordId) {
           //团长免单返回recordId
@@ -1983,7 +1994,7 @@ Page({
             that.showWxPayment(res);
           }
         }
-      }, function(res) {
+      }, function (res) {
         my.hideLoading();
         // wx.showToast({
         //   title: res,
@@ -1993,7 +2004,7 @@ Page({
           showToastMes: res
         });
         clearTimeout(that.data.timeOut);
-        var timeOut = setTimeout(function() {
+        var timeOut = setTimeout(function () {
           that.setData({
             showToast: false
           });
@@ -2008,7 +2019,7 @@ Page({
 	/**
 	 * 关闭必须同意用户须知弹窗
 	 * */
-  closeChooseAndPay: function() {
+  closeChooseAndPay: function () {
     var that = this;
     that.setData({
       showChooseAndPay: false
@@ -2018,7 +2029,7 @@ Page({
 	/**
 	 * 广告行为转化上报
 	 * */
-  useractionAdd: function() {
+  useractionAdd: function () {
     var that = this;
     var now = Math.floor(new Date().getTime() / 1000);
     var app = getApp();
@@ -2046,9 +2057,9 @@ Page({
             }
           }]
         },
-        success: function(res) {
+        success: function (res) {
         },
-        fail: function(err) {
+        fail: function (err) {
         }
       });
     } else {
@@ -2058,7 +2069,7 @@ Page({
 	/**
 	 * 选择要不要用积分抵扣
 	 * */
-  useDikou: function() {
+  useDikou: function () {
     var that = this;
     var maxDeductPoint = that.data.maxDeductPoint;
     var maxDeductPrice = that.data.maxDeductPrice;
@@ -2120,7 +2131,7 @@ Page({
 	/**
 	 * 输入备注信息
 	 */
-  memoInput: function(e) {
+  memoInput: function (e) {
     var that = this;
     var value = e.detail.value;
     var index = e.currentTarget.dataset.index;
@@ -2137,7 +2148,7 @@ Page({
 	/**
 	 * 点击显示平台优惠券
 	 */
-  availableCouponTap: function(e) {
+  availableCouponTap: function (e) {
     var that = this;
     that.setData({
       showDialogCoupon: true,
@@ -2160,7 +2171,7 @@ Page({
 	/**
 	 * 隐藏优惠券dialog
 	 */
-  closeCouponDialog: function(e) {
+  closeCouponDialog: function (e) {
     var that = this;
     that.setData({
       showDialogCoupon: false,
@@ -2171,7 +2182,7 @@ Page({
   },
 
   // 不使用发票
-  uselessInvoice: function() {
+  uselessInvoice: function () {
     var that = this;
     that.setData({
       showInvoice: false,
@@ -2181,7 +2192,7 @@ Page({
   },
 
   // 发票传值  obj为要传的data , type用来判断是从哪里进来的，0为普通下单，1为购物车
-  invoiceToData: function(obj, type) {
+  invoiceToData: function (obj, type) {
     var that = this;
     if (that.data.useInvoiceBoff) {
       if (invoiceData.ihead == 0) {
@@ -2205,7 +2216,7 @@ Page({
 	/**
 	 * 点击选中优惠券
 	 */
-  couponTap: function(e) {
+  couponTap: function (e) {
     var that = this
     let {
       couponId,
@@ -2227,7 +2238,7 @@ Page({
       result
     } = this.data
     let userCouponId = this.data.userCouponId
-    result.availableCoupon.forEach(function(v, i, arr) {
+    result.availableCoupon.forEach(function (v, i, arr) {
       if (v.userCouponId == couponId) {
         v.taped = !v.taped
         if (v.taped) {
@@ -2366,7 +2377,7 @@ Page({
               var max = supplierItem.supplierCoupon[0].costPrice;
               var index = 0;
               var endDateStr = new Date(supplierItem.supplierCoupon[0].endDate);
-              supplierItem.supplierCoupon.forEach(function(couponItem, couponIndex, arr) {
+              supplierItem.supplierCoupon.forEach(function (couponItem, couponIndex, arr) {
 
                 couponItem.beginDateStr = that.formatTime(couponItem.beginDate)
                 couponItem.endDateStr = that.formatTime(couponItem.endDate)
@@ -2575,7 +2586,7 @@ Page({
   },
 
   // 添加发票信息
-  showInvoiceFn: function() {
+  showInvoiceFn: function () {
     var that = this;
     that.setData({
       showInvoice: true
@@ -2586,7 +2597,7 @@ Page({
 	/**
 	 * 切换发票类型
 	 * */
-  chooseInvoiceType: function(e) {
+  chooseInvoiceType: function (e) {
     var index = parseInt(e.currentTarget.dataset.index);
     invoiceData.itype = index;
     this.setData({
@@ -2603,14 +2614,14 @@ Page({
 	/**
 	 * 切换发票抬头
 	 */
-  invoiceTaped: function(e) {
+  invoiceTaped: function (e) {
     var that = this;
     var index = e.currentTarget.dataset.index;
     var myType = e.currentTarget.dataset.mytype;
     var passData = {};
     if (myType == 'invoiceHead') {
       invoiceData.ihead = index;
-      that.data.invoiceHeadType.forEach(function(v, i, arr) {
+      that.data.invoiceHeadType.forEach(function (v, i, arr) {
         if (index == i) {
           v.taped = true;
           if (index == 1) {
@@ -2633,7 +2644,7 @@ Page({
         invoiceHeadType: that.data.invoiceHeadType
       });
     } else if (myType == 'invoiceCon') {
-      that.data.invoiceConType.forEach(function(v, i, arr) {
+      that.data.invoiceConType.forEach(function (v, i, arr) {
         if (index == i) {
           v.taped = true;
         } else {
@@ -2663,7 +2674,7 @@ Page({
 	 * */
 
   //  输入时事件
-  checkTakerMoInput: function(e) {
+  checkTakerMoInput: function (e) {
     var that = this;
     var phone = e.detail.value;
     if (that.data.result.defaultAddress) {
@@ -2692,7 +2703,7 @@ Page({
   },
 
   // 离开焦点后事件
-  checkTakerMoFn: function(e) {
+  checkTakerMoFn: function (e) {
     var that = this;
     var phone = e.detail.value;
     if (!this.checkPhoneNumber(phone) && !(this.HidePhone(this.data.initMobile) == phone)) {
@@ -2705,7 +2716,7 @@ Page({
         showToast: true,
         showToastMes: '请输入正确的手机号'
       });
-      setTimeout(function() {
+      setTimeout(function () {
         that.setData({
           showToast: false
         });
@@ -2728,7 +2739,7 @@ Page({
         showToast: true,
         showToastMes: '请输入正确的邮箱'
       });
-      setTimeout(function() {
+      setTimeout(function () {
         that.setData({
           showToast: false
         });
@@ -2737,7 +2748,7 @@ Page({
   },
 
   // 邮箱输入时验证是否正确，显示框框线提示
-  checkTakerMailInput: function(e) {
+  checkTakerMailInput: function (e) {
     var that = this;
     var email = e.detail.value;
     if (!utils.validateEmail(email)) {
@@ -2757,7 +2768,7 @@ Page({
   },
 
   // 发票--公司名称
-  companyInput: function(e) {
+  companyInput: function (e) {
     var that = this;
     // var invoiceData = tha
     that.setData({
@@ -2767,7 +2778,7 @@ Page({
   },
 
   // 纳税人识别码
-  taxCodeInput: function(e) {
+  taxCodeInput: function (e) {
     var that = this;
     that.setData({
       taxCode: e.detail.value
@@ -2776,7 +2787,7 @@ Page({
   },
 
   // 使用发票
-  useInvoice: function(e) {
+  useInvoice: function (e) {
     var that = this;
     // 如果选了电子发票时，收票人手机号和收票人邮箱要是正确的
     if (invoiceData.itype == 1) {
@@ -2786,7 +2797,7 @@ Page({
           showToast: true,
           showToastMes: '请输入正确的收票人手机号！'
         });
-        setTimeout(function() {
+        setTimeout(function () {
           that.setData({
             showToast: false
           });
@@ -2799,7 +2810,7 @@ Page({
           showToast: true,
           showToastMes: '请输入正确的收票人邮箱！'
         });
-        setTimeout(function() {
+        setTimeout(function () {
           that.setData({
             showToast: false
           });
@@ -2823,7 +2834,7 @@ Page({
         });
 
         clearTimeout(that.data.timeOut);
-        var timeOut = setTimeout(function() {
+        var timeOut = setTimeout(function () {
           that.setData({
             showToast: false
           });
@@ -2838,7 +2849,7 @@ Page({
         });
 
         clearTimeout(that.data.timeOut);
-        var timeOut = setTimeout(function() {
+        var timeOut = setTimeout(function () {
           that.setData({
             showToast: false
           });
@@ -2879,7 +2890,7 @@ Page({
         });
 
         clearTimeout(that.data.timeOut);
-        var timeOut = setTimeout(function() {
+        var timeOut = setTimeout(function () {
           that.setData({
             showToast: false
           });
@@ -2894,7 +2905,7 @@ Page({
         });
 
         clearTimeout(that.data.timeOut);
-        var timeOut = setTimeout(function() {
+        var timeOut = setTimeout(function () {
           that.setData({
             showToast: false
           });
@@ -2921,7 +2932,7 @@ Page({
 	/**
 	 * 积分使用规则显示
 	 * */
-  showUseRule: function() {
+  showUseRule: function () {
     var that = this;
     that.setData({
       showUseRule: true
@@ -2929,7 +2940,7 @@ Page({
   },
 
   // 关闭积分使用规则
-  closeUseRule: function() {
+  closeUseRule: function () {
     var that = this;
     that.setData({
       showUseRule: false
@@ -2952,7 +2963,7 @@ Page({
 	/**
 	 * 阻止事件冒泡
 	 * */
-  preventTouch: function(e) {
+  preventTouch: function (e) {
     return;
   },
 

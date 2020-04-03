@@ -11,7 +11,7 @@
         <!-- 每个状态对应每个列表 -->
         <block a:for="{{orderTypeList}}">
             <!-- 对应的状态有数据时 -->
-            <block a:if="{{orderList[index].length > 0}}">
+            <block a:if="{{orderList[index].length > 0 || !isLoadedList[index]}}">
                 <view a:if="{{typeIndex == index}}" class="">
                     <block a:for="{{orderList[index]}}" a:for-index="listIndex" a:for-item="listItem">
                         <template is="itemOrderList" data="{{staticsImageUrl}}"></template>
@@ -24,9 +24,7 @@
                             <text>加载中</text>
                         </view>
                         <!--没有更多-->
-                        <view a:else class='loading_view font-26 color-323232'>
-        没有更多了
-                        </view>
+                        <view a:else class='loading_view font-26 color-323232'>没有更多了</view>
                     </view>
                 </view>
             </block>

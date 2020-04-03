@@ -1,5 +1,5 @@
 <template name="itemAddress">
-    <view class="addrListItem {{canUse ? 'usefulList' : ''}}">
+    <view class="addrListItem {{canUse ? 'usefulList' : ''}}" onTap="selectTap">
         <view class="addrListItem_left single-line">
             <!-- 省市区 -->
             <view class="single-line font-30">广东省深圳市南山区</view>
@@ -12,7 +12,7 @@
             </view>
         </view>
         <!-- 编辑按钮 -->
-        <view class="addrListItem_edit">
+        <view class="addrListItem_edit" catchTap="editTap">
             <text class="icon-yijianfankui font-40"></text>
         </view>
     </view>

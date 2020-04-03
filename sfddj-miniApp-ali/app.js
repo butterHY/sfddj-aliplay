@@ -70,6 +70,7 @@ App({
 		NowAddrId: null,   //用于保存临时选中的地址
 		detailNowAddrId: null,	// 用于商详页保存用户选择的地址；
 
+		communalAddr: {},      //社区购选择的地址
 		userLocInfo: {},			// 用户定位信息
 
 
@@ -136,20 +137,20 @@ App({
     }
   },
 
-	// 设置定位数据缓存并设置全局数据 
-	setLocStorage(data, fn) { 
+	// 设置定位数据缓存并设置全局数据
+	setLocStorage(data, fn) {
 		const _this = this;
-		// console.log('locAddr-setLocStorage', data ) 
+		// console.log('locAddr-setLocStorage', data )
 		my.setStorage({
 			key: 'locationInfo',
 			data: data,
-			success: function (res) { 
+			success: function (res) {
 				_this.globalData.userLocInfo = data;
-				if (fn) fn(); 
+				if (fn) fn();
 			},
 			fail: function(err) {
 				console.log('定位缓存失败了', err)
 			}
 		});
-	},  
+	},
 });

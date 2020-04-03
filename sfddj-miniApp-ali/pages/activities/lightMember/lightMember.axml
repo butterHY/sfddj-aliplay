@@ -61,11 +61,11 @@
   </view>
 </view>
 
-<view class="openingButton posi_ab">
   <!-- <button class="openingBox all_100 flex_view_row tex_center"  open-type="getAuthorize" onGetAuthorize="onGetAuthorize" onError="onAuthError" scope='userInfo'>会员基础信息授权</button> -->
+<!-- <view class="openingButton posi_ab">
   <view class="openingBox all_100 flex_view_row tex_center" style="background: black" catchTap="goToLightMember">
   </view>
-</view>
+</view> -->
 
 <popup show="{{showRuleStatus}}" disableScroll="{{false}}">
   <view class="height_100vh flex_view_row justi_cen align_cen">

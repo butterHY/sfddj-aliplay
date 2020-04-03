@@ -87,6 +87,7 @@ Component({
         this.props.onSpikeOver('isSpikeOver');
       } else if (nowTime < starTime) {
         clearTimeout(getApp().globalData.goodsDetail_spikeTime);
+        console.log('ss')
         this.props.onSpikeOver('noStart');
       } else if (isFirstTime) {
         this.countDown();

@@ -29,9 +29,10 @@ Component({
   didUnmount() {},
   methods: { 
     onShowDetailClick() { 
-      if(this.props.canShowDetails && this.data.cartitems && this.data.cartitems.length) {
+      if(this.props.canShowDetails
+       && ((this.data.cartitems && this.data.cartitems.length) || this.data.isShowed)) {
         this.setData({ 
-          isShowed: true,
+          isShowed: !this.data.isShowed,
         });
       }
     },
