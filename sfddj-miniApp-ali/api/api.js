@@ -154,6 +154,7 @@ export default {
 	//O2O订单部分
 	O2O_ORDER: {
 		getOrderList: '/m/oto/otoOrder/1.0/findOrderListByType',   //获取订单列表
+		orderDetail: '/m/oto/otoOrder/1.0/detail',             //获取订单详情
 	},
 
 	// 高德地图api -- https://lbs.amap.com/api/webservice/gettingstarted
