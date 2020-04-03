@@ -1,25 +1,42 @@
-.pageBg{
-  background: #ffffff;
+.pageLicence{
+  background-color: white;
   width: 100vw;
   height: 100vh;
-  overflow: hidden;
+  padding: 30rpx;
   box-sizing: border-box;
+  overflow-y: auto;
 }
 
 .image-view {
   display: flex;
   flex-direction: row;
-  align-items: center;
-  padding-left: 56rpx;
-  margin: 64rpx 0 64rpx 0;
+  flex-wrap: wrap;
+  padding-top: 20rpx;
 }
-/*文字   */
-.licenseText {
-  margin: 38rpx 20rpx 0rpx 20rpx;
+
+.licenceArea{
+  width: 33.33%;
+  margin-bottom: 20rpx;
+  text-align: center;
 }
-/*图片   */
+
+/*图片  */
 .licenseImg {
   width: 180rpx;
   height: 180rpx;
-  margin-right: 42rpx;
 }
+
+/*文字  */
+.licenseText {
+  line-height: 1.6;
+}
+
+.bold{
+  font-weight: bold;
+}
+
+.highLight{
+  color: #508FF6;
+}
+
+

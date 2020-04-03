@@ -1,5 +1,6 @@
 let constants = require('../../../../utils/constants.js')
-
+import http from '../../../../api/http';
+import api from '../../../../api/api';
 Page({
 
   /**
@@ -9,6 +10,7 @@ Page({
     baseLocImgUrl: constants.UrlConstants.baseImageLocUrl,
     baseImageUrl: constants.UrlConstants.baseImageUrl, // 图片资源地址前缀
     showIntroduction: false,                           // 是否显示商家简介弹窗
+    supplierId: '',                                    // 商家id
 
     supplierDetail: '',                               // 商家详情
     starYew: [],                                      // 黄色星星
@@ -19,14 +21,36 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    if (options.supplierDetail) {
-      let storeDetail = JSON.parse(options.supplierDetail);
-      this.startEvent(storeDetail.supplierScore);
-      this.dateEvent(storeDetail.createDate);
+    if(options.supplierId){
       this.setData({
-        supplierDetail: storeDetail
+        supplierId: options.supplierId
       })
     }
+    this.getSupplierDetail()
+  },
+
+  // 获取商家信息
+  getSupplierDetail() {
+    let that = this
+    let data = {
+      supplierId: this.data.supplierId
+    }
+    http.post(api.SUPPLIER.GET_SUPPLIER_DETAIL, data, res => {
+      let result = res.data.data ? res.data.data : {}
+      that.setData({
+        supplierDetail: result,
+      })
+      if(result.supplierScore || result.supplierScore == "0"){
+        this.startEvent(result.supplierScore);
+
+      }
+      if(result.createDate){
+        this.dateEvent(result.createDate);
+      }
+    }, err => {
+
+    })
+
   },
 
   // 综合评分小星星个数
@@ -75,7 +99,7 @@ Page({
   },
 
   // 关闭商家简介弹窗
-  colseCommonDialog(){
+  onPopupClose(){
     this.setData({
       showIntroduction: false
     })
