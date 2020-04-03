@@ -1,0 +1,137 @@
+.addressPage {
+	height: 100vh;
+}
+
+.addressPage .formList {
+	background-color: #fff;
+	margin: 20rpx;
+	border-radius: 20rpx; 
+	font-size: 30rpx;
+	overflow: hidden;
+}
+
+.formList .listInput {
+	display: flex; 
+	align-items : flex-start;
+	justify-content : flex-start;
+}
+ 
+.formList .listInput .inputShow {
+	padding-left: 30rpx;
+	width: 100%;
+}
+.inputShow .am-input-line {
+	padding-right: 30rpx;
+	min-height: 110rpx;
+}
+
+.inputShow .am-input-label  {
+	min-width: 150rpx;
+	font-size: 30rpx;
+	margin-right: 0; 
+	color: #666666;
+}
+
+.inputShow .am-input-content  {
+	font-size: 30rpx;
+	color: #333333;
+	flex: 1;
+	display: flex;
+}
+
+.inputShow .am-input-item-extra {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.inputShow .am-input-item-extra .iconStyle {
+	font-size: 36rpx;
+	color: #dbdbdb;
+	height: 50rpx;
+	width: 70rpx;
+	display: block;
+	text-align: center;
+	line-height: 50rpx; 
+}
+
+.am-input-line-bottom::after {
+	left: 150rpx;
+	background-color: #e6e6e6
+}
+
+
+/*  textarea   */
+.formList .listInput .lableName {
+	font-size: 30rpx;
+	color: #666666;
+	width: 150rpx;
+	text-align: left;
+	margin-top: 4rpx;
+}
+
+.formList .listInput .textareaBox {
+	width: 100%;
+	display: block;
+	flex: 1;
+}
+
+.formList .listInput .textareaBox textarea {
+	padding: 0;
+	font-size: 30rpx;
+	color: #333333;
+}
+
+.formList .textareaShow {
+	box-sizing: border-box;
+	padding: 14rpx 30rpx; 
+	min-height: 110rpx;
+	box-sizing: border-box;
+
+}
+
+
+/*  底部按钮 */
+.bottomBtn {
+	margin-top: 120rpx;
+	padding: 0 50rpx;
+}
+
+.bottomBtn .BtnBox {
+	display: flex;
+	justify-content: space-between;
+	align-items: center; 
+	margin-bottom: 5rpx;
+}
+
+.bottomBtn .BtnBox button { 
+	height: 100rpx;
+	line-height: 100rpx;
+	font-size: 36rpx;
+	border-radius: 50px;
+}
+
+
+.bottomBtn .BtnBox.double button {
+	width: 300rpx; 
+}
+
+.bottomBtn .BtnBox .l_btn { 
+ 	background-color: #f3f3f3;
+	border: 1px solid #dbdbdb;
+	color: #666666; 
+}
+.bottomBtn .BtnBox .r_btn { 
+	background-color: #ff0032; 
+	color: #fff; 
+}
+
+.bottomBtn .BtnBox .big_btn { 
+	background-color: #ff0032; 
+	color: #fff; 
+	flex: 1;
+}
+
+.button-hover {
+	background-color: rgba(0, 0, 0, 0.2); opacity: 0.7;
+}

@@ -1,3 +1,57 @@
-<view>
-  New Page
+<view class="addressPage">
+  <view class="formList"> 
+    <view class="listInput">
+      <input-item type="text" clear="{{true}}"  placeholder="{{ name_placeholder }}"  value="{{ name }}" 
+        data-field="name"  
+        className="inputShow"
+        className="dadada"  
+        onInput="onItemInput"  
+        onClear="onClear">
+        联系人 
+      </input-item>
+    </view>
+   
+    <view class="listInput ">
+      <input-item type="number" clear="{{true}}" placeholder="{{ tel_placeholder }}" value="{{ tel }}"  
+        data-field="tel"  
+        className="inputShow"
+        onInput="onItemInput" 
+        onClear="onClear">电话</input-item>
+    </view>
+
+    <view class="listInput">
+      <input-item type="text" clear="{{true}}" placeholder="{{ addr_placeholder }}"  value="{{ address }}" 
+        disabled="{{ true }}"
+        data-field="address"  
+        className="inputShow">地址
+          <view slot="extra" class="">
+            <am-icon class="iconStyle" type="right"></am-icon>
+          </view>
+
+          <view slot="extra" onTap="chooseLocation">
+            <am-icon class="iconStyle" type="location"></am-icon>
+          </view>
+        </input-item>
+    </view> 
+    
+    <view class="listInput textareaShow">
+      <view class="lableName">详细地址</view>
+      <view class="textareaBox"> 
+        <textarea 
+          value="{{ street }}"
+          auto-height show-count="{{ false }}"
+          placeholder="{{ street_placeholder }}" />
+      </view> 
+    </view>
+  </view>
+
+  <view class="bottomBtn">
+    <view class="BtnBox double"> 
+      <button class="l_btn" hover-class="button-hover" type="primary">删除</button>
+      <button class="r_btn" hover-class="button-hover" type="warn">保存</button>
+    </view>
+    <view class="BtnBox single">
+      <button class="big_btn" hover-class="button-hover" type="warn">保存并使用</button>
+    </view>
+  </view>
 </view>
