@@ -84,7 +84,7 @@ Page({
     my.chooseLocation({
 
       success: (res) => {
-        // console.log('chooseLocation - address', res)
+        console.log('chooseLocation - address', res)
         _this.setData({
           'locInfo.longitude': res.longitude,
           'locInfo.latitude': res.latitude,

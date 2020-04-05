@@ -159,6 +159,11 @@ export default {
 		deleteOrder: '/m/oto/otoOrder/1.0/delete',             //删除订单
 	},
 
+	// 地址部分
+	O2O_ADDRESS: {
+		getAddrList: '/m/oto/otoAddress/getAddress',          //获取地址列表
+	},
+
 	// 高德地图api -- https://lbs.amap.com/api/webservice/gettingstarted
 	GDMap: {
 		KEY: 'd68d967fdbeba970a72653b52e5e4404',
