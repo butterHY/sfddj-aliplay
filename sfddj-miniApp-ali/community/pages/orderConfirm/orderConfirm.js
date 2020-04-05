@@ -1,6 +1,7 @@
-import api from '/api/api';
+// import api from '/api/api';
 import Cart from '/community/service/cart';
-import http from '/api/http';
+import { post, api } from '/api/http';
+import { payOrderNow } from '/community/assets/common';
 
 Page({
     data: {
@@ -79,7 +80,7 @@ Page({
 
     // 获取进入确认订单页的数据
     getOrderData(shopId) {
-        http.post(api.O2O_ORDERCONFIRM.toOrderPay, { shopId }, res => {
+        post(api.O2O_ORDERCONFIRM.toOrderPay, { shopId }, res => {
             // console.log(res)
             let result = res.data.data ? res.data.data : {};
             if (Object.keys(result).length > 0) {
@@ -191,10 +192,45 @@ Page({
 
     createPayOrder(data) {
         let that = this;
-        http.post(api.O2O_ORDERCONFIRM.createPayOrder, data, res => {
-            // console.log(res)
-            // 调起支付
-            that.showWxPayment(res);
+        post(api.O2O_ORDERCONFIRM.createPayOrder, data, res => {
+            if (res.data.data && Object.keys(res.data.data).length > 0) {
+                let { orderSn, tradeNo } = res.data.data;
+                // console.log(res.data.data,orderSn,tradeNo);
+                // 调起支付
+                payOrderNow({
+                    orderSn,
+                    tradeNo,
+                    clearShopCart: () => {
+                        this.cart.clear(this.data.shopid, (res) => {
+                        });
+                    },
+                    callBack: () => {
+                        that.cancelSwitch();
+                        my.showToast({
+                            content: '支付成功'
+                        });
+                        my.redirectTo({
+                            url: '/community/pages/communalOrderDetail/communalOrderDetail?orderSn=' + orderSn
+                        })
+                    },
+                    failFun: () => {
+                        // 解除防止重复提交开关
+                        that.cancelSwitch();
+                        my.showToast({
+                            content: '已取消'
+                        })
+                        my.redirectTo({
+                            url: '/community/pages/communalOrderDetail/communalOrderDetail?orderSn=' + orderSn
+                        })
+                    },
+                    errorFun: () => {
+                        that.cancelSwitch();
+                    }
+                })
+            } else {
+                that.cancelSwitch();
+            }
+
         }, err => { })
     },
 
@@ -204,6 +240,9 @@ Page({
     showWxPayment: function (res) {
         var that = this;
         if (res.data.data && Object.keys(res.data.data).length > 0) {
+            // 清除本地购物车
+            this.cart.clear(this.data.shopid, (res) => {
+            });
             // conso
             let { orderSn, tradeNo } = res.data.data;
             // let orderStr = res.data.data.orderStr;
@@ -216,7 +255,7 @@ Page({
 
                         // 检测是否到账
                         that.controllPayment(orderSn, nowDate, () => {
-                            that.cancleSwitch();
+                            that.cancelSwitch();
                             my.showToast({
                                 content: '支付成功'
                             });
@@ -229,7 +268,7 @@ Page({
                     }
                     else if (res.resultCode == '6001') {
                         // 解除防止重复提交开关
-                        that.cancleSwitch();
+                        that.cancelSwitch();
                         my.showToast({
                             content: '已取消'
                         })
@@ -239,7 +278,7 @@ Page({
                     }
                     else if (res.resultCode == '6002') {
                         // 解除防止重复提交开关
-                        that.cancleSwitch();
+                        that.cancelSwitch();
                         my.showToast({
                             content: '网络连接出错'
                         })
@@ -249,7 +288,7 @@ Page({
                     }
                     else {
                         // 解除防止重复提交开关
-                        that.cancleSwitch();
+                        that.cancelSwitch();
                         my.showToast({
                             content: '支付失败'
                         })
@@ -261,16 +300,16 @@ Page({
 
                 },
                 fail: function (res) {
-                    that.cancleSwitch();
+                    that.cancelSwitch();
                 }
             });
         } else {
-            that.cancleSwitch();
+            that.cancelSwitch();
         }
     },
 
     // 解除开关
-    cancleSwitch() {
+    cancelSwitch() {
         my.hideLoading();
         // 解除防止重复提交开关
         this.setData({
@@ -284,7 +323,7 @@ Page({
 	 */
     controllPayment(orderSn, payTime, callback) {
         let that = this;
-        http.post(api.O2O_ORDERCONFIRM.queryPayType, { orderSn }, (res) => {
+        post(api.O2O_ORDERCONFIRM.queryPayType, { orderSn }, (res) => {
             let result = res.data.data ? res.data.data : {};
             if (result.payFinish) {
                 callback()
@@ -295,7 +334,7 @@ Page({
                 if (nowDate - payTime < 10000) {
                     that.controllPayment(orderSn, payTime, callback)
                 } else {
-                    that.cancleSwitch();
+                    that.cancelSwitch();
                     // 支付失败
                     my.showToast({
                         content: '支付失败'
@@ -310,7 +349,7 @@ Page({
             // my.showToast({
             //     content: '支付失败'
             // })
-            that.cancleSwitch();
+            that.cancelSwitch();
             my.redirectTo({
                 url: '/community/pages/communalOrderDetail/communalOrderDetail?orderSn=' + orderSn
             })

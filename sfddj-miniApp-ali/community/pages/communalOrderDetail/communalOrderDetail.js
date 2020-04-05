@@ -1,6 +1,7 @@
 
-import api from '/api/api';
-import http from '/api/http';
+// import api from '/api/api';
+import { post, api } from '/api/http';
+import { payOrderNow } from '/community/assets/common';
 const dateFmt = require('/utils/dateformat');
 
 Page({
@@ -14,6 +15,8 @@ Page({
         leftTimeStr: '00:00',     //倒计时的字符串显示形式
         timer: null,
         typeIndex: 0,
+        loadComplete: false,       //是否加载完成 
+        loadFail: false,           //是否加载失败
     },
     onLoad(options) {
         let { orderSn } = options;
@@ -24,26 +27,46 @@ Page({
 
     },
 
+    // onUnload() {
+    //     clearTimeout(this.data.timer);
+    // },
+
+    onHide() {
+        // 页面隐藏
+        clearTimeout(this.data.timer);
+    },
+    onUnload() {
+        // 页面被关闭
+        clearTimeout(this.data.timer);
+    },
+
     // 获取订单详情
-    getOrderDetail(orderSn) {
+    getOrderDetail() {
         let that = this;
-        http.post(api.O2O_ORDER.orderDetail, { orderSn }, res => {
+        post(api.O2O_ORDER.orderDetail, { orderSn: this.data.orderSn }, res => {
             // console.log('orderDetail', res)
             let result = res.data.data ? res.data.data : {};
             result.items = result.items && Object.keys(result.items).length > 0 ? that.handleGoodsInfo(result.items) : [];
-            if(result.orderStatus == 'NOPAY') {
+            if (result.orderStatus == 'NOPAY') {
                 that.noPayCount(result.createDate);
             }
             this.setGoodsInfo(result);
             this.setData({
                 result,
-                goodsList: result.items
+                goodsList: result.items,
+                loadComplete: true,
+                loadFail: false
             })
-        }, err => { })
+        }, err => {
+            this.setData({
+                loadComplete: true,
+                loadFail: true
+            })
+         })
     },
 
     // 设置商品信息
-    setGoodsInfo(result){
+    setGoodsInfo(result) {
         this.setData({
             deliveryFee: result.deliveryFee,
             shopTotalPrice: result.payFee,
@@ -92,15 +115,14 @@ Page({
             this.setData({
                 leftTimeStr: minsStr + ':' + secondsStr
             })
-            console.log(this.data.leftTimeStr)
             clearTimeout(this.data.timer);
-            this.data.timer = setTimeout(function(){
+            this.data.timer = setTimeout(function () {
                 leftTimes = parseInt(leftTimes - 1000);
                 that.setData({
                     leftTimes
                 })
                 that.countDown();
-            },1000)
+            }, 1000)
         }
         else {
             this.getOrderDetail(this.data.orderSn);
@@ -108,10 +130,20 @@ Page({
     },
 
     // 取消订单
-    cancleOrder() {
+    cancelOrder() {
         this.confirmPop({
             content: '确认取消订单？', confirmButtonText: '取消订单', cancelButtonText: '再想想', callback: () => {
-                console.log('取消订单确认')
+                post(api.O2O_ORDER.cancelOrder, { orderSn: this.data.orderSn }, res => {
+                    let result = res.data.data ? res.data.data : {};
+                    my.showToast({
+                        content: '取消成功'
+                    })
+                    this.getOrderDetail()
+                }, err => {
+                    my.showToast({
+                        content: err
+                    })
+                })
             }
         })
     },
@@ -138,4 +170,39 @@ Page({
             },
         });
     },
+
+    // 去支付
+    toPayNow(e) {
+        let that = this;
+        let { orderSn, tradeNo } = e.currentTarget.dataset;
+        payOrderNow({
+            orderSn,
+            tradeNo,
+            callBack: () => {
+                my.showToast({
+                    content: '支付成功'
+                })
+                that.getOrderDetail()
+            },
+            failFun: () => {
+                my.showToast({
+                    content: '支付失败'
+                })
+            },
+            errorFun: () => {
+                my.showToast({
+                    content: '支付失败'
+                })
+            }
+        })
+    },
+
+    // 去商品详情页
+    toGoodsDetail(e) {
+        let {goodsId} = e.currentTarget.dataset;
+        my.navigateTo({
+          url: '/community/pages/goodsDetail/goodsDetail?goodsId=' + goodsId
+        });
+    },
+
 });
