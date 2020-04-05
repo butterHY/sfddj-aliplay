@@ -89,9 +89,12 @@ Page({
     }
 
     // 每次进到商家店铺页面 就显示首页
-    this.setData({
-      tabIndex: 0,
-    })
+    if(this.data.tabIndex == 3){
+      this.setData({
+        tabIndex: 0,
+      })
+    }
+    
   },
 
   /**
@@ -193,7 +196,6 @@ Page({
     let that = this;
     let url = e.currentTarget.dataset.url;
     let chInfo = constants.UrlConstants.chInfo;
-    console.log('chInfo',url,chInfo)
     if (url.substring(0,4).indexOf('http') > -1) {
       my.call('startApp', { appId: '20000067', param: { url: url, chInfo: chInfo } })
     }

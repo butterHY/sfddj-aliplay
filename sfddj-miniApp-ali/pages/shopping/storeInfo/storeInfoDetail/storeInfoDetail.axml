@@ -1,6 +1,3 @@
-<!--viewages/shoviewviewing/storeInfo/storeInfoDetail/storeInfoDetail.wxml-->
-<import src="/pages/common/common-dialog" />
-
 <view>
   <view class="storeIntroduction">
     <!--商家头像-->
@@ -29,7 +26,7 @@
     <!--好评率-->
     <view class="storeFavRate whiteBack">
       <!--标题-->
-      <view class="storeFavRateTit">
+      <view class="storeFavRateTit" a:if="{{supplierDetail.goodRate}}">
         <view class="flex_view_row">
           <view>店铺好评率</view>
         
@@ -58,7 +55,7 @@
         <view>基础信息</view>
       </view>
       <!--掌柜名-->
-      <view class="storeOwnerNew flex_view_row align_cen justi_between">
+      <view class="storeOwnerNew storeRegisAddr flex_view_row">
         <view class="storeOwnerTit flex_1">
           <view>掌柜名</view>
         </view>
@@ -67,7 +64,7 @@
         </view>
       </view>
       <!--客服电话-->
-      <view class="storeOwnerNew flex_view_row align_cen justi_between">
+      <view class="storeOwnerNew storeRegisAddr flex_view_row">
         <view class="storeOwnerTit flex_1">
           <view>客服电话</view>
         </view>
@@ -76,7 +73,7 @@
         </view>
       </view>
       <!--注册地址-->
-      <view class="storeOwnerNew storeRegisAddr flex_view_row">
+      <view class="storeOwnerNew storeRegisAddr flex_view_row" a:if="{{supplierDetail.showAddress}}">
         <view class="storeOwnerTit flex_1">
           <view>注册地址</view>
         </view>
@@ -85,7 +82,7 @@
         </view>
       </view>
       <!--企业资质-->
-      <navigator hover-class="none" a:if="{{supplierDetail.companyImages}}" url='../businessLicence/businessLicence?images={{supplierDetail.companyImages}}' class="storeIntell flex_view_row align_cen justi_between">
+      <navigator hover-class="none" a:if="{{supplierDetail.companyImages && supplierDetail.companyImages.length>0}}" url='../businessLicence/businessLicence?images={{supplierDetail.companyImages}}' class="storeIntell flex_view_row align_cen justi_between">
         <view class="storeIntellTit flex_1">
           <view>企业资质</view>
         </view>
@@ -97,7 +94,7 @@
         </view>
       </navigator>
         <!--行业证照-->
-        <navigator hover-class="none" a:if="{{supplierDetail.businesImages}}" url='../businessLicence/businessLicence?images={{supplierDetail.businesImages}}' class="storeIntell flex_view_row align_cen justi_between">
+        <navigator hover-class="none" a:if="{{supplierDetail.businesImages && supplierDetail.businesImages.length>0}}" url='../businessLicence/businessLicence?images={{supplierDetail.businesImages}}' class="storeIntell flex_view_row align_cen justi_between">
           <view class="storeIntellTit flex_1">
             <view>行业证照</view>
           </view>
@@ -110,7 +107,7 @@
         </navigator>
 
       <!--开店时间-->
-      <view class="storeOwnerNew flex_view_row align_cen justi_between">
+      <view class="storeOwnerNew storeRegisAddr flex_view_row" a:if="{{supplierDetail.createDate}}">
         <view class="storeOwnerTit flex_1">
           <view>开店时间</view>
         </view>
@@ -134,4 +131,14 @@
 </view>
 
 <!-- 店铺简介弹窗 -->
-<template is="commonDialog" data="{{show: showIntroduction, dialogType: 'storeIntroduction',content: supplierDetail.introduction,botText:'确定'}}"></template>
+<popup show="{{ showIntroduction }}" mask="{{true}}" position="bottom" animation="{{true}}" onClose="onPopupClose" zIndex="1001" disableScroll="{{false}}">
+  <view class="coupon-popup">
+    <view class="flex_view_col all_100">
+        <scroll-view class="flex_1" scroll-y="{{true}}">
+            <view class="storeInfotroTit">商家简介</view>
+            <view class="storeIntroCon font-26">{{supplierDetail.introduction}}</view>
+        </scroll-view>
+        <view class="couponPopup-btn toBuyNowBack" onTap="onPopupClose">确定</view>
+    </view>
+  </view>
+</popup>

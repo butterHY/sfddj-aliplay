@@ -235,7 +235,7 @@ Page({
 		// 	url: '/pages/user/webCallView/webCallView?link=' + webCallLink + '&newMethod=new'
 		// });
     my.navigateTo({
-			url: '/pages/user/webView/webView?uname=' + that.data.uname
+			url: '/pages/user/zcWebView/zcWebView?uname=' + that.data.uname
 		});
 
 	},
