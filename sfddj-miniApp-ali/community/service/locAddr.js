@@ -48,7 +48,7 @@ let LocAddr = {
 			location: _location,
 			extensions: 'all'
 		}, (res) => {
-			console.log('逆向地理',res.data.regeocode)
+			// console.log('逆向地理',res.data.regeocode)
 			
 			let regeo = res.data.regeocode; 
 			let _addressComponent = regeo.addressComponent;
@@ -93,20 +93,7 @@ let LocAddr = {
 			my.hideLoading();
 			console.log(err)
 		})
-	},
-
-	// 设置缓存数据
-	setLocStorage(data, fn) { 
-		// console.log('locAddr-setLocStorage', data ) 
-		my.setStorage({
-			key: 'locationInfo',
-			data: data,
-			success: function (res) { if (fn) fn(); },
-			fail: function(err) {
-				console.log('缓存失败了',err)
-			}
-		});
-	},
+	}
 }
 
 export default LocAddr;

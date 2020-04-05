@@ -5,7 +5,7 @@
         data-field="name"  
         className="inputShow"
         className="dadada"  
-        onInput="onItemInput"  
+        onInput="onInputName"  
         onClear="onClear">
         联系人 
       </input-item>
@@ -15,11 +15,11 @@
       <input-item type="number" clear="{{true}}" placeholder="{{ tel_placeholder }}" value="{{ tel }}"  
         data-field="tel"  
         className="inputShow"
-        onInput="onItemInput" 
+        onInput="onInputTel" 
         onClear="onClear">电话</input-item>
     </view>
 
-    <view class="listInput">
+    <view class="listInput" onTap="chooseLocation">
       <input-item type="text" clear="{{true}}" placeholder="{{ addr_placeholder }}"  value="{{ address }}" 
         disabled="{{ true }}"
         data-field="address"  
@@ -28,7 +28,7 @@
             <am-icon class="iconStyle" type="right"></am-icon>
           </view>
 
-          <view slot="extra" onTap="chooseLocation">
+          <view slot="extra" >
             <am-icon class="iconStyle" type="location"></am-icon>
           </view>
         </input-item>
@@ -46,12 +46,12 @@
   </view>
 
   <view class="bottomBtn">
-    <view class="BtnBox double"> 
-      <button class="l_btn" hover-class="button-hover" type="primary">删除</button>
-      <button class="r_btn" hover-class="button-hover" type="warn">保存</button>
+    <view class="BtnBox double" a:if="{{ !isNew }}"> 
+      <button class="l_btn" hover-class="button-hover" type="primary" onTap="delAddr">删除</button>
+      <button class="r_btn" hover-class="button-hover" type="warn" onTap="saveAddr">保存</button>
     </view>
-    <view class="BtnBox single">
-      <button class="big_btn" hover-class="button-hover" type="warn">保存并使用</button>
+    <view class="BtnBox single" a:else>
+      <button class="big_btn" hover-class="button-hover" type="warn" onTap="useAddr">保存并使用</button>
     </view>
   </view>
 </view>

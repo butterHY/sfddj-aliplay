@@ -2,7 +2,7 @@
 
 <view class="addressList">
     <!-- 新增地址按钮 -->
-    <view class="addAddrPart">
+    <view class="addAddrPart" onTap="goNewAddress">
         <view class="flex_1">新增地址</view>
         <view class="marLeft_30">
             <text class="icon-chevron-right font-30 color-bdbdbd"></text>

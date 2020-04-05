@@ -71,6 +71,8 @@ App({
 		detailNowAddrId: null,	// 用于商详页保存用户选择的地址；
 
 		communalAddr: {},      //社区购选择的地址
+
+		editSelectAddr: {}, 	// 选择编辑的地址
 		userLocInfo: {},			// 用户定位信息
 
 
