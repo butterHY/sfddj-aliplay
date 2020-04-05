@@ -197,12 +197,5 @@ Page({
         })
     },
 
-    // 去商品详情页
-    toGoodsDetail(e) {
-        let {goodsId} = e.currentTarget.dataset;
-        my.navigateTo({
-          url: '/community/pages/goodsDetail/goodsDetail?goodsId=' + goodsId
-        });
-    },
 
 });
