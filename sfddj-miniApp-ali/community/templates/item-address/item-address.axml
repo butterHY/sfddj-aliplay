@@ -12,7 +12,7 @@
             </view>
         </view>
         <!-- 编辑按钮 -->
-        <view class="addrListItem_edit" data-id="{{item.id}}" catchTap="editTap">
+        <view class="addrListItem_edit" data-id="{{item.id}}" data-editAddr="{{ item }}" catchTap="editTap">
             <text class="icon-edit1 font-40"></text>
         </view>
     </view>

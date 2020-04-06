@@ -56,18 +56,10 @@ Page({
   },
 
   // 点击编辑
-  editTap() {
-    let editAddress = {
-      shipName: '哈哈',
-      shipPhone: 18848848888,
-      province: '广东省1',
-      city: '深圳市1',
-      district: '宝安区1',
-      street: '西乡街道1',
-      detail: '你猜不到的地址1'
-    }
-    getApp().globalData.editSelectAddr = Object.assign({}, editAddress);
-    // isNew 1 表示新建地址  0表示是旧地址，需要从全局地址中获取数据
+  editTap(e) {
+    let editAddress = e.target.dataset.editAddr;
+    getApp().globalData.editSelectAddr = Object.assign({}, editAddress); 
+    // isNew 1 表示新建地址  0表示是旧地址，需要从全局地址中获取数据 
     my.navigateTo({ url: '../addressEdit/addressEdit?isNew=0' });
   },
 

@@ -161,7 +161,9 @@ export default {
 
 	// 地址部分
 	O2O_ADDRESS: {
-		getAddrList: '/m/oto/otoAddress/getAddress',          //获取地址列表
+		getAddrList: '/m/oto/otoAddress/getAddress',          	// 获取地址列表
+		saveAddr: '/m/oto/otoAddress/save',          			// 保存地址
+		delAddr: '/m/oto/otoAddress/delete',          			// 删除地址
 	},
 
 	// 高德地图api -- https://lbs.amap.com/api/webservice/gettingstarted

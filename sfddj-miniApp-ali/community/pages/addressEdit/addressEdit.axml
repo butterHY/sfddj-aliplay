@@ -1,8 +1,8 @@
 <view class="addressPage">
   <view class="formList"> 
     <view class="listInput">
-      <input-item type="text" clear="{{true}}"  placeholder="{{ name_placeholder }}"  value="{{ name }}" 
-        data-field="name"  
+      <input-item type="text" clear="{{true}}"  placeholder="{{ name_placeholder }}"  value="{{ optAddr.fullName }}" 
+        data-field="optAddr.fullName"  
         className="inputShow"
         className="dadada"  
         onInput="onInputName"  
@@ -12,17 +12,18 @@
     </view>
    
     <view class="listInput ">
-      <input-item type="number" clear="{{true}}" placeholder="{{ tel_placeholder }}" value="{{ tel }}"  
-        data-field="tel"  
+      <input-item type="number" clear="{{true}}" placeholder="{{ mobile_placeholder }}" value="{{ optAddr.mobile }}"  
+        data-field="optAddr.mobile"  
         className="inputShow"
         onInput="onInputTel" 
+        maxlength="{{ 11 }}"
         onClear="onClear">电话</input-item>
     </view>
 
     <view class="listInput" onTap="chooseLocation">
-      <input-item type="text" clear="{{true}}" placeholder="{{ addr_placeholder }}"  value="{{ address }}" 
+      <input-item type="text" clear="{{false}}" placeholder="{{ addr_placeholder }}"  value="{{ optAddr.locate }}" 
         disabled="{{ true }}"
-        data-field="address"  
+        data-field="optAddr.locate"  
         className="inputShow">地址
           <view slot="extra" class="">
             <am-icon class="iconStyle" type="right"></am-icon>
@@ -38,9 +39,11 @@
       <view class="lableName">详细地址</view>
       <view class="textareaBox"> 
         <textarea 
-          value="{{ street }}"
+          data-field="optAddr.address"  
+          value="{{ optAddr.address }}"
           auto-height show-count="{{ false }}"
-          placeholder="{{ street_placeholder }}" />
+          placeholder="{{ street_placeholder }}" 
+          onInput="onInputDetail" />
       </view> 
     </view>
   </view>

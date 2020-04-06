@@ -50,7 +50,7 @@ Component({
 
   methods: {
     goLocationCity() {
-      my.reLaunch({ url: '../addressLoc/addressLoc' });
+      my.navigateTo({ url: '../addressLoc/addressLoc' });
     }, 
   },
 });
