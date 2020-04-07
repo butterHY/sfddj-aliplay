@@ -91,7 +91,10 @@ Page({
   saveAddr() {  
     const _this = this; 
     this.verifyForm(false, function() {
-      my.redirectTo({ url: '../addressList/addressList' });
+      // my.redirectTo({ url: '../addressList/addressList' });
+      my.navigateBack({
+                  
+                });
       // my.navigateTo({ url: '../addressList/addressList' });
     })
   },
@@ -124,7 +127,10 @@ Page({
             let _data = res.data.data;
             if (_ret.code == '0') { 
                 // 到地址列表
-                my.redirectTo({ url: '../addressList/addressList' });
+                // my.redirectTo({ url: '../addressList/addressList' });
+                my.navigateBack({
+                  
+                });
             }  
           }, (err)=>{})
         }
