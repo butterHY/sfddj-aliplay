@@ -72,6 +72,10 @@ App({
 
 		communalAddr: {},      //社区购选择的地址
 
+		editSelectAddr: {}, 	// 选择编辑的地址
+		userLocInfo: {},			// 用户定位信息
+
+
 	},
 
 	getNewUserInfoFn: function(fn) {
@@ -133,6 +137,22 @@ App({
 				}
       }, function(res) { });
     }
-  }
+  },
 
+	// 设置定位数据缓存并设置全局数据
+	setLocStorage(data, fn) {
+		const _this = this;
+		// console.log('locAddr-setLocStorage', data )
+		my.setStorage({
+			key: 'locationInfo',
+			data: data,
+			success: function (res) {
+				_this.globalData.userLocInfo = data;
+				if (fn) fn();
+			},
+			fail: function(err) {
+				console.log('定位缓存失败了', err)
+			}
+		});
+	},
 });

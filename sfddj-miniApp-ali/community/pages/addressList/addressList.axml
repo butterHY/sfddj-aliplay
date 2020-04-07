@@ -2,26 +2,26 @@
 
 <view class="addressList">
     <!-- 新增地址按钮 -->
-    <view class="addAddrPart">
+    <view class="addAddrPart" onTap="goNewAddress">
         <view class="flex_1">新增地址</view>
         <view class="marLeft_30">
             <text class="icon-chevron-right font-30 color-bdbdbd"></text>
         </view>
     </view>
     <!-- 可选地址模块 -->
-    <view class="optionalList">
-        <block a:if="{{optionalList.length > 0}}" a:for="{{optionalList}}">
+    <view a:if="{{optionalList.length > 0}}" class="optionalList">
+        <block a:for="{{optionalList}}">
             <template is="itemAddress" data="{{canUse: true}}"></template>
         </block>
     </view>
 
     <!-- 不可选地址 -->
-    <view class="unusableList">
+    <view a:if="{{unusableList.length > 0}}" class="unusableList">
         <!-- 标题 -->
         <view class="unusableList_tit font-30 color-333">以下地址超出范围</view>
         <!-- 列表 -->
-        <block a:if="{{unusableList.length > 0}}" a:for="{{unusableList}}">
-            <template is="itemAddress"></template>
+        <block a:for="{{unusableList}}">
+            <template is="itemAddress" data="{{item}}"></template>
         </block>
     </view>
 </view>

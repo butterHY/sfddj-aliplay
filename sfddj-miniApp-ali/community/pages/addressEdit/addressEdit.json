@@ -1,7 +1,9 @@
 {
 	"titleBarColor": "#ffffff",
-  	"defaultTitle": "编辑地址",
-  	"pullRefresh": false,
-  	"usingComponents": {
-    }
+	"backgroundColor": "#f3f3f3", 
+	"pullRefresh": false,
+	"usingComponents": {
+		"input-item": "mini-ali-ui/es/input-item/index",
+		"am-icon": "mini-ali-ui/es/am-icon/index"
+	}
 }

@@ -18,9 +18,9 @@
                 <!-- 其他，不是积分商品也不是返现商品 -->
                 <view class="font-40 color-57" a:else>
                   <!-- 秒杀商品，秒杀价 -->
-                  <block a:if="{{goods.secKillStatus}}"><text class="aba">￥{{product.secondKillPrice}}</text></block>
+                  <!-- <block a:if="{{goods.secKillStatus}}"><text class="aba">￥{{product.secondKillPrice}}</text></block> -->
                   <!-- 大当家会员日商品 -->
-                  <block a:elif="{{goods.memberDayPriceStatus}}"><text class="aba">￥{{product.memberDayPrice}}</text></block>
+                  <block a:if="{{goods.memberDayPriceStatus}}"><text class="aba">￥{{product.memberDayPrice}}</text></block>
                   <!-- 是顺丰会员商品，会员价 + 兑换会员积分  -->
                   <block a:elif="{{SFmember}}">
                     <text class="cbc">￥{{product.memberPriceAll}}</text>
@@ -117,7 +117,7 @@
           <block a:else>
             <view class="whiteBack buttonView">
               <view class="goods-sepc-bottom-button2 posi_re">
-                <navigator class="flex_1  shopButton toBuyNowBack" a:if="{{ goods.goodsStore == 0 || (goods.secKillStatus && goodsSecondKill.totalSaleVolume == goodsSecondKill.totalStock) }}" url="/pages/category/secondCategory/secondCategory?categoryId={{goods.categoryVO.categoryId}}" open-type="navigate" hover-class="none">查看类似商品</navigator>
+                <navigator class="flex_1  shopButton toBuyNowBack" a:if="{{ goods.goodsStore == 0 }}" url="/pages/category/secondCategory/secondCategory?categoryId={{goods.categoryVO.categoryId}}" open-type="navigate" hover-class="none">查看类似商品</navigator>
                 <block a:elif="{{selectedSpecsBar}}">
                   <!-- <view class="flex_1  shopButton shopCart_button" data-addCart="addCart" catchTap="addCart">加入购物车</view> -->
                   <block a:if="{{ SFmember || ( !SFmember && (goods.jifenStatus || goods.deductStatus || goods.memberDayGoods || goods.secKillStatus || goods.memberDayPriceStatus) ) }}">
@@ -128,9 +128,10 @@
                     <view class="shopButton separateShopButton toBuyNowBack color-255" data-buyNow="buyNow" catchTap="buyNow">立即购买</view>
                   </block>
                 </block>
-                <view class="flex_1  shopButton toBuyNowBack color-255" a:else catchTap="goodsSpecSubmitTap">确定</view>
-                <button class="btnStyle gpnBtn zIndex100" a:if="{{ (goods.secKillStatus && goodsSecondKill.totalSaleVolume != goodsSecondKill.totalStock) && (user_memId == 0 || user_memId == '0')}}" open-type="getAuthorize" onGetAuthorize="getPhoneNumber" scope='phoneNumber' onError="onAuthError" hover-class="none"></button>
-                <button class="btnStyle gpnBtn zIndex100" a:elif="{{ !goods.secKillStatus && goods.goodsStore != 0 && (user_memId == 0 || user_memId == '0')}}" open-type="getAuthorize" onGetAuthorize="getPhoneNumber" scope='phoneNumber' onError="onAuthError" hover-class="none"></button>
+                <view a:else class="flex_1  shopButton toBuyNowBack color-255" catchTap="goodsSpecSubmitTap">确定</view>
+                <!-- <button class="btnStyle gpnBtn zIndex100" a:if="{{ (goods.secKillStatus && goodsSecondKill.totalSaleVolume != goodsSecondKill.totalStock) && (user_memId == 0 || user_memId == '0')}}" open-type="getAuthorize" onGetAuthorize="getPhoneNumber" scope='phoneNumber' onError="onAuthError" hover-class="none"></button> -->
+                <!-- <button class="btnStyle gpnBtn zIndex100" a:elif="{{ !goods.secKillStatus && goods.goodsStore != 0 && (user_memId == 0 || user_memId == '0')}}" open-type="getAuthorize" onGetAuthorize="getPhoneNumber" scope='phoneNumber' onError="onAuthError" hover-class="none"></button> -->
+                <button class="btnStyle gpnBtn zIndex100" a:if="{{ goods.goodsStore != 0 && (user_memId == 0 || user_memId == '0')}}" open-type="getAuthorize" onGetAuthorize="getPhoneNumber" scope='phoneNumber' onError="onAuthError" hover-class="none"></button>
               </view>
             </view>
           </block>

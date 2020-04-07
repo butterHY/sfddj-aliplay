@@ -1,13 +1,14 @@
-import api from '/api/api';
+// import api from '/api/api';
 import Cart from '/community/service/cart';
-import http from '/api/http';
+import { post, api } from '/api/http';
+import { payOrderNow } from '/community/assets/common';
 
 Page({
     data: {
         staticsImageUrl: api.staticsImageUrl,
         baseImageUrl: api.baseImageUrl,
         typeIndex: 2,
-        shopCartList: [],
+        // shopCartList: [],
         memo: '',
         deliveryTypeTaped: false,
         shopTotalPrice: 0,     //整个商店商品的总价格
@@ -20,7 +21,7 @@ Page({
             shipperName: '',
             shipperMobile: '',
         },
-        deliveryFee: 0,       //配送费
+        // deliveryFee: 0,       //配送费
         deliveryOutGratis: 0,      //满多少可免邮的价格
         totalPrice: 0,           //总价格
         defaultAddress: {},      //商家配送时的地址
@@ -52,7 +53,7 @@ Page({
         //     detail: '你猜不到的地址，哈哈哈哈哈哈'
         // }
         let communalAddr = getApp().globalData.communalAddr;
-        if(communalAddr && Object.keys(communalAddr).length > 0) {
+        if (communalAddr && Object.keys(communalAddr).length > 0) {
             this.setData({
                 defaultAddress: Object.assign({}, communalAddr)
             })
@@ -79,7 +80,7 @@ Page({
 
     // 获取进入确认订单页的数据
     getOrderData(shopId) {
-        http.post(api.O2O_ORDERCONFIRM.toOrderPay, { shopId }, res => {
+        post(api.O2O_ORDERCONFIRM.toOrderPay, { shopId }, res => {
             // console.log(res)
             let result = res.data.data ? res.data.data : {};
             if (Object.keys(result).length > 0) {
@@ -91,11 +92,12 @@ Page({
 
                 })
                 this.setData({
-                    confirmToken: result.confirmToken,
-                    shopTotalPrice: this.data.shopTotalPrice > 0 ? this.data.shopTotalPrice : result.price,
-                    shopCartList: this.data.shopCartList.length > 0 ? this.data.shopCartList : shopCartList,
-                    shopName: result.name,
-                    deliveryFee: result.deliveryFee ? result.deliveryFee : 0,
+                    confirmToken: result.confirmToken,    //防止重复提交的token
+                    shopTotalPrice: this.data.shopTotalPrice > 0 && result.price == this.data.shopTotalPrice ? this.data.shopTotalPrice : result.price,
+                    // shopCartList: this.data.shopCartList.length > 0  ? this.data.shopCartList : shopCartList,
+                    shopCartList: this.data.shopTotalPrice <= 0 || result.price != this.data.shopTotalPrice ? shopCartList : this.data.shopCartList,       //如果service里算的价格跟接口返回的不一样，或者service的价格没设置到，则要重新加一下商品列表。
+                    shopName: result.name,     // 商家名称
+                    deliveryFee: result.deliveryOutGratis && result.deliveryOutGratis > 0 ? (result.deliveryFee && result.price < result.deliveryOutGratis ? result.deliveryFee : 0) : result.deliveryFee,    // 配送费
                     deliveryOutGratis: result.deliveryOutGratis ? result.deliveryOutGratis : 0,
                     totalPrice: this.data.totalPrice > 0 ? this.data.totalPrice : result.price
                 })
@@ -109,10 +111,12 @@ Page({
     switchType(e) {
         let { index } = e.currentTarget.dataset;
         if (this.data.typeIndex != index) {
+            // 如果是选择商家配送，如果商家设置了满多少免配送费的，如果要商品总价大于等于满额则为0，否则就要加上设置的配送费；
+            let deliveryFee = index == 1 ? (this.data.deliveryOutGratis > 0 ? this.data.shopTotalPrice >= this.data.deliveryOutGratis ? 0 : this.data.deliveryFee : this.data.deliveryFee) : 0;
             this.setData({
                 typeIndex: index,
                 deliveryTypeTaped: true,
-                totalPrice: index == 1 ? (this.data.deliveryFee ? this.data.totalPrice + this.data.deliveryFee : this.data.totalPrice) : this.data.totalPrice
+                totalPrice: this.data.totalPrice + deliveryFee
             })
         }
     },
@@ -146,7 +150,15 @@ Page({
                         shipName: this.data.selfInfo.shipperName,
                         shipPhone: this.data.selfInfo.shipperMobile,
                     })
-                    this.createPayOrder(data);
+                    if (!this.data.isSubmiting) {
+                        this.setData({
+                            isSubmiting: true
+                        })
+                        my.showLoading();
+                        this.createPayOrder(data);
+                    } else {
+                        return;
+                    }
                 }
             } else {
                 // 判断地址是否已选择
@@ -180,10 +192,45 @@ Page({
 
     createPayOrder(data) {
         let that = this;
-        http.post(api.O2O_ORDERCONFIRM.createPayOrder, data, res => {
-            // console.log(res)
-            // 调起支付
-            that.showWxPayment(res);
+        post(api.O2O_ORDERCONFIRM.createPayOrder, data, res => {
+            if (res.data.data && Object.keys(res.data.data).length > 0) {
+                let { orderSn, tradeNo } = res.data.data;
+                // console.log(res.data.data,orderSn,tradeNo);
+                // 调起支付
+                payOrderNow({
+                    orderSn,
+                    tradeNo,
+                    clearShopCart: () => {
+                        this.cart.clear(this.data.shopid, (res) => {
+                        });
+                    },
+                    callBack: () => {
+                        that.cancelSwitch();
+                        my.showToast({
+                            content: '支付成功'
+                        });
+                        my.redirectTo({
+                            url: '/community/pages/communalOrderDetail/communalOrderDetail?orderSn=' + orderSn
+                        })
+                    },
+                    failFun: () => {
+                        // 解除防止重复提交开关
+                        that.cancelSwitch();
+                        my.showToast({
+                            content: '已取消'
+                        })
+                        my.redirectTo({
+                            url: '/community/pages/communalOrderDetail/communalOrderDetail?orderSn=' + orderSn
+                        })
+                    },
+                    errorFun: () => {
+                        that.cancelSwitch();
+                    }
+                })
+            } else {
+                that.cancelSwitch();
+            }
+
         }, err => { })
     },
 
@@ -193,17 +240,22 @@ Page({
     showWxPayment: function (res) {
         var that = this;
         if (res.data.data && Object.keys(res.data.data).length > 0) {
+            // 清除本地购物车
+            this.cart.clear(this.data.shopid, (res) => {
+            });
             // conso
             let { orderSn, tradeNo } = res.data.data;
             // let orderStr = res.data.data.orderStr;
             my.tradePay({
                 tradeNO: tradeNo,
                 success: function (res) {
+                    let nowDate = new Date().getTime();
                     // 如果支付code为9000则是成功
                     if (res.resultCode == '9000') {
 
                         // 检测是否到账
-                        that.controllPayment(orderSn, () => {
+                        that.controllPayment(orderSn, nowDate, () => {
+                            that.cancelSwitch();
                             my.showToast({
                                 content: '支付成功'
                             });
@@ -215,6 +267,8 @@ Page({
 
                     }
                     else if (res.resultCode == '6001') {
+                        // 解除防止重复提交开关
+                        that.cancelSwitch();
                         my.showToast({
                             content: '已取消'
                         })
@@ -223,6 +277,8 @@ Page({
                         })
                     }
                     else if (res.resultCode == '6002') {
+                        // 解除防止重复提交开关
+                        that.cancelSwitch();
                         my.showToast({
                             content: '网络连接出错'
                         })
@@ -231,6 +287,8 @@ Page({
                         })
                     }
                     else {
+                        // 解除防止重复提交开关
+                        that.cancelSwitch();
                         my.showToast({
                             content: '支付失败'
                         })
@@ -242,23 +300,59 @@ Page({
 
                 },
                 fail: function (res) {
+                    that.cancelSwitch();
                 }
             });
+        } else {
+            that.cancelSwitch();
         }
+    },
+
+    // 解除开关
+    cancelSwitch() {
+        my.hideLoading();
+        // 解除防止重复提交开关
+        this.setData({
+            isSubmiting: false
+        })
     },
 
 
 	/**
 	 * 监控用户付款行为 success(成功)/cancel（取消）/sysBreak（异常）
 	 */
-    controllPayment: function (orderSn, callback) {
-        http.post(api.O2O_ORDERCONFIRM.queryPayType, { orderSn }, (res) => {
+    controllPayment(orderSn, payTime, callback) {
+        let that = this;
+        post(api.O2O_ORDERCONFIRM.queryPayType, { orderSn }, (res) => {
             let result = res.data.data ? res.data.data : {};
             if (result.payFinish) {
                 callback()
             }
+            else {
+                let nowDate = new Date().getTime();
+                // 做一个人10秒的回调查询支付成功，否则视为失败
+                if (nowDate - payTime < 10000) {
+                    that.controllPayment(orderSn, payTime, callback)
+                } else {
+                    that.cancelSwitch();
+                    // 支付失败
+                    my.showToast({
+                        content: '支付失败'
+                    })
+                    my.redirectTo({
+                        url: '/community/pages/communalOrderDetail/communalOrderDetail?orderSn=' + orderSn
+                    })
+                }
+            }
         }, (err) => {
-
+            // 支付失败
+            // my.showToast({
+            //     content: '支付失败'
+            // })
+            that.cancelSwitch();
+            my.redirectTo({
+                url: '/community/pages/communalOrderDetail/communalOrderDetail?orderSn=' + orderSn
+            })
         })
     },
 

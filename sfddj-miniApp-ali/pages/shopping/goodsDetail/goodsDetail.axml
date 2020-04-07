@@ -34,7 +34,7 @@
   <!-- 秒杀商品的价格                       已完成新接口字段更换 -->
   <view class="{{goods.secKillStatus ? 'marBot_30' : ''}}">
     <!-- goodsSecondKill 应该放置一个默认价格，因为这样在改动规格的时候倒计时模块展示的价格才不会跟着规格改变，原有版本并没有这个效果 -->
-    <spike-price secKillStatus="{{goods.secKillStatus}}" goodsSecondKill="{{goodsSecondKill}}" product="{{product}}" viewStatus="{{goods.viewStatus}}"  isFirstTime="{{true}}" onSpikeOver="onSpikeOver"></spike-price>
+    <spike-price secKillStatus="{{goods.secKillStatus}}" goodsSecondKill="{{goodsSecondKill}}"  viewStatus="{{goods.viewStatus}}"  isFirstTime="{{true}}" onSpikeOver="onSpikeOver"></spike-price>
   </view>
   <!-- 商品价格、销量 -->
   <view a:if="{{!goods.secKillStatus}}" class="priceView">
@@ -586,9 +586,11 @@
             <!-- <view a:elif="{{goods.secKillStatus && (goodsSecondKill.totalSaleVolume == goodsSecondKill.totalStock)}}" class="flex_1 background_gray toBuyNow border-radius45">已售罄</view> -->
 
             <!-- a:if="{{product.activityStock > 0}}"  -->
-            <view a:if="{{product.activityStock > 0 || product.store >0}}" class="flex_1 toBuyNowBack toBuyNow border-radius45" onTap="buyNow">
-              {{ product.activityStock > 0 ? '马上抢' : (product.store >0 ? '立即购买' : '') }}
+            <view a:if="{{ goodsSecondKill.activityStock > 0 || product.store > 0 }}" class="flex_1 toBuyNowBack toBuyNow border-radius45 posi_re" onTap="buyNow">
+              {{ goodsSecondKill.activityStock > 0 ? '马上抢' : (product.store > 0 ? '立即购买' : '') }}
+            <button class="btnStyle gpnBtn zIndex100" a:if="{{ user_memId == 0 || user_memId == '0' }}" open-type="getAuthorize" onGetAuthorize="getPhoneNumber" scope='phoneNumber' onError="onAuthError" hover-class="none"></button>
             </view>
+
             <!-- <view a:elif="{{product.store >0}}" class="flex_1 toBuyNowBack toBuyNow border-radius45" onTap="buyNow">立即购买</view> -->
             <navigator a:elif="{{goods.viewStatus != 'SALEING' || (goods.viewStatus == 'SALEING' && goods.goodsStore == 0)}}" class="flex_1 toBuyNowBack toBuyNow border-radius45" url="/pages/category/secondCategory/secondCategory?categoryId={{goods.categoryVO.categoryId}}" open-type="navigate" hover-class="none">查看类似商品</navigator>
 

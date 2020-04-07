@@ -28,7 +28,7 @@
       <!-- 店铺信息 -->
       <view class="storeInfo flex_view_row align_cen flex_1 justi_between">
         <!-- 左边头像与名称 -->
-        <navigator hover-class="none" url="/pages/shopping/storeInfo/storeInfoDetail/storeInfoDetail?supplierDetail={{supplierDetailJSON}}" class="storeInfo_brand flex_view_row align_cen flex_1">
+        <navigator hover-class="none" url="/pages/shopping/storeInfo/storeInfoDetail/storeInfoDetail?supplierId={{supplierId}}" class="storeInfo_brand flex_view_row align_cen flex_1">
           <image src="{{supplierDetail.headPortraitPath ? baseImageUrl + supplierDetail.headPortraitPath : baseLocImgUrl + 'miniappImg/icon/icon_default_head.jpeg'}}" class="store_headImg"></image>
 
           <view class="flex_1 color-white single-line">

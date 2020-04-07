@@ -1,3 +1,4 @@
+const myApp = getApp();
 Page({
   data: {
     currentCity: {},
@@ -89,8 +90,10 @@ Page({
       'locInfo.longitude': cityData.longitude,
       'locInfo.latitude': cityData.latitude, 
       'locInfo.loading': false, 
-    });
-    this.setLocStorage(()=> {
+    }); 
+
+    // 设置缓存并设置全部变量的值 globalData.userLocInfo 
+    myApp.setLocStorage(this.data.locInfo, function() {
       my.reLaunch({ url: '../addressLoc/addressLoc' });
     });
   }, 
@@ -112,23 +115,14 @@ Page({
         _this.setData({
           locCity: _this.data.locInfo
         })
-
-        _this.setLocStorage();
+ 
+        myApp.setLocStorage(_this.data.locInfo);
       },
       fail() {
         my.hideLoading();
         my.alert({ title: '定位失败' });
       },
     })
-  },
-
-  setLocStorage(fn) {
-    const _this = this;
-    my.setStorage({
-      key: 'locationInfo',
-      data: _this.data.locInfo,
-      success: function () { if(fn)fn(); }
-    });
-  },
+  }, 
 
 });

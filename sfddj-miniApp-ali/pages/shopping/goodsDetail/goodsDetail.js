@@ -315,8 +315,12 @@ Page({
 
           
           that.data.goodsId = resData.goodsShowVO.goodsId;
+          resData.goodsShowVO.defaultProd.activityStock = 0;    // 测试添加
           that.setSecKillDate(resData.goodsShowVO);
+
+          console.log(that.data.goodsSecondKill)
           console.log(resData.goodsShowVO)
+          
 
 
           //提前判断是否有默认规格且有库存
@@ -425,7 +429,7 @@ Page({
           // activityList.secKillPrice = that.data.product.activityPrice;
 
           
-          let activityList = Object.assign({}, that.data.goods.activity);   // 新秒杀数据
+          // let activityList = Object.assign({}, that.data.goods.activity);   // 新秒杀数据
           // that.data.product.activityStock = 1;                              // 秒杀测试数据
  
           // 测试用  
@@ -446,7 +450,6 @@ Page({
             xgCount: that.data.xgCount,
             optionalProduct: that.data.optionalProduct,
             goods: that.data.goods,
-            goodsSecondKill: activityList,
             SFmember: that.data.SFmember,
             type: type ? type : '',                                                                // 积分商品 type = 3,用来判断选规格的价格那里的显示
             // theMemberPoint: that.data.theMemberPoint ? that.data.theMemberPoint : 0,                  // 这是获取会员积分
@@ -859,6 +862,7 @@ Page({
 	 */
   selectedSpecs: function() {
     let that = this;
+    console.log()
     if(that.data.goods.viewStatus != 'SALEING') {
       return;
     } else if( that.data.goods.secKillStatus && (that.data.isJustBuNow || (!that.data.isJustBuNow && that.data.goods.goodsStore == 0)) ) {
@@ -903,6 +907,11 @@ Page({
       optionalProduct: that.data.optionalProduct,       // 任选规格被选中的数组 ; 
       quantity: that.data.minCount,                     // 再次初始化为最低起售数 ;
     });
+
+    console.log(that.data.product)
+    console.log(that.data.allProduct)
+    console.log(that.data.goodsSpecMap)
+    console.log(that.data.iavPath)
 
 
     // 如果当前选中的规格的库存为 0 那就提示库存不足, 最新的修改是切换的时候库存为 0 不提醒，只有点击确定按钮的时候如果库存为 0 再提醒；
@@ -1490,9 +1499,6 @@ Page({
     that.listenNavigationBar();
   },
 
-
-
-
   // 跳转去h5的全赔页
   goToAfterSaleGuee() {
     let that = this;
@@ -2062,16 +2068,22 @@ Page({
   setSecKillDate(data) {
     data.secKillStatus != true ? data.secKillStatus = false : '';
     console.log('secKillStatus',data.secKillStatus,'noStart',this.data.noStart,'isSpikeOver',this.data.isSpikeOver)
+    
     if( data.secKillStatus && !this.data.noStart && !this.data.isSpikeOver ) {
       data.secKillStatus = true;
-      if( data.defaultProd.activityStock > 0 || data.defaultProd.store > 0 ) {
+      let activityList = Object.assign({}, data.activity, JSON.parse(JSON.stringify(data.defaultProd)) );   // 新秒杀数据
+      this.setData({goodsSecondKill: activityList});
+      console.log(activityList)
+      console.log(activityList.activityStock)
+      console.log(activityList.store)
+      if( activityList.activityStock > 0 || activityList.store > 0 ) {
         this.data.isJustBuNow = true;
       }
     }
     console.log('isJustBuNow',this.data.isJustBuNow)
   },
 
-  // 如果是秒杀商品且有秒杀库存或者常规库存，则不能打开规格、地址、领券弹窗；如果不是秒杀商品，则 goodsStore == 0 不能打开弹窗；
+  // 如果是秒杀商品且有秒杀库存或者常规库存，则不能打开地址、领券弹窗；如果不是秒杀商品，则 goodsStore == 0 不能打开弹窗；
   isCantOpen() {
     if(this.data.goods.viewStatus != 'SALEING') {
       return false;
@@ -2079,9 +2091,8 @@ Page({
       return false;
     } else if( !this.data.goods.secKillStatus && this.data.goods.goodsStore == 0 ) {
       return false;
-    } else {
-      return true;
     }
+      return true;
   },
 
   

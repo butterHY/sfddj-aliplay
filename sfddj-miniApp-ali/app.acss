@@ -361,6 +361,11 @@ input {
   color: #ff5353;
 }
 
+.color-ff0532 {
+  /** 红色字体 **/
+  color: #ff0532;
+}
+
 .corlor-ff2e2e {
   color: #ff2e2e;
 }

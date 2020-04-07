@@ -2,7 +2,7 @@
     <!-- 提醒 -->
     <view class="communalTip">店家会以最快的速度送达，请耐心等待~</view>
     <!-- 选地址部分 -->
-    <navigator url="/community/pages/addressList/addressList" class="chooseAddrBox">
+    <navigator url="/community/pages/addressList/addressList?shopId={{shopId}}" class="chooseAddrBox">
         <!-- 有地址时显示 -->
         <view a:if="{{hasAddr}}" class="flex_1 single-line">
             <view class="chooseAddr_det single-line">{{defaultAddress.detail}}</view>

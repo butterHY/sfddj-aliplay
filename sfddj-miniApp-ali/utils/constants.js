@@ -3,8 +3,9 @@
 * 配置字段文件类
 * @author 01368384，854638
 */
+import {env} from '/api/api';
 
-var release = false; //环境切换开关 true:正式环境  false：测试环境
+var release = env === 'production' ? true : false; //环境切换开关 true:正式环境  false：测试环境
 
 var baseUrl_sit = "https://shop.fx-sf.com"; //测试环境https://sit.sfddj.com https://itsm.sfddj.com；https://shop.fx-sf.com
 // var baseUrl_sit = "https://sit.sfddj.com";   //测试环境https://sit.sfddj.com
@@ -197,7 +198,8 @@ var InterfaceUrl = {
 	GET_ORDER_IDENTIFY: "/order/identify", //身份证与姓名验证
 	GET_GLOBAL_NOTICE: '/order/toKnow', //查看全球购用户须知
 	UPLOAD_IDCARDIMG: '/upload/saveIDCardImg', //上传身份证图片
-  UPLOAD_IDCARDIMGV2: '/upload/saveIDCardImgV2',   //上传身份证图片第2版，带OCR验证
+	UPLOAD_IDCARDIMGV2: '/upload/saveIDCardImgV2',   //上传身份证图片第2版，带OCR验证
+	UPLOAD_IDCARDIMGV3: '/upload/saveIDCardImgV3',   //上传身份证图片第2版 --- 支付宝小程序，带OCR验证
 
 	//    ----------------获取jsticket和id传给365那边 -------------//
 	GET_TICKET_ID: '/getWeixinData', //获取公众号的jsticket和appid

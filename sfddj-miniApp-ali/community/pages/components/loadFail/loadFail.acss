@@ -1,0 +1,14 @@
+.handMakeRefresh {
+	color: rgb(230, 31, 52);
+	height: 0.6rem;
+	border: 1px solid rgb(230, 31, 52);
+	line-height: 65rpx;
+	/* width: 20%; */
+	padding: 0 30rpx;
+	opacity: 0.5;
+	text-align: center;
+	justify-content: center;
+	border-radius: 45rpx;
+	position: absolute;
+	top: 60%
+}

@@ -1,3 +1,60 @@
-<view>
-  New Page
+<view class="addressPage">
+  <view class="formList"> 
+    <view class="listInput">
+      <input-item type="text" clear="{{true}}"  placeholder="{{ name_placeholder }}"  value="{{ optAddr.fullName }}" 
+        data-field="optAddr.fullName"  
+        className="inputShow"
+        className="dadada"  
+        onInput="onInputName"  
+        onClear="onClear">
+        联系人 
+      </input-item>
+    </view>
+   
+    <view class="listInput ">
+      <input-item type="number" clear="{{true}}" placeholder="{{ mobile_placeholder }}" value="{{ optAddr.mobile }}"  
+        data-field="optAddr.mobile"  
+        className="inputShow"
+        onInput="onInputTel" 
+        maxlength="{{ 11 }}"
+        onClear="onClear">电话</input-item>
+    </view>
+
+    <view class="listInput" onTap="chooseLocation">
+      <input-item type="text" clear="{{false}}" placeholder="{{ addr_placeholder }}"  value="{{ optAddr.locate }}" 
+        disabled="{{ true }}"
+        data-field="optAddr.locate"  
+        className="inputShow">地址
+          <view slot="extra" class="">
+            <am-icon class="iconStyle" type="right"></am-icon>
+          </view>
+
+          <view slot="extra" >
+            <am-icon class="iconStyle" type="location"></am-icon>
+          </view>
+        </input-item>
+    </view> 
+    
+    <view class="listInput textareaShow">
+      <view class="lableName">详细地址</view>
+      <view class="textareaBox"> 
+        <textarea 
+          data-field="optAddr.address"  
+          value="{{ optAddr.address }}"
+          auto-height show-count="{{ false }}"
+          placeholder="{{ street_placeholder }}" 
+          onInput="onInputDetail" />
+      </view> 
+    </view>
+  </view>
+
+  <view class="bottomBtn">
+    <view class="BtnBox double" a:if="{{ !isNew }}"> 
+      <button class="l_btn" hover-class="button-hover" type="primary" onTap="delAddr">删除</button>
+      <button class="r_btn" hover-class="button-hover" type="warn" onTap="saveAddr">保存</button>
+    </view>
+    <view class="BtnBox single" a:else>
+      <button class="big_btn" hover-class="button-hover" type="warn" onTap="useAddr">保存并使用</button>
+    </view>
+  </view>
 </view>
