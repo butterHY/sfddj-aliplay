@@ -4,7 +4,7 @@
 
     <view class="address">
       <view class="line"></view>
-      <am-icon class="iconStyle" type="location"/>
+      <text class="iconStyle icon-address"></text> 
       {{ locInfo.streetShow }}
     </view>
   </view>

@@ -41,7 +41,8 @@ Component({
         skuId: _goodsInfo.skuData.id,
         num: 1
       }   
-      console.log(addData)
+      // console.log(addData)  
+      // console.log(_goodsInfo) 
       // 参数1：店铺ID
       // 参数2：商品数据，将整个商品数据传过去
       // 参数3：skuID
