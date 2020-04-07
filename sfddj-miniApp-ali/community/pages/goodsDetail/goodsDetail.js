@@ -33,8 +33,8 @@ Page({
         // 商品价格区域
         _this.setPrice(_data);
         // 营业时间
-        _storeTime.endTime = _data.endBusinessTime;
-        _storeTime.startTime = _data.startBusinessTime;
+        _storeTime.endBusinessTime = _data.endBusinessTime;
+        _storeTime.startBusinessTime = _data.startBusinessTime;
         // 商品详情介绍
         _goodsInfo.info = _data.goodInfo;
         _goodsInfo.introduction = _data.introduction; 
