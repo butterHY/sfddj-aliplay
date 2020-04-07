@@ -166,13 +166,13 @@ Page({
                     let defaultAddress = this.data.defaultAddress
                     data = Object.assign(data, {
                         deliveryType: 'LOGISTICS',
-                        shipName: defaultAddress.shipName,
-                        shipPhone: defaultAddress.shipPhone,
-                        province: defaultAddress.province,
-                        city: defaultAddress.city,
-                        district: defaultAddress.district,
-                        street: defaultAddress.street,
-                        detail: defaultAddress.detail
+                        shipName: defaultAddress.fullName,
+                        shipPhone: defaultAddress.mobile,
+                        province: defaultAddress.province ? defaultAddress.province : '',
+                        city: defaultAddress.city ? defaultAddress.city : '',
+                        district: defaultAddress.area ? defaultAddress.area : '',
+                        street: defaultAddress.street ? defaultAddress.street : '',
+                        detail: defaultAddress.locate + defaultAddress.address
                     })
                     this.createPayOrder(data);
                 } else {

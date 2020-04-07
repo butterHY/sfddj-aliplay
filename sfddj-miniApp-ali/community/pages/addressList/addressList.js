@@ -36,7 +36,7 @@ Page({
     let optionalList = [], unusableList = [];
 
     for(let i =0; i < result.length; i++) {
-      result[i].isMatcheDistance == true ? optionalList.push(result[i]) : unusableList.push(result[i]);
+      result[i].isMatchesDistance == true ? optionalList.push(result[i]) : unusableList.push(result[i]);
     }
 
     return {optionalList, unusableList}
