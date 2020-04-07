@@ -17,12 +17,11 @@ Component({
     this.selfName = 'cart';
     this.cart = Cart.init('cart', this);
   },
-  didUpdate() {  
-    if(this.props.shopid) {
+  didUpdate(prevProps, prevData) {
+    if(!prevProps.shopid && this.props.shopid) {
       this.cart.gets(this.props.shopid, (res) => {
         if(res) {
           this.setData({
-            'cartitems': res.cartList,
             'obj': res
           });
         }
@@ -34,7 +33,7 @@ Component({
   methods: { 
     onShowDetailClick() { 
       if(this.props.canShowDetails
-       && ((this.data.cartitems && this.data.cartitems.length) || this.data.isShowed)) {
+       && ((this.data.obj && this.data.obj.cartList && this.data.obj.cartList.length) || this.data.isShowed)) {
         this.setData({ 
           isShowed: !this.data.isShowed,
         });
@@ -49,15 +48,6 @@ Component({
     },
 
     clear() {
-      if(this.data.cartitems) {
-        this.$spliceData({
-          cartitems: [0]
-        });
-      } else {
-        this.setData({
-          cartitems: []
-        });
-      }
       this.setData({obj: {}});
     },
 
@@ -109,7 +99,7 @@ Component({
     // 店铺打烊时间控制
     storeClosed() {
       const _this = this;
-      let storeTime = this.props.storeTime;
+      let storeTime = this.props.storeTime;   
       if( !storeTime ) return; 
       
       let nowTime = storeTime.nowTime || Date.now(); 

@@ -61,6 +61,10 @@
     font-size: 20rpx; 
 }
 
+.shop_cart .cartShow.isempty .cartNum {
+    visibility: hidden;
+}
+
 .cartNum .am-badge-text {
     background-color: #ff0532; 
 }

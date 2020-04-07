@@ -12,5 +12,5 @@
   </view>
 
 
-  <cart a:if="{{ shopId }}" shopid="{{ shopId }}" storeTime="{{ storeTime }}"></cart> 
+  <cart shopid="{{ shopId }}" storeTime="{{ storeTime }}"></cart> 
 </view>
