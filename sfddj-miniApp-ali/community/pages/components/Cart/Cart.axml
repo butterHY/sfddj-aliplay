@@ -1,4 +1,4 @@
-<view class="shop_cartbox {{isShowed ? 'isshow' : ''}}">
+<view class="shop_cartbox">
   <!-- 控制区域 -->
   <view class="shop_cartcontrol">
       <view class="shop_cart">
@@ -25,11 +25,23 @@
         </view>
  
         <view class="actionBtn" a:if="{{cartitems && cartitems.length}}">
-          <view class="shop_cart_topay" onTap="onToPayClick">{{nextText || '去结算'}}</view>
+          <view class="shop_cart_topay {{ isDisabled ? 'isDisabled' : '' }}"
+            onTap="onToPayClick">{{nextText || '去结算'}}</view>
         </view>
       </view>
-  </view>
+
+      
+  </view> 
 </view>
+
+<view class="noticeShow">
+        <notice
+          show="{{ noticeShow }}"
+          type="{{ normal }}"   
+          showIcon="{{false}}" > 
+          {{ actionText }}
+        </notice>
+      </view>
  
 <!-- 弹出层  -->
 <popup class="goodsAction_popup" show="{{ isShowed }}" zIndex="{{ 8 }}" disableScroll="{{ false }}" position="bottom" onClose="onHideClick">

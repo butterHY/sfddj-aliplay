@@ -6,13 +6,13 @@
 	bottom: 30rpx;
 	background-color: #333333;
 	border-radius: 50px;
-	padding: 10rpx 20rpx;  
+	padding: 10rpx 20rpx;   
 }
+
 
 .shop_cartcontrol { 
-}
-
- 
+	position: relative;
+} 
 
 .shop_cart { 
     width: 100%;
@@ -106,6 +106,7 @@
 
 /* goodsAction_popup */
 .goodsAction_popup { 
+	z-index: 10;
 }
 
 .goodsAction_popup .am-popup-bottom {
@@ -240,3 +241,25 @@
 	text-align: center; 
 } 
 
+
+
+/*  通告  */
+.noticeShow {
+	position: fixed; 
+	left: 20rpx;
+	bottom: 140rpx;
+	right: 20rpx;
+	z-index: 5;
+}
+
+.noticeShow .am-notice {
+	background-color: #ffe6ea;
+	padding: 5rpx;
+	font-size: 24rpx;
+	color: #ff0532;
+	text-align: center;
+	border-radius: 50px;
+	overflow: hidden;
+}
+
+ 

@@ -4,7 +4,7 @@
             <!-- 省市区 -->
             <view class="single-line font-30">{{item.address}}</view>
             <!-- 详细地址 -->
-            <view class="single-line font-26 marTop_20">{{item.province + item.city + item.area}}</view>
+            <view class="single-line font-26 marTop_20">{{ item.locate }}</view>
             <!-- 电话和姓名 -->
             <view class="single-line font-26 marTop_20">
                 <text>{{item.fullName}}</text>
