@@ -110,10 +110,12 @@ Component({
     storeClosed() {
       const _this = this;
       let storeTime = this.props.storeTime; 
+      if( !storeTime ) return;
+
       let nowTime = Date.parse(new Date()); 
-      if ( nowTime > storeTime.endTime ) {
-        // 当前时间大于最晚营业时间  actionText
-        let _startTime = this.FormatDateTime( storeTime.startTime, 'minMinute', '-' ); 
+      if ( nowTime > storeTime.endBusinessTime ) {
+        // 当前时间大于最晚营业时间 
+        let _startTime = this.FormatDateTime( storeTime.startBusinessTime, 'minMinute', '-' ); 
         this.setData({
           noticeShow: true,
           actionText: `本店已打烊，请${_startTime}营业！`,
