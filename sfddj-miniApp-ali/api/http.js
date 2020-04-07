@@ -3,10 +3,12 @@
 * 网络请求基类
 * @author 01368384
 */
+import api from '/api/api';
 let stringUtils = require('../utils/stringUtils');
 let constants = require('../utils/constants');
 let util = require('../utils/util');
-let baseUrl = constants.UrlConstants.baseUrl;
+let baseUrl = api.baseUrl;
+
 // let ERR_CODE = constants.errorCode;
 let ERR_CODE = {
 	SUCCESS: '0', //成功
@@ -211,5 +213,6 @@ function get(url, data, sucFunc, errFunc, header = {}) {
 
 module.exports = {
 	post: post,
-	get: get
+	get: get,
+	api
 };

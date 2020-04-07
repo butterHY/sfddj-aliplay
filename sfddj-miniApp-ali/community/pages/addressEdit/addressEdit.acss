@@ -39,17 +39,20 @@
 	display: flex;
 }
 
+ 
+
 .inputShow .am-input-item-extra {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	margin-right: -30rpx
 }
 
 .inputShow .am-input-item-extra .iconStyle {
 	font-size: 36rpx;
 	color: #dbdbdb;
 	height: 50rpx;
-	width: 70rpx;
+	width: 60rpx;
 	display: block;
 	text-align: center;
 	line-height: 50rpx; 

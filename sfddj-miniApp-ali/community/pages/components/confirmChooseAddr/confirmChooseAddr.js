@@ -8,7 +8,8 @@ Component({
   didMount() {
     this.setData({
       defaultAddress: this.props.defaultAddress,
-      hasAddr: this.props.defaultAddress && Object.keys(this.props.defaultAddress).length > 0 ? true : false
+      hasAddr: this.props.defaultAddress && Object.keys(this.props.defaultAddress).length > 0 ? true : false,
+      shopId: this.props.shopId
     })
   },
   didUpdate() {

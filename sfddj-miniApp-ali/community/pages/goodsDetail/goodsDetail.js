@@ -7,7 +7,8 @@ Page({
     godosPriceInfo: null,
     goodsInfo: null,
     skuList: null,
-    shopId: '',
+    shopId: '',       // 店铺id
+    storeTime: null,  // 店铺营业时间
   },
   onLoad(e) { 
     this.setData({
@@ -28,20 +29,24 @@ Page({
         let _goodsImagePath = JSON.parse( _data.goodsImagePath );  
         let _goodsInfo = {}
         let _skuList = {} 
-
+        let _storeTime = {} 
+        // 商品价格区域
         _this.setPrice(_data);
-
+        // 营业时间
+        _storeTime.endTime = _data.endBusinessTime;
+        _storeTime.startTime = _data.startBusinessTime;
+        // 商品详情介绍
         _goodsInfo.info = _data.goodInfo;
-        _goodsInfo.introduction = _data.introduction;
-
-        _skuList = _data.shopGoodsSkuList[0];
+        _goodsInfo.introduction = _data.introduction; 
+        _skuList = _data.shopGoodsSkuList[0]; 
 
         _this.setData({
           goodsImagePath: _goodsImagePath, 
           goodsInfo: _goodsInfo,
           skuList: _skuList,
-          shopId: _data.shopId
-        });
+          shopId: _data.shopId,
+          storeTime: _storeTime
+        }); 
       }
 
     }, (err) => { })
@@ -52,8 +57,10 @@ Page({
     let _data = data;
     let _price = {};
     let skuData =  _data.shopGoodsSkuList[0]; 
+    let _goodsImagePath = JSON.parse( _data.goodsImagePath );   
+
     // 商品默认规格数据
-    _price.skuData = skuData; 
+    _price.skuData = skuData;  
 
     // 商品价格区域
     _price.priceShow = _data.priceShow;
@@ -73,8 +80,11 @@ Page({
     _price.goodsSn = _data.goodsSn;
 
     // 全部数据
-    _price.allData = data;
+    _price.allData = Object.assign({}, _data);
 
+    // 图片数据
+    _price.allData.goodsImagePath = api.baseImageUrl + _goodsImagePath[0];  
+    
     _this.setData({ 
       godosPriceInfo: _price, 
     });

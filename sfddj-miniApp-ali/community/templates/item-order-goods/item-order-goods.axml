@@ -1,5 +1,5 @@
 <template name="itemOrderGoods">
-    <view class="flex_view_row align_cen marTop_30">
+    <view data-goodsId="{{item.goodsId}}" class="flex_view_row align_cen marTop_30" onTap="{{type == 'orderDetail' ? 'toGoodsDetail' : ''}}">
         <!-- 商品图片 -->
         <image class="orderGoodsImg" src="{{item.goodsImagePath}}"/>
         <!-- 商品名称 -->

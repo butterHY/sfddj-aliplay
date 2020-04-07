@@ -8,5 +8,21 @@
     "umtrack-alipay": "^2.2.2-0",
     "underscore": "^1.9.1"
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "name": "sfddj-miniapp-ali",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "ssh://zhangping@118.126.107.229:29418/alipay-miniapp.git"
+  },
+  "keywords": [
+    "123456"
+  ],
+  "author": "zhangping",
+  "license": "ISC",
+  "description": ""
 }

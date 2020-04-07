@@ -88,7 +88,7 @@
     box-sizing: border-box;
 }
 
-.cancleOrderBtn {
+.cancelOrderBtn {
     margin-left: 0;
 }
 

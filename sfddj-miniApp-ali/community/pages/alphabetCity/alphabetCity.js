@@ -93,7 +93,7 @@ Page({
     }); 
 
     // 设置缓存并设置全部变量的值 globalData.userLocInfo 
-    myApp.setLocStorage(_this.data.locInfo, function() {
+    myApp.setLocStorage(this.data.locInfo, function() {
       my.reLaunch({ url: '../addressLoc/addressLoc' });
     });
   }, 

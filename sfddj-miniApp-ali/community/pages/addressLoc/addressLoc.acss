@@ -81,7 +81,8 @@
 }
 
 .searchBox .reLoc .reLoc_addr .iconStyle {
-    color: #ff0532
+    color: #ff0532;
+    font-size: 36rpx;
 }
 
 .searchBox .reLoc .nowCity {   

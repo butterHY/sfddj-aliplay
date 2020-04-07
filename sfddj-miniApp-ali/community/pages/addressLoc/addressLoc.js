@@ -100,6 +100,11 @@ Page({
     my.navigateTo({ url: '../alphabetCity/alphabetCity' });
   },
 
+  // 到新增地址
+  newAddress() {
+    my.navigateTo({ url: '../addressEdit/addressEdit?isNew=1' });
+  },
+
   // 重新定位
   reLocation() {
     const _this = this;

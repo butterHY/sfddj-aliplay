@@ -1,0 +1,4 @@
+<!-- 加载中 -->
+<view class="loading">
+  <image src="{{baseImageLocUrl}}miniappImg/loading/loading_new.gif" class="loading_image" mode="widthFix"/> 
+</view>

@@ -154,6 +154,16 @@ export default {
 	//O2O订单部分
 	O2O_ORDER: {
 		getOrderList: '/m/oto/otoOrder/1.0/findOrderListByType',   //获取订单列表
+		orderDetail: '/m/oto/otoOrder/1.0/detail',             //获取订单详情
+		cancelOrder: '/m/oto/otoOrderPay/1.0/cancelOrder',     //取消订单
+		deleteOrder: '/m/oto/otoOrder/1.0/delete',             //删除订单
+	},
+
+	// 地址部分
+	O2O_ADDRESS: {
+		getAddrList: '/m/oto/otoAddress/getAddress',          	// 获取地址列表
+		saveAddr: '/m/oto/otoAddress/save',          			// 保存地址
+		delAddr: '/m/oto/otoAddress/delete',          			// 删除地址
 	},
 
 	// 高德地图api -- https://lbs.amap.com/api/webservice/gettingstarted

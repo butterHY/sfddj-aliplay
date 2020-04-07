@@ -16,8 +16,8 @@
       </view>
     </view>
     <view class="reLoc">
-      <view class="reLoc_addr">
-        <am-icon class="iconStyle" type="location"   />
+      <view class="reLoc_addr"> 
+        <text class="iconStyle icon-address"></text> 
         <text class="nowCity">{{ locInfo.streetShow }}</text> 
       </view>
        
@@ -41,7 +41,7 @@
   </view>
 
   <view class="addBtn">
-    <button size="default" color="#ff0532">新增收货地址</button>
+    <button size="default" onTap="newAddress" color="#ff0532">新增收货地址</button>
   </view>
 
   
