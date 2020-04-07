@@ -23,8 +23,11 @@ Page({
         this.setData({
             orderSn
         })
-        this.getOrderDetail(orderSn);
 
+    },
+    onShow(){
+      
+        this.getOrderDetail();
     },
 
     // onUnload() {
