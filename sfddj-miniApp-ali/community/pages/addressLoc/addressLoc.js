@@ -23,41 +23,36 @@ Page({
 
   },
   onLoad() {
-    const _this = this;
-    my.getStorage({
-      key: 'locationInfo',
-      success: function (res) {
-         if( res.data ) {
-          locAddr.GDCity(res.data, (data) => {
-            _this.setData({
-              locInfo: data
-            });
+  },
 
-            // 设置缓存并设置全部变量的值 globalData.userLocInfo 
-            myApp.setLocStorage(_this.data.locInfo);
-          });
-        }
-        else {
-          locAddr.location((res) => {
-            _this.setData({
-              locInfo: res
-            })
-            
-            // 设置缓存并设置全部变量的值 globalData.userLocInfo 
-            myApp.setLocStorage(_this.data.locInfo);
-          });
-        }
-      }
-    });
+  onShow: function () {
+    const _this = this;
+    let userLocInfo = myApp.globalData.userLocInfo;
+    // console.log('onShow-index', userLocInfo)
+
+    if (this.jsonNull(userLocInfo) == 0) {
+      // console.log('重新定位')
+      locAddr.location((res) => {
+        _this.setData({
+          locInfo: res
+        });
+        // 设置缓存并设置全部变量的值 globalData.userLocInfo 
+        myApp.setLocStorage(_this.data.locInfo);
+      });
+    }
+    else {
+      _this.setData({
+        locInfo: userLocInfo
+      })
+    }
   },
 
   // 地址栏选择的方法
   chooseLocation() {
     const _this = this
     my.chooseLocation({
-
       success: (res) => {
-        // console.log('chooseLocation', res)
+        // console.log('chooseLocation', res) 
         _this.setData({
           'locInfo.longitude': res.longitude,
           'locInfo.latitude': res.latitude,
@@ -65,9 +60,10 @@ Page({
           'locInfo.streetLoc': res.longitude + ',' + res.latitude
         });
 
-        locAddr.GDCity(_this.data.locInfo, (data) => { 
+        locAddr.GDCity(_this.data.locInfo, (data) => {
+          // console.log(data)
           myApp.setLocStorage(data, function () {
-            my.reLaunch({ url: '../index/index' });
+            my.navigateBack();
           });
         });
       },
@@ -80,21 +76,24 @@ Page({
     const _this = this;
     let selectCity = e.target.dataset.itemData;
     let _location = selectCity.location.split(',');
-    // console.log(selectCity)  
+    let _locInfo = _this.data.locInfo;
+    let _addressAll = _locInfo.province + _locInfo.city + _locInfo.district + _locInfo.street + selectCity.address;
     this.setData({
       'locInfo.streetShow': selectCity.name,
       'locInfo.streetLoc': selectCity.location,
+      'locInfo.addressAll': _addressAll,
       'locInfo.longitude': _location[0] * 1,
       'locInfo.latitude': _location[1] * 1,
     });
 
     // 更新locAddr 地址成最新的
     locAddr.locInfo = _this.data.locInfo;
+    // console.log(locAddr.locInfo)
     myApp.setLocStorage(_this.data.locInfo, function () {
-      my.reLaunch({ url: '../index/index' });
+      my.navigateBack();
     });
   },
- 
+
   // 到城市列表
   goToCityList() {
     my.navigateTo({ url: '../alphabetCity/alphabetCity' });
@@ -116,6 +115,7 @@ Page({
     _this.setData({ reLocOff: false });
 
     locAddr.location((res) => {
+      // console.log('重新定位', res)
       _this.setData({
         locInfo: res
       })
@@ -138,5 +138,13 @@ Page({
     this.setData({
       [e.target.dataset.field]: '',
     });
+  },
+
+  jsonNull(json) {
+    let num = 0;
+    for (let i in json) {
+      num++;
+    }
+    return num;
   },
 });

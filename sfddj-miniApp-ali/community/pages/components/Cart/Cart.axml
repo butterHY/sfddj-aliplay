@@ -34,14 +34,15 @@
   </view> 
 </view>
 
+<!-- 消息提醒  -->
 <view class="noticeShow">
-        <notice
-          show="{{ noticeShow }}"
-          type="{{ normal }}"   
-          showIcon="{{false}}" > 
-          {{ actionText }}
-        </notice>
-      </view>
+  <notice
+    show="{{ noticeShow }}"
+    type="{{ normal }}"   
+    showIcon="{{false}}" > 
+    {{ actionText }}
+  </notice>
+</view>
  
 <!-- 弹出层  -->
 <popup class="goodsAction_popup" show="{{ isShowed }}" zIndex="{{ 8 }}" disableScroll="{{ false }}" position="bottom" onClose="onHideClick">

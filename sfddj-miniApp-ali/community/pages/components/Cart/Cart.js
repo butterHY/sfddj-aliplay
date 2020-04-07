@@ -109,19 +109,30 @@ Component({
     // 店铺打烊时间控制
     storeClosed() {
       const _this = this;
-      let storeTime = this.props.storeTime;
+      let storeTime = this.props.storeTime; 
       if( !storeTime ) return; 
+
+      let _actionText = '';
+      let _showOff = false;
+      let _startTime = this.FormatDateTime( storeTime.startBusinessTime, 'minMinute', '-' ); 
       
       let nowTime = storeTime.nowTime || Date.now(); 
-      if ( nowTime < storeTime.startBusinessTime || nowTime > storeTime.endBusinessTime ) {
-        // 当前时间大于最晚营业时间 
-        let _startTime = this.FormatDateTime( storeTime.startBusinessTime, 'minMinute', '-' ); 
-        this.setData({
-          noticeShow: true,
-          actionText: `本店已打烊，将在${_startTime}开业！`,
-          isDisabled: true,
-        }) 
+
+      if ( nowTime < storeTime.startBusinessTime ) { 
+        _actionText = `本店还未到营业时间哦~，将在${_startTime}开业！`;
+        _showOff = true;
       }
+      else if ( nowTime > storeTime.endBusinessTime ) {
+        // 当前时间大于最晚营业时间  
+        _actionText = `本店已打烊，将在${_startTime}开业！`;
+        _showOff = true; 
+      }
+       
+      this.setData({
+        noticeShow: _showOff,
+        actionText: _actionText,
+        isDisabled: _showOff,
+      })  
     },
 
     FormatDateTime(date, minType, point) {

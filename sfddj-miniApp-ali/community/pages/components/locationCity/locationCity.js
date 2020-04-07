@@ -20,31 +20,33 @@ Component({
   props: {},
 
   didMount() { 
-    const _this = this;  
+   
+    const _this = this; 
+    let userLocInfo = myApp.globalData.userLocInfo; 
+     console.log('didMount', userLocInfo)
 
-    my.getStorage({
-      key: 'locationInfo', 
-      success: function(res) {   
-        if( res.data ) {
-          _this.setData({
-            locInfo: res.data
-          })
-        }
-        else {  
-          locAddr.location((res)=> {
-            _this.setData({
-              locInfo: res
-            }); 
-            
-            // 设置缓存并设置全部变量的值 globalData.userLocInfo 
-            myApp.setLocStorage(_this.data.locInfo);
-          });
-        }
-      }
-    });  
+    if ( this.jsonNull(userLocInfo) == 0 ) {
+      console.log('重新定位')
+      locAddr.location((res)=> {
+        _this.setData({
+          locInfo: res
+        });  
+        // 设置缓存并设置全部变量的值 globalData.userLocInfo 
+        myApp.setLocStorage(_this.data.locInfo);
+      });
+    }
+    else {
+      _this.setData({
+        locInfo: userLocInfo
+      })
+    } 
   },
 
-  didUpdate() { },
+  didUpdate() { 
+    const _this = this; 
+    let userLocInfo = myApp.globalData.userLocInfo; 
+    console.log('didUpdate', userLocInfo)
+  },
 
   didUnmount() { },
 
@@ -52,5 +54,14 @@ Component({
     goLocationCity() {
       my.navigateTo({ url: '../addressLoc/addressLoc' });
     }, 
+
+    jsonNull(json) {
+      let num = 0;
+      for(let i in json){  
+        num++; 
+      } 
+      return num;
+    }
+
   },
 });
