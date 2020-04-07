@@ -188,7 +188,7 @@ Page({
     let _optAddr = this.data.optAddr; 
 
     // 联系人
-    if( _optAddr.fullName == '' ) {
+    if( _optAddr.fullName == '' || !_optAddr.fullName ) {
       // console.log('联系人不能空')
       my.showToast({
         type: 'none',
@@ -216,12 +216,23 @@ Page({
       });
       return
     }
+
     
-    if ( _optAddr.address == '' ) {
-      // console.log('地址定位不能为空')
+    if ( _optAddr.locate == '' || !_optAddr.locate ) {
+      // console.log('地址不能为空')
       my.showToast({
         type: 'none',
-        content: '地址定位不能为空',
+        content: '地址不能为空',
+        duration: 2500
+      });
+      return
+    }
+    
+    if ( _optAddr.address == '' || !_optAddr.address ) {
+      // console.log('详细地址不能为空')
+      my.showToast({
+        type: 'none',
+        content: '详细地址不能为空',
         duration: 2500
       });
       return

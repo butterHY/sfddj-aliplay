@@ -1,10 +1,10 @@
 <template name="itemAddress">
-    <view class="addrListItem {{canUse ? 'usefulList' : ''}}" onTap="{{canUse ? 'selectTap' : ''}}">
+    <view class="addrListItem {{canUse ? 'usefulList' : ''}}" data-index="{{index}}" onTap="{{canUse ? 'selectTap' : ''}}">
         <view class="addrListItem_left single-line">
             <!-- 省市区 -->
-            <view class="single-line font-30">{{item.address}}</view>
+            <view class="single-line font-30">{{item.locate}}</view>
             <!-- 详细地址 -->
-            <view class="single-line font-26 marTop_20">{{ item.locate }}</view>
+            <view class="single-line font-26 marTop_20">{{item.address}}</view>
             <!-- 电话和姓名 -->
             <view class="single-line font-26 marTop_20">
                 <text>{{item.fullName}}</text>
@@ -12,7 +12,7 @@
             </view>
         </view>
         <!-- 编辑按钮 -->
-        <view class="addrListItem_edit" data-id="{{item.id}}" data-editAddr="{{ item }}" catchTap="editTap">
+        <view class="addrListItem_edit" data-id="{{item.id}}" data-index="{{index}}" data-type="{{canUse ? 'useful' : 'unuseful'}}" catchTap="editTap">
             <text class="icon-edit1 font-40"></text>
         </view>
     </view>

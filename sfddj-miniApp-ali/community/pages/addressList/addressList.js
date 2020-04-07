@@ -10,7 +10,10 @@ Page({
     this.setData({
       shopId: options.shopId ? options.shopId : ''
     })
-    this.getAddrList();
+   },
+   onShow(){
+     
+      this.getAddrList();
    },
 
   // 获取地址列表
@@ -41,24 +44,17 @@ Page({
   },
 
   // 点击选择
-  selectTap() {
-    let defaultAddress = {
-      shipName: '123',
-      shipPhone: 18823451312,
-      province: '广东省',
-      city: '深圳市',
-      district: '宝安区',
-      street: '西乡街道',
-      detail: '你猜不到的地址，哈哈哈哈哈哈'
-    }
-    getApp().globalData.communalAddr = Object.assign({}, defaultAddress);
+  selectTap(e) {
+    let {index} = e.currentTarget.dataset;
+    getApp().globalData.communalAddr = this.data.optionalList[index];
     my.navigateBack();
   },
 
   // 点击编辑
   editTap(e) {
-    let editAddress = e.target.dataset.editAddr;
-    getApp().globalData.editSelectAddr = Object.assign({}, editAddress); 
+    let {index, type} = e.currentTarget.dataset;
+    let addresss =  type == 'useful' ? this.data.optionalList[index] : this.data.unusableList[index];
+    getApp().globalData.editSelectAddr = Object.assign({}, addresss ); 
     // isNew 1 表示新建地址  0表示是旧地址，需要从全局地址中获取数据 
     my.navigateTo({ url: '../addressEdit/addressEdit?isNew=0' });
   },
