@@ -3,7 +3,7 @@
     <goods-swiper-box goodsImagePath="{{ goodsImagePath }}"></goods-swiper-box>
   </view>
 
-  <view class="layoutGroup" a:if="{{ godosPriceInfo !== null }}">
+  <view class="layoutGroup noMarTop" a:if="{{ godosPriceInfo !== null }}">
     <goods-price-box godosPriceInfo="{{ godosPriceInfo }}" ></goods-price-box>
   </view>
   
