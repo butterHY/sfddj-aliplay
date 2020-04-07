@@ -279,8 +279,6 @@ Page({
             if (result && Object.keys(result).length > 0) {
               that.showToast('兑换成功')
             }
-
-
             that.setData({
               couponLoadTap: true,                                                // 加载更多按钮防止双击
               loadingMore: true,
@@ -374,14 +372,6 @@ Page({
 
   },
 
-  /**
-   * 切换优惠券列表，跳转到失效优惠券列表页
-   */
-  changeCouponList() {
-    my.navigateTo({
-      url: '/pages/user/myCoupon/expiredCoupon/expiredCoupon',
-    })
-  },
 
   /**
    * 去使用按钮
@@ -481,39 +471,14 @@ Page({
   addCart: function (e) {
     let that = this
     let productId = e.currentTarget.dataset.pid;
-    console.log('加入购物车');
-    my.showLoading({
-      content: '加载中',
-    })
     sendRequest.send(constants.InterfaceUrl.SHOP_ADD_CART, { pId: productId, quantity: '1' }, function (res) {
-      //  my.hideLoading()
       my.showToast({
         content: '添加购物车成功',
       })
-      // my.showLoading({
-      //   title: '加载中',
-      // })
-      //  that.getCartData();//更新购物车
-      that.setData({
-        loadComplete: true
-      })
-
     }, function (res) {
-      //  my.hideLoading()
-      // my.showToast({
-      //   title: res,
-      // })
-      that.setData({
-        // showDialog3: false,
-        showToast: true,
-        showToastMes: res,
-        loadComplete: true
+      my.showToast({
+        content: res,
       })
-      setTimeout(function () {
-        that.setData({
-          showToast: false
-        })
-      }, 2000)
     })
   },
 

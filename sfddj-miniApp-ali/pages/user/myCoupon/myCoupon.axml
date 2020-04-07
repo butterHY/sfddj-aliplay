@@ -1,6 +1,9 @@
 <import src="../../common/couponItem.axml"/>
 <import src="../../common/item-goods-card.axml" />
 <import src="/pages/common/swiperItem"/>
+
+<import src="../../common/item-goods-card.axml" />
+
 <!-- 加载失败 -->
 <view a:if="{{couponFail && guessLikeFail}}">
   <load-fail></load-fail>
@@ -19,7 +22,7 @@
       <!--轮播图-->
       <view class="swipe whiteBack" a:if='{{ couponSwiper && couponSwiper.length > 0}}'>
         <block>
-          <template is="swiperItem" data="{{swiperList: couponSwiper,baseImageUrl:baseImageUrl,radius:'13rpx',height:'300rpx'}}"></template>
+          <template is="swiperItem" data="{{swiperList: couponSwiper,baseImageUrl:baseImageUrl,radius:'13rpx',height:'134rpx'}}"></template>
         </block>
       </view>
       <!-- 兑换优惠券部分 -->
@@ -29,7 +32,7 @@
         <!-- 兑换码输入  -->
         <view class="myCoupon_exchangeBox flex_view_row">
           <view class="myCoupon_input flex_1">
-            <input-item data-field="exchangeSign" placeholder="" type="text" value="{{ruleSign}}" clear="{{ruleSign.length > 0}}" last="{{true}}" placeholderClass="font-28" inputCls="font-28" onInput="handleExchangeInput" onClear="exchangeClear"></input-item>
+            <input-item data-field="exchangeSign" placeholder="请输入10位优惠券编码" type="text" value="{{ruleSign}}" clear="{{ruleSign.length > 0}}" last="{{true}}" placeholderClass="font-28" inputCls="font-28" onInput="handleExchangeInput" onClear="exchangeClear"></input-item>
           </view>
           <!-- 兑换按钮 -->
           <view class="myCoupon_exchangeBtn {{(ruleSign.length >= maxLength) && isRightSign ? 'redBtn' : 'greyBtn' }}" catchTap="sure">
@@ -74,9 +77,10 @@
         </view>
       </view>
     </view>
+
     <!--猜你喜欢-->
-    <view class='guessLikeArea' a:if="{{ recommondList.length > 0 }} ">
-      <view class='guessLikeTit'>猜你喜欢</view>
+    <view class='guessLikeArea all_100 clearfix padding_108' a:if="{{ recommondList.length > 0 }} ">
+      <!-- <view class='guessLikeTit'>猜你喜欢</view>
       <view class='guessLike'>
         <view class='guessLikeView'>
           <block a:for="{{recommondList}}" a:if="{{index % 2 == 0}}" a:key="itemIndex">
@@ -88,7 +92,25 @@
             <template is="itemGoodsCard" data="{{...item,left:false,baseImageUrl:baseImageUrl,baseLocImgUrl,smallImgArg}}"></template>
           </block>
         </view>
+      </view> -->
+
+      <view class="guessLikeTitle flex_view_row justi_cen align_cen">
+        <image src="{{baseLocImgUrl}}miniappImg/icon/ic_like.png" class='ic_like'></image>
+        <text>猜你喜欢</text>
       </view>
+      <view class="guessLikeGoodsBox ">
+        <block  a:for="{{ recommondList }}" a:if="{{ index %2 == 0 }}">
+          <template is="itemGoodsCard" data="{{...item,left:true,baseImageUrl,baseLocImgUrl,type:'newGuessLike'}}"></template>
+        </block>
+      </view>
+      <view class="guessLikeGoodsBox ">
+        <block a:for="{{ recommondList }}" a:if="{{ index %2 != 0 }}">
+           <template is="itemGoodsCard" data="{{...item,left:false,baseImageUrl,baseLocImgUrl,type:'newGuessLike'}}"></template>
+        </block>
+      </view>
+    <!-- </view> -->
+
+
       <!--加载数据进度条-->
       <view a:if="{{!guessLikeLoadMore}}" class='loading_view'>
         <image src='{{baseLocImgUrl}}miniappImg/loading/loading.gif' class='loading_gif'></image>
@@ -96,14 +118,14 @@
       </view>
       <!--没有更多-->
       <view a:if="{{guessLikeLoadMore}}" class='loading_view font-26 color-323232'>
-              没有更多了
+          没有更多了
       </view>
     </view>
+
     <!-- 底部切换优惠券按钮 -->
-    <view class="myConpon_footer">
-      <view class="width_100 tex_center font-24 color-blue" onTap="changeCouponList">
-        <text class="checkMore_unValCoupon">查看失效券 ></text>
-      </view>
+    <view class="myConpon_footer flex_view_row justi_cen align_cen">
+      <navigator class="flex_1 checkMore_unValCoupon" url="/pages/user/myCoupon/expiredCoupon/expiredCoupon">查看失效券</navigator>
+      <navigator class="flex_1 checkMore_unValCoupon" url="/pages/home/getCoupon/getCoupon">领取更多好券</navigator>
     </view>
     <!--联系客服按钮-->
     <view class='contactArea' onTap='goToWebCall'>

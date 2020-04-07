@@ -7,7 +7,8 @@
     circular="{{swiperList.length > 1 ? 'true' : ''}}" 
     acceleration="true" 
     indicator-color="rgba(255,255,255,.8)" 
-    indicator-active-color="#ff5353">
+    indicator-active-color="#ff5353"
+    style="border-radius:{{radius? radius : '20rpx'}};overflow:hidden;">
 
       <swiper-item class="swiperItem" a:for="{{swiperList}}" key="swiper-item-{{index}}">
         <!-- <view class="swiper-item bc_{{item}}" ></view> -->

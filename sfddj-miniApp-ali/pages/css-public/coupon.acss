@@ -170,13 +170,13 @@
 }
 
 .myCouopon_sign {
-  font-size: 32rpx;
+  font-size: 36rpx;
   margin-right: -5rpx;
   color: #FFFFFF;
 }
 
 .myCoupon_num {
-  font-size: 57rpx;
+  font-size: 66rpx;
   color: #FFFFFF;
 }
 
@@ -184,6 +184,7 @@
   width: 100%;
   color: rgba(255, 255, 255, 0.6);
   font-size: 22rpx;
+  margin-top: 10rpx;
   /* height: 22rpx; */
 }
 
@@ -196,12 +197,12 @@
 }
 
 .myCoupon_itemTit {
-  font-size: 28rpx;
+  font-size: 26rpx;
   margin-bottom: 22rpx;
   color: #323232;
-  font-weight: 400;
+  font-weight: 600;
   -o-text-overflow: ellipsis;
-     text-overflow: ellipsis;
+  text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
@@ -220,7 +221,7 @@
   margin-top: -6rpx;
   overflow: hidden;
   -o-text-overflow: ellipsis;
-     text-overflow: ellipsis;
+  text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
@@ -239,6 +240,7 @@
   font-size: 24rpx;
   color: #ff5da0;
   background: transparent;
+  font-weight: 600;
 }
 
 /* 橙色系列优惠券 */

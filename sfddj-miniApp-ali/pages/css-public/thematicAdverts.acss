@@ -425,89 +425,6 @@
 
 /* 优惠券新样式 */
 
-/* .twoCoupon:nth-child(2n+1){
-     margin-right: 2.5px;
- }
-.twoCoupon:nth-child(2n){
-    margin-left: 2.5px;
-}
-
-.AdsImgShow{
-
-    .AdsImgShowBox{
-
-        .AdsImgShow1-2 {
-            width: 100%;
-
-            li {
-                position: relative;
-                border-radius: 4PX;
-                background-color: #ffffff;
-                overflow: hidden;
-            }
-            img {
-                display: block;
-                width: 100%;
-            }
-
-            .AdsImg-href-left {
-                width: 50%;
-                overflow: hidden;
-                margin: 0;
-
-                ul{
-                    margin-right: 2.5px;
-                }
-
-                ul, li, div {
-                    height: 100%;
-                }
-
-                img {
-                    margin: 0 auto;
-                    width: 100%;
-                    height: 100%;
-            }
-            .AdsImg-href-right{
-                margin: 0;
-                overflow: hidden;
-
-                ul{
-                    margin-left: 2.5px;
-
-                    li{
-                        margin-bottom: 5px;
-
-                        div{
-                            position: absolute;
-                            top: 0;
-                            left: 0;
-                            height: 100%;
-                            width: 100%;
-                        }
-
-                        img {
-                            height: 100%;
-                            width: 100%;
-                            margin: 0 auto;
-                        }
-                    }
-
-                    li:last-child {
-                        margin-bottom: 0;
-                    }
-                }
-            }
-        }
-    }
-} */
-
-
-
-.AdsImgShow .ads-white-interval {
-    height: 0.384rem;
-    width: 100%;
-}
 
 .couponModular {
   padding: 0 30rpx;
@@ -515,10 +432,6 @@
 
 .couponTitle {
   height: 74rpx;
-}
-
-.couponConnent {
-  /* height: 190rpx; */
 }
 
 .couponBox {
