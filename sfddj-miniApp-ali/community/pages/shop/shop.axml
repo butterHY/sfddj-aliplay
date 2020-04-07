@@ -45,5 +45,5 @@
 
 
   <!-- 购物车 -->
-  <cart shopid="{{shop.id}}"></cart>
+  <cart shopid="{{shop.id}}" storeTime="{{ storeTime }}"></cart>
 </view>

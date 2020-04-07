@@ -17,7 +17,12 @@ Page({
     this.shop.get(this.shopId, (res) => {
       if(res && res.data && res.data.data) {
         this.setData({
-          shop: res.data.data
+          shop: res.data.data,
+          storeTime: {
+            startBusinessTime: res.data.data.startBusinessTime,
+            endBusinessTime: res.data.data.endBusinessTime,
+            nowTime: res.data.data.nowTime
+          }
         });
 
         this.shop.getCategories(this.shopId, (res2) => {

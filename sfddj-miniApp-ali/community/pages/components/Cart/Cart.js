@@ -16,7 +16,6 @@ Component({
   didMount() {
     this.selfName = 'cart';
     this.cart = Cart.init('cart', this);
-    this.storeClosed();
   },
   didUpdate() {  
     if(this.props.shopid) {
@@ -27,6 +26,7 @@ Component({
             'obj': res
           });
         }
+        this.storeClosed();
       });
     }
   },
@@ -109,11 +109,11 @@ Component({
     // 店铺打烊时间控制
     storeClosed() {
       const _this = this;
-      let storeTime = this.props.storeTime;   
+      let storeTime = this.props.storeTime;
       if( !storeTime ) return; 
       
-      let nowTime = Date.parse(new Date()); 
-      if ( nowTime > storeTime.endBusinessTime ) {
+      let nowTime = storeTime.nowTime || Date.now(); 
+      if ( nowTime < storeTime.startBusinessTime || nowTime > storeTime.endBusinessTime ) {
         // 当前时间大于最晚营业时间 
         let _startTime = this.FormatDateTime( storeTime.startBusinessTime, 'minMinute', '-' ); 
         this.setData({

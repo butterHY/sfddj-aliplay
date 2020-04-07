@@ -35,6 +35,7 @@ Page({
         // 营业时间
         _storeTime.endBusinessTime = _data.endBusinessTime;
         _storeTime.startBusinessTime = _data.startBusinessTime;
+        _storeTime.nowTime = _data.nowTime;
         // 商品详情介绍
         _goodsInfo.info = _data.goodInfo;
         _goodsInfo.introduction = _data.introduction; 
