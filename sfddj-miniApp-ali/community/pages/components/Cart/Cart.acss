@@ -106,7 +106,7 @@
 
 /* goodsAction_popup */
 .goodsAction_popup { 
-	z-index: 10;
+	z-index: 6;
 }
 
 .goodsAction_popup .am-popup-bottom {
