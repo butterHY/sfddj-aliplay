@@ -3,6 +3,7 @@
 @import '../../css-public/coupon.acss';    /*优惠券的样式*/
 @import '../../css-public/itemGoodsCard.acss';
 
+
 .width_85 {
   width: 85%;
 }
@@ -204,9 +205,16 @@
 }
 
 /*查看更多失效券   */
-
 .checkMore_unValCoupon {
+  height: 36rpx;
   display: inline-block;
+  color: #ff3c2d;
+  font-weight: 600;
+  line-height: 36rpx;
+}
+
+.checkMore_CouponLeft {
+  border-left: 1rpx solid #dddddd;
 }
 
 /*小空隙   */
@@ -265,16 +273,17 @@
   height: 68rpx;
   background: #f0f0f0;
   border: none;
-  border-radius: 5px;
+  border-radius: 50rpx;
   /* overflow: hidden; */
-  box-sizing: border-box;
+  /* box-sizing: border-box; */
 }
+
 
 .myCoupon_input .am-input-item {
   padding: 0;
   background:#f0f0f0;
   height: 68rpx;
-  border-radius: 5px;
+  border-radius: 50rpx;
   /* overflow: hidden; */
 }
 
@@ -283,6 +292,7 @@
   height: 68rpx;
   border-color: #f0f0f0;
   box-sizing: border-box;
+  border-radius: 50rpx;
 }
 
 .am-input-content {
@@ -290,6 +300,7 @@
   background: #f0f0f0;
   box-sizing: border-box;
   padding-left: 24rpx;
+  border-radius: 50rpx;
 }
 
 .myCoupon_exchangeBtn{
@@ -320,10 +331,9 @@
   z-index: 10;
   width: 100%;
   background-color: #fff;
-  color: #a1a0a0;
-  /* padding: 20rpx 0; */
-  height: 75rpx;
-  line-height: 75rpx;
+  padding: 30rpx 0;
+  /* height: 98rpx; */
+  /* line-height: 98rpx; */
 }
 
 /* 使用说明样式 ----- start */
@@ -363,7 +373,7 @@
 }
 
 .swipe{
-  padding: 32rpx 0 0;
+  padding: 32rpx 20rpx 0;
 }
 
 .couponLoading_view{
@@ -387,12 +397,6 @@
   padding: 20rpx;
 }
 
-.myCoupon_input{
-  height: 68rpx;
-  background: #f0f0f0;
-  border: none;
-  border-radius: 5px;
-}
 
 .myCoupon_exchangeBtn{
   font-size: 32rpx;
@@ -432,29 +436,31 @@
   text-align: center;
 }
 
-.guessLikeTit{
+
+
+/* .guessLikeTit{
   color: rgba(50,50,50,0.8);
   font-size: 32rpx;
   text-align: left;
   margin: 26rpx 0 10rpx 20rpx;
-}
+} */
 
-.guessLike {
+/* .guessLike {
   display: flex;
   padding: 0 20rpx;
   box-sizing: border-box;
-}
+} */
 
-.guessLikeView {
+/* .guessLikeView {
   width: 50%;
   box-sizing: border-box;
   position: relative;
   padding: 0;
   border: none;
   overflow: hidden;
-}
+} */
 
-.goodsArea{
+/* .goodsArea{
     position: relative;
     display: block;
     background-color: #FFFFFF;
@@ -464,9 +470,9 @@
     width: 100%;
     height: auto;
     overflow: hidden;
-}
+} */
 
-.goodsImg{
+/* .goodsImg{
     text-align: center;
     position: relative;
     height: 312rpx;
@@ -475,20 +481,20 @@
     overflow: hidden;
     box-sizing: border-box;
     line-height: 312rpx;
-}
+} */
 
-.goodsImg image{
+/* .goodsImg image{
     display: inline-block;
     width: 260rpx;
     height: 260rpx;
     border-radius: 2px;
     vertical-align: middle;
-}
+} */
 
 .loading_view{
   font-size: 26rpx;
   color: #323232;
-  margin-bottom: 100rpx;
+  margin-bottom: 200rpx;
 }
 
 .loading_gif{
@@ -509,7 +515,7 @@
   height: 124rpx;
 }
 
-.guessLikeCart{
+/* .guessLikeCart{
   height:45rpx;
   width:45rpx;
   position: absolute;
@@ -518,6 +524,40 @@
   z-index: 5;
   margin: 20rpx;
   user-select: none;
-}
+} */
 
 /* 新版我的优惠券样式 ---190709 end */
+
+
+/* ---  猜你喜欢样式 --- */
+
+.guessLikeArea {
+  box-sizing: border-box;
+  padding: 0 20rpx;
+}
+
+.guessLikeTitle {
+  height: 128rpx;
+  text-align: center;
+  line-height: 128rpx;
+  font-size: 32rpx;
+  font-weight: 600;
+}
+
+.guessLikeGoodsBox {
+  width: 50%;
+  float: left;
+}
+
+.guessLikeGoods .allCompensation {
+  top: 0;  
+  width: 65rpx;
+  height: 65rpx;
+}
+
+.ic_like {
+  width: 25rpx;
+  height: 32rpx;
+  margin-right: 5rpx;
+}
+

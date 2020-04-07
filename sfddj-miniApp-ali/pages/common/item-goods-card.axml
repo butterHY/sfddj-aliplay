@@ -40,18 +40,18 @@
         <image a:elif="{{filters.strIndexOf(afterSaleGuee,'3')}}" src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff3.png" class="allCompensation posi_ab" style="{{left ? 'right: 30rpx;' : 'right: 10rpx;'}}"></image>
         <image a:elif="{{filters.strIndexOf(afterSaleGuee,'4')}}" src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff4.png?version=2.0" class="allCompensation posi_ab" style="{{left ? 'right: 30rpx;' : 'right: 10rpx;'}}"></image>
 
-        <!-- i活动标签 普通页面需添加标签的-->
-      <block a:if="{{type == 'normal' && goodsLabel}}">
-        <view class="verpromotionHot posi_ab">
-          <view class="color-white font-24 iconHot">
-            <text>{{goodsLabel}}</text>
+          <!-- i活动标签 普通页面需添加标签的-->
+        <block a:if="{{type == 'normal' && goodsLabel}}">
+          <view class="verpromotionHot posi_ab">
+            <view class="color-white font-24 iconHot">
+              <text>{{goodsLabel}}</text>
+            </view>
+            <view class="iconHotBg">
+              <image src="https://img.sfddj.com/miniappImg/public/goodsInfo/hotIcon.png" />
+            </view>
           </view>
-          <view class="iconHotBg">
-            <image src="https://img.sfddj.com/miniappImg/public/goodsInfo/hotIcon.png" />
-          </view>
-        </view>
-      </block>
-        
+        </block>
+          
         <view class="{{ type == 'newGuessLike' ? 'guessLikeDescribe' : 'goodsInfo height_176r notAtHome' }} {{type == 'normal'?'normalTextHeiht':''}}">
           <view class="{{type == 'newGuessLike' ? 'guessLikeGoodsName single-line2' : 'single-line flex_view_col height_80r'}} {{type == 'normal'?'normalDel':''}}">
             <text class="{{type == 'newGuessLike' ? 'single-line2' : 'font-26 color-323232 single-line-text lineH_2'}} {{type == 'normal'?'normalTit twoLineShow lineH_40r':''}}"><text a:if="{{type == 'normal'&& goodsLabel}}" class="promotionHotIcon">{{goodsLabel}}</text>{{name ? name : goodsName}}</text>
