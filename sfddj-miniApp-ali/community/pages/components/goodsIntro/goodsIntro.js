@@ -14,7 +14,7 @@ Component({
       detail: [
         {
           text: '未划线价：为划线价是当前商品或服务在本平台的实时销售价（不含包装费、运费等），是您最终觉定是否购买商品或服务的依据。最终以订单结算也看呈现的价格为准',
-          src: 'http://img.sfddj.com/image/20200212/158147649737727027.jpg',
+          src: '',
         }
       ], 
     }
@@ -29,7 +29,7 @@ Component({
     init() {
       const _this = this;
       _this.setInfo();
-      // _this.setDetaile(); 
+      _this.setDetaile(); 
     },
 
     setInfo() {
@@ -49,7 +49,7 @@ Component({
       let _src = 'goodsIntro.detail[' + 0 + '].src';
 
       _this.setData({ 
-        [_text]: _this.props.goodsInfo.introduction, 
+        [_text]: _this.props.goodsInfo.introduction,  
       })
     },
 
