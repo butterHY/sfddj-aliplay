@@ -1,55 +1,56 @@
 <view class="addressPage">
-  <view class="formList"> 
+  <view class="formList">
     <view class="listInput">
-      <input-item type="text" clear="{{true}}"  placeholder="{{ name_placeholder }}"  value="{{ optAddr.fullName }}" 
-        data-field="optAddr.fullName"  
-        className="inputShow"
-        className="dadada"  
-        onInput="onInputName"  
-        onClear="onClear">
-        联系人 
+      <input-item type="text" clear="{{true}}" placeholder="{{ name_placeholder }}" value="{{ optAddr.fullName }}" data-field="optAddr.fullName" className="inputShow" className="dadada" onInput="onInputName" onClear="onClear">
+        联系人
       </input-item>
     </view>
-   
     <view class="listInput ">
-      <input-item type="number" clear="{{true}}" placeholder="{{ mobile_placeholder }}" value="{{ optAddr.mobile }}"  
-        data-field="optAddr.mobile"  
-        className="inputShow"
-        onInput="onInputTel" 
-        maxlength="{{ 11 }}"
-        onClear="onClear">电话</input-item>
+      <input-item type="number" clear="{{true}}" placeholder="{{ mobile_placeholder }}" value="{{ optAddr.mobile }}" data-field="optAddr.mobile" className="inputShow" onInput="onInputTel" maxlength="{{ 11 }}" onClear="onClear">电话</input-item>
     </view>
-
-    <view class="listInput" onTap="chooseLocation">
-      <input-item type="text" clear="{{false}}" placeholder="{{ addr_placeholder }}"  value="{{ optAddr.locate }}" 
-        disabled="{{ true }}"
-        data-field="optAddr.locate"  
-        className="inputShow">地址
-          <view slot="extra" class="">
-            <am-icon class="iconStyle" type="right"></am-icon>
-          </view>
-
-          <view slot="extra" >
-            <am-icon class="iconStyle" type="location"></am-icon>
-          </view>
-        </input-item>
-    </view> 
-    
+    <!-- <view class="listInput" onTap="chooseLocation">
+      <input-item type="text" clear="{{false}}" placeholder="{{ addr_placeholder }}" value="{{ optAddr.locate }}" disabled="{{ true }}" data-field="optAddr.locate" className="inputShow">地址
+        <view slot="extra" class="">
+          <am-icon class="iconStyle" type="right"></am-icon>
+        </view>
+        <view slot="extra">
+          <am-icon class="iconStyle" type="location"></am-icon>
+        </view>
+      </input-item>
+    </view> -->
+    <!-- 定位地址 -->
+    <view class="locateItem" onTap="chooseLocation">
+      <!-- 左边 -->
+      <view class="locateItemTit">地址</view>
+      <!-- 右边 -->
+      <view class="locateItemCon">
+        <!-- 定位地址显示 -->
+        <view class="flex_1 locateItemTxt single-line">
+          <!-- 如果定位到内容时的显示  -->
+          <block a:if="{{optAddr.locate}}">
+            <text class="color-333">{{optAddr.locate}}</text>
+          </block>
+          <block a:else>
+            <text class="color-ccc">{{addr_placeholder}}</text>
+          </block>
+        </view>
+        <!-- icon -->
+        <view class="locateItemIcon">
+          <text class="icon-chevron-right font-32"></text>
+          <text class="icon-address marLeft_30 font-40"></text>
+        </view>
+      </view>
+    </view>
     <view class="listInput textareaShow">
       <view class="lableName">详细地址</view>
-      <view class="textareaBox"> 
-        <textarea 
-          data-field="optAddr.address"  
-          value="{{ optAddr.address }}"
-          auto-height show-count="{{ false }}"
-          placeholder="{{ street_placeholder }}" 
-          onInput="onInputDetail" />
-      </view> 
+      <view class="textareaBox">
+        <textarea data-field="optAddr.address" value="{{ optAddr.address }}"
+          auto-height show-count="{{ false }}" placeholder="{{ street_placeholder }}" onInput="onInputDetail" />
+      </view>
     </view>
   </view>
-
   <view class="bottomBtn">
-    <view class="BtnBox double" a:if="{{ !isNew }}"> 
+    <view class="BtnBox double" a:if="{{ !isNew }}">
       <button class="l_btn" hover-class="button-hover" type="primary" onTap="delAddr">删除</button>
       <button class="r_btn" hover-class="button-hover" type="warn" onTap="saveAddr">保存</button>
     </view>
