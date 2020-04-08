@@ -523,9 +523,14 @@
     </view>
   </view>
   <view a:if="{{goods.viewStatus != 'SALEING'}}" class="goods-soldOut">非常抱歉，该商品已经下架</view>
-  <view a:elif="{{goods.viewStatus == 'SALEING' && goods.goodsStore == 0}}" class="goods-soldOut">非常抱歉，该商品已经售罄</view>
-  <view a:elif="{{goods.viewStatus == 'SALEING' && goods.goodsStore != 0 && nonDeliveryArea}}" class="goods-soldOut">当前地址不在服务范围，请切换收货地址</view>
+  <view a:elif="{{(!goods.secKillStatus && goods.goodsStore <= 0) || (goods.secKillStatus && goodsSecondKill.activityStock <= 0 && goods.goodsStore <= 0)}}" class="goods-soldOut">非常抱歉，该商品已经售罄</view>
   
+  <view a:if="{{goods.viewStatus == 'SALEING' && goods.secKillStatus &&  (goodsSecondKill.activityStock > 0 || goods.goodsStore > 0) && nonDeliveryArea}}">当前地址不在服务范围，请切换收货地址</view>
+  <view a:if="{{goods.viewStatus == 'SALEING' && !goods.secKillStatus && goods.goodsStore > 0 && nonDeliveryArea}}">当前地址不在服务范围，请切换收货地址</view>
+
+
+  <!-- <view a:elif="{{goods.viewStatus == 'SALEING' && goods.goodsStore != 0 && nonDeliveryArea}}" class="goods-soldOut">当前地址不在服务范围，请切换收货地址</view> -->
+
   <!-- 不是顺丰会员商品      重构按钮完成 -->
   <block a:if="{{!SFmember}}">
     <!-- 积分商品和抵扣商品和会员日商品, 不能显示'送他按钮'和'加入购物车按钮'                  memberDeductGoods 会员积分抵扣旧字段， memberDayGoods 与原有接口字段一样 -->
@@ -585,14 +590,16 @@
             <!-- <view a:elif="{{isSpikeOver}}" class="flex_1 background_gray toBuyNow border-radius45">活动结束</view> -->
             <!-- <view a:elif="{{goods.secKillStatus && (goodsSecondKill.totalSaleVolume == goodsSecondKill.totalStock)}}" class="flex_1 background_gray toBuyNow border-radius45">已售罄</view> -->
 
-            <!-- a:if="{{product.activityStock > 0}}"  -->
-            <view a:if="{{ goodsSecondKill.activityStock > 0 || product.store > 0 }}" class="flex_1 toBuyNowBack toBuyNow border-radius45 posi_re" onTap="buyNow">
+
+            <navigator a:if="{{goods.viewStatus != 'SALEING' || (goodsSecondKill.activityStock <= 0 && goods.goodsStore <= 0)}}" class="flex_1 toBuyNowBack toBuyNow border-radius45" url="/pages/category/secondCategory/secondCategory?categoryId={{goods.categoryVO.categoryId}}" open-type="navigate" hover-class="none">查看类似商品</navigator>
+
+            <view a:elif="{{ goodsSecondKill.activityStock > 0 || product.store > 0 }}" class="flex_1 toBuyNowBack toBuyNow border-radius45 posi_re" onTap="buyNow">
               {{ goodsSecondKill.activityStock > 0 ? '马上抢' : (product.store > 0 ? '立即购买' : '') }}
-            <button class="btnStyle gpnBtn zIndex100" a:if="{{ user_memId == 0 || user_memId == '0' }}" open-type="getAuthorize" onGetAuthorize="getPhoneNumber" scope='phoneNumber' onError="onAuthError" hover-class="none"></button>
+              <button class="btnStyle gpnBtn zIndex100" a:if="{{ user_memId == 0 || user_memId == '0' }}" open-type="getAuthorize" onGetAuthorize="getPhoneNumber" scope='phoneNumber' onError="onAuthError" hover-class="none"></button>
             </view>
 
-            <!-- <view a:elif="{{product.store >0}}" class="flex_1 toBuyNowBack toBuyNow border-radius45" onTap="buyNow">立即购买</view> -->
-            <navigator a:elif="{{goods.viewStatus != 'SALEING' || (goods.viewStatus == 'SALEING' && goods.goodsStore == 0)}}" class="flex_1 toBuyNowBack toBuyNow border-radius45" url="/pages/category/secondCategory/secondCategory?categoryId={{goods.categoryVO.categoryId}}" open-type="navigate" hover-class="none">查看类似商品</navigator>
+            
+            
 
           </block>
           <block a:elif="{{goods.viewStatus != 'SALEING' || (goods.viewStatus == 'SALEING' && goods.goodsStore == 0)}}">

@@ -89,12 +89,10 @@ page {
 }
 
 .estimateNavListCon {
-  width: 200rpx;
-  line-height: 58rpx;
   text-align: center;
 	font-size: 28rpx;
   box-sizing: border-box;
-	padding: 0 36rpx;
+	padding: 14rpx 36rpx;
   border: 1rpx solid transparent;
 	border-radius: 45rpx;
 	background-color: #f5f5f5;

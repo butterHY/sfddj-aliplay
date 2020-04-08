@@ -410,6 +410,7 @@ Page({
 
       var goodsAmount = 0;
       that.data.result = res.data.result;
+      console.log(res.data.result)
       that.data.totalPrice = 0;
       that.data.result.supplierList.forEach(function (v1, i1, arr1) {
         v1.leftCount = '60';
@@ -764,7 +765,7 @@ Page({
         knockActivityDescribe: result.knockActivityDescribe && result.knockActivityDescribe != 'null' && result.knockActivityDescribe != 'undefined' ? result.knockActivityDescribe : '',
         bbsData: ['']
       });
-
+      console.log(result)
       that.resetTotalPrice('', 'init')
 
       // 如果是从顺丰速运+那里过来

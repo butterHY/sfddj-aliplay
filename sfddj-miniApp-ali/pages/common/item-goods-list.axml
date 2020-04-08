@@ -22,8 +22,8 @@
 					</view>
 				</view>
 			</view>
-			<view style="width:50rpx;height:50rpx;position:absolute;right:30rpx;bottom:30rpx" class="posi_re" catchTap="addCart">
-				<image class="all_100" src="{{baseLocImgUrl}}miniappImg/icon/icon_redCart.png" data-pid="{{productId}}"/>
+			<view style="width:50rpx;height:50rpx;position:absolute;right:30rpx;bottom:30rpx" class="posi_re" data-pid="{{productId}}" catchTap="addCart">
+				<image class="all_100" src="{{baseLocImgUrl}}miniappImg/icon/icon_redCart.png" />
 				<!--埋点-快捷绑定手机号 -->
 				<button a:if="{{isBing}}" class="btnStyle gpnBtn zIndex100" open-type="getAuthorize" onGetAuthorize="getPhoneNumber" scope='phoneNumber' onError="onAuthError"></button>
 			</view>

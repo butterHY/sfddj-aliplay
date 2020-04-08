@@ -32,7 +32,7 @@
         <!-- 兑换码输入  -->
         <view class="myCoupon_exchangeBox flex_view_row">
           <view class="myCoupon_input flex_1">
-            <input-item data-field="exchangeSign" placeholder="请输入10位优惠券编码" type="text" value="{{ruleSign}}" clear="{{ruleSign.length > 0}}" last="{{true}}" placeholderClass="font-28" inputCls="font-28" onInput="handleExchangeInput" onClear="exchangeClear"></input-item>
+            <input-item data-field="exchangeSign" placeholder="请输入优惠券编码" type="text" value="{{ruleSign}}" clear="{{ruleSign.length > 0}}" last="{{true}}" placeholderClass="font-28" inputCls="font-28" onInput="handleExchangeInput" onClear="exchangeClear"></input-item>
           </view>
           <!-- 兑换按钮 -->
           <view class="myCoupon_exchangeBtn {{(ruleSign.length >= maxLength) && isRightSign ? 'redBtn' : 'greyBtn' }}" catchTap="sure">

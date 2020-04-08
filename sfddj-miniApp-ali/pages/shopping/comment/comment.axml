@@ -22,7 +22,7 @@
       <!-- 评分 -->
       <view class="estimateHead font-28">
         <view>好评度:
-          <text class="color-ff5353 ">{{commentScore}}%</text>
+          <text class="color-ff5353 marLeft_5">{{commentScore}}%</text>
         </view>
       </view>
       <!-- 筛选有图没图 -->

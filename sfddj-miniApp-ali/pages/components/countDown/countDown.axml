@@ -1,23 +1,23 @@
   <!-- 秒杀价格 -->
   <view class="backgroiund_orange secondkillModule font-weight flex_view_row color_fff" a:if="{{secKillStatus}}">
     <view class="flex-1 single-line">
-      <view class="secKillPriceView">
+      <view class="secKillPriceView {{viewStatus != 'SALEING' ? 'flex_view_row align_cen' : ''}}">
         <view a:if="{{viewStatus != 'SALEING'}}" class="font-50 font-weight-600">暂无报价</view>
         <view a:else>
           <view class="activityPrice single-line">
             <text class="font-32">¥ </text>
-            <text class="font-weight-600">{{goodsSecondKill.activityPrice}}</text>
+            <text class="font-weight-600">{{goodsSecondKill.activityStock > 0 ? goodsSecondKill.activityPrice : goodsSecondKill.salePrice}}</text>
           </view>
           <view class="font-28 inline_block marTop_20 single-line {{goodsSecondKill.activityStock <= 0 ? 'sellOut' : ''}}" style="max-width: 100%;">
-            <text class="single-line marRight_20 {{goodsSecondKill.activityStock > 0 ? 'line_through' : ''}}" >¥ {{goodsSecondKill.salePrice}}</text>
-            <block>{{goodsSecondKill.activityStock > 0? '仅剩' + (goodsSecondKill.activityStock - goodsSecondKill.activitysSalesVolumn) + '件' : '已秒完'}}</block>
+            <text class="single-line marRight_20 {{goodsSecondKill.activityStock > 0 ? 'line_through' : ''}}" >¥ {{goodsSecondKill.activityStock > 0 ? goodsSecondKill.salePrice : goodsSecondKill.activityPrice}}</text>
+            <block>{{goodsSecondKill.activityStock > 0? '仅剩' + (goodsSecondKill.activityStock) + '件' : '已秒完'}}</block>
           </view>
         </view>
       </view>
     </view>
     <!-- 进度条 -->
     <view class="progress flex-1 flex_view_col  align_end" >
-      <block a:if="{{goodsSecondKill.activityStock > 0}}">
+      <block a:if="{{goodsSecondKill.activityStock > 0 && viewStatus == 'SALEING'}}">
         <view class="font-30 flex_view_row  align_cen">
           <image class="alarmClock" mode="aspectFit" src="{{baseImageLocUrl}}miniappImg/goodsDetail/alarmClock.png"/>
           <text>限时秒杀</text>

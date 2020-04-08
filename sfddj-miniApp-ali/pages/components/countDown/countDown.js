@@ -36,8 +36,7 @@ Component({
 
   didMount() {
     this.$page.spikePrice = this; // 通过此操作可以将组件实例挂载到所属页面实例上
-    console.log(this.props.secKillStatus)
-    if (this.props.secKillStatus) {
+    if (this.props.secKillStatus && this.props.goodsSecondKill.activityStock > 0 && this.props.viewStatus == 'SALEING') {
       this.getTimes(this.props.isFirstTime);
     };
   },
@@ -87,7 +86,6 @@ Component({
         this.props.onSpikeOver('isSpikeOver');
       } else if (nowTime < starTime) {
         clearTimeout(getApp().globalData.goodsDetail_spikeTime);
-        console.log('ss')
         this.props.onSpikeOver('noStart');
       } else if (isFirstTime) {
         this.countDown();
@@ -100,6 +98,7 @@ Component({
       var that = this;
       getApp().globalData.goodsDetail_spikeTime = setInterval(
         function() {
+          console.log('aa')
           that.getTimes()
         }, 1000)
     },
