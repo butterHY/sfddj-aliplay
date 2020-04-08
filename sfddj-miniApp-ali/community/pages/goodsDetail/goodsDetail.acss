@@ -3,9 +3,9 @@
 }
 
 .layoutGroup {
-	margin-bottom: 15rpx;
-}
+	margin-top: 15rpx;
+} 
 
-.layoutGroup:last-child {
-	margin-bottom: 0;
+.layoutGroup.noMarTop {
+	margin-top: 0;
 }

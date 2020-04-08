@@ -1,5 +1,5 @@
 .goodsIntroBox {
-	margin-bottom: 135rpx; 
+	/* margin-bottom: 135rpx;  */
 }
 
 .goodsInfo {  
@@ -22,6 +22,7 @@
 
 .goodsIntro {   
 	background-color: #ffffff;
+	min-height: 300rpx;
 }
 .goodsIntro .introShow { 
 }
@@ -32,6 +33,10 @@
 	width: 100%;
 	box-sizing: border-box;
 } 
+
+.goodsIntro .introShow .imageShow {
+	height: auto; 
+}
 
 .goodsIntro .introShow .textShow {
 	margin-bottom: 10rpx;

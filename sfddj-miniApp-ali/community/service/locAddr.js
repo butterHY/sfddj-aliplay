@@ -13,7 +13,7 @@ let LocAddr = {
 		my.getLocation({
 			type: 1,
 			success(res) {
-				// console.log(res);
+				// console.log('my.getLocation',res);
 				my.hideLoading();
 				_this.locInfo.city = res.city;
 				_this.locInfo.longitude = res.longitude;
@@ -22,7 +22,7 @@ let LocAddr = {
 
 				// 高德api定位
 				_this.GDCity('', function(addr) {
-					console.log('逆地址', addr); 
+					// console.log('逆地址', addr); 
 					if(fn) fn(addr);
 				});
 			},
@@ -37,7 +37,7 @@ let LocAddr = {
 	GDCity(data, fn) { 
 		const _this = this;  
 		let _locInfo = data ? data : _this.locInfo;
-		let _location = `${_locInfo.longitude}, ${_locInfo.latitude}`; 
+		let _location = `${_locInfo.longitude}, ${_locInfo.latitude}`;  
 
 		// if ( _locInfo.loading ) return;  // loading 为true 不逆向，说明缓存有数据 但是城市数据固定 不会动态刷新
 

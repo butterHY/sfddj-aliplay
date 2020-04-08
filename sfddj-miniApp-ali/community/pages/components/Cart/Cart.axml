@@ -4,15 +4,14 @@
       <view class="shop_cart">
  
         <view class="shop_priceShow" onTap="onShowDetailClick">
-          <view class="cartShow {{(cartitems && cartitems.length) ? 'notempty' : 'isempty'}}">
-            <badge class="cartNum"  
-              a:if="{{cartitems && cartitems.length}}" 
+          <view class="cartShow {{(obj.cartList && obj.cartList.length) ? 'notempty' : 'isempty'}}">
+            <badge class="cartNum"
               text="{{obj && obj.cnt || 0}}"
               overflowCount="{{ 99 }}">
             </badge>
           </view>
           <view class="priceBox">
-            <block a:if="{{cartitems.length}}">
+            <block a:if="{{obj.cartList.length}}">
               <text class="now">￥{{ obj.discountPrice.toFixed(2) }}</text> 
               <text class="old" 
                 a:if={{ obj.discountPrice != obj.salePrice }}>￥{{ obj.salePrice.toFixed(2) }}</text>
@@ -24,7 +23,7 @@
           </view>
         </view>
  
-        <view class="actionBtn" a:if="{{cartitems && cartitems.length}}">
+        <view class="actionBtn" a:if="{{obj.cartList && obj.cartList.length}}">
           <view class="shop_cart_topay {{ isDisabled ? 'isDisabled' : '' }}"
             onTap="onToPayClick">{{nextText || '去结算'}}</view>
         </view>
@@ -34,14 +33,15 @@
   </view> 
 </view>
 
+<!-- 消息提醒  -->
 <view class="noticeShow">
-        <notice
-          show="{{ noticeShow }}"
-          type="{{ normal }}"   
-          showIcon="{{false}}" > 
-          {{ actionText }}
-        </notice>
-      </view>
+  <notice
+    show="{{ noticeShow }}"
+    type="{{ normal }}"   
+    showIcon="{{false}}" > 
+    {{ actionText }}
+  </notice>
+</view>
  
 <!-- 弹出层  -->
 <popup class="goodsAction_popup" show="{{ isShowed }}" zIndex="{{ 8 }}" disableScroll="{{ false }}" position="bottom" onClose="onHideClick">
@@ -50,7 +50,7 @@
     <view class="title_right" onTap="onClearClick">全部清空</view>
   </view>
   <scroll-view class="cartListShow" scroll-y="{{ true }}" >
-    <block a:for="{{ cartitems }}">
+    <block a:for="{{ obj.cartList }}">
       <view class="cartList">
         <view class="figureImg">
           <image src="{{ item.defaultGoodsImage }}" lazy-load="{{ false }}" />

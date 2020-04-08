@@ -147,7 +147,7 @@ App({
 			key: 'locationInfo',
 			data: data,
 			success: function (res) {
-				_this.globalData.userLocInfo = data;
+				_this.globalData.userLocInfo = data; 
 				if (fn) fn();
 			},
 			fail: function(err) {

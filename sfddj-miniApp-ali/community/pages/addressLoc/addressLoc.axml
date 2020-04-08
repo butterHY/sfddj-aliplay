@@ -33,7 +33,7 @@
         <block a:for="{{ locInfo.pois }}">
           <view class="list"  data-itemData="{{ item }}" onTap="selectCity">
             <text class="row">{{ item.name }}</text>  
-            <text class="rowDetail">{{ locInfo.district + item.address }}</text>  
+            <text class="rowDetail">{{ item.address }}</text>  
           </view>  
         </block> 
       </scroll-view> 

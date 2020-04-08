@@ -17,28 +17,25 @@ Component({
     loadMore() {
       my.getStorage({ 
         key: 'locationInfo',  
-        success: function(loc) {
+        success: (loc) => {
           if(loc && loc.data && loc.data.latitude && loc.data.longitude) {
-            // TODO: 
+            this.shop.gets(loc.data.longitude, loc.data.latitude, this.nextPageIdx, (res) => {
+              if(res && res.data && res.data.data) {
+                if(res.data.data.length) {
+                  this.nextPageIdx++;
+                }
+                this.$spliceData({
+                  list: [this.data.list.length, 0, ...res.data.data]
+                });
+              } else {
+                my.alert({
+                  title: '提示',
+                  content: '系统忙，请稍后再试'
+                });
+              }
+            });
           }
         } 
-      });
-
-
-      this.shop.gets(11, 22, this.nextPageIdx, (res) => {
-        if(res && res.data && res.data.data) {
-          if(res.data.data.length) {
-            this.nextPageIdx++;
-          }
-          this.$spliceData({
-            list: [this.data.list.length, 0, ...res.data.data]
-          });
-        } else {
-          my.alert({
-            title: '提示',
-            content: '系统忙，请稍后再试'
-          });
-        }
       });
     }
   },

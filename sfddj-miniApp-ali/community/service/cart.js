@@ -66,8 +66,8 @@ class Cart extends MiniAppService {
                                     'obj.cnt': obj.cnt,
                                     'obj.salePrice': obj.salePrice,
                                     'obj.discountPrice': obj.discountPrice,
-                                    [`cartitems[${idx}].id`]: obj.cartList[idx].id,
-                                    [`cartitems[${idx}].quantity`]: obj.cartList[idx].quantity
+                                    [`obj.cartList[${idx}].id`]: obj.cartList[idx].id,
+                                    [`obj.cartList[${idx}].quantity`]: obj.cartList[idx].quantity
                                 });
                             }
                         });
@@ -92,7 +92,8 @@ class Cart extends MiniAppService {
                             T.setData({
                                 'obj.cnt': obj.cnt,
                                 'obj.salePrice': obj.salePrice,
-                                'obj.discountPrice': obj.discountPrice
+                                'obj.discountPrice': obj.discountPrice,
+                                'obj.cartList': obj.cartList
                             });
                         }
                     });
@@ -232,7 +233,7 @@ class Cart extends MiniAppService {
                                         this.$cmps.forEach((T) => {
                                             if(T.selfName == 'cart' && T.props.shopid == shopId) {
                                                 T.setData({
-                                                    [`cartitems[${idx}].quantity`]: newNum,
+                                                    [`obj.cartList[${idx}].quantity`]: newNum,
                                                     'obj.cnt': shop.cnt,
                                                     'obj.salePrice': shop.salePrice,
                                                     'obj.discountPrice': shop.discountPrice
@@ -290,6 +291,13 @@ class Cart extends MiniAppService {
                         break;
                     }
                 }
+                this.$cmps.forEach((T) => {
+                    if(T.selfName == 'cart' && T.props.shopid == shopId) {
+                        T.setData({
+                            'obj.cartList': cartList
+                        });
+                    }
+                });
             }
         }
     }
