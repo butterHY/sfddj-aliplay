@@ -98,7 +98,7 @@
     </view>
   </view>
   <!-- 优惠券栏 -->
-  <view a:if="{{couponDataList && couponDataList.length > 0}}" class="receiveCoupon flex_view_row justi_between font-26 single-line" onTap="showPopup">
+  <view a:if="{{!goods.secKillStatus && couponDataList && couponDataList.length > 0}}" class="receiveCoupon flex_view_row justi_between font-26 single-line" onTap="showPopup">
     <view class="couponNameBox flex_view_row justi_start single-line">
       <view class="single-line couponNameLine">
         <text a:for="{{couponDataList}}" a:if="{{index == 0 || index == 1 }}" class="couponName goodsTag color-46 " a:key="*this" style="{{ index == 1 ? 'margin-right: 0' : '' }}">满{{item.needPrice}}减{{item.costPrice}}</text>

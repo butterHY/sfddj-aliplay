@@ -20,16 +20,16 @@
   <view class="estimateNav whiteBack js_estimateNav">
     <view class="padLR_20">
       <!-- 评分 -->
-      <view class="estimateHead font-26">
-        <view>好评度
-          <text class="color-ff5353 font-28">{{commentScore}}%</text>
+      <view class="estimateHead font-28">
+        <view>好评度:
+          <text class="color-ff5353 ">{{commentScore}}%</text>
         </view>
       </view>
       <!-- 筛选有图没图 -->
       <view class="estimateNavList clearfix  width_100">
         <!-- 全部 -->
-          <view class="estimateNavListCon {{commentFenlei == 1 ? 'active' : ''}}" data-type="1" catchTap="filterCommentList">全部(
-            <text>{{countData.allCount}}</text> )
+          <view class="estimateNavListCon {{commentFenlei == 1 ? 'active' : ''}}" data-type="1" catchTap="filterCommentList">全部
+            <!-- (<text>{{countData.allCount}}</text> ) -->
           </view>
         <!-- 有图 -->
           <view a:if="{{countData.youTuCount}}" class="estimateNavListCon {{commentFenlei == 2 ? 'active' : ''}}" data-type="2" catchTap="filterCommentList">有图(

@@ -66,6 +66,7 @@ page {
 	transition: all .5s ease 0s;
 	z-index: 15;
 	top: 0px;
+  border-top: 1rpx solid #eaeaea;
 }
 
 .padLR_20 {
@@ -79,32 +80,37 @@ page {
 }
 
 .estimateHead {
-	padding: 20rpx 0;
-    line-height: 26rpx;
+	padding: 30rpx 0 10rpx 0;
+  line-height: 26rpx;
 }
 
 .estimateNavList {
-  	padding-bottom: 15rpx;
+  	padding-bottom: 30rpx;
 }
 
 .estimateNavListCon {
+  width: 200rpx;
+  line-height: 58rpx;
   text-align: center;
-	font-size: 20rpx;
-	padding: 14rpx 20rpx;
+	font-size: 28rpx;
+  box-sizing: border-box;
+	padding: 0 36rpx;
+  border: 1rpx solid transparent;
 	border-radius: 45rpx;
-	background-color: #FFE4E8;
+	background-color: #f5f5f5;
 	color: #494344;
-	margin: 15rpx 24rpx 0 0;
+	margin: 18rpx 18rpx 0 0;
   float: left;
 }
 
 .estimateNavListCon.active {
-	color: #FFFFFF;
-	background-color: #fe4f61;
+	color: #e8534d;
+	background-color: #fff2f1;
+  border: 1rpx solid #e8534d;
 }
 
 .estimateList {
-	margin-top: 13rpx;
+	margin-top: 20rpx;
 }
 
 .append-comment-date {

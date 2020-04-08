@@ -315,7 +315,7 @@ Page({
 
           
           that.data.goodsId = resData.goodsShowVO.goodsId;
-          resData.goodsShowVO.defaultProd.activityStock = 0;    // 测试添加
+          // resData.goodsShowVO.defaultProd.activityStock = 0;    // 测试添加
           that.setSecKillDate(resData.goodsShowVO);
 
           console.log(that.data.goodsSecondKill)
@@ -2068,11 +2068,12 @@ Page({
   setSecKillDate(data) {
     data.secKillStatus != true ? data.secKillStatus = false : '';
     console.log('secKillStatus',data.secKillStatus,'noStart',this.data.noStart,'isSpikeOver',this.data.isSpikeOver)
-    
+    console.log(data);
     if( data.secKillStatus && !this.data.noStart && !this.data.isSpikeOver ) {
       data.secKillStatus = true;
       let activityList = Object.assign({}, data.activity, JSON.parse(JSON.stringify(data.defaultProd)) );   // 新秒杀数据
       this.setData({goodsSecondKill: activityList});
+      console.log(data.defaultProd)
       console.log(activityList)
       console.log(activityList.activityStock)
       console.log(activityList.store)

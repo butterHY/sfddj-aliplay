@@ -11,7 +11,7 @@
 </view>
 
 <view a:else class="page {{!isLightMember ? 'activity' : ''}}">
-  <view class="heade">
+  <!-- <view class="heade">
     <view class="headMessage" style="background-image: url({{baseImageUrl + headData.parseItem[0].titleImageUrl}}) ;background-size: 100% 100%; ">
       <view class="userPersonal" >
         <view class="userNameAndRul ">
@@ -46,26 +46,21 @@
         </view>
       </view>
     </view>
-  </view>
-  <block a:for="{{thematicAds.modules}}" a:key="thematicAds">
+  </view> -->
+  <!-- <block a:for="{{thematicAds.modules}}" a:key="thematicAds">
     <template is="thematicItem" data="{{item, fatherIndex: index, baseImageUrl, baseLocImgUrl, ossImgStyle, countHour, countMinute, countSecond,banRightMargin, isLightMember}}"></template>
-  </block>
-  <view class="openingButton posi_ab">
+  </block> -->
+  <!-- <view class="openingButton posi_ab">
     <view class="openingBox all_100 flex_view_row tex_center" style="background-image: url({{baseImageUrl + openingButtonData.parseItem[0].imageUrl}}) ;background-size: 100% 100%;" catchTap="goToLightMember">
-      <!-- <view class="openingCost flex_1 flex_view_col justi_cen">
-         <view class="membershipFees font-34">限时开通仅需￥4.9</view>
-         <view class="font-26">享受会员特权</view>
-      </view>
-      <view class="openingText font-36 color-white">立即开通</view> -->
     </view>
-  </view>
+  </view> -->
 </view>
 
   <!-- <button class="openingBox all_100 flex_view_row tex_center"  open-type="getAuthorize" onGetAuthorize="onGetAuthorize" onError="onAuthError" scope='userInfo'>会员基础信息授权</button> -->
-<!-- <view class="openingButton posi_ab">
+<view class="openingButton posi_ab">
   <view class="openingBox all_100 flex_view_row tex_center" style="background: black" catchTap="goToLightMember">
   </view>
-</view> -->
+</view>
 
 <popup show="{{showRuleStatus}}" disableScroll="{{false}}">
   <view class="height_100vh flex_view_row justi_cen align_cen">
