@@ -48,6 +48,10 @@ Page({
           shopId: _data.shopId,
           storeTime: _storeTime
         }); 
+        // 设置标题
+        my.setNavigationBar({ 
+          title: _data.title,
+        });
       }
 
     }, (err) => { })
