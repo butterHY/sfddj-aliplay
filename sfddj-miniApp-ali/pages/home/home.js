@@ -1,6 +1,6 @@
 // import 'regenerator';
 import _ from 'underscore'
-
+import locAddr from '/community/service/locAddr.js';
 //获取应用实例
 let app = getApp();
 let sendRequest = require('../../utils/sendRequest');
@@ -72,6 +72,18 @@ Page({
 		isShowSearch: false,								// 新版搜索组件显示开关
 		isFocus: false,											// 新版搜索组件焦点开关
 		searchComponent: null,							// 新版搜索组件实例
+
+		locInfo: {
+			loading: false,
+			longitude: '',
+			latitude: '',
+			city: '',
+			addressAll: '',
+			addressJson: {},
+			pois: [],
+			streetShow: '',
+			streetLoc: ''
+		}
 	},
 
 	onLoad: async function(options) {
@@ -132,6 +144,8 @@ Page({
 			this.getPop();
 		};
 
+		this.initLocation();
+
 		// 只是显示并不是创建页面，计算时间并开始倒计时  , 发版需要，注释了
 		// if (!this.data.isonLoad) {
 		// 	this.getTimes('isFirstTime');
@@ -173,6 +187,42 @@ Page({
 	// 页面被关闭
 	onUnload() {
 		clearTimeout(getApp().globalData.home_spikeTime)
+	},
+
+	// 定位初始化
+	initLocation() {
+		const _this = this;
+		let userLocInfo = app.globalData.userLocInfo;
+		// console.log('onShow-index', userLocInfo)
+
+		if (this.jsonNull(userLocInfo) == 0) {
+			// console.log('重新定位')
+			locAddr.location((res) => {
+				_this.setData({
+					locInfo: res
+				});
+				// 设置缓存并设置全部变量的值 globalData.userLocInfo 
+				app.setLocStorage(_this.data.locInfo);
+			});
+		}
+		else {
+			_this.setData({
+				locInfo: userLocInfo
+			})
+		}
+	},
+
+	// 跳转页面
+	goLocationCity() {
+		my.navigateTo({ url: '/community/pages/addressLoc/addressLoc' });
+	},
+	// 检测json是否为空
+	jsonNull(json) {
+		let num = 0;
+		for (let i in json) {
+			num++;
+		}
+		return num;
 	},
 
 	// 初始化模块广告的滚动高度
