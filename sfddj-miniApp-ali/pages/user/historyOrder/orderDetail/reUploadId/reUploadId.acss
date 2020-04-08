@@ -1,0 +1,101 @@
+/* pages/user/historyOrder/orderDetail/reUploadId/reUploadId.wxss */
+
+.titleStyle {
+  background: #fff;
+  padding: 0 30rpx 20rpx;
+}
+
+.reLoadIdCard {
+  padding: 40rpx 0;
+  border-bottom: 1px solid #eaeaea;
+  font-size: 30rpx;
+  color: #323232;
+}
+
+.reLoadTip {
+  padding-top: 40rpx;
+}
+
+.iDCard_del {
+  font-size: 28rpx;
+  color: #323232;
+  margin-bottom: 40rpx;
+}
+
+.id_oppo_exam {
+  width: 130rpx;
+  height: 83rpx;
+}
+
+.upload_id_oppo {
+  height: 213rpx;
+  box-sizing: border-box;
+  border-radius: 8px;
+  background: #f7f1f1;
+}
+
+.icon_add_id {
+  width: 75rpx;
+  height: 75rpx;
+  margin-bottom: 28rpx;
+}
+
+.idImg_front {
+  top: 0;
+  left: 0;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #f7f1f1;
+}
+
+.icon_deleteImg {
+  right: -10rpx;
+  top: -10rpx;
+  width: 30rpx;
+  height: 30rpx;
+  padding: 10rpx;
+}
+
+.lineH_36 {
+  line-height: 36rpx;
+}
+
+.marRight_18 {
+  margin-right: 18rpx;
+}
+
+.viewIdCard {
+  height: 38rpx;
+  width: 120rpx;
+  border-radius: 38rpx;
+  border: 1px solid #1c9bdc;
+  font-size: 20rpx;
+  line-height: 38rpx;
+  color: #1c9bdc;
+  text-align: center;
+  background: #fff;
+}
+
+.reLoadBtn {
+  padding: 40rpx 64rpx 0;
+}
+
+.reLoadBtn .reLoadBtnBot {
+  width: 285rpx;
+  height: 88rpx;
+  line-height: 88rpx;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 36rpx;
+}
+
+.reLoadBtn .cancleBtn {
+  color: #999;
+  border: 1px solid #999;
+}
+
+.reLoadBtn .reLoadUp {
+    color: #FFFFFF;
+    background: #1c9bdc;
+}
+

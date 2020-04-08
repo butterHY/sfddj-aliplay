@@ -1,0 +1,110 @@
+<!--pages/user/historyOrder/orderDetail/reUploadId/reUploadId.wxml-->
+
+<import-sjs name='filters' from="/pages/wxsFile/public.sjs"/>
+
+<view>
+
+  <view class='titleStyle marBot_20'>
+
+    <!-- 身份证号 -->
+    <view class='reLoadIdCard flex_view_row'>
+      <text>身份证号</text>
+      <text>{{filters.cutString(idCardNo,0,4)}}</text>
+      <text>**********</text>
+      <text>{{filters.cutString(idCardNo,14,18)}}</text>
+    </view>
+
+    <!--上传提示  -->
+    <view class='iDCard_del reLoadTip flex_view_row'>
+      <text>请上传<text class='color-ff5353'>清晰</text>、<text class='color-ff5353'>完整</text>、<text class='color-ff5353'>有效</text>的身份证正反面照片</text>
+    </view>
+
+    <!-- 示例图 -->
+    <view class='flex_view_row marBot_30'>
+      <view>
+        <text class='font-24'>示例：</text>
+      </view>
+      <view class='flex_view_row'>
+        <image src='{{baseLocImgUrl}}miniappImg/more/photo_id_positive.png' class='marRight_20 id_oppo_exam' data-index='0' onTap='previewExample'></image>
+        <image src='{{baseLocImgUrl}}miniappImg/more/photo_id_opposite.png' class='id_oppo_exam' data-index='1' onTap='previewExample'></image>
+      </view>
+    </view>
+
+    <!-- 身份证图 -->
+    <view>
+      <view class='flex_view_row'>
+        <!--正面  -->
+        <view class='flex_view_row flex_1 marRight_18' onTap='chooseImg' data-type='0'>
+          <view class='posi_re width_100 upload_id_oppo'>
+            <view a:if='{{!idCardImgFront}}' class='all_100 flex_view_col justi_cen align_cen'>
+              <image src='{{baseLocImgUrl}}miniappImg/icon/icon_add_id.png' class='icon_add_id'></image>
+              <text class='font-24 color-323232 lineH_36'>上传身份证正面</text>
+            </view>
+            <view a:if='{{idCardImgFront}}' class='all_100 posi_ab tex_center idImg_front'>
+              <image class='all_100' data-index='0' src='{{baseImageUrl}}{{idCardImgFront}}' onLoad='loadImg'></image>
+            </view>
+
+            <image a:if='{{idCardImgFront}}' data-index='0' src='{{baseLocImgUrl}}miniappImg/icon/delIcon.png' class='posi_ab icon_deleteImg' catchTap='deleteIdCardImg'></image>
+
+          </view>
+        </view>
+
+        <!--反面  -->
+        <view class='flex_view_row flex_1' onTap='chooseImg' data-type='1'>
+          <view class='posi_re width_100 upload_id_oppo'>
+            <view a:if='{{!idCardImgBack}}' class='all_100 flex_view_col justi_cen align_cen'>
+              <image src='{{baseLocImgUrl}}miniappImg/icon/icon_add_id.png' class='icon_add_id'></image>
+              <text class='font-24 color-323232 lineH_36'>上传身份证反面</text>
+            </view>
+            <!-- <image a:if='{{idCardImgBack}}' class='all_100 posi_ab' style='top: 0; left: 0;'  src='{{baseImageUrl}}{{idCardImgBack}}'></image> -->
+            <view a:if='{{idCardImgBack}}' class='all_100 posi_ab tex_center idImg_front'>
+              <image class='all_100' data-index='1' src='{{baseImageUrl}}{{idCardImgBack}}' onLoad='loadImg'></image>
+            </view>
+
+            <image a:if='{{idCardImgBack}}' data-index='1' src='{{baseLocImgUrl}}miniappImg/icon/delIcon.png' class='posi_ab icon_deleteImg' catchTap='deleteIdCardImg'></image>
+          </view>
+        </view>
+      </view>
+
+      <!--底部预览按钮  -->
+      <view class='flex_view_row marTop_40'>
+        <view class='flex_1 flex_view_row justi_cen marRight_18'>
+          <view class='viewIdCard posi_re' onTap='preIdCardImg' data-index='0'>效果预览</view>
+        </view>
+        <view class='flex_1 flex_view_row justi_cen'>
+          <view class='viewIdCard posi_re' onTap='preIdCardImg' data-index='1'>效果预览</view>
+        </view>
+      </view>
+
+    </view>
+
+  </view>
+
+  <!-- 底部按钮部分 -->
+  <view class='flex_view_row justi_between reLoadBtn'>
+    <!-- 取消 -->
+    <view class='reLoadBtnBot cancleBtn' onTap='cancleReUpload'>
+      <text>取消</text>
+    </view>
+    <!-- 重新上传 -->
+    <view class='reLoadBtnBot reLoadUp' onTap='reUploadFn'>
+      <text>立即上传</text>
+    </view>
+  </view>
+
+
+</view>
+
+<!--上传身份证剪裁时的弹窗  -->
+<!-- <view a:if='{{uploadIdPic}}' class='' bindtouchmove='preventTouch'>
+  <image-cropper id="image-cropper" limit_move="{{false}}" disable_rotate="{{true}}" width="{{width}}" height="{{height}}" imgSrc="{{src}}" onLoadin="cropperload" bindimageload="loadimage" onTapcut="clickcut" bindcancle='cancleCut'></image-cropper>
+</view> -->
+
+<!--toast弹窗-->
+<view class='mark flex_view_col align_cen justi_cen' a:if="{{showToast}}">
+  <view  class='toastView_wb' catchtouchmove='move'>
+    <view class='toastView_wb_con font-26 color-232323'>
+      {{showToastMes}}
+    </view>
+  </view>
+</view> 

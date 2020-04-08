@@ -48,6 +48,8 @@ Page({
 		invoiceData: invoiceData, //设默认的发票信息
 		mailRight: false,
 		initMobile: '',     //用来保存最原始的电话
+    orderVice: '',
+    idCardImgArr: ['', ''],
 	},
 
 	/**
@@ -137,6 +139,15 @@ Page({
 			var remainSecond = res.data.result.remainSecond;
 			var imobile = ''
 
+      // 全球购身份证图片保存，以便预览
+      if (result.orderVice) {
+        if (result.orderVice.imageList) {
+          for (var i = 0; i < result.orderVice.imageList.length; i++) {
+            that.data.idCardImgArr[i] = that.data.baseImageUrl + result.orderVice.imageList[i];
+          }
+        }
+      }
+
 			// 用于电子发票的选择
 			if (result.order) {
 				// imobile = result.order.shipMobile && result.order.shipMobile.length >= 11 ? result.order.shipMobile.substr(0, 4) + '****' + result.order.shipMobile.substr(8, 12) : ""
@@ -150,6 +161,7 @@ Page({
 			that.setData({
 				result: res.data.result,
 				goods: res.data.result.goods,
+        orderVice: result.orderVice ? result.orderVice : '',
 				hasComment: res.data.result.hasCommnet ? res.data.result.hasCommnet : '',
 				order: res.data.result.order,
 				supplier: res.data.result.supplier,
