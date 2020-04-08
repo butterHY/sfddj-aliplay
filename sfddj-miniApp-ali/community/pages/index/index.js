@@ -1,4 +1,3 @@
-
 import locAddr from '/community/service/locAddr.js';
 const myApp = getApp();
 

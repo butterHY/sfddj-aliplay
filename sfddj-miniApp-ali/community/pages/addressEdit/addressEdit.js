@@ -43,12 +43,12 @@ Page({
     else {
       let _editAddr = getApp().globalData.editSelectAddr;
       title = '编辑地址'; 
-      console.log('_editAddr', _editAddr); 
+      // console.log('_editAddr', _editAddr); 
       _this.setData({
         optAddr: _editAddr, 
       });
     } 
-    // 设置表他
+    // 设置标题
     my.setNavigationBar({ 
       title: title,
     });
@@ -90,12 +90,8 @@ Page({
   // 保存地址
   saveAddr() {  
     const _this = this; 
-    this.verifyForm(false, function() {
-      // my.redirectTo({ url: '../addressList/addressList' });
-      my.navigateBack({
-                  
-                });
-      // my.navigateTo({ url: '../addressList/addressList' });
+    this.verifyForm(false, function() { 
+      my.navigateBack(); 
     })
   },
   
@@ -128,9 +124,7 @@ Page({
             if (_ret.code == '0') { 
                 // 到地址列表
                 // my.redirectTo({ url: '../addressList/addressList' });
-                my.navigateBack({
-                  
-                });
+                my.navigateBack();
             }  
           }, (err)=>{})
         }
@@ -147,7 +141,7 @@ Page({
     const _this = this;
     const mydata = this.data;   
     mydata.optAddr.isDefault = isDefault ? true : false;   
-    console.log('提交保存数据', mydata.optAddr) 
+    // console.log('提交保存数据', mydata.optAddr) 
     http.post(api.O2O_ADDRESS.saveAddr, mydata.optAddr, (res) => { 
       let _ret = res.data.ret;
       let _data = res.data.data;

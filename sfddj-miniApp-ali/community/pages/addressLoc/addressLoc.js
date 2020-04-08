@@ -27,8 +27,7 @@ Page({
 
   onShow: function () {
     const _this = this;
-    let userLocInfo = myApp.globalData.userLocInfo;
-    // console.log('onShow-index', userLocInfo)
+    let userLocInfo = myApp.globalData.userLocInfo; 
 
     if (this.jsonNull(userLocInfo) == 0) {
       // console.log('重新定位')
@@ -40,10 +39,23 @@ Page({
         myApp.setLocStorage(_this.data.locInfo);
       });
     }
-    else {
-      _this.setData({
-        locInfo: userLocInfo
-      })
+    else { 
+      // 从城市列表过来的 loading 为false 需要重新定位加载   loading 为true 可以直接使用
+      if ( userLocInfo.loading ) {
+        _this.setData({
+          locInfo: userLocInfo
+        })
+      }
+      else {
+        // 此时 userLocInfo的值 只有 经纬度和城市时候
+        locAddr.GDCity(userLocInfo, (res)=> {
+          _this.setData({
+            locInfo: res
+          });
+          // 设置缓存并设置全部变量的值 globalData.userLocInfo 
+          myApp.setLocStorage(_this.data.locInfo);
+        });
+      } 
     }
   },
 

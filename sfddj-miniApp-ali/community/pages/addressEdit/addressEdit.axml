@@ -20,19 +20,40 @@
         onClear="onClear">电话</input-item>
     </view>
 
-    <view class="listInput" onTap="chooseLocation">
-      <input-item type="text" clear="{{false}}" placeholder="{{ addr_placeholder }}"  value="{{ optAddr.locate }}" 
+    <view class="listInput" catchTap="chooseLocation">
+      <!-- <input-item type="text" clear="{{false}}" placeholder="{{ addr_placeholder }}"  value="{{ optAddr.locate }}"   
         disabled="{{ true }}"
         data-field="optAddr.locate"  
         className="inputShow">地址
-          <view slot="extra" class="">
-            <am-icon class="iconStyle" type="right"></am-icon>
-          </view>
+        <view slot="extra" class="">
+          <am-icon class="iconStyle" type="right"></am-icon>
+        </view>
 
-          <view slot="extra" >
-            <am-icon class="iconStyle" type="location"></am-icon>
-          </view>
-        </input-item>
+        <view slot="extra" >
+          <am-icon class="iconStyle" type="location"></am-icon>
+        </view>
+      </input-item> -->
+      
+      <view class="am-input-item inputShow myInputShow">
+        <view class="am-input-line">
+            <view class="am-input-layer am-input-layer-normal">
+              <view class="am-input-label ">地址</view>
+              <view class="am-input-content">
+                <text 
+                  class="textShow {{ optAddr.locate == '' ? 'placeholder' : ''}}" >
+                  {{ optAddr.locate == '' ? addr_placeholder : optAddr.locate }}
+                </text> 
+              </view>
+            </view>
+             
+            <view class="am-input-item-extra">
+              <am-icon class="iconStyle" type="right"></am-icon>
+              <text class="iconStyle icon-address"></text>
+            </view> 
+            <view class="am-input-line-bottom"></view>
+        </view> 
+      </view>
+        
     </view> 
     
     <view class="listInput textareaShow">

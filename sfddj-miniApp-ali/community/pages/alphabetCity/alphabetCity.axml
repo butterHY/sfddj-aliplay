@@ -7,7 +7,7 @@
 				<view class="listShow">
 					<view class="listName">当前定位城市</view>
 					<view class="listBox">
-						<list-item onClick="selectCity" data-cityName="{{ locCity }}">{{ locCity.city }}</list-item>
+						<list-item onClick="selectCity">{{ locCity.city }}</list-item>
 					</view>
 					
 				</view>
@@ -17,9 +17,10 @@
 							<view class="listName">{{ item.letter }}</view> 
 							<view class="listBox">
 								<block a:for="{{ item.list }}" a:key="{{ idx }}" a:for-index="idx" a:for-item="itemName">
-									<list-item onClick="selectCity"
+									<list-item 
 										data-listIndex="{{ index }}"
-										data-cityName="{{ itemName }}">{{ itemName.name }}</list-item> 
+										data-cityName="{{ itemName }}"
+										onClick="selectCity">{{ itemName.name }}</list-item> 
 								</block> 
 							</view>
 						</list>

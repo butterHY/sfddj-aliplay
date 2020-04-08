@@ -69,7 +69,7 @@ let LocAddr = {
 			_locInfo.loading = true;
 			// 保存全部数据 备用
 			_locInfo.addressJson = _addressComponent;
-			// 附件1000米地址
+			// 附件1000米 de地址
 			_locInfo.pois = regeo.pois; 
 			// 经纬度
 			_locInfo.streetLoc = _streetLoc;
