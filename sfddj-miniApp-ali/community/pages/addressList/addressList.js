@@ -5,6 +5,7 @@ Page({
     optionalList: [],     //可选地址列表
     unusableList: [],
     shopId: '',
+    staticsImageUrl: api.staticsImageUrl,
   },
   onLoad(options) {
     this.setData({
@@ -26,6 +27,11 @@ Page({
         this.setData({
           optionalList,
           unusableList
+        })
+      } else {
+        this.setData({
+          optionalList: [],
+          unusableList: []
         })
       }
     }, err => {})
