@@ -1,4 +1,5 @@
 const myApp = getApp();
+
 Page({
   data: {
     currentCity: {},
@@ -7,7 +8,7 @@ Page({
         letter: 'G',
         list: [
           {
-            name: '广州市', 
+            name: '广州市',
             latitude: 23.117055,
             longitude: 113.275995,
           }
@@ -22,7 +23,7 @@ Page({
             longitude: 113.948925,
           }
         ]
-      } 
+      }
     ],
     alphabet: [],
 
@@ -35,8 +36,15 @@ Page({
   },
   onLoad() {
     this.setLetterShow();
-    this.setCurrentCity();   
+   
   },
+
+  onShow: function () {
+    this.setCurrentCity();
+    
+  },
+
+
   onAlphabetClick(ev) {
     console.log(ev)
     // my.alert({
@@ -56,8 +64,8 @@ Page({
     let _cityList = this.data.cityList;
 
     for (let i = 0; i < _cityList.length; i++) {
-      charList.push( _cityList[i].letter );
-    } 
+      charList.push(_cityList[i].letter);
+    }
 
     this.setData({
       alphabet: charList,
@@ -67,62 +75,99 @@ Page({
   // 设置当前城市
   setCurrentCity() {
     const _this = this; 
-    my.getStorage({ 
-      key: 'locationInfo',  
-      success: function(res) { 
-        if( res.data ) {
-          _this.setData({
-            locCity: res.data
-          });
-        }
-        else {
-          _this.getLocation();
-        }  
-      } 
-    });    
-  }, 
+    let userLocInfo = myApp.globalData.userLocInfo; 
+
+    if (this.jsonNull(userLocInfo) == 0) {
+      // console.log('重新定位')
+			_this.getLocation( ()=>{}, ()=> {
+        // 定位失败
+        // my.getStorage({
+        //   key: 'locationInfo',
+        //   success: function (res) {
+        //     if (res.data) {
+        //       _this.setData({
+        //         locCity: res.data
+        //       });
+        //     }
+        //     else {
+        //       _this.getLocation();
+        //     }
+        //   }
+        // });   
+      });
+    }
+    else {
+      // console.log('userLocInfo', userLocInfo);
+      _this.setData({
+        'locCity.city': userLocInfo.city ? userLocInfo.city : userLocInfo.name,
+        'locCity.longitude': userLocInfo.longitude,
+        'locCity.latitude': userLocInfo.latitude,
+        'locIlocCitynfo.loading': false,
+      });
+    }
+  },
 
   selectCity(e) { 
-    let cityData = e.target.dataset.cityName;
-    // console.log(cityData)
-    this.setData({
-      'locInfo.city': cityData.city ? cityData.city : cityData.name,
-      'locInfo.longitude': cityData.longitude,
-      'locInfo.latitude': cityData.latitude, 
-      'locInfo.loading': false, 
-    }); 
+    let cityData = e.target.dataset.cityName; 
+    // 选择当前定位直接返回
+    if (!cityData) {
+      my.navigateBack();
+      return;
+    }
+    else {
+      // 选择其他城市列表中的城市
+      // console.log(cityData)
+      this.setData({
+        'locInfo.city': cityData.city ? cityData.city : cityData.name,
+        'locInfo.longitude': cityData.longitude,
+        'locInfo.latitude': cityData.latitude,
+        'locInfo.loading': false,
+      });
 
-    // 设置缓存并设置全部变量的值 globalData.userLocInfo 
-    myApp.setLocStorage(this.data.locInfo, function() {
-      my.reLaunch({ url: '../addressLoc/addressLoc' });
-    });
-  }, 
+      // my.reLaunch({ url: '../addressLoc/addressLoc' }); 
+      // 设置缓存并设置全部变量的值 globalData.userLocInfo 
+      myApp.setLocStorage(this.data.locInfo, function() {
+        my.navigateBack();
+      });
+    } 
+  },
 
-  getLocation() {
+  getLocation(fn1,fn2) {
     const _this = this;
     my.showLoading();
     my.getLocation({
-      type: 1, 
+      type: 1,
       success(res) {
-        my.hideLoading();   
+        my.hideLoading();
         _this.setData({
           'locInfo.city': res.city,
           'locInfo.longitude': res.longitude,
-          'locInfo.latitude': res.latitude, 
-          'locInfo.loading': false, 
+          'locInfo.latitude': res.latitude,
+          'locInfo.loading': false,
         });
 
         _this.setData({
           locCity: _this.data.locInfo
-        })
- 
-        myApp.setLocStorage(_this.data.locInfo);
+        });
+
+        myApp.setLocStorage(_this.data.locInfo); 
+
+        if (fn1) fn1();
       },
       fail() {
         my.hideLoading();
-        my.alert({ title: '定位失败' });
+        if (fn2) fn2();
+        // my.alert({ title: '定位失败' });
       },
     })
-  }, 
+  },
+
+  jsonNull(json) {
+    let num = 0;
+    for (let i in json) {
+      num++;
+    }
+    return num;
+  },
 
 });
