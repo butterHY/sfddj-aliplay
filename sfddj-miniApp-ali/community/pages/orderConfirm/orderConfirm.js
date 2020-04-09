@@ -57,6 +57,9 @@ Page({
             this.setData({
                 defaultAddress: Object.assign({}, communalAddr)
             })
+
+            // 清空全局地址
+            getApp().globalData.communalAddr = {};
         }
     },
 
