@@ -1,21 +1,21 @@
 // var _myShim = require('..my.shim');
 // import uma from 'umtrack-alipay';
 import 'umtrack-alipay';
-import {UrlConstants} from './utils/constants';
+import { UrlConstants } from './utils/constants';
 let sendRequest = require('./utils/sendRequest');
 let constants = require('./utils/constants');
 
 
 
 App({
-  umengConfig: {
-    appKey: UrlConstants.umaAppKey, //由友盟分配的APP_KEY
-    debug: false //是否打开调试模式
-  },
+	umengConfig: {
+		appKey: UrlConstants.umaAppKey, //由友盟分配的APP_KEY
+		debug: false //是否打开调试模式
+	},
 
-	onLaunch: function(options) {
+	onLaunch: function (options) {
 		// uma.init(UrlConstants.umaAppKey, my);   // 务必填入已注册的appKey，不然将无法统计	（友盟小程序应用引入不需要此操作）
-    console.log(UrlConstants.umaAppKey)
+		console.log(UrlConstants.umaAppKey)
 		if (options.query) {
 			this.globalData.query = options.query
 		}
@@ -27,7 +27,7 @@ App({
 		});
 	},
 
-	onShow: function(options) {
+	onShow: function (options) {
 		// uma.resume();                      // 请务必引入	（友盟小程序应用引入不需要此操作）
 		if (options.query) {
 			this.globalData.query = options.query
@@ -46,7 +46,7 @@ App({
 		});
 	},
 
-	onHide: function() {
+	onHide: function () {
 		// uma.pause();                       // 请务必引入（友盟小程序应用引入不需要此操作）
 		clearTimeout(this.globalData.home_spikeTime);
 		clearTimeout(this.globalData.goodsDetail_spikeTime);
@@ -78,15 +78,15 @@ App({
 
 	},
 
-	getNewUserInfoFn: function(fn) {
+	getNewUserInfoFn: function (fn) {
 		var that = this;
 		my.getSetting({
-			success: function(res) {
+			success: function (res) {
 
 				if (res.authSetting['scope.userInfo']) {
 					my.getAuthUserInfo({
 						withCredentials: true,
-						success: function(res) {
+						success: function (res) {
 							typeof fn == "function" && fn(res);
 							that.globalData.userInfo = res.userInfo;
 
@@ -94,7 +94,7 @@ App({
 								my.setStorageSync({ key: 'userInfo', data: res.userInfo });
 							} catch (e) { }
 						},
-						fail: function(res) {
+						fail: function (res) {
 							typeof fn == "function" && fn(res);
 						}
 					});
@@ -109,7 +109,7 @@ App({
 	},
 
 	// 判断是否是一个空对象
-	isEmptyObject: function(obj) {
+	isEmptyObject: function (obj) {
 		var boff = false;
 		for (var key in obj) {
 			boff = true;
@@ -117,40 +117,42 @@ App({
 		return boff;
 	},
 
-  getCartNumber: function() {
-    var that = this;
-    var canUsesetTab = my.canIUse('setTabBarBadge');
+	getCartNumber: function () {
+		var that = this;
+		var canUsesetTab = my.canIUse('setTabBarBadge');
 		var canUsesremoveTab = my.canIUse('removeTabBarBadge');
-    if(canUsesetTab && canUsesremoveTab) {
-      sendRequest.send(constants.InterfaceUrl.SHOP_GET_COUNT, {}, function(res) {
-        if(res.data.result.count) {
-          my.setTabBarBadge({
-            index: 2,
-            text: (res.data.result.count).toString()
-          },function success(res) {
-					},function fail(res) {
+		if (canUsesetTab && canUsesremoveTab) {
+			sendRequest.send(constants.InterfaceUrl.SHOP_GET_COUNT, {}, function (res) {
+				if (res.data.result.count) {
+					my.setTabBarBadge({
+						index: 2,
+						text: (res.data.result.count).toString()
+					}, function success(res) {
+					}, function fail(res) {
 					})
-        } else {
+				} else {
 					my.removeTabBarBadge({
 						index: 2
 					})
 				}
-      }, function(res) { });
-    }
-  },
+			}, function (res) { });
+		}
+	},
 
 	// 设置定位数据缓存并设置全局数据
 	setLocStorage(data, fn) {
 		const _this = this;
 		// console.log('locAddr-setLocStorage', data )
+		_this.globalData.userLocInfo = data;
+		if (fn) fn();
 		my.setStorage({
 			key: 'locationInfo',
 			data: data,
 			success: function (res) {
-				_this.globalData.userLocInfo = data; 
-				if (fn) fn();
+				// _this.globalData.userLocInfo = data; 
+				// if (fn) fn();
 			},
-			fail: function(err) {
+			fail: function (err) {
 				console.log('定位缓存失败了', err)
 			}
 		});
