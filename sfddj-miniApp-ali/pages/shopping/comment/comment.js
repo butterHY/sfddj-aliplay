@@ -34,6 +34,7 @@ Page({
 		countData: { allCount: 0, youTuCount: 0 },
     commentFenlei: 1,                 //获取评论列表的类型，1： 全部， 2： 有图
     automaticCount: 0,                //自动评价数量
+    defaultSort: 1,                   //排序，1：默认排序，2：按时间排序
 
     isFullScreen: false,      // 视频是否进入全屏
     videoShow: false,         // 视频显示
@@ -132,6 +133,13 @@ Page({
 			// var result = res.data.result;
 			commentList.forEach(value => {
 				if (value) {
+
+          value.appendSupplierReply = '商家追加回复商家追加回复商家追加回复商家追加回复商家追加回复商家追加回复商家追加回复商家追加回复商家追加回复商家追加回复';
+          value.appendPlatformReply = '平台追加回复平台追加回复平台追加回复平台追加回复平台追加回复平台追加回复平台追加回复平台追加回复平台追加回复平台追加回复';
+          value.supplierReply = '商家第一次回复商家第一次回复商家第一次回复商家第一次回复商家第一次回复商家第一次回复商家第一次回复商家第一次回复';
+          value.platformReply = '平台第一次回复平台第一次回复平台第一次回复平台第一次回复平台第一次回复平台第一次回复平台第一次回复平台第一次回复';
+
+
 					value.createDate = util.pointFormatTime(new Date(value.createDate));
           if ( value.videoPath && value.videoPath.length > 0 ) { 
             value.videoPath.forEach((vals, index) => {
@@ -319,5 +327,13 @@ Page({
       video.stop();
     }
   },
+
+  selectionSort(e) {
+     console.log(e)
+    this.setData({
+      defaultSort: e.currentTarget.dataset.sortType == 'defaultSort' ? 1 : 2
+    })
+   
+  }
 
 });

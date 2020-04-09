@@ -370,6 +370,7 @@
 .all_100v {
 	width: 100%;
 	height: 100vh;
+  padding-bottom: 100rpx;
 }
 
 .swipe{
@@ -494,7 +495,7 @@
 .loading_view{
   font-size: 26rpx;
   color: #323232;
-  margin-bottom: 200rpx;
+  /* margin-bottom: 200rpx; */
 }
 
 .loading_gif{

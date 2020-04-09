@@ -57,6 +57,11 @@
 	<!-- 评论列表 -->
 	<scroll-view scroll-y="{{true}}" class="estimateList flex_1" onScrollToLower="loadMoreList">
 		<block a:if="{{commentList && commentList.length > 0}}">
+      <view class="sort flex_view_row justi_end whiteBack">
+        <view class="{{defaultSort == 1 ? 'activity' : ''}}" data-sortType="defaultSort" catchTap="selectionSort">默认排序</view>
+        <view class="dividingLine"></view>
+        <view class="{{defaultSort == 2 ? 'activity' : ''}}" data-sortType="timeSort" catchTap="selectionSort">按时间排序</view>
+      </view>
 			<view a:for="{{commentList}}">
 				<view class="{{index == (commentList.length -1) ? '' : 'borBot_e6'}} whiteBack">
 					<view class="goods-comment-area">
@@ -67,18 +72,18 @@
 									<view class="comment-user-image">
 										<image src="{{item.headPortraitPath ? item.headPortraitPath : baseLocImgUrl + 'miniappImg/icon/icon_default_head.jpeg'}}" class="commentUser_img"></image>
 									</view>
-									<view class="flex_view_col marLeft_10 justi_cen">
-										<view class="font-20 color-414141">{{item.nickName}}</view>
+									<view class="flex_view_col marLeft_20 justi_cen">
+										<view class="font-32 color-414141">{{item.nickName}}</view>
 										<view class="flex_view_row marTop_10">
 											<image src="{{baseLocImgUrl}}miniappImg/icon/icon_star_selected.png" class="starIcon" a:for="{{item.star}}"></image>
 											<image src="{{baseLocImgUrl}}miniappImg/icon/icon_star_normal.png" class="starIcon" a:for="{{5 - item.star}}"></image>
 										</view>
 									</view>
 								</view>
-								<view class="font-20 color-bdbdbd">{{item.createDate}}</view>
+								<view class="font-24 color-999999">{{item.createDate}}</view>
 							</view>
-							<view class="commentText font-24 color-414141">{{item.comment}}</view>
-							<view class="commentText blockView">
+							<view class="commentText font-28 color-333">{{item.comment}}</view>
+							<view class="commentText blockView" a:if="{{ (item.videoPath && item.videoPath.length > 0) || (item.imagePath && item.imagePath.length > 0) }}" >
                 <view class="commentTextImg video_view" a:if="{{ item.videoPath && item.videoPath.length > 0 }}" a:for="{{item.videoPath}}"  a:for-item="videoItem"  a:for-index="videoIndex" a:key="videoIndex" data-id="video{{videoIndex}}" data-videoSrc="{{videoItem.videoSrc}}" catchTap="playCommeVideo">
                   <image class="all_100" src="{{baseImageUrl + videoItem.videoCover}}" ></image>
                   <image class="video_playImg" src="{{baseLocImgUrl + 'miniappImg/public/video/player-play-btn.png'}}"></image>
@@ -100,8 +105,8 @@
 						<!--追评 -->
 						<view a:if="{{item.appendComment || item.appendDateStr || item.appendImagePath}}" class="append-comment-area marTop_15">
 							<view class="append-comment-date">{{item.appendDateStr}}</view>
-							<view class="commentText font-24 color-414141">{{item.appendComment}}</view>
-							<view class="commentText blockView">
+							<view class="commentText font-28 color-414141">{{item.appendComment}}</view>
+							<view class="commentText blockView" a:if="{{ (item.appendVideoPath && item.appendVideoPath.length > 0) || (item.appendImagePath && item.appendImagePath.length > 0) }}">
                 <view a:if="{{ item.appendVideoPath && item.appendVideoPath.length > 0 }}" class="commentTextImg video_view"  a:for="{{item.appendVideoPath}}"  a:for-item="appendVideoItem"  a:for-index="appendVideoIndex" a:key="appendVideoIndex" data-id="appendVideo{{appendVideoIndex}}" data-videoSrc="{{appendVideoItem.videoSrc}}" catchTap="playCommeVideo">
                   <image class="all_100" src="{{baseImageUrl + appendVideoItem.videoCover}}" ></image>
                   <image class="video_playImg" src="{{baseLocImgUrl + 'miniappImg/public/video/player-play-btn.png'}}"></image>

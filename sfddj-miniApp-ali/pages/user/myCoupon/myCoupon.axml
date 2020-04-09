@@ -79,7 +79,7 @@
     </view>
 
     <!--猜你喜欢-->
-    <view class='guessLikeArea all_100 clearfix padding_108' a:if="{{ recommondList.length > 0 }} ">
+    <view class='guessLikeArea  clearfix padding_108' a:if="{{ recommondList.length > 0 }} ">
       <!-- <view class='guessLikeTit'>猜你喜欢</view>
       <view class='guessLike'>
         <view class='guessLikeView'>
@@ -94,21 +94,22 @@
         </view>
       </view> -->
 
-      <view class="guessLikeTitle flex_view_row justi_cen align_cen">
-        <image src="{{baseLocImgUrl}}miniappImg/icon/ic_like.png" class='ic_like'></image>
-        <text>猜你喜欢</text>
-      </view>
-      <view class="guessLikeGoodsBox ">
-        <block  a:for="{{ recommondList }}" a:if="{{ index %2 == 0 }}">
-          <template is="itemGoodsCard" data="{{...item,left:true,baseImageUrl,baseLocImgUrl,type:'newGuessLike'}}"></template>
-        </block>
-      </view>
-      <view class="guessLikeGoodsBox ">
-        <block a:for="{{ recommondList }}" a:if="{{ index %2 != 0 }}">
-           <template is="itemGoodsCard" data="{{...item,left:false,baseImageUrl,baseLocImgUrl,type:'newGuessLike'}}"></template>
-        </block>
-      </view>
-    <!-- </view> -->
+        <view class="guessLikeTitle flex_view_row justi_cen align_cen">
+          <image src="{{baseLocImgUrl}}miniappImg/icon/ic_like.png" class='ic_like'></image>
+          <text>猜你喜欢</text>
+        </view>
+        <view class="guessLikeGoodsBox ">
+          <block  a:for="{{ recommondList }}" a:if="{{ index %2 == 0 }}">
+            <template is="itemGoodsCard" data="{{...item,left:true,baseImageUrl,baseLocImgUrl,type:'newGuessLike'}}"></template>
+          </block>
+        </view>
+        <view class="guessLikeGoodsBox ">
+          <block a:for="{{ recommondList }}" a:if="{{ index %2 != 0 }}">
+            <template is="itemGoodsCard" data="{{...item,left:false,baseImageUrl,baseLocImgUrl,type:'newGuessLike'}}"></template>
+          </block>
+        </view>
+
+    </view>
 
 
       <!--加载数据进度条-->
