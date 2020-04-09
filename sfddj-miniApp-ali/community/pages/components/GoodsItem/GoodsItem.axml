@@ -9,7 +9,7 @@
           <text class="goodsitemsprice" a:if="{{data.shopGoodsSkuList[0].isDiscount}}">￥{{data.shopGoodsSkuList[0].salePrice}}</text>
         </view>
         <view>
-          <view class="cart" catchTap="onCartClick" data-item="{{data}}"></view>
+          <view class="cart {{cartjump ? 'scale2' : ''}}" catchTap="onCartClick" data-item="{{data}}"></view>
         </view>
       </view>
     </view>

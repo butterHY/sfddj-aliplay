@@ -59,6 +59,7 @@
     top: -6rpx;
     right: -25rpx; 
     font-size: 20rpx; 
+	transition: 0.15s;
 }
 
 .shop_cart .cartShow.isempty .cartNum {

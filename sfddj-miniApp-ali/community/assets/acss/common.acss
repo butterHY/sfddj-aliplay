@@ -18,3 +18,7 @@ page {
     background-position: center;
     background-size: contain;
 }
+
+.scale2 {
+    transform: scale(2);
+}
