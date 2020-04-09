@@ -36,6 +36,7 @@ export default {
 		order_invoice: '/m/o/1.0/orderInvoice/patch',      //补开电子发票，订单详情
 		afterSale_reason: '/m/o/1.0/order/getShowAfterSalesReason',     //获取售后原因
 		aftersale_comment_save: '/m/o/afterSale/comment/1.0/save',    //售后评价提交
+    reupload_global_img: '/m/o/1.0/order/globalOrderUploadImage',    //重新上传身份证图
 	},
 
 	COUPON: {

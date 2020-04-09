@@ -4,6 +4,10 @@
     width: 100%;
     box-sizing: border-box;
     padding: 20rpx;
+    height: 100vh;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
 }
 
 .addAddrPart {
@@ -44,4 +48,20 @@
 
 .unusableList_tit {
     padding: 30rpx;
+}
+
+/*没有地址时   */
+.noAddress {
+  width: 100%;
+  /* height: 100%; */
+  /* background-color: white; */
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.noAddress_img {
+  width: 328rpx;
+  height: 331rpx;
+  /* margin-top: 352rpx; */
 }

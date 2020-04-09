@@ -144,7 +144,7 @@
         </view>
       </block>
     </view>
-    <!-- 1行2个模块 a:if="{{item.moduleType == 'DOUBLEGOODS'}}"-->
+    <!-- 1行2个模块 -->
     <view a:if='{{item.moduleType == "DOUBLEGOODS"}}' class="adsGroup2">
       <!-- 灰色间条 a:if="{{item.spacing == 1}}"-->
       <view class="ads_space" style="background: #{{item.topIntervalColor}}"></view>
@@ -290,7 +290,7 @@
         </view>
       </view>
     </view>
-    <!--横排分类广告  a:if='{{item.moduleType == "NAVIGATION_MIN"}}' -->
+    <!--横排分类广告  -->
     <view  a:if='{{item.moduleType == "NAVIGATION_MIN"}}'>
       <!-- 灰色间条 a:if="{{item.spacing == 1}}"-->
       <view class="ads_space" style="background: #{{item.topIntervalColor ? item.topIntervalColor : 'FFFFFF'}};"></view>
@@ -398,10 +398,8 @@
         </swiper>
       </view>
     </view>
-    <!-- couponType -->
+    <!--优惠券 -->
     <view a:if="{{item.moduleType == 'EASY_MEMBER_COUPON'}}" class="couponModular {{item.couponType == 0 ? 'onLine' : ''}}">
-      <!-- <view class="ads-white-interval" style="background: #{{item.topIntervalColor}};"></view> -->
-        <!-- <view class="couponTitle font-38 font-weight-600">{{item.moduleName}}</view>               isLightMember ? -->
         <view class="couponConnent clearfix">
           <view class="couponBox" a:for="{{item.parseItem}}" a:for-item="couponItem" a:key="index" style="{{item.couponType == 1 ? (index %2 == 0 ? 'padding-right: 5rpx;' : 'padding-left: 5rpx;') : ''}}">
             <view class="coupon flex_view_row" >

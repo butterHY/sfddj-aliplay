@@ -115,7 +115,6 @@
 }
 
 .exchangeCoupon_btn {
-  /* padding: 10rpx 50rpx; */
   line-height: 56rpx;
   width: 344rpx;
   text-align: center;
@@ -221,7 +220,6 @@
 
 .dividingSpace {
   height: 20rpx;
-  /* background: #f3f3f3; */
 }
 
 /*轮播图   */
@@ -274,8 +272,6 @@
   background: #f0f0f0;
   border: none;
   border-radius: 50rpx;
-  /* overflow: hidden; */
-  /* box-sizing: border-box; */
 }
 
 
@@ -284,7 +280,6 @@
   background:#f0f0f0;
   height: 68rpx;
   border-radius: 50rpx;
-  /* overflow: hidden; */
 }
 
 .myCoupon_input .am-input-item .am-input-line {
@@ -332,8 +327,6 @@
   width: 100%;
   background-color: #fff;
   padding: 30rpx 0;
-  /* height: 98rpx; */
-  /* line-height: 98rpx; */
 }
 
 /* 使用说明样式 ----- start */
@@ -370,6 +363,7 @@
 .all_100v {
 	width: 100%;
 	height: 100vh;
+  padding-bottom: 100rpx;
 }
 
 .swipe{
@@ -437,64 +431,9 @@
 }
 
 
-
-/* .guessLikeTit{
-  color: rgba(50,50,50,0.8);
-  font-size: 32rpx;
-  text-align: left;
-  margin: 26rpx 0 10rpx 20rpx;
-} */
-
-/* .guessLike {
-  display: flex;
-  padding: 0 20rpx;
-  box-sizing: border-box;
-} */
-
-/* .guessLikeView {
-  width: 50%;
-  box-sizing: border-box;
-  position: relative;
-  padding: 0;
-  border: none;
-  overflow: hidden;
-} */
-
-/* .goodsArea{
-    position: relative;
-    display: block;
-    background-color: #FFFFFF;
-    box-shadow: 1px 1px 2px rgba(105,105,105,.1), -1px 1px 2px rgba(105,105,105,.1);
-    border-radius: 10px;
-    box-sizing: border-box;
-    width: 100%;
-    height: auto;
-    overflow: hidden;
-} */
-
-/* .goodsImg{
-    text-align: center;
-    position: relative;
-    height: 312rpx;
-    width: auto;
-    margin: 0;
-    overflow: hidden;
-    box-sizing: border-box;
-    line-height: 312rpx;
-} */
-
-/* .goodsImg image{
-    display: inline-block;
-    width: 260rpx;
-    height: 260rpx;
-    border-radius: 2px;
-    vertical-align: middle;
-} */
-
 .loading_view{
   font-size: 26rpx;
   color: #323232;
-  margin-bottom: 200rpx;
 }
 
 .loading_gif{
@@ -514,17 +453,6 @@
   width: 122rpx;
   height: 124rpx;
 }
-
-/* .guessLikeCart{
-  height:45rpx;
-  width:45rpx;
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  z-index: 5;
-  margin: 20rpx;
-  user-select: none;
-} */
 
 /* 新版我的优惠券样式 ---190709 end */
 
