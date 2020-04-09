@@ -7,7 +7,7 @@ Page({
     items: []
   },
   onLoad(options) {
-    this.shop = Shop.init('shop', this);
+    this.shop = Shop.init(this);
     this.shopId = options.id;
     my.createSelectorQuery().select('.shop_goodslist').boundingClientRect().exec((ret) => {
       this.setData({

@@ -1,5 +1,7 @@
 import Shop from '/community/service/shop';
 
+const app = getApp();
+
 Component({
   mixins: [],
   data: {
@@ -7,36 +9,35 @@ Component({
   },
   props: {},
   didMount() {
-    this.shop = Shop.init('shop', this);
-    this.nextPageIdx = 0;
-    this.loadMore();
+    this.shop = Shop.init(this);
+    this.reload();
   },
   didUpdate() {},
   didUnmount() {},
   methods: {
     loadMore() {
-      my.getStorage({ 
-        key: 'locationInfo',  
-        success: (loc) => {
-          if(loc && loc.data && loc.data.latitude && loc.data.longitude) {
-            this.shop.gets(loc.data.longitude, loc.data.latitude, this.nextPageIdx, (res) => {
-              if(res && res.data && res.data.data) {
-                if(res.data.data.length) {
-                  this.nextPageIdx++;
-                }
-                this.$spliceData({
-                  list: [this.data.list.length, 0, ...res.data.data]
-                });
-              } else {
-                my.alert({
-                  title: '提示',
-                  content: '系统忙，请稍后再试'
-                });
-              }
+      let loc = app.globalData.userLocInfo;
+      if(loc && loc.longitude) {
+        this.shop.gets(loc.longitude, loc.latitude, this.nextPageIdx, (res) => {
+          if(res && res.data && res.data.data) {
+            if(res.data.data.length) {
+              this.nextPageIdx++;
+            }
+            this.$spliceData({
+              list: [this.data.list.length, 0, ...res.data.data]
+            });
+          } else {
+            my.alert({
+              title: '提示',
+              content: '系统忙，请稍后再试'
             });
           }
-        } 
-      });
+        });
+      }
+    },
+    reload() { // 重新加载
+      this.nextPageIdx = 0;
+      this.loadMore();
     }
   },
 });

@@ -7,7 +7,6 @@ import api from '/api/api';
 class Cart extends MiniAppService {
     constructor() {
         super();
-        this.shops = {};
     }
 
     static get Name() {
@@ -44,9 +43,9 @@ class Cart extends MiniAppService {
         "cartTotalNumb": 0
     }
                 */
-                let obj = this.shops[shopId];
+                let obj = this.$get(shopId + '');
                 if(!obj) {
-                    obj = this.shops[shopId] = {cartList: [], cartTotalNumb: 0, salePrice: 0, discountPrice: 0};
+                    obj = {cartList: [], cartTotalNumb: 0, salePrice: 0, discountPrice: 0, cnt: 0};
                 }
                 obj.cnt += cnt;
                 obj.salePrice += sku.salePrice * cnt;
@@ -59,26 +58,13 @@ class Cart extends MiniAppService {
                 if(idx >= 0) {
                     obj.cartList[idx].quantity += cnt;
                     obj.cartList[idx].id = res.data.data.id;
-                    if(this.$cmps) {
-                        this.$cmps.forEach((T) => {
-                            if(T.selfName == 'cart' && T.props.shopid == shopId) {
-                                T.setData({
-                                    'obj.cnt': obj.cnt,
-                                    'obj.salePrice': obj.salePrice,
-                                    'obj.discountPrice': obj.discountPrice,
-                                    [`obj.cartList[${idx}].id`]: obj.cartList[idx].id,
-                                    [`obj.cartList[${idx}].quantity`]: obj.cartList[idx].quantity
-                                });
-                            }
-                        });
-                    }
                 } else {
                     obj.cartList.push({
-                        "defaultGoodsImage": goods.goodsImagePath[0],
+                        "defaultGoodsImage": goods.goodsImagePath instanceof Array ? goods.goodsImagePath[0] : goods.goodsImagePath,
                         "discountPrice": sku.discountPrice,
                         "discountStatus": sku.isDiscount,
                         "goodsId": sku.goodsId,
-                        "goodsImagePath": goods.goodsImagePath[0],
+                        "goodsImagePath": goods.goodsImagePath instanceof Array ? goods.goodsImagePath[0] : goods.goodsImagePath,
                         "goodsSn": goods.goodsSn,
                         "id": res.data.data.id,
                         "name": goods.title,
@@ -87,17 +73,10 @@ class Cart extends MiniAppService {
                         "skuId": sku.id,
                         "skuValue": sku.iavValue
                     });
-                    this.$cmps.forEach((T) => {
-                        if(T.selfName == 'cart' && T.props.shopid == shopId) {
-                            T.setData({
-                                'obj.cnt': obj.cnt,
-                                'obj.salePrice': obj.salePrice,
-                                'obj.discountPrice': obj.discountPrice,
-                                'obj.cartList': obj.cartList
-                            });
-                        }
-                    });
                 }
+                this.$set(shopId + '', obj, (T) => {
+                    return T.selfName == 'cart' && T.props.shopid == shopId;
+                });
                 if(callbackFun) {
                     callbackFun(res);
                 }
@@ -111,10 +90,7 @@ class Cart extends MiniAppService {
 
 
     gets(shopId, callbackFun) {
-        if(!this.shops) {
-            this.shops = {};
-        }
-        let data = this.shops[shopId];
+        let data = this.$get(shopId + '');
         if(data) {
             callbackFun(data);
         } else {
@@ -147,9 +123,11 @@ class Cart extends MiniAppService {
                     res.data.data.salePrice = salePrice;
                     res.data.data.discountPrice = discountPrice;
                     res.data.data.cnt = cnt;
-                    this.shops[shopId] = res.data.data;
+                    this.$set(shopId + '', res.data.data, (T) => {
+                        return T.selfName == 'cart' && T.props.shopid == shopId;
+                    });
                     if(callbackFun) {
-                        callbackFun(this.shops[shopId]);
+                        callbackFun(res.data.data);
                     }
                 } else {
                     if(callbackFun) {
@@ -166,14 +144,9 @@ class Cart extends MiniAppService {
             shopId: shopId
         }, (res) => {
             if(res.data && res.data.ret && res.data.ret.code == 0) {
-                delete this.shops[shopId];
-                if(this.$cmps) {
-                    this.$cmps.forEach((T) => {
-                        if(T.selfName == 'cart' && T.props.shopid == shopId && T.clear) {
-                            T.clear();
-                        }
-                    });
-                }
+                this.$set(shopId + '', null, (T) => {
+                    return T.selfName == 'cart' && T.props.shopid == shopId;
+                });
                 if(callbackFun) {
                     callbackFun(res.data);
                 }
@@ -186,7 +159,7 @@ class Cart extends MiniAppService {
     }
 
     changeNum(shopId, skuId, addNum, callbackFun) {
-        let shop = this.shops[shopId];
+        let shop = this.$get(shopId);
         if(shop) {
             let cartList = shop.cartList;
             if(cartList) {
@@ -221,26 +194,14 @@ class Cart extends MiniAppService {
                                 addCount: addNum
                             }, (res) => {
                                 if(res.data && res.data.ret && res.data.ret.code == 0) {
-                                    item.quantity = newNum;
-                                    shop.cnt += addNum;
-                                    shop.salePrice += item.salePrice * addNum;
-                                    if(item.discountStatus) {
-                                        shop.discountPrice += item.discountPrice * addNum;
-                                    } else {
-                                        shop.discountPrice += item.salePrice * addNum;
-                                    }
-                                    if(this.$cmps) {
-                                        this.$cmps.forEach((T) => {
-                                            if(T.selfName == 'cart' && T.props.shopid == shopId) {
-                                                T.setData({
-                                                    [`obj.cartList[${idx}].quantity`]: newNum,
-                                                    'obj.cnt': shop.cnt,
-                                                    'obj.salePrice': shop.salePrice,
-                                                    'obj.discountPrice': shop.discountPrice
-                                                });
-                                            }
-                                        });
-                                    }
+                                    this.$set({
+                                        [`${shopId}.cartList[${idx}].quantity`]: newNum,
+                                        [`${shopId}.cnt`]: shop.cnt + addNum,
+                                        [`${shopId}.salePrice`]: shop.salePrice + item.salePrice * addNum,
+                                        [`${shopId}.discountPrice`]: shop.discountPrice + (item.discountStatus ? item.discountPrice : item.salePrice) * addNum
+                                    }, (T) => {
+                                        return T.selfName == 'cart' && T.props.shopid == shopId;
+                                    });
                                     if(callbackFun) {
                                         callbackFun(shop);
                                     }
@@ -279,25 +240,20 @@ class Cart extends MiniAppService {
 
 
     filter(shopId) {
-        let shop = this.shops[shopId];
+        let shop = this.$get(shopId + '');
         if(shop) {
             let cartList = shop.cartList;
             if(cartList) {
                 while(true) {
                     let idx = cartList.findIndex((T) => T.quantity <= 0);
                     if(idx >= 0) {
-                        cartList.splice(idx, 1);
+                        this.$splice(`${shopId}.cartList`, [idx, 1], (T) => {
+                            return T.selfName == 'cart' && T.props.shopid == shopId;
+                        });
                     } else {
                         break;
                     }
                 }
-                this.$cmps.forEach((T) => {
-                    if(T.selfName == 'cart' && T.props.shopid == shopId) {
-                        T.setData({
-                            'obj.cartList': cartList
-                        });
-                    }
-                });
             }
         }
     }

@@ -4,17 +4,17 @@
       <view class="shop_cart">
  
         <view class="shop_priceShow" onTap="onShowDetailClick">
-          <view class="cartShow {{(obj.cartList && obj.cartList.length) ? 'notempty' : 'isempty'}}">
+          <view class="cartShow {{(Cart[shopid].cartList && Cart[shopid].cartList.length) ? 'notempty' : 'isempty'}}">
             <badge class="cartNum"
-              text="{{obj && obj.cnt || 0}}"
+              text="{{Cart[shopid] && Cart[shopid].cnt || 0}}"
               overflowCount="{{ 99 }}">
             </badge>
           </view>
           <view class="priceBox">
-            <block a:if="{{obj.cartList.length}}">
-              <text class="now">￥{{ obj.discountPrice.toFixed(2) }}</text> 
+            <block a:if="{{Cart[shopid].cartList.length}}">
+              <text class="now">￥{{ Cart[shopid].discountPrice.toFixed(2) }}</text> 
               <text class="old" 
-                a:if={{ obj.discountPrice != obj.salePrice }}>￥{{ obj.salePrice.toFixed(2) }}</text>
+                a:if={{ Cart[shopid].discountPrice != Cart[shopid].salePrice }}>￥{{ Cart[shopid].salePrice.toFixed(2) }}</text>
             </block>
             
             <block a:else>
@@ -23,7 +23,7 @@
           </view>
         </view>
  
-        <view class="actionBtn" a:if="{{obj.cartList && obj.cartList.length}}">
+        <view class="actionBtn" a:if="{{Cart[shopid].cartList && Cart[shopid].cartList.length}}">
           <view class="shop_cart_topay {{ isDisabled ? 'isDisabled' : '' }}"
             onTap="onToPayClick">{{nextText || '去结算'}}</view>
         </view>
@@ -46,11 +46,11 @@
 <!-- 弹出层  -->
 <popup class="goodsAction_popup" show="{{ isShowed }}" zIndex="{{ 8 }}" disableScroll="{{ false }}" position="bottom" onClose="onHideClick">
   <view class="listTitle">
-    <view class="title_left">共{{obj && obj.cnt || 0}}件商品</view>
+    <view class="title_left">共{{Cart[shopid] && Cart[shopid].cnt || 0}}件商品</view>
     <view class="title_right" onTap="onClearClick">全部清空</view>
   </view>
   <scroll-view class="cartListShow" scroll-y="{{ true }}" >
-    <block a:for="{{ obj.cartList }}">
+    <block a:for="{{ Cart[shopid].cartList }}">
       <view class="cartList">
         <view class="figureImg">
           <image src="{{ item.defaultGoodsImage }}" lazy-load="{{ false }}" />
