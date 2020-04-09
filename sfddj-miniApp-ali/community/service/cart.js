@@ -47,36 +47,43 @@ class Cart extends MiniAppService {
                 if(!obj) {
                     obj = {cartList: [], cartTotalNumb: 0, salePrice: 0, discountPrice: 0, cnt: 0};
                 }
-                obj.cnt += cnt;
-                obj.salePrice += sku.salePrice * cnt;
-                if(sku.isDiscount) {
-                    obj.discountPrice += sku.discountPrice * cnt;
-                } else {
-                    obj.discountPrice += sku.salePrice * cnt;
-                }
+                let cnt2 = obj.cnt + cnt,
+                    salePrice = obj.salePrice + sku.salePrice * cnt,
+                    discountPrice = obj.discountPrice + (sku.isDiscount ? sku.discountPrice : sku.salePrice) * cnt;
                 let idx = obj.cartList.findIndex((T) => T.skuId == sku.id);
                 if(idx >= 0) {
-                    obj.cartList[idx].quantity += cnt;
-                    obj.cartList[idx].id = res.data.data.id;
+                    this.$set({
+                        [`${shopId}.salePrice`]: salePrice,
+                        [`${shopId}.discountPrice`]: discountPrice,
+                        [`${shopId}.cartList[${idx}].quantity`]: obj.cartList[idx].quantity + cnt,
+                        [`${shopId}.cartList[${idx}].id`]: res.data.data.id,
+                        [`${shopId}.cnt`]: cnt2
+                    }, (T) => {
+                        return T.selfName == 'cart' && T.props.shopid == shopId;
+                    });
                 } else {
-                    obj.cartList.push({
-                        "defaultGoodsImage": goods.goodsImagePath instanceof Array ? goods.goodsImagePath[0] : goods.goodsImagePath,
-                        "discountPrice": sku.discountPrice,
-                        "discountStatus": sku.isDiscount,
-                        "goodsId": sku.goodsId,
-                        "goodsImagePath": goods.goodsImagePath instanceof Array ? goods.goodsImagePath[0] : goods.goodsImagePath,
-                        "goodsSn": goods.goodsSn,
-                        "id": res.data.data.id,
-                        "name": goods.title,
-                        "quantity": cnt,
-                        "salePrice": sku.salePrice,
-                        "skuId": sku.id,
-                        "skuValue": sku.iavValue
+                    this.$set({
+                        [`${shopId}.salePrice`]: salePrice,
+                        [`${shopId}.discountPrice`]: discountPrice,
+                        [`${shopId}.cartList[${obj.cartList.length}]`]: {
+                            "defaultGoodsImage": goods.goodsImagePath instanceof Array ? goods.goodsImagePath[0] : goods.goodsImagePath,
+                            "discountPrice": sku.discountPrice,
+                            "discountStatus": sku.isDiscount,
+                            "goodsId": sku.goodsId,
+                            "goodsImagePath": goods.goodsImagePath instanceof Array ? goods.goodsImagePath[0] : goods.goodsImagePath,
+                            "goodsSn": goods.goodsSn,
+                            "id": res.data.data.id,
+                            "name": goods.title,
+                            "quantity": cnt,
+                            "salePrice": sku.salePrice,
+                            "skuId": sku.id,
+                            "skuValue": sku.iavValue
+                        },
+                        [`${shopId}.cnt`]: cnt2
+                    }, (T) => {
+                        return T.selfName == 'cart' && T.props.shopid == shopId;
                     });
                 }
-                this.$set(shopId + '', obj, (T) => {
-                    return T.selfName == 'cart' && T.props.shopid == shopId;
-                });
                 if(callbackFun) {
                     callbackFun(res);
                 }
@@ -188,7 +195,7 @@ class Cart extends MiniAppService {
                         }
                     } else {
                         let newNum = item.quantity + addNum;
-                        if(newNum >= 0 && newNum <= 999) {
+                        if(newNum >= 0 && newNum <= 99) {
                             http.post(api.O2OCart.CHANGE, {
                                 cartId: item.id,
                                 addCount: addNum
