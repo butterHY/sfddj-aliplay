@@ -94,15 +94,12 @@
 
 .secondkillModule .countDown {
   text-align: center;
-  /* width: 150rpx; */
   height: 42rpx;
   margin-top: 14rpx;
 }
 
 .secondkillModule .timeView {
   display: inline-block;
-  /* width: 40rpx; */
-  /* height: 100%; */
   font-size: 24rpx;
   color: #483a00;
   padding: 8rpx;
@@ -118,12 +115,15 @@
 }
 
 .sellOut {
-  /* width: 286rpx; */
   height: 42rpx;
   box-sizing: border-box;
   padding: 6rpx 14rpx;
   font-size: 26rpx;
-  /* line-height: 42rpx; */
   border-radius: 30rpx;
   background: #ec4f26;
+}
+
+.iconImg_secKill {
+  width: 38rpx;
+  height: 38rpx;
 }

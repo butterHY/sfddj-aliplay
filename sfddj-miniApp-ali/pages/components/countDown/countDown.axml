@@ -9,6 +9,7 @@
             <text class="font-weight-600">{{goodsSecondKill.activityStock > 0 ? goodsSecondKill.activityPrice : goodsSecondKill.salePrice}}</text>
           </view>
           <view class="font-28 inline_block marTop_20 single-line {{goodsSecondKill.activityStock <= 0 ? 'sellOut' : ''}}" style="max-width: 100%;">
+            <image a:if="{{goodsSecondKill.activityStock <= 0}}" class="iconImg_secKill marRight_20" mode="widthFix" src="{{baseImageLocUrl}}miniappImg/goodsDetail/iconImg_secKill.png"/>
             <text class="single-line marRight_20 {{goodsSecondKill.activityStock > 0 ? 'line_through' : ''}}" >¥ {{goodsSecondKill.activityStock > 0 ? goodsSecondKill.salePrice : goodsSecondKill.activityPrice}}</text>
             <block>{{goodsSecondKill.activityStock > 0? '仅剩' + (goodsSecondKill.activityStock) + '件' : '已秒完'}}</block>
           </view>

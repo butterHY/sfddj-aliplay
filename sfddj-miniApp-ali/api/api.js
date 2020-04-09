@@ -111,7 +111,7 @@ export default {
 	},
 	DELETE_IMAGE: '/m/u/1.0/user/deleteImgPro',                                //加强安全性-图片删除
 
-	// 轻会员页接口
+	// 轻会员页的接口 
 	LIGHTMEMBER: {
 		'GETLIGHTMEMBER': '/m/a/1.0/subject/getLightMember',                      // 广告模块
 		'GETEASYMEMBERINFO': '/m/a/aliPayEasyMember/1.0/getEasyMemberInfo',				// 获取用户和活动信息 参数outSignNo

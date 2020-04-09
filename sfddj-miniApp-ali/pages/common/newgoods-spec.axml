@@ -129,6 +129,7 @@
                   </block>
                 </block>
                 <view a:else class="flex_1  shopButton toBuyNowBack color-255" catchTap="goodsSpecSubmitTap">确定</view>
+                
                 <!-- <button class="btnStyle gpnBtn zIndex100" a:if="{{ (goods.secKillStatus && goodsSecondKill.totalSaleVolume != goodsSecondKill.totalStock) && (user_memId == 0 || user_memId == '0')}}" open-type="getAuthorize" onGetAuthorize="getPhoneNumber" scope='phoneNumber' onError="onAuthError" hover-class="none"></button> -->
                 <!-- <button class="btnStyle gpnBtn zIndex100" a:elif="{{ !goods.secKillStatus && goods.goodsStore != 0 && (user_memId == 0 || user_memId == '0')}}" open-type="getAuthorize" onGetAuthorize="getPhoneNumber" scope='phoneNumber' onError="onAuthError" hover-class="none"></button> -->
                 <button class="btnStyle gpnBtn zIndex100" a:if="{{ goods.goodsStore != 0 && (user_memId == 0 || user_memId == '0')}}" open-type="getAuthorize" onGetAuthorize="getPhoneNumber" scope='phoneNumber' onError="onAuthError" hover-class="none"></button>

@@ -19,7 +19,6 @@ Page({
     banRightMargin: 0,        //banner图的右边距
     isLightMember: false,
     showRuleStatus: false,
-
     openingButtonData: {},     // 底部按钮数据
   },
   onLoad: async function() {

@@ -400,7 +400,7 @@
   height: 260rpx;
 }
 
-/* 优惠券新样式 */
+/* 优惠券新增样式 */
 .couponModular {
   padding: 0 30rpx;
 }

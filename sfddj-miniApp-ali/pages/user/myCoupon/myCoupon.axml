@@ -94,7 +94,6 @@
       </view>
     </view>
 
-
     <!--加载数据进度条-->
     <view a:if="{{!guessLikeLoadMore}}" class='loading_view'>
       <image src='{{baseLocImgUrl}}miniappImg/loading/loading.gif' class='loading_gif'></image>
@@ -105,7 +104,6 @@
         没有更多了
     </view>
   
-
     <!-- 底部切换优惠券按钮 -->
     <view class="myConpon_footer flex_view_row justi_cen align_cen">
       <navigator class="flex_1 checkMore_unValCoupon" url="/pages/user/myCoupon/expiredCoupon/expiredCoupon">查看失效券</navigator>

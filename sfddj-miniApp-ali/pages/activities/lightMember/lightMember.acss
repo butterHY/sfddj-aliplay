@@ -8,7 +8,7 @@
   overflow: auto;
 }
 
-/* 已注册轻会员样式 */
+/* 已注册轻会员的样式 */
 .heade {
   height: 446rpx;
   background: #2b2d3e;

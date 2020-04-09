@@ -398,7 +398,7 @@
         </swiper>
       </view>
     </view>
-    <!--优惠券 -->
+    <!--新增优惠券 -->
     <view a:if="{{item.moduleType == 'EASY_MEMBER_COUPON'}}" class="couponModular {{item.couponType == 0 ? 'onLine' : ''}}">
         <view class="couponConnent clearfix">
           <view class="couponBox" a:for="{{item.parseItem}}" a:for-item="couponItem" a:key="index" style="{{item.couponType == 1 ? (index %2 == 0 ? 'padding-right: 5rpx;' : 'padding-left: 5rpx;') : ''}}">
@@ -418,8 +418,5 @@
           </view>
         </view>
     </view>
-
-
-    
   </view>
 </template>

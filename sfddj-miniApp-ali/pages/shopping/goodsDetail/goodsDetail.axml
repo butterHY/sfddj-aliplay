@@ -322,22 +322,20 @@
   <!-- 商品评分和评价条数                             已完成新接口字段更换 -->
   <view a:if="{{ buyerShowCount || goods.commentTotal }}" class="division-area"></view>
   <view a:if="{{ buyerShowCount || goods.commentTotal }}"  data-url="/pages/shopping/comment/comment?type={{buyerShowCount ? 'buyerShow' : 'generalComment'}}&goodsId={{goods.goodsId}}" data-type="comment" catchTap="goToTargetPage">
-    <view class="goods-comment-title">
+    <view class="goods-comment-title" style="justify-content: {{(buyerShowCount) || (!buyerShowCount && goods.commentTotal >= 50) ? 'space-between;' : 'flex-end;'}}">
       <view class="alignMiddle">
-        <block  a:if="{{!buyerShowCount}}">
+        <block  a:if="{{!buyerShowCount && goods.commentTotal >= 50}}">
           好评率:  <text class="marLeft_5 color-57">{{goods.commentScore}}%</text>
         </block>
-        <block a:else>
+        <block a:elif="{{buyerShowCount}}">
           <text class="color-51">买家秀</text>
         </block>
       </view>
       <view class="color-999 alignMiddle">
         <text>评价</text>
         <text class="marLeft_10">
-          <text>(</text>
-          <text a:if="{{buyerShowCount}}">{{buyerShowCount}}</text>
-          <text a:else>{{goods.commentTotal}}</text>
-          <text>)</text>
+          <text a:if="{{buyerShowCount}}">({{buyerShowCount}})</text>
+          <text a:else>({{goods.commentTotal}})</text>
         </text>
         <text class="icon-href-right opacity8 font-22 marLeft_10 color-999"></text>
       </view>
@@ -375,18 +373,14 @@
 
   <view  a:if="{{ buyerShowCount && goods.commentTotal }}" class="division-area"></view>
   <view a:if="{{ buyerShowCount && goods.commentTotal }}" data-url="/pages/shopping/comment/comment?type=generalComment&goodsId={{goods.goodsId}}" data-type="comment" catchTap="goToTargetPage">
-    <view class="goods-comment-title">
-      <view class="alignMiddle">
+    <view class="goods-comment-title" style="justify-content: {{goods.commentTotal >= 50 ? 'space-between;' : 'flex-end;'}}">
+      <view class="alignMiddle" a:if="{{goods.commentTotal >= 50}}">
         好评率: 
         <text class="marLeft_5 color-57"> {{goods.commentScore}}%</text>
       </view>
       <view class="color-999 alignMiddle">
         <text>评价</text>
-        <text class="marLeft_10">
-          <text>(</text>
-          <text>{{goods.commentTotal}}</text>
-          <text>)</text>
-        </text>
+        <text class="marLeft_10">({{goods.commentTotal}})</text>
       </view>
     </view>
   </view>

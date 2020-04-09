@@ -313,21 +313,13 @@ Page({
             my.uma.trackEvent('goodsDetailPage_source', { utm_source: that.data.pageOptions.utm_source, utm_medium: that.data.pageOptions.utm_medium, utm_campaign: that.data.pageOptions.utm_campaign, utm_content: that.data.pageOptions.utm_content, utm_term: that.data.pageOptions.utm_term })
           }
 
-          
           that.data.goodsId = resData.goodsShowVO.goodsId;
-          // resData.goodsShowVO.defaultProd.activityStock = 0;    // 测试添加
           that.setSecKillDate(resData.goodsShowVO);
-
-          console.log(that.data.goodsSecondKill)
-          console.log(resData.goodsShowVO)
           
-
-
           //提前判断是否有默认规格且有库存
           if( !that.data.isJustBuNow && (!resData.goodsShowVO.defaultProd || !resData.goodsShowVO.defaultProd.store) && resData.goodsShowVO.products ) {
             resData.goodsShowVO.products.forEach(value => {value.isDefault = false})
             let allProductIndex = resData.goodsShowVO.products.findIndex(value => {return value.store && value.store > 0 });
-            console.log(allProductIndex)
             if( allProductIndex != -1 ) {
               resData.goodsShowVO.products[allProductIndex].isDefault = true;
               resData.goodsShowVO.defaultProd = resData.goodsShowVO.products[allProductIndex];
@@ -394,7 +386,6 @@ Page({
 
             that.data.specType == 'SINGLE' || that.data.specType == 'MULTI' ? that.data.iavPath = resData.goodsShowVO.defaultProd.iavPath : that.data.iavPath = [];	// 单选和多选商品设置默认规格
 
-          console.log(that.data.specType);
           // 测试用的，让库存为 0
           // specType 规格类型,  MULTI 多规格, SINGLE 单规格, OPTIONAL 任选规格；
           that.data.goodsSpecMap = JSON.parse(JSON.stringify(that.data.goods.specifications));
@@ -422,16 +413,7 @@ Page({
 
           that.setGoodsSpecMap();
 
-          
-          // let activityList = that.data.goods.activity ? that.data.goods.activity : {};  // 秒杀数据
-          // activityList.totalStock = that.data.goods.secKillTotalCount;
-          // activityList.totalSaleVolume = that.data.goods.secKillTotalSale;
-          // activityList.secKillPrice = that.data.product.activityPrice;
 
-          
-          // let activityList = Object.assign({}, that.data.goods.activity);   // 新秒杀数据
-          // that.data.product.activityStock = 1;                              // 秒杀测试数据
- 
           // 测试用  
           // console.log('是否已售罄总库存，goodsStore', that.data.goods.goodsStore);
           // console.log('是否已下架，如果是 SALEING 则是正销售中',that.data.goods.viewStatus)
@@ -461,8 +443,6 @@ Page({
           })
 
 // console.log( that.data.SFmember ,that.data.goods.jifenStatus, that.data.goods.deductStatus ,that.data.goods.memberDayPriceStatus)
-          console.log(that.data.product)
-          console.log(that.data.goodsSpecMap)
           reslove({
             type: true
           })
@@ -832,8 +812,6 @@ Page({
     this.setData({
       [e]: true
     })
-    console.log('isSpikeOver====',this.data.isSpikeOver)
-    console.log('noStart====',this.data.noStart)
   },
 
 	/**
@@ -862,7 +840,6 @@ Page({
 	 */
   selectedSpecs: function() {
     let that = this;
-    console.log()
     if(that.data.goods.viewStatus != 'SALEING') {
       return;
     } else if( that.data.goods.secKillStatus && (that.data.isJustBuNow || (!that.data.isJustBuNow && that.data.goods.goodsStore == 0)) ) {
@@ -907,11 +884,6 @@ Page({
       optionalProduct: that.data.optionalProduct,       // 任选规格被选中的数组 ; 
       quantity: that.data.minCount,                     // 再次初始化为最低起售数 ;
     });
-
-    console.log(that.data.product)
-    console.log(that.data.allProduct)
-    console.log(that.data.goodsSpecMap)
-    console.log(that.data.iavPath)
 
 
     // 如果当前选中的规格的库存为 0 那就提示库存不足, 最新的修改是切换的时候库存为 0 不提醒，只有点击确定按钮的时候如果库存为 0 再提醒；
@@ -1363,8 +1335,6 @@ Page({
     if(!that.isCantOpen()) {
       return;
     }
-
-
     // if (that.data.goods.secKillStatus) {
     //   if (that.data.goods.viewStatus != 'SALEING' || that.data.goodsSecondKill.totalSaleVolume == that.data.goodsSecondKill.totalStock) {
     //     return;
@@ -1372,9 +1342,6 @@ Page({
     // } else if (that.data.goods.viewStatus != 'SALEING' || that.data.goods.goodsStore == 0) {
     //   return;
     // }
-
-
-
 
     that.setData({
       isShowPopup: true
@@ -1700,8 +1667,6 @@ Page({
         }
       })
     })
-
-    // console.log(that.data.goodsSpecMap)
   },
 
   // selectionArr： 选中一个子规格，循环该子规格的所有组合规格得出来的数组；addFatherIavth： 选中的这个子规格，拼接第一个为空的父类规格的第一个子规格再循环第二个父类规格拼接第二个父类规格的所有子规格得出的数组；
@@ -1731,7 +1696,6 @@ Page({
     that.setData({
       multiformname: multiformnames.toString()
     })
-    // console.log(multiformnames.toString());
   },
 
   // 友盟+数据上报  ---立即购买、加入购物车、商家、评论
@@ -2067,21 +2031,14 @@ Page({
 
   setSecKillDate(data) {
     data.secKillStatus != true ? data.secKillStatus = false : '';
-    console.log('secKillStatus',data.secKillStatus,'noStart',this.data.noStart,'isSpikeOver',this.data.isSpikeOver)
-    console.log(data);
     if( data.secKillStatus && !this.data.noStart && !this.data.isSpikeOver ) {
       data.secKillStatus = true;
       let activityList = Object.assign({}, data.activity, JSON.parse(JSON.stringify(data.defaultProd)) );   // 新秒杀数据
       this.setData({goodsSecondKill: activityList});
-      console.log(data.defaultProd)
-      console.log(activityList)
-      console.log(activityList.activityStock)
-      console.log(activityList.store)
       if( activityList.activityStock > 0 || activityList.store > 0 ) {
         this.data.isJustBuNow = true;
       }
     }
-    console.log('isJustBuNow',this.data.isJustBuNow)
   },
 
   // 如果是秒杀商品且有秒杀库存或者常规库存，则不能打开地址、领券弹窗；如果不是秒杀商品，则 goodsStore == 0 不能打开弹窗；

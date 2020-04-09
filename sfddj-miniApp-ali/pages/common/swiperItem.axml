@@ -16,6 +16,5 @@
           <image src="{{baseImageUrl}}{{item.imageUrl}}" class="all_100" lazy-load="{{true}}"/>
           </view>
       </swiper-item>
-
   </swiper>
 </template>

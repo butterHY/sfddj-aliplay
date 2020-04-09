@@ -466,7 +466,7 @@ Page({
   },
 
   /**
-   * 添加到购物车
+   * 添加到购物车，弹窗修改了
    */
   addCart: function (e) {
     let that = this

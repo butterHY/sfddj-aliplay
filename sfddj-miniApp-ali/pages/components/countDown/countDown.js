@@ -92,7 +92,7 @@ Component({
       }
     },
 
-    //---------- 倒计时 -------------
+    //---------- 倒计时 ------------- 
     countDown: function() {
       clearTimeout(getApp().globalData.goodsDetail_spikeTime)
       var that = this;
