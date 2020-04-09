@@ -122,7 +122,7 @@ Page({
   onLikeClick(e) {
     if(this.data.shop && !this._liking) {
       this._liking = true;
-      this.shop.like(this.shopId, !this.data.shop.like, (res) => {
+      this.shop.like(this.shopId, !this.data.shop.attention, (res) => {
         if(res && res.data) {
           this.setData({
             'shop.attention': !this.data.shop.attention
@@ -164,6 +164,10 @@ Page({
           if(res && res.data && res.data.data) {
             if(res.data.data.length > 0) {
               this.$spliceData({items: [0, 0, ...res.data.data]});
+            } else {
+              this.setData({
+                resultmsg: '未搜索到相关产品~'
+              });
             }
           }
         });

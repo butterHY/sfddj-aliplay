@@ -5,7 +5,7 @@
  
         <view class="shop_priceShow" onTap="onShowDetailClick">
           <view class="cartShow {{(Cart[shopid].cartList && Cart[shopid].cartList.length) ? 'notempty' : 'isempty'}}">
-            <badge class="cartNum"
+            <badge class="cartNum {{badgejump ? 'scale2' : ''}}"
               text="{{Cart[shopid] && Cart[shopid].cnt || 0}}"
               overflowCount="{{ 99 }}">
             </badge>
