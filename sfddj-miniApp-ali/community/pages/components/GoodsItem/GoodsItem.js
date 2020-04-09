@@ -26,10 +26,10 @@ Component({
       });
     });
     
-    this.cart = Cart.init('cart', this);
+    this.cart = Cart.init(this);
   },
-  didUpdate() {},
   didUnmount() {},
+  didUpdate() {},
   methods: {
     onTap(e) {
       if(this.props.canclick) {

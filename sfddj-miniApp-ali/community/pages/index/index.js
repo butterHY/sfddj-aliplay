@@ -32,13 +32,21 @@ Page({
 					locInfo: res
 				});
 				// 设置缓存并设置全部变量的值 globalData.userLocInfo 
-				myApp.setLocStorage(_this.data.locInfo);
+				myApp.setLocStorage(_this.data.locInfo, () => {
+					if(this.shopList) {
+						this.shopList.reload();
+					}
+				});
 			});
 		}
 		else {
 			_this.setData({
 				locInfo: userLocInfo
-			})
+			}, () => {
+				if(this.shopList) {
+					this.shopList.reload();
+				}
+			});
 		}
 	},
 

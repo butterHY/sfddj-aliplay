@@ -17,7 +17,7 @@ Component({
     godosPriceInfo: 'godosPriceInfo'
   },
   didMount() {
-    this.cart = Cart.init('cart', this);
+    this.cart = Cart.init(this);
     this.init();
   },
   didUpdate() {},

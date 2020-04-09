@@ -61,7 +61,6 @@ Page({
     limitCoupon: 4,															// 优惠券请求参数
     hasMore: true,															// 优惠券是否还有更多
     isLoadMore: false,
-    loadComplete: false,
     couponDataList: [],
 
     // 收货地址弹窗
