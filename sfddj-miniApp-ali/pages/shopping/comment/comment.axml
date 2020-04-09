@@ -55,12 +55,12 @@
 
 
 	<!-- 评论列表 -->
-	<scroll-view scroll-y="{{true}}" class="estimateList flex_1" onScrollToLower="loadMoreList">
+	<scroll-view scroll-y="{{true}}" class=" flex_1" onScrollToLower="loadMoreList">
 		<block a:if="{{commentList && commentList.length > 0}}">
       <view class="sort flex_view_row justi_end whiteBack">
-        <view class="{{defaultSort == 1 ? 'activity' : ''}}" data-sortType="defaultSort" catchTap="selectionSort">默认排序</view>
+        <view class="{{defaultSort == 0 ? 'activity' : ''}}" data-sortType="defaultSort" catchTap="selectionSort">默认排序</view>
         <view class="dividingLine"></view>
-        <view class="{{defaultSort == 2 ? 'activity' : ''}}" data-sortType="timeSort" catchTap="selectionSort">按时间排序</view>
+        <view class="{{defaultSort == 1 ? 'activity' : ''}}" data-sortType="timeSort" catchTap="selectionSort">按时间排序</view>
       </view>
 			<view a:for="{{commentList}}">
 				<view class="{{index == (commentList.length -1) ? '' : 'borBot_e6'}} whiteBack">

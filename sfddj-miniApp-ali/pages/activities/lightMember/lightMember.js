@@ -24,31 +24,12 @@ Page({
   },
   onLoad: async function() {
     let returnBack = await this.getAdvertisingModule();
-    console.log(returnBack)
     returnBack.type == "SUCCESS" ? this.getEasyMemberInfo() : ''
-
-    
-    // console.log('+++++++++++++++++++++++++')
-    // my.getAuthCode({
-    //   scopes: ['auth_user'],
-    //   success: (res) => {
-    //     console.log(res)
-    //   },
-    // });
-    // my.d({
-    //   success: (res) => {
-    //     let userInfo = JSON.parse(res.response).response // 以下方的报文格式解析两层 response
-    //     console.log(userInfo)
-    //   },
-    //   fail: (res) => {
-    //   }
-    // })
   },
 
   onShow() {},
 
   isShowRule() {
-    console.log(this.data.showRuleStatus)
     this.setData({
       showRuleStatus: !this.data.showRuleStatus
     })
@@ -60,7 +41,6 @@ Page({
       https.get(api.LIGHTMEMBER.GETLIGHTMEMBER, {}, (res) => {
         let resData = res.data.data;
         let resRet = res.data.ret;
-        console.log(res);
         if( resRet && resRet.code == '0' && resRet.message == "SUCCESS" && resData ) {
           if (Object.keys(resData.modules).length > 0) {
             resData.modules.forEach( value => {
@@ -70,15 +50,6 @@ Page({
               value.backgroundColor ? value.backgroundColor = value.backgroundColor.replace('#', '') : '';
               
               switch(value.moduleType) {
-                // case "SINGLE":
-                //   value.moduleType = "SINGLEGOODS"  
-                // break;
-                // case "DOUBLE":
-                //   value.moduleType = "DOUBLEGOODS"
-                // break;
-                // case "GOODS":
-                //   value.moduleType = "GOODSLIST"
-                // break;
                 case "SET_LOW_BUTTON":
                   that.data.openingButtonData = value
                 break;
@@ -116,7 +87,6 @@ Page({
                 fail() { },
               });
             }
-            console.log(resData)
 
             that.setData({
               loadComplete: true,
@@ -126,11 +96,6 @@ Page({
               openingButtonData: that.data.openingButtonData,
               isLightMember: resData.classify == "已注册" ? true : false,
             })
-            console.log(that.data.thematicAds);
-            console.log(that.data.headData);
-            console.log(that.data.isLightMember);
-            console.log(that.data.openingButtonData);
-
             reslove({
               type: 'SUCCESS'
             })
@@ -141,7 +106,6 @@ Page({
           loadComplete: true,
           loadFail: true,
         })
-
         reject({
           type: 'FAIL'
         })
@@ -179,7 +143,6 @@ Page({
 
   // 轻会员跳转
   goToLightMember() {
-    console.log('goToLightMember')
     my.navigateToMiniService({
       serviceId: "2019072365974237", // 插件id,固定值勿改
       servicePage: "pages/hz-enjoy/main/index", // 插件页面地址,固定值勿改
@@ -191,16 +154,6 @@ Page({
       fail: (res) => {},
       complete: (res) => {},
     });
-    // my.navigateToMiniService({ 
-    //   serviceId: "2019072365974237", // 插件id,固定值勿改 
-    //   servicePage: "pages/hz-enjoy/main/index", // 插件页面地址,固定值勿改 
-    //   extraData: { 
-    //   "alipay.huabei.hz-enjoy.templateId": "2020032500020903320005146418", 
-    //   "alipay.huabei.hz-enjoy.partnerId": "2088421251942323", 
-    // }, success: (res) => {
-    // }, fail: (res) => {
-    // }, complete: (res) => {
-    // }, }); 
   },
 
 
@@ -217,9 +170,6 @@ Page({
     let index = e.currentTarget.dataset.index;
     let ruleSign = e.currentTarget.dataset.ruleSign;
     let fatherIndex = e.currentTarget.dataset.fatherIndex;
-
-    console.log(fatherIndex, index, ruleSign)
-    console.log(that.data.thematicAds.modules[fatherIndex].parseItem[index]);
 
     https.post(api.GOODSDETAIL.GOODS_DETAIL_DRAWCOUPON, { ruleSign }, function(res) {
       let resData = res.data.data;
@@ -245,8 +195,6 @@ Page({
         that.setData({
           thematicAds: that.data.thematicAds
         })
-        console.log(resData[0]);
-        console.log(that.data.thematicAds);
       }
     }, function(err) {
       my.showToast({
@@ -257,44 +205,22 @@ Page({
   },
 
 
-
-
-  // onGetAuthorize(res) {
-  //   my.getOpenUserInfo({
-  //     success: (res) => {
-  //       let userInfo = JSON.parse(res.response).response // 以下方的报文格式解析两层 response
-  //       console.log(userInfo)
-  //     },
-  //     fail: (res) => {
-  //     }
-  //   });
-  // },
-
   getEasyMemberInfo() {
     let that = this;
     let data = that.data.isLightMember ? {outSignNo: that.data.thematicAds.lightMemberId} : {}
-    console.log(that.data.isLightMember);
-    console.log(data);
-
     https.get(api.LIGHTMEMBER.GETEASYMEMBERINFO, data, function(res){
       let resData = res.data.data;
       let resRet = res.data.ret;
-
       if(resRet.code == '0' && resRet.message == "SUCCESS" && resData) {
-        console.log(that.data.headData);
         resData.headImage = resData.headImage ? that.data.baseImageUrl + resData.headImage : that.data.baseLocImgUrl + 'miniappImg/icon/icon_default_head.jpeg';
         resData.gmtSign = Math.round((new Date().getTime() - resData.gmtSign) / 1000 /60 /60 /24) // 签约时间
         resData.gmtUnSign = utils.formatTime(new Date(resData.gmtUnSign));
-        console.log(Math.round((new Date().getTime() - resData.gmtSign) / 1000 /60 /60 /24));
         that.data.headData = Object.assign(that.data.headData, resData);
-        console.log(that.data.headData);
         that.setData({
           headData: that.data.headData
         })
-        console.log(that.data.headData);
       }
     }, function(res) {
-      console.log(res);
     })
   },
 

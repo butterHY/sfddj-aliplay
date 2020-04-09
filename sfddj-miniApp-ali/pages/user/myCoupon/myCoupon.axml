@@ -2,8 +2,6 @@
 <import src="../../common/item-goods-card.axml" />
 <import src="/pages/common/swiperItem"/>
 
-<import src="../../common/item-goods-card.axml" />
-
 <!-- 加载失败 -->
 <view a:if="{{couponFail && guessLikeFail}}">
   <load-fail></load-fail>
@@ -80,48 +78,33 @@
 
     <!--猜你喜欢-->
     <view class='guessLikeArea  clearfix padding_108' a:if="{{ recommondList.length > 0 }} ">
-      <!-- <view class='guessLikeTit'>猜你喜欢</view>
-      <view class='guessLike'>
-        <view class='guessLikeView'>
-          <block a:for="{{recommondList}}" a:if="{{index % 2 == 0}}" a:key="itemIndex">
-            <template is="itemGoodsCard" data="{{...item,left:true,baseImageUrl:baseImageUrl,baseLocImgUrl,smallImgArg}}"></template>
-          </block>
-        </view>
-        <view class='guessLikeView'>
-          <block a:for="{{recommondList}}" a:if="{{index % 2 != 0}}" a:key="itemIndex2">
-            <template is="itemGoodsCard" data="{{...item,left:false,baseImageUrl:baseImageUrl,baseLocImgUrl,smallImgArg}}"></template>
-          </block>
-        </view>
-      </view> -->
-
-        <view class="guessLikeTitle flex_view_row justi_cen align_cen">
-          <image src="{{baseLocImgUrl}}miniappImg/icon/ic_like.png" class='ic_like'></image>
-          <text>猜你喜欢</text>
-        </view>
-        <view class="guessLikeGoodsBox ">
-          <block  a:for="{{ recommondList }}" a:if="{{ index %2 == 0 }}">
-            <template is="itemGoodsCard" data="{{...item,left:true,baseImageUrl,baseLocImgUrl,type:'newGuessLike'}}"></template>
-          </block>
-        </view>
-        <view class="guessLikeGoodsBox ">
-          <block a:for="{{ recommondList }}" a:if="{{ index %2 != 0 }}">
-            <template is="itemGoodsCard" data="{{...item,left:false,baseImageUrl,baseLocImgUrl,type:'newGuessLike'}}"></template>
-          </block>
-        </view>
-
-    </view>
-
-
-      <!--加载数据进度条-->
-      <view a:if="{{!guessLikeLoadMore}}" class='loading_view'>
-        <image src='{{baseLocImgUrl}}miniappImg/loading/loading.gif' class='loading_gif'></image>
-        <text>加载中</text>
+      <view class="guessLikeTitle flex_view_row justi_cen align_cen">
+        <image src="{{baseLocImgUrl}}miniappImg/icon/ic_like.png" class='ic_like'></image>
+        <text>猜你喜欢</text>
       </view>
-      <!--没有更多-->
-      <view a:if="{{guessLikeLoadMore}}" class='loading_view font-26 color-323232'>
-          没有更多了
+      <view class="guessLikeGoodsBox ">
+        <block  a:for="{{ recommondList }}" a:if="{{ index %2 == 0 }}">
+          <template is="itemGoodsCard" data="{{...item,left:true,baseImageUrl,baseLocImgUrl,type:'newGuessLike'}}"></template>
+        </block>
+      </view>
+      <view class="guessLikeGoodsBox ">
+        <block a:for="{{ recommondList }}" a:if="{{ index %2 != 0 }}">
+          <template is="itemGoodsCard" data="{{...item,left:false,baseImageUrl,baseLocImgUrl,type:'newGuessLike'}}"></template>
+        </block>
       </view>
     </view>
+
+
+    <!--加载数据进度条-->
+    <view a:if="{{!guessLikeLoadMore}}" class='loading_view'>
+      <image src='{{baseLocImgUrl}}miniappImg/loading/loading.gif' class='loading_gif'></image>
+      <text>加载中</text>
+    </view>
+    <!--没有更多-->
+    <view a:if="{{guessLikeLoadMore}}" class='loading_view font-26 color-323232'>
+        没有更多了
+    </view>
+  
 
     <!-- 底部切换优惠券按钮 -->
     <view class="myConpon_footer flex_view_row justi_cen align_cen">

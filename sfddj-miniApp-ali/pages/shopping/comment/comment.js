@@ -34,7 +34,7 @@ Page({
 		countData: { allCount: 0, youTuCount: 0 },
     commentFenlei: 1,                 //获取评论列表的类型，1： 全部， 2： 有图
     automaticCount: 0,                //自动评价数量
-    defaultSort: 1,                   //排序，1：默认排序，2：按时间排序
+    defaultSort: 0,                   //排序，0：默认排序，1：按时间排序
 
     isFullScreen: false,      // 视频是否进入全屏
     videoShow: false,         // 视频显示
@@ -124,11 +124,14 @@ Page({
 		var that = this;
     let videoPath = [];
     let appendVideoPath = [];
+    let { goodsId,start,limit,commentFenlei,commentType,defaultSort } = that.data;
+    console.log( goodsId,start,limit,commentFenlei,commentType,defaultSort)
+
 		this.setData({
 			isLoadMore: true
 		});
 
-		http.get(api.COMMENT.GET_COMMENT_LIST, { goodsId: that.data.goodsId, start: that.data.start, limit: that.data.limit, type: that.data.commentFenlei, commentType: that.data.commentType == 'buyerShow' ? '1' : '2' }, res => {
+		http.get(api.COMMENT.GET_COMMENT_LIST, { goodsId, start, limit, type: commentFenlei, commentType: commentType == 'buyerShow' ? '1' : '2',sort: defaultSort }, res => {
 			let commentList = res.data.data;
 			// var result = res.data.result;
 			commentList.forEach(value => {
@@ -329,11 +332,16 @@ Page({
   },
 
   selectionSort(e) {
-     console.log(e)
-    this.setData({
-      defaultSort: e.currentTarget.dataset.sortType == 'defaultSort' ? 1 : 2
-    })
-   
+    let sortType = e.currentTarget.dataset.sortType;
+    if( (sortType == 'defaultSort' && this.data.defaultSort == 0) || (sortType == 'timeSort' && this.data.defaultSort == 1) ) {
+      return;
+    } else {
+      console.log(e)
+      this.setData({
+        defaultSort: e.currentTarget.dataset.sortType == 'defaultSort' ? 0 : 1
+      })
+      this.getCommentDataNew();
+    }
   }
 
 });
