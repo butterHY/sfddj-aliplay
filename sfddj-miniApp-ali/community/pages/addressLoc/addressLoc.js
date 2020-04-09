@@ -62,18 +62,23 @@ Page({
   // 地址栏选择的方法
   chooseLocation() {
     const _this = this
+    let _locInfo = this.data.locInfo;
+    let _name = ''; 
+
     my.chooseLocation({
       success: (res) => {
         // console.log('chooseLocation', res) 
         _this.setData({
           'locInfo.longitude': res.longitude,
-          'locInfo.latitude': res.latitude,
-          'locInfo.streetShow': res.name,
-          'locInfo.streetLoc': res.longitude + ',' + res.latitude
+          'locInfo.latitude': res.latitude, 
         });
+        _name = res.name;
 
         locAddr.GDCity(_this.data.locInfo, (data) => {
-          // console.log(data)
+          
+          data.streetShow = _name; 
+          data.addressAll = data.province + data.city + data.district + data.street + _name; 
+          
           myApp.setLocStorage(data, function () {
             my.navigateBack();
           });
