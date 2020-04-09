@@ -29,7 +29,7 @@ Page({
     },
     onLoad(options) {
         let { shopid } = options;
-        this.cart = Cart.init('cart', this);
+        this.cart = Cart.init(this);
         if (shopid) {
             this.setData({
                 shopid

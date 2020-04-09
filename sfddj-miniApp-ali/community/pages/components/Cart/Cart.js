@@ -15,28 +15,25 @@ Component({
   },
   didMount() {
     this.selfName = 'cart';
-    this.cart = Cart.init('cart', this);
+    this.cart = Cart.init(this);
   },
   didUpdate(prevProps, prevData) {
     if(!prevProps.shopid && this.props.shopid) {
       this.cart.gets(this.props.shopid, (res) => {
-        if(res) {
-          this.setData({
-            'obj': res
-          });
-        }
         this.storeClosed();
       });
     }
   },
   didUnmount() {},
   methods: { 
-    onShowDetailClick() { 
-      if(this.props.canShowDetails
-       && ((this.data.obj && this.data.obj.cartList && this.data.obj.cartList.length) || this.data.isShowed)) {
-        this.setData({ 
-          isShowed: !this.data.isShowed,
-        });
+    onShowDetailClick() {
+      if(this.props.canShowDetails) {
+        let obj = this.cart.$get(this.props.shopid + '');
+        if((obj && obj.cartList && obj.cartList.length) || this.data.isShowed) {
+          this.setData({ 
+            isShowed: !this.data.isShowed,
+          });
+        }
       }
     },
 
@@ -45,10 +42,6 @@ Component({
         isShowed: false,
       });
       this.cart.filter(this.props.shopid); 
-    },
-
-    clear() {
-      this.setData({obj: {}});
     },
 
     onClearClick() {
