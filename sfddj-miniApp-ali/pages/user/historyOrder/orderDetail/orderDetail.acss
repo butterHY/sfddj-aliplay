@@ -395,3 +395,42 @@
   margin-left: 10rpx;
   line-height: 60rpx;
 } */
+
+
+/* 显示身份证审核不通过 */
+.idWrongTip {
+  padding: 13rpx 30rpx;
+  background: #feecec;
+  color: #fa4444;
+  font-size: 24rpx;
+  border-radius: 104rpx;
+}
+
+.icon_deWarning {
+  width: 26rpx;
+  height: 26rpx;
+  margin-right: 8rpx;
+}
+
+.padTB_26 {
+  padding: 26rpx 0;
+}
+
+.idCardImgBox {
+  margin-bottom: 20rpx;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  color: #414141;
+}
+
+.uploadAgain {
+  color: #fff;
+  font-size: 26rpx;
+  height: 50rpx;
+  line-height: 50rpx;
+  width: 140rpx;
+  text-align: center;
+  border-radius: 5px;
+  background: #ff5353;
+}

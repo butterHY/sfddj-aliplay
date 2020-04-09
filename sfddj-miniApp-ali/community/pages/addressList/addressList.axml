@@ -1,27 +1,31 @@
 <import src="/community/templates/item-address/item-address"/>
-
 <view class="addressList">
-    <!-- 新增地址按钮 -->
-    <view class="addAddrPart" onTap="goNewAddress">
-        <view class="flex_1">新增地址</view>
-        <view class="marLeft_30">
-            <text class="icon-chevron-right font-30 color-bdbdbd"></text>
-        </view>
+  <!-- 新增地址按钮 -->
+  <view class="addAddrPart" onTap="goNewAddress">
+    <view class="flex_1">新增地址</view>
+    <view class="marLeft_30">
+      <text class="icon-chevron-right font-30 color-bdbdbd"></text>
     </view>
+  </view>
+  <scroll-view scroll-y="{{true}}" class="flex_1" a:if="{{optionalList.length > 0 || unusableList.length > 0}}">
     <!-- 可选地址模块 -->
     <view a:if="{{optionalList.length > 0}}" class="optionalList">
-        <block a:for="{{optionalList}}">
-            <template is="itemAddress" data="{{canUse: true, item, index}}"></template>
-        </block>
+      <block a:for="{{optionalList}}">
+        <template is="itemAddress" data="{{canUse: true, item, index}}"></template>
+      </block>
     </view>
-
     <!-- 不可选地址 -->
     <view a:if="{{unusableList.length > 0}}" class="unusableList">
-        <!-- 标题 -->
-        <view class="unusableList_tit font-30 color-333">以下地址超出范围</view>
-        <!-- 列表 -->
-        <block a:for="{{unusableList}}">
-            <template is="itemAddress" data="{{item,index}}"></template>
-        </block>
+      <!-- 标题 -->
+      <view class="unusableList_tit font-30 color-333">以下地址超出范围</view>
+      <!-- 列表 -->
+      <block a:for="{{unusableList}}">
+        <template is="itemAddress" data="{{item,index}}"></template>
+      </block>
     </view>
+  </scroll-view>
+  <!--没数据时 -->
+  <view a:else class="flex_1 noAddress">
+    <image src="{{staticsImageUrl}}miniappImg/icon/icon_empty_addr.png" class="noAddress_img"></image>
+  </view>
 </view>
