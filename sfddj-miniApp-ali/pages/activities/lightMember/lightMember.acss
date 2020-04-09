@@ -2,7 +2,6 @@
 
 .page {
   background: #f5f5f5;
-  /* position: relative; */
   box-sizing: border-box;
   padding-bottom: 106rpx;
   height: 100vh;
@@ -14,18 +13,12 @@
   height: 446rpx;
   background: #2b2d3e;
   box-sizing: border-box;
-  /* background: url(../../../image/lightMemberHeard.png) top center no-repeat; */
-  /* background-size:cover; */
-  /* padding: 80rpx 30rpx 0; */
 }
 
 .headMessage {
   height: 100%;
   box-sizing: border-box;
   padding: 124rpx 72rpx 0;
-  /* background-size: 100% 100%;
-  background-repeat: no-repeat;
-  background-position: top center; */
 }
 
 .userPersonal {
@@ -75,9 +68,6 @@
   height: 52rpx;
   line-height: 52rpx;
   border-radius: 40rpx;
-  /* background: #b6fce8; */
-  /* background: url(../../../image/lightMemberHeard.png) top center no-repeat; */
-  /* background-size:cover; */
   color: #1e9271;
 }
 

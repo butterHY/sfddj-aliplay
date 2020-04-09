@@ -17,7 +17,6 @@
 }
 
 .goodsListOneRow .bigGoodsListOne {
-  /* margin-top: 20rpx; */
   background: #FFFFFF;
   border-radius: 6px;
   overflow: hidden;
@@ -166,7 +165,6 @@
   display: inline-block;
   width: 340rpx;
   height: 340rpx;
-  /* border-radius: 2px; */
   vertical-align: middle;
 }
 
@@ -227,7 +225,6 @@
 }
 
 .oneAds_con {
-  /* margin-bottom: 20rpx; */
   padding: 0 30rpx 0rpx;
   box-sizing: border-box;
   background: #FFFFFF;
@@ -290,7 +287,6 @@
 
 .goodsViewBox {
   display: inline-block;
-  /* padding-right: 20rpx; */
   height: 384rpx;
   border-radius: 10rpx;
   margin-right: 20rpx;
@@ -320,17 +316,10 @@
 .goodsViewBox .goodsShowImgBox {
   height: 260rpx;
   width: 100%;
-  /* background-image: url('/image/loadImg.jpg');
-  background-size: 100% 100%;
-  background-repeat: no-repeat; */
   background: #f3f5fa;
-  /* border-radius: 10rpx; */
   overflow: hidden;
 }
 
-/* .goodsViewBox .goodsShowImg {
-  border-radius: 10rpx;
-} */
 
 .padRL_10 {
   padding: 0 10rpx;
@@ -390,25 +379,14 @@
   padding: 24rpx 0 0;
 }
 
-
-
 .goods-scrollx-view {
 	white-space: nowrap;
 	font-size: 0;
 }
 
-/* .goodsViewBox {
-  display: inline-block;
-  padding-right: 20rpx;
-  height: 384rpx;
-} */
-
 .goodsViewBox .goodsShowImgBox {
   height: 260rpx;
   width: 100%;
-  /* background-image: url('/image/loadImg.jpg');
-  background-size: 100% 100%;
-  background-repeat: no-repeat; */
   background:#f3f5fa;
   border-radius: 10rpx;
   overflow:hidden;
@@ -422,10 +400,7 @@
   height: 260rpx;
 }
 
-
 /* 优惠券新样式 */
-
-
 .couponModular {
   padding: 0 30rpx;
 }
