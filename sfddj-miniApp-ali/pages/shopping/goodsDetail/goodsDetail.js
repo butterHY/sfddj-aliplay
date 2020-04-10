@@ -326,6 +326,12 @@ Page({
           }
 
           that.data.goods = resData.goodsShowVO;
+          let allGoodsStore = 0;
+          resData.goodsShowVO.products.forEach(value => {
+            allGoodsStore += value.store;
+          });
+          that.data.goods.goodsStore = allGoodsStore;
+  
           // 处理商品评论；
           if ( resData.buyerShow && resData.buyerShow.buyerShowList && resData.buyerShow.buyerShowList.length > 0 ) {
             that.getComment(resData.buyerShow.buyerShowList, 'buyerShow');

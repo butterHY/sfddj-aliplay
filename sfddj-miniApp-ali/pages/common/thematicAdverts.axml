@@ -407,7 +407,7 @@
                 <view class="couponPrice single-line font-26  font-weight-600 ">￥<text class="font-50">{{couponItem.costPrice}}</text></view>
                 <view class="couponDescribe single-line font-26">{{couponItem.couponName}}</view>
               </view>
-              <view class="couponButton font-30 posi_re" data-fatherIndex="{{fatherIndex}}" data-index="{{index}}" data-ruleSign="{{couponItem.couponShowRuleSign}}" catchTap="getCoupon">
+              <view class="couponButton font-30 posi_re" data-fatherIndex="{{fatherIndex}}" data-index="{{index}}" data-ruleSign="{{couponItem.couponShowRuleSign}}" catchTap="{{couponItem.couponStatus == 'NO_RECEIVE' ? 'getCoupon' : (couponItem.couponStatus == 'NORMAR' ? 'toUseCoupon' : '')}}">
                 <view class="litlePoint posi_ab litlePointTop"></view>
                 <view class="dottedLine posi_ab">
                 </view>

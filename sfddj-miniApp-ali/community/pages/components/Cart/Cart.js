@@ -24,7 +24,9 @@ Component({
         this.storeClosed();
       });
     }
-    if(this.props.shopid && prevData.Cart && prevData.Cart[this.props.shopid]) {
+    
+    if(this.props.shopid && prevData.Cart && prevData.Cart[this.props.shopid]
+      && this.data.Cart && this.data.Cart[this.props.shopid]) {
       if(prevData.Cart[this.props.shopid].cnt != this.data.Cart[this.props.shopid].cnt) {
         this.setData({
           badgejump: true
@@ -85,8 +87,14 @@ Component({
     onPlusClick(e) {
       if(!this._changing) {
         this._changing = true;
-        this.cart.changeNum(this.props.shopid, e.target.dataset.skuid, 1, (res) => {
+        this.cart.changeNum(this.props.shopid, e.target.dataset.skuid, 1, (res, err) => {
           this._changing = false;
+          if(err) {
+            my.alert({
+              title: '提示',
+              content: err
+            });
+          }
         });
       }
     },

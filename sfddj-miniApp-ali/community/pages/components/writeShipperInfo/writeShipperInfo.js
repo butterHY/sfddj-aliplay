@@ -5,7 +5,7 @@ Component({
     mixins: [],
     data: {
         userInfoPop: false,
-        sexualList: [{ text: '女士' }, { text: '男士' }],
+        sexualList: [{ text: '女士' }, { text: '先生' }],
         sexualIndex: 0,    //用户姓别选择索引
         userName: '',    //用户姓名信息
         userMobile: '',      //用户电话信息

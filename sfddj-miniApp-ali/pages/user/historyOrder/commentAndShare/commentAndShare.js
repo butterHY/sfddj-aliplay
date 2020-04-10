@@ -336,16 +336,16 @@ Page({
     }
 
 
-    if (goodsDesc.trim().length < 5) {
-      that.setData({
-        showToast: true
-      })
-      setTimeout(function () {
-        that.setData({
-          showToast: false
-        })
-      }, 1500)
-    } else {
+    // if (goodsDesc.trim().length < 5) {
+    //   that.setData({
+    //     showToast: true
+    //   })
+    //   setTimeout(function () {
+    //     that.setData({
+    //       showToast: false
+    //     })
+    //   }, 1500)
+    // } else {
       http.post(api.UPLOADCOMMENT.SAVECOMMENt, data, function (res) {
         my.confirm({
           title: '评价成功',
@@ -358,7 +358,7 @@ Page({
         });
       }, function (err) {
       })
-    }
+    // }
   }
 
 

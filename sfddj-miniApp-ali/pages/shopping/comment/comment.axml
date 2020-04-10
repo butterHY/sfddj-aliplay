@@ -55,7 +55,7 @@
 
 
 	<!-- 评论列表 -->
-	<scroll-view scroll-y="{{true}}" class=" flex_1" onScrollToLower="loadMoreList">
+	<scroll-view scroll-y="{{true}}" class="posi_re flex_1" scroll-top="{{scrollTop}}" scroll-with-animation="{{true}}}" onScrollToLower="loadMoreList" onScroll="scrollEvent">
 		<block a:if="{{commentList && commentList.length > 0}}">
       <view class="sort flex_view_row justi_end whiteBack">
         <view class="{{defaultSort == 0 ? 'activity' : ''}}" data-sortType="defaultSort" catchTap="selectionSort">默认排序</view>
@@ -159,6 +159,12 @@
 				</view>
 			</view>
 		</view>
+
+    <view class="{{comeBackBar == 'show'? 'comeBackDisplay' : (comeBackBar == 'hide' ? 'comeBackHide' : '')}} comeBack font-36">
+      <view class="goIcon" onTap="goTop">
+        <text class="icon-goTop_home"></text>
+      </view>
+    </view>
 	</scroll-view>
 </view>
 

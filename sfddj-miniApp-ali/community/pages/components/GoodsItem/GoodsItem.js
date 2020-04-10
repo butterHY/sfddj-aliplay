@@ -48,8 +48,13 @@ Component({
               });
             }, 150);
           });
-          this.cart.add(this.props.data.shopId, this.props.data, this.props.data.shopGoodsSkuList[0].id, 1, (res) => {
-
+          this.cart.add(this.props.data.shopId, this.props.data, this.props.data.shopGoodsSkuList[0].id, 1, (res, err) => {
+            if(err) {
+              my.alert({
+                title: '提示',
+                content: err
+              });
+            }
           });
         }
       }

@@ -95,6 +95,8 @@ Page({
               openingButtonData: that.data.openingButtonData,
               isLightMember: resData.classify == "已注册" ? true : false,
             })
+            console.log(that.data.isLightMember)
+            console.log(that.data.thematicAds)
             reslove({
               type: 'SUCCESS'
             })
@@ -155,7 +157,9 @@ Page({
     });
   },
 
-
+    /**
+   * 领取优惠群
+   * */
   getCoupon: function(e) {
     // 如果没有开通轻会员应先弹窗提示不请求接口
     let that = this;
@@ -203,6 +207,29 @@ Page({
     })
   },
 
+    /**
+   * 去使用按钮
+   * */
+  toUseCoupon(e) {
+    let linkType = e.currentTarget.dataset.linkType;
+    let couponId = e.currentTarget.dataset.couponid;
+    let useLink = e.currentTarget.dataset.uselink;
+    // linkType 0跳转uselink, 1跳转商城首页， 2跳转优惠券可使用商品列表
+    if (linkType == 0) {
+      my.navigateTo({
+        url: useLink
+      });
+    } else if (linkType == 1) {
+      my.switchTab({
+        url: '/pages/home/home',
+      })
+    } else if (linkType == 2) {
+      my.navigateTo({
+        url: '/pages/home/grouping/grouping?pageFrom=coupon&couponId=' + couponId
+      });
+    }
+  },
+
 
   getEasyMemberInfo() {
     let that = this;
@@ -218,10 +245,73 @@ Page({
         that.setData({
           headData: that.data.headData
         })
+        console.log(that.data.headData)
       }
     }, function(res) {
     })
   },
+
+    // 判断是否绑定了手机
+    // try {
+    //   let user_memId = my.getStorageSync({
+    //     key: "user_memId",
+    //   }).data;
+
+    //   that.setData({
+    //     user_memId: user_memId == 'null' || user_memId == null || user_memId == 'undefined' || user_memId == undefined ? '默认是会员' : user_memId
+    //   })
+    // } catch (e) { }
+
+  //   // 获取手机号
+  // getPhoneNumber: function(e) {
+  //   var that = this;
+  //   // console.log('获取手机号')
+  //   my.getPhoneNumber({
+  //     success: (res) => {
+  //       let response = res.response
+  //       sendRequest.send(constants.InterfaceUrl.USER_BINGMOBILEV4, {
+  //         response: response,
+  //       }, function(res) {
+  //         if (res.data.result) {
+  //           try {
+  //             my.setStorageSync({ key: constants.StorageConstants.tokenKey, data: res.data.result.loginToken });
+  //             my.setStorageSync({ key: 'user_memId', data: res.data.result.memberId });
+  //           } catch (e) {
+  //             my.setStorage({ key: 'user_memId', data: res.data.result.memberId });
+  //           }
+  //         }
+  //         else { }
+
+  //         my.showToast({
+  //           content: '绑定成功'
+  //         })
+  //         that.setData({
+  //           user_memId: res.data.result ? res.data.result.memberId : '默认会员'
+  //         })
+  //       }, function(res, resData) {
+  //         // '1013',为该用户已绑定手机号；
+  //         var resData = resData ? resData : {}
+  //         if (resData.errorCode == '1013') {
+  //           that.setData({
+  //             user_memId: '默认会员'
+  //           })
+  //           my.setStorage({ key: 'user_memId', data: '默认会员' });
+  //         } else {
+  //           my.showToast({
+  //             content: res,
+  //             duration: 2000,
+  //           })
+  //         }
+  //       });
+  //     },
+  //     fail: (res) => {
+  //       my.navigateTo({
+  //         url: '/pages/user/bindPhone/bindPhone'
+  //       });
+  //     },
+  //   });
+  // },
+
 
   // 阻止下拉刷新
   onPullDownRefresh() {
