@@ -125,7 +125,7 @@ Page({
         let countList = [];    //定时器列表
         let now = new Date().getTime();
         goodsList.forEach((val, i, arr) => {
-            val.goodsImagePath = val.orderItemList[0] && Object.keys(val.orderItemList[0]).length > 0 ? val.orderItemList[0].goodsImagePath ? api.baseImageUrl + JSON.parse(val.orderItemList[0].goodsImagePath)[0] : defaultImg : defaultImg;
+            val.goodsImagePath = val.orderItemList[0] && Object.keys(val.orderItemList[0]).length > 0 ? val.orderItemList[0].goodsImagePath ? api.baseImageUrl + val.orderItemList[0].goodsImagePath : defaultImg : defaultImg;
             // 转换订单状态中文
             val.orderStatusStr = that.handleStatus(val.orderStatus);
             // 转换订单创建时间
