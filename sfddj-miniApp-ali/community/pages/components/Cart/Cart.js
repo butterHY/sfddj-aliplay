@@ -86,8 +86,14 @@ Component({
     onPlusClick(e) {
       if(!this._changing) {
         this._changing = true;
-        this.cart.changeNum(this.props.shopid, e.target.dataset.skuid, 1, (res) => {
+        this.cart.changeNum(this.props.shopid, e.target.dataset.skuid, 1, (res, err) => {
           this._changing = false;
+          if(err) {
+            my.alert({
+              title: '提示',
+              content: err
+            });
+          }
         });
       }
     },
