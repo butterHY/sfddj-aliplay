@@ -3,6 +3,9 @@
 import MiniAppService from "alipay-miniapp-service";
 import http from '/api/http';
 import api from '/api/api';
+import {getDistance} from '/community/assets/common';
+
+const app = getApp();
 
 class Shop extends MiniAppService {
     constructor() {
@@ -12,6 +15,37 @@ class Shop extends MiniAppService {
     static get Name() {
         return 'Shop';
     }
+
+    static sortShopData(shop) {
+        shop.shopLogo = api.baseImageUrl + shop.shopLogo;
+        if(shop.shopGoodsList) {
+            shop.shopGoodsList.forEach((M) => {
+                if(M.goodsImagePath) {
+                    M.goodsImagePath = JSON.parse(M.goodsImagePath);
+                    for(let i = 0; i < M.goodsImagePath.length; i++) {
+                        M.goodsImagePath[i] = api.baseImageUrl + M.goodsImagePath[i];
+                    }
+                } else {
+                    M.goodsImagePath = [];
+                }
+            });
+        }
+        if(shop.businessTime) {
+            let ary = shop.businessTime.split('~');
+            if(ary.length == 2) {
+                let timeStart = ary[0],
+                    timeEnd = ary[1];
+                shop.timeStart = timeStart;
+                shop.timeEnd = timeEnd;
+            }
+        }
+        if(shop.latitude && shop.longitude) {
+            let loc = app.globalData.userLocInfo;
+            if(loc && loc.longitude) {
+                shop.distance = getDistance(loc.latitude, loc.longitude, shop.latitude, shop.longitude);
+            }
+        }
+    };
 
     // 取得指定经纬度附近的所有店铺
     gets(x, y, pageIdx, callbackFun) {
@@ -24,19 +58,7 @@ class Shop extends MiniAppService {
         }, (res) => {
             if(res.data && res.data.data) {
                 res.data.data.forEach((T) => {
-                    T.shopLogo = api.baseImageUrl + T.shopLogo;
-                    if(T.shopGoodsList) {
-                        T.shopGoodsList.forEach((M) => {
-                            if(M.goodsImagePath) {
-                                M.goodsImagePath = JSON.parse(M.goodsImagePath);
-                                for(let i = 0; i < M.goodsImagePath.length; i++) {
-                                    M.goodsImagePath[i] = api.baseImageUrl + M.goodsImagePath[i];
-                                }
-                            } else {
-                                M.goodsImagePath = [];
-                            }
-                        });
-                    }
+                    Shop.sortShopData(T);
                 });
             }
             if(callbackFun) {
@@ -53,16 +75,7 @@ class Shop extends MiniAppService {
     get(id, callbackFun) {
         http.get(api.Shop.GETBYID + id, {}, (res) => {
             if(res.data && res.data.data) {
-                res.data.data.shopLogo = api.baseImageUrl + res.data.data.shopLogo;
-                if(res.data.data.businessTime) {
-                    let ary = res.data.data.businessTime.split('~');
-                    if(ary.length == 2) {
-                        let timeStart = ary[0],
-                            timeEnd = ary[1];
-                        res.data.data.timeStart = timeStart;
-                        res.data.data.timeEnd = timeEnd;
-                    }
-                }
+                Shop.sortShopData(res.data.data);
             }
             if(callbackFun) {
                 callbackFun(res);

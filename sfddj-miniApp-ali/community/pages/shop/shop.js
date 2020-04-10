@@ -36,46 +36,6 @@ Page({
           }
         });
 
-        my.getStorage({ 
-            key: 'locationInfo',  
-            success: (loc) => {
-              if(loc && loc.data && loc.data.latitude && loc.data.longitude) {
-                let distance = getDistance(loc.data.latitude, loc.data.longitude, res.data.data.latitude, res.data.data.longitude);
-                this.setData({
-                  distance: distance
-                });
-
-
-                // if(my.calculateRoute) {
-                //   my.calculateRoute({
-                //     startLat: loc.data.latitude,
-                //     startLng: loc.data.longitude,
-                //     endLat: res.data.data.latitude,
-                //     endLng: res.data.data.longitude,
-                //     success:(e)=>{
-                //       if(e.success && e.distance) {
-                //         this.setData({distance: e.distance});
-                //       }
-                //     }
-                //   });
-                // } else {
-                //   my.ap.updateAlipayClient({
-                //     success: () => {
-                //       my.alert({
-                //         title: '升级成功',
-                //       });
-                //     },
-                //     fail: () => {
-                //       my.alert({
-                //         title: '升级失败',
-                //       });
-                //     },
-                //   });
-                // }
-              }
-            } 
-        });
-
         if(res.data.data.nowTime && res.data.data.startBusinessTime && res.data.data.endBusinessTime) {
           let msg = undefined;
           if(res.data.data.nowTime < res.data.data.startBusinessTime || res.data.data.nowTime > res.data.data.endBusinessTime) {
