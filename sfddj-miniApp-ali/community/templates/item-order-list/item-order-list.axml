@@ -1,7 +1,7 @@
 <template name="itemOrderList">
     <view class="itemOrderList">
         <!-- 头部商品信息 -->
-        <navigator url="/community/pages/communalOrderDetail/communalOrderDetail?orderSn={{item.orderSn}}" hover-class="none" class="flex_view_col orderListInfo">
+        <navigator url="/community/pages/orderDetail/orderDetail?orderSn={{item.orderSn}}" hover-class="none" class="flex_view_col orderListInfo">
             <!-- 上部分 -->
             <view class="flex_view_row align_cen orderListInfo_top">
                 <view class="orderList_goodsImg">
@@ -45,7 +45,7 @@
         <!-- 底部按钮 -->
         <view class="orderListBtnBox">
             <block a:if="{{item.orderStatus == 'NOPAY'}}">
-                <navigator url="/community/pages/communalOrderDetail/communalOrderDetail?orderSn={{item.orderSn}}" class="orderList_btn redBtn" hover-class="none">去支付</navigator>
+                <navigator url="/community/pages/orderDetail/orderDetail?orderSn={{item.orderSn}}" class="orderList_btn redBtn" hover-class="none">去支付</navigator>
             </block>
             <block a:else>
                 <view class="orderList_btn" data-orderSn="{{item.orderSn}}" data-index="{{index}}" onTap="deleteOrder">删除订单</view>

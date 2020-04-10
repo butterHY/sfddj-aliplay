@@ -61,7 +61,7 @@
         "pages/alphabetCity/alphabetCity",
         "pages/addressLoc/addressLoc", 
         "pages/goodsDetail/goodsDetail",
-        "pages/communalOrderDetail/communalOrderDetail",
+        "pages/orderDetail/orderDetail",
         "pages/orderConfirm/orderConfirm",
         "pages/addressList/addressList",
         "pages/orderList/orderList",

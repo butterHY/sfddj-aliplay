@@ -25,7 +25,8 @@ Component({
       });
     }
     
-    if(this.props.shopid && prevData.Cart && prevData.Cart[this.props.shopid]) {
+    if(this.props.shopid && prevData.Cart && prevData.Cart[this.props.shopid]
+      && this.data.Cart && this.data.Cart[this.props.shopid]) {
       if(prevData.Cart[this.props.shopid].cnt != this.data.Cart[this.props.shopid].cnt) {
         this.setData({
           badgejump: true

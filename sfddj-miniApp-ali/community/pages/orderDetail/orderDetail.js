@@ -83,7 +83,7 @@ Page({
     handleGoodsInfo(list = []) {
         // 为了与其他组件的字段兼容
         list.forEach((val, i, arr) => {
-            val.goodsImagePath = val.productImg ? api.baseImageUrl + JSON.parse(val.productImg)[0] : '';
+            val.goodsImagePath = val.productImg ? api.baseImageUrl + val.productImg : '';
             val.salePrice = val.price;
             val.name = val.goodsName;
         })
