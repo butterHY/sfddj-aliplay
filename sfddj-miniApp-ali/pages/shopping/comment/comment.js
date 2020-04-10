@@ -36,9 +36,12 @@ Page({
     automaticCount: 0,                //自动评价数量
     defaultSort: 0,                   //排序，0：默认排序，1：按时间排序
 
-    isFullScreen: false,      // 视频是否进入全屏
-    videoShow: false,         // 视频显示
-    videoDirection: 0
+    isFullScreen: false,              // 视频是否进入全屏
+    videoShow: false,                 // 视频显示
+    videoDirection: 0,
+
+        
+    setComeBack: true,                // 返回顶部或首页的导航的节流开关
 	},
 
 	onLoad: function(options) {
@@ -258,19 +261,6 @@ Page({
 	*/
 	commentViewTap: function(e) {
 		var that = this
-		// var urls = e.currentTarget.dataset.urls;
-		// // var url = baseImageUrl + e.currentTarget.dataset.current;
-		// var current = e.currentTarget.dataset.current;
-		// var newUrls = [];
-		// urls.forEach(function(v, i, arr) {
-		// 	v = v.substring(0, 5).indexOf('http') > -1 ? that.data.baseLocImgUrl + 'vueStatic/img/commentErrImg.png' : baseImageUrl + v
-		// 	newUrls.push(v);
-		// });
-		// my.previewImage({
-		// 	urls: newUrls,
-		// 	current: current
-		// });
-
     var urls = e.currentTarget.dataset.urls;
     var index = e.currentTarget.dataset.current;
 
@@ -338,10 +328,41 @@ Page({
     } else {
       console.log(e)
       this.setData({
-        defaultSort: e.currentTarget.dataset.sortType == 'defaultSort' ? 0 : 1
+        defaultSort: e.currentTarget.dataset.sortType == 'defaultSort' ? 0 : 1,
+        start: 0
       })
       this.getCommentDataNew();
     }
-  }
+  },
+
+    // 监听页面滚动
+  scrollEvent: function(e) {
+    console.log(e)
+    var that = this;
+    // 设置返回首页/顶部栏
+    if (e.detail.scrollTop >= 500 && that.data.setComeBack) {
+      that.data.setComeBack = false;
+      that.setData({
+        comeBackBar: 'show',
+        
+      })
+    } else if (e.detail.scrollTop < 500 && !that.data.setComeBack) {
+      that.data.setComeBack = true;
+      that.setData({
+        comeBackBar: 'hide',
+        scrollTop: null
+      })
+    }
+  },
+
+  // 页面回滚到顶部
+  goTop() {
+   this.setData({
+      scrollTop: 1,
+      duration: 500,
+   });
+    // console.log(this.data.scrollTop)
+    // console.log(this.data.duration)
+  },
 
 });

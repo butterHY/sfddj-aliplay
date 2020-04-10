@@ -214,7 +214,9 @@
         <swiper indicator-dots="{{item.items.length > 5 ? 'true' : ''}}" indicator-active-color='rgba(255,83,83.1)' autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" display-multiple-items='5' data-fatherIndex="{{index}}" onChange="adsSwiper">
           <swiper-item class="flex_view_row">
             <block a:for="{{item.items}}" a:for-index="idx">
-              <view a:if='{{idx< 5}}' data-url="{{item.link}}" onTap='goToPage' open-type="navigate" hover-class="none" class='{{item.items.length > 4 ? "width_20" : "width_25"}} {{(filters.isGoodsLink(item.link) && !item.isLoaded) ? "js_adsGoods" + index + "_" + idx : ""}}' style='height: {{item.items.length > 4 ? "214rpx" : "160rpx"}}'>
+              <!-- data-url="{{item.link}}" -->
+              <!-- data-url="/pages/activities/lightMember/lightMember" -->
+              <view a:if='{{idx< 5}}' data-url="{{item.link}}"  onTap='goToPage' open-type="navigate" hover-class="none" class='{{item.items.length > 4 ? "width_20" : "width_25"}} {{(filters.isGoodsLink(item.link) && !item.isLoaded) ? "js_adsGoods" + index + "_" + idx : ""}}' style='height: {{item.items.length > 4 ? "214rpx" : "160rpx"}}'>
                 <image src="{{baseImageUrl}}{{item.imageUrl}}" mode="widthFix" class="width_100" />
               </view>
             </block>
