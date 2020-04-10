@@ -21,7 +21,7 @@
         <text class="nowCity">{{ locInfo.streetShow }}</text> 
       </view>
        
-      <text class="reLoc_btn" onTap="reLocation">重新定位</button>
+      <text class="reLoc_btn" onTap="reLocation">重新定位</text>
     </view>
   </view>
   <view class="nearList">
