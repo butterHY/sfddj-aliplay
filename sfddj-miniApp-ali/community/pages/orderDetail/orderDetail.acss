@@ -1,0 +1,137 @@
+
+
+.color-ff0532 {
+    color: #ff0532;
+}
+
+.color-333 {
+    color: #333333;
+}
+
+.marTop_12 {
+    margin-top: 12rpx;
+}
+
+.commuOrderDetail {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 20rpx 20rpx;
+    background-color: #f9f9f9;
+    font-family: "SourceHanSansCN";
+}
+
+.orderStatusBox {
+    width: 100%;
+    /* margin-top: 20rpx; */
+    background-color: #fff;
+    border-radius: 10rpx;
+    box-sizing: border-box;
+    padding: 0 30rpx;
+}
+
+.orderStatus {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 182rpx;
+}
+
+.orderStatusItem {
+    color: #333333;
+    font-size: 36rpx;
+}
+
+.orderStatusTip {
+    font-size: 26rpx;
+    color: #999999;
+    margin-top: 26rpx;
+}
+
+.orderStatusIcon_img {
+    width: 160rpx;
+    height: 126rpx;
+}
+
+.orderAddrInfo {
+    padding: 30rpx 0;
+    border-top: 1px dashed #e6e6e6;
+}
+
+.orderAddr {
+    display: flex;
+    flex-direction: row;
+    margin-top: 20rpx;
+    line-height: 34rpx;
+}
+
+.shopIcon {
+    width: 38rpx;
+    height: 34rpx;
+}
+
+.orderStatusBtnBox {
+    border-top: 1px solid #e6e6e6;
+    padding: 20rpx 0;
+} 
+
+.orderStatusBtn {
+    width: 176rpx;
+    height: 58rpx;
+    line-height: 60rpx;
+    border: 1px solid #999;
+    text-align: center;
+    color: #333333;
+    font-size: 30rpx;
+    margin-left: 56rpx;
+    border-radius: 45px;
+    box-sizing: border-box;
+}
+
+.cancelOrderBtn {
+    margin-left: 0;
+}
+
+.toPayBtn {
+    border-color: #ff0532;
+    color: #ff0532;
+}
+
+.orderInfo {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 30rpx;
+    background-color: #fff;
+    border-radius: 10rpx;
+    margin-top: 20rpx;
+}
+
+.orderInfo_con {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-bottom: 16rpx;
+}
+
+.orderInfoTit {
+    padding: 30rpx 0 18rpx;
+    font-size: 30rpx;
+    color: #333333;
+    font-weight: 600;
+}
+
+.orderInfo_des, .orderInfo_mes {
+    font-size: 28rpx;
+    color: #666666;
+    line-height: 56rpx;
+}
+
+.orderInfo_mes {
+    margin-left: 84rpx;
+}
+
+.orderInfo_mes > view , .orderInfo_des > view {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
