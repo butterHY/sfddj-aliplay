@@ -48,9 +48,13 @@ Component({
       // 参数3：skuID
       // 参数4：数量
       // 参数5：回调函数
-      _this.cart.add(addData.shopId, _goodsInfo.allData, addData.skuId, addData.num, (res) => {
-          // do somthing
-          console.log(res)
+      _this.cart.add(addData.shopId, _goodsInfo.allData, addData.skuId, addData.num, (res, err) => {
+          if(err) {
+            my.alert({
+              title: '提示',
+              content: err
+            });
+          }
       }); 
 
       // http.post(api.O2O_SHOPCAR.addCar, addData, (res) => {

@@ -7,6 +7,7 @@ Component({
     noticeShow: false,
     actionText: '本店已打烊，请明天8：00来',
     isDisabled: false,
+    badgejump: false, // 设为true时，给badge设置scale2 class
   },
   props: {
     canShowDetails: true,
@@ -22,6 +23,20 @@ Component({
       this.cart.gets(this.props.shopid, (res) => {
         this.storeClosed();
       });
+    }
+    
+    if(this.props.shopid && prevData.Cart && prevData.Cart[this.props.shopid]) {
+      if(prevData.Cart[this.props.shopid].cnt != this.data.Cart[this.props.shopid].cnt) {
+        this.setData({
+          badgejump: true
+        }, () => {
+          setTimeout(() => {
+            this.setData({
+              badgejump: false
+            });
+          }, 150);
+        });
+      }
     }
   },
   didUnmount() {},
@@ -71,8 +86,14 @@ Component({
     onPlusClick(e) {
       if(!this._changing) {
         this._changing = true;
-        this.cart.changeNum(this.props.shopid, e.target.dataset.skuid, 1, (res) => {
+        this.cart.changeNum(this.props.shopid, e.target.dataset.skuid, 1, (res, err) => {
           this._changing = false;
+          if(err) {
+            my.alert({
+              title: '提示',
+              content: err
+            });
+          }
         });
       }
     },

@@ -19,7 +19,6 @@
         <block a:if="{{typeIndex == 0}}">
             <write-info onWriteInfo="confirmWriteInfo"></write-info>
         </block>
-
         <!-- 选地址栏  --- 只有选商家配送时才显示 -->
         <block a:if="{{typeIndex == 1}}">
             <choose-addr defaultAddress="{{defaultAddress}}" shopId="{{shopid}}"></choose-addr>
@@ -58,13 +57,15 @@
         </view>
     </scroll-view>
     <!-- 底部去支付 -->
-    <view class="payNowBox">
-        <!-- 价格 -->
-        <view class="payNowPriceBox">
-            <view class="payNowPrice">￥{{totalPrice.toFixed(2)}}</view>
-            <!-- <view class="discountPrice">￥69.9</view> -->
+    <view class="footer">
+        <view class="payNowBox">
+            <!-- 价格 -->
+            <view class="payNowPriceBox">
+                <view class="payNowPrice">￥{{totalPrice.toFixed(2)}}</view>
+                <!--<view class="discountPrice">￥69.9</view> -->
+            </view>
+            <!-- 去结算按钮 -->
+            <view class="payNowBtn" onTap="submitPay">去结算</view>
         </view>
-        <!-- 去结算按钮 -->
-        <view class="payNowBtn" onTap="submitPay">去结算</view>
     </view>
 </view>

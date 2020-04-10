@@ -6,7 +6,7 @@ import Cart from '/community/service/cart';
 Component({
   mixins: [],
   data: {
-    
+    cartjump: false, // 当为true时，购物车图标应用scale2 class
   },
   props: {
     data: {},
@@ -39,8 +39,22 @@ Component({
     onCartClick() {
       if(this.props.canclick && this.props.data) {
         if(this.props.data.shopGoodsSkuList) {
-          this.cart.add(this.props.data.shopId, this.props.data, this.props.data.shopGoodsSkuList[0].id, 1, (res) => {
-
+          this.setData({
+            cartjump: true
+          }, () => {
+            setTimeout(() => {
+              this.setData({
+                cartjump: false
+              });
+            }, 150);
+          });
+          this.cart.add(this.props.data.shopId, this.props.data, this.props.data.shopGoodsSkuList[0].id, 1, (res, err) => {
+            if(err) {
+              my.alert({
+                title: '提示',
+                content: err
+              });
+            }
           });
         }
       }

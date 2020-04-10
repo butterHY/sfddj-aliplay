@@ -72,3 +72,7 @@ view > .goodsitem.adjacent:last-child > view {
     text-decoration: line-through;
     margin-left: 6rpx;
 }
+
+.cart {
+    transition: 0.15s;
+}

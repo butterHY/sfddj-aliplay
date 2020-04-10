@@ -163,6 +163,7 @@
     flex-shrink: 1;
     flex-grow: 1;
     padding: 20rpx;
+    padding-right: 1rpx;
     font-size: 26rpx;
     color: rgb(102,102,102);
 }
@@ -206,4 +207,9 @@
 .shop_more {
     width: 100%;
     height: 280rpx;
+}
+
+.shop_resultmsg {
+    text-align: center;
+    padding: 26rpx 0;
 }

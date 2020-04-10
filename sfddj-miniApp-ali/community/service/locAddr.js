@@ -58,6 +58,7 @@ let LocAddr = {
 			extensions: 'all'
 		}, (res) => {
 			// console.log('逆向地理',res.data.regeocode)
+			// console.log('逆向地理-_location', _location)
 			
 			let regeo = res.data.regeocode; 
 			let _addressComponent = regeo.addressComponent;
@@ -72,7 +73,8 @@ let LocAddr = {
 
 			let _streetNumber = _addressComponent.streetNumber; 
 			let _streetShow = addr_noStreeet;
-			let _streetLoc = _streetNumber.location;
+			// let _streetLoc = _streetNumber.location;
+			let _streetLoc = _location;
 			let _city = _addressComponent.city.length > 0 ? _addressComponent.city : _addressComponent.province;
 
 			_locInfo.loading = true;

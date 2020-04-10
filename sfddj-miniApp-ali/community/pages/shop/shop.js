@@ -36,46 +36,6 @@ Page({
           }
         });
 
-        my.getStorage({ 
-            key: 'locationInfo',  
-            success: (loc) => {
-              if(loc && loc.data && loc.data.latitude && loc.data.longitude) {
-                let distance = getDistance(loc.data.latitude, loc.data.longitude, res.data.data.latitude, res.data.data.longitude);
-                this.setData({
-                  distance: distance
-                });
-
-
-                // if(my.calculateRoute) {
-                //   my.calculateRoute({
-                //     startLat: loc.data.latitude,
-                //     startLng: loc.data.longitude,
-                //     endLat: res.data.data.latitude,
-                //     endLng: res.data.data.longitude,
-                //     success:(e)=>{
-                //       if(e.success && e.distance) {
-                //         this.setData({distance: e.distance});
-                //       }
-                //     }
-                //   });
-                // } else {
-                //   my.ap.updateAlipayClient({
-                //     success: () => {
-                //       my.alert({
-                //         title: '升级成功',
-                //       });
-                //     },
-                //     fail: () => {
-                //       my.alert({
-                //         title: '升级失败',
-                //       });
-                //     },
-                //   });
-                // }
-              }
-            } 
-        });
-
         if(res.data.data.nowTime && res.data.data.startBusinessTime && res.data.data.endBusinessTime) {
           let msg = undefined;
           if(res.data.data.nowTime < res.data.data.startBusinessTime || res.data.data.nowTime > res.data.data.endBusinessTime) {
@@ -95,6 +55,9 @@ Page({
   onCategoryClick(e) {
     let id = e.target.dataset.id;
     if(id != this.data.selectedCategoryId) {
+      this.setData({
+        resultmsg: ''
+      });
       let category = this.data.categories.find((T) => T.id == id);
       if(category) {
         this.setData({
@@ -114,6 +77,10 @@ Page({
           if(res.data.data.length > 0) {
             this.nextPageIdx++;
             this.$spliceData({items: [this.data.items.length, 0, ...res.data.data]});
+          } else {
+            this.setData({
+              resultmsg: '未搜索到相关产品~'
+            });
           }
         }
       });
@@ -122,7 +89,7 @@ Page({
   onLikeClick(e) {
     if(this.data.shop && !this._liking) {
       this._liking = true;
-      this.shop.like(this.shopId, !this.data.shop.like, (res) => {
+      this.shop.like(this.shopId, !this.data.shop.attention, (res) => {
         if(res && res.data) {
           this.setData({
             'shop.attention': !this.data.shop.attention
@@ -160,10 +127,17 @@ Page({
         isSearch: true,
         selectedCategoryId: -1
       }, () => {
+        this.setData({
+          resultmsg: ''
+        });
         this.shop.searchGoodsOfShop(this.shopId, this.data.searchVal, (res) => {
           if(res && res.data && res.data.data) {
             if(res.data.data.length > 0) {
               this.$spliceData({items: [0, 0, ...res.data.data]});
+            } else {
+              this.setData({
+                resultmsg: '未搜索到相关产品~'
+              });
             }
           }
         });

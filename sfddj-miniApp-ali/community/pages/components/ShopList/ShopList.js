@@ -37,7 +37,13 @@ Component({
     },
     reload() { // 重新加载
       this.nextPageIdx = 0;
-      this.loadMore();
+      if(this.data.list) {
+        this.$spliceData({
+          list: [0]
+        }, () => {
+          this.loadMore();
+        });
+      }
     }
   },
 });
