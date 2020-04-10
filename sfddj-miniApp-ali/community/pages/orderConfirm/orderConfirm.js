@@ -89,7 +89,7 @@ Page({
             if (Object.keys(result).length > 0) {
                 let shopCartList = result.items;
                 shopCartList.forEach((val, i, arr) => {
-                    val.goodsImagePath = this.data.baseImageUrl + JSON.parse(val.productImg)[0];
+                    val.goodsImagePath = this.data.baseImageUrl + val.productImg;
                     val.salePrice = val.price;
                     val.name = val.goodsName;
 
@@ -213,7 +213,7 @@ Page({
                             content: '支付成功'
                         });
                         my.redirectTo({
-                            url: '/community/pages/communalOrderDetail/communalOrderDetail?orderSn=' + orderSn
+                            url: '/community/pages/orderDetail/orderDetail?orderSn=' + orderSn
                         })
                     },
                     failFun: () => {
@@ -223,7 +223,7 @@ Page({
                             content: '已取消'
                         })
                         my.redirectTo({
-                            url: '/community/pages/communalOrderDetail/communalOrderDetail?orderSn=' + orderSn
+                            url: '/community/pages/orderDetail/orderDetail?orderSn=' + orderSn
                         })
                     },
                     errorFun: () => {
@@ -234,7 +234,12 @@ Page({
                 that.cancelSwitch();
             }
 
-        }, err => { })
+        }, err => { 
+            that.cancelSwitch();
+            my.showToast({
+                content: err
+            })
+        })
     },
 
     /**
@@ -263,7 +268,7 @@ Page({
                                 content: '支付成功'
                             });
                             my.redirectTo({
-                                url: '/community/pages/communalOrderDetail/communalOrderDetail?orderSn=' + orderSn
+                                url: '/community/pages/orderDetail/orderDetail?orderSn=' + orderSn
                             })
                         })
 
@@ -276,7 +281,7 @@ Page({
                             content: '已取消'
                         })
                         my.redirectTo({
-                            url: '/community/pages/communalOrderDetail/communalOrderDetail?orderSn=' + orderSn
+                            url: '/community/pages/orderDetail/orderDetail?orderSn=' + orderSn
                         })
                     }
                     else if (res.resultCode == '6002') {
@@ -286,7 +291,7 @@ Page({
                             content: '网络连接出错'
                         })
                         my.redirectTo({
-                            url: '/community/pages/communalOrderDetail/communalOrderDetail?orderSn=' + orderSn
+                            url: '/community/pages/orderDetail/orderDetail?orderSn=' + orderSn
                         })
                     }
                     else {
@@ -296,7 +301,7 @@ Page({
                             content: '支付失败'
                         })
                         my.redirectTo({
-                            url: '/community/pages/communalOrderDetail/communalOrderDetail?orderSn=' + orderSn
+                            url: '/community/pages/orderDetail/orderDetail?orderSn=' + orderSn
                         })
                     }
 
@@ -343,7 +348,7 @@ Page({
                         content: '支付失败'
                     })
                     my.redirectTo({
-                        url: '/community/pages/communalOrderDetail/communalOrderDetail?orderSn=' + orderSn
+                        url: '/community/pages/orderDetail/orderDetail?orderSn=' + orderSn
                     })
                 }
             }
@@ -354,7 +359,7 @@ Page({
             // })
             that.cancelSwitch();
             my.redirectTo({
-                url: '/community/pages/communalOrderDetail/communalOrderDetail?orderSn=' + orderSn
+                url: '/community/pages/orderDetail/orderDetail?orderSn=' + orderSn
             })
         })
     },

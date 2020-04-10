@@ -252,3 +252,46 @@ page {
 .replyTitle {
   line-height: 46rpx;
 }
+
+.comeBack {
+  position: fixed;
+  z-index: 1000;
+  bottom: 200rpx;
+  right: -93rpx;
+  background: rgba(0, 0, 0, .7);
+  border-radius: 15rpx 0 0 15rpx;
+}
+
+.goIcon {
+  height: 92rpx;
+  width: 92rpx;
+  text-align: center;
+  color: #FFFFFF;
+  line-height: 92rpx;
+  border-bottom: 1rpx solid #3D3D3D;
+  position: relative;
+  border-radius: 15rpx 0 0 15rpx;
+}
+
+.comeBackDisplay {
+  animation: comeBackMoveShow 0.3s linear;
+  right: 0 !important;
+}
+
+@keyframes comeBackMoveShow {
+  0% {right: -93rpx;}
+  50% {right: -45;}
+  100% {right: 0;}
+}
+
+.comeBackHide {
+  animation: comeBackMoveHide 0.3s linear;
+  right: -93rpx !important;
+}
+
+@keyframes comeBackMoveHide {
+  0% {right: 0;}
+  50% {right: -45;}
+  100% {right:-93rpx;}
+}
+

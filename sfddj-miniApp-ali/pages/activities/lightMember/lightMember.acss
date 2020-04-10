@@ -10,15 +10,19 @@
 
 /* 已注册轻会员的样式 */
 .heade {
-  height: 446rpx;
+  height: 405rpx;
   background: #2b2d3e;
   box-sizing: border-box;
+  padding: 80rpx 30rpx 0;
+  margin-bottom: 76rpx;
+  /* padding: 124rpx 30rpx 0; */
 }
 
 .headMessage {
   height: 100%;
-  box-sizing: border-box;
-  padding: 124rpx 72rpx 0;
+  box-sizing: border-box; 
+  padding: 42rpx 42rpx 0;
+  border-radius: 20rpx 20rpx 0 0;
 }
 
 .userPersonal {
@@ -53,8 +57,12 @@
 }
 
 .name {
-  height: 38rpx;
-  line-height: 38rpx;
+  /* height: 38rpx;
+  line-height: 38rpx; */
+}
+
+.font-70 {
+  font-size: 70rpx;
 }
 
 .lightMemberDate {
@@ -80,7 +88,7 @@
 }
 
 .userEquity {
-  height: 166rpx;
+  /* height: 166rpx; */
   display: flex;
   flex-direction: row;
 }
