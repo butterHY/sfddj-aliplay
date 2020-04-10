@@ -89,7 +89,7 @@ class Cart extends MiniAppService {
                 }
             }, (err) => {
                 if(callbackFun) {
-                    callbackFun(err);
+                    callbackFun(undefined, err);
                 }
             });
         }

@@ -95,6 +95,9 @@ Page({
   onCategoryClick(e) {
     let id = e.target.dataset.id;
     if(id != this.data.selectedCategoryId) {
+      this.setData({
+        resultmsg: ''
+      });
       let category = this.data.categories.find((T) => T.id == id);
       if(category) {
         this.setData({
@@ -114,6 +117,10 @@ Page({
           if(res.data.data.length > 0) {
             this.nextPageIdx++;
             this.$spliceData({items: [this.data.items.length, 0, ...res.data.data]});
+          } else {
+            this.setData({
+              resultmsg: '未搜索到相关产品~'
+            });
           }
         }
       });
@@ -160,6 +167,9 @@ Page({
         isSearch: true,
         selectedCategoryId: -1
       }, () => {
+        this.setData({
+          resultmsg: ''
+        });
         this.shop.searchGoodsOfShop(this.shopId, this.data.searchVal, (res) => {
           if(res && res.data && res.data.data) {
             if(res.data.data.length > 0) {
