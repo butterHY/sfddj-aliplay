@@ -1,18 +1,18 @@
 <view class="goodsIntroBox">
-  <view class="goodsInfo">
+  <view a:if="{{goodsIntro.infoShow.length > 0}}" class="goodsInfo">
     <view class="titleStyle">
       <text>商品信息</text>
     </view>
     <view class="infoShow">
-      <block a:for="{{ goodsIntro.infoShow }}" a:for-index="idx" a:for-item="itemInfo" a:key="{{ idx }}">
-        <view class="info_title">{{ itemInfo.title }}</view>
-        <block a:for="{{ itemInfo.text }}">
-          <view class="info_section">{{ item }}</view>
+      <block a:for="{{ goodsIntro.infoShow }}" a:for-index="idx" a:for-item="itemInfo">
+        <view class="info_title">{{ itemInfo.desc }}</view>
+        <block a:for="{{ itemInfo.images }}">
+          <image mode="widthFix" src="{{baseImageUrl + item}}" class="info_section width_100"></image>
         </block>
       </block>
     </view>
   </view>
-  <view class="goodsIntro">
+  <view a:if="{{goodsIntro.detail.length > 0}}" class="goodsIntro">
     <view class="titleStyle">
       <text>商品详情</text>
     </view>

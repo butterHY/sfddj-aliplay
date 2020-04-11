@@ -162,7 +162,7 @@
 .shop_categories > view > view:nth-child(2) {
     flex-shrink: 1;
     flex-grow: 1;
-    padding: 20rpx;
+    padding: 30rpx;
     padding-right: 1rpx;
     font-size: 26rpx;
     color: rgb(102,102,102);

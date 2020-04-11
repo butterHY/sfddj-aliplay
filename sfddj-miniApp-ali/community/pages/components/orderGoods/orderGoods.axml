@@ -10,7 +10,7 @@
         </block>
     </view>
     <!-- 配送费 -->
-    <view a:if="{{typeIndex == 1 && deliveryFee > 0}}" class="deliveryFee">
+    <view a:if="{{typeIndex == 1 && result.deliveryFee && result.deliveryFee > 0}}" class="deliveryFee">
         <!-- 配送 -->
         <view class="flex_view_row align_cen flex_1">
             <view>配送费</view>

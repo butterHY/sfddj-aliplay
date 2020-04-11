@@ -25,7 +25,7 @@ Page({
         deliveryOutGratis: 0,      //满多少可免邮的价格
         totalPrice: 0,           //总价格
         defaultAddress: {},      //商家配送时的地址
-
+        result: {},
     },
     onLoad(options) {
         let { shopid } = options;
@@ -95,6 +95,7 @@ Page({
 
                 })
                 this.setData({
+                    result: result,
                     confirmToken: result.confirmToken,    //防止重复提交的token
                     shopTotalPrice: this.data.shopTotalPrice > 0 && result.price == this.data.shopTotalPrice ? this.data.shopTotalPrice : result.price,
                     // shopCartList: this.data.shopCartList.length > 0  ? this.data.shopCartList : shopCartList,

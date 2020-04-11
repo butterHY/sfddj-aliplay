@@ -46,7 +46,7 @@
           </view>
           <view class="goodsInfo">
             <view class="goodsName">
-              <text class="textCell productName">{{ item.goodsName }}</text>
+              <text class="textCell productName">{{ item.goodsName }} {{item.iavValue}}</text>
             </view>
             <view class="goodsPriceBox">
               <view class="goods_price">

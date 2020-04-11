@@ -31,6 +31,7 @@ Component({
         _goodsShow[i].goodsImage = JSON.parse( shopGood[i].goodsImagePath )[0];
 
         let skuList = shopGood[i].shopGoodsSkuList[0];
+        _goodsShow[i].iavValue = skuList.iavValue;
 
         if ( skuList.isDiscount ) {
           _goodsShow[i].salePrice = skuList.discountPrice;

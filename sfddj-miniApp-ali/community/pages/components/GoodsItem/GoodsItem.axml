@@ -2,7 +2,7 @@
   <view>
     <view id="goodsitemimgbox_{{imgidx}}" class="goodsitemimgbox" data-id="{{data.id}}" style="{{styleHeight}};background-image:url({{data.goodsImagePath[0]}})" onTap="onTap"></view>
     <view class="goodsitemtitbox">
-      <view class="goodsitemtit" data-id="{{data.id}}" onTap="onTap">{{data.title}}</view>
+      <view class="goodsitemtit" data-id="{{data.id}}" onTap="onTap">{{data.title}}{{data.shopGoodsSkuList[0].iavValue}}</view>
       <view class="goodsitemcontrol">
         <view>
           <text class="goodsitemprice">￥{{data.shopGoodsSkuList[0].isDiscount ? data.shopGoodsSkuList[0].discountPrice : data.shopGoodsSkuList[0].salePrice}}</text>
