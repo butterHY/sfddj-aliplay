@@ -1,0 +1,62 @@
+<!-- 商品展示卡 -->
+<view class="topRanking">
+  <!-- 标题 -->
+  <view class="topRankTit">
+    <view class="topRankTitBox">
+      <view class="topRankTitText">
+        <text>社区专属</text>
+      </view>
+    </view>
+    <view class="more" onTap="moreShop">
+      <text>更多好店</text>
+      <text class="iconStyle icon-href-right"></text>
+    </view>
+    <view class="aside">
+        <text class="icon_fire"></text>
+        {{ aside }}
+    </view>
+  </view>
+  <!-- 店铺 -->
+  <view class="storeBanner">
+    <view class="shop_tit">
+      <view class="tit_l">
+        <view class="storeImg">
+          <image src="{{ baseImageUrl }}{{ storeShow.shopLogo }}"/>
+        </view>
+        <view class="storeName">
+          <view class="shop_info">
+            <text class="shop_name">{{ storeShow.shopName }}</text>
+            <text class="shop_distance">距您{{ storeShow.distance || '-' }}米</text>
+          </view>
+          <view class="shop_addr">{{ storeShow.address }}</view>
+        </view>
+      </view>
+      <view class="tit_r">
+        <button class="shop_like" onTap="goShop" data-shopid="{{ storeShow.id }}">进店</button>
+      </view>
+    </view>
+  </view>
+  <view class="goodsListShow">
+    <block a:for="{{ goodsShow }}" a:key="{{ index }}">
+      <view onTap="goDetail" data-goodsid="{{ item.goodsId }}">
+        <!--<template is="itemStoreGoodsCard" data="{{ ...item, smallImg200, baseImageUrl }}"></template> -->
+        <view class="goodsCard">
+          <view class="goodsImgArea">
+            <image src="{{ baseImageUrl }}{{ item.goodsImage }}{{ smallImg200 }}"/>
+          </view>
+          <view class="goodsInfo">
+            <view class="goodsName">
+              <text class="textCell productName">{{ item.goodsName }}</text>
+            </view>
+            <view class="goodsPriceBox">
+              <view class="goods_price">
+                <text class="price">¥{{ item.salePrice }}</text>
+                <text class="aside" a:if="{{ item.oldPrice }}">¥{{ item.oldPrice }}</text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </block>
+  </view>
+</view>

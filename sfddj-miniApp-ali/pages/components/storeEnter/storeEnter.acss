@@ -1,0 +1,236 @@
+/* 商品卡样式 */
+/* @import '../../templates/itemStoreGoodsCard/itemStoreGoodsCard.acss';  */
+.topRanking { 
+  background-color: #fff;
+  border-radius: 10rpx;
+  margin: 20rpx 24rpx 0;
+  padding: 30rpx;
+  position: relative; 
+  overflow: hidden;
+  border-radius: 16rpx;
+  box-sizing: border-box;
+}
+
+.topRankTitBox {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.topRankTitText {  
+  color: #333333;
+  font-size: 32rpx;
+  font-family: "SourceHanSansCN-Medium"; 
+}
+
+.topRankTit_right {
+  width: 50rpx; 
+  display: block;
+}
+
+.topRanking .more {
+	position: absolute;
+	right: 30rpx;
+	top: 32rpx; 
+	color: #999999;
+	font-size: 28rpx;
+}
+
+.topRanking .more .iconStyle {
+	color: #999999;
+	font-size: 24rpx;
+  margin-left: 5rpx;
+}
+
+.topRanking .aside {
+	color: #ff7200;
+	font-size: 24rpx;
+	padding: 20rpx 0;
+}
+
+.topRanking .aside .icon_fire {
+  background-image: url('/image/icon_fire.png');
+  background-repeat: no-repeat;
+  background-position: center 6rpx;
+  background-size: 100% 100%;
+  height: 30rpx;
+  width: 24rpx;
+  display: inline-block;  
+  margin-right: 5rpx;
+}
+
+/* 商家头部信息 */
+.topRanking .storeBanner {
+  margin-bottom: 30rpx;
+} 
+
+.topRanking .storeBanner .shop_tit {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center; 
+    box-sizing: border-box
+}
+
+.topRanking .storeBanner .shop_tit .tit_l {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.topRanking .storeBanner .shop_tit .storeImg {
+    width: 82rpx;
+    height: 82rpx; 
+    border-radius: 6rpx;
+    overflow: hidden;
+}
+
+.topRanking .storeBanner .shop_tit .storeImg image {
+  height: 100%;
+  width: 100%;
+}
+
+.topRanking .storeBanner .shop_tit .storeName {
+    padding-left: 12rpx; 
+}
+
+.storeName .shop_info {
+  display: flex;
+  align-items: center;
+}
+
+.storeName .shop_name {
+    font-size: 32rpx;
+    padding-right: 12rpx;
+    border-right: 1px solid #f2f2f2;
+    max-width: 280rpx;
+    overflow: hidden;
+    text-overflow: ellipsis;  
+    white-space: nowrap;
+    display: block;
+    box-sizing: border-box;
+}
+
+.storeName .shop_distance {
+    color: rgb(153,153,153);
+    margin-left: 12rpx;
+    font-size: 26rpx;
+    display: block;
+    margin-top: 8rpx;
+}
+
+.storeName .shop_addr {
+    color: rgb(153,153,153);
+    padding-top: 10rpx;
+    font-size: 24rpx;
+}
+
+.topRanking .storeBanner .shop_like {
+  width: 140rpx;
+  height: 60rpx; 
+  background: linear-gradient(to right, #00bf51, #00aa58);
+  border-radius: 30rpx;
+  font-size: 30rpx;
+  padding: 0px 25rpx;;
+  margin: 0px;
+  line-height: 60rpx;
+  color: #ffffff;
+    
+}
+
+/* 商家商品信息 */
+.topRanking .goodsListShow {
+  display: flex;
+  align-items: center;
+  overflow-x: scroll; 
+  box-sizing: border-box;
+}
+
+/* ************ 商品展示card **************** */ 
+.goodsCard {
+    background-color: #ffffff;    
+    border-radius: 10rpx; 
+    overflow: hidden;
+    box-sizing: border-box;  
+    width: 210rpx;
+    margin-right: 30rpx;
+}
+
+.goodsCard .goodsImgArea { 
+    width: 210rpx;
+    height: 210rpx;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.goodsCard .goodsImgArea image {
+    width: 100%;
+    height: 100%;
+    display: block;   
+}
+
+.goodsCard .goodsInfo {
+    box-sizing: border-box;
+    padding: 10rpx; 
+}
+
+.goodsCard .goodsInfo .textCell {
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    overflow: hidden;
+    width: 100%;
+    display: block; 
+}
+ 
+.goodsCard .goodsInfo .productName { 
+    font-size: 32rpx; 
+    margin-bottom: 8rpx;
+} 
+.goodsCard .goodsInfo  .productTip {
+    font-size: 28rpx;
+    color: #999999; 
+    margin-bottom: 12rpx;
+}
+
+.goodsCard .goodsPriceBox    {
+    display: flex;   
+} 
+
+.goodsCard .goodsPriceBox .goods_price  { 
+    display: flex; 
+    align-items: center; 
+} 
+
+.goodsCard .goodsPriceBox .goods_price .price {
+    font-size: 32rpx;
+    color: #ff0032; 
+    margin-right: 2rpx;  
+    display: block; 
+} 
+
+.goodsCard .goodsPriceBox .goods_price .aside {
+    padding: 0;
+    margin-left: 10rpx;
+    margin-top: 5rpx;
+    font-size: 26rpx;
+    color: #999999;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    overflow: hidden; 
+    text-decoration: line-through;
+    display: block; 
+    flex: 1;
+} 
+
+.goodsCard .goodsPriceBox .goods_buy {
+    text-align: right;
+    max-width: 40%;  
+    display: flex; 
+    -webkit-align-items: flex-end;
+    align-items: flex-end;  
+} 
+
+.goodsCard .goodsPriceBox .goods_buy .sendCount  { 
+    font-size: 28rpx; 
+    color: #999999;  
+}
