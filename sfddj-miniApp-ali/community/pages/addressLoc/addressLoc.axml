@@ -41,7 +41,7 @@
   </view>
 
   <view class="addBtn">
-    <button size="default" onTap="newAddress" color="#ff0532">新增收货地址</button>
+    <button size="default" onTap="newAddress" color="#ff0532">我的地址</button>
   </view>
 
   

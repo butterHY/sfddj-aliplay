@@ -111,8 +111,12 @@ Component({
       d = 2 * w * a;
       h1 = (3 * r - 1) / 2 / c;
       h2 = (3 * r + 1) / 2 / s;
-      s = d * (1 + fl * (h1 * sf * (1 - sg) - h2 * (1 - sf) * sg));
-      s = Math.round(s);
+      s = d * (1 + fl * (h1 * sf * (1 - sg) - h2 * (1 - sf) * sg)); 
+      if(s > 1000) {
+        s = (s / 1000).toFixed(2) + 'km';
+      } else {
+        s = Math.round(s) + 'm';
+      }
       return s;
     },
     getRad(d) {

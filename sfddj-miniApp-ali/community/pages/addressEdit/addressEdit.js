@@ -155,32 +155,30 @@ Page({
   chooseLocation() {
     const _this = this
     let _optAddr = this.data.optAddr;
+    let _name = ''; 
     my.chooseLocation({ 
       success: (res) => {
         // console.log('chooseLocation - address', res)
         _this.setData({
           'locInfo.longitude': res.longitude,
-          'locInfo.latitude': res.latitude, 
-          'optAddr.locate': res.name,
+          'locInfo.latitude': res.latitude,  
           'optAddr.address': res.address, 
           'optAddr.longitude': res.longitude,
           'optAddr.latitude': res.latitude, 
         });
+         _name = res.name;
  
         locAddr.GDCity(_this.data.locInfo, (data) => {  
           // 如果 定位的name 是空 返回 省市区
-          let _area = data.province + data.city + data.district;
-          if ( _optAddr.locate ) { 
-            _area =  _optAddr.locate;
-          } 
-          
+          // let _area = data.province + data.city + data.district; 
+
           _this.setData({ 
             'optAddr.province': data.province,
             'optAddr.city': data.city,
             'optAddr.area': data.district,
-            'optAddr.locate': _area,
+            'optAddr.locate': _name ? _name : _name = data.pois[0].name, // 有那么显示 那么 没有 显示 pois第一个数据的name
           }) 
-          console.log('data', data) 
+          // console.log('data', data) 
           // console.log('optAddr', _this.data.optAddr) 
         }); 
         
