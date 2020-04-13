@@ -254,7 +254,23 @@ Page({
         let that = this;
         let {index, orderSn} = e.currentTarget.dataset;
         let { typeIndex, orderList } = this.data;
-        post(api.O2O_ORDER.deleteOrder, { orderSn }, res => {
+        my.confirm({
+            content: '确定要删除该订单吗？',
+            // confirmButtonText: '',
+            // cancelButtonText,
+          success: (res) => {
+            if(res.confirm) {
+              that.deleteOrderRequest(orderSn, typeIndex, orderList, index);
+            }
+          },
+        });
+        
+    },
+
+    // 删除订单请求
+    deleteOrderRequest(orderSn, typeIndex, orderList, index){
+      let that = this;
+      post(api.O2O_ORDER.deleteOrder, { orderSn }, res => {
             let { code, message } = res.data.ret;
             if (code == '0') {
                 my.showToast({
@@ -274,6 +290,13 @@ Page({
                 content: err || '删除失败'
             })
         })
+    },
+
+    // 去逛逛跳转
+    toDDJHome(){
+      my.navigateTo({
+        url: '/community/pages/index/index'
+      });
     },
 
 });

@@ -22,7 +22,7 @@
     </view>
     <!--商品小计  -->
     <view class="order_goods_sum">
-        <text>小记：</text>
+        <text>小计：</text>
         <text>￥{{totalPrice}}</text>
     </view>
 </view>
