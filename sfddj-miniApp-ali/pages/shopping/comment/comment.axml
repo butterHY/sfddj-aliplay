@@ -14,7 +14,7 @@
 	<!-- 旧版 -->
 	<!--<view class="goods-comment-title"><view>评分:{{goodScore}}</view><view>评价({{goodsCommentTotal}})</view></view> -->
 	<!-- 旧版 -->
-	<!--<block a:for="{{result}}"><view class="goods-comment-area"><view class="comment-user-area"><view class="flex_view_row"><view class="comment-user-image"><image src="{{item.headPortraitPath ? item.headPortraitPath : baseLocImgUrl + 'miniappImg/icon/icon_default_head.jpeg'}}" class="commentUser_img"></image></view><view class="flex_view_col marLeft_10 justi_cen"><view class="font-20 color-414141">{{item.nickNameResult}}</view><view class="flex_view_row marTop_10"><image src="{{baseLocImgUrl}}miniappImg/icon/icon_star_selected.png" class="starIcon" a:for="{{item.star}}"></image><image src="{{baseLocImgUrl}}miniappImg/icon/icon_star_normal.png" class="starIcon" a:for="{{5 - item.star}}"></image></view></view></view><view class="font-20 color-bdbdbd">{{item.createDate}}</view></view><view class="commentText font-24 color-414141">{{item.comment}}</view><view class="commentText blockView"><image src="{{baseImageUrl}}{{item2}}" class="commentTextImg" data-current="{{item2}}" data-urls="{{item.imagePath}}" a:for="{{item.imagePath}}" a:for-item="item2" onTap="commentViewTap"></image></view></view></block> -->
+	<!--<block a:for="{{result}}"><view class="goods-comment-area"><view class="comment-user-area"><view class="flex_view_row"><view class="comment-user-image"><image src="{{item.headPortraitPath ? item.headPortraitPath : baseLocImgUrl + 'miniappImg/icon/'}}" class="commentUser_img"></image></view><view class="flex_view_col marLeft_10 justi_cen"><view class="font-20 color-414141">{{item.nickNameResult}}</view><view class="flex_view_row marTop_10"><image src="{{baseLocImgUrl}}miniappImg/icon/icon_star_selected.png" class="starIcon" a:for="{{item.star}}"></image><image src="{{baseLocImgUrl}}miniappImg/icon/icon_star_normal.png" class="starIcon" a:for="{{5 - item.star}}"></image></view></view></view><view class="font-20 color-bdbdbd">{{item.createDate}}</view></view><view class="commentText font-24 color-414141">{{item.comment}}</view><view class="commentText blockView"><image src="{{baseImageUrl}}{{item2}}" class="commentTextImg" data-current="{{item2}}" data-urls="{{item.imagePath}}" a:for="{{item.imagePath}}" a:for-item="item2" onTap="commentViewTap"></image></view></view></block> -->
 
   <!-- 新版 -->
   <view class="estimateNav whiteBack js_estimateNav">
@@ -70,7 +70,7 @@
 							<view class="comment-user-area">
 								<view class="flex_view_row">
 									<view class="comment-user-image">
-										<image src="{{item.headPortraitPath ? item.headPortraitPath : baseLocImgUrl + 'miniappImg/icon/icon_default_head.jpeg'}}" class="commentUser_img"></image>
+										<image src="{{item.headPortraitPath ? item.headPortraitPath : baseLocImgUrl + 'miniappImg/icon/icon_default_head.jpg'}}" class="commentUser_img"></image>
 									</view>
 									<view class="flex_view_col marLeft_20 justi_cen">
 										<view class="font-32 color-414141">{{item.nickName}}</view>

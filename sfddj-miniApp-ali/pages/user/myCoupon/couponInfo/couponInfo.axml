@@ -1,5 +1,5 @@
 <view class='couponInfo'>
-  <view class='couponInfoTit'>顺丰大当家平台优惠券</view>
+  <view class='couponInfoTit'>年丰大当家平台优惠券</view>
   <!--优惠券-->
    <view class='couponInfoArea'>
     <view a:for="{{platList}}" onTap='platListEvent' data-index='{{index}}' a:key='questionList' class='couponPlatList'>

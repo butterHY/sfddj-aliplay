@@ -56,7 +56,7 @@ Page({
 		// }
 		// 设置页面头部的 title 
 		my.setNavigationBar({
-			title: fatherCategory.name ? fatherCategory.name : "顺丰大当家",
+			title: fatherCategory.name ? fatherCategory.name : "年丰大当家",
 			success: (res) => {
 			},
 		});

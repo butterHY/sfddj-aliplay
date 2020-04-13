@@ -238,7 +238,7 @@ Page({
       let resData = res.data.data;
       let resRet = res.data.ret;
       if(resRet.code == '0' && resRet.message == "SUCCESS" && resData) {
-        resData.headImage = resData.headImage ? that.data.baseImageUrl + resData.headImage : that.data.baseLocImgUrl + 'miniappImg/icon/icon_default_head.jpeg';
+        resData.headImage = resData.headImage ? that.data.baseImageUrl + resData.headImage : that.data.baseLocImgUrl + 'miniappImg/icon/icon_default_head.jpg';
         resData.gmtSign = Math.round((new Date().getTime() - resData.gmtSign) / 1000 /60 /60 /24) // 签约时间
         resData.gmtUnSign = utils.formatTime(new Date(resData.gmtUnSign));
         that.data.headData = Object.assign(that.data.headData, resData);

@@ -351,7 +351,7 @@ Page({
           // 请求联系商家的 webCallParam
           that.getWebCallParam(resData.goodsShowVO.supplierInfo.supplierId);
 
-          resData.goodsShowVO.supplierInfo.headImage = resData.goodsShowVO.supplierInfo.headImage ? resData.goodsShowVO.supplierInfo.headImage : that.data.baseImageLocUrl + 'miniappImg/icon/icon_default_head.jpeg'; // 商家头像
+          resData.goodsShowVO.supplierInfo.headImage = resData.goodsShowVO.supplierInfo.headImage ? resData.goodsShowVO.supplierInfo.headImage : that.data.baseImageLocUrl + 'miniappImg/icon/icon_default_head.jpg'; // 商家头像
 
           var article = resData.goodsShowVO.introduction;                                           // 商详的富文本字符串
           that.data.minCount = resData.goodsShowVO.minCount ? resData.goodsShowVO.minCount : 1;     //最少起售数

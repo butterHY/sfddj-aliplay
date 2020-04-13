@@ -1,6 +1,6 @@
 <view class="all_100">
     <view class="flex_view_col align_cen justi_cen" style="height: 50%;">
-      <image src="{{baseImgLocUrl}}miniappImg/icon/icon_default_head.jpeg" style="width: 200rpx; height: 200rpx;"></image>
+      <image src="{{baseImgLocUrl}}miniappImg/icon/icon_default_head.jpg" style="width: 200rpx; height: 200rpx;"></image>
       <view class="font-28 color-323232 marTop_30 marBot_30 tex_center" style="padding: 0 30rpx;"><text>需要授权需要授权需要授权需要授权需要授权需要授权需要授权需要授权需要授权需要授权</text></view>
       <button class="font-32 color-white marTop_30" open-type="getUserInfo" bindgetuserinfo="btnGetUserInfo" style="background-color: #ff5353; border: none; width: 40%;">确认登录</button>
     </view>
