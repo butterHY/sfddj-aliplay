@@ -103,7 +103,7 @@ Page({
   },
 
 	loadData(callbackFun) {
-    tihs.loadLoc(() => {
+    this.loadLoc(() => {
       if(this.shopList) {
         this.shopList.reload(callbackFun);
       }
