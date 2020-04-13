@@ -25,14 +25,12 @@ Component({
       let _goodsShow = [];
       let shopGood = this.props.storeShow.shopGoodsList;
       // console.log(this.props.storeShow)
-      // console.log(locAddr.locInfo)
-
+      // console.log(locAddr.locInfo) 
       let _locInfo = locAddr.locInfo;
-
-      let distance = _this.getDistance(_locInfo.latitude*1, _locInfo.longitude*1, this.props.storeShow.latitude*1, this.props.storeShow.longitude*1);
-
-
-       console.log( distance )
+      
+      // 计算店铺距离
+      let _distance = _this.getDistance(_locInfo.latitude*1, _locInfo.longitude*1, this.props.storeShow.latitude*1, this.props.storeShow.longitude*1);
+ 
 
 
       for (let i=0; i<shopGood.length; i++) {
@@ -40,6 +38,8 @@ Component({
         _goodsShow[i].goodsId = shopGood[i].id;
         _goodsShow[i].goodsName = shopGood[i].title;
         _goodsShow[i].goodsImage = JSON.parse( shopGood[i].goodsImagePath )[0];
+
+        _goodsShow[i]._distance = _distance;
 
         let skuList = shopGood[i].shopGoodsSkuList[0];
         _goodsShow[i].iavValue = skuList.iavValue;
