@@ -1,10 +1,9 @@
 // 购物车
 
-import MiniAppService from "alipay-miniapp-service";
 import http from '/api/http';
 import api from '/api/api';
 
-class Cart extends MiniAppService {
+class Cart extends getApp().Service {
     constructor() {
         super();
     }

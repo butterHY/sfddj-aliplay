@@ -48,6 +48,10 @@ Component({
         if((obj && obj.cartList && obj.cartList.length) || this.data.isShowed) {
           this.setData({ 
             isShowed: !this.data.isShowed,
+          }, () => {
+            if(!this.data.isShowed) {
+              this.cart.filter(this.props.shopid);
+            }
           });
         }
       }
@@ -108,7 +112,11 @@ Component({
         });
         return
       }
-      my.navigateTo({ url: (this.props.nextPath || '../orderConfirm/orderConfirm') + '?shopid=' + this.props.shopid });
+      this.cart.filter(this.props.shopid);
+      let obj = this.cart.$get(this.props.shopid + '');
+      if(obj.cnt) {
+        my.navigateTo({ url: (this.props.nextPath || '../orderConfirm/orderConfirm') + '?shopid=' + this.props.shopid });
+      }
     },
 
     // 店铺打烊时间控制
