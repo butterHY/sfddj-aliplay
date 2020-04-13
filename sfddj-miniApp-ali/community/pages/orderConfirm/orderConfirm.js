@@ -70,6 +70,7 @@ Page({
             let result = res && Object.keys(res).length > 0 ? res : {};
             if (Object.keys(result).length > 0) {
                 let shopCartList = result.cartList ? result.cartList : [];
+                console.log('cartService', result)
                 this.setData({
                     shopTotalPrice: result.discountPrice < result.salePrice ? result.discountPrice : result.salePrice,     //整个商店商品的总价格
                     originalTotalPrice: result.discountPrice < result.salePrice ? result.discountPrice : result.salePrice,    //最原始商品的总价
@@ -86,6 +87,7 @@ Page({
             // console.log(res)
             let result = res.data.data ? res.data.data : {};
             if (Object.keys(result).length > 0) {
+                console.log('orderData', result);
                 let shopCartList = result.items;
                 shopCartList.forEach((val, i, arr) => {
                     val.goodsImagePath = this.data.baseImageUrl + val.productImg;

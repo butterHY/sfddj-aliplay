@@ -55,6 +55,12 @@
                 </view>
             </view>
         </view>
+
+        <!-- 门店自提提示 -->
+        <view a:if="{{typeIndex == 0}}" class="color-ff0532 font-28 tex_center padTB_20">
+          <text>请到门店自提哦~</text>
+        </view>
+
     </scroll-view>
     <!-- 底部去支付 -->
     <view class="footer">
