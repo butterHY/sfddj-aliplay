@@ -1,0 +1,17 @@
+<view class="shop">
+  <view>
+    <view onTap="onEnterClick" data-id="{{data.id}}">
+      <view style="background-image: url({{data.shopLogo}})"></view>
+      <view>
+        <view>{{data.shopName}}</view>
+        <view>距您{{data.distance}}</view>
+      </view>
+    </view>
+    <view>
+      <button class="btnEnter" onTap="onEnterClick" data-id="{{data.id}}">进店</button>
+    </view>
+  </view>
+  <view onTap="onEnterClick" data-id="{{data.id}}">
+    <goods-item a:for="{{data.shopGoodsList}}" canclick="{{false}}" spacingClass="adjacent" data="{{item}}"></goods-item>
+  </view>
+</view>

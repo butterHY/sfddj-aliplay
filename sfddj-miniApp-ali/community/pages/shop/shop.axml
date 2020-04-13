@@ -1,0 +1,50 @@
+<view class="shop">
+  <view class="shop_head">
+    <view a:if="{{msg}}" class="shop_msg">{{msg}}</view>
+    <view class="shop_tit">
+      <view>
+        <view style="background-image:url({{shop.shopLogo}})"></view>
+        <view>
+          <view>
+            <text class="shop_name">{{shop.shopName}}</text>
+            <text class="shop_distance">距您{{shop.distance || '-'}}</text>
+          </view>
+          <view class="shop_addr">{{shop.address}}</view>
+        </view>
+      </view>
+      <view>
+        <view>
+          <button class="shop_like" onTap="onLikeClick">{{shop.attention ? '取消' : ''}}关注</button>
+        </view>
+      </view>
+    </view>
+    <view class="shop_search">
+      <!-- <input type="search" placeholder="搜索店内商品" onConfirm="onSearchConfirm" onInput="onSearchInput"/> -->
+      <search-bar value="{{searchVal}}" maxLength="{{30}}" placeholder="搜索店内商品" onInput="onSearchInput" onClear="onSearchClear" onCancel="onSearchCancel" onSubmit="onSearchConfirm" showCancelButton="{{false}}"/>
+    </view>
+    <view a:if="{{shop.notice}}" class="shop_info">公告：{{shop.notice}}</view>
+  </view>
+
+  <view class="shop_goods">
+    <view a:if="{{!isSearch}}" class="shop_categories">
+      <view a:for="{{categories}}" a:key="*this" class="{{item.id == selectedCategoryId ? 'actived' : ''}}" data-id="{{item.id}}" onTap="onCategoryClick">
+        <view><view></view></view>
+        <view>{{item.name}}</view>
+      </view>
+    </view>
+    <view class="shop_goodsitems">
+      <view a:if="{{!isSearch}}" class="shop_selectedcategoryname">{{selectedCategoryName}}</view>
+      <view class="shop_goodslist">
+        <scroll-view scroll-y="{{true}}" lower-threshold="{{120}}" style="height:{{itemsheight}}" onScrollToLower="onScrollToLower">
+          <goods-item a:for="{{items}}" data="{{item}}"></goods-item>
+          <view class="shop_resultmsg" a:if="{{resultmsg && isSearch}}">{{resultmsg}}</view>
+          <view class="shop_more"></view>
+        </scroll-view>
+      </view>
+    </view>
+  </view>
+
+
+  <!-- 购物车 -->
+  <cart shopid="{{shop.id}}" storeTime="{{ storeTime }}"></cart>
+</view>
