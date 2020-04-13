@@ -130,6 +130,10 @@
     margin-left: 84rpx;
 }
 
+.padBot_30 {
+  padding-bottom: 30rpx;
+}
+
 .orderInfo_mes > view , .orderInfo_des > view {
   overflow: hidden;
   text-overflow: ellipsis;

@@ -181,7 +181,7 @@ Page({
         let allCountList = countList[0];
         let setOrderList = 'orderList[0]';
         let setCountList = 'countList[0]';
-        allCountList.every((item, i, arr) => {
+        allCountList.forEach((item, i, arr) => {
             if (item > 0) {
                 let mins = parseInt((item / 1000) / 60);
                 let seconds = parseInt((item / 1000 - mins * 60));
@@ -219,7 +219,7 @@ Page({
         let noPayCountList = countList[1];
         // let setOrderList = 'orderList[' + 0 + ']';
         let setCountList = 'countList[1]';
-        noPayCountList.every((item, i, arr) => {
+        noPayCountList.forEach((item, i, arr) => {
             if (item > 0) {
                 let mins = parseInt((item / 1000) / 60);
                 let seconds = parseInt((item / 1000 - mins * 60));

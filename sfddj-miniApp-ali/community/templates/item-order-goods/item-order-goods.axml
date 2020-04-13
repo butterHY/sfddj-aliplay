@@ -7,6 +7,6 @@
         <!-- 数量  -->
         <view class="orderGoodsNum flex_1 tex_center">×{{item.quantity}}</view>
         <!-- 价格 -->
-        <view class="orderGoodsPrice">￥{{item.discountStatus.toString() == 'true' ? item.discountPrice : item.salePrice}}</view>
+        <view class="orderGoodsPrice">￥{{item.discountStatus.toString() == 'true' ? (item.discountPrice * item.quantity).toFixed(2) : (item.salePrice * item.quantity).toFixed(2)}}</view>
     </view>
 </template>

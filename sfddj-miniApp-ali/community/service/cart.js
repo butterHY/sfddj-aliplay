@@ -44,7 +44,11 @@ class Cart extends getApp().Service {
                 */
                 let obj = this.$get(shopId + '');
                 if(!obj) {
-                    obj = {cartList: [], cartTotalNumb: 0, salePrice: 0, discountPrice: 0, cnt: 0};
+                    let _obj = {cartList: [], cartTotalNumb: 0, salePrice: 0, discountPrice: 0, cnt: 0};
+                    if(obj === null) {
+                      this.$set(shopId, _obj);
+                    }
+                    obj = _obj;
                 }
                 let cnt2 = obj.cnt + cnt,
                     salePrice = obj.salePrice + sku.salePrice * cnt,
