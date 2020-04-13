@@ -15,7 +15,7 @@ Component({
   didUpdate() {},
   didUnmount() {},
   methods: {
-    loadMore() {
+    loadMore(callbackFun) {
       let loc = app.globalData.userLocInfo;
       if(loc && loc.longitude) {
         this.shop.gets(loc.longitude, loc.latitude, this.nextPageIdx, (res) => {
@@ -32,16 +32,19 @@ Component({
               content: '系统忙，请稍后再试'
             });
           }
+          if(callbackFun) {
+            callbackFun();
+          }
         });
       }
     },
-    reload() { // 重新加载
+    reload(callbackFun) { // 重新加载
       this.nextPageIdx = 0;
       if(this.data.list) {
         this.$spliceData({
           list: [0]
         }, () => {
-          this.loadMore();
+          this.loadMore(callbackFun);
         });
       }
     }
