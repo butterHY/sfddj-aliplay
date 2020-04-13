@@ -213,3 +213,8 @@
     text-align: center;
     padding: 26rpx 0;
 }
+
+.shop_resultmsg image {
+    max-height: 165rpx;
+    margin-bottom: 18rpx;
+}

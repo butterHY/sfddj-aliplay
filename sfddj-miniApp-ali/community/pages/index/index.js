@@ -18,11 +18,16 @@ Page({
 	},
 
 	onLoad: async function () {
-		this.loadLoc();
 	},
 
 	onShow: function () {
-		
+		this.loadLoc((loc) => {
+			if (this.shopList) {
+				if(!this.shopList.loc || (loc.latitude != this.shopList.loc.latitude || loc.longitude != this.shopList.loc.longitude)) {
+					this.shopList.reload();
+				}
+			}
+		});
 	},
 
 	goLocationCity() {
@@ -82,12 +87,13 @@ Page({
 			locAddr.location((res) => {
 				_this.setData({
 					locInfo: res
-				});
-				// 设置缓存并设置全部变量的值 globalData.userLocInfo 
-				myApp.setLocStorage(_this.data.locInfo, () => {
-					if(callbackFun) {
-						callbackFun();
-					}
+				}, () => {
+					// 设置缓存并设置全部变量的值 globalData.userLocInfo 
+					myApp.setLocStorage(_this.data.locInfo, () => {
+						if(callbackFun) {
+							callbackFun(_this.data.locInfo);
+						}
+					});
 				});
 			});
 		}
@@ -96,8 +102,8 @@ Page({
 				locInfo: userLocInfo
 			}, () => {
 				if(callbackFun) {
-          callbackFun();
-        }
+					callbackFun(userLocInfo);
+				}
 			});
 		}
   },
