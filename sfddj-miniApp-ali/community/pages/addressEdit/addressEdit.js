@@ -154,6 +154,7 @@ Page({
   // 定位地址栏选择的方法
   chooseLocation() {
     const _this = this
+    let _optAddr = this.data.optAddr;
     my.chooseLocation({ 
       success: (res) => {
         // console.log('chooseLocation - address', res)
@@ -167,13 +168,20 @@ Page({
         });
  
         locAddr.GDCity(_this.data.locInfo, (data) => {  
-          //  let _area = data.province + data.city + data.district;
-           _this.setData({ 
-              'optAddr.province': data.province,
-              'optAddr.city': data.city,
-              'optAddr.area': data.district
-           }) 
-          //  console.log('optAddr', _this.data.optAddr) 
+          // 如果 定位的name 是空 返回 省市区
+          let _area = data.province + data.city + data.district;
+          if ( _optAddr.locate ) { 
+            _area =  _optAddr.locate;
+          } 
+          
+          _this.setData({ 
+            'optAddr.province': data.province,
+            'optAddr.city': data.city,
+            'optAddr.area': data.district,
+            'optAddr.locate': _area,
+          }) 
+          console.log('data', data) 
+          // console.log('optAddr', _this.data.optAddr) 
         }); 
         
       },
