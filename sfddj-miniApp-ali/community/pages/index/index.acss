@@ -1,21 +1,20 @@
 .index {
     background-color: #f3f3f3;
 }
-
-.locationBox {
-    padding-top: 8rpx;
-    background-color: #fff;
-}
-
+ 
 .index_shoplist {
     padding: 20rpx 20rpx;
 }
 
 
 /* 定位样式 */
+.locationBox { 
+    background-color: #fff;
+}
+
 .locCityShow {
 	background-color: #ffffff;
-	padding: 0 20rpx 30rpx;
+	padding: 30rpx 20rpx;
 }
 
 .locCityShow .cityInfo {

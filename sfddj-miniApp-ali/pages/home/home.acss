@@ -594,6 +594,7 @@ page {
 
 .locationBox { 
     background-color: #fff;
+    padding-top: 26rpx;
 }
  
 
