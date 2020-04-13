@@ -251,6 +251,14 @@ Page({
 	getPhoneNumber: function(e) {
 		var that = this;
 
+		this.myGetPhone(e);
+		
+
+	},
+
+	// 调起手机号弹窗
+	myGetPhone(e) {
+		let that = this;
 		my.getPhoneNumber({
 			success: (res) => {
 				let response = res.response
@@ -297,7 +305,6 @@ Page({
 				});
 			},
 		});
-
 	},
 
 	// 获取手机号失败
@@ -305,6 +312,11 @@ Page({
 		my.navigateTo({
 			url: '/pages/user/bindPhone/bindPhone'
 		});
+	},
+
+	// 社区订单获取手机号
+	commuGetPhoneNumber(e) {
+		this.myGetPhone(e);
 	},
 
 	// 获取用户信息，授权 

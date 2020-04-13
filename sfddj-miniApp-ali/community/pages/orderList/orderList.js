@@ -21,7 +21,11 @@ Page({
         // noPayCounting: false,      // 未支付状态订单是否在使用倒计时
         isCounting: [false, false, false, false, false],    //对应的订单状态是否在使用倒计时
     },
-    onLoad() {
+    onLoad(options) {
+		let index = options.index ? options.index : 0;
+		this.setData({
+			typeIndex: index
+		})
         this.getOrderList(0);
     },
 
