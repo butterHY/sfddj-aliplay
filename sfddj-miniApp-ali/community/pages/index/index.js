@@ -103,11 +103,11 @@ Page({
   },
 
 	loadData(callbackFun) {
-    this.loadLoc(() => {
-      if(this.shopList) {
-        this.shopList.reload(callbackFun);
-      }
-    });
+        this.loadLoc(() => {
+            if(this.shopList) {
+                this.shopList.reload(callbackFun);
+            }
+        });
 	}
 
 });
