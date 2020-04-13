@@ -6,364 +6,364 @@
 /*个人中心   */
 
 page {
-  background: white;
+	background: white;
 }
 
 .fontW_600 {
-  font-weight: 600;
+	font-weight: 600;
 }
 
 .marBot_32 {
-  margin-bottom: 32rpx;
+	margin-bottom: 32rpx;
 }
 
 .marTop_14 {
-  margin-top: 14rpx;
+	margin-top: 14rpx;
 }
 
 .color-c7c7cc {
-  color: #c7c7cc;
+	color: #c7c7cc;
 }
 
 .zIndex100 {
-  z-index: 100;
+	z-index: 100;
 }
 
 .user_scroll {
-  width: 100%;
-  min-height: 100%;
-  background-color: white;
-  box-sizing: border-box;
+	width: 100%;
+	min-height: 100%;
+	background-color: white;
+	box-sizing: border-box;
 }
 
 .user_header {
-  left: 0;
-  bottom: 0;
-  padding-bottom: 28rpx;
-  box-sizing: border-box;
+	left: 0;
+	bottom: 0;
+	padding-bottom: 28rpx;
+	box-sizing: border-box;
 }
 
 .user_header_info {
-  padding: 0 30rpx;
-  box-sizing: border-box;
+	padding: 0 30rpx;
+	box-sizing: border-box;
 }
 
 .user_avatar {
-  width: 98rpx;
-  height: 98rpx;
-  border-radius: 50%;
+	width: 98rpx;
+	height: 98rpx;
+	border-radius: 50%;
 }
 
 .user_level {
-  margin-top: 8rpx;
-  height: 40rpx;
-  width: 160rpx;
-  background-color: #d7162e;
-  border-radius: 42rpx;
-  box-sizing: border-box;
-  line-height: 40rpx;
+	margin-top: 8rpx;
+	height: 40rpx;
+	width: 160rpx;
+	background-color: #d7162e;
+	border-radius: 42rpx;
+	box-sizing: border-box;
+	line-height: 40rpx;
 }
 
 .icon_vipGold {
-  width: 26rpx;
-  height: 26rpx;
-  margin-right: 10rpx;
+	width: 26rpx;
+	height: 26rpx;
+	margin-right: 10rpx;
 }
 
 .user_balance {
-  color: rgba(255, 255, 255, 0.8);
-  width: 50%;
+	color: rgba(255, 255, 255, 0.8);
+	width: 50%;
 }
 
 .middleLine {
-  right: 0;
-  height: 60%;
-  width: 1px;
-  background: rgba(255, 255, 255, 0.3);
-  top: 30%;
+	right: 0;
+	height: 60%;
+	width: 1px;
+	background: rgba(255, 255, 255, 0.3);
+	top: 30%;
 }
 
 .userInfo_bottom {
-  padding: 0 24rpx;
+	padding: 0 24rpx;
 }
 
 .user_myOrder {
-  height: auto;
-  margin-top: 42rpx;
-  margin-bottom: 56rpx;
+	height: auto;
+	margin-top: 42rpx;
+	margin-bottom: 56rpx;
 }
 
 .color32_04 {
-  color: rgba(50, 50, 50, 0.4);
+	color: rgba(50, 50, 50, 0.4);
 }
 
 .color32_07 {
-  color: rgba(50, 50, 50, 0.9);
+	color: rgba(50, 50, 50, 0.9);
 }
 
 .user_orderType {
-  width: 20%;
-  height: 93rpx;
+	width: 20%;
+	height: 93rpx;
 }
 
 .width_72r {
-  width: 72rpx;
+	width: 72rpx;
 }
 
 .width_70r {
-  width: 70rpx;
+	width: 70rpx;
 }
 
 .width_71r {
-  width: 71rpx;
+	width: 71rpx;
 }
 
 .width_104r {
-  width: 104rpx;
+	width: 104rpx;
 }
 
 .user_orderTypeNum {
-  width: 33rpx;
-  height: 33rpx;
-  color: #ff2a55;
-  font-size: 20rpx;
-  border: 1px solid #ff2a55;
-  border-radius: 25px;
-  top: -20rpx;
-  right: 26rpx;
-  line-height: 33rpx;
-  background-color: #fff;
+	width: 33rpx;
+	height: 33rpx;
+	color: #ff2a55;
+	font-size: 20rpx;
+	border: 1px solid #ff2a55;
+	border-radius: 25px;
+	top: -20rpx;
+	right: 26rpx;
+	line-height: 33rpx;
+	background-color: #fff;
 }
 
 .user_myHome_tit {
-  margin: 52rpx 0 10rpx;
+	margin: 52rpx 0 10rpx;
 }
 
 .user_myHome_one {
-  width: 25%;
-  height: 176rpx;
+	width: 25%;
+	height: 176rpx;
 }
 
 .color_ff2a54_08 {
-  color: rgba(255, 42, 84, 0.8);
+	color: rgba(255, 42, 84, 0.8);
 }
 
 .font-52 {
-  font-size: 52rpx;
+	font-size: 52rpx;
 }
 
 .font-54 {
-  font-size: 54rpx;
+	font-size: 54rpx;
 }
 
 .font-56 {
-  font-size: 56rpx;
+	font-size: 56rpx;
 }
 
 .user_header_userName {
-  position: relative;
-  /* padding-bottom: 15rpx; */
+	position: relative;
+	/* padding-bottom: 15rpx; */
 }
 
 .user_header_mobile {
-  color: #ffa478;
-  border: 2rpx #ffa478 solid;
-  border-radius: 50rpx;
-  padding: 5rpx 10rpx;
+	color: #ffa478;
+	border: 2rpx #ffa478 solid;
+	border-radius: 50rpx;
+	padding: 5rpx 10rpx;
 }
 
 .user_header_bindPhone {
-  color: #ffa478;
-  border: 2rpx #ffa478 solid;
-  border-radius: 50rpx;
-  padding: 5rpx 10rpx 5rpx 10rpx;
+	color: #ffa478;
+	border: 2rpx #ffa478 solid;
+	border-radius: 50rpx;
+	padding: 5rpx 10rpx 5rpx 10rpx;
 }
 
 /*我的订单，全部订单一栏   */
 
 .user_con_allOrder {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 30rpx;
-  box-sizing: border-box;
-  margin-top: 20rpx;
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0 30rpx;
+	box-sizing: border-box;
+	margin-top: 20rpx;
 }
 
 .user_con_allOrderText {
-  margin-right: 15rpx;
+	margin-right: 15rpx;
 }
 
 .user_con_allOrdIcon {
-  width: 16rpx;
-  height: 26rpx;
+	width: 16rpx;
+	height: 26rpx;
 }
 
 /*五个订单状态   */
 
 .fiveOrderStatus {
-  width: 100%;
-  height: 80rpx;
-  margin-top: 30rpx;
-  display: flex;
-  justify-content: space-around;
+	width: 100%;
+	height: 80rpx;
+	margin-top: 30rpx;
+	display: flex;
+	justify-content: space-around;
 }
 
 .fiveStatus_allImg {
-  width: 61rpx;
-  height: 48rpx;
+	width: 61rpx;
+	height: 48rpx;
 }
 
 .fiveStatus_allIcon {
-  width: 30rpx;
-  height: 30rpx;
-  background-color: #ff5353;
-  position: absolute;
-  right: -5rpx;
-  top: -5rpx;
-  border-radius: 15rpx;
-  text-align: center;
-  line-height: 30rpx;
+	width: 30rpx;
+	height: 30rpx;
+	background-color: #ff5353;
+	position: absolute;
+	right: -5rpx;
+	top: -5rpx;
+	border-radius: 15rpx;
+	text-align: center;
+	line-height: 30rpx;
 }
 
 /*分割线   */
 
 .dividingLine {
-  height: 2rpx;
-  background-color: #fff;
-  margin: 40rpx 30rpx 0rpx;
+	height: 2rpx;
+	background-color: #fff;
+	margin: 40rpx 30rpx 0rpx;
 }
 
 .dividingLine_el {
-  height: 2rpx;
-  background-color: #e3e3e3;
-  margin: 40rpx 30rpx 0rpx;
+	height: 2rpx;
+	background-color: #e3e3e3;
+	margin: 40rpx 30rpx 0rpx;
 }
 
 /*分割线   */
 
 .dividingLine1 {
-  height: 2rpx;
-  background-color: #e3e3e3;
-  margin: 20rpx 30rpx 20rpx;
+	height: 2rpx;
+	background-color: #e3e3e3;
+	margin: 20rpx 30rpx 20rpx;
 }
 
 /*下面各分类   */
 
 .oneStautsFull {
-  width: 100%;
-  height: 100rpx;
-  padding: 0 30rpx 0 46rpx;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  box-sizing: border-box;
-  position: relative;
+	width: 100%;
+	height: 100rpx;
+	padding: 0 30rpx 0 46rpx;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	box-sizing: border-box;
+	position: relative;
 }
 
 .oneStautsFull_imgIcon {
-  width: 34rpx;
-  height: 42rpx;
+	width: 34rpx;
+	height: 42rpx;
 }
 
 .oneStautsFull_arrowIcon {
-  width: 16rpx;
-  height: 26rpx;
+	width: 16rpx;
+	height: 26rpx;
 }
 
 .user_scroll .oneStautsFull_btn {
-  border: 0;
+	border: 0;
 }
 
 .dividingSpace {
-  height: 20rpx;
-  background: #fff;
+	height: 20rpx;
+	background: #fff;
 }
 
 /*轮播图   */
 
 .adSwiper {
-  width: 690rpx;
-  height: 260rpx;
+	width: 690rpx;
+	height: 260rpx;
 }
 
 .swiperDots {
-  bottom: 10rpx;
+	bottom: 10rpx;
 }
 
 .swiperDots_con {
-  width: 30rpx;
-  height: 4rpx;
-  margin: 0 4rpx;
-  background: rgba(0, 0, 0, 0.2);
+	width: 30rpx;
+	height: 4rpx;
+	margin: 0 4rpx;
+	background: rgba(0, 0, 0, 0.2);
 }
 
 .swiperDots_con_active {
-  background-color: #ff5353;
+	background-color: #ff5353;
 }
 
 .blockHide {
-  overflow: hidden;
-  display: block;
+	overflow: hidden;
+	display: block;
 }
 
 .icon_jifen {
-  width: 24rpx;
-  height: 26rpx;
-  margin-right: 10rpx;
+	width: 24rpx;
+	height: 26rpx;
+	margin-right: 10rpx;
 }
 
 .color-a1a1a1 {
-  color: #a1a1a1;
+	color: #a1a1a1;
 }
 
 .memberPointText {
-  /* color: #686868; */
-  margin-right: 5rpx;
+	/* color: #686868; */
+	margin-right: 5rpx;
 }
 
 .icon_arrowRight {
-  width: 15rpx;
-  height: 22rpx;
-  margin-left: 6rpx;
+	width: 15rpx;
+	height: 22rpx;
+	margin-left: 6rpx;
 }
 
 .icon_member {
-  width: 37rpx;
-  height: 35rpx;
+	width: 37rpx;
+	height: 35rpx;
 }
 
 .icon_score {
-  width: 33rpx;
-  height: 31rpx;
+	width: 33rpx;
+	height: 31rpx;
 }
 
 .icon_fanxian {
-  width: 26rpx;
-  height: 28rpx;
-  margin-right: 10rpx;
+	width: 26rpx;
+	height: 28rpx;
+	margin-right: 10rpx;
 }
 
 /* 订单各状态  */
 
 .icon_orderType {
-  width: 50rpx;
-  height: 46rpx;
+	width: 50rpx;
+	height: 46rpx;
 }
 
 .getUserInfoBtn::after {
-  border: none;
+	border: none;
 }
 
 /* 签到入口 */
 
 .signEntance {
-  position: absolute;
-  top: 0;
-  right: 30rpx;
-  width: 126rpx;
-  z-index: 5;
-  text-align: center;
-  height: 60rpx;
+	position: absolute;
+	top: 0;
+	right: 30rpx;
+	width: 126rpx;
+	z-index: 5;
+	text-align: center;
+	height: 60rpx;
 }

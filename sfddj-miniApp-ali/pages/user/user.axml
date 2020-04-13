@@ -120,6 +120,11 @@
         </view>
       </view>
     </view>
+	
+    <!-- 社区订单 -->
+	<community-order isMember="{{isMember}}" onGetPhoneNumber="commuGetPhoneNumber"></community-order>
+	
+
     <!-- 我的服务 -->
     <view>
       <!-- 标题 -->

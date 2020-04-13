@@ -2,21 +2,36 @@ Component({
   mixins: [],
   data: {
       contactsPop: false,
-      contactsTel: ''
+      contactsTel: '',
+      telsList: [],     //联系电话列表
   },
   props: {},
   didMount() {
+      // this.setData({
+      //     contactsTel: this.props.contactsTel
+      // })
+      let telsList = this.handleTels(this.props.contactsTel);
       this.setData({
-          contactsTel: this.props.contactsTel
+          telsList: Object.assign([],telsList)
       })
   },
   didUpdate() {
-      this.setData({
-          contactsTel: this.props.contactsTel
-      })
+      // let telsList = this.handleTels(this.props.contactsTel);
+      // console.log(telsList)
+      // this.setData({
+      //     telsList: Object.assign([],telsList)
+      // })
+      
   },
   didUnmount() {},
   methods: {
+
+    handleTels(tels){
+      let telsList = tels.split(',');
+      return telsList;
+      // console.log('[[[',telsList)
+    },
+
     tapContacts(data) {   
         // let _showPop =  'itemsBtn[' +  data.index + '].showPop';   
         this.setData({  
@@ -31,9 +46,10 @@ Component({
         }); 
     },
 
-    onCallPhone() {
-        let _tel = this.data.contactsTel;
-        my.makePhoneCall({ number: _tel });
+    onCallPhone(data) {
+      let {index} = data;
+      let _tel = this.data.telsList[index];
+      my.makePhoneCall({ number: _tel });
     } 
   },
 });
