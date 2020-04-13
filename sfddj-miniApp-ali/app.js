@@ -1,6 +1,7 @@
 // var _myShim = require('..my.shim');
 // import uma from 'umtrack-alipay';
 import 'umtrack-alipay';
+import MiniAppService from "alipay-miniapp-service";
 import { UrlConstants } from './utils/constants';
 let sendRequest = require('./utils/sendRequest');
 let constants = require('./utils/constants');
@@ -8,6 +9,7 @@ let constants = require('./utils/constants');
 
 
 App({
+	Service: MiniAppService,
 	umengConfig: {
 		appKey: UrlConstants.umaAppKey, //由友盟分配的APP_KEY
 		debug: false //是否打开调试模式

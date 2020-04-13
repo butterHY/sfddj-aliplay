@@ -5,21 +5,8 @@ Component({
   data: {
     baseImageUrl: api.baseImageUrl,
     goodsIntro: {
-      infoShow: [
-        {
-          title: '价格说明',
-          text: [
-            '1.未划线价：为划线价是当前商品或服务在本平台的实时销售价（不含包装费、运费等），是您最终觉定是否购买商品或服务的依据。最终以订单结算也看呈现的价格为准。',
-            '2.划线价：划线价为参考价，并非原价或线下实体门店的销售价。'
-          ]
-        }
-      ],
-      detail: [
-        {
-          text: '未划线价：为划线价是当前商品或服务在本平台的实时销售价（不含包装费、运费等），是您最终觉定是否购买商品或服务的依据。最终以订单结算也看呈现的价格为准',
-          src: '',
-        }
-      ],
+      infoShow: [],
+      detail: [],
     }
   },
   props: {},
@@ -37,13 +24,23 @@ Component({
 
     setInfo() {
       const _this = this;
-      let _title = 'goodsIntro.infoShow[' + 0 + '].title';
-      let _text = 'goodsIntro.infoShow[' + 0 + '].text';
+      // let _title = 'goodsIntro.infoShow[' + 0 + '].title';
+      // let _text = 'goodsIntro.infoShow[' + 0 + '].text';
+      let infoShow = [];
+      let info = this.parseIntro(this.props.goodsInfo.info);
+
+      // 如果是对象，则直接将整个数据保存
+      if (typeof (info) == 'object') {
+        infoShow.push(info);
+      } else {
+        let infoObj = { desc: info };
+        infoShow.push(infoObj);
+      }
 
       _this.setData({
-        [_title]: _this.props.goodsInfo.info,
-        [_text]: []
+        'goodsIntro.infoShow': infoShow
       })
+      console.log(this.data.goodsIntro.infoShow)
     },
 
     setDetaile() {

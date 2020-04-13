@@ -85,6 +85,7 @@
 .priceBox .old {
 	color: #999999;
 	font-size: 24rpx;
+	text-decoration: line-through;
 }
  
 .priceBox .cart_null {

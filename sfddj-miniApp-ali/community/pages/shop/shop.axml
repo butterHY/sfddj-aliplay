@@ -7,7 +7,7 @@
         <view>
           <view>
             <text class="shop_name">{{shop.shopName}}</text>
-            <text class="shop_distance">距您{{shop.distance || '-'}}米</text>
+            <text class="shop_distance">距您{{shop.distance || '-'}}</text>
           </view>
           <view class="shop_addr">{{shop.address}}</view>
         </view>
@@ -37,7 +37,7 @@
       <view class="shop_goodslist">
         <scroll-view scroll-y="{{true}}" lower-threshold="{{120}}" style="height:{{itemsheight}}" onScrollToLower="onScrollToLower">
           <goods-item a:for="{{items}}" data="{{item}}"></goods-item>
-          <view class="shop_resultmsg" a:if="{{resultmsg}}">{{resultmsg}}</view>
+          <view class="shop_resultmsg" a:if="{{resultmsg && isSearch}}">{{resultmsg}}</view>
           <view class="shop_more"></view>
         </scroll-view>
       </view>

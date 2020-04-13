@@ -17,37 +17,12 @@ Page({
 		}
 	},
 
-	onLoad: async function (options) {
+	onLoad: async function () {
+		this.loadLoc();
 	},
 
 	onShow: function () {
-		const _this = this;
-		let userLocInfo = myApp.globalData.userLocInfo;
-		// console.log('onShow-index', userLocInfo)
-
-		if (this.jsonNull(userLocInfo) == 0) {
-			// console.log('重新定位')
-			locAddr.location((res) => {
-				_this.setData({
-					locInfo: res
-				});
-				// 设置缓存并设置全部变量的值 globalData.userLocInfo 
-				myApp.setLocStorage(_this.data.locInfo, () => {
-					if(this.shopList) {
-						this.shopList.reload();
-					}
-				});
-			});
-		}
-		else {
-			_this.setData({
-				locInfo: userLocInfo
-			}, () => {
-				if(this.shopList) {
-					this.shopList.reload();
-				}
-			});
-		}
+		
 	},
 
 	goLocationCity() {
@@ -89,6 +64,50 @@ Page({
 
 	shopListSave(ref) {
 		this.shopList = ref;
+	},
+
+	onPullDownRefresh() {
+		this.loadData(() => {
+			my.stopPullDownRefresh();
+		});
+	},
+
+  loadLoc(callbackFun) {
+    const _this = this;
+		let userLocInfo = myApp.globalData.userLocInfo;
+		// console.log('onShow-index', userLocInfo)
+
+		if (this.jsonNull(userLocInfo) == 0) {
+			// console.log('重新定位')
+			locAddr.location((res) => {
+				_this.setData({
+					locInfo: res
+				});
+				// 设置缓存并设置全部变量的值 globalData.userLocInfo 
+				myApp.setLocStorage(_this.data.locInfo, () => {
+					if(callbackFun) {
+						callbackFun();
+					}
+				});
+			});
+		}
+		else {
+			_this.setData({
+				locInfo: userLocInfo
+			}, () => {
+				if(callbackFun) {
+          callbackFun();
+        }
+			});
+		}
+  },
+
+	loadData(callbackFun) {
+    tihs.loadLoc(() => {
+      if(this.shopList) {
+        this.shopList.reload(callbackFun);
+      }
+    });
 	}
 
 });
