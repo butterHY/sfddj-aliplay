@@ -8,6 +8,7 @@ Component({
     baseImageUrl: baseImageUrl,
     aside: '专属于你的附近之精彩', 
     goodsShow: null,
+    storeDis: 0,     // 小店距离
 
 },
   props: {
@@ -21,25 +22,21 @@ Component({
   methods: {
     // 商铺设置数据
     setStoreData() {
-      const _this = this;
-      let _goodsShow = [];
-      let shopGood = this.props.storeShow.shopGoodsList;
-      // console.log(this.props.storeShow)
-      // console.log(locAddr.locInfo) 
-      let _locInfo = locAddr.locInfo;
+        const _this = this;
+        let _goodsShow = [];
+        let shopGood = this.props.storeShow.shopGoodsList;
+        // console.log(this.props.storeShow)
+        // console.log(locAddr.locInfo)
+        let _locInfo = locAddr.locInfo;
       
-      // 计算店铺距离
-      let _distance = _this.getDistance(_locInfo.latitude*1, _locInfo.longitude*1, this.props.storeShow.latitude*1, this.props.storeShow.longitude*1);
- 
-
+        // 计算店铺距离
+        let _distance = _this.getDistance(_locInfo.latitude*1, _locInfo.longitude*1, this.props.storeShow.latitude*1, this.props.storeShow.longitude*1);
 
       for (let i=0; i<shopGood.length; i++) {
         _goodsShow[i] = {};
         _goodsShow[i].goodsId = shopGood[i].id;
         _goodsShow[i].goodsName = shopGood[i].title;
         _goodsShow[i].goodsImage = JSON.parse( shopGood[i].goodsImagePath )[0];
-
-        _goodsShow[i]._distance = _distance;
 
         let skuList = shopGood[i].shopGoodsSkuList[0];
         _goodsShow[i].iavValue = skuList.iavValue;
@@ -52,10 +49,11 @@ Component({
           _goodsShow[i].salePrice = skuList.salePrice;
           _goodsShow[i].oldPrice = '';
         } 
-      } 
+      }
 
       this.setData({
-        goodsShow: _goodsShow
+        goodsShow: _goodsShow,
+        storeDis: _distance
       })
 
     },

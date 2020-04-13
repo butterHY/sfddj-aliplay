@@ -26,7 +26,7 @@
         <view class="storeName">
           <view class="shop_info">
             <text class="shop_name">{{ storeShow.shopName }}</text>
-            <text class="shop_distance">距您{{ storeShow.distance || '-' }}米</text>
+            <text class="shop_distance">距您{{ storeDis || '-' }}米</text>
           </view>
           <view class="shop_addr">{{ storeShow.address }}</view>
         </view>
