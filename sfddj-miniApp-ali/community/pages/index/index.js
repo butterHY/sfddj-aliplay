@@ -18,7 +18,7 @@ Page({
 	},
 
 	onLoad: async function () {
-		this.loadData();
+		this.loadLoc();
 	},
 
 	onShow: function () {
@@ -72,8 +72,8 @@ Page({
 		});
 	},
 
-	loadData(callbackFun) {
-		const _this = this;
+  loadLoc(callbackFun) {
+    const _this = this;
 		let userLocInfo = myApp.globalData.userLocInfo;
 		// console.log('onShow-index', userLocInfo)
 
@@ -85,8 +85,8 @@ Page({
 				});
 				// 设置缓存并设置全部变量的值 globalData.userLocInfo 
 				myApp.setLocStorage(_this.data.locInfo, () => {
-					if(this.shopList) {
-						this.shopList.reload(callbackFun);
+					if(callbackFun) {
+						callbackFun();
 					}
 				});
 			});
@@ -95,11 +95,19 @@ Page({
 			_this.setData({
 				locInfo: userLocInfo
 			}, () => {
-				if(this.shopList) {
-					this.shopList.reload(callbackFun);
-				}
+				if(callbackFun) {
+          callbackFun();
+        }
 			});
 		}
+  },
+
+	loadData(callbackFun) {
+    tihs.loadLoc(() => {
+      if(this.shopList) {
+        this.shopList.reload(callbackFun);
+      }
+    });
 	}
 
 });
