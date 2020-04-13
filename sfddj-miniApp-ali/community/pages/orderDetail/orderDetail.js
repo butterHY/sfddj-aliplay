@@ -86,6 +86,7 @@ Page({
             val.goodsImagePath = val.productImg ? api.baseImageUrl + val.productImg : '';
             val.salePrice = val.price;
             val.name = val.goodsName;
+            val.skuValue = val.productName;
         })
         return list;
     },

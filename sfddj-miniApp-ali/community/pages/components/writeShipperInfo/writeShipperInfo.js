@@ -28,8 +28,14 @@ Component({
 
         // 关闭弹窗
         closeUserPop() {
+          // 还得清空输入的信息
             this.setData({
-                userInfoPop: false
+                userInfoPop: false,
+                completeUserName: '',
+                shipperMobile: '',
+                userName: '',
+                userMobile: '',
+                hasUserInfo: false,
             })
         },
 
