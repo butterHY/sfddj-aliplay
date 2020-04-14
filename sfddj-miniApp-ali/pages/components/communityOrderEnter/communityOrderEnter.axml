@@ -1,5 +1,5 @@
 <!-- 社区订单 -->
-<view a:if="{{hasList}}">
+<view>
 	<!-- 社区订单 -->
 	<view class="user_comOrder flex_view_row align_cen posi_re">
 		<view>
