@@ -90,17 +90,30 @@ Page({
   // 保存地址
   saveAddr() {  
     const _this = this; 
-    this.verifyForm(false, function() { 
-      my.navigateBack(); 
+    this.verifyForm(false, function() {  
+      my.showToast({
+        type: 'success',
+        content: '保存成功',
+        duration: 2000,
+        success: () => {
+          my.navigateBack(); 
+        },
+      });
     })
   },
   
   // 保存和使用
   useAddr() { 
-    const _this = this;
-    const mydata = this.data;
+    const _this = this; 
     this.verifyForm(true, function() {
-      my.navigateBack();
+      my.showToast({
+        type: 'success',
+        content: '保存成功',
+        duration: 2000,
+        success: () => {
+          my.navigateBack(); 
+        },
+      });
     })   
   },
 
@@ -146,9 +159,18 @@ Page({
       let _ret = res.data.ret;
       let _data = res.data.data;
       if (_ret.code == '0') { 
-          if (fn) fn();
+		//   保存成功提示
+		my.showToast({
+		  content: '保存成功'
+		});
+        if (fn) fn();
       }  
-    }, (err)=>{})
+    }, (err)=>{
+		//   保存失败
+		my.showToast({
+		  content: err
+		});
+	})
   },
 
   // 定位地址栏选择的方法

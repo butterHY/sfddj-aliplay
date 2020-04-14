@@ -11,7 +11,7 @@
     <!-- 可选地址模块 -->
     <view a:if="{{optionalList.length > 0}}" class="optionalList">
       <block a:for="{{optionalList}}">
-        <template is="itemAddress" data="{{canUse: true, item, index}}"></template>
+        <template is="itemAddress" data="{{canUse: true, item, index, canTap: type == 'order'}}"></template>
       </block>
     </view>
     <!-- 不可选地址 -->
