@@ -146,9 +146,18 @@ Page({
       let _ret = res.data.ret;
       let _data = res.data.data;
       if (_ret.code == '0') { 
-          if (fn) fn();
+		//   保存成功提示
+		my.showToast({
+		  content: '保存成功'
+		});
+        if (fn) fn();
       }  
-    }, (err)=>{})
+    }, (err)=>{
+		//   保存失败
+		my.showToast({
+		  content: err
+		});
+	})
   },
 
   // 定位地址栏选择的方法
