@@ -124,7 +124,7 @@ Page({
     // 处理商品信息
     handleGoods(list) {
         let that = this;
-        let defaultImg = "https://img.sfddj.com/miniappImg/icon/icon_default_head.jpeg";
+        let defaultImg = "https://img.sfddj.com/miniappImg/icon/icon_default_head.jpg";
         let goodsList = list && Object.keys(list).length > 0 ? list : [];
         let countList = [];    //定时器列表
         let now = new Date().getTime();

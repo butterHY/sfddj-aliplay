@@ -7,7 +7,7 @@
         <!--商家头像-->
         <view class="storeHeadImg">
           <image a:if="{{supplierDetail.headPortraitPath}}" src="{{baseImageUrl}}{{supplierDetail.headPortraitPath}}" class="all_100"></image>
-          <image a:else src="{{baseLocImgUrl}}miniappImg/icon/icon_default_head.jpeg" class="all_100"></image>
+          <image a:else src="{{baseLocImgUrl}}miniappImg/icon/icon_default_head.jpg" class="all_100"></image>
         </view>
         <!--商家昵称和评分-->
         <view class="goodStoreDes flex_view_col flex_1 single-line">

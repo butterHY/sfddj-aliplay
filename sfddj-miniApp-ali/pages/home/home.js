@@ -791,7 +791,7 @@ Page({
 	// 分享页面
 	onShareAppMessage: function(res) {
 		return {
-			title: '顺丰大当家-顺丰旗下电商平台',
+			title: '年丰大当家-生鲜电商平台',
 			path: '/pages/home/home'
 		};
 	},
