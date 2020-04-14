@@ -13,10 +13,10 @@
 	<view class="locCityShow">
 		<view class="cityInfo" onTap="goLocationCity">
 			<view class="city">{{ locInfo.city }}</view>
-			<view class="address">
+			<view class="address flex_view_row align_cen">
 				<view class="line"></view>
 				<text class="iconStyle icon-address"></text> 
-				{{ locInfo.streetShow }}
+				<text class="single-line">{{ locInfo.streetShow }}</text>
 			</view>
 		</view> 
 	</view>
