@@ -132,6 +132,8 @@
     padding-right: 30rpx;
     flex-grow: 0;
     flex-shrink: 0;
+    padding-bottom: 180rpx;
+    overflow-y: scroll;
 }
 
 .shop_categories > view {
