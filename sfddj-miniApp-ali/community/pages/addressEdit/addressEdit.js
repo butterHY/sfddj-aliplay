@@ -90,17 +90,30 @@ Page({
   // 保存地址
   saveAddr() {  
     const _this = this; 
-    this.verifyForm(false, function() { 
-      my.navigateBack(); 
+    this.verifyForm(false, function() {  
+      my.showToast({
+        type: 'success',
+        content: '保存成功',
+        duration: 2000,
+        success: () => {
+          my.navigateBack(); 
+        },
+      });
     })
   },
   
   // 保存和使用
   useAddr() { 
-    const _this = this;
-    const mydata = this.data;
+    const _this = this; 
     this.verifyForm(true, function() {
-      my.navigateBack();
+      my.showToast({
+        type: 'success',
+        content: '保存成功',
+        duration: 2000,
+        success: () => {
+          my.navigateBack(); 
+        },
+      });
     })   
   },
 

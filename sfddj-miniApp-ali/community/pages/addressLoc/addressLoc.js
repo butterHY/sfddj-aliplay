@@ -75,7 +75,7 @@ Page({
         _name = res.name;
 
         locAddr.GDCity(_this.data.locInfo, (data) => {
-          // 有那么显示 那么 没有 显示 pois第一个数据的name
+          // name 没有 显示 pois第一个数据的name
           data.streetShow = _name ? _name : _name = data.pois[0].name; 
           data.addressAll = data.province + data.city + data.district + data.street + _name;  
           myApp.setLocStorage(data, function () {
