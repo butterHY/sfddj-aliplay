@@ -1,6 +1,7 @@
 {
   "component": true,
   "usingComponents":{
-    "input-item": "mini-ali-ui/es/input-item/index"
+    "input-item": "mini-ali-ui/es/input-item/index",
+	"popup": "mini-ali-ui/es/popup/index"
   }
 }

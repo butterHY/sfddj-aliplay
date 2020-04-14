@@ -46,7 +46,8 @@
             <!-- 手机号输入框 -->
             <view class="userNameBox width_100">
                 <!--<input-item disabled="{{false}}" data-field="userMobile" clear="{{true}}" value="{{userMobile}}" placeholder="电话" onInput="onItemInput" onClear="onClear" placeholderStyle="color: #666; font-size: 30rpx;"></input-item> -->
-                <input-item type="number" maxLength="{{maxPhoneLength}}" data-field="userMobile" clear="{{true}}" value="{{userMobile}}" placeholderStyle="color: #666; font-size: 30rpx;" placeholder="电话" onInput="phoneInput" onClear="onClear"></input-item>
+                <input-item type="number" maxLength="{{maxPhoneLength}}" enableNative="{{false}}" data-field="userMobile" clear="{{true}}" value="{{userMobile}}" placeholderStyle="color: #666; font-size: 30rpx;" placeholder="电话" onInput="phoneInput" onClear="onClear"></input-item>
+				<!-- <input class="all_100" type="number" placeholder="电话" maxLength="{{maxPhoneLength}}" enableNative="{{false}}" data-field="userMobile" clear="{{true}}" value="{{userMobile}}" placeholderStyle="color: #666; font-size: 30rpx;" placeholder="电话" onInput="phoneInput" onClear="onClear" /> -->
             </view>
         </view>
         <!-- 查看更多按钮 跳转去更多包裹动态页 -->
