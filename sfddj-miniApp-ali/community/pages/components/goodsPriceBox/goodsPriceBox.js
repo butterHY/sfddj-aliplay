@@ -49,7 +49,15 @@ Component({
       // 参数4：数量
       // 参数5：回调函数
       _this.cart.add(addData.shopId, _goodsInfo.allData, addData.skuId, addData.num, (res, err) => {
-          if(err) {
+          if(res) {
+            if(err && err.msg) {
+              my.showToast({
+                type: 'success',
+                content: err.msg,
+                duration: 1500
+              });
+            }
+          } else if(err) {
             my.alert({
               title: '提示',
               content: err

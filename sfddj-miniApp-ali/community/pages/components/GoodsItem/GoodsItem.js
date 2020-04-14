@@ -49,7 +49,15 @@ Component({
             }, 150);
           });
           this.cart.add(this.props.data.shopId, this.props.data, this.props.data.shopGoodsSkuList[0].id, 1, (res, err) => {
-            if(err) {
+            if(res) {
+              if(err && err.msg) {
+                my.showToast({
+                  type: 'success',
+                  content: err.msg,
+                  duration: 1500
+                });
+              }
+            } else if(err) {
               my.alert({
                 title: '提示',
                 content: err
