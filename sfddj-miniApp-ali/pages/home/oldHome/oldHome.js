@@ -1,17 +1,18 @@
 // import 'regenerator';
 import _ from 'underscore'
 import locAddr from '/community/service/locAddr.js';
-import api from '../../api/api';
-import http from '../../api/http';
 //获取应用实例
 let app = getApp();
-let sendRequest = require('../../utils/sendRequest');
-let constants = require('../../utils/constants');
+let sendRequest = require('../../../utils/sendRequest');
+let constants = require('../../../utils/constants');
 let baseImageUrl = constants.UrlConstants.baseImageUrl;
-let stringUtils = require('../../utils/stringUtils');
-let utils = require('../../utils/util');
+let stringUtils = require('../../../utils/stringUtils');
+let utils = require('../../../utils/util');
 let windowWidth = my.getSystemInfoSync().windowWidth;
 let windowHeight = my.getSystemInfoSync().windowHeight;
+
+import api from '../../../api/api';
+import http from '../../../api/http';
 
 
 Page({
@@ -81,15 +82,8 @@ Page({
 			addressJson: {},
 			pois: [],
 			streetShow: '',
-			streetLoc: '', 
-		},
-
-		o2oStore: {
-			show: false,
-			store: null,
-		},
-		isGetLocation: false,
-		isLocationLoad: true,       //是否正在定位
+			streetLoc: ''
+		}
 	},
 
 	onLoad: async function(options) {
@@ -102,6 +96,7 @@ Page({
 		}
 		// 友盟+统计--首页浏览
 		my.uma.trackEvent('homepage_show', pageOptions);
+    console.log(pageOptions)
 		var that = this;
 
 
@@ -117,13 +112,7 @@ Page({
 			key: 'homeGoodsList', // 缓存数据的key
 		}).data;
 
-		// 定位中判断
-		let userLocInfo = app.globalData.userLocInfo;
-		if( userLocInfo && Object.keys(userLocInfo).length > 0) {
-			this.setData({
-				isLocationLoad: false
-			})
-		}
+
 
 		that.setData({
 			materialArr: materialArr ? materialArr : [],
@@ -208,26 +197,16 @@ Page({
 			// console.log('重新定位')
 			locAddr.location((res) => {
 				_this.setData({
-					locInfo: res,
-					isGetLocation: true,
-					isLocationLoad: false,
+					locInfo: res
 				});
 				// 设置缓存并设置全部变量的值 globalData.userLocInfo 
 				app.setLocStorage(_this.data.locInfo);
-				_this.locStoreShow();
-			}, ()=> {
-				// 定位失败
-				_this.setData({
-					isGetLocation: false,
-					isLocationLoad: false,
-				});
 			});
 		}
 		else {
 			_this.setData({
 				locInfo: userLocInfo
 			})
-			_this.locStoreShow();
 		}
 	},
 
@@ -245,33 +224,7 @@ Page({
 		return num;
 	},
 
-	// 定位显示小店
-	locStoreShow() {
-		const _this = this;
-		let _locInfo = app.globalData.userLocInfo;
-		http.get(api.Shop.SEARCH, {
-			longitude: _locInfo.longitude,
-			latitude: _locInfo.latitude,
-			start: 0,
-			limit: 1,
-		}, (res) => {
-			let _data = res.data.data;
-			let _show = false;
-			let _store = [];
-			if (_data.length > 0) {
-				_show = true;
-				_store = Object.assign({}, _data[0]);
-			}
-			_this.setData({
-				'o2oStore.show': _show,
-				'o2oStore.store': _store
-			})
-		}, (err) => {
-
-		});
-	},
-
-	// 初始化模块广告的滚动高度
+	// 初始化模块广告的滚动高度  ， 原来旧的达官统计方法， ----- 已没有使用；
 	setModuleScrollTop(result) {
 		let that = this;
 		let { materialArr, advertsArr, homeGoodsList } = this.data;
@@ -796,7 +749,7 @@ Page({
 	// 分享页面
 	onShareAppMessage: function(res) {
 		return {
-			title: '年丰大当家-生鲜电商平台',
+			title: '顺丰大当家-顺丰旗下电商平台',
 			path: '/pages/home/home'
 		};
 	},

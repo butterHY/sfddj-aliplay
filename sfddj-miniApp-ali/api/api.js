@@ -115,6 +115,7 @@ export default {
 	LIGHTMEMBER: {
 		'GETLIGHTMEMBER': '/m/a/1.0/subject/getLightMember',                      // 广告模块
 		'GETEASYMEMBERINFO': '/m/a/aliPayEasyMember/1.0/getEasyMemberInfo',				// 获取用户和活动信息 参数outSignNo
+    'AGREEMENTQUERY': '/m/a/aliPayEasyMember/1.0/agreementQuery',             // 查询用户是不是开通成功
 	},
 
 	// O2O 商家店铺
@@ -173,5 +174,11 @@ export default {
 		REGEO: 'https://restapi.amap.com/v3/geocode/regeo',	// 逆地理编码API服务地址
 		SEARCH: 'https://restapi.amap.com/v3/assistant/inputtips', // 输入提示
 		POI: 'https://restapi.amap.com/v3/place/text'
-	}
+	},
+
+  HOME: {
+    ADVERTS_MOUDULE: '/m/a/moduleAdvert/1.1/getModuleAdvert',
+    ALL_MATERIAL: '/m/a/material/1.0/listMaterialByName',     //获取首页底部所有banner位数据
+  },
+
 }

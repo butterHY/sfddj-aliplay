@@ -132,6 +132,8 @@
     padding-right: 30rpx;
     flex-grow: 0;
     flex-shrink: 0;
+    padding-bottom: 180rpx;
+    overflow-y: scroll;
 }
 
 .shop_categories > view {
@@ -215,6 +217,6 @@
 }
 
 .shop_resultmsg image {
-    max-height: 165rpx;
+    max-height: 230rpx;
     margin-bottom: 18rpx;
 }

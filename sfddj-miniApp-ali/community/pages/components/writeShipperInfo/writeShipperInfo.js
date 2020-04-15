@@ -13,6 +13,11 @@ Component({
         completeUserName: '',
         shipperMobile: '',
         maxPhoneLength: 16,     // 电话最长数
+		lastInfo: {
+			userName: '',
+			userMobile: '',
+			sexualIndex: 0
+		}
     },
     props: {},
     didMount() { },
@@ -21,15 +26,36 @@ Component({
     methods: {
         // 填写个人信息
         writeUserData() {
-            this.setData({
-                userInfoPop: true
-            })
+			// 如果已经保存过信息的，要重新初始化上次保存的
+			if(this.data.hasUserInfo) {
+				let {userName, userMobile, sexualIndex} = this.data.lastInfo;
+				this.setData({
+					userInfoPop: true,
+					userName,
+					userMobile,
+					sexualIndex
+				})
+			} else {
+				this.setData({
+					userInfoPop: true,
+					lastInfo: {
+						userName: '',
+						userMobile: '',
+						sexualIndex: 0
+					}
+				})
+			}
         },
 
         // 关闭弹窗
         closeUserPop() {
-          // 还得清空输入的信息
-            this.setData({
+          // 如果之前没保存过，则还得清空输入的信息
+		  if(this.data.hasUserInfo) {
+			  this.setData({
+                userInfoPop: false
+            })
+		  } else {
+			  this.setData({
                 userInfoPop: false,
                 completeUserName: '',
                 shipperMobile: '',
@@ -37,6 +63,8 @@ Component({
                 userMobile: '',
                 hasUserInfo: false,
             })
+		  }
+            
         },
 
         // 性别选择
@@ -105,7 +133,8 @@ Component({
                 hasUserInfo: true,
                 completeUserName,
                 shipperMobile,
-                userInfoPop: false
+                userInfoPop: false,
+				lastInfo: Object.assign({userName: this.data.userName, userMobile: this.data.userMobile, sexualIndex: this.data.sexualIndex})
             })
 
             this.props.onWriteInfo({shipperName: completeUserName, shipperMobile})

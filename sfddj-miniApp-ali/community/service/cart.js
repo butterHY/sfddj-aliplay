@@ -88,7 +88,11 @@ class Cart extends getApp().Service {
                     });
                 }
                 if(callbackFun) {
-                    callbackFun(res);
+                    let tip = {};
+                    if(sku.store < 3) {
+                        tip.msg = '库存不足，请尽快下单';
+                    }
+                    callbackFun(res, tip);
                 }
             }, (err) => {
                 if(callbackFun) {

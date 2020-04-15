@@ -140,10 +140,10 @@ Page({
 			commentList.forEach(value => {
 				if (value) {
 
-          value.appendSupplierReply = '商家追加回复商家追加回复商家追加回复商家追加回复商家追加回复商家追加回复商家追加回复商家追加回复商家追加回复商家追加回复';
-          value.appendPlatformReply = '平台追加回复平台追加回复平台追加回复平台追加回复平台追加回复平台追加回复平台追加回复平台追加回复平台追加回复平台追加回复';
-          value.supplierReply = '商家第一次回复商家第一次回复商家第一次回复商家第一次回复商家第一次回复商家第一次回复商家第一次回复商家第一次回复';
-          value.platformReply = '平台第一次回复平台第一次回复平台第一次回复平台第一次回复平台第一次回复平台第一次回复平台第一次回复平台第一次回复';
+          // value.appendSupplierReply = '商家追加回复商家追加回复商家追加回复商家追加回复商家追加回复商家追加回复商家追加回复商家追加回复商家追加回复商家追加回复';
+          // value.appendPlatformReply = '平台追加回复平台追加回复平台追加回复平台追加回复平台追加回复平台追加回复平台追加回复平台追加回复平台追加回复平台追加回复';
+          // value.supplierReply = '商家第一次回复商家第一次回复商家第一次回复商家第一次回复商家第一次回复商家第一次回复商家第一次回复商家第一次回复';
+          // value.platformReply = '平台第一次回复平台第一次回复平台第一次回复平台第一次回复平台第一次回复平台第一次回复平台第一次回复平台第一次回复';
 
 
 					value.createDate = util.pointFormatTime(new Date(value.createDate));
@@ -231,6 +231,7 @@ Page({
 			that.setData({
 				automaticCount: result.data
 			})
+      console.log(that.data.automaticCount)
 		}, err => {
 
 		})
@@ -341,12 +342,13 @@ Page({
     var that = this;
     // 设置返回首页/顶部栏
     if (e.detail.scrollTop >= 500 && that.data.setComeBack) {
+      console.log('scrollTop >= 500, 显示')
       that.data.setComeBack = false;
       that.setData({
         comeBackBar: 'show',
-        
       })
     } else if (e.detail.scrollTop < 500 && !that.data.setComeBack) {
+      console.log('scrollTop < 500, 隐藏')
       that.data.setComeBack = true;
       that.setData({
         comeBackBar: 'hide',

@@ -15,7 +15,7 @@
         <view class="flex_view_row align_cen flex_1">
             <view>配送费</view>
             <!-- 满多少免配送费 -->
-            <view a:if="{{deliveryOutGratis > 0}}" class="deliveryFee_term">(订单满{{deliveryOutGratis}}元，免配送费)</view>
+            <view a:if="{{deliveryOutGratis > 0 && deliveryFee > 0}}" class="deliveryFee_term">(订单满{{deliveryOutGratis}}元，免配送费)</view>
         </view>
         <!-- 配送费金额 -->
         <view class="deliveryFee_sum">￥{{deliveryFee}}</view>

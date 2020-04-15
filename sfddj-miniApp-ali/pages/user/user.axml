@@ -121,8 +121,10 @@
       </view>
     </view>
 	
-    <!-- 社区订单 -->
-	<community-order isMember="{{isMember}}" onGetPhoneNumber="commuGetPhoneNumber"></community-order>
+	<block a:if="{{hasList}}">	
+		<!-- 社区订单 -->
+		<community-order isMember="{{isMember}}" onGetPhoneNumber="commuGetPhoneNumber"></community-order>
+	</block>
 	
 
     <!-- 我的服务 -->

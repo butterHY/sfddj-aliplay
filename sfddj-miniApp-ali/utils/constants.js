@@ -81,7 +81,7 @@ var InterfaceUrl = {
 	USER_BINGMOBILEV3: '/user/bingMobileV3', //领券时自动授权绑定手机号(首页)
 	USER_BINGMOBILEV4: '/user/bingMobileV4', //支付宝小程序获取直接获取手机绑定
 
-	HOME_BANNER_LIST: '/home/getMaterialGroup',   //首页banner接口
+	HOME_BANNER_LIST: '/home/getMaterialGroup',   //首页banner接口  
 	HOME_GROUPGOODS_LIST: '/home/getGroupGoods',    //首页商品列表
 	HOME_POP: '/1.0/pop/advert/getPop',           //首页弹窗广告
 	//---------分类相关接口----------//

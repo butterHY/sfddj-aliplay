@@ -407,13 +407,16 @@
                 <view class="couponPrice single-line font-26  font-weight-600 ">￥<text class="font-50">{{couponItem.costPrice}}</text></view>
                 <view class="couponDescribe single-line font-26">{{couponItem.couponName}}</view>
               </view>
-              <view class="couponButton font-30 posi_re" data-fatherIndex="{{fatherIndex}}" data-index="{{index}}" data-ruleSign="{{couponItem.couponShowRuleSign}}" catchTap="{{couponItem.couponStatus == 'NO_RECEIVE' ? 'getCoupon' : (couponItem.couponStatus == 'NORMAR' ? 'toUseCoupon' : '')}}">
-                <view class="litlePoint posi_ab litlePointTop"></view>
-                <view class="dottedLine posi_ab">
+              <view class="couponButton posi_re">
+                <button a:if="{{(couponItem.couponStatus == 'NO_RECEIVE') && (user_memId == 0 || user_memId == '0')}}" class="btnStyle gpnBtn zIndex100"  open-type="getAuthorize" onGetAuthorize="getPhoneNumber" scope='phoneNumber' onError="onAuthError" hover-class="none"></button>
+                <view class="couponButton font-30 posi_re" data-fatherIndex="{{fatherIndex}}" data-index="{{index}}" data-ruleSign="{{couponItem.couponShowRuleSign}}" data-couponid="{{couponItem.id}}" data-linkType="{{couponItem.linkType}}"  data-useLink="{{couponItem.useLink}}" catchTap="{{couponItem.couponStatus == 'NO_RECEIVE' ? 'getCoupon' : (couponItem.couponStatus == 'NORMAR' ? 'toUseCoupon' : '')}}">
+                  <view class="litlePoint posi_ab litlePointTop"></view>
+                  <view class="dottedLine posi_ab"></view>
+                  <view class="litlePoint posi_ab litlePointBot"></view>
+                  <view class="couponButtonText">{{couponItem.couponText}}</view>
                 </view>
-                <view class="litlePoint posi_ab litlePointBot"></view>
-                <view class="couponButtonText">{{couponItem.couponText}}</view>
               </view>
+
             </view>
           </view>
         </view>

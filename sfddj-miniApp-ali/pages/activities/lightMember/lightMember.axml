@@ -45,14 +45,14 @@
     </view>
   </view>
   <block a:for="{{thematicAds.modules}}" a:key="thematicAds">
-    <template is="thematicItem" data="{{item, fatherIndex: index, baseImageUrl, baseLocImgUrl, ossImgStyle, countHour, countMinute, countSecond,banRightMargin, isLightMember}}"></template>
+    <template is="thematicItem" data="{{item, fatherIndex: index, baseImageUrl, baseLocImgUrl, ossImgStyle, countHour, countMinute, countSecond,banRightMargin, isLightMember, user_memId}}"></template>
   </block>
-  <view class="openingButton posi_ab">
+  <view a:if="{{!isLightMember}}" class="openingButton posi_ab">
     <view class="openingBox all_100 flex_view_row tex_center" style="background-image: url({{baseImageUrl + openingButtonData.parseItem[0].imageUrl}}) ;background-size: 100% 100%;" catchTap="goToLightMember">
     </view>
   </view>
 </view>
-                <!-- <button class="btnStyle gpnBtn zIndex100" a:if="{{ (goods.secKillStatus && goodsSecondKill.totalSaleVolume != goodsSecondKill.totalStock) && (user_memId == 0 || user_memId == '0')}}" open-type="getAuthorize" onGetAuthorize="getPhoneNumber" scope='phoneNumber' onError="onAuthError" hover-class="none"></button> -->
+
 <!-- <view class="openingButton posi_ab">
   <view class="openingBox all_100 flex_view_row tex_center" style="background: black" catchTap="goToLightMember">
   </view>

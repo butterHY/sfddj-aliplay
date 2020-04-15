@@ -87,7 +87,7 @@
     <!-- 按钮 -->
     <view class="orderStatusBtnBox flex_view_row justi_end">
       <!-- 取消订单 -->
-      <view a:if="{{result.orderStatus != 'CANCEL'}}" class="cancelOrderBtn orderStatusBtn" onTap="cancelOrder">取消订单</view>
+      <view a:if="{{result.orderStatus != 'CANCEL' && result.orderStatus == 'NOPAY'}}" class="cancelOrderBtn orderStatusBtn" onTap="cancelOrder">取消订单</view>
       <!-- 联系客服 -->
       <!--<view class="contactsBtn orderStatusBtn">联系客服</view> -->
       <block a:if="{{result.shopPhone}}">
@@ -130,9 +130,9 @@
       <!-- 右边信息明细 -->
       <view class="flex_1 orderInfo_mes single-line">
         <view>{{orderSn}}</view>
-        <view>在线支付</view>
+        <view>{{result.orderStatus != 'NOPAY' && result.orderStatus != 'CANCEL' ? '支付宝' : '在线支付' }}</view>
         <view>{{orderDate}}</view>
-        <view a:if="{{result.orderStatus != 'NOPAY' && result.orderStatus != 'CANCEL' }}">3892038373628293038</view>
+        <view a:if="{{result.orderStatus != 'NOPAY' && result.orderStatus != 'CANCEL' }}">{{result.tradeNo}}</view>
       </view>
     </view>
   </view>

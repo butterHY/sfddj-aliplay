@@ -10,14 +10,14 @@ Component({
 		{text: '退款/售后', imageUrl: 'https://img.sfddj.com/miniappImg/community/icon/icon_after_com.png'},
 	],           //社区购订单入口
 	isMember: true,
-	hasList: false,
+	// hasList: false,
   },
   props: {},
   didMount() {
 	  this.setData({
 		  isMember: this.props.isMember
 	  })
-	  this.isHasOrder();
+	//   this.isHasOrder();
   },
   didUpdate() {
 	  this.setData({

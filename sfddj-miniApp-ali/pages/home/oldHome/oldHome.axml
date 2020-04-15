@@ -1,33 +1,24 @@
 <!--index.wxml-->
-<import src="../common/item-pintuan"/>
-<import src="../common/adverts"/>
-<import-sjs name="filters" from="../wxsFile/public.sjs"/>
+<import src="../../common/item-pintuan"/>
+<import src="../../common/adverts"/>
+<import-sjs name="filters" from="../../wxsFile/public.sjs"/>
 <!-- 旧的搜索模版和热词模版-->
 <!-- <import src="../common/home-search"/> -->
 <!-- <import src="../common/home-hotWords"/>  -->
 <!-- 新的搜索模块 -->
-<import src="../common/search"/>
+<import src="../../common/search"/>
 
-<view class="locationBox" hidden="{{ !isLocationLoad && !isGetLocation }}">
+<view class="locationBox">
 	<!-- TODO: 这里放最上面的“定位” --> 
 	<view class="locCityShow">
-		<view a:if="{{ isLocationLoad && !isGetLocation }}" class="cityInfo"
-			onTap="goLocationCity">
-			<text class="city">定位中...</text>
-		</view>
-
-		<view a:elif="{{isGetLocation && !isLocationLoad}}" class="cityInfo" onTap="goLocationCity">
+		<view class="cityInfo" onTap="goLocationCity">
 			<view class="city">{{ locInfo.city }}</view>
-			<view class="address flex_view_row align_cen">
+			<view class="address">
 				<view class="line"></view>
 				<text class="iconStyle icon-address"></text> 
-				<text class="single-line">{{ locInfo.streetShow }}</text>
+				{{ locInfo.streetShow }}
 			</view>
 		</view> 
-		
-		<view a:else class="cityInfo" onTap="goLocationCity">
-			<text class="city">无法自动获取地址，请手动选择地址</text>
-		</view>
 	</view>
 </view>
 
@@ -63,13 +54,6 @@
 					</block>
 				</swiper>
 			</view>
-
-			<!-- 推荐小店入口 -->
-			<block a:if="{{ o2oStore.show }}">
-				<store-enter storeShow="{{ o2oStore.store }}"></store-enter>
-			</block>
-
-
       <!-- 不知道为啥这么写，如果没有轮播数据为啥要添加 margin_top_120 ？ class="{{!materialArr || materialArr.length == 0 ? 'margin_top_120' : ''}}" -->
 			<view>
 				<template a:if='{{advertsArr && advertsArr.length > 0}}' is='advertsTem' data='{{advertsArr: advertsArr,baseImageUrl: baseImageUrl,baseLocImgUrl: baseLocImgUrl,current: current,ossImgStyle, hours: hours, minute: minute, second: second, isLastActivitys: isLastActivitys, isActivitysStart: isActivitysStart,pageScrollTop,windowHeight}}' ></template>

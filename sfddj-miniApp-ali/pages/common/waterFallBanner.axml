@@ -1,0 +1,9 @@
+
+<!-- 瀑布流 -->
+<import-sjs name="filters" from="../wxsFile/public.sjs"/>
+<template name="waterFallBannerItem">
+  <view class="width_100" style='{{left ? "padding:10rpx 10rpx 10rpx 0":"padding:10rpx 0 10rpx 10rpx"}}; box-sizing:border-box;' data-region='waterFallBanner' data-growio='{{gioType}}' data-index='{{index}}'  data-url='{{url}}' catchTap="goToPage">
+    <image a:if="{{imageUrl && !filters.strIndexOf(imageUrl,'http')}}" src="{{baseImageUrl}}{{imageUrl}}" class="width_100  borRa_16r boxShadow" style="border-radius: 10rpx;overflow:hidden; display:block;" mode="widthFix"></image>
+    <image a:elif="{{imageUrl && filters.strIndexOf(imageUrl,'http')}}" src="{{imageUrl}}" class="width_100  borRa_16r boxShadow" style="border-radius: 10rpx;overflow:hidden; display:block;" mode="widthFix"></image>
+  </view>
+</template>

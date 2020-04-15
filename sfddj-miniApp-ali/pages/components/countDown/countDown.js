@@ -28,7 +28,6 @@ Component({
     this.setData({
       goodsSecondKill: this.props.goodsSecondKill
     })
-    console.log(this.props.goodsSecondKill)
   },
 
   deriveDataFromProps(nextProps) {
@@ -98,7 +97,6 @@ Component({
       var that = this;
       getApp().globalData.goodsDetail_spikeTime = setInterval(
         function() {
-          console.log('aa')
           that.getTimes()
         }, 1000)
     },

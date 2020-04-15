@@ -1,0 +1,271 @@
+@import '../css-public/adverts.acss';
+@import '../css-public/itemGoodsCard.acss';
+
+page {
+  background: #f5f5f5;
+  overflow-x: hidden;
+}
+
+.zIndex_10002 {
+  z-index: 10002;
+}
+
+.boxShadow {
+  -webkit-box-shadow: 1px 1px 3px #e5e5e5;
+  -moz-shadow: 1px 1px 3px #e5e5e5;
+  box-shadow: 1px 1px 3px #e5e5e5;
+}
+
+.borRa_16r {
+  border-radius: 16rpx;
+  overflow: hidden;
+}
+
+.color-c6c6c6 {
+  color: #c6c6c6;
+}
+
+.home_searchBox {
+  height: 88rpx;
+  padding: 0 30rpx;
+}
+
+.home_message {
+  margin-right: 30rpx;
+}
+
+.home_search_bar {
+  height: 60rpx;
+  background: #f5f5f5;
+  border-radius: 45rpx;
+  box-sizing: border-box;
+}
+
+.home_notice {
+  margin-left: 20rpx;
+}
+
+.index_search {
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  position: fixed;
+  top: 0;
+  transform: translate(100%, 0);
+  transition: transform 0.3s;
+  z-index: 10001;
+}
+
+.index_search.show {
+  transform: translate(0, 0);
+}
+
+/* .index_search_action {           这一行是我新注释的
+  padding: 20rpx 0 20rpx 24rpx;
+  box-sizing: border-box;
+} */
+
+/* .index_search_content {          这一行是我新注释的  
+  padding-left: 16rpx;  
+  background-color: #f7f8fa;
+  border-radius: 45rpx;
+  width: 100%;
+  box-sizing: border-box;
+} */
+
+/* .index_search_cancle {           这一行是我新注释的  
+  padding: 0 16rpx;
+} */
+
+/* .search_bar_input {              这一行是我新注释的 
+  background-color: #f7f8fa;
+  border-radius: 45rpx;
+} */
+
+/* .systemRecomBox {                这一行是我新注释的 
+  padding: 0 24rpx;
+  position: relative;
+} */
+
+/* .hotWordListItem {                这一行是我新注释的 
+  background-color: #eee;
+  padding: 10rpx 20rpx;
+  border-radius: 45rpx;
+  margin-right: 20rpx;
+  max-width: 650rpx;
+  display: inline-block;
+  margin-bottom: 20rpx;
+  color: #323232;
+} */
+
+/* .hotWordListItem.active {       这一行是我新注释的 
+  color: #ff5353;
+} */
+
+/* .searchListItem {               这一行是我新注释的 
+  padding: 10rpx 20rpx;
+  border-radius: 5px;
+  margin-right: 20rpx;
+  margin-bottom: 20rpx;
+  max-width: 650rpx;
+  display: inline-block;
+} */
+
+.pad_24r {
+  padding: 0 24rpx;
+}
+
+.padTop_24 {
+  padding-top: 24rpx;
+}
+
+.marTop_24r {
+  margin-top: 24rpx;
+}
+
+.marTop_18r {
+  margin-top: 18rpx;
+}
+
+.bannerListBox {
+  width: 100%;
+  padding: 24rpx 24rpx 0 24rpx;
+  box-sizing: border-box;
+}
+
+.bannerListSwiper {
+  height: 174rpx;
+  border-radius: 16rpx;
+  overflow: hidden;
+}
+
+.bannerList_dot {
+  width: 8rpx;
+  height: 8rpx;
+  background: #fff;
+  border-radius: 50%;
+  margin-right: 12rpx;
+}
+
+.bannerList_dot.active {
+  width: 24rpx;
+  border-radius: 45rpx;
+}
+
+.homeSliderNav {
+  border-radius: 8rpx;
+  overflow: hidden;
+}
+
+.waterFallGoodsList {
+  display: flex;
+  /* padding: 0 24rpx; */
+  box-sizing: border-box;
+}
+
+.waterFallGoodsView.padL_24r {
+  padding-left: 24rpx;
+}
+
+.waterFallGoodsView.padR_24r {
+  padding-right: 24rpx;
+}
+
+.waterFallGoodsView {
+  width: 50%;
+  box-sizing: border-box;
+  position: relative;
+  padding: 0;
+  border: none;
+  overflow: hidden;
+}
+
+.waterFallTitFixed {
+  position: fixed;
+  top: 88rpx;
+  z-index: -1;
+  background: #fcfcfc;
+  left: 0;
+  opacity: 0;
+}
+
+.waterFallTitFixed.show {
+  opacity: 1;
+  z-index: 10000;
+}
+
+.loading_gif {
+  width: 26rpx;
+  height: 26rpx;
+  margin-right: 8rpx;
+}
+
+/* 返回顶部按钮 */
+
+.goTopBox {
+  position: fixed;
+  bottom: 68rpx;
+  right: -85rpx;
+  width: 80rpx;
+  height: 80rpx;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  border: 1px solid #eaeaea;
+  transition: all 0.3s;
+}
+
+.goTopBox.show {
+  right: 30rpx;
+}
+
+/* 弹窗广告 */
+
+.back-black {
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.advertPop_close {
+  right: 0;
+  top: 0;
+}
+
+.width_400r {
+  width: 400rpx;
+}
+
+.homePop {
+  padding: 60rpx 60rpx;
+  max-width: 400rpx;
+  border-radius: 10rpx;
+  overflow: hidden;
+}
+
+.borRa_10r {
+  border-radius: 10rpx;
+}
+
+/* 弹窗广告 */
+
+.back-black {
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.advertPop_close {
+  right: 0;
+  top: 0;
+}
+
+.width_400r {
+  width: 400rpx;
+}
+
+.homePop {
+  padding: 60rpx 60rpx;
+  max-width: 400rpx;
+  border-radius: 10rpx;
+  overflow: hidden;
+}
+
+.borRa_10r {
+  border-radius: 10rpx;
+}
