@@ -213,8 +213,10 @@ Page({
 					isLocationLoad: false,
 				});
 				// 设置缓存并设置全部变量的值 globalData.userLocInfo 
-				app.setLocStorage(_this.data.locInfo);
-				_this.locStoreShow();
+				app.setLocStorage(_this.data.locInfo, function() {
+					_this.locStoreShow();
+				});
+				
 			}, ()=> {
 				// 定位失败
 				_this.setData({
@@ -248,7 +250,9 @@ Page({
 	// 定位显示小店
 	locStoreShow() {
 		const _this = this;
-		let _locInfo = app.globalData.userLocInfo;
+		let _locInfo = this.data.locInfo; 
+		// console.log('locStoreShow', _locInfo)
+
 		http.get(api.Shop.SEARCH, {
 			longitude: _locInfo.longitude,
 			latitude: _locInfo.latitude,
@@ -266,9 +270,7 @@ Page({
 				'o2oStore.show': _show,
 				'o2oStore.store': _store
 			})
-		}, (err) => {
-
-		});
+		}, (err) => {});
 	},
 
 	// 初始化模块广告的滚动高度
