@@ -5,7 +5,7 @@
             <!-- 上部分 -->
             <view class="flex_view_row align_cen orderListInfo_top">
                 <view class="orderList_goodsImg">
-                    <image class="all_100 blockBox" src="{{item.goodsImagePath}}"/>
+                    <image class="all_100 blockBox" src="{{item.shopIcon ? baseImageUrl + item.shopIcon : staticsImageUrl + 'miniappImg/icon/icon_default_head.jpeg'}}"/>
                 </view>
                 <view class="flex_view_col justi_cen width_100">
                     <view class="flex_view_row align_cen justi_between">
@@ -33,7 +33,7 @@
                 <view class="storeMes flex_view_row align_cen font-26 color333">
                     <view class="flex_1 single-line">
                         <block a:for="{{item.orderItemList}}" a:for-item="goodsItem">
-                            <text>{{goodsItem.goodsName}}</text>
+                            {{index > 0 ? ',' + goodsItem.goodsName : goodsItem.goodsName}}
                         </block>
                     </view>
                     <view class="">等{{item.orderItemList.length}}件商品</view>

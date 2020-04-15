@@ -5,6 +5,7 @@ const dateFmt = require('/utils/dateformat');
 Page({
     data: {
         staticsImageUrl: api.staticsImageUrl,
+		baseImageUrl: api.baseImageUrl,
         orderTypeList: ['全部', '待付款', '付款成功', '交易成功', '退款/售后'],
         orderTypeCode: ['ALL', 'NOPAY', 'PAYFINISH', 'COMMENT', 'AFTERSALE'],       // 获取数据列表的类型
 
@@ -27,11 +28,11 @@ Page({
 		this.setData({
 			typeIndex: index
 		})
-        this.getOrderList(0);
+        // this.getOrderList(0);
     },
 
 	onShow(){
-		this.getOrderList(0, this.data.orderList[this.data.typeIndex])
+		this.getOrderList(0, this.data.orderList[this.data.typeIndex].length)
 	},
 
     onUnload() {
@@ -70,7 +71,7 @@ Page({
             this.setData({
                 [setStart]: 0,
                 [setHasMore]: true,
-                [setOrderList]: []
+                [setOrderList]: setLimit && setLimit > 0 ? this.data.orderList[typeIndex] : []
             })
         }
 
