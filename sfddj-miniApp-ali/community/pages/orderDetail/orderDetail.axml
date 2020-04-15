@@ -132,7 +132,7 @@
         <view>{{orderSn}}</view>
         <view>{{result.orderStatus != 'NOPAY' && result.orderStatus != 'CANCEL' ? '支付宝' : '在线支付' }}</view>
         <view>{{orderDate}}</view>
-        <view a:if="{{result.orderStatus != 'NOPAY' && result.orderStatus != 'CANCEL' }}">3892038373628293038</view>
+        <view a:if="{{result.orderStatus != 'NOPAY' && result.orderStatus != 'CANCEL' }}">{{result.tradeNo}}</view>
       </view>
     </view>
   </view>
