@@ -23,7 +23,7 @@
           <navigator url="/pages/user/member/myInfoList/myInfoList" hover-class="none">
             <!-- 使用open-data   -->
             <!-- <image a:if='{{avatarUrl}}' src="{{avatarUrl}}" class='user_header_bg2'></image>   -->
-            <image class="user_avatar" src="{{avatarUrl ? avatarUrl : baseLocImgUrl + 'miniappImg/icon/icon_default_head.jpeg'}}"></image>
+            <image class="user_avatar" src="{{avatarUrl ? avatarUrl : baseLocImgUrl + 'miniappImg/icon/icon_default_head.jpg'}}"></image>
           </navigator>
         </view>
         <!--昵称  -->
@@ -32,7 +32,7 @@
           <navigator class="tex_left" url="/pages/user/member/myInfoList/myInfoList" hover-class="none">
             <!--<text class=''>{{userName}}</text> -->
             <!--使用open-data  -->
-            <text class=" font-36 color-white fontW_600">{{userName ? userName : '顺丰大当家'}}</text>
+            <text class=" font-36 color-white fontW_600">{{userName ? userName : '年丰大当家'}}</text>
           </navigator>
           <view hover-class="none" url="memberLevel/memberLevel" class="user_level flex_view_row font-22 color-white align_cen justi_cen">
             <image src="{{baseLocImgUrl}}miniappImg/icon/icon_vipGold.png" class="icon_vipGold"></image>
@@ -120,6 +120,13 @@
         </view>
       </view>
     </view>
+	
+	<block a:if="{{hasList}}">	
+		<!-- 社区订单 -->
+		<community-order isMember="{{isMember}}" onGetPhoneNumber="commuGetPhoneNumber"></community-order>
+	</block>
+	
+
     <!-- 我的服务 -->
     <view>
       <!-- 标题 -->

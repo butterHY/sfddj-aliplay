@@ -6,10 +6,13 @@ Page({
     unusableList: [],
     shopId: '',
     staticsImageUrl: api.staticsImageUrl,
+	type: 'order',      //从哪里过来的，默认是确认订单页
   },
   onLoad(options) {
+	let shopId  = options.shopId ? options.shopId : ''
     this.setData({
-      shopId: options.shopId ? options.shopId : ''
+      shopId,
+	  type: shopId ? 'order' : 'other',      //如果没有店铺id,则认为不是确认订单页过来的 
     })
    },
    onShow(){
@@ -23,11 +26,20 @@ Page({
     get(api.O2O_ADDRESS.getAddrList, {shopId}, res => {
       let result = res.data.data ? res.data.data : []
       if(result && Object.keys(result).length > 0) {
-        let {optionalList, unusableList} = this.filterList(result);
-        this.setData({
-          optionalList,
-          unusableList
-        })
+		//   如果是从确认订单页过来，则要分是否可用，否则，只作为展示
+		if(this.data.type == 'order') {
+        	let {optionalList, unusableList} = this.filterList(result);
+			this.setData({
+				optionalList,
+				unusableList
+			})
+		} else {
+			let optionalList = Object.assign([], result);
+			this.setData({
+				optionalList
+			})
+		}
+		
       } else {
         this.setData({
           optionalList: [],

@@ -10,18 +10,24 @@ Component({
   props: {},
   didMount() {
     this.shop = Shop.init(this);
-    this.reload();
   },
   didUpdate() {},
   didUnmount() {},
   methods: {
-    loadMore() {
+    loadMore(callbackFun) {
       let loc = app.globalData.userLocInfo;
       if(loc && loc.longitude) {
+        this.loc = loc;
         this.shop.gets(loc.longitude, loc.latitude, this.nextPageIdx, (res) => {
           if(res && res.data && res.data.data) {
             if(res.data.data.length) {
               this.nextPageIdx++;
+            } else {
+              if(this.nextPageIdx == 0) {
+                this.setData({
+                  isEmpty: true
+                });
+              }
             }
             this.$spliceData({
               list: [this.data.list.length, 0, ...res.data.data]
@@ -32,16 +38,22 @@ Component({
               content: '系统忙，请稍后再试'
             });
           }
+          if(callbackFun) {
+            callbackFun();
+          }
         });
       }
     },
-    reload() { // 重新加载
+    reload(callbackFun) { // 重新加载
       this.nextPageIdx = 0;
       if(this.data.list) {
+        this.setData({
+          isEmpty: false
+        });
         this.$spliceData({
           list: [0]
         }, () => {
-          this.loadMore();
+          this.loadMore(callbackFun);
         });
       }
     }

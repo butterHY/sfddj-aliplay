@@ -1,7 +1,8 @@
 <view class="contactsBtn orderStatusBtn" onTap="tapContacts">联系客服</view>
-
-<popup show="{{contactsPop}}" position="bottom" onClose="onPopupClose"> 
-    <list-item onClick="onCallPhone" >{{contactsTel}}</list-item>
-    <list-item class="sendBtn" onClick="onCallPhone">拨打</list-item>
-    <list-item class="closeBtn" onClick="onPopupClose">取消</list-item> 
-</popup> 
+<popup show="{{contactsPop}}" position="bottom" onClose="onPopupClose">
+  <block a:for="{{telsList}}">
+    <list-item index="{{index}}" onClick="onCallPhone">{{item}}</list-item>
+  </block>
+  <!-- <list-item class="sendBtn" onClick="onCallPhone">拨打</list-item> -->
+  <list-item class="closeBtn" onClick="onPopupClose">取消</list-item>
+</popup>

@@ -82,7 +82,12 @@ Page({
 			addressJson: {},
 			pois: [],
 			streetShow: '',
-			streetLoc: ''
+			streetLoc: '', 
+		},
+
+		o2oStore: {
+			show: false,
+			store: null,
 		}
 	},
 
@@ -201,12 +206,14 @@ Page({
 				});
 				// 设置缓存并设置全部变量的值 globalData.userLocInfo 
 				app.setLocStorage(_this.data.locInfo);
+				_this.locStoreShow();
 			});
 		}
 		else {
 			_this.setData({
 				locInfo: userLocInfo
 			})
+			_this.locStoreShow();
 		}
 	},
 
@@ -224,7 +231,34 @@ Page({
 		return num;
 	},
 
+
 	// 初始化模块广告的滚动高度  ， 原来旧的达官统计方法， ----- 已没有使用；
+	// 定位显示小店
+	locStoreShow() {
+			const _this = this; 
+			const _locInfo = locAddr.locInfo; 
+			http.get(api.Shop.SEARCH, {
+							longitude: _locInfo.longitude,
+							latitude: _locInfo.latitude,
+							start: 0,
+							limit: 1, 
+					},(res)=> {
+						let _data = res.data.data; 
+						if (_data.length > 0) {
+							_this.setData({
+									'o2oStore.show': true,
+									'o2oStore.store': Object.assign({}, _data[0])
+							}) 
+							
+						} 
+					}, (err)=> {
+							 
+				});
+    },
+
+
+
+	// 初始化模块广告的滚动高度
 	setModuleScrollTop(result) {
 		let that = this;
 		let { materialArr, advertsArr, homeGoodsList } = this.data;
@@ -749,7 +783,7 @@ Page({
 	// 分享页面
 	onShareAppMessage: function(res) {
 		return {
-			title: '顺丰大当家-顺丰旗下电商平台',
+			title: '年丰大当家-生鲜电商平台',
 			path: '/pages/home/home'
 		};
 	},

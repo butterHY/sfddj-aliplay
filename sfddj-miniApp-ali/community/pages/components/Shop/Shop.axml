@@ -4,7 +4,7 @@
       <view style="background-image: url({{data.shopLogo}})"></view>
       <view>
         <view>{{data.shopName}}</view>
-        <view>距您{{data.distance}}米</view>
+        <view>距您{{data.distance}}</view>
       </view>
     </view>
     <view>

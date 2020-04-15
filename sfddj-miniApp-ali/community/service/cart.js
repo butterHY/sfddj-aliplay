@@ -1,10 +1,9 @@
 // 购物车
 
-import MiniAppService from "alipay-miniapp-service";
 import http from '/api/http';
 import api from '/api/api';
 
-class Cart extends MiniAppService {
+class Cart extends getApp().Service {
     constructor() {
         super();
     }
@@ -45,7 +44,11 @@ class Cart extends MiniAppService {
                 */
                 let obj = this.$get(shopId + '');
                 if(!obj) {
-                    obj = {cartList: [], cartTotalNumb: 0, salePrice: 0, discountPrice: 0, cnt: 0};
+                    let _obj = {cartList: [], cartTotalNumb: 0, salePrice: 0, discountPrice: 0, cnt: 0};
+                    if(obj === null) {
+                      this.$set(shopId, _obj);
+                    }
+                    obj = _obj;
                 }
                 let cnt2 = obj.cnt + cnt,
                     salePrice = obj.salePrice + sku.salePrice * cnt,
@@ -85,7 +88,11 @@ class Cart extends MiniAppService {
                     });
                 }
                 if(callbackFun) {
-                    callbackFun(res);
+                    let tip = {};
+                    if(sku.store < 3) {
+                        tip.msg = '库存不足，请尽快下单';
+                    }
+                    callbackFun(res, tip);
                 }
             }, (err) => {
                 if(callbackFun) {

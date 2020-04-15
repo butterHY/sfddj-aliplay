@@ -132,6 +132,8 @@
     padding-right: 30rpx;
     flex-grow: 0;
     flex-shrink: 0;
+    padding-bottom: 180rpx;
+    overflow-y: scroll;
 }
 
 .shop_categories > view {
@@ -162,7 +164,7 @@
 .shop_categories > view > view:nth-child(2) {
     flex-shrink: 1;
     flex-grow: 1;
-    padding: 20rpx;
+    padding: 30rpx;
     padding-right: 1rpx;
     font-size: 26rpx;
     color: rgb(102,102,102);
@@ -212,4 +214,9 @@
 .shop_resultmsg {
     text-align: center;
     padding: 26rpx 0;
+}
+
+.shop_resultmsg image {
+    max-height: 230rpx;
+    margin-bottom: 18rpx;
 }

@@ -230,7 +230,7 @@
 		<view class="comment-user-area">
 			<view class="flex_view_row align_cen">
 				<view class="comment-user-image">
-					<image src="{{comment.headPortraitPath ? comment.headPortraitPath : base64imageUrl + 'miniappImg/icon/icon_default_head.jpeg'}}" class="proComment_headPort">
+					<image src="{{comment.headPortraitPath ? comment.headPortraitPath : base64imageUrl + 'miniappImg/icon/icon_default_head.jpg'}}" class="proComment_headPort">
 					</image>
 				</view>
 				<view class="font-24 color-323232 marLeft_20">{{comment.nickNameResult}}

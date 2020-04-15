@@ -4,6 +4,9 @@ var constants = require('../../utils/constants');
 var sendRequest = require('../../utils/sendRequest');
 var utils = require('../../utils/util');
 var app = getApp();
+
+import { api, post} from '/api/http';
+
 Page({
 
 	/**
@@ -27,6 +30,7 @@ Page({
 		// autoplay: true,
 		// duration: 500,
 		// currentIndex: 0,
+		hasList: false
 	},
 
 	/**
@@ -90,6 +94,9 @@ Page({
 		// })
 
 		that.getCartNumber();
+
+		// 请求是否有社区订单
+		that.isHasOrder();
 	},
 
 	getMemberInfo: function() {
@@ -241,16 +248,24 @@ Page({
 	// },
   
 	// 跳转去原生的优惠券页
-  goToCoupon() {
-		// 友盟+统计--签到页浏览
-		this.umaTrackEvent('coupon')
-    my.navigateTo({ url: './myCoupon/myCoupon' })
-  },
+	goToCoupon() {
+			// 友盟+统计--签到页浏览
+			this.umaTrackEvent('coupon')
+		my.navigateTo({ url: './myCoupon/myCoupon' })
+	},
 
 	// 获取手机号
 	getPhoneNumber: function(e) {
 		var that = this;
 
+		this.myGetPhone(e);
+		
+
+	},
+
+	// 调起手机号弹窗
+	myGetPhone(e) {
+		let that = this;
 		my.getPhoneNumber({
 			success: (res) => {
 				let response = res.response
@@ -297,7 +312,6 @@ Page({
 				});
 			},
 		});
-
 	},
 
 	// 获取手机号失败
@@ -305,6 +319,11 @@ Page({
 		my.navigateTo({
 			url: '/pages/user/bindPhone/bindPhone'
 		});
+	},
+
+	// 社区订单获取手机号
+	commuGetPhoneNumber(e) {
+		this.myGetPhone(e);
 	},
 
 	// 获取用户信息，授权 
@@ -466,6 +485,30 @@ Page({
 	getCartNumber: function() {
 		var app = getApp();
 		app.getCartNumber();
+	},
+
+	// 判断是否有订单
+	isHasOrder(){
+		let that = this;
+		let data = {
+			start: 0,
+			limit: 10,
+			otoOrderPageEnum: 'ALL'
+		}
+		if(!this.data.hasList) {
+			
+			post(api.O2O_ORDER.getOrderList, data, res => {
+				if(res.data.data && Object.keys(res.data.data).length > 0) {
+					that.setData({
+						hasList: true
+					})
+				}
+			}, err => {
+				that.setData({
+					hasList: false
+				})
+			})
+		}
 	},
 
 

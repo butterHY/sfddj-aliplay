@@ -4,6 +4,7 @@
   "pullRefresh": false,
   "usingComponents": {
     "loading-now": "../components/loadingNow/loadingNow",
-    "load-fail": "../components/loadFail/loadFail"
+    "load-fail": "../components/loadFail/loadFail",
+    "community-order": "../components/communityOrderEnter/communityOrderEnter"
   }
 } 

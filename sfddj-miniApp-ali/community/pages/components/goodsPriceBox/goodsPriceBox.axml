@@ -1,11 +1,11 @@
 <view class="goodsPriceBox">
   <view class="goodsName">
     <view class="nameShow">
-      <text>{{ goodsInfo.skuData.iavValue }} {{ goodsInfo.name }}</text>
+      <text>{{ goodsInfo.name }} {{ goodsInfo.skuData.iavValue }}</text>
     </view>
-    <view class="nameTip">
+    <!-- <view class="nameTip">
       <text>月售{{ goodsInfo.monthSaleCount }}份</text>
-    </view>
+    </view> -->
   </view>
   <view class="goodsPrice">
     <view class="priceBox">

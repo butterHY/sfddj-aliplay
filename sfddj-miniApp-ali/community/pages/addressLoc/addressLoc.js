@@ -67,7 +67,7 @@ Page({
 
     my.chooseLocation({
       success: (res) => {
-        // console.log('chooseLocation', res) 
+        console.log('chooseLocation', res) 
         _this.setData({
           'locInfo.longitude': res.longitude,
           'locInfo.latitude': res.latitude, 
@@ -75,10 +75,9 @@ Page({
         _name = res.name;
 
         locAddr.GDCity(_this.data.locInfo, (data) => {
-          
-          data.streetShow = _name; 
-          data.addressAll = data.province + data.city + data.district + data.street + _name; 
-          
+          // name 没有 显示 pois第一个数据的name
+          data.streetShow = _name ? _name : _name = data.pois[0].name; 
+          data.addressAll = data.province + data.city + data.district + data.street + _name;  
           myApp.setLocStorage(data, function () {
             my.navigateBack();
           });
@@ -118,7 +117,7 @@ Page({
 
   // 到新增地址
   newAddress() {
-    my.navigateTo({ url: '../addressEdit/addressEdit?isNew=1' });
+    my.navigateTo({ url: '../addressList/addressList' });
   },
 
   // 重新定位

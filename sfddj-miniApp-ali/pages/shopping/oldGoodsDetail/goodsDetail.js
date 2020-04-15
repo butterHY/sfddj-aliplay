@@ -255,7 +255,7 @@ Page({
 				}
 
 				var article = res.data.result.introduction;
-				res.data.result.headPortraitPath = result.headPortraitPath ? that.data.baseImageUrl + result.headPortraitPath : that.data.baseImageLocUrl + 'miniappImg/icon/icon_default_head.jpeg'
+				res.data.result.headPortraitPath = result.headPortraitPath ? that.data.baseImageUrl + result.headPortraitPath : that.data.baseImageLocUrl + 'miniappImg/icon/icon_default_head.jpg'
 				var allProduct = res.data.allProduct;
 				that.data.allProduct = res.data.allProduct;
 				var minCount = res.data.result.minCount ? res.data.result.minCount : 1; //最少起售数

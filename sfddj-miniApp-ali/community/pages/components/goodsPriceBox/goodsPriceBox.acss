@@ -8,6 +8,7 @@
 .goodsName .nameShow {
 	color: #010101;
 	font-size: 38rpx;
+	line-height: 40rpx;
 	margin-bottom: 15rpx; 
 	overflow: hidden;  
 	text-overflow: ellipsis; 

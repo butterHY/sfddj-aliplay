@@ -17,37 +17,17 @@ Page({
 		}
 	},
 
-	onLoad: async function (options) {
+	onLoad: async function () {
 	},
 
 	onShow: function () {
-		const _this = this;
-		let userLocInfo = myApp.globalData.userLocInfo;
-		// console.log('onShow-index', userLocInfo)
-
-		if (this.jsonNull(userLocInfo) == 0) {
-			// console.log('重新定位')
-			locAddr.location((res) => {
-				_this.setData({
-					locInfo: res
-				});
-				// 设置缓存并设置全部变量的值 globalData.userLocInfo 
-				myApp.setLocStorage(_this.data.locInfo, () => {
-					if(this.shopList) {
-						this.shopList.reload();
-					}
-				});
-			});
-		}
-		else {
-			_this.setData({
-				locInfo: userLocInfo
-			}, () => {
-				if(this.shopList) {
+		this.loadLoc((loc) => {
+			if (this.shopList) {
+				if(!this.shopList.loc || (loc.latitude != this.shopList.loc.latitude || loc.longitude != this.shopList.loc.longitude)) {
 					this.shopList.reload();
 				}
-			});
-		}
+			}
+		});
 	},
 
 	goLocationCity() {
@@ -89,6 +69,51 @@ Page({
 
 	shopListSave(ref) {
 		this.shopList = ref;
+	},
+
+	onPullDownRefresh() {
+		this.loadData(() => {
+			my.stopPullDownRefresh();
+		});
+	},
+
+  loadLoc(callbackFun) {
+    const _this = this;
+		let userLocInfo = myApp.globalData.userLocInfo;
+		// console.log('onShow-index', userLocInfo)
+
+		if (this.jsonNull(userLocInfo) == 0) {
+			// console.log('重新定位')
+			locAddr.location((res) => {
+				_this.setData({
+					locInfo: res
+				}, () => {
+					// 设置缓存并设置全部变量的值 globalData.userLocInfo 
+					myApp.setLocStorage(_this.data.locInfo, () => {
+						if(callbackFun) {
+							callbackFun(_this.data.locInfo);
+						}
+					});
+				});
+			});
+		}
+		else {
+			_this.setData({
+				locInfo: userLocInfo
+			}, () => {
+				if(callbackFun) {
+					callbackFun(userLocInfo);
+				}
+			});
+		}
+  },
+
+	loadData(callbackFun) {
+        this.loadLoc(() => {
+            if(this.shopList) {
+                this.shopList.reload(callbackFun);
+            }
+        });
 	}
 
 });

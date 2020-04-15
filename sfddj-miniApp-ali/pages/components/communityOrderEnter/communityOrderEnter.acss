@@ -1,0 +1,27 @@
+.user_comOrder {
+	margin: 50rpx 0;
+}
+
+.orderListBox {
+	display: flex;
+	width: 100%;
+	justify-content: space-between;
+}
+
+.iconImg {
+	width: 48rpx;
+	height: 48rpx;
+}
+
+.color-636363 {
+	color: #636363;
+}
+
+.orderListItem {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	flex: 1;
+}

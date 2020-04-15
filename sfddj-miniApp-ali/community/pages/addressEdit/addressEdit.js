@@ -90,17 +90,30 @@ Page({
   // 保存地址
   saveAddr() {  
     const _this = this; 
-    this.verifyForm(false, function() { 
-      my.navigateBack(); 
+    this.verifyForm(false, function() {  
+      my.showToast({
+        type: 'success',
+        content: '保存成功',
+        duration: 2000,
+        success: () => {
+          my.navigateBack(); 
+        },
+      });
     })
   },
   
   // 保存和使用
   useAddr() { 
-    const _this = this;
-    const mydata = this.data;
+    const _this = this; 
     this.verifyForm(true, function() {
-      my.navigateBack();
+      my.showToast({
+        type: 'success',
+        content: '保存成功',
+        duration: 2000,
+        success: () => {
+          my.navigateBack(); 
+        },
+      });
     })   
   },
 
@@ -146,34 +159,49 @@ Page({
       let _ret = res.data.ret;
       let _data = res.data.data;
       if (_ret.code == '0') { 
-          if (fn) fn();
+		//   保存成功提示
+		my.showToast({
+		  content: '保存成功'
+		});
+        if (fn) fn();
       }  
-    }, (err)=>{})
+    }, (err)=>{
+		//   保存失败
+		my.showToast({
+		  content: err
+		});
+	})
   },
 
   // 定位地址栏选择的方法
   chooseLocation() {
     const _this = this
+    let _optAddr = this.data.optAddr;
+    let _name = ''; 
     my.chooseLocation({ 
       success: (res) => {
         // console.log('chooseLocation - address', res)
         _this.setData({
           'locInfo.longitude': res.longitude,
-          'locInfo.latitude': res.latitude, 
-          'optAddr.locate': res.name,
+          'locInfo.latitude': res.latitude,  
           'optAddr.address': res.address, 
           'optAddr.longitude': res.longitude,
           'optAddr.latitude': res.latitude, 
         });
+         _name = res.name;
  
         locAddr.GDCity(_this.data.locInfo, (data) => {  
-          //  let _area = data.province + data.city + data.district;
-           _this.setData({ 
-              'optAddr.province': data.province,
-              'optAddr.city': data.city,
-              'optAddr.area': data.district
-           }) 
-          //  console.log('optAddr', _this.data.optAddr) 
+          // 如果 定位的name 是空 返回 省市区
+          // let _area = data.province + data.city + data.district; 
+
+          _this.setData({ 
+            'optAddr.province': data.province,
+            'optAddr.city': data.city,
+            'optAddr.area': data.district,
+            'optAddr.locate': _name ? _name : _name = data.pois[0].name, // 有那么显示 那么 没有 显示 pois第一个数据的name
+          }) 
+          // console.log('data', data) 
+          // console.log('optAddr', _this.data.optAddr) 
         }); 
         
       },

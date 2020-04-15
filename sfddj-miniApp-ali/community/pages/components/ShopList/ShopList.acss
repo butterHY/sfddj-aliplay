@@ -1,3 +1,13 @@
 .shoplist > .shop {
     margin-bottom: 20rpx;
 }
+
+.shoplist_empty {
+    background-image: url('/community/assets/images/Moreshops.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    height: 196rpx;
+    margin-top: 50rpx;
+    margin-bottom: 50rpx;
+}

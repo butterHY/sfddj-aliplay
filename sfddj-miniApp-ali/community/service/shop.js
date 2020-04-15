@@ -1,13 +1,12 @@
 // 店铺相关
 
-import MiniAppService from "alipay-miniapp-service";
 import http from '/api/http';
 import api from '/api/api';
 import {getDistance} from '/community/assets/common';
 
 const app = getApp();
 
-class Shop extends MiniAppService {
+class Shop extends app.Service {
     constructor() {
         super();
     }

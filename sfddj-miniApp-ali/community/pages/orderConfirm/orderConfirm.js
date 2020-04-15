@@ -25,7 +25,7 @@ Page({
         deliveryOutGratis: 0,      //满多少可免邮的价格
         totalPrice: 0,           //总价格
         defaultAddress: {},      //商家配送时的地址
-
+        result: {},
     },
     onLoad(options) {
         let { shopid } = options;
@@ -70,7 +70,7 @@ Page({
             let result = res && Object.keys(res).length > 0 ? res : {};
             if (Object.keys(result).length > 0) {
                 let shopCartList = result.cartList ? result.cartList : [];
-
+                console.log('cartService', result)
                 this.setData({
                     shopTotalPrice: result.discountPrice < result.salePrice ? result.discountPrice : result.salePrice,     //整个商店商品的总价格
                     originalTotalPrice: result.discountPrice < result.salePrice ? result.discountPrice : result.salePrice,    //最原始商品的总价
@@ -87,18 +87,20 @@ Page({
             // console.log(res)
             let result = res.data.data ? res.data.data : {};
             if (Object.keys(result).length > 0) {
+                console.log('orderData', result);
                 let shopCartList = result.items;
                 shopCartList.forEach((val, i, arr) => {
                     val.goodsImagePath = this.data.baseImageUrl + val.productImg;
                     val.salePrice = val.price;
                     val.name = val.goodsName;
-
+                    val.skuValue = val.productName;
                 })
                 this.setData({
+                    result: result,
                     confirmToken: result.confirmToken,    //防止重复提交的token
                     shopTotalPrice: this.data.shopTotalPrice > 0 && result.price == this.data.shopTotalPrice ? this.data.shopTotalPrice : result.price,
                     // shopCartList: this.data.shopCartList.length > 0  ? this.data.shopCartList : shopCartList,
-                    shopCartList: this.data.shopTotalPrice <= 0 || result.price != this.data.shopTotalPrice ? shopCartList : this.data.shopCartList,       //如果service里算的价格跟接口返回的不一样，或者service的价格没设置到，则要重新加一下商品列表。
+                    shopCartList: this.data.shopTotalPrice <= 0 || result.price != this.data.shopTotalPrice || shopCartList.length != this.data.shopCartList ? shopCartList : this.data.shopCartList,       //如果service里算的价格跟接口返回的不一样，或者service的价格没设置到，则要重新加一下商品列表。
                     shopName: result.name,     // 商家名称
                     deliveryFee: result.deliveryOutGratis && result.deliveryOutGratis > 0 ? (result.deliveryFee && result.price < result.deliveryOutGratis ? result.deliveryFee : 0) : result.deliveryFee,    // 配送费
                     deliveryOutGratis: result.deliveryOutGratis ? result.deliveryOutGratis : 0,
@@ -239,6 +241,8 @@ Page({
             my.showToast({
                 content: err
             })
+            // 重新更新下token
+            that.getOrderData(that.data.shopid);
         })
     },
 

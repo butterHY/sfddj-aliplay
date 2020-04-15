@@ -20,10 +20,19 @@ Page({
         // allCounting: false,        //全部状态订单是否在使用倒计时
         // noPayCounting: false,      // 未支付状态订单是否在使用倒计时
         isCounting: [false, false, false, false, false],    //对应的订单状态是否在使用倒计时
+		isLoadingList: [false, false, false, false, false],    //是否正在加载
     },
-    onLoad() {
+    onLoad(options) {
+		let index = options.index ? options.index : 0;
+		this.setData({
+			typeIndex: index
+		})
         this.getOrderList(0);
     },
+
+	onShow(){
+		this.getOrderList(0, this.data.orderList[this.data.typeIndex])
+	},
 
     onUnload() {
         // 清除定时器
@@ -45,13 +54,15 @@ Page({
     },
 
     // 获取订单列表
-    getOrderList(type = '') {
+    getOrderList(type = '', setLimit) {
         let that = this;
-        let { typeIndex, limit, orderList } = this.data;
+        let { typeIndex, limit, orderList, isLoadingList } = this.data;
         let setHasMore = 'hasMoreList[' + typeIndex + ']';
         let setLoaded = 'isLoadedList[' + typeIndex + ']';
         let setOrderList = 'orderList[' + typeIndex + ']';
         let setCountList = 'countList[' + typeIndex + ']';
+        let setLoadingList = 'isLoadingList[' + typeIndex + ']';
+		limit = setLimit && setLimit > 0 ? setLimit : limit;
 
         // 如果type == 0则视为刷新
         if (type.toString() == '0') {
@@ -70,27 +81,37 @@ Page({
             otoOrderPageEnum: this.data.orderTypeCode[typeIndex]
         };
 
+		if(!isLoadingList[typeIndex]) {
 
-        post(api.O2O_ORDER.getOrderList, data, res => {
-            let result = res.data.data ? res.data.data : [];
-            let handleList = that.handleGoods(result);
-            result = handleList.goodsList;
-            let { countList } = handleList;
-            let newestList = start == 0 ? Object.assign([], result) : orderList[typeIndex].concat(result);
-            let newestCountList = start == 0 ? Object.assign([], countList) : orderList[typeIndex].concat(countList);
-            that.setData({
-                [setHasMore]: result.length >= limit ? true : false,
-                [setLoaded]: true,
-                [setOrderList]: newestList,
-                [setCountList]: newestCountList
-            })
-            that.isUseCountDown();
-        }, err => {
-            that.setData({
-                [setHasMore]: false,
-                [setLoaded]: true
-            })
-        })
+			// 加载开关
+			this.setData({
+				[setLoadingList]: true
+			})
+			
+			post(api.O2O_ORDER.getOrderList, data, res => {
+				let result = res.data.data ? res.data.data : [];
+				let handleList = that.handleGoods(result);
+				result = handleList.goodsList;
+				let { countList } = handleList;
+				let newestList = start == 0 ? Object.assign([], result) : orderList[typeIndex].concat(result);
+				let newestCountList = start == 0 ? Object.assign([], countList) : orderList[typeIndex].concat(countList);
+				that.setData({
+					[setHasMore]: result.length >= limit ? true : false,
+					[setLoaded]: true,
+					[setOrderList]: newestList,
+					[setCountList]: newestCountList,
+					[setLoadingList]: false
+				})
+				that.isUseCountDown();
+			}, err => {
+				that.setData({
+					[setHasMore]: false,
+					[setLoaded]: true,
+					[setLoadingList]: false
+				})
+			})
+		}
+
 
     },
 
@@ -120,12 +141,12 @@ Page({
     // 处理商品信息
     handleGoods(list) {
         let that = this;
-        let defaultImg = "https://img.sfddj.com/miniappImg/icon/icon_default_head.jpeg";
+        let defaultImg = "https://img.sfddj.com/miniappImg/icon/icon_default_head.jpg";
         let goodsList = list && Object.keys(list).length > 0 ? list : [];
         let countList = [];    //定时器列表
         let now = new Date().getTime();
         goodsList.forEach((val, i, arr) => {
-            val.goodsImagePath = val.orderItemList[0] && Object.keys(val.orderItemList[0]).length > 0 ? val.orderItemList[0].goodsImagePath ? api.baseImageUrl + JSON.parse(val.orderItemList[0].goodsImagePath)[0] : defaultImg : defaultImg;
+            val.goodsImagePath = val.orderItemList[0] && Object.keys(val.orderItemList[0]).length > 0 ? val.orderItemList[0].goodsImagePath ? api.baseImageUrl + val.orderItemList[0].goodsImagePath : defaultImg : defaultImg;
             // 转换订单状态中文
             val.orderStatusStr = that.handleStatus(val.orderStatus);
             // 转换订单创建时间
@@ -181,7 +202,7 @@ Page({
         let allCountList = countList[0];
         let setOrderList = 'orderList[0]';
         let setCountList = 'countList[0]';
-        allCountList.every((item, i, arr) => {
+        allCountList.forEach((item, i, arr) => {
             if (item > 0) {
                 let mins = parseInt((item / 1000) / 60);
                 let seconds = parseInt((item / 1000 - mins * 60));
@@ -219,7 +240,7 @@ Page({
         let noPayCountList = countList[1];
         // let setOrderList = 'orderList[' + 0 + ']';
         let setCountList = 'countList[1]';
-        noPayCountList.every((item, i, arr) => {
+        noPayCountList.forEach((item, i, arr) => {
             if (item > 0) {
                 let mins = parseInt((item / 1000) / 60);
                 let seconds = parseInt((item / 1000 - mins * 60));
@@ -254,7 +275,23 @@ Page({
         let that = this;
         let {index, orderSn} = e.currentTarget.dataset;
         let { typeIndex, orderList } = this.data;
-        post(api.O2O_ORDER.deleteOrder, { orderSn }, res => {
+        my.confirm({
+            content: '确定要删除该订单吗？',
+            // confirmButtonText: '',
+            // cancelButtonText,
+          success: (res) => {
+            if(res.confirm) {
+              that.deleteOrderRequest(orderSn, typeIndex, orderList, index);
+            }
+          },
+        });
+        
+    },
+
+    // 删除订单请求
+    deleteOrderRequest(orderSn, typeIndex, orderList, index){
+      let that = this;
+      post(api.O2O_ORDER.deleteOrder, { orderSn }, res => {
             let { code, message } = res.data.ret;
             if (code == '0') {
                 my.showToast({
@@ -274,6 +311,13 @@ Page({
                 content: err || '删除失败'
             })
         })
+    },
+
+    // 去逛逛跳转
+    toDDJHome(){
+      my.navigateTo({
+        url: '/community/pages/index/index'
+      });
     },
 
 });

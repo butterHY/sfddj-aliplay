@@ -347,7 +347,7 @@
     <view class="comment-user-area">
       <view class="flex_view_row align_cen">
         <view class="comment-user-image">
-          <image src="{{item.headPortraitPath ? item.headPortraitPath : base64imageUrl + 'miniappImg/icon/icon_default_head.jpeg'}}" class="all_100"></image>
+          <image src="{{item.headPortraitPath ? item.headPortraitPath : base64imageUrl + 'miniappImg/icon/icon_default_head.jpg'}}" class="all_100"></image>
         </view>
         <view class="height_100 flex_view_col marLeft_20">
           <view class="comment_nickName font-28 color-999">{{item.nickName}}</view>

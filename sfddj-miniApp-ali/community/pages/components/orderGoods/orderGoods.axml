@@ -10,7 +10,7 @@
         </block>
     </view>
     <!-- 配送费 -->
-    <view a:if="{{typeIndex == 1 && deliveryFee > 0}}" class="deliveryFee">
+    <view a:if="{{typeIndex == 1}}" class="deliveryFee">
         <!-- 配送 -->
         <view class="flex_view_row align_cen flex_1">
             <view>配送费</view>
@@ -22,7 +22,7 @@
     </view>
     <!--商品小计  -->
     <view class="order_goods_sum">
-        <text>小记：</text>
+        <text>小计：</text>
         <text>￥{{totalPrice}}</text>
     </view>
 </view>

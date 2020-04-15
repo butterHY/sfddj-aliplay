@@ -30,7 +30,7 @@ Page({
 		isloadMore: false,
 		baseLocImgUrl: constants.UrlConstants.baseImageLocUrl,
 		baseImageUrl: constants.UrlConstants.baseImageUrl,
-		defaultImage: 'miniappImg/icon/icon_default_head.jpeg',
+		defaultImage: 'miniappImg/icon/icon_default_head.jpg',
 		loadComplete: false,
 		goodsLoadFail: false,
 

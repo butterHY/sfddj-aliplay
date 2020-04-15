@@ -1,5 +1,5 @@
-<view class="orderConfirmPage">
-    <scroll-view scroll-y="{{true}}" class="orderConfirmScroll">
+<view class="orderConfirmPage posi_re">
+    <view scroll-y="{{true}}" class="orderConfirmScroll">
         <!--配送方式 --选择完就不显示了  -->
         <view a:if="{{!deliveryTypeTaped}}" class="deliverType">
             <!-- 门店自提 -->
@@ -24,7 +24,7 @@
             <choose-addr defaultAddress="{{defaultAddress}}" shopId="{{shopid}}"></choose-addr>
         </block>
         <!-- 商品信息 -->
-        <order-goods goodsList="{{shopCartList}}" shopName="{{shopName}}" typeIndex="{{typeIndex}}" shopTotalPrice="{{shopTotalPrice.toFixed(2)}}" deliveryOutGratis="{{deliveryOutGratis}}" deliveryFee="{{deliveryFee}}" totalPrice="{{totalPrice.toFixed(2)}}"></order-goods>
+        <order-goods goodsList="{{shopCartList}}" shopName="{{shopName}}" typeIndex="{{typeIndex}}" shopTotalPrice="{{shopTotalPrice.toFixed(2)}}" deliveryOutGratis="{{deliveryOutGratis}}" deliveryFee="{{deliveryFee}}" totalPrice="{{totalPrice.toFixed(2)}}" result="{{result}}"></order-goods>
         <!-- 应付金额 -->
         <payable-sum totalPrice="{{totalPrice.toFixed(2)}}"></payable-sum>
         <!-- 留言 -->
@@ -55,14 +55,20 @@
                 </view>
             </view>
         </view>
-    </scroll-view>
+
+        <!-- 门店自提提示 -->
+        <view a:if="{{typeIndex == 0}}" class="color-ff0532 font-28 tex_center padTB_20">
+          <text>请到门店自提哦~</text>
+        </view>
+
+    </view>
     <!-- 底部去支付 -->
     <view class="footer">
         <view class="payNowBox">
             <!-- 价格 -->
             <view class="payNowPriceBox">
                 <view class="payNowPrice">￥{{totalPrice.toFixed(2)}}</view>
-                <!--<view class="discountPrice">￥69.9</view> -->
+                <view a:if="{{result.originalPrice && result.originalPrice > 0 && result.originalPrice > totalPrice}}" class="discountPrice">￥{{result.originalPrice.toFixed(2)}}</view>
             </view>
             <!-- 去结算按钮 -->
             <view class="payNowBtn" onTap="submitPay">去结算</view>
