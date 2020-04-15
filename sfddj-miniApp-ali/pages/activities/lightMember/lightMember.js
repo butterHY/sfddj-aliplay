@@ -20,13 +20,29 @@ Page({
     isLightMember: false,
     showRuleStatus: false,
     openingButtonData: {},     // 底部按钮数据
+
   },
-  onLoad: async function() {
-    let returnBack = await this.getAdvertisingModule();
-    returnBack.type == "SUCCESS" ? this.getEasyMemberInfo() : ''
+  onLoad:  function() {
+    // 判断是否绑定了手机
+    try {
+      let user_memId = my.getStorageSync({
+        key: "user_memId",
+      }).data;
+      this.setData({
+        user_memId: user_memId == 'null' || user_memId == null || user_memId == 'undefined' || user_memId == undefined ? '默认是会员' : user_memId
+      })
+
+      // this.setData({
+      //   user_memId: 0
+      // })
+      console.log(this.data.user_memId)
+    } catch (e) { }
   },
 
-  onShow() {},
+  onShow: async function() {
+    let returnBack = await this.getAdvertisingModule();
+    returnBack.type == "SUCCESS" ? this.getEasyMemberInfo() : '';
+  },
 
   isShowRule() {
     this.setData({
@@ -97,6 +113,7 @@ Page({
             })
             console.log(that.data.isLightMember)
             console.log(that.data.thematicAds)
+            console.log(that.data.headData)
             reslove({
               type: 'SUCCESS'
             })
@@ -144,6 +161,7 @@ Page({
 
   // 轻会员跳转
   goToLightMember() {
+    let that = this;
     my.navigateToMiniService({
       serviceId: "2019072365974237", // 插件id,固定值勿改
       servicePage: "pages/hz-enjoy/main/index", // 插件页面地址,固定值勿改
@@ -151,7 +169,15 @@ Page({
         "alipay.huabei.hz-enjoy.templateId": "2020040700020903320005426669",
         "alipay.huabei.hz-enjoy.partnerId": "2088421251942323",
       },
-      success: (res) => {},
+      success: (res) => {
+        console.log(res);
+        console.log(that.data.thematicAds)
+        https.post(api.LIGHTMEMBER.AGREEMENTQUERY, { outSignNo: that.data.thematicAds.lightMemberId }, function(res) {
+          console.log(res)
+        },function(res) {
+          console.log(res)
+        })
+      },
       fail: (res) => {},
       complete: (res) => {},
     });
@@ -163,6 +189,7 @@ Page({
   getCoupon: function(e) {
     // 如果没有开通轻会员应先弹窗提示不请求接口
     let that = this;
+    console.log(e)
     if( !that.data.isLightMember ) {
       my.showToast({
         content: '注册成为轻会员才可以领取！',
@@ -175,6 +202,7 @@ Page({
     let fatherIndex = e.currentTarget.dataset.fatherIndex;
 
     https.post(api.GOODSDETAIL.GOODS_DETAIL_DRAWCOUPON, { ruleSign }, function(res) {
+      console.log(res)
       let resData = res.data.data;
       if (resData && resData.length > 0) {
         resData[0].beginDateStr = utils.pointFormatTime(new Date(resData[0].beginDate));
@@ -200,6 +228,7 @@ Page({
         })
       }
     }, function(err) {
+      console.log(err)
       my.showToast({
         content: err,
         duration: 2000,
@@ -211,6 +240,7 @@ Page({
    * 去使用按钮
    * */
   toUseCoupon(e) {
+    console.log(e)
     let linkType = e.currentTarget.dataset.linkType;
     let couponId = e.currentTarget.dataset.couponid;
     let useLink = e.currentTarget.dataset.uselink;
@@ -251,66 +281,62 @@ Page({
     })
   },
 
-    // 判断是否绑定了手机
-    // try {
-    //   let user_memId = my.getStorageSync({
-    //     key: "user_memId",
-    //   }).data;
+  // 获取手机号
+  getPhoneNumber: function(e) {
+    let that = this;
+    console.log('获取手机号')
+    console.log(this.data.user_memId)
+    my.getPhoneNumber({
+      success: (res) => {
+        let response = res.response
+        sendRequest.send(constants.InterfaceUrl.USER_BINGMOBILEV4, {
+          response: response,
+        }, function(res) {
+          if (res.data.result) {
+            try {
+              my.setStorageSync({ key: constants.StorageConstants.tokenKey, data: res.data.result.loginToken });
+              my.setStorageSync({ key: 'user_memId', data: res.data.result.memberId });
+            } catch (e) {
+              my.setStorage({ key: 'user_memId', data: res.data.result.memberId });
+            }
+            console.log('获取成功设置成功1', res.data.result.loginToken, res.data.result.memberId)
+          }
+          else { }
 
-    //   that.setData({
-    //     user_memId: user_memId == 'null' || user_memId == null || user_memId == 'undefined' || user_memId == undefined ? '默认是会员' : user_memId
-    //   })
-    // } catch (e) { }
+          my.showToast({
+            content: '绑定成功'
+          })
+          that.setData({
+            user_memId: res.data.result ? res.data.result.memberId : '默认会员'
+          })
 
-  //   // 获取手机号
-  // getPhoneNumber: function(e) {
-  //   var that = this;
-  //   // console.log('获取手机号')
-  //   my.getPhoneNumber({
-  //     success: (res) => {
-  //       let response = res.response
-  //       sendRequest.send(constants.InterfaceUrl.USER_BINGMOBILEV4, {
-  //         response: response,
-  //       }, function(res) {
-  //         if (res.data.result) {
-  //           try {
-  //             my.setStorageSync({ key: constants.StorageConstants.tokenKey, data: res.data.result.loginToken });
-  //             my.setStorageSync({ key: 'user_memId', data: res.data.result.memberId });
-  //           } catch (e) {
-  //             my.setStorage({ key: 'user_memId', data: res.data.result.memberId });
-  //           }
-  //         }
-  //         else { }
-
-  //         my.showToast({
-  //           content: '绑定成功'
-  //         })
-  //         that.setData({
-  //           user_memId: res.data.result ? res.data.result.memberId : '默认会员'
-  //         })
-  //       }, function(res, resData) {
-  //         // '1013',为该用户已绑定手机号；
-  //         var resData = resData ? resData : {}
-  //         if (resData.errorCode == '1013') {
-  //           that.setData({
-  //             user_memId: '默认会员'
-  //           })
-  //           my.setStorage({ key: 'user_memId', data: '默认会员' });
-  //         } else {
-  //           my.showToast({
-  //             content: res,
-  //             duration: 2000,
-  //           })
-  //         }
-  //       });
-  //     },
-  //     fail: (res) => {
-  //       my.navigateTo({
-  //         url: '/pages/user/bindPhone/bindPhone'
-  //       });
-  //     },
-  //   });
-  // },
+          console.log('获取成功设置成功2', that.data.user_memId)
+        }, function(res, resData) {
+          // '1013',为该用户已绑定手机号；
+          var resData = resData ? resData : {}
+          if (resData.errorCode == '1013') {
+            that.setData({
+              user_memId: '默认会员'
+            })
+            my.setStorage({ key: 'user_memId', data: '默认会员' });
+            console.log('获取成功设置失败1', that.data.user_memId) 
+          } else {
+            my.showToast({
+              content: res,
+              duration: 2000,
+            })
+            console.log('获取成功设置失败2', that.data.user_memId) 
+          }
+        });
+      },
+      fail: (res) => {
+        my.navigateTo({
+          url: '/pages/user/bindPhone/bindPhone'
+        });
+        console.log('获取失败', that.data.user_memId) 
+      },
+    });
+  },
 
 
   // 阻止下拉刷新

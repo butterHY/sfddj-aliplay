@@ -3,16 +3,16 @@ import _ from 'underscore'
 import locAddr from '/community/service/locAddr.js';
 //获取应用实例
 let app = getApp();
-let sendRequest = require('../../utils/sendRequest');
-let constants = require('../../utils/constants');
+let sendRequest = require('../../../utils/sendRequest');
+let constants = require('../../../utils/constants');
 let baseImageUrl = constants.UrlConstants.baseImageUrl;
-let stringUtils = require('../../utils/stringUtils');
-let utils = require('../../utils/util');
+let stringUtils = require('../../../utils/stringUtils');
+let utils = require('../../../utils/util');
 let windowWidth = my.getSystemInfoSync().windowWidth;
 let windowHeight = my.getSystemInfoSync().windowHeight;
 
-import api from '../../api/api';
-import http from '../../api/http';
+import api from '../../../api/api';
+import http from '../../../api/http';
 
 
 Page({

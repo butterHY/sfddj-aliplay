@@ -20,7 +20,7 @@
   <view class="estimateNav whiteBack js_estimateNav">
     <view class="padLR_20">
       <!-- 评分 -->
-      <view class="estimateHead font-28">
+      <view a:if="{{countData.allCount > 50}}" class="estimateHead font-28">
         <view>好评度:
           <text class="color-ff5353 marLeft_5">{{commentScore}}%</text>
         </view>
@@ -55,7 +55,8 @@
 
 
 	<!-- 评论列表 -->
-	<scroll-view scroll-y="{{true}}" class="posi_re flex_1" scroll-top="{{scrollTop}}" scroll-with-animation="{{true}}}" onScrollToLower="loadMoreList" onScroll="scrollEvent">
+  <!-- scroll-with-animation="{{true}}}" -->
+	<scroll-view scroll-y="{{true}}" class="posi_re flex_1" scroll-top="{{scrollTop}}"  onScrollToLower="loadMoreList" onScroll="scrollEvent">
 		<block a:if="{{commentList && commentList.length > 0}}">
       <view class="sort flex_view_row justi_end whiteBack">
         <view class="{{defaultSort == 0 ? 'activity' : ''}}" data-sortType="defaultSort" catchTap="selectionSort">默认排序</view>
@@ -151,7 +152,7 @@
 				<image a:if="{{commentType != 'buyerShow'}}" mode="widthFix" src="{{baseLocImgUrl}}miniappImg/loading/autoEstimate.png" class="autoEstimateImg"/>
 				<view class="autoEstimateTip flex_view_row align_cen">
           <block a:if="{{commentType == 'buyerShow'}}">
-               <text>没有更多了</text>
+               <text>已经到底啦，只能帮你到这里了~</text>
           </block>
           <block a:else>
             <text>{{automaticCount ? automaticCount : 0}}</text>个用户默认评价了该商品

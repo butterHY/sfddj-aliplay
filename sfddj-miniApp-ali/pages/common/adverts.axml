@@ -296,5 +296,59 @@
         </view>
       </view>
     </view>
+
+    <!-- 2+4广告模块 -->
+    <view a:if="{{item.moduleType == 'TWOFOURADVERT'}}" class="twoFourModule">
+      <!-- 上间隔 -->
+      <view a:if="{{item.spacing == 1}}" class='topSpace' style='background-color: {{item.topIntervalColor ? "#" + item.topIntervalColor : "#ffffff"}};'></view>
+      <!-- 内容 {{item.spacing == 1 ? "marBot_10" : ""}} -->
+      <view class='otherModeCon twoFourModuleBox' style='background-color: {{item.backgroundColor ? "#" + item.backgroundColor : "#ffffff"}}'>
+        <view class="boxShadow twoFourModuleView">
+          <view class="flex_view_row width_100 twoFourAdvertsTop">
+            <view data-url="{{item.items[0].link}}" catchtap='goToPage' data-region='twoAndFourGio' data-growio='{{item.items[0].gioType}}' data-index='0' open-type="navigate" hover-class="none" class="flex_1 twoFourAdvertsLeft">
+              <image a:if="{{item.items[0].imageUrl && !filters.strIndexOf(item.items[0].imageUrl,'http')}}" src="{{baseImageUrl}}{{item.items[0].imageUrl}}" mode="widthFix" class="width_100" />
+              <image a:elif="{{item.items[0].imageUrl && filters.strIndexOf(item.items[0].imageUrl,'http')}}" src="{{item.items[0].imageUrl}}" mode="widthFix" class="width_100" />
+            </view>
+            <view data-url="{{item.items[1].link}}" catchtap='goToPage' data-region='twoAndFourGio' data-growio='{{item.items[1].gioType}}' data-index='1' open-type="navigate" hover-class="none" class="flex_1  flex_view_row">
+              <image a:if="{{item.items[1].imageUrl && !filters.strIndexOf(item.items[1].imageUrl,'http')}}" src="{{baseImageUrl}}{{item.items[1].imageUrl}}" mode="widthFix" class="width_100" />
+              <image a:elif="{{item.items[1].imageUrl && filters.strIndexOf(item.items[1].imageUrl,'http')}}" src="{{item.items[1].imageUrl}}" mode="widthFix" class="width_100" />
+            </view>
+          </view>
+          <view class="flex_view_row width_100 twoFourAdvertsBot">
+            <block a:for="{{item.items}}" a:key="TWOFOURADVERT" a:for-item="twoFourItem">
+              <view a:if="{{index > 1}}" data-url="{{twoFourItem.link}}" catchtap='goToPage' data-region='twoAndFourGio' data-growio='{{twoFourItem.gioType}}' data-index='{{index}}' open-type="navigate" hover-class="none" class="flex_1 {{index < item.items.length - 1 ? 'twoFourAdvertsLeft' : ''}} flex_view_row">
+                <image a:if="{{twoFourItem.imageUrl && !filters.strIndexOf(twoFourItem.imageUrl,'http')}}" src="{{baseImageUrl}}{{twoFourItem.imageUrl}}" mode="widthFix" class="width_100" />
+                <image a:elif="{{twoFourItem.imageUrl && filters.strIndexOf(twoFourItem.imageUrl,'http')}}" src="{{twoFourItem.imageUrl}}" mode="widthFix" class="width_100" />
+              </view>
+            </block>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 瀑布流标题 -->
+    <view a:if="{{item.moduleType == 'GOODS_WATERFALL'}}" id="js_waterFallScroll" class="width_100 back_fcfcfc">
+      <!-- 上间隔 -->
+      <view a:if="{{item.spacing == 1}}" class='topSpace' style='background-color: {{item.topIntervalColor ? "#" + item.topIntervalColor : "#ffffff"}};'></view>
+      <!--  style="{{item.backgroundColor ? 'background-color: #' + item.backgroundColor + ';'}}" -->
+      <scroll-view class="waterFallScroll {{!waterFallTitIsTop ? 'opaci_1' : 'opaci_0'}}" scroll-x="{{true}}" scroll-with-animation="{{true}}" scroll-into-view="{{'waterFall' + waterIndex}}" style="{{item.backgroundColor ? 'background-color: #' + item.backgroundColor + ';' : ''}}">
+        <block a:for="{{item.items}}" a:for-item="waterFallItem" a:for-index="waterFallIndex" a:key="waterFallItem">
+          <view id="{{'waterFall' + waterFallIndex}}" class="waterFallTitItem" data-index="{{waterFallIndex}}" bindtap="waterFallChange">
+            <view class="flex_view_col align_cen {{waterIndex == waterFallIndex ? 'waterFallActiveItem' : ''}}" data-index="{{waterFallIndex}}">
+              <!-- 主标题 -->
+              <view class="waterFallTit flex_view_row {{waterFallIndex < item.items.length - 1 ? 'borderRight_ea' : ''}}">
+                <text class="font-32">{{waterFallItem.moduleTitle}}</text>
+              </view>
+              <!-- 副标题 -->
+              <view class="flex_view_row justi_cen waterFallSubTit">
+                <text class="font-24">{{waterFallItem.moduleSubTitle}}</text>
+                <!-- 选中的三角 -->
+                <view class="subTitAng"></view>
+              </view>
+            </view>
+          </view>
+        </block>
+      </scroll-view>
+    </view>
   </view>
 </template>

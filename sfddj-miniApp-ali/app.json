@@ -50,7 +50,8 @@
     "pages/user/jifenDetail/jifenDetail",
     "pages/shopping/storeInfo/searchList/searchList",
     "pages/user/zcWebView/zcWebView",
-    "pages/user/historyOrder/orderDetail/reUploadId/reUploadId"
+    "pages/user/historyOrder/orderDetail/reUploadId/reUploadId",
+    "pages/home/oldHome/oldHome"
   ],
   "subPackages": [
     {
@@ -59,7 +60,7 @@
         "pages/index/index",
         "pages/shop/shop",
         "pages/alphabetCity/alphabetCity",
-        "pages/addressLoc/addressLoc", 
+        "pages/addressLoc/addressLoc",
         "pages/goodsDetail/goodsDetail",
         "pages/orderDetail/orderDetail",
         "pages/orderConfirm/orderConfirm",

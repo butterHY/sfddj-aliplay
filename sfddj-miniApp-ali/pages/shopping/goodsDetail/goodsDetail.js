@@ -390,6 +390,7 @@ Page({
             that.data.theAwardMemberScore = resData.goodsShowVO.defaultProd.awardMemberScore;               // 默认奖励会员积分
 
             that.data.specType == 'SINGLE' || that.data.specType == 'MULTI' ? that.data.iavPath = resData.goodsShowVO.defaultProd.iavPath : that.data.iavPath = [];	// 单选和多选商品设置默认规格
+            console.log(that.data.iavPath)
 
           // 测试用的，让库存为 0
           // specType 规格类型,  MULTI 多规格, SINGLE 单规格, OPTIONAL 任选规格；
@@ -739,8 +740,9 @@ Page({
     let urls = e.currentTarget.dataset.urls;
     let index = e.currentTarget.dataset.current;
     // 带有 http 则表示该视频或图片被禁用；
+    console.log(urls)
     let newUrls = urls.map(value => { 
-      return value = value.substring(0, 5).indexOf('http') > -1 ? base64imageUrl + 'vueStatic/img/commentErrImg.png' : baseImageUrl + value 
+      return value = value.substring(0, 5).indexOf('http') > -1 ? this.data.base64imageUrl + 'vueStatic/img/commentErrImg.png' : this.data.baseImageUrl + value 
     });
 
     my.previewImage({
@@ -1694,7 +1696,8 @@ Page({
     var that = this;
     var multiformnames = [];
     var iavPathArr = that.data.iavPath.split(',');
-    
+    console.log(iavPathArr)
+    console.log(that.data.goodsSpecMap)
     iavPathArr.forEach(function(value, index) {
       value == '' ? multiformnames[index] = that.data.goodsSpecMap[index].specName : multiformnames[index] = that.data.goodsSpecMap[index].values.find(val => val.valueId == value).valueName;
     })
