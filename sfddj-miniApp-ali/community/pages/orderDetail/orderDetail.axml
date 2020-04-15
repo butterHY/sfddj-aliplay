@@ -104,7 +104,7 @@
   <!-- 商品信息 -->
   <order-goods goodsList="{{goodsList}}" shopName="{{result.shopName}}" typeIndex="{{typeIndex}}" shopTotalPrice="{{shopTotalPrice.toFixed(2)}}" deliveryOutGratis="{{0}}" deliveryFee="{{deliveryFee}}" totalPrice="{{totalPrice.toFixed(2)}}" type="orderDetail"></order-goods>
   <!-- 应付金额 -->
-  <payable-sum totalPrice="{{totalPrice.toFixed(2)}}"></payable-sum>
+  <payable-sum totalPrice="{{totalPrice.toFixed(2)}}" type="{{result.orderStatus != 'CANCLE' && result.orderStatus != 'NOPAY' ? 'success' : ''}}"></payable-sum>
   <!-- 用户留言 -->
   <view a:if="{{result.memo}}" class="orderInfo">
     <!-- 标题 -->
