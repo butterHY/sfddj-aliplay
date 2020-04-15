@@ -87,7 +87,9 @@ Page({
 		o2oStore: {
 			show: false,
 			store: null,
-		}
+		},
+		isGetLocation: false,
+		isLocationLoad: true,       //是否正在定位
 	},
 
 	onLoad: async function(options) {
@@ -115,7 +117,13 @@ Page({
 			key: 'homeGoodsList', // 缓存数据的key
 		}).data;
 
-
+		// 定位中判断
+		let userLocInfo = app.globalData.userLocInfo;
+		if( userLocInfo && Object.keys(userLocInfo).length > 0) {
+			this.setData({
+				isLocationLoad: false
+			})
+		}
 
 		that.setData({
 			materialArr: materialArr ? materialArr : [],
@@ -135,6 +143,7 @@ Page({
 
 		
 		that.getSearchTextMax()
+
 	},
 
 	onShow: function() {
@@ -196,17 +205,25 @@ Page({
 	initLocation() {
 		const _this = this;
 		let userLocInfo = app.globalData.userLocInfo;
-		// console.log('onShow-index', userLocInfo)
+		// console.log('userLocInfo', userLocInfo)
 
 		if (this.jsonNull(userLocInfo) == 0) {
 			// console.log('重新定位')
 			locAddr.location((res) => {
 				_this.setData({
-					locInfo: res
+					locInfo: res,
+					isGetLocation: true,
+					isLocationLoad: false,
 				});
 				// 设置缓存并设置全部变量的值 globalData.userLocInfo 
 				app.setLocStorage(_this.data.locInfo);
 				_this.locStoreShow();
+			}, ()=> {
+				// 定位失败 
+				_this.setData({ 
+					isGetLocation: false,
+					isLocationLoad: false,
+				}); 
 			});
 		}
 		else {
@@ -232,30 +249,30 @@ Page({
 	},
 
 	// 定位显示小店
-    locStoreShow() {
-        const _this = this;
-        const _locInfo = locAddr.locInfo;
-        http.get(api.Shop.SEARCH, {
-            longitude: _locInfo.longitude,
-            latitude: _locInfo.latitude,
-            start: 0,
-            limit: 1,
-        }, (res) => {
-            let _data = res.data.data;
-            let _show = false;
-            let _store = [];
-            if (_data.length > 0) {
-                _show = true;
-                _store = Object.assign({}, _data[0]);
-            }
-            _this.setData({
-							'o2oStore.show': _show,
-							'o2oStore.store': _store
-            })
-        }, (err) => {
+	locStoreShow() {
+		const _this = this; 
+		let _locInfo = app.globalData.userLocInfo;
+		http.get(api.Shop.SEARCH, {
+			longitude: _locInfo.longitude,
+			latitude: _locInfo.latitude,
+			start: 0,
+			limit: 1,
+		}, (res) => {
+			let _data = res.data.data;
+			let _show = false;
+			let _store = [];
+			if (_data.length > 0) {
+				_show = true;
+				_store = Object.assign({}, _data[0]);
+			}
+			_this.setData({
+				'o2oStore.show': _show,
+				'o2oStore.store': _store
+			})
+		}, (err) => {
 
-        });
-    },
+		});
+	},
 
 	// 初始化模块广告的滚动高度
 	setModuleScrollTop(result) {
