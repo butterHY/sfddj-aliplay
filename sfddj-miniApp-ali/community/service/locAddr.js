@@ -30,14 +30,14 @@ let LocAddr = {
 				my.hideLoading();
 				// console.log('定位失败!')
 				// 获取缓存的数据，如果缓存有数据, 不至于定位失败后没有数据
-				my.getStorage({
-				  key: 'locationInfo',
-				  success: (result) => {
-					let data = result.data ? result.data : {};
-					getApp().globalData.userLocInfo = data;
-					if(fn) fn(data);
-				  }
-				});
+				// my.getStorage({
+				//   key: 'locationInfo',
+				//   success: (result) => {
+				// 	let data = result.data ? result.data : {};
+				// 	getApp().globalData.userLocInfo = data;
+				// 	if(fn) fn(data);
+				//   }
+				// });
 			},
 		})
 	},

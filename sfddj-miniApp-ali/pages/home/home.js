@@ -1,6 +1,8 @@
 // import 'regenerator';
 import _ from 'underscore'
 import locAddr from '/community/service/locAddr.js';
+import api from '../../api/api';
+import http from '../../api/http';
 //获取应用实例
 let app = getApp();
 let sendRequest = require('../../utils/sendRequest');
@@ -10,9 +12,6 @@ let stringUtils = require('../../utils/stringUtils');
 let utils = require('../../utils/util');
 let windowWidth = my.getSystemInfoSync().windowWidth;
 let windowHeight = my.getSystemInfoSync().windowHeight;
-
-import api from '../../api/api';
-import http from '../../api/http';
 
 
 Page({
@@ -100,8 +99,7 @@ Page({
 			pageOptions = Object.assign(options, globalQuery)
 		}
 		// 友盟+统计--首页浏览
-		my.uma.trackEvent('homepage_show', pageOptions);
-    console.log(pageOptions)
+		my.uma.trackEvent('homepage_show', pageOptions); 
 		var that = this;
 
 
@@ -223,6 +221,7 @@ Page({
 	goLocationCity() {
 		my.navigateTo({ url: '/community/pages/addressLoc/addressLoc' });
 	},
+
 	// 检测json是否为空
 	jsonNull(json) {
 		let num = 0;
@@ -232,31 +231,31 @@ Page({
 		return num;
 	},
 
-
 	// 定位显示小店
-	locStoreShow() {
-			const _this = this; 
-			const _locInfo = locAddr.locInfo; 
-			http.get(api.Shop.SEARCH, {
-							longitude: _locInfo.longitude,
-							latitude: _locInfo.latitude,
-							start: 0,
-							limit: 1, 
-					},(res)=> {
-						let _data = res.data.data; 
-						if (_data.length > 0) {
-							_this.setData({
-									'o2oStore.show': true,
-									'o2oStore.store': Object.assign({}, _data[0])
-							}) 
-							
-						} 
-					}, (err)=> {
-							 
-				});
+    locStoreShow() {
+        const _this = this;
+        const _locInfo = locAddr.locInfo;
+        http.get(api.Shop.SEARCH, {
+            longitude: _locInfo.longitude,
+            latitude: _locInfo.latitude,
+            start: 0,
+            limit: 1,
+        }, (res) => {
+            let _data = res.data.data;
+            let _show = false;
+            let _store = [];
+            if (_data.length > 0) {
+                _show = true;
+                _store = Object.assign({}, _data[0]);
+            }
+            _this.setData({
+							'o2oStore.show': _show,
+							'o2oStore.store': _store
+            })
+        }, (err) => {
+
+        });
     },
-
-
 
 	// 初始化模块广告的滚动高度
 	setModuleScrollTop(result) {
@@ -478,8 +477,6 @@ Page({
 			})
 		}
 	}, 300),
-
-
 
 	_onPageScroll: _.debounce(function(obj) {
 
@@ -757,7 +754,6 @@ Page({
 		// this.getAllPintuanProduct(0);
 	},
 
-
 	bannerType2: function(e) {
 		var that = this;
 		var current = e.detail.current;
@@ -887,8 +883,6 @@ Page({
 		})
 
 	},
-
-
 
 	/**
 	 * 获取单独的秒杀广告数据

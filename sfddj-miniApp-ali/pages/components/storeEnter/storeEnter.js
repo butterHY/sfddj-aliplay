@@ -1,4 +1,4 @@
-import { baseImageUrl } from '/api/api';
+import {baseImageUrl} from '/api/api';
 import locAddr from '/community/service/locAddr.js';
 
 Component({
@@ -17,46 +17,59 @@ Component({
   didMount() { 
     this.setStoreData(); 
   },
-  didUpdate() {},
+  didUpdate() {
+    this.setStoreData(); 
+  },
   didUnmount() {},
   methods: {
     // 商铺设置数据
     setStoreData() {
-        const _this = this;
-        let _goodsShow = [];
-        let shopGood = this.props.storeShow.shopGoodsList;
-        // console.log(this.props.storeShow)
-        // console.log(locAddr.locInfo)
-        let _locInfo = locAddr.locInfo;
-      
-        // 计算店铺距离
-        let _distance = _this.getDistance(_locInfo.latitude*1, _locInfo.longitude*1, this.props.storeShow.latitude*1, this.props.storeShow.longitude*1);
+      const _this = this;
+      let storeShow = this.props.storeShow;
+      let goodsShow = this.data.goodsShow;
+      let _goodsShow = [];
+      let shopGood = storeShow.shopGoodsList;
+      let _locInfo = locAddr.locInfo;
 
-      for (let i=0; i<shopGood.length; i++) {
+      // 计算店铺距离
+      let _distance = _this.getDistance(_locInfo.latitude * 1, _locInfo.longitude * 1, this.props.storeShow.latitude * 1, this.props.storeShow.longitude * 1);
+      _this.setData({
+        storeDis: _distance
+      });
+
+      // 防止重复加载
+      if (goodsShow) {
+        if (goodsShow[0].shopId == storeShow.id) return;
+      }
+
+      // console.log('storeShow', storeShow)
+      // console.log('goodsShow', goodsShow)
+
+      for (let i = 0; i < shopGood.length; i++) {
         _goodsShow[i] = {};
+        _goodsShow[i].shopId = shopGood[i].shopId;
         _goodsShow[i].goodsId = shopGood[i].id;
         _goodsShow[i].goodsName = shopGood[i].title;
-        _goodsShow[i].goodsImage = JSON.parse( shopGood[i].goodsImagePath )[0];
+        _goodsShow[i].goodsImage = JSON.parse(shopGood[i].goodsImagePath)[0];
 
         let skuList = shopGood[i].shopGoodsSkuList[0];
         _goodsShow[i].iavValue = skuList.iavValue;
 
-        if ( skuList.isDiscount ) {
+        if (skuList.isDiscount) {
           _goodsShow[i].salePrice = skuList.discountPrice;
           _goodsShow[i].oldPrice = skuList.salePrice;
-        }
-        else {
+        } else {
           _goodsShow[i].salePrice = skuList.salePrice;
           _goodsShow[i].oldPrice = '';
-        } 
+        }
       }
 
       this.setData({
-        goodsShow: _goodsShow,
-        storeDis: _distance
+        goodsShow: _goodsShow
       })
 
     },
+
     // 更多
     moreShop() {
       my.navigateTo({
@@ -111,14 +124,17 @@ Component({
       d = 2 * w * a;
       h1 = (3 * r - 1) / 2 / c;
       h2 = (3 * r + 1) / 2 / s;
-      s = d * (1 + fl * (h1 * sf * (1 - sg) - h2 * (1 - sf) * sg)); 
+      s = d * (1 + fl * (h1 * sf * (1 - sg) - h2 * (1 - sf) * sg));
+      s = Math.round(s) * 1;
       if(s > 1000) {
-        s = (s / 1000).toFixed(2) + 'km';
-      } else {
-        s = Math.round(s) + 'm';
+       s = (s / 1000).toFixed(2) * 1 + 'km';
+      }
+      else {
+       s = s + 'm';
       }
       return s;
     },
+
     getRad(d) {
       var PI = Math.PI;
       return d * PI / 180.0;
