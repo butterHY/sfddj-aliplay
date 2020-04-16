@@ -3,9 +3,9 @@
     <view class="titleStyle">
       <text>商品信息</text>
     </view>
-    <view class="infoShow">
+    <view class="infoShow flex_view_col">
       <block a:for="{{ goodsIntro.infoShow }}" a:for-index="idx" a:for-item="itemInfo">
-        <view class="info_title">{{ itemInfo.desc }}</view>
+        <view class="textShow font-28">{{ itemInfo.desc }}</view>
         <block a:for="{{ itemInfo.images }}">
           <image mode="widthFix" src="{{baseImageUrl + item}}" class="info_section width_100"></image>
         </block>

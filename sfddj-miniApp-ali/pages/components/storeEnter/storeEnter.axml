@@ -38,7 +38,7 @@
   </view>
   <view class="goodsListShow">
     <block a:for="{{ goodsShow }}" a:key="{{ index }}">
-      <view onTap="goDetail" data-goodsid="{{ item.goodsId }}">
+      <view class="goodsListBox" onTap="goDetail" data-goodsid="{{ item.goodsId }}">
         <!--<template is="itemStoreGoodsCard" data="{{ ...item, smallImg200, baseImageUrl }}"></template> -->
         <view class="goodsCard">
           <view class="goodsImgArea">

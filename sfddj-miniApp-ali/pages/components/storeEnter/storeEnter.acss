@@ -152,8 +152,12 @@
     border-radius: 10rpx; 
     overflow: hidden;
     box-sizing: border-box;  
-    width: 210rpx;
-    margin-right: 30rpx;
+    width: 200rpx;
+    margin-right: 20rpx;
+}
+
+.goodsListShow .goodsListBox:last-child .goodsCard {
+	margin-right: 0;
 }
 
 .goodsCard .goodsImgArea { 

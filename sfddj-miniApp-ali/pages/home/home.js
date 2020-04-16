@@ -258,6 +258,7 @@ Page({
 			latitude: _locInfo.latitude,
 			start: 0,
 			limit: 1,
+			goodsCount: 3,     //返回商店商品数量的，在首页的入口需要展示3个，最多只能传10
 		}, (res) => {
 			let _data = res.data.data;
 			let _show = false;
