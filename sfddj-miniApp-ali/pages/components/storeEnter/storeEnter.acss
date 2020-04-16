@@ -3,7 +3,7 @@
 .topRanking { 
   background-color: #fff;
   border-radius: 10rpx;
-  margin: 20rpx 24rpx 0;
+  margin: 20rpx 24rpx;
   padding: 30rpx;
   position: relative; 
   overflow: hidden;
