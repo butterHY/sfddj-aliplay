@@ -7,40 +7,43 @@ Component({
     smallImg200: '?x-oss-process=style/goods_webp',   //大当家图片资源域名 
     baseImageUrl: baseImageUrl,
     aside: '专属于你的附近之精彩', 
-    goodsShow: null,
+    goodsShow: [],
     storeDis: 0,     // 小店距离
-
+	show: false,
+	storeShow: {}
 },
   props: {
-    storeShow: ''
+    // storeShow: ''
   },
   didMount() { 
-    this.setStoreData(); 
+    // this.setStoreData(); 
   },
   didUpdate() {
-    this.setStoreData(); 
+    // this.setStoreData(); 
   },
   didUnmount() {},
   methods: {
     // 商铺设置数据
-    setStoreData() {
+    setStoreData(storeObj = {}, show) {
       const _this = this;
-      let storeShow = this.props.storeShow;
+      let storeShow = storeObj;
       let goodsShow = this.data.goodsShow;
       let _goodsShow = [];
-      let shopGood = storeShow.shopGoodsList;
+      let shopGood = storeShow.shopGoodsList ? storeShow.shopGoodsList : [];
       let _locInfo = locAddr.locInfo;
 
       // 计算店铺距离
-      let _distance = _this.getDistance(_locInfo.latitude * 1, _locInfo.longitude * 1, this.props.storeShow.latitude * 1, this.props.storeShow.longitude * 1);
-      _this.setData({
-        storeDis: _distance
-      });
+      let _distance = _this.getDistance(_locInfo.latitude * 1, _locInfo.longitude * 1, storeShow.latitude * 1, storeShow.longitude * 1);
+    //   _this.setData({
+    //     storeDis: _distance
+    //   });
 
       // 防止重复加载
-      if (goodsShow) {
-        if (goodsShow[0].shopId == storeShow.id) return;
-      }
+    //   if (goodsShow && goodsShow.length > 0) {
+    //     if (goodsShow[0].shopId == storeShow.id) return;
+    //   } else {
+
+	//   }
 
       // console.log('storeShow', storeShow)
       // console.log('goodsShow', goodsShow)
@@ -65,7 +68,10 @@ Component({
       }
 
       this.setData({
-        goodsShow: _goodsShow
+		storeShow,
+		goodsShow: _goodsShow,
+		storeDis: _distance,
+		show: show
       })
 
     },

@@ -270,7 +270,12 @@ Page({
 				'o2oStore.show': _show,
 				'o2oStore.store': _store
 			})
+			// 更新社区入口组件
+			this.storeEnter.setStoreData(_store, _show)
 		}, (err) => {});
+	},
+	storeEnter(ref){
+		this.storeEnter = ref;
 	},
 
 	// 初始化模块广告的滚动高度

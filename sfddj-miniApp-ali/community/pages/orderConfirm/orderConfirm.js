@@ -104,7 +104,7 @@ Page({
                     shopName: result.name,     // 商家名称
                     deliveryFee: result.deliveryOutGratis && result.deliveryOutGratis > 0 ? (result.deliveryFee && result.price < result.deliveryOutGratis ? result.deliveryFee : 0) : result.deliveryFee,    // 配送费
                     deliveryOutGratis: result.deliveryOutGratis ? result.deliveryOutGratis : 0,
-                    totalPrice: this.data.totalPrice > 0 ? this.data.totalPrice : result.price
+                    totalPrice: this.data.totalPrice > 0 && this.data.totalPrice == result.price ? this.data.totalPrice : result.price
                 })
             }
         }, err => {

@@ -1,5 +1,5 @@
 <!-- 商品展示卡 -->
-<view class="topRanking">
+<view a:if="{{show}}" class="topRanking">
   <!-- 标题 -->
   <view class="topRankTit">
     <view class="topRankTitBox">

@@ -65,9 +65,9 @@
 			</view>
 
 			<!-- 推荐小店入口 -->
-			<block a:if="{{ o2oStore.show }}">
-				<store-enter storeShow="{{ o2oStore.store }}"></store-enter>
-			</block>
+			<!-- <block a:if="{{ o2oStore.show }}">  storeShow="{{ o2oStore.store }}" -->
+			<store-enter ref="storeEnter"></store-enter>
+			<!-- </block> -->
 
 
       <!-- 不知道为啥这么写，如果没有轮播数据为啥要添加 margin_top_120 ？ class="{{!materialArr || materialArr.length == 0 ? 'margin_top_120' : ''}}" -->
