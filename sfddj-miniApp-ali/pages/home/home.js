@@ -271,7 +271,7 @@ Page({
 				'o2oStore.store': _store
 			})
 			// 更新社区入口组件
-			this.storeEnter.setStoreData(_store, _show)
+			this.storeEnter.setStoreData(_store, _show,_locInfo)
 		}, (err) => {});
 	},
 	storeEnter(ref){
@@ -843,7 +843,7 @@ Page({
 				},
 				success: function(res) {
 					var resData = res.data;
-					if (resData.ret.code == '0') {
+					if (resData.ret && resData.ret.code == '0') {
 						let result = resData.data;
 						let spliceArr = [];
 						let newResult = [];

@@ -24,13 +24,14 @@ Component({
   didUnmount() {},
   methods: {
     // 商铺设置数据
-    setStoreData(storeObj = {}, show) {
+    setStoreData(storeObj = {}, show, _locInfo) {
       const _this = this;
       let storeShow = storeObj;
       let goodsShow = this.data.goodsShow;
       let _goodsShow = [];
       let shopGood = storeShow.shopGoodsList ? storeShow.shopGoodsList : [];
-      let _locInfo = locAddr.locInfo;
+    //   let _locInfo = locAddr.locInfo;
+	//   console.log(locAddr.locInfo)
 
       // 计算店铺距离
       let _distance = _this.getDistance(_locInfo.latitude * 1, _locInfo.longitude * 1, storeShow.latitude * 1, storeShow.longitude * 1);
