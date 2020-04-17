@@ -85,6 +85,7 @@ export default {
         lng1 = parseFloat(lng1);
         lat2 = parseFloat(lat2);
         lng2 = parseFloat(lng2);
+		if(lat1 == lat2 && lng1 == lng2) return 0 + 'm';
         var f = getRad((lat1 + lat2) / 2);
         var g = getRad((lat1 - lat2) / 2);
         var l = getRad((lng1 - lng2) / 2);
