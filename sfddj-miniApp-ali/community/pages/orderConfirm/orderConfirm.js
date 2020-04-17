@@ -106,7 +106,12 @@ Page({
                 })
             }
         }, err => {
-
+			my.showToast({
+				content: err ? err : '很抱歉，暂时无法购买',
+				complete: () => {
+					my.navigateBack({});
+				}
+			})
         })
     },
 
