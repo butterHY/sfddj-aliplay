@@ -3,7 +3,6 @@
   "pullRefresh": true,
   "usingComponents": {
     "search-component": "../components/search-component/search-component",
-    "popup": "mini-antui/es/popup/index",
-    "store-enter" :  "/pages/components/storeEnter/storeEnter"
+    "popup": "mini-antui/es/popup/index"
   }
 }

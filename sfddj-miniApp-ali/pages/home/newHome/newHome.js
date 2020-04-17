@@ -41,12 +41,9 @@ Page({
     allMaterialList: [],          //瀑布流第一个导航商品列表的banner广告位
     allMaterialIndex: -1,         //当前瀑布流第一个导航商品列表banner的加载位置
     waterFallTitIsTop: false,     //是否置顶瀑布流导航
-    // searchBoxHeight: 120 * app.globalData.systemInfo.windowWidth / 750,
     isWaterFallLoaded: [],        //判断是否加载完
     isWaterFallLoading: [],       //判断是否在加载中
     isWaterFallFirst: [],         //是否是第一次加载
-    //如果在瀑布流导航置顶时，设置瀑布流商品的最低高度
-    // goodsBoxMinHeight: app.globalData.systemInfo.windowHeight - (230 * app.globalData.systemInfo.windowWidth / 750),
     countWaterTit: 0,            //用于计算统计计算了多少次瀑布流导航位置的次数,
     waterFallListIndex: null,     //瀑布流导航所在的索引
 
@@ -81,6 +78,7 @@ Page({
 	},
 
 	onLoad: async function(options) {
+    // console.log(app.globalData.systemInfo)
     var that = this;
 		// 友盟+统计--首页浏览 （如果从推文或者其他方进来并且带广告参数时）
     var pageOptions = options
@@ -90,20 +88,26 @@ Page({
 		} 
 		my.uma.trackEvent('homepage_show', pageOptions);
 		
-		var materialArr = my.getStorageSync({key: 'homeMaterial', }).data;      // 获取缓存首页 banner 数据
-		var advertsArr = my.getStorageSync({key: 'homeAdvertsArr', }).data;     // 获取缓存 首页广告  数据
+		var wheelPlantingArr = my.getStorageSync({key: 'wheelPlantingArr', }).data;      // 获取缓存首页 banner 数据
+		var advertsArr = my.getStorageSync({key: 'homeAdvertsArr', }).data;     // 获取缓存 首页广告模板  数据
 		var homeGoodsList = my.getStorageSync({	key: 'homeGoodsList', }).data;  // 获取缓存 首页商品  数据
 
 		that.setData({
-			materialArr: materialArr ? materialArr : [],
+      searchBoxHeight: 120 * app.globalData.systemInfo.windowWidth / 750,
+     //如果在瀑布流导航置顶时，设置瀑布流商品的最低高度
+      goodsBoxMinHeight: app.globalData.systemInfo.windowHeight - (230 * app.globalData.systemInfo.windowWidth / 750),
+			wheelPlantingArr: wheelPlantingArr ? wheelPlantingArr : [],
 			advertsArr: advertsArr ? advertsArr : [],
 			homeGoodsList: homeGoodsList ? homeGoodsList : [],
       isonLoad: true
 		})
 
-		that.getMaterial();                                             // 获取 banner 数据
+    // console.log(that.data.searchBoxHeight)
+    // console.log(that.data.goodsBoxMinHeight)
+
+		that.getWheelPlanting();                                        // 获取 轮播banner 数据
     that.getSearchTextMax();                                        // 获取搜索 placeholder 数据
-    that.getAllMaterialData();                                      // 获取 所有瀑布流的banner 数据
+    that.getAllMaterialData();                                      // 获取第一导航  瀑布流的 banner 数据
 		let isSuccess = await that.getAdvertsModule();                  // 获取广告模板数据
     isSuccess.type ? this.getTimes('isFirstTime') : '';             // 获取秒杀模板数据
 
@@ -111,21 +115,20 @@ Page({
 
 	onShow: function() {
 		let that = this;
-    my.getStorageSync({key: 'isHotStart',}).data ? this.getPop() : '';  // 如果页面是热启动，就请求弹窗广告数据；
+    my.getStorageSync({key: 'isHotStart',}).data ? that.getPop() : '';  // 如果页面是热启动，就请求弹窗广告数据；
 
 		that.getCartNumber();   // 获取购物车数量
-    this.initLocation();    // 获取定位数据
+    that.initLocation();    // 获取定位数据
     my.hideKeyboard();      // 关闭键盘，有些苹果手机会出现输入搜索去到搜索页返回初始页面时，初始页的键盘没有关闭的问题；
-		
-		// 回到页面关闭搜索组件
-		this.setData({
+	
+		that.searchComponent ? that.searchComponent.setData({inputVal: ''}) : '';   // 如果有搜索组件则清空搜索值
+    that.data.isCutTimer ? that.cutTimeStart() : '';                            // 如果广告模板倒计时有则开始倒计时
+    !that.data.isonLoad ? that.getTimes('isFirstTime') : '';        // 只是显示并不是创建页面，计算时间并开始倒计时
+
+		that.setData({         // 回到页面关闭搜索组件
 			isFocus: false,
 			isShowSearch: false,
 		});
-
-		that.searchComponent ? that.searchComponent.setData({inputVal: ''}) : '';   // 如果秒杀组件则清空搜索值
-    that.data.isCutTimer ? that.cutTimeStart() : '';                            // 如果有倒计时则开始倒计时
-    !this.data.isonLoad ? this.getTimes('isFirstTime') : '';        // 只是显示并不是创建页面，计算时间并开始倒计时
 	},
 
 
@@ -194,21 +197,81 @@ Page({
 	},
 
 	/**
-	 * 获取数据，判断生活号的位置;
+	 * 页面滚动
 	 */
-	onPageScroll: _.debounce(function(e) {
-		let { scrollTop } = e
-    console.log(scrollTop)
-		if (scrollTop > 56) {
-			this.setData({
-				hideLifeStyle: true
-			})
-		} else {
-			this.setData({
-				hideLifeStyle: false
-			})
-		}
-	}, 300),
+	onPageScroll() {
+    let that = this
+    let scrollTop = e.scrollTop
+    let waterFallTopInit = this.data.waterFallTopInit
+    let waterFallTop = this.data.waterFallTop
+
+    //防止统计位置不准确，重新再算一次
+    if (this.data.countWaterTit < 4 && this.data.waterFallTitList.length > 0) {
+      this.getWaterFallSeat()
+    }
+
+    // 显示返回顶部按钮
+    this.setData({
+      isShowGoTop: scrollTop > app.globalData.systemInfo.windowHeight / 2 ? true : false
+    })
+
+    if (waterFallTopInit == 'success') {
+      if (e.scrollTop >= (this.data.waterFallTop - that.data.searchBoxHeight) && !this.data.waterFallTitIsTop) {
+        that.setData({
+          waterFallTitIsTop: true
+        })
+      } else if (e.scrollTop < (this.data.waterFallTop - that.data.searchBoxHeight) && this.data.waterFallTitIsTop) {
+        that.setData({
+          waterFallTitIsTop: false
+        })
+      }
+    } else {
+      that.getWaterFallSeat()
+    }
+  },
+
+    // 页面上拉加载更多瀑布流商品 loadWaterFallGoods
+  onReachBottom() {
+    console.log('上拉加载')
+    let {
+      waterIndex,
+      waterFallGoodsList,
+      isWaterFallLoaded
+    } = this.data
+    if (!isWaterFallLoaded[waterIndex] && isWaterFallLoaded.length > 0) {
+      let setWaterFallStart = 'waterStartList[' + waterIndex + ']'
+      this.setData({
+        [setWaterFallStart]: waterFallGoodsList.length > 0 ? waterFallGoodsList[waterIndex].length : 0
+      })
+      this.getWaterFallGoodsList(1, waterIndex)
+    }
+  },
+
+  // 获取瀑布流导航位置
+  getWaterFallSeat() {
+    let that = this;
+    my.createSelectorQuery().select('#js_advert_list').boundingClientRect().exec((res) => {
+      let result = res[0] && res[0] != 'null' ? res[0].height ? res[0].height : 0 : ''
+      if (that.data.waterFallTitList.length > 0 && result) {
+        that.setData({
+          waterFallTop: Math.floor(result),
+          waterFallTopInit: 'success'
+        })
+      }
+    })
+  },
+
+  // 瀑布流导航点击
+  waterFallChange(e) {
+    console.log('瀑布流点击',e )
+    let { index } = e.currentTarget.dataset
+    this.setData({
+      waterIndex: index
+    })
+    if (this.data.isWaterFallFirst[index]) {
+      this.getWaterFallGoodsList(0, index)
+    }
+  },
 
 	/**
 	 * 添加购物车
@@ -232,15 +295,20 @@ Page({
 	/**
 	* 下拉刷新
 	*/
-	onPullDownRefresh: function() {
-		this.setData({
-			start: 0
-		});
+	onPullDownRefresh() {
 		// 清除定时器
-		getApp().globalData.home_spikeTime = null;
-		this.getMaterial();
-		this.getAdvertsModule();
-	},
+		getApp().globalData.home_spikeTime = null;      
+		this.getAdvertsModule();   // 获取广告模块资源
+
+    this.setData({
+      allMaterialIndex: -1
+    })
+
+    let timer = setTimeout(function() {
+      clearTimeout(timer)
+      my.stopPullDownRefresh();
+    }, 1000)
+  },
 
 
   /**
@@ -255,7 +323,7 @@ Page({
 
 
   /**
-	  *获取广告模块
+	  *获取全部广告模块
 	*/
 	getAdvertsModule() {
 		var that = this;
@@ -276,8 +344,9 @@ Page({
 					"client-channel": "alipay-miniprogram"
 				},
 				success: function(res) {
+          console.log(res)
 					let resRet = res.data.ret;
-          let resData= resData.data.data;
+          let resData= res.data.data;
 					if (resRet.code == '0' && resData) {
 						let newResult = [];
 						for ( var i = 0; i < resData.length; i++ ) {
@@ -298,6 +367,8 @@ Page({
                     waterLimitList: new Array(resData[i].items.length).fill(10),
                     waterFallListIndex: i
                   })
+                  console.log(that.data.waterFallTitList)
+                  console.log('全部广告模板请求成功，开始调用 getWaterFallGoodsList(0, 0)')
                   that.getWaterFallGoodsList(0, 0)
                 }
 
@@ -346,31 +417,38 @@ Page({
 
     // 获取瀑布流商品数据
   getWaterFallGoodsList(type, waterIndex) {
+    let that = this;
     let setWaterLoadingName = 'isWaterFallLoading[' + waterIndex + ']'
     let setWaterLimitName = 'waterLimitList[' + waterIndex + ']'
 
-
+    console.log(type,waterIndex,setWaterLoadingName, setWaterLimitName)
+    console.log(that.data.waterLimitList)
     // 如果是第一个则需要加入banner资源
     if (waterIndex == 0) {
-      this.setData({
-        [setWaterLimitName]: (this.data.allMaterialList.length > 0 && (this.data.allMaterialIndex + 1) < this.data.allMaterialList.length) ? 9 : 10
+      that.setData({
+        [setWaterLimitName]: (that.data.allMaterialList.length > 0 && (that.data.allMaterialIndex + 1) < that.data.allMaterialList.length) ? 9 : 10
       })
     }
-    let that = this;
-    let waterFallTitList = Object.assign([], this.data.waterFallTitList)
+    console.log(that.data.allMaterialList)
+    console.log(that.data.waterLimitList)
+
+    let waterFallTitList = Object.assign([], that.data.waterFallTitList)
+    console.log(waterFallTitList)
     let goodsContents = waterFallTitList[waterIndex].goodsContents;
     let data = {} //要传的数据
-    data.start = this.data.waterStartList[waterIndex]
-    data.limit = this.data.waterLimitList[waterIndex]
+    data.start = that.data.waterStartList[waterIndex]
+    data.limit = that.data.waterLimitList[waterIndex]
     data.queryType = waterFallTitList[waterIndex].goodsType == 'GOODS_GROUP' ? 0 : 1;
     data.goodsContents = waterFallTitList[waterIndex].goodsType == 'GOODS_GROUP' ? waterFallTitList[waterIndex].goodsGroupName : waterFallTitList[waterIndex].goodsCategoryArray
     // 防止滚动重复
-    if (!this.data.isWaterFallLoading[waterIndex]) {
-      this.setData({
+    if (!that.data.isWaterFallLoading[waterIndex]) {
+      that.setData({
         [setWaterLoadingName]: true
       })
-
+      // data.limit = 10;
+      console.log(data)
       http.post(api.GOODS.WATERFALL, data, res => {
+        console.log(res);
         let result = res.data.data ? res.data.data : [];
         let setListName = 'waterFallGoodsList[' + waterIndex + ']'
         let setLoadedName = 'isWaterFallLoaded[' + waterIndex + ']'
@@ -393,8 +471,6 @@ Page({
           [setFirstName]: false,
           allMaterialIndex: that.data.allMaterialIndex
         })
-
-
       }, err => {
         let setLoadedName = 'isWaterFallLoaded[' + waterIndex + ']'
         let setLoadingName = 'isWaterFallLoading[' + waterIndex + ']'
@@ -488,26 +564,42 @@ Page({
 			})
 		})
 	},
-
-  /**
-	  *获取banner数据
-	*/ 
-	getMaterial() {
-		var that = this;
+  
+    /**
+   * 获取首页banner getWheelPlanting
+   * */
+  getWheelPlanting() {
+		let that = this;
+    console.log('getWheelPlanting')
 		sendRequest.send(constants.InterfaceUrl.HOME_BANNER_LIST, { groupName: '支付宝小程序_首页轮播图' }, function(res) {
-			var result = res.data.result;
-			my.setStorage({
-				key: 'homeMaterial', // 缓存数据的key
+      console.log(res)
+      let result = res.data.result;
+      that.setData({
+				wheelPlantingArr: result.material ? result.material : []
+			})
+      my.setStorage({
+				key: 'wheelPlantingArr', // 缓存数据的key
 				data: result.material, // 要缓存的数据
 				success: (res) => {
 				},
 			});
-			that.setData({
-				materialArr: result.material ? result.material : []
-			})
+      console.log(that.data.wheelPlantingArr)
 		}, function(err) {
-		}, 'GET', true)
-	},
+		}, 'GET')
+  },
+
+  // banner的swiper触发change时
+  bannerListChange(e) {
+    let {
+      current,
+      source
+    } = e.detail
+    if (source === 'autoplay' || source === 'touch') {
+      this.setData({
+        currentIndex: current
+      })
+    }
+  },
 
   /**
 	  *获取弹窗广告数据
@@ -598,12 +690,12 @@ Page({
 	},
 
     /**
-   * 获取所有瀑布流的banner
+   * 获取所有瀑布流的 banner，只在第一栏瀑布流显示，排序由高到底，优先显示排序高的，每10个瀑布流商品展示一张 banner;
    * */
   getAllMaterialData() {
     let that = this;
     http.get(api.HOME.ALL_MATERIAL, {
-      groupName: '支付宝小程序瀑布流广告banner'
+      groupName: '支付宝小程序_首页轮播图'
     }, res => {
       let result = res.data.data ? res.data.data : [];
       for (let i = 0; i < result.length; i++) {
@@ -612,24 +704,23 @@ Page({
       that.setData({
         allMaterialList: Object.assign(that.data.allMaterialList, result)
       })
+      console.log(result)
+      console.log(that.data.allMaterialList)
     }, err => {})
   },
 
-    // 获取瀑布流导航位置
-  getWaterFallSeat() {
+
+  // 开始倒计时
+  cutTimeStart(){
     let that = this;
-    my.createSelectorQuery().select('#js_advert_list').boundingClientRect().exec((res) => {
-      let result = res[0] && res[0] != 'null' ? res[0].height ? res[0].height : 0 : ''
-        if (that.data.waterFallTitList.length > 0 && result) {
-          that.setData({
-            waterFallTop: Math.floor(result),
-            waterFallTopInit: 'success'
-          })
-      }
-    })
+    that.cutTimeToday();
+    clearTimeout(that.data.cutTime_timer);
+    that.data.cutTime_timer = setTimeout(function(){
+      that.cutTimeStart()
+    },1000)
   },
 
-    // 当天倒计时
+  // 当天倒计时
   cutTimeToday(){
     let that = this;
     let date = new Date();
@@ -663,15 +754,6 @@ Page({
     })
   },
 
-  // 开始倒计时
-  cutTimeStart(){
-    let that = this;
-    that.cutTimeToday();
-    clearTimeout(that.data.cutTime_timer);
-    that.data.cutTime_timer = setTimeout(function(){
-      that.cutTimeStart()
-    },1000)
-  },
 
 
   /**
@@ -975,6 +1057,7 @@ Page({
 		 }, (err) => {
 		 })
 	},
+  
 
 	/**
 	  * 存储新版搜索组件实例

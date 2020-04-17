@@ -71,24 +71,26 @@
     </navigator>
   </view>
 
+<!-- <navigator url="/pages/activities/lightMember/lightMember">轻会员</navigator> -->
+
   <!-- banner与模块广告和商品列表部分 -->
   <view class="flex_1 overHid posi_re">
     <scroll-view scroll-y="{{true}}"  scroll-with-animation="{{true}}" class="height_100 posi_re" bindscroll="advertsScroll" bindscrolltolower="loadWaterFallGoods" bindscrolltoupper="loadToTop" scroll-top="{{isGoTop ? scrollViewTop : ''}}">
       <view>
         <view id="js_advert_list" class="advertPart ">
           <!-- banner -->
-          <view wx:if="{{bannerList && bannerList.length > 0}}" class="bannerListBox posi_re">
+          <view a:if="{{bannerList && bannerList.length > 0}}" class="bannerListBox posi_re">
             <swiper class='width_100 bannerListSwiper' bindchange="bannerListChange" circular='{{bannerList && bannerList.length > 1 ? "true" : ""}}' current='{{currentIndex}}' autoplay='true' interval='3000'>
-              <swiper-item wx:for='{{bannerList}}' wx:key='indexBanner' class='all_100' data-region='topBanner' data-growio='{{item.gioType}}' data-index='{{index}}' data-url='{{item.url}}' bindtap="goToPage">
+              <swiper-item a:for='{{bannerList}}' a:key='indexBanner' class='all_100' data-region='topBanner' data-growio='{{item.gioType}}' data-index='{{index}}' data-url='{{item.url}}' bindtap="goToPage">
                 <view hover-class='none' class='all_100 homeSliderNav'>
-                  <image wx:if="{{item.imageUrl && !filters.strIndexOf(item.imageUrl,'http')}}" src='{{baseImageUrl}}{{item.imageUrl}}' class='all_100 borRa_16r'></image> 
-                  <image wx:elif="{{item.imageUrl && filters.strIndexOf(item.imageUrl,'http')}}" src='{{item.imageUrl}}' class='all_100 borRa_16r'></image>
+                  <image a:if="{{item.imageUrl && !filters.strIndexOf(item.imageUrl,'http')}}" src='{{baseImageUrl}}{{item.imageUrl}}' class='all_100 borRa_16r'></image> 
+                  <image a:elif="{{item.imageUrl && filters.strIndexOf(item.imageUrl,'http')}}" src='{{item.imageUrl}}' class='all_100 borRa_16r'></image>
                 </view>
               </swiper-item>
             </swiper>
             <!-- 自定义的指示点 -->
-            <view wx:if="{{bannerList.length > 1}}" class="posi_ab flex_view_row" style="bottom: 7%; left: 50%; transform: translate(-50%, 0)">
-              <block wx:for="{{bannerList}}" wx:key="bannerDot">
+            <view a:if="{{bannerList.length > 1}}" class="posi_ab flex_view_row" style="bottom: 7%; left: 50%; transform: translate(-50%, 0)">
+              <block a:for="{{bannerList}}" a:key="bannerDot">
                 <view class="bannerList_dot {{currentIndex == index ? 'active' : ''}}" style=""></view>
               </block>
             </view>
@@ -101,37 +103,37 @@
         </view>
         <!-- 瀑布流商品模块 -->
         <view class="" style="min-height: 100%;">
-          <block wx:for="{{waterFallGoodsList}}" wx:key="waterFallGoodsList">
-            <view wx:if="{{waterIndex == index}}" style="{{waterIndex == index ? 'min-height: ' + goodsBoxMinHeight + 'px;' : ''}}">
+          <block a:for="{{waterFallGoodsList}}" a:key="waterFallGoodsList">
+            <view a:if="{{waterIndex == index}}" style="{{waterIndex == index ? 'min-height: ' + goodsBoxMinHeight + 'px;' : ''}}">
               <view class='waterFallGoodsList'>
                 <view class='waterFallGoodsView padL_24r'>
-                  <block wx:for="{{waterFallGoodsList[index]}}" wx:for-index="goodsIndex" wx:for-item="goodsItem" wx:key="itemIndex">
-                    <block wx:if="{{goodsItem.type == 'advert'}}">
-                      <template is="waterFallBannerItem" wx:if="{{goodsIndex % 2 == 0}}" data="{{...goodsItem,baseImageUrl,left: true,index: goodsIndex}}"></template>
+                  <block a:for="{{waterFallGoodsList[index]}}" a:for-index="goodsIndex" a:for-item="goodsItem" a:key="itemIndex">
+                    <block a:if="{{goodsItem.type == 'advert'}}">
+                      <template is="waterFallBannerItem" a:if="{{goodsIndex % 2 == 0}}" data="{{...goodsItem,baseImageUrl,left: true,index: goodsIndex}}"></template>
                     </block>
-                    <block wx:else>
-                      <template is="itemGoodsCard" wx:if="{{goodsIndex % 2 == 0}}" data="{{...goodsItem,left:true,baseImageUrl,baseLocImgUrl,smallImgArg,pageAt: 'home'}}"></template>
+                    <block a:else>
+                      <template is="itemGoodsCard" a:if="{{goodsIndex % 2 == 0}}" data="{{...goodsItem,left:true,baseImageUrl,baseLocImgUrl,smallImgArg,pageAt: 'home'}}"></template>
                     </block>
                   </block>
                 </view>
                 <view class='waterFallGoodsView padR_24r'>
-                  <block wx:for="{{waterFallGoodsList[index]}}" wx:for-index="goodsIndex" wx:for-item="goodsItem" wx:key="itemIndex2">
-                    <block wx:if="{{goodsItem.type == 'advert'}}">
-                      <template is="waterFallBannerItem" wx:if="{{goodsIndex % 2 != 0}}" data="{{...goodsItem,baseImageUrl,left: false,index: goodsIndex}}"></template>
+                  <block a:for="{{waterFallGoodsList[index]}}" a:for-index="goodsIndex" a:for-item="goodsItem" a:key="itemIndex2">
+                    <block a:if="{{goodsItem.type == 'advert'}}">
+                      <template is="waterFallBannerItem" a:if="{{goodsIndex % 2 != 0}}" data="{{...goodsItem,baseImageUrl,left: false,index: goodsIndex}}"></template>
                     </block>
-                    <block wx:else>
-                      <template is="itemGoodsCard" wx:if="{{goodsIndex % 2 != 0}}" data="{{...goodsItem,left:false,baseImageUrl,baseLocImgUrl,smallImgArg,pageAt: 'home'}}"></template>
+                    <block a:else>
+                      <template is="itemGoodsCard" a:if="{{goodsIndex % 2 != 0}}" data="{{...goodsItem,left:false,baseImageUrl,baseLocImgUrl,smallImgArg,pageAt: 'home'}}"></template>
                     </block>
                   </block>
                 </view>
               </view>
               <!-- 加载中 -->
-              <view wx:if="{{!isWaterFallLoaded[index]}}" class='flex_view_row color-a1a0a0 font-32 marTop_20 align_cen justi_cen'>
+              <view a:if="{{!isWaterFallLoaded[index]}}" class='flex_view_row color-a1a0a0 font-32 marTop_20 align_cen justi_cen'>
                 <image src='{{baseLocImgUrl}}miniappImg/loading/loading.gif' class='loading_gif'></image>
                 <text>加载中</text>
               </view>
               <!--没有更多-->
-              <view wx:if="{{isWaterFallLoaded[index]}}" class='flex_view_row color-a1a0a0 font-32 marTop_20 align_cen justi_cen'>
+              <view a:if="{{isWaterFallLoaded[index]}}" class='flex_view_row color-a1a0a0 font-32 marTop_20 align_cen justi_cen'>
                 没有更多了
               </view>
             </view>
@@ -141,12 +143,12 @@
     </scroll-view>
 
 
-    <!-- 瀑布流固定导航  wx:if="{{waterFallTitIsTop && waterFallTitList.length > 0}}"-->
+    <!-- 瀑布流固定导航  a:if="{{waterFallTitIsTop && waterFallTitList.length > 0}}"-->
     <view class="width_100 waterFallTitFixed {{waterFallTitIsTop && waterFallTitList.length > 0 ? 'show' : ''}}">
       <!-- 瀑布流标题 -->
       <view class="width_100">
         <scroll-view class="waterFallScroll" scroll-x="{{true}}" scroll-with-animation="{{true}}" scroll-into-view="{{'waterFall' + waterIndex}}" style="{{advertsArr[waterFallListIndex].backgroundColor ? 'background-color: #' + advertsArr[waterFallListIndex].backgroundColor + ';' : ''}}">
-          <block wx:for="{{waterFallTitList}}" wx:for-item="waterFallItem" wx:for-index="waterFallIndex" wx:key="waterFallItem">
+          <block a:for="{{waterFallTitList}}" a:for-item="waterFallItem" a:for-index="waterFallIndex" a:key="waterFallItem">
             <view id="{{'waterFall' + waterFallIndex}}" class="waterFallTitItem" data-index="{{waterFallIndex}}" bindtap="waterFallChange">
               <view class="flex_view_col align_cen {{waterIndex == waterFallIndex ? 'waterFallActiveItem' : ''}}" data-index="{{waterFallIndex}}">
                 <!-- 主标题 -->
@@ -159,12 +161,9 @@
                   <!-- 选中的三角 -->
                   <view class="subTitAng"></view>
                 </view>
-
               </view>
             </view>
-
           </block>
-
         </scroll-view>
       </view>
     </view>

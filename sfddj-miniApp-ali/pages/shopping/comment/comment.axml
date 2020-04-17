@@ -10,45 +10,46 @@
 </view>
 <!-- 没有网络提示这个 -->
 <!--<view a:elif="{{!wifiAvailable}}"><no-wifi></no-wifi></view> -->
-<view a:else class="all_100vh flex_view_col">
+<view a:else class="all_100vh flex_view_col posi_re">
 	<!-- 旧版 -->
 	<!--<view class="goods-comment-title"><view>评分:{{goodScore}}</view><view>评价({{goodsCommentTotal}})</view></view> -->
 	<!-- 旧版 -->
 	<!--<block a:for="{{result}}"><view class="goods-comment-area"><view class="comment-user-area"><view class="flex_view_row"><view class="comment-user-image"><image src="{{item.headPortraitPath ? item.headPortraitPath : baseLocImgUrl + 'miniappImg/icon/'}}" class="commentUser_img"></image></view><view class="flex_view_col marLeft_10 justi_cen"><view class="font-20 color-414141">{{item.nickNameResult}}</view><view class="flex_view_row marTop_10"><image src="{{baseLocImgUrl}}miniappImg/icon/icon_star_selected.png" class="starIcon" a:for="{{item.star}}"></image><image src="{{baseLocImgUrl}}miniappImg/icon/icon_star_normal.png" class="starIcon" a:for="{{5 - item.star}}"></image></view></view></view><view class="font-20 color-bdbdbd">{{item.createDate}}</view></view><view class="commentText font-24 color-414141">{{item.comment}}</view><view class="commentText blockView"><image src="{{baseImageUrl}}{{item2}}" class="commentTextImg" data-current="{{item2}}" data-urls="{{item.imagePath}}" a:for="{{item.imagePath}}" a:for-item="item2" onTap="commentViewTap"></image></view></view></block> -->
 
+
   <!-- 新版 -->
-  <view class="estimateNav whiteBack js_estimateNav">
-    <view class="padLR_20">
+  <view class="estimateNav whiteBack padLR_20 scrollTop navigation {{pullUpShow ? 'opacityOne' : ''}}">
       <!-- 评分 -->
-      <view a:if="{{countData.allCount > 50}}" class="estimateHead font-28">
+      <view a:if="{{countData.allCount > 50 && commentScore}}" class="estimateHead font-28">
         <view>好评度:
           <text class="color-ff5353 marLeft_5">{{commentScore}}%</text>
         </view>
       </view>
       <!-- 筛选有图没图 -->
-      <view class="estimateNavList clearfix  width_100">
-        <!-- 全部 -->
-          <view class="estimateNavListCon {{commentFenlei == 1 ? 'active' : ''}}" data-type="1" catchTap="filterCommentList">全部
-            <!-- (<text>{{countData.allCount}}</text> ) -->
-          </view>
-        <!-- 有图 -->
-          <view a:if="{{countData.youTuCount}}" class="estimateNavListCon {{commentFenlei == 2 ? 'active' : ''}}" data-type="2" catchTap="filterCommentList">有图(
-            <text>{{countData.youTuCount}}</text> )
-          </view>
-        <!-- 有视频 -->
-          <view a:if="{{countData.shiPingCount}}" class="estimateNavListCon {{commentFenlei == 3 ? 'active' : ''}}" data-type="3" catchTap="filterCommentList">有视频(
-            <text>{{countData.shiPingCount}}</text> )
-          </view>
-        <!-- 好评 -->
-          <view a:if="{{countData.haoPingCount}}" class="estimateNavListCon {{commentFenlei == 4 ? 'active' : ''}}" data-type="4" catchTap="filterCommentList">好评(
-            <text>{{countData.haoPingCount}}</text> )
-          </view>
-        <!-- 差评 -->
-          <view a:if="{{countData.chaPingCount}}" class="estimateNavListCon {{commentFenlei == 5 ? 'active' : ''}}" style="margin-right: 0;" data-type="5" catchTap="filterCommentList">差评(
-            <text>{{countData.chaPingCount}}</text> )
-          </view>
-      </view>
-    </view>
+      <scroll-view scroll-x="{{true}}" class="estimateNavList  width_100">
+        <view class="horizontalRoll">
+          <!-- 全部 -->
+            <view class="estimateNavListCon {{commentFenlei == 1 ? 'active' : ''}}" data-type="1" catchTap="filterCommentList">全部
+              <!-- (<text>{{countData.allCount}}</text> ) -->
+            </view>
+          <!-- 有图 -->
+            <view a:if="{{countData.youTuCount}}" class="estimateNavListCon {{commentFenlei == 2 ? 'active' : ''}}" data-type="2" catchTap="filterCommentList">有图(
+              <text>{{countData.youTuCount}}</text> )
+            </view>
+          <!-- 有视频 -->
+            <view a:if="{{countData.shiPingCount}}" class="estimateNavListCon {{commentFenlei == 3 ? 'active' : ''}}" data-type="3" catchTap="filterCommentList">有视频(
+              <text>{{countData.shiPingCount}}</text> )
+            </view>
+          <!-- 好评 -->
+            <view a:if="{{countData.haoPingCount}}" class="estimateNavListCon {{commentFenlei == 4 ? 'active' : ''}}" data-type="4" catchTap="filterCommentList">好评(
+              <text>{{countData.haoPingCount}}</text> )
+            </view>
+          <!-- 差评 -->
+            <view a:if="{{countData.chaPingCount}}" class="estimateNavListCon {{commentFenlei == 5 ? 'active' : ''}}" style="margin-right: 0;" data-type="5" catchTap="filterCommentList">差评(
+              <text>{{countData.chaPingCount}}</text> )
+            </view>
+        </view>
+      </scroll-view>
     <!-- 间隙 -->
     <!--<view class="estimateNavSquare"></view> -->
   </view>
@@ -57,14 +58,55 @@
 	<!-- 评论列表 -->
   <!-- scroll-with-animation="{{true}}}" -->
 	<scroll-view scroll-y="{{true}}" class="posi_re flex_1" scroll-top="{{scrollTop}}"  onScrollToLower="loadMoreList" onScroll="scrollEvent">
+      <!-- 新版       {{pullUpShow ? 'scrollTop' : ''}}-->
+    <view class="estimateNav whiteBack js_estimateNav padLR_20 ">
+        <!-- 评分 -->
+        <view a:if="{{countData.allCount > 50 && commentScore}}" class="estimateHead font-28">
+          <view>好评度:
+            <text class="color-ff5353 marLeft_5">{{commentScore}}%</text>
+          </view>
+        </view>
+        <!-- 筛选有图没图 -->
+        <scroll-view scroll-x="{{true}}" class="estimateNavList  width_100">
+          <view class="horizontalRoll">
+            <!-- 全部 -->
+              <view class="estimateNavListCon {{commentFenlei == 1 ? 'active' : ''}}" data-type="1" catchTap="filterCommentList">全部
+                <!-- (<text>{{countData.allCount}}</text> ) -->
+              </view>
+            <!-- 有图 -->
+              <view a:if="{{countData.youTuCount}}" class="estimateNavListCon {{commentFenlei == 2 ? 'active' : ''}}" data-type="2" catchTap="filterCommentList">有图(
+                <text>{{countData.youTuCount}}</text> )
+              </view>
+            <!-- 有视频 -->
+              <view a:if="{{countData.shiPingCount}}" class="estimateNavListCon {{commentFenlei == 3 ? 'active' : ''}}" data-type="3" catchTap="filterCommentList">有视频(
+                <text>{{countData.shiPingCount}}</text> )
+              </view>
+            <!-- 好评 -->
+              <view a:if="{{countData.haoPingCount}}" class="estimateNavListCon {{commentFenlei == 4 ? 'active' : ''}}" data-type="4" catchTap="filterCommentList">好评(
+                <text>{{countData.haoPingCount}}</text> )
+              </view>
+            <!-- 差评 -->
+              <view a:if="{{countData.chaPingCount}}" class="estimateNavListCon {{commentFenlei == 5 ? 'active' : ''}}" style="margin-right: 0;" data-type="5" catchTap="filterCommentList">差评(
+                <text>{{countData.chaPingCount}}</text> )
+              </view>
+          </view>
+        </scroll-view>
+      <!-- 间隙 -->
+      <!--<view class="estimateNavSquare"></view> -->
+    </view>
+
+
+
+
 		<block a:if="{{commentList && commentList.length > 0}}">
-      <view class="sort flex_view_row justi_end whiteBack">
+      <!-- style="padding-top:{{pullUpShow ? js_estimateNavHeight + 'px' : ''}}" -->
+      <view class="sort flex_view_row justi_end whiteBack" >
         <view class="{{defaultSort == 0 ? 'activity' : ''}}" data-sortType="defaultSort" catchTap="selectionSort">默认排序</view>
         <view class="dividingLine"></view>
         <view class="{{defaultSort == 1 ? 'activity' : ''}}" data-sortType="timeSort" catchTap="selectionSort">按时间排序</view>
       </view>
-			<view a:for="{{commentList}}">
-				<view class="{{index == (commentList.length -1) ? '' : 'borBot_e6'}} whiteBack">
+			<view a:for="{{commentList}}" >
+				<view class="{{index == (commentList.length -1) ? '' : 'borBot_e6 marBot_20'}} whiteBack">
 					<view class="goods-comment-area">
 						<!-- 第一次评论 -->
 						<view class="first-comment">
@@ -74,7 +116,7 @@
 										<image src="{{item.headPortraitPath ? item.headPortraitPath : baseLocImgUrl + 'miniappImg/icon/icon_default_head.jpg'}}" class="commentUser_img"></image>
 									</view>
 									<view class="flex_view_col marLeft_20 justi_cen">
-										<view class="font-32 color-414141">{{item.nickName}}</view>
+										<view class="font-30 color-414141">{{item.nickName}}</view>
 										<view class="flex_view_row marTop_10">
 											<image src="{{baseLocImgUrl}}miniappImg/icon/icon_star_selected.png" class="starIcon" a:for="{{item.star}}"></image>
 											<image src="{{baseLocImgUrl}}miniappImg/icon/icon_star_normal.png" class="starIcon" a:for="{{5 - item.star}}"></image>
@@ -84,15 +126,14 @@
 								<view class="font-24 color-999999">{{item.createDate}}</view>
 							</view>
 							<view class="commentText font-28 color-333">{{item.comment}}</view>
-							<view class="commentText blockView" a:if="{{ (item.videoPath && item.videoPath.length > 0) || (item.imagePath && item.imagePath.length > 0) }}" >
-                <view class="commentTextImg video_view" a:if="{{ item.videoPath && item.videoPath.length > 0 }}" a:for="{{item.videoPath}}"  a:for-item="videoItem"  a:for-index="videoIndex" a:key="videoIndex" data-id="video{{videoIndex}}" data-videoSrc="{{videoItem.videoSrc}}" catchTap="playCommeVideo">
-                  <image class="all_100" src="{{baseImageUrl + videoItem.videoCover}}" ></image>
+							<view class="commentText blockView clearfix" a:if="{{ (item.videoPath && item.videoPath.length > 0) || (item.imagePath && item.imagePath.length > 0) }}" >
+                <view class="commentTextImg video_view fl" a:if="{{ item.videoPath && item.videoPath.length > 0 }}" a:for="{{item.videoPath}}"  a:for-item="videoItem"  a:for-index="videoIndex" a:key="videoIndex" data-id="video{{videoIndex}}" data-videoSrc="{{videoItem.videoSrc}}" catchTap="playCommeVideo">
+                  <image class="commentTextImg" src="{{baseImageUrl + videoItem.videoCover}}" ></image>
                   <image class="video_playImg" src="{{baseLocImgUrl + 'miniappImg/public/video/player-play-btn.png'}}"></image>
                 </view>
-
-                <image a:if="{{ item.imagePath && item.imagePath.length > 0 }}" a:for="{{item.imagePath}}" a:for-item="imageItem"  a:for-index="imageIndex"  wx:key="imageIndex"  data-current="{{imageIndex}}" data-urls="{{item.imagePath}}" src="{{filters.isHttpUrl(imageItem) ? baseLocImgUrl + 'vueStatic/img/commentErrImg.png' : baseImageUrl + imageItem}}" class="commentTextImg" catchTap="commentViewTap"></image>
-
-
+                <view class="commentTextImg fl" a:for="{{item.imagePath}}" a:for-item="imageItem"  a:for-index="imageIndex"  wx:key="imageIndex">
+                  <image a:if="{{ item.imagePath && item.imagePath.length > 0 }}" data-current="{{imageIndex}}" data-urls="{{item.imagePath}}" src="{{filters.isHttpUrl(imageItem) ? baseLocImgUrl + 'vueStatic/img/commentErrImg.png' : baseImageUrl + imageItem}}" class="commentTextImg" catchTap="commentViewTap"></image>
+                </view>
 							</view>
 						</view>
 						<!-- 商家第一次回复 -->
@@ -107,16 +148,17 @@
 						<view a:if="{{item.appendComment || item.appendDateStr || item.appendImagePath}}" class="append-comment-area marTop_15">
 							<view class="append-comment-date">{{item.appendDateStr}}</view>
 							<view class="commentText font-28 color-414141">{{item.appendComment}}</view>
-							<view class="commentText blockView" a:if="{{ (item.appendVideoPath && item.appendVideoPath.length > 0) || (item.appendImagePath && item.appendImagePath.length > 0) }}">
-                <view a:if="{{ item.appendVideoPath && item.appendVideoPath.length > 0 }}" class="commentTextImg video_view"  a:for="{{item.appendVideoPath}}"  a:for-item="appendVideoItem"  a:for-index="appendVideoIndex" a:key="appendVideoIndex" data-id="appendVideo{{appendVideoIndex}}" data-videoSrc="{{appendVideoItem.videoSrc}}" catchTap="playCommeVideo">
-                  <image class="all_100" src="{{baseImageUrl + appendVideoItem.videoCover}}" ></image>
+							<view class="commentText blockView clearfix" a:if="{{ (item.appendVideoPath && item.appendVideoPath.length > 0) || (item.appendImagePath && item.appendImagePath.length > 0) }}">
+                <view  class="commentTextImg video_view fl" a:if="{{ item.appendVideoPath && item.appendVideoPath.length > 0 }}" a:for="{{item.appendVideoPath}}"  a:for-item="appendVideoItem"  a:for-index="appendVideoIndex" a:key="appendVideoIndex" data-id="appendVideo{{appendVideoIndex}}" data-videoSrc="{{appendVideoItem.videoSrc}}" catchTap="playCommeVideo">
+                  <image class="commentTextImg" src="{{baseImageUrl + appendVideoItem.videoCover}}" ></image>
                   <image class="video_playImg" src="{{baseLocImgUrl + 'miniappImg/public/video/player-play-btn.png'}}"></image>
                 </view>
-
-                <image a:if="{{ item.appendImagePath && item.appendImagePath.length > 0 }}" a:for="{{item.appendImagePath}}" a:for-item="appendImgItem"  a:for-index="appendImgIndex" a:key="appendImgIndex" data-current="{{appendImgIndex}}" data-urls="{{item.appendImagePath}}" src="{{filters.isHttpUrl(appendImgItem) ? baseLocImgUrl + 'vueStatic/img/commentErrImg.png' : baseImageUrl + appendImgItem}}" class="commentTextImg"  catchTap="commentViewTap"></image>
-
+                <view class="commentTextImg fl" a:for="{{item.appendImagePath}}" a:for-item="appendImgItem"  a:for-index="appendImgIndex" a:key="appendImgIndex" >
+                  <image a:if="{{ item.appendImagePath && item.appendImagePath.length > 0 }}" data-current="{{appendImgIndex}}" data-urls="{{item.appendImagePath}}" src="{{filters.isHttpUrl(appendImgItem) ? baseLocImgUrl + 'vueStatic/img/commentErrImg.png' : baseImageUrl + appendImgItem}}" class="commentTextImg"  catchTap="commentViewTap"></image>
+                </view>
 							</view>
 						</view>
+
 						<!-- 商家追加回复 -->
 						<block a:if="{{item.appendSupplierReply}}">
 							<template is="commentReply" data="{{replyTitle: supplierTit, replyText: item.appendSupplierReply}}"></template>

@@ -49,7 +49,7 @@ export default {
 	},
 
 	GOODS: {
-
+    WATERFALL: '/m/g/1.0/group/1.0/getGoodsWaterfall',      //首页瀑布流商品列表
 		LISTGOODSBYNAME: '/m/g/1.0/group/listGoodsByName',     //商品分组接口，可用于猜你喜欢商品列表
 	},
 
@@ -177,7 +177,7 @@ export default {
 	},
 
   HOME: {
-    ADVERTS_MOUDULE: '/m/a/moduleAdvert/1.1/getModuleAdvert',
+    ADVERTS_MOUDULE: '/m/a/moduleAdvert/1.1/getModuleAdvert', //获取全部广告模块
     ALL_MATERIAL: '/m/a/material/1.0/listMaterialByName',     //获取首页底部所有banner位数据
   },
 

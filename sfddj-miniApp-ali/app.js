@@ -22,11 +22,18 @@ App({
 			this.globalData.query = options.query
 		}
 		var that = this;
-		my.getSystemInfo({
-			success: (res) => {
-				that.globalData.systemInfo = res;
-			},
-		});
+    // 如果您需要在首页初始化时获取异步的数据建议在首页的 onload 中写入异步方法在异步方法中获取对应参数，
+    // 异步数据存在延迟性所以不建议在 app.js 中获取在页面的 onload 的中操作数据。
+    // 另外，亲测，同步可以在 app.js 中获取，在页面的 onload 的中操作数据，
+    // 但在初始化 data 中操作 app.js 获取的数据，无论同步、异步，都不行；
+		// my.getSystemInfo({
+		// 	success: (res) => {
+		// 		that.globalData.systemInfo = res;
+    //     console.log(that.globalData.systemInfo)
+		// 	},
+		// });
+
+    that.globalData.systemInfo = my.getSystemInfoSync();
 	},
 
 	onShow: function (options) {

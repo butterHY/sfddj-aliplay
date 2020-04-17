@@ -43,7 +43,7 @@
         <!--使用说明-->
         <view class='couponUseTip'>
           <text class='couponUseTipArea' onTap="useTip">
-            <text class='couponUseTxt'>使用说明</text>
+            <text class='couponUseTxt'>优惠说明</text>
             <text class='iconfont icon-changjianwenti couponUseIcon'></text>
           </text>
         </view>
@@ -60,7 +60,7 @@
           <!--点击加载-->
           <view a:if="{{loadingAddMore}}" class="nomore_txt" onTap="couponLoadMore">查看更多</view>
           <!--没有更多-->
-          <view a:if="{{loadingNoMore}}" class='couponLoading_view'>
+          <view a:if="{{loadingNoMore && couponList.length >= 5}}" class='couponLoading_view'>
           没有更多优惠券了
           </view>
         </view>
@@ -69,7 +69,7 @@
           <view class="icon_noMoreImg">
             <image src='{{baseLocImgUrl}}miniappImg/invite/noCoupon.png' class='icon_empty'></image>
           </view>
-          <view a:if="true" class='couponLoading_view'>
+          <view class='couponLoading_view smallFont'>
            您还没有优惠券
           </view>
         </view>
@@ -80,7 +80,7 @@
     <view class='guessLikeArea  clearfix padding_108' a:if="{{ recommondList.length > 0 }} ">
       <view class="guessLikeTitle flex_view_row justi_cen align_cen">
         <image src="{{baseLocImgUrl}}miniappImg/icon/ic_like.png" class='ic_like'></image>
-        <text>猜你喜欢</text>
+        <text class="marLeft_10">猜你喜欢</text>
       </view>
       <view class="guessLikeGoodsBox ">
         <block  a:for="{{ recommondList }}" a:if="{{ index %2 == 0 }}">
@@ -107,7 +107,7 @@
     <!-- 底部切换优惠券按钮 -->
     <view class="myConpon_footer flex_view_row justi_cen align_cen">
       <navigator class="flex_1 checkMore_unValCoupon" url="/pages/user/myCoupon/expiredCoupon/expiredCoupon">查看失效券</navigator>
-      <navigator class="flex_1 checkMore_unValCoupon" url="/pages/home/getCoupon/getCoupon">领取更多好券</navigator>
+      <navigator class="flex_1 checkMore_unValCoupon checkMore_CouponLeft" url="/pages/home/getCoupon/getCoupon">领取更多好券</navigator>
     </view>
     <!--联系客服按钮-->
     <view class='contactArea' onTap='goToWebCall'>

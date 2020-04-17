@@ -44,7 +44,7 @@
   height: 260rpx;
   padding: 0 10rpx;
   -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 .borderRa_15r {
@@ -105,3 +105,174 @@
 	white-space: nowrap;
 	font-size: 0;
 }
+
+/* ------- 新样式  --------- */
+/* .adsView image {
+  display: block;
+}
+
+.back_fcfcfc {
+  background: #fcfcfc;
+}
+
+.opaci_0 {
+  opacity: 0;
+}
+
+.opaci_1 {
+  opacity: 1;
+}
+
+.goodsScrollTit_del{
+  max-width: 490rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.width_20 {
+  width: 20%;
+}
+
+.width_25 {
+  width: 25%;
+}
+
+.width_50 {
+  width: 50%;
+} */
+
+/* 2+4 */
+/* .twoFourAdvertsLeft {
+  border-right: 1px solid #ececec;
+  box-sizing: border-box;
+}
+
+.twoFourAdvertsTop {
+  border-bottom: 1px solid #ececec;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.twoFourAdvertsBot {
+  overflow: hidden;
+}
+
+.twoFourModuleView {
+  border-radius: 16rpx;
+  overflow: hidden;
+}
+
+.twoFourModule image {
+  display: block;
+}
+
+.twoFourModuleBox {
+  border-radius: 8rpx;
+  overflow: hidden;
+  padding-top: 10rpx;
+}
+
+.waterFallScroll {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  white-space: nowrap;
+  overflow: auto;
+  font-size: 0;
+  z-index: 1000;
+}
+
+.waterFallTitBox {
+  padding: 24rpx 0 24rpx 0;
+  width: auto;
+}
+
+.waterFallTitItem {
+  display: inline-block;
+  padding: 30rpx 0 24rpx 0;
+  overflow: auto;
+}
+
+.waterFallTit {
+  padding: 0 24rpx;
+  color: #666;
+  line-height: 36rpx;
+}
+
+.borderRight_ea {
+  border-right: 1px solid #eaeaea;
+}
+
+.waterFallSubTit {
+  color: #999;
+  padding: 0 10rpx;
+  border-radius: 45rpx;
+  position: relative;
+  line-height: 32rpx;
+  margin-top: 8rpx;
+}
+
+.waterFallSubTit .subTitAng {
+  display: none;
+  position: absolute;
+}
+
+.waterFallActiveItem .waterFallTit {
+  color: #00ac57;
+  font-weight: 500;
+}
+
+.waterFallActiveItem .waterFallSubTit {
+  color: #fff;
+  background: -o-linear-gradient(320deg, #00bf51, #00a958);
+  background: linear-gradient(130deg, #00bf51, #00a958);
+}
+
+.waterFallActiveItem .waterFallSubTit .subTitAng {
+  display: block;
+  width: 0;
+  height: 0;
+  border-width: 10rpx;
+  border-style: solid;
+  border-color: #00a958 transparent transparent transparent;
+  bottom: -18rpx;
+} */
+
+/* 倒计时 */
+/* .countDown{
+  margin-left: 20rpx;
+}
+
+.countDown_txt{
+  height: 36rpx;
+  width: 48rpx;
+  font-size: 24rpx;
+  line-height: 36rpx;
+  display: inline-block;
+  text-align: center;
+  color: #ffffff;
+  vertical-align: top;
+  margin-top: 10rpx;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 100% 100%;
+}
+
+.countDown_split{
+  font-size: 28rpx;
+  line-height: 36rpx;
+  color: #ff5353;
+  font-weight: bold;
+  display: inline-block;
+  vertical-align: top;
+  margin-top: 10rpx;
+}
+
+.countDown_black{
+  background-image: url('https://img.sfddj.com/miniappImg/bg/timeBg-black.png');
+}
+
+.countDown_red{
+  background-image: url('https://img.sfddj.com/miniappImg/bg/timeBg-red.png');
+} */

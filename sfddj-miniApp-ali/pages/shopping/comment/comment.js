@@ -3,7 +3,7 @@
 * 评价详情页面
 * @author 01368384
 */
-
+let app = getApp();
 var sendRequest = require('../../../utils/sendRequest');
 var constants = require('../../../utils/constants');
 var util = require('../../../utils/util');
@@ -13,7 +13,6 @@ var baseImageUrl = constants.UrlConstants.baseImageUrl; //图片资源地址前�
 import http from '../../../api/http'
 import api from '../../../api/api'
 Page({
-
 	/**
 	 * 页面的初始数据
 	 */
@@ -42,6 +41,10 @@ Page({
 
         
     setComeBack: true,                // 返回顶部或首页的导航的节流开关
+    pullUpShow: false,                    // 用户是上拉
+    coloneScrollTop: [],
+    js_estimateNavHeight: null,       // js_estimateNav 节点高度；
+
 	},
 
 	onLoad: function(options) {
@@ -62,6 +65,9 @@ Page({
       title: options.type == 'buyerShow' ? '买家秀' : '评价详情',
     });
 	},
+
+  onShow() {
+  },
 
 	/**
 	 * 获取评论列表信息
@@ -128,7 +134,6 @@ Page({
     let videoPath = [];
     let appendVideoPath = [];
     let { goodsId,start,limit,commentFenlei,commentType,defaultSort } = that.data;
-    console.log( goodsId,start,limit,commentFenlei,commentType,defaultSort)
 
 		this.setData({
 			isLoadMore: true
@@ -139,13 +144,6 @@ Page({
 			// var result = res.data.result;
 			commentList.forEach(value => {
 				if (value) {
-
-          // value.appendSupplierReply = '商家追加回复商家追加回复商家追加回复商家追加回复商家追加回复商家追加回复商家追加回复商家追加回复商家追加回复商家追加回复';
-          // value.appendPlatformReply = '平台追加回复平台追加回复平台追加回复平台追加回复平台追加回复平台追加回复平台追加回复平台追加回复平台追加回复平台追加回复';
-          // value.supplierReply = '商家第一次回复商家第一次回复商家第一次回复商家第一次回复商家第一次回复商家第一次回复商家第一次回复商家第一次回复';
-          // value.platformReply = '平台第一次回复平台第一次回复平台第一次回复平台第一次回复平台第一次回复平台第一次回复平台第一次回复平台第一次回复';
-
-
 					value.createDate = util.pointFormatTime(new Date(value.createDate));
           if ( value.videoPath && value.videoPath.length > 0 ) { 
             value.videoPath.forEach((vals, index) => {
@@ -177,7 +175,6 @@ Page({
 			});
 
       var hasMore = commentList && commentList.length == that.data.limit ? true : false;
-
       that.data.commentList = that.data.start == 0 ? commentList : that.data.commentList.concat(commentList);
 
 			that.setData({
@@ -187,14 +184,16 @@ Page({
 				hasMore: hasMore,
 				isLoadMore: false
 			});
+
+      that.data.start == 0 ? that.getHeight() : '';
 		}, err => {
 			that.setData({
 				loadComplete: true,
 				hasMore: false,
 				isLoadMore: false
 			})
+      that.data.start == 0 ? that.getHeight() : '';
 		})
-
 	},
 
 	// 获取商品评论数量
@@ -205,8 +204,9 @@ Page({
 			that.setData({
 				countData: result.data
 			})
+      that.getHeight();
 		}, err => {
-
+      that.getHeight();
 		})
 	},
 
@@ -218,8 +218,9 @@ Page({
 			that.setData({
 				commentScore: result.data
 			})
+      that.getHeight();
 		}, err => {
-
+      that.getHeight();
 		})
 	},
 
@@ -231,11 +232,10 @@ Page({
 			that.setData({
 				automaticCount: result.data
 			})
-      console.log(that.data.automaticCount)
+      that.getHeight();
 		}, err => {
-
+      that.getHeight()
 		})
-
 	},
 
 	// 点击是有图还是没图
@@ -327,7 +327,6 @@ Page({
     if( (sortType == 'defaultSort' && this.data.defaultSort == 0) || (sortType == 'timeSort' && this.data.defaultSort == 1) ) {
       return;
     } else {
-      console.log(e)
       this.setData({
         defaultSort: e.currentTarget.dataset.sortType == 'defaultSort' ? 0 : 1,
         start: 0
@@ -338,23 +337,63 @@ Page({
 
     // 监听页面滚动
   scrollEvent: function(e) {
-    console.log(e)
-    var that = this;
+    let that = this;
     // 设置返回首页/顶部栏
     if (e.detail.scrollTop >= 500 && that.data.setComeBack) {
-      console.log('scrollTop >= 500, 显示')
       that.data.setComeBack = false;
       that.setData({
         comeBackBar: 'show',
       })
     } else if (e.detail.scrollTop < 500 && !that.data.setComeBack) {
-      console.log('scrollTop < 500, 隐藏')
       that.data.setComeBack = true;
       that.setData({
         comeBackBar: 'hide',
         scrollTop: null
       })
     }
+
+    that.data.coloneScrollTop.push(e.detail.scrollTop);
+    let length = that.data.coloneScrollTop.length;
+    if( that.data.coloneScrollTop[length - 1] ==  that.data.coloneScrollTop[length - 2] || length < 2 ) {
+      return;
+    }
+    let isPullUp = that.data.coloneScrollTop[length - 1] <  that.data.coloneScrollTop[length - 2] ? true : false;
+    let outRange = that.data.coloneScrollTop[length - 1] > that.data.js_estimateNavHeight ? true : false;
+    // console.log('最后一个滚动距离',that.data.coloneScrollTop[length - 1],'倒数第二个滚动距离', that.data.coloneScrollTop[length - 2]);
+    if( !outRange && that.data.pullUpShow ) {
+      // console.log('滚动距离小于导航高度，影藏')
+      that.data.pullUpShow = false;
+      that.setData({
+        pullUpShow: that.data.pullUpShow,
+      })
+      return;
+    } else {
+      if( length > 0 && isPullUp  && !that.data.pullUpShow && outRange ) {
+          // console.log('滚动距离大于导航高度，且上拉拉，显示')
+          that.data.pullUpShow = true;
+          that.setData({
+            pullUpShow: that.data.pullUpShow,
+          }) 
+      } else if ( length > 0 && !isPullUp && that.data.pullUpShow && outRange ) {
+        // console.log('滚动距离大于导航高度，且下拉拉，影藏')
+        that.data.pullUpShow = false;
+          that.setData({
+            pullUpShow: that.data.pullUpShow,
+          })
+      }
+    }
+    // console.log(that.data.coloneScrollTop)
+  },
+
+  getHeight() {
+    let that = this;
+    my.createSelectorQuery().select('.js_estimateNav').boundingClientRect().exec((res) => {
+      let result = res[0] && res[0] != 'null' ? res[0].height ? res[0].height : 0 : 0;
+      that.setData({
+        // (result * app.globalData.systemInfo.windowWidth / 750)
+        js_estimateNavHeight: result,
+      })
+    });
   },
 
   // 页面回滚到顶部
@@ -363,8 +402,6 @@ Page({
       scrollTop: 1,
       duration: 500,
    });
-    // console.log(this.data.scrollTop)
-    // console.log(this.data.duration)
   },
 
 });

@@ -22,7 +22,7 @@ Page({
     openingButtonData: {},     // 底部按钮数据
 
   },
-  onLoad:  function() {
+  onLoad: function() {
     // 判断是否绑定了手机
     try {
       let user_memId = my.getStorageSync({
@@ -39,7 +39,7 @@ Page({
     } catch (e) { }
   },
 
-  onShow: async function() {
+  onShow: async function(options) {
     let returnBack = await this.getAdvertisingModule();
     returnBack.type == "SUCCESS" ? this.getEasyMemberInfo() : '';
   },
@@ -157,6 +157,8 @@ Page({
         url
       });
     }
+
+
   },
 
   // 轻会员跳转
@@ -170,15 +172,11 @@ Page({
         "alipay.huabei.hz-enjoy.partnerId": "2088421251942323",
       },
       success: (res) => {
-        console.log(res);
-        console.log(that.data.thematicAds)
-        https.post(api.LIGHTMEMBER.AGREEMENTQUERY, { outSignNo: that.data.thematicAds.lightMemberId }, function(res) {
-          console.log(res)
-        },function(res) {
-          console.log(res)
-        })
+        console.log('打开成功', res)
       },
-      fail: (res) => {},
+      fail: (res) => {
+        console.log('打开失败', res)
+      },
       complete: (res) => {},
     });
   },
@@ -203,29 +201,34 @@ Page({
 
     https.post(api.GOODSDETAIL.GOODS_DETAIL_DRAWCOUPON, { ruleSign }, function(res) {
       console.log(res)
+      console.log(that.data.thematicAds.modules[fatherIndex].parseItem[index]);
       let resData = res.data.data;
+      resData[0].id = resData[0].couponId;
       if (resData && resData.length > 0) {
-        resData[0].beginDateStr = utils.pointFormatTime(new Date(resData[0].beginDate));
-        resData[0].endDateStr = utils.pointFormatTime(new Date(resData[0].endDate));
         switch(resData[0].couponStatus) {
           case "NO_RECEIVE":
-            couponVal.couponText = "立即领取"
+            resData[0].couponText = "立即领取"
           break;
           case "NORMAR":
-            couponVal.couponText = "去使用"
+            resData[0].couponText = "去使用"
           break;
           case "USED":
-            couponVal.couponText = "已使用"
+            resData[0].couponText = "已使用"
           break;
           default:
           break;
         }
 
         that.data.thematicAds.modules[fatherIndex].parseItem[index] = resData[0];
+        my.showToast({
+          content: '领取成功',
+          duration: 2000,
+        })
 
         that.setData({
           thematicAds: that.data.thematicAds
         })
+        console.log(that.data.thematicAds)
       }
     }, function(err) {
       console.log(err)
@@ -245,6 +248,8 @@ Page({
     let couponId = e.currentTarget.dataset.couponid;
     let useLink = e.currentTarget.dataset.uselink;
     // linkType 0跳转uselink, 1跳转商城首页， 2跳转优惠券可使用商品列表
+
+    console.log(linkType, couponId, useLink, e)
     if (linkType == 0) {
       my.navigateTo({
         url: useLink
@@ -267,17 +272,31 @@ Page({
     https.get(api.LIGHTMEMBER.GETEASYMEMBERINFO, data, function(res){
       let resData = res.data.data;
       let resRet = res.data.ret;
-      if(resRet.code == '0' && resRet.message == "SUCCESS" && resData) {
-        resData.headImage = resData.headImage ? that.data.baseImageUrl + resData.headImage : that.data.baseLocImgUrl + 'miniappImg/icon/icon_default_head.jpg';
-        resData.gmtSign = Math.round((new Date().getTime() - resData.gmtSign) / 1000 /60 /60 /24) // 签约时间
-        resData.gmtUnSign = utils.formatTime(new Date(resData.gmtUnSign));
-        that.data.headData = Object.assign(that.data.headData, resData);
+      if( resRet.code == '0' && resRet.message == "SUCCESS" && resData ) {
+        resData.gmtSign = Math.round((new Date().getTime() - resData.gmtSign) / 1000 /60 /60 /24); // 签约时间
+        !resData.gmtUnSign ? that.getGmtUnSign() : resData.gmtUnSign = utils.formatTime(new Date(resData.gmtUnSign));
+        // that.data.headData = Object.assign(that.data.headData, resData);
         that.setData({
           headData: that.data.headData
         })
-        console.log(that.data.headData)
       }
     }, function(res) {
+    })
+  },
+
+  // 获取已注册用户的到期时间；
+  getGmtUnSign() {
+    https.post(api.LIGHTMEMBER.AGREEMENTQUERY, { outSignNo: that.data.thematicAds.lightMemberId }, (res) => {
+      console.log(res)
+      let resRet = res.data.ret;
+      let resData = res.data.data;
+     if( resRet.code == '0' && resRet.message == "SUCCESS" && resData ) {
+        // that.setData({
+        //   isLightMember: true
+        // })
+      }
+    },(res) => {
+      console.log(res)
     })
   },
 
@@ -337,7 +356,6 @@ Page({
       },
     });
   },
-
 
   // 阻止下拉刷新
   onPullDownRefresh() {

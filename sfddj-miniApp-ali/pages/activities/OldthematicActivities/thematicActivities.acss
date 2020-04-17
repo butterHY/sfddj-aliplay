@@ -590,4 +590,8 @@ page {
   height: 100vh;
 }
 
+.width_20 {
+  width: 20%;
+}
+
 

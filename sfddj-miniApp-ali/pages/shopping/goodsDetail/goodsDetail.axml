@@ -324,7 +324,7 @@
   <view a:if="{{ buyerShowCount || goods.commentTotal }}"  data-url="/pages/shopping/comment/comment?type={{buyerShowCount ? 'buyerShow' : 'generalComment'}}&goodsId={{goods.goodsId}}" data-type="comment" catchTap="goToTargetPage">
     <view class="goods-comment-title" style="justify-content: {{(buyerShowCount) || (!buyerShowCount && goods.commentTotal >= 50) ? 'space-between;' : 'flex-end;'}}">
       <view class="alignMiddle">
-        <block  a:if="{{!buyerShowCount && goods.commentTotal >= 50}}">
+        <block  a:if="{{!buyerShowCount && goods.commentTotal >= 50 && goods.commentScore}}">
           好评率:  <text class="marLeft_5 color-57">{{goods.commentScore}}%</text>
         </block>
         <block a:elif="{{buyerShowCount}}">
@@ -374,13 +374,14 @@
   <view  a:if="{{ buyerShowCount && goods.commentTotal }}" class="division-area"></view>
   <view a:if="{{ buyerShowCount && goods.commentTotal }}" data-url="/pages/shopping/comment/comment?type=generalComment&goodsId={{goods.goodsId}}" data-type="comment" catchTap="goToTargetPage">
     <view class="goods-comment-title" style="justify-content: {{goods.commentTotal >= 50 ? 'space-between;' : 'flex-end;'}}">
-      <view class="alignMiddle" a:if="{{goods.commentTotal >= 50}}">
+      <view class="alignMiddle" a:if="{{goods.commentTotal >= 50 && goods.commentScore}}">
         好评率: 
         <text class="marLeft_5 color-57"> {{goods.commentScore}}%</text>
       </view>
       <view class="color-999 alignMiddle">
         <text>评价</text>
         <text class="marLeft_10">({{goods.commentTotal}})</text>
+        <text class="icon-href-right opacity8 font-22 marLeft_10 color-999"></text>
       </view>
     </view>
   </view>

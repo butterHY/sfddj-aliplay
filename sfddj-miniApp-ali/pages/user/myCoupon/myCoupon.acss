@@ -208,9 +208,9 @@
   height: 36rpx;
   display: inline-block;
   color: #ff3c2d;
-  font-weight: 600;
   line-height: 36rpx;
 }
+
 
 .checkMore_CouponLeft {
   border-left: 1rpx solid #dddddd;
@@ -327,13 +327,14 @@
   width: 100%;
   background-color: #fff;
   padding: 30rpx 0;
+  box-shadow: 0px 0px 6px rgb(229, 229, 229);
 }
 
 /* 使用说明样式 ----- start */
 
 .couponUseTip{
   text-align: right;
-  padding-bottom: 25rpx;
+  padding-bottom: 36rpx;
 }
 
 .couponUseTipArea{
@@ -377,8 +378,12 @@
   text-align: center;
 }
 
+.couponLoading_view.smallFont {
+  font-size: 26rpx;
+}
+
 .myCoupon_coupon{
-  padding-bottom: 74rpx;
+  /* padding-bottom: 74rpx; */
   box-sizing: border-box;
   overflow: hidden;
 }
@@ -465,9 +470,9 @@
 }
 
 .guessLikeTitle {
-  height: 128rpx;
+  height: 152rpx;
   text-align: center;
-  line-height: 128rpx;
+  line-height: 120rpx;
   font-size: 32rpx;
   font-weight: 600;
 }

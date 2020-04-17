@@ -16,10 +16,11 @@
       <view class="userPersonal" >
         <view class="userNameAndRul ">
           <view class="headImg">
-            <image class="headImg" mode="scaleToFill" src="{{headData.headImage}}"/>
+            <image class="headImg" mode="scaleToFill" src="{{headData.headImage ? baseImageUrl + headData.headImage : baseLocImgUrl + 'miniappImg/icon/icon_default_head.jpg'}}"/>
           </view>
           <view class="nameBox  font-weight-600">
-            <view class="name single-line font-38 ">{{headData.nikeName ? headData.nikeNam : '--'}}</view>
+            <view class="name single-line font-38 ">{{headData.nikeName ? headData.nikeName : '--'}}</view>
+            
             <view a:if="{{isLightMember}}" class="lightMemberDate font-26">
               {{headData.gmtUnSign}}到期
               <image class="iconImg " mode="scaleToFill" src="{{baseImageUrl + headData.parseItem[0].iconImageUrl}}"  catchTap="isShowRule"></image >
@@ -27,7 +28,8 @@
           </view>
         </view>
         <view  class="administration font-26 tex_center font-weight-600">
-          <view  data-url="{{headData.parseItem[0].activityLink}}" catchTap="{{isLightMember ? 'goToPage' : 'isShowRule'}}">
+          <!-- data-url="{{headData.parseItem[0].activityLink}}" -->
+          <view catchTap="{{isLightMember ? 'goToLightMember' : 'isShowRule'}}">
             <image class="administration" mode="scaleToFill" src="{{baseImageUrl + headData.parseItem[0].activityImageUrl}}"/>
           </view>
         </view>

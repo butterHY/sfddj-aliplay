@@ -1,6 +1,8 @@
 @import '../css-public/adverts.acss';
 @import '../css-public/itemGoodsCard.acss';
 
+/* 新页面样式 */
+
 page {
   background: #f5f5f5;
   overflow-x: hidden;
@@ -59,57 +61,6 @@ page {
 .index_search.show {
   transform: translate(0, 0);
 }
-
-/* .index_search_action {           这一行是我新注释的
-  padding: 20rpx 0 20rpx 24rpx;
-  box-sizing: border-box;
-} */
-
-/* .index_search_content {          这一行是我新注释的  
-  padding-left: 16rpx;  
-  background-color: #f7f8fa;
-  border-radius: 45rpx;
-  width: 100%;
-  box-sizing: border-box;
-} */
-
-/* .index_search_cancle {           这一行是我新注释的  
-  padding: 0 16rpx;
-} */
-
-/* .search_bar_input {              这一行是我新注释的 
-  background-color: #f7f8fa;
-  border-radius: 45rpx;
-} */
-
-/* .systemRecomBox {                这一行是我新注释的 
-  padding: 0 24rpx;
-  position: relative;
-} */
-
-/* .hotWordListItem {                这一行是我新注释的 
-  background-color: #eee;
-  padding: 10rpx 20rpx;
-  border-radius: 45rpx;
-  margin-right: 20rpx;
-  max-width: 650rpx;
-  display: inline-block;
-  margin-bottom: 20rpx;
-  color: #323232;
-} */
-
-/* .hotWordListItem.active {       这一行是我新注释的 
-  color: #ff5353;
-} */
-
-/* .searchListItem {               这一行是我新注释的 
-  padding: 10rpx 20rpx;
-  border-radius: 5px;
-  margin-right: 20rpx;
-  margin-bottom: 20rpx;
-  max-width: 650rpx;
-  display: inline-block;
-} */
 
 .pad_24r {
   padding: 0 24rpx;

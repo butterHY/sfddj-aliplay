@@ -51,12 +51,13 @@
 .nameBox {
   height: 100%;
   width: 264rpx;
-  flex-direction: column;
-  justify-content: space-between;
+  /* flex-direction: column; */
+  /* justify-content: space-between; */
 }
 
 .name {
   /* height: 38rpx;
+  width: 100%;
   line-height: 38rpx; */
 }
 
@@ -67,7 +68,7 @@
 .lightMemberDate {
   height: 34rpx;
   line-height: 34rpx;
-  margin-top: 18rpx;
+  margin-top: 16rpx;
 }
 
 .administration {
@@ -205,6 +206,7 @@
 }
 
 .activity .name {
+
   line-height: 70rpx;
 }
 
