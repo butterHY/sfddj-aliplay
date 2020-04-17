@@ -1,5 +1,5 @@
 <!-- 商品展示卡 -->
-<view class="topRanking">
+<view a:if="{{show}}" class="topRanking">
   <!-- 标题 -->
   <view class="topRankTit">
     <view class="topRankTitBox">
@@ -26,7 +26,7 @@
         <view class="storeName">
           <view class="shop_info">
             <text class="shop_name">{{ storeShow.shopName }}</text>
-            <text class="shop_distance">距您{{ storeDis || '-' }}米</text>
+            <text class="shop_distance">距您{{ storeDis || '0m' }}</text>
           </view>
           <view class="shop_addr">{{ storeShow.address }}</view>
         </view>
@@ -38,7 +38,7 @@
   </view>
   <view class="goodsListShow">
     <block a:for="{{ goodsShow }}" a:key="{{ index }}">
-      <view onTap="goDetail" data-goodsid="{{ item.goodsId }}">
+      <view class="goodsListBox" onTap="goDetail" data-goodsid="{{ item.goodsId }}">
         <!--<template is="itemStoreGoodsCard" data="{{ ...item, smallImg200, baseImageUrl }}"></template> -->
         <view class="goodsCard">
           <view class="goodsImgArea">

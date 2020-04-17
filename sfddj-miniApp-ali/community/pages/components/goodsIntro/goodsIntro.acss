@@ -7,10 +7,10 @@
 	background-color: #ffffff;
 }
 .goodsInfo .infoShow {
-	padding: 0 50rpx;
+	/* padding: 0 50rpx; */
 	font-size: 28rpx;
-	line-height: 52rpx;
-	padding-bottom: 30rpx;
+	/* line-height: 52rpx; */
+	padding-bottom: 20rpx;
 	
 } 
 .goodsInfo .infoShow .info_title {
@@ -38,7 +38,7 @@
 	height: auto; 
 }
 
-.goodsIntro .introShow .textShow {
+.goodsIntro .introShow .textShow, .goodsInfo .textShow {
 	margin-bottom: 10rpx;
 	line-height: 48rpx;
 	padding: 0 50rpx;

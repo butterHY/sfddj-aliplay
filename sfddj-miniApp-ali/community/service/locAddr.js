@@ -7,7 +7,7 @@ let LocAddr = {
 	locInfo: {},
 
 	// 支付宝定位获取经纬度 在执行 GDCity 获取详情地址信息
-	location(fn) {
+	location(fn, failFn) {
 		const _this = this;
 		my.showLoading();
 		my.getLocation({
@@ -30,14 +30,15 @@ let LocAddr = {
 				my.hideLoading();
 				// console.log('定位失败!')
 				// 获取缓存的数据，如果缓存有数据, 不至于定位失败后没有数据
-				my.getStorage({
-				  key: 'locationInfo',
-				  success: (result) => {
-					let data = result.data ? result.data : {};
-					getApp().globalData.userLocInfo = data;
-					if(fn) fn(data);
-				  }
-				});
+				// my.getStorage({
+				//   key: 'locationInfo',
+				//   success: (result) => {
+				// 	let data = result.data ? result.data : {};
+				// 	getApp().globalData.userLocInfo = data;
+				// 	if(fn) fn(data);
+				//   }
+				// }); 
+				if (failFn)failFn();
 			},
 		})
 	},

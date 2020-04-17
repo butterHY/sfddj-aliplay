@@ -156,7 +156,6 @@ Page({
     returnTap() {
         this.confirmPop({
             content: '确认申请退款吗？', callback: () => {
-                console.log('申请退款确认')
             }
         })
     },

@@ -70,7 +70,6 @@ Page({
             let result = res && Object.keys(res).length > 0 ? res : {};
             if (Object.keys(result).length > 0) {
                 let shopCartList = result.cartList ? result.cartList : [];
-                console.log('cartService', result)
                 this.setData({
                     shopTotalPrice: result.discountPrice < result.salePrice ? result.discountPrice : result.salePrice,     //整个商店商品的总价格
                     originalTotalPrice: result.discountPrice < result.salePrice ? result.discountPrice : result.salePrice,    //最原始商品的总价
@@ -87,7 +86,6 @@ Page({
             // console.log(res)
             let result = res.data.data ? res.data.data : {};
             if (Object.keys(result).length > 0) {
-                console.log('orderData', result);
                 let shopCartList = result.items;
                 shopCartList.forEach((val, i, arr) => {
                     val.goodsImagePath = this.data.baseImageUrl + val.productImg;
@@ -104,11 +102,16 @@ Page({
                     shopName: result.name,     // 商家名称
                     deliveryFee: result.deliveryOutGratis && result.deliveryOutGratis > 0 ? (result.deliveryFee && result.price < result.deliveryOutGratis ? result.deliveryFee : 0) : result.deliveryFee,    // 配送费
                     deliveryOutGratis: result.deliveryOutGratis ? result.deliveryOutGratis : 0,
-                    totalPrice: this.data.totalPrice > 0 ? this.data.totalPrice : result.price
+                    totalPrice: this.data.totalPrice > 0 && this.data.totalPrice == result.price ? this.data.totalPrice : result.price
                 })
             }
         }, err => {
-
+			my.showToast({
+				content: err ? err : '很抱歉，暂时无法购买',
+				complete: () => {
+					my.navigateBack({});
+				}
+			})
         })
     },
 

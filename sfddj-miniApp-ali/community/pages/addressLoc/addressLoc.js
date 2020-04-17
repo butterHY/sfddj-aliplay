@@ -67,7 +67,7 @@ Page({
 
     my.chooseLocation({
       success: (res) => {
-        console.log('chooseLocation', res) 
+        // console.log('chooseLocation', res) 
         _this.setData({
           'locInfo.longitude': res.longitude,
           'locInfo.latitude': res.latitude, 
@@ -78,6 +78,7 @@ Page({
           // name 没有 显示 pois第一个数据的name
           data.streetShow = _name ? _name : _name = data.pois[0].name; 
           data.addressAll = data.province + data.city + data.district + data.street + _name;  
+          locAddr.locInfo = data; 
           myApp.setLocStorage(data, function () {
             my.navigateBack();
           });
@@ -134,7 +135,9 @@ Page({
       // console.log('重新定位', res)
       _this.setData({
         locInfo: res
-      })
+      });
+      // 设置缓存并设置全部变量的值 globalData.userLocInfo 
+      myApp.setLocStorage(_this.data.locInfo);
     });
 
     clearTimeout(_timer);

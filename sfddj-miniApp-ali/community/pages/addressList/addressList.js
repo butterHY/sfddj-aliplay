@@ -41,12 +41,19 @@ Page({
 		}
 		
       } else {
+		  
         this.setData({
           optionalList: [],
           unusableList: []
         })
       }
-    }, err => {})
+    }, err => {
+		// 初始化
+		this.setData({
+          optionalList: [],
+          unusableList: []
+        })
+	})
   },
 
   // 分拣可选和不可选的

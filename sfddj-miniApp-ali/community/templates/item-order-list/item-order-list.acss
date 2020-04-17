@@ -23,6 +23,7 @@
     height: 80rpx;
     border-radius: 10rpx;
     margin-right: 20rpx;
+	overflow: hidden;
     position: absolute;
     top: 0;
     left: 0;

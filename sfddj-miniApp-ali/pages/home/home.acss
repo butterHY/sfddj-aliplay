@@ -599,7 +599,7 @@ page {
 
 /* 定位样式 */
 .locCityShow { 
-	padding: 0 20rpx;
+	padding: 0 20rpx; 
 }
 
 .locCityShow .cityInfo { 
@@ -608,6 +608,7 @@ page {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+  padding: 10rpx 0;
 }
 
 .locCityShow .cityInfo .city {

@@ -1,6 +1,8 @@
 // import 'regenerator';
 import _ from 'underscore'
 import locAddr from '/community/service/locAddr.js';
+import api from '../../api/api';
+import http from '../../api/http';
 //获取应用实例
 let app = getApp();
 let sendRequest = require('../../utils/sendRequest');
@@ -10,9 +12,6 @@ let stringUtils = require('../../utils/stringUtils');
 let utils = require('../../utils/util');
 let windowWidth = my.getSystemInfoSync().windowWidth;
 let windowHeight = my.getSystemInfoSync().windowHeight;
-
-import api from '../../api/api';
-import http from '../../api/http';
 
 
 Page({
@@ -88,7 +87,9 @@ Page({
 		o2oStore: {
 			show: false,
 			store: null,
-		}
+		},
+		isGetLocation: false,
+		isLocationLoad: true,       //是否正在定位
 	},
 
 	onLoad: async function(options) {
@@ -101,7 +102,6 @@ Page({
 		}
 		// 友盟+统计--首页浏览
 		my.uma.trackEvent('homepage_show', pageOptions);
-    console.log(pageOptions)
 		var that = this;
 
 
@@ -117,7 +117,13 @@ Page({
 			key: 'homeGoodsList', // 缓存数据的key
 		}).data;
 
-
+		// 定位中判断
+		let userLocInfo = app.globalData.userLocInfo;
+		if( userLocInfo && Object.keys(userLocInfo).length > 0) {
+			this.setData({
+				isLocationLoad: false
+			})
+		}
 
 		that.setData({
 			materialArr: materialArr ? materialArr : [],
@@ -202,11 +208,21 @@ Page({
 			// console.log('重新定位')
 			locAddr.location((res) => {
 				_this.setData({
-					locInfo: res
+					locInfo: res,
+					isGetLocation: true,
+					isLocationLoad: false,
 				});
 				// 设置缓存并设置全部变量的值 globalData.userLocInfo 
-				app.setLocStorage(_this.data.locInfo);
-				_this.locStoreShow();
+				app.setLocStorage(_this.data.locInfo, function() {
+					_this.locStoreShow();
+				});
+				
+			}, ()=> {
+				// 定位失败
+				_this.setData({
+					isGetLocation: false,
+					isLocationLoad: false,
+				});
 			});
 		}
 		else {
@@ -231,32 +247,37 @@ Page({
 		return num;
 	},
 
-
-	// 初始化模块广告的滚动高度  ， 原来旧的达官统计方法， ----- 已没有使用；
 	// 定位显示小店
 	locStoreShow() {
-			const _this = this; 
-			const _locInfo = locAddr.locInfo; 
-			http.get(api.Shop.SEARCH, {
-							longitude: _locInfo.longitude,
-							latitude: _locInfo.latitude,
-							start: 0,
-							limit: 1, 
-					},(res)=> {
-						let _data = res.data.data; 
-						if (_data.length > 0) {
-							_this.setData({
-									'o2oStore.show': true,
-									'o2oStore.store': Object.assign({}, _data[0])
-							}) 
-							
-						} 
-					}, (err)=> {
-							 
-				});
-    },
+		const _this = this;
+		let _locInfo = this.data.locInfo; 
+		// console.log('locStoreShow', _locInfo)
 
-
+		http.get(api.Shop.SEARCH, {
+			longitude: _locInfo.longitude,
+			latitude: _locInfo.latitude,
+			start: 0,
+			limit: 1,
+			goodsCount: 3,     //返回商店商品数量的，在首页的入口需要展示3个，最多只能传10
+		}, (res) => {
+			let _data = res.data.data;
+			let _show = false;
+			let _store = [];
+			if (_data.length > 0) {
+				_show = true;
+				_store = Object.assign({}, _data[0]);
+			}
+			_this.setData({
+				'o2oStore.show': _show,
+				'o2oStore.store': _store
+			})
+			// 更新社区入口组件
+			// this.storeEnter.setStoreData(_store, _show,_locInfo)
+		}, (err) => {});
+	},
+	storeEnter(ref){
+		this.storeEnter = ref;
+	},
 
 	// 初始化模块广告的滚动高度
 	setModuleScrollTop(result) {
@@ -823,7 +844,7 @@ Page({
 				},
 				success: function(res) {
 					var resData = res.data;
-					if (resData.ret.code == '0') {
+					if (resData.ret && resData.ret.code == '0') {
 						let result = resData.data;
 						let spliceArr = [];
 						let newResult = [];

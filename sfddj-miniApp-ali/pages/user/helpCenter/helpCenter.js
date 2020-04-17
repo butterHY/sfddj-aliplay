@@ -146,7 +146,7 @@ Page({
   // }
 
   onLoad: function(options) {
-    console.log(options)
+    // console.log(options)
 		var that = this;
 		that.setData({
       webCallParam: options.webCallParam,
