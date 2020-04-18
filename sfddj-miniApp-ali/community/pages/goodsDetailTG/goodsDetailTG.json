@@ -1,0 +1,12 @@
+{
+	"defaultTitle": "",
+    "titleBarColor": "#ffffff",
+    "allowsBounceVertical": "NO",
+    "backgroundColor": "#f3f3f3",
+    "usingComponents": {
+        "goods-swiper-box":  "/community/pages/components/goodsSwiperBox/goodsSwiperBox", 
+        "goods-price-box":  "/community/pages/components/goodsPriceBox/goodsPriceBox",
+        "goods-intro":  "/community/pages/components/goodsIntro/goodsIntro",
+        "cart":  "/community/pages/components/Cart/Cart"
+    }
+}

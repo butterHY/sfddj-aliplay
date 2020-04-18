@@ -40,7 +40,7 @@ Component({
       _this.setData({
         'goodsIntro.infoShow': infoShow
       })
-      console.log(this.data.goodsIntro.infoShow)
+      // console.log(this.data.goodsIntro.infoShow)
     },
 
     setDetaile() {

@@ -1,0 +1,16 @@
+<view class="goodsDetailBox"> 
+  <view class="swiperShow" a:if="{{ goodsImagePath.length > 0 }}">
+    <goods-swiper-box goodsImagePath="{{ goodsImagePath }}"></goods-swiper-box>
+  </view>
+
+  <view class="layoutGroup noMarTop" a:if="{{ godosPriceInfo !== null }}">
+    <goods-price-box godosPriceInfo="{{ godosPriceInfo }}" ></goods-price-box>
+  </view>
+  
+  <view class="layoutGroup" a:if="{{ goodsInfo !== null }}">
+    <goods-intro goodsInfo="{{ goodsInfo }}"></goods-intro>
+  </view>
+
+
+  <cart shopid="{{ shopId }}" storeTime="{{ storeTime }}"></cart> 
+</view>

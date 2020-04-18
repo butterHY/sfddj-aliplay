@@ -1,0 +1,13 @@
+@import '/community/assets/acss/common.acss';
+
+.goodsDetailBox { 
+	position: relative; 
+}
+
+.layoutGroup {
+	margin-top: 15rpx;
+} 
+
+.layoutGroup.noMarTop {
+	margin-top: 0;
+}
