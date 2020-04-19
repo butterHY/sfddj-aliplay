@@ -12,7 +12,7 @@
 
 .otherModeCon {
   /* margin-bottom: 20rpx; */
-  padding: 0 30rpx 10rpx;
+  padding: 0 24rpx 10rpx;
 }
 
 .goodsViewBox {
@@ -80,7 +80,7 @@
   font-weight: 400;
   font-size: 36rpx;
   margin-right: 21rpx;
-  height: 40rpx;
+  /* height: 40rpx; */
 }
 
 
@@ -106,8 +106,8 @@
 	font-size: 0;
 }
 
-/* ------- 新样式  --------- */
-/* .adsView image {
+/* ------- 新样式  start --------- */
+.adsView image {
   display: block;
 }
 
@@ -140,10 +140,10 @@
 
 .width_50 {
   width: 50%;
-} */
+}
 
 /* 2+4 */
-/* .twoFourAdvertsLeft {
+.twoFourAdvertsLeft {
   border-right: 1px solid #ececec;
   box-sizing: border-box;
 }
@@ -174,13 +174,15 @@
 }
 
 .waterFallScroll {
-  display: flex;
-  flex-direction: row;
+  /* display: flex; */
+  /* flex-direction: row; */
   width: 100%;
   white-space: nowrap;
   overflow: auto;
   font-size: 0;
   z-index: 1000;
+  white-space: nowrap;
+  display: inline-block;
 }
 
 .waterFallTitBox {
@@ -237,10 +239,10 @@
   border-style: solid;
   border-color: #00a958 transparent transparent transparent;
   bottom: -18rpx;
-} */
+}
 
 /* 倒计时 */
-/* .countDown{
+.countDown{
   margin-left: 20rpx;
 }
 
@@ -253,7 +255,7 @@
   text-align: center;
   color: #ffffff;
   vertical-align: top;
-  margin-top: 10rpx;
+  /* margin-top: 10rpx; */
   background-repeat: no-repeat;
   background-position: center center;
   background-size: 100% 100%;
@@ -266,7 +268,7 @@
   font-weight: bold;
   display: inline-block;
   vertical-align: top;
-  margin-top: 10rpx;
+  /* margin-top: 10rpx; */
 }
 
 .countDown_black{
@@ -275,4 +277,7 @@
 
 .countDown_red{
   background-image: url('https://img.sfddj.com/miniappImg/bg/timeBg-red.png');
-} */
+}
+
+/* ------- 新样式  end --------- */
+

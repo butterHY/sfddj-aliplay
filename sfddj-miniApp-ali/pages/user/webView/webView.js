@@ -16,10 +16,11 @@ Page({
     //     key: 'swiperUrl', // 缓存数据的key
     //   }).data;
     //   console.log(link)
+    console.log(options)
       this.setData({
         link: options.link,
       });
-    console.log(this.link)
+    console.log(this.data.link)
     //   my.removeStorageSync({
     //     key: 'swiperUrl', // 缓存数据的key
     //   });

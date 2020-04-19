@@ -28,6 +28,7 @@ page {
 }
 
 .home_searchBox {
+  box-sizing: border-box;
   height: 88rpx;
   padding: 0 30rpx;
 }
@@ -47,19 +48,27 @@ page {
   margin-left: 20rpx;
 }
 
+/* 新版搜索组件在首页的样式 */
+.am-popup-content {
+  width: 100%;
+  position: absolute;
+}
+
 .index_search {
   width: 100%;
-  height: 100%;
+  height: 100vh;
   background: #fff;
   position: fixed;
+  left: 0;
   top: 0;
-  transform: translate(100%, 0);
+  transform: translateX(100%);
+  backface-visibility: hidden;
   transition: transform 0.3s;
-  z-index: 10001;
+  z-index: 100100011;
 }
 
 .index_search.show {
-  transform: translate(0, 0);
+  transform: translateX(0);
 }
 
 .pad_24r {
@@ -133,7 +142,7 @@ page {
 
 .waterFallTitFixed {
   position: fixed;
-  top: 88rpx;
+  /* top: 88rpx; */
   z-index: -1;
   background: #fcfcfc;
   left: 0;
@@ -219,4 +228,61 @@ page {
 
 .borRa_10r {
   border-radius: 10rpx;
+}
+
+/* 定位样式 */
+
+.locationBox { 
+    background-color: #fff;
+}
+ 
+.locCityShow { 
+	padding: 0 20rpx;
+}
+
+.locCityShow .cityInfo { 
+	color: #333333;
+	font-size: 30rpx;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.locCityShow .cityInfo .city {
+	margin-left: 12rpx;
+}
+
+.locCityShow .cityInfo .address { 
+	position: relative; 
+	overflow: hidden;
+	margin-left: 10rpx; 
+	flex: 1; 
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	
+	display: flex;
+	align-items: center;
+}
+
+.locCityShow .cityInfo .line {
+	position: absolute;  
+	width: 1px;
+	top: 0; 
+	bottom: 0;
+	background-color: rgba(219, 219, 219, .5);
+	left: 0;
+}
+
+.locCityShow .cityInfo .iconStyle {
+	font-size: 36rpx;
+	color: #999999;
+	margin: 0 10rpx; 
+}
+
+.locCityShow .titleInfo {
+	font-size: 24rpx;
+	color: #999999;
+	padding: 0 30rpx;
+	margin-left: 12rpx;
 }

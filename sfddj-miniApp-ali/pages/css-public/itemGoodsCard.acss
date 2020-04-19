@@ -185,13 +185,19 @@
 
 .guessLikeImgBox {
   width: 100%;
-  height: 342rpx;
+  /* height: 342rpx; */
   border-radius: 30rpx 30rpx 0 0;
 }
 
 
 .guessLikeImg {
+  display: block;
   border-radius: 30rpx 30rpx 0 0;
+}
+
+.homeGuessLikeImg {
+  display: block;
+  border-radius: 16rpx 16rpx 0 0;
 }
 
 .guessLikeDescribe {
@@ -212,6 +218,11 @@
   font-size: 26rpx;
 }
 
+.homeGoods {
+  font-size: 24rpx;
+  margin-top: 4rpx;
+}
+
 .guessLikeGoodsLabel {
   display: inline-block;
   box-sizing: border-box;
@@ -225,6 +236,20 @@
   color: #ff7200;
   max-width: 100%;
 }
+
+.promotionalLabels {
+  color: #ff7200;
+  line-height: 30rpx;
+  max-width: 100%;
+  padding: 0 24rpx;
+  box-sizing: border-box;
+  margin-top: 16rpx;
+  border: 1px solid #ff7200;
+  border-radius: 45rpx;
+  display: inline-block;
+  font-size: 24rpx;
+}
+
 
 .priceBox {
   height: 100%;
@@ -265,6 +290,7 @@
 
 .guessLikeGoods .guessLikeView {
   border-radius: 30rpx;
+  position: relative;
 }
 
 .backg_fff {
