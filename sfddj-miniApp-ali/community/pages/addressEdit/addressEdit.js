@@ -124,7 +124,7 @@ Page({
 
     my.confirm({
       title: '删除地址',
-      content: '确定删除该收货地址码？', 
+      content: '确定删除该收货地址吗？', 
       success: (result) => {
         if( result.confirm ) {
           // 确定
