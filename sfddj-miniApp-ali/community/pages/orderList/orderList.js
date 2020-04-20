@@ -63,7 +63,7 @@ Page({
         let setOrderList = 'orderList[' + typeIndex + ']';
         let setCountList = 'countList[' + typeIndex + ']';
         let setLoadingList = 'isLoadingList[' + typeIndex + ']';
-		limit = setLimit && setLimit > 10 ? setLimit : limit;
+		limit = setLimit && setLimit > 10 ? setLimit + 1 : limit;
 
         // 如果type == 0则视为刷新
         if (type.toString() == '0') {
