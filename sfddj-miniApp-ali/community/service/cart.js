@@ -230,9 +230,17 @@ class Cart extends getApp().Service {
                                 }
                             });
                         } else {
-                            if(callbackFun) {
-                                callbackFun(undefined);
-                            }
+							// 如果超过99加提示
+							if(newNum > 99) {
+								if(callbackFun) {
+									callbackFun({}, {msg: '已达上限99'});
+								}
+							} else {
+								
+								if(callbackFun) {
+									callbackFun(undefined);
+								}
+							}
                         }
                     }
                 } else {

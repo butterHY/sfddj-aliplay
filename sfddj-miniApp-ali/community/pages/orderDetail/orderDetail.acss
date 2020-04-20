@@ -100,7 +100,7 @@
 .orderInfo {
     width: 100%;
     box-sizing: border-box;
-    padding: 0 30rpx;
+    padding: 0 30rpx 20rpx;
     background-color: #fff;
     border-radius: 10rpx;
     margin-top: 20rpx;
@@ -138,4 +138,44 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+
+
+.afterDetail_item {
+    margin-bottom: 20rpx;
+    line-height: 34rpx;
+    font-size: 28rpx;
+    display: flex;
+	position: relative;
+}
+
+.afterDetail_item:last-child {
+    margin-bottom: 0;
+}
+
+.orderInfoItem_txt {
+	color: #666666;
+	margin-left: 60rpx;
+	flex: 1;
+}
+
+.marLeft_60 {
+    margin-left: 60rpx;
+}
+
+/* 复制按钮 */
+.copyBtn {
+	position: absolute;
+	width: 80rpx;
+	height: 42rpx;
+	font-size: 28rpx;
+	color: #666666;
+	border: 1px solid #e6e6e6;
+	text-align: center;
+	line-height: 42rpx;
+	border-radius: 8rpx;
+	box-sizing: border-box;
+	right: 0;
+	top: -2rpx;
 }

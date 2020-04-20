@@ -99,6 +99,11 @@
 	padding-left: 30rpx;
 }
 
+.userNameBox .am-input-item .am-input-line, .userNameBox .am-input-item .am-input-layer, .userNameBox .am-input-item .am-input-content {
+	height: 100%;
+}
+
+
 .userNameBox .am-input-content {
 	background: #f3f3f3;
 }
