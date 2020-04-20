@@ -6,6 +6,8 @@ Page({
     data: {
         staticsImageUrl: api.staticsImageUrl,
 		baseImageUrl: api.baseImageUrl,
+		tabList: [{ title: 'o2o订单' }, { title: "拼团订单" }],
+		tabIndex: 0,
         orderTypeList: ['全部', '待付款', '付款成功', '交易成功', '退款/售后'],
         orderTypeCode: ['ALL', 'NOPAY', 'PAYFINISH', 'COMMENT', 'AFTERSALE'],       // 获取数据列表的类型
 

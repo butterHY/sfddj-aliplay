@@ -81,3 +81,8 @@
   height: 26rpx;
   margin-right: 8rpx;
 }
+
+/* 新增最顶部的tab栏 */
+.orderListPage .am-tabs-bar {
+	border-bottom: 0;
+}
