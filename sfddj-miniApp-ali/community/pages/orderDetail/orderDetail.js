@@ -200,5 +200,22 @@ Page({
         })
     },
 
+	// 复制订单号
+	copyOrderSn() {
+		my.setClipboard({
+			text: this.data.orderSn,
+			success: function(res) {
+				my.getClipboard({
+					success: ({ text }) => {
+						my.showToast({
+							content: '订单号复制成功',
+							type: 'success'
+						})
+					}
+				});
+			}
+		});
+	},
+
 
 });

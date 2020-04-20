@@ -118,13 +118,16 @@
 
 
 .shop_goods {
-    flex-grow: 1;
-    flex-shrink: 1;
+    /* flex-grow: 1;
+    flex-shrink: 1; */
+	flex: 1;
     overflow: hidden;
     background-color: #fff;
     padding: 18rpx 18rpx 18rpx 1px;
     display: flex;
     flex-direction: row;
+	overflow: hidden;
+	box-sizing: border-box;
 }
 
 .shop_categories {
@@ -133,7 +136,9 @@
     flex-grow: 0;
     flex-shrink: 0;
     padding-bottom: 180rpx;
-    overflow-y: scroll;
+	height: 100%;
+	box-sizing: border-box;
+    /* overflow-y: scroll; */
 }
 
 .shop_categories > view {
