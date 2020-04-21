@@ -4,7 +4,8 @@
   <view class="topRankTit">
     <view class="topRankTitBox">
       <view class="topRankTitText">
-        <text>社区专属</text>
+        <!-- 将社区专属改成附近的店 0421 zhang -->
+        <text>附近的店</text>
       </view>
     </view>
     <view class="more" onTap="moreShop">
@@ -12,7 +13,7 @@
       <text class="iconStyle icon-href-right"></text>
     </view>
     <view class="aside">
-        <text class="icon_fire"></text>
+      <text class="icon_fire"></text>
         {{ aside }}
     </view>
   </view>

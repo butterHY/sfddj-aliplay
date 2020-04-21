@@ -4,54 +4,54 @@
 	<tabs tabs="{{tabList}}" tabBarCls="fontHan_30" tabBarInactiveTextColor="#666666" tabBarActiveTextColor="#ff0032" tabBarUnderlineColor="#ff0032" tabsName="orderTypeTab" onTabClick="handleTabClick" activeTab="{{tabIndex}}" showPlus="{{false}}" capsule="{{false}}" swipeable="{{false}}" hasSubTitle="{{false}}" tabBarBackgroundColor="#fff">
 		<block a:for="{{tabList}}">
 			<tab-content key="{{index}}" tabId="{{index}}" activeTab="tabList">
-				<!-- o2o订单 -->
-				<block a:if="{{index == 0}}">
-					<!-- 订单状态导航 -->
-					<view class="orderListNav">
-						<block a:for="{{orderTypeList}}">
-							<view class="orderListNavItem {{typeIndex == index ? 'orderActive' : ''}}" data-index="{{index}}" onTap="switchType">{{item}}</view>
-						</block>
-					</view>
-					<!-- 订单内容 -->
-					<scroll-view scroll-y="{{true}}" class="flex_1" onScrollToLower="loadMoreList">
-						<!-- 每个状态对应每个列表 -->
-						<block a:for="{{orderTypeList}}">
-							<!-- 对应的状态有数据时 -->
-							<block a:if="{{orderList[index].length > 0 || !isLoadedList[index]}}">
-								<view a:if="{{typeIndex == index}}" class="">
-									<block a:for="{{orderList[index]}}" a:for-index="listIndex" a:for-item="listItem" a:for-index="listIndex">
-										<template is="itemOrderList" data="{{item: listItem, index: listIndex, countList: countList[typeIndex], baseImageUrl, staticsImageUrl}}"></template>
-									</block>
-									<!-- 加载更多 -->
-									<view>
-										<!--加载数据进度条-->
-										<view a:if="{{hasMoreList[index].toString() == 'true'}}" class='loading_view flex_view_row align_cen justi_cen'>
-											<image src="{{staticsImageUrl}}miniappImg/loading/loading.gif" class='loading_gif'></image>
-											<text>加载中</text>
-										</view>
-										<!--没有更多-->
-										<view a:else class='loading_view font-26 color-323232'>没有更多了</view>
-									</view>
-								</view>
-							</block>
-							<!-- 空白页 -->
-							<block a:else>
-								<view a:if="{{typeIndex == index}}" class="height_100  flex_view_col justi_cen">
-									<!-- 图 -->
-									<view class="errImgBox">
-										<image mode="widthFix" src="{{staticsImageUrl}}miniappImg/loading/goods-null_trans.png" class="errImg"/>
-									</view>
-									<!-- 文本 -->
-									<view class="flex_1 errTextBox">
-										<view class="errText">没有订单信息哦~</view>
-										<view class="errBtn" onTap="toDDJHome">去逛逛</view>
-									</view>
-								</view>
-							</block>
-						</block>
-					</scroll-view>
-				</block>
 			</tab-content>
 		</block>
 	</tabs>
+	<!-- o2o订单 -->
+	<block a:if="{{index == 0}}">
+		<!-- 订单状态导航 -->
+		<view class="orderListNav">
+			<block a:for="{{orderTypeList}}">
+				<view class="orderListNavItem {{typeIndex == index ? 'orderActive' : ''}}" data-index="{{index}}" onTap="switchType">{{item}}</view>
+			</block>
+		</view>
+		<!-- 订单内容 -->
+		<scroll-view scroll-y="{{true}}" class="flex_1" onScrollToLower="loadMoreList">
+			<!-- 每个状态对应每个列表 -->
+			<block a:for="{{orderTypeList}}">
+				<!-- 对应的状态有数据时 -->
+				<block a:if="{{orderList[index].length > 0 || !isLoadedList[index]}}">
+					<view a:if="{{typeIndex == index}}" class="">
+						<block a:for="{{orderList[index]}}" a:for-index="listIndex" a:for-item="listItem" a:for-index="listIndex">
+							<template is="itemOrderList" data="{{item: listItem, index: listIndex, countList: countList[typeIndex], baseImageUrl, staticsImageUrl}}"></template>
+						</block>
+						<!-- 加载更多 -->
+						<view>
+							<!--加载数据进度条-->
+							<view a:if="{{hasMoreList[index].toString() == 'true'}}" class='loading_view flex_view_row align_cen justi_cen'>
+								<image src="{{staticsImageUrl}}miniappImg/loading/loading.gif" class='loading_gif'></image>
+								<text>加载中</text>
+							</view>
+							<!--没有更多-->
+							<view a:else class='loading_view font-26 color-323232'>没有更多了</view>
+						</view>
+					</view>
+				</block>
+				<!-- 空白页 -->
+				<block a:else>
+					<view a:if="{{typeIndex == index}}" class="height_100  flex_view_col justi_cen">
+						<!-- 图 -->
+						<view class="errImgBox">
+							<image mode="widthFix" src="{{staticsImageUrl}}miniappImg/loading/goods-null_trans.png" class="errImg"/>
+						</view>
+						<!-- 文本 -->
+						<view class="flex_1 errTextBox">
+							<view class="errText">没有订单信息哦~</view>
+							<view class="errBtn" onTap="toDDJHome">去逛逛</view>
+						</view>
+					</view>
+				</block>
+			</block>
+		</scroll-view>
+	</block>
 </view>
