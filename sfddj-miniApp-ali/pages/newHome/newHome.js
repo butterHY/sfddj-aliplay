@@ -1,7 +1,7 @@
 import _ from 'underscore'
 import locAddr from '/community/service/locAddr.js';
-//获取应用实例
-let app = getApp();
+//获取应用实例不要写在页面外面，会出问题；
+
 let sendRequest = require('../../utils/sendRequest');
 let constants = require('../../utils/constants');
 let stringUtils = require('../../utils/stringUtils');
@@ -15,6 +15,7 @@ import http from '../../api/http';
 Page({
 	data: {
     // 公共数据
+		app: null,
 		baseLocImgUrl: constants.UrlConstants.baseImageLocUrl,
     baseImageUrl: constants.UrlConstants.baseImageUrl,
     baseUrlOnly: constants.UrlConstants.baseUrlOnly,
@@ -78,50 +79,59 @@ Page({
 	onLoad: async function(options) {
     // console.log(app.globalData.systemInfo)
     var that = this;
+		that.data.app = getApp();
 		// 友盟+统计--首页浏览 （如果从推文或者其他方进来并且带广告参数时）
     var pageOptions = options
-		var globalQuery = Object.assign({}, app.globalData.query)
+		var globalQuery = Object.assign({}, that.data.app.globalData.query)
 		if (Object.keys(globalQuery).length > 0) {
 			pageOptions = Object.assign(options, globalQuery)
 		} 
 		my.uma.trackEvent('homepage_show', pageOptions);
 		
 		var wheelPlantingArr = my.getStorageSync({key: 'wheelPlantingArr', }).data;      // 获取缓存首页 banner 数据
-		var advertsArr = my.getStorageSync({key: 'homeAdvertsArr', }).data;             // 获取缓存 首页广告模板  数据
+		var advertsArr = my.getStorageSync({key: 'homeAdvertsArr', }).data;             // 获取缓存 首页广告模板  数据			---- 移到组件
 		var homeGoodsList = my.getStorageSync({	key: 'homeGoodsList', }).data;          // 获取缓存 首页商品  数据
     var placeholder = my.getStorageSync({	key: 'searchTextMax', }).data;          // 获取缓存 首页商品  数据
 
 		that.setData({
-      topContentHeight: that.data.canUseLife ? utils.px2Rpx(56 + 18) : utils.px2Rpx(18),
-      waterFallTitHeight: 124 * app.globalData.systemInfo.windowWidth / 750,             // 瀑布流导航高度；
+      // topContentHeight: that.data.canUseLife ? utils.px2Rpx(56 + 18) : utils.px2Rpx(18),
+      waterFallTitHeight: 124 * that.data.app.globalData.systemInfo.windowWidth / 750,             // 瀑布流导航高度；
      //如果在瀑布流导航置顶时，设置瀑布流商品的最低高度, 56: 生活号高度，18：定位高度；44：搜索导航高度；62：瀑布流导航高度；
-      goodsBoxMinHeight: app.globalData.systemInfo.windowHeight - (that.data.canUseLife ? 56 + 18 + 44 + 62 : 18 + 44 + 62),
+      goodsBoxMinHeight: that.data.app.globalData.systemInfo.windowHeight - (that.data.canUseLife ? 56 + 18 + 44 + 62 : 18 + 44 + 62),
       wheelPlantingArr: wheelPlantingArr ? wheelPlantingArr : [],
-			advertsArr: advertsArr ? advertsArr : [],
+			advertsArr: advertsArr ? advertsArr : [],																																		// ---- 移到组件			
 			homeGoodsList: homeGoodsList ? homeGoodsList : [],
       placeholder: placeholder ? placeholder : '',
       isonLoad: true
 		})
 
+		console.log(that.data.topContentHeight)
+		console.log(that.data.canUseLife)
+
 		that.getWheelPlanting();                                        // 获取 轮播banner 数据
     that.getSearchTextMax();                                        // 获取搜索 placeholder 数据
     that.getAllMaterialData();                                      // 获取第一导航  瀑布流的 banner 数据
-		let isSuccess = await that.getAdvertsModule();                  // 获取广告模板数据
-    isSuccess.type ? this.getTimes('isFirstTime') : '';             // 获取秒杀模板数据
+		let isSuccess = await that.getAdvertsModule();                  // 获取广告模板数据											---- 移到组件
+    // isSuccess.type ? this.getTimes('isFirstTime') : '';             // 获取秒杀模板数据											---- 移到组件
 
 	},
 
 	onShow: function() {
 		let that = this;
+		console.log('页面显示')
     my.getStorageSync({key: 'isHotStart',}).data ? that.getPop() : '';  // 如果页面是热启动，就请求弹窗广告数据；
 
 		that.getCartNumber();   // 获取购物车数量
     that.initLocation();    // 获取定位数据
     my.hideKeyboard();      // 关闭键盘，有些苹果手机会出现输入搜索去到搜索页返回初始页面时，初始页的键盘没有关闭的问题；
 	
-		that.searchComponent ? that.searchComponent.setData({inputVal: ''}) : '';   // 如果有搜索组件则清空搜索值
-    that.data.isCutTimer ? that.cutTimeStart() : '';                            // 如果广告模板倒计时有则开始倒计时
-    !that.data.isonLoad ? that.getTimes('isFirstTime') : '';        // 只是显示并不是创建页面，计算时间并开始倒计时
+		that.searchComponent ? that.searchComponent.setData({inputVal: ''}) : '';   					// 如果有搜索组件则清空搜索值
+		that.advertisement && that.data.isCutTimer ? that.advertisement.cutTimeStart() : '';	// 页面 onLoad 则
+
+		
+				console.log(that.advertisement)
+    // that.data.isCutTimer ? that.cutTimeStart() : '';                            // 如果广告模板倒计时有则开始倒计时
+    // !that.data.isonLoad ? that.getTimes('isFirstTime') : '';        // 只是显示并不是创建页面，计算时间并开始倒计时
 
 		that.setData({         // 回到页面关闭搜索组件
 			isFocus: false,
@@ -133,15 +143,15 @@ Page({
 	 * 页面隐藏
 	 */
 	onHide() {
-		clearTimeout(getApp().globalData.home_spikeTime);
-    this.data.isonLoad = false;
+		// clearTimeout(this.data.app.globalData.home_spikeTime);
+    // this.data.isonLoad = false;
 	},
 
 	/**
 	 *  页面被关闭
 	 */
 	onUnload() {
-		clearTimeout(getApp().globalData.home_spikeTime)
+		// clearTimeout(this.data.app.globalData.home_spikeTime)
 	},
 
 	/**
@@ -149,14 +159,15 @@ Page({
 	 */
 	initLocation() {
 		const _this = this;
-		let userLocInfo = app.globalData.userLocInfo;
+		let userLocInfo = _this.data.app.globalData.userLocInfo;
 		if (this.jsonNull(userLocInfo) == 0) {
 			locAddr.location((res) => {
 				_this.setData({
 					locInfo: res
 				});
 				// 设置缓存并设置全部变量的值 globalData.userLocInfo 
-				app.setLocStorage(_this.data.locInfo);
+				_this.data.app.setLocStorage(_this.data.locInfo);
+				_this.getTopContentHeight();
 			});
 		}	else {
 			_this.setData({
@@ -198,7 +209,6 @@ Page({
     let { scrollTop } = e;
     let waterFallTopInit = this.data.waterFallTopInit;
     let waterFallTop = this.data.waterFallTop;
-
     //防止统计位置不准确，重新再算一次
     if ( this.data.waterFallTitList.length > 0 ) {
       this.getWaterFallSeat()
@@ -206,7 +216,7 @@ Page({
 
     // 显示返回顶部按钮
     this.setData({
-      isShowGoTop: scrollTop > app.globalData.systemInfo.windowHeight / 2 ? true : false
+      isShowGoTop: scrollTop > that.data.app.globalData.systemInfo.windowHeight / 2 ? true : false
     })
 
     if (waterFallTopInit == 'success') {
@@ -238,13 +248,25 @@ Page({
     })
   },
 
+	// 获取顶部，定位 + 生活号 + 搜索 的高度
+  getTopContentHeight() {
+    let that = this;
+    my.createSelectorQuery().select('#js_topContent').boundingClientRect().exec((res) => {
+      let result = res[0] && res[0] != 'null' ? res[0].height ? res[0].height : 0 : 0
+        that.setData({
+          topContentHeight: Math.floor(result) * (750 / that.data.app.globalData.systemInfo.windowWidth),
+        })
+    })
+  },
+
+
 
     // 页面上拉加载更多瀑布流商品 loadWaterFallGoods
   onReachBottom() {
     let that = this;
-    console.log('上拉加载', that.data.waterFallTitList, that.data.advertsArr)
+    console.log('上拉加载', '瀑布流导航数据',that.data.waterFallTitList)
     let { waterIndex, waterFallGoodsList, isWaterFallLoaded } = this.data
-    console.log(waterIndex, isWaterFallLoaded, waterFallGoodsList)
+    console.log('此时的导航 index', waterIndex, '此时各个正在加载状态', isWaterFallLoaded, '此时各个瀑布流数据', waterFallGoodsList)
     if ( !isWaterFallLoaded[waterIndex] && isWaterFallLoaded.length > 0 ) {
       let setWaterFallStart = 'waterStartList[' + waterIndex + ']'
       this.setData({
@@ -298,7 +320,7 @@ Page({
 	*/
 	onPullDownRefresh() {
     console.log('下拉刷新重新请求数据')
-    clearTimeout(getApp().globalData.home_spikeTime);	// 清除定时器    
+    clearTimeout(this.data.app.globalData.home_spikeTime);	// 清除定时器    
 		this.getAdvertsModule();   // 获取广告模块资源
     this.setData({
       allMaterialIndex: -1
@@ -371,11 +393,13 @@ Page({
 
                 // 如果是滚动商品 有倒计时的情况
                 if ( resData[i].moduleType == 'GOODSSCROLL' && resData[i].items[0].timerType == 'DAY_TIMER' ) {
+									that.advertisement && that.data.isCutTimer ? that.advertisement.cutTimeStart() : '';
                   that.setData({
                     isCutTimer: true,
                   })
+									console.log(that.data.isCutTimer)
                   // 开始倒计时
-                  that.cutTimeStart()
+                //  that.cutTimeStart()
                 }
 								newResult.push(resData[i]);
 							}
@@ -394,6 +418,7 @@ Page({
             console.log('全部广告模板请求成功，数据---', that.data.advertsArr)
             var timeout = setTimeout(function() {
               that.getWaterFallSeat();
+							that.getTopContentHeight();
               clearTimeout(timeout)
             }, 800)
 						reslove({
@@ -414,7 +439,7 @@ Page({
 		})
 	},
 
-    // 获取瀑布流商品数据
+  // 获取瀑布流商品数据
   getWaterFallGoodsList(type, waterIndex) {
     let that = this;
     let setWaterLoadingName = 'isWaterFallLoading[' + waterIndex + ']'
@@ -464,6 +489,8 @@ Page({
           [setFirstName]: false,
           allMaterialIndex: that.data.allMaterialIndex
         })
+
+				type == 0 ? that.getTopContentHeight() : '';
         console.log('当前导航渲染的商品',wholeGoodsList,'是否没有更多？',that.data.isWaterFallLoaded,'本次请求是否还在继续',that.data.isWaterFallLoading,'是否是第一次？',that.data.isWaterFallFirst)
       }, err => {
         console.log('当前导航请求的数据报错',err)
@@ -478,89 +505,6 @@ Page({
     }
   },
 
-  /**
-	  *获取秒杀模块
-	*/ 
-	getSpikeModule() {
-		var that = this;
-		var urlPre = '/m/a';
-		var url = urlPre + '/moduleAdvert/1.0/getSecKillAdvert';
-		var token = '';
-		var contentType = '';
-		try {
-			token = my.getStorageSync({ key: constants.StorageConstants.tokenKey }).data ? my.getStorageSync({ key: constants.StorageConstants.tokenKey }).data : '';
-		} catch (e) { }
-		return new Promise((reslove, reject) => {
-			my.httpRequest({
-				url: constants.UrlConstants.baseUrlOnly + url,
-				method: 'GET',
-				data: {
-					activitysId: that.data.secondKillActivityId
-				},
-				headers: {
-					'token': token ? token : '',
-					"content-type": contentType ? contentType : "application/x-www-form-urlencoded",
-					"client-channel": "alipay-miniprogram"
-				},
-				success: function(res) {
-					var resData = res.data;
-					if (resData.ret.code == '0') {
-						var result = resData.data;
-						var index = null;
-						var spikeArr = [];
-						for (var i = 0; i < that.data.advertsArr.length; i++) {
-							if (that.data.advertsArr[i].moduleType == "SECONDKILL") {
-
-								spikeArr = JSON.parse(JSON.stringify(that.data.advertsArr[i]));
-								spikeArr.secondKillModuleVO = result;
-								index = i;
-								that.data.advertsArr[i] = spikeArr;
-
-								var nowTime = new Date();
-								var endTime = that.data.advertsArr[i].secondKillModuleVO.endDate;
-								var startTime = that.data.advertsArr[i].secondKillModuleVO.startDate;
-								nowTime = nowTime.getTime();
-								startTime = new Date(startTime).getTime();
-								endTime = new Date(endTime).getTime();
-								var timeDifferences = (startTime - nowTime) / 1000;
-
-								if (startTime > nowTime) {
-									that.data.isActivitysStart = '活动还未开始';
-								};
-
-								that.setData({
-									advertsArr: that.data.advertsArr,
-									nowTime: nowTime,
-									startTime: startTime,
-									endTime: endTime,
-									timeDifferences: timeDifferences,
-									isActivitysStart: that.data.isActivitysStart
-								})
-							}
-						}
-						// 缓存数据
-						my.setStorage({
-							key: 'homeAdvertsArr', // 缓存数据的key
-							data: that.data.advertsArr, // 要缓存的数据
-							success: (res) => {
-							},
-						});
-						reslove({
-							'type': true,
-							'result': result
-						});
-					}
-				},
-				fail: function(err) {
-					reject({
-						'type': false,
-						'result': err
-					});
-				}
-			})
-		})
-	},
-  
     /**
    * 获取首页轮播 getWheelPlanting
    * */
@@ -699,49 +643,6 @@ Page({
   },
 
 
-  // 开始倒计时
-  cutTimeStart(){
-    let that = this;
-    that.cutTimeToday();
-    clearTimeout(that.data.cutTime_timer);
-    that.data.cutTime_timer = setTimeout(function(){
-      that.cutTimeStart()
-    },1000)
-  },
-
-  // 当天倒计时
-  cutTimeToday(){
-    let that = this;
-    let date = new Date();
-    let nowData = '',       // 现在的时间
-        nextDate = '',      // 明天零点时间
-        surplusTime = '',   // 今天剩下的时间
-        hh = '',
-        mm = '',
-        ss = '';
-    date.setMilliseconds(0);
-    nowData = date.getTime();
-    date.setSeconds(0)
-    date.setMinutes(0);
-    date.setHours(0);
-    date.setDate(date.getDate()+1)
-    nextDate = date.getTime();
-    surplusTime = (nextDate-nowData)/1000;
-    if(surplusTime<0){
-      surplusTime=0;
-    }
-    ss = parseInt(surplusTime%60);
-    mm = parseInt(surplusTime/60%60);
-    hh = parseInt(surplusTime/60/60%24);
-
-    that.setData({
-      countTime:{
-        hh: hh<10? '0'+hh : hh,
-        mm: mm<10? '0'+mm : mm,
-        ss: ss<10? '0'+ss : ss
-      }
-    })
-  },
 
 
   /**
@@ -818,119 +719,6 @@ Page({
 		return;
 	},
 
-	/**
-	  *秒杀获取倒计时时间
-	*/
-	getTimes: async function(isFirstTime) {
-		var nowTime = new Date();
-		var starTime = '';
-		var endTime = '';
-		var isLastActivitys = '';
-		var index = '';
-
-		for (var i = 0; i < this.data.advertsArr.length; i++) {
-			if (this.data.advertsArr[i].moduleType == "SECONDKILL" && this.data.advertsArr[i].secondKillModuleVO) {
-				index = i;
-				starTime = this.data.advertsArr[i].secondKillModuleVO.startDate;
-				endTime = this.data.advertsArr[i].secondKillModuleVO.endDate;
-				isLastActivitys = this.data.advertsArr[i].secondKillModuleVO.isLastActivitys;
-			}
-		}
-		if (!this.data.advertsArr[index] || !(this.data.advertsArr[index].secondKillModuleVO)) {
-			return;
-		}
-
-		starTime = new Date(starTime).getTime();
-		endTime = new Date(endTime).getTime();
-		nowTime = nowTime.getTime();
-
-		// (starTime - nowTime) / 1000 >= 1 这么判断会多出 几百毫秒，导致活动开始倒计时的时间差是以整数开始的, 如 07：00 而不是 06：59
-		if (nowTime < starTime) {
-			this.setData({
-				isActivitysStart: '活动还未开始',
-			})
-			this.notYetStarted(starTime);
-			return;
-		};
-
-		var timeDifference = endTime - nowTime;
-		var s1 = (timeDifference / 1000) % 60;
-		s1 = Math.floor((timeDifference / 1000) % 60);
-
-		var m1 = Math.floor((timeDifference / 1000 / 60) % 60);
-		var h1 = Math.floor((timeDifference / 1000 / 60 / 60));
-
-		var s = s1 <= 0 ? '00' : (s1 < 10 ? '0' + s1 : s1);
-		var m = m1 <= 0 ? '00' : (m1 < 10 ? '0' + m1 : m1);
-		var h = h1 <= 0 ? '00' : (h1 < 10 ? '0' + h1 : h1);
-
-		this.setData({
-			hours: h,
-			minute: m,
-			second: s
-		})
-
-		// if (nowTime - endTime >= 0)，这样判断在活动的最后一秒里，零点几秒，页面已经显示为 00：00：00 了，但这时没有重新请求数据，而是在 1秒后，再计算一次，这一次是 -秒，才重新请求
-		if ((timeDifference / 1000) < 1) {
-			clearTimeout(getApp().globalData.home_spikeTime);
-			this.setData({
-				isLastActivitys: isLastActivitys
-			});
-			if (!isLastActivitys) {
-				// 请求单独的秒杀广告模块的数据
-				var sendRequest = await this.getSpikeModule();
-
-				if (sendRequest.type && (this.data.startTime <= this.data.nowTime) && ((this.data.endTime - this.data.nowTime) / 1000 <= 1)) {
-					this.getTimes();
-				} else if (sendRequest.type && (this.data.startTime <= this.data.nowTime) && ((this.data.endTime - this.data.nowTime) / 1000 > 1)) { // this.data.timeDifferences < 1    这么判断有时会多出 几百毫秒，导致活动开始倒计时的时间差是以整数开始的, 如 07：00 而不是 06：59
-					this.getTimes();
-					this.countDown();
-					// this.data.timeDifferences >= 1   
-				} else if (sendRequest.type && (this.data.startTime > this.data.nowTime)) {
-					// 如果是活动还未开始，创建倒计时但不 setData ，直到活动开始则开始渲染 DOM
-					this.notYetStarted(this.data.startTime);
-				}
-			}
-		} else if (isFirstTime) {
-			this.countDown();
-		}
-	},
-
-	/**
-	  *秒杀计时器
-	*/
-	countDown: function(starTime) {
-    var that = this;
-		clearTimeout(getApp().globalData.home_spikeTime);
-		clearTimeout(getApp().globalData.home_spikeTime);
-		getApp().globalData.home_spikeTime = setInterval(
-			function() {
-				that.getTimes()
-			}, 1000);
-	},
-
-  /**
-	  *如果是秒杀活动还未开始，创建倒计时但不 setData ，直到活动开始则开始渲染 DOM
-	*/
-	notYetStarted: function(starTime) {
-		clearTimeout(getApp().globalData.home_spikeTime);
-		var that = this;
-		if (starTime) {
-			getApp().globalData.home_spikeTime = setInterval(
-				function() {
-					var nowTime = new Date();
-					nowTime = nowTime.getTime();
-					// (starTime - nowTime) / 1000 < 1 这么判断会多出 几百毫秒，导致活动开始倒计时的时间差是以整数开始的, 如 07：00 而不是 06：59
-					if (starTime <= nowTime) {
-						that.setData({
-							isActivitysStart: null
-						})
-						that.getTimes('isFirstTime')
-					};
-				}, 1000);
-		}
-	},
-
   /**
 	  * 广告弹窗显示逻辑
 	*/
@@ -953,7 +741,7 @@ Page({
 			this.setData({
 				showToast: true
 			});
-      thata.savePopImgData(popImgData);
+      that.savePopImgData(popImgData);
 		} else {
 			var localPopId = storagePopImgData.popId;                                     //本地缓存 广告id
 			var localPopType = storagePopImgData.popAdvMemoryOpt;                         //本地缓存 广告类型
@@ -1002,8 +790,7 @@ Page({
 	   * 获取购物车数量
 	*/
 	getCartNumber: function() {
-		var app = getApp();
-		app.getCartNumber();
+		this.data.app.getCartNumber();
 	},
 
 	/**
@@ -1030,7 +817,17 @@ Page({
 	  * 存储新版搜索组件实例
 	*/
 	saveRef(ref) {
-    this.searchComponent = ref;
+
+		switch(ref.props.__tag) {
+			case "search-component":
+				this.searchComponent = ref
+			break;
+			case "advertisement":
+				this.advertisement = ref
+			break;
+			default:
+			break;
+		}
   },
 	
 	/**

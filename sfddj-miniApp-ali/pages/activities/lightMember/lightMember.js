@@ -39,7 +39,9 @@ Page({
     } catch (e) { }
   },
 
+  // 轻会员点击去使用没有走 onShow
   onShow: async function(options) {
+    console.log('页面重新显示， onShow')
     let returnBack = await this.getAdvertisingModule();
     returnBack.type == "SUCCESS" ? this.getEasyMemberInfo() : '';
   },
@@ -81,8 +83,8 @@ Page({
                       case "NORMAR":
                         couponVal.couponText = "去使用"
                       break;
-                      case "USED":
-                        couponVal.couponText = "已使用"
+                      // case "USED":
+                      //   couponVal.couponText = "已使用"
                       break;
                       default:
                       break;
@@ -111,9 +113,9 @@ Page({
               openingButtonData: that.data.openingButtonData,
               isLightMember: resData.classify == "已注册" ? true : false,
             })
-            console.log(that.data.isLightMember)
-            console.log(that.data.thematicAds)
-            console.log(that.data.headData)
+            console.log('广告请求成功， 是否是轻会员', that.data.isLightMember)
+            console.log('广告请求成功， 广告数据', that.data.thematicAds)
+            console.log('广告请求成功， 头部数据', that.data.headData)
             reslove({
               type: 'SUCCESS'
             })
@@ -157,18 +159,17 @@ Page({
         url
       });
     }
-
-
   },
 
   // 轻会员跳转
   goToLightMember() {
     let that = this;
+    console.log(that.data.thematicAds.lightMemberId)
     my.navigateToMiniService({
       serviceId: "2019072365974237", // 插件id,固定值勿改
       servicePage: "pages/hz-enjoy/main/index", // 插件页面地址,固定值勿改
       extraData: {
-        "alipay.huabei.hz-enjoy.templateId": "2020040700020903320005426669",
+        "alipay.huabei.hz-enjoy.templateId": that.data.thematicAds.lightMemberId,
         "alipay.huabei.hz-enjoy.partnerId": "2088421251942323",
       },
       success: (res) => {
@@ -212,9 +213,9 @@ Page({
           case "NORMAR":
             resData[0].couponText = "去使用"
           break;
-          case "USED":
-            resData[0].couponText = "已使用"
-          break;
+          // case "USED":
+          //   resData[0].couponText = "已使用"
+          // break;
           default:
           break;
         }
@@ -268,17 +269,18 @@ Page({
 
   getEasyMemberInfo() {
     let that = this;
-    let data = that.data.isLightMember ? {outSignNo: that.data.thematicAds.lightMemberId} : {}
+    let data = {outSignNo: that.data.thematicAds.lightMemberId};
     https.get(api.LIGHTMEMBER.GETEASYMEMBERINFO, data, function(res){
       let resData = res.data.data;
       let resRet = res.data.ret;
       if( resRet.code == '0' && resRet.message == "SUCCESS" && resData ) {
         resData.gmtSign = Math.round((new Date().getTime() - resData.gmtSign) / 1000 /60 /60 /24); // 签约时间
         !resData.gmtUnSign ? that.getGmtUnSign() : resData.gmtUnSign = utils.formatTime(new Date(resData.gmtUnSign));
-        // that.data.headData = Object.assign(that.data.headData, resData);
+        that.data.headData = Object.assign(that.data.headData, resData);
         that.setData({
           headData: that.data.headData
         })
+        console.log('请求 getEasyMemberInfo 后的 headData', that.data.headData)
       }
     }, function(res) {
     })
@@ -286,17 +288,20 @@ Page({
 
   // 获取已注册用户的到期时间；
   getGmtUnSign() {
+    let that = this;
     https.post(api.LIGHTMEMBER.AGREEMENTQUERY, { outSignNo: that.data.thematicAds.lightMemberId }, (res) => {
-      console.log(res)
+      console.log('请求到期时间 成功',res)
       let resRet = res.data.ret;
       let resData = res.data.data;
      if( resRet.code == '0' && resRet.message == "SUCCESS" && resData ) {
-        // that.setData({
-        //   isLightMember: true
-        // })
+       that.data.headData.gmtUnSign = utils.formatTime(new Date(resData));
+        that.setData({
+          headData: that.data.headData
+        })
       }
+      console.log('请求到期时间成功重新修改  headData',res)
     },(res) => {
-      console.log(res)
+      console.log('请求到期时间 报错',res)
     })
   },
 
