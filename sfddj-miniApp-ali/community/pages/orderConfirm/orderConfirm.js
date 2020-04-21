@@ -87,11 +87,40 @@ Page({
             let result = res.data.data ? res.data.data : {};
             if (Object.keys(result).length > 0) {
                 let shopCartList = result.items;
+                let noneStoreList = [];   //没有库存
+                let noneStoreIdList = []
                 shopCartList.forEach((val, i, arr) => {
                     val.goodsImagePath = this.data.baseImageUrl + val.productImg;
                     val.salePrice = val.price;
                     val.name = val.goodsName;
                     val.skuValue = val.productName;
+                    // val.store && val.store > 0 ? '' : noneStoreList.push(val.goodsName);
+                    if (val.store && val.store <= 0) {
+                        noneStoreList.push(val.goodsName);
+                        noneStoreIdList.push(val.goodsId);
+                    }
+                    // 如果是最后一个
+                    if (i == shopCartList.length - 1) {
+                        if (noneStoreList.length > 0) {
+                            let noneStoreStr = noneStoreList.join('、');
+                            my.confirm({
+                                // title: '删除地址',
+                                content:  `${noneStoreStr +  '已售罄，是否继续下单？'}`,
+                                confirmButtonText: '是',
+                                cancelButtonText: '否',
+                                success: (result) => {
+                                    if (result.confirm) {
+                                       
+                                    }
+                                    else {
+                                        // 取消
+                                    }
+                                },
+
+                            });
+
+                        }
+                    }
                 })
                 this.setData({
                     result: result,
@@ -106,12 +135,12 @@ Page({
                 })
             }
         }, err => {
-			my.showToast({
-				content: err ? err : '很抱歉，暂时无法购买',
-				complete: () => {
-					my.navigateBack({});
-				}
-			})
+            my.showToast({
+                content: err ? err : '很抱歉，暂时无法购买',
+                complete: () => {
+                    my.navigateBack({});
+                }
+            })
         })
     },
 
@@ -239,7 +268,7 @@ Page({
                 that.cancelSwitch();
             }
 
-        }, err => { 
+        }, err => {
             that.cancelSwitch();
             my.showToast({
                 content: err
