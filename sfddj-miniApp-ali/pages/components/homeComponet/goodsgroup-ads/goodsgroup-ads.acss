@@ -1,0 +1,97 @@
+image {
+  display: block;
+}
+
+.goodsgroup .topSpace {
+  height: 10rpx;
+  width: 100%;
+}
+
+.goodsgroup .otherModeCon {
+  padding: 0 24rpx 10rpx;
+}
+
+.goodsgroup .oneImaView {
+  height: auto;
+}
+
+.goodsgroup .width_100 {
+  width: 100%;
+}
+
+.goodsgroup .goods-scrollx-view {
+  white-space: nowrap;
+	font-size: 0;
+}
+
+.goodsgroup .flex_view_row {
+  display: flex;
+  display:-webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  flex-direction: row;
+  box-orient:horizontal;
+  box-direction:normal;
+  -webkit-flex-direction:row;
+}
+
+.goodsgroup .goodsViewBox {
+  display: inline-block;
+  padding-right: 20rpx;
+  height: 384rpx;
+}
+
+.goodsgroup .navigatorView {
+  position: relative;
+  width: 260rpx;
+}
+
+.goodsgroup .goodsShowImgBox {
+  height: 260rpx;
+  width: 100%;
+  background:#f3f5fa;
+  border-radius: 10rpx;
+  overflow:hidden;
+}
+
+.goodsgroup .goodsShowImg {
+  display: block;
+  border-radius: 10rpx;
+  width: 100%;
+}
+
+.goodsgroup .littleIcon {
+  position: absolute;
+  width: 50rpx;
+  height: 50rpx;
+  top: 10rpx;
+  right: 10rpx;
+}
+
+.goodsgroup .goodsDetail {
+  margin-top: 15rpx;
+}
+
+.goodsgroup .goodsDetail view {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.goodsgroup .goodsName {
+  font-size: 30rpx;
+}
+
+.goodsgroup .productName {
+  font-size: 26rpx;
+  color: #a1a0a0;
+  margin-top: 5rpx;
+}
+
+.goodsgroup .salePrice {
+  font-size: 32rpx;
+  color: #ff5353;
+  font-weight: 600;
+}

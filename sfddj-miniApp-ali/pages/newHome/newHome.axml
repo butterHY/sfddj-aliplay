@@ -30,7 +30,7 @@
 <import-sjs name="filters" from="../wxsFile/public.sjs"></import-sjs>
 
 <!-- 内容 -->
-<view class="wrap flex_view_col overHid posi_re height_100vh" style="padding-top: {{topContentHeight}}rpx">
+<view class="page flex_view_col overHid posi_re" style="padding-top: {{topContentHeight}}rpx;">
 
   <view id="js_topContent" class="topContent width_100" style="position: fixed; top: 0; left: 0; z-index: 10000; box-sizing:border-box;">
     <!-- TODO: 这里放最上面的“定位” --> 
@@ -80,7 +80,7 @@
           <view a:if="{{wheelPlantingArr && wheelPlantingArr.length > 0}}" class="bannerListBox posi_re">
             <swiper class="width_100 bannerListSwiper" onChange="bannerListChange" circular="{{wheelPlantingArr && wheelPlantingArr.length > 1 ? 'true' : ''}}" current="{{currentIndex}}" autoplay="true" interval="3000">
               <swiper-item a:for="{{wheelPlantingArr}}" a:key="indexBanner" class="all_100">
-                <view hover-class="none" class="all_100 homeSliderNav" data-type="banner" data-title="{{item.title}}" data-index="{{index}}" data-url="{{item.url}}" onTap="goToPage">
+                <view hover-class="none" class="all_100 homeSliderNav" data-type="banner" data-title="{{item.title}}" data-index="{{index}}" data-url="{{item.url}}" onTap="checkJumpType">
                   <image src="{{item.imageUrl && !filters.strIndexOf(item.imageUrl,'http') ? baseImageUrl+item.imageUrl : item.imageUrl}}" class="all_100 borRa_16r"></image>
                 </view>
               </swiper-item>
@@ -96,8 +96,26 @@
           <view class="width_100">
             <image src="{{baseLocImgUrl}}miniappImg/more/home_describe.png" class="width_100 blockBox" mode="widthFix"></image>
           </view>
+
+
+          <block a:for='{{advertsArr}}' a:key="advertsArr">
+            <goodsscroll-ads a:if="{{item.moduleType == 'GOODSSCROLL'}}" timerType="{{item.items[0].timerType}}"  ref="saveRef" item="{{item}}" onGoToPage="goToPage"></goodsscroll-ads>
+            <seckill-ads a:if="{{item.moduleType == 'SECONDKILL' && !isLastActivitys && item.secondKillModuleVO}}" ref="saveRef" item="{{item}}" onGoToPage="goToPage"></seckill-ads>
+            <navigationmini-ads  a:if='{{item.moduleType == "NAVIGATION_MIN"}}' ref="saveRef" item="{{item}}" onGoToPage="goToPage"></navigationmini-ads>
+            <shopwindow-ads a:if="{{item.moduleType == 'SHOPWINDOW'}}" ref="saveRef" item="{{item}}" onGoToPage="goToPage"></shopwindow-ads>
+            <goodsgroup-ads a:if="{{item.moduleType == 'GOODSGROUP'}}" ref="saveRef" item="{{item}}" onGoToPage="goToPage"></goodsgroup-ads>
+            <onefouradvert-ads a:if="{{item.moduleType == 'ONEFOURADVERT'}}"  ref="saveRef" item="{{item}}" onGoToPage="goToPage"></onefouradvert-ads>
+            <bannertype2-ads a:if="{{item.moduleType == 'BANNER_TYPE_2'}}" ref="saveRef" item="{{item}}" onGoToPage="goToPage"></bannertype2-ads>
+            <singlegoods-ads a:if="{{item.moduleType == 'SINGLEGOODS'}}"  ref="saveRef" item="{{item}}" onGoToPage="goToPage"></singlegoods-ads>
+            <navigation-ads a:if="{{item.moduleType == 'NAVIGATION'}}"  ref="saveRef" item="{{item}}" onGoToPage="goToPage"></navigation-ads>
+            <doublegoods-ads a:if="{{item.moduleType == 'DOUBLEGOODS'}}"  ref="saveRef" item="{{item}}" onGoToPage="goToPage"></doublegoods-ads>
+            <twofouradvert-ads a:if="{{item.moduleType == 'TWOFOURADVERT'}}" ref="saveRef" item="{{item}}" onGoToPage="goToPage"></twofouradvert-ads>
+            <goodswatefall-ads a:if="{{item.moduleType == 'GOODS_WATERFALL'}}" ref="saveRef" item="{{item}}" waterIndex="{{waterIndex}}"  onWaterFallChange="waterFallChange" onGoToPage="goToPage"></goodswatefall-ads>
+          </block>
+
+          
           <!-- <template is="new_advertsTem" data="{{advertsArr, baseImageUrl,baseLocImgUrl,ossImgStyle,waterIndex,waterFallTitIsTop,countDown:countTime}}"></template> -->
-            <advertisement ref="saveRef" advertsArr="{{advertsArr}}" waterIndex="{{waterIndex}}" waterFallTitIsTop="{{waterFallTitIsTop}}" isCutTimer="{{isCutTimer}}"></advertisement>
+            <!-- <advertisement ref="saveRef" advertsArr="{{advertsArr}}" waterIndex="{{waterIndex}}" waterFallTitIsTop="{{waterFallTitIsTop}}" isCutTimer="{{isCutTimer}}"></advertisement> -->
         </view>
         <!-- 瀑布流商品模块 -->
         <view style="min-height: 100%;">
@@ -173,7 +191,7 @@
     <view class="posi_ab" style="right: 0; top: 0;" catchTap="closePop">
       <icon type="clear" size="25" color="rgba(255,255,255,0.3)"></icon>
     </view>
-    <view class="toastView_wb_con font-26 homePop" data-url="{{popImgData.link}}" data-type="popup" data-linkType="{{popImgData.appLink}}" catchTap="goToPage">
+    <view class="toastView_wb_con font-26 homePop" data-url="{{popImgData.link}}" data-type="popup" data-linkType="{{popImgData.appLink}}" catchTap="checkJumpType">
       <image src="{{baseImageUrl}}{{popImgData.popImgPath}}" mode="widthFix" class="width_100"></image>
     </view>
   </view>

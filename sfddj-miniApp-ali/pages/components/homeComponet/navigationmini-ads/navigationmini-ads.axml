@@ -1,0 +1,27 @@
+    <import-sjs name='filters' from="../../../wxsFile/public.sjs"/>
+    
+    <view class="navigation-mini">
+      <!-- 上间隔-->
+      <view a:if="{{item.spacing == 1}}" class='topSpace' style='background-color: {{item.topIntervalColor ? "#" + item.topIntervalColor : "#ffffff"}};'></view>
+      <!-- 内容 -->
+      <view class='otherModeCon {{item.spacing == 1 ? "marBot_20" : ""}}' style='background-color: {{item.backgroundColor ? "#" + item.backgroundColor : "#ffffff"}}; {{item.backgroundImg ? "background: url("+ baseImageUrl + item.backgroundImg+") no-repeat; background-size: 100% 100%;" : ""}}'>
+        <view class="boxShadowView">
+          <swiper style='height: {{item.items.length > 4 ? "167rpx" : "187rpx"}}' indicator-dots="{{item.items.length > 5 ? 'true' : ''}}" indicator-active-color='rgba(255,83,83.1)' interval="{{interval}}" duration="{{duration}}" data-fatherIndex="{{index}}">
+            <swiper-item class="flex_view_row swiper-item">
+              <block a:for="{{item.items}}" a:for-index="idx" a:for-item="itemsValue" a:key="navigationMin">
+                <view a:if='{{idx< 5}}' data-url="{{itemsValue.link}}" catchTap='goToPage'  class='{{item.items.length > 4 ? "width_20" : "width_25"}} imgView'>
+                  <image src="{{baseImageUrl}}{{itemsValue.imageUrl}}" class="all_100" />
+                </view>
+              </block>
+            </swiper-item>
+            <swiper-item a:if='{{item.items.length > 5}}' class="flex_view_row">
+              <block a:for="{{item.items}}" a:for-index="idx" a:for-item="itemsValue" a:key="navigationMin">
+                <view a:if='{{idx > 4}}' data-url="{{itemsValue.link}}" catchTap='goToPage'  class="imgViewsec">
+                  <image src="{{baseImageUrl}}{{itemsValue.imageUrl}}" mode="widthFix" class="width_100" />
+                </view>
+              </block>
+            </swiper-item>
+          </swiper>
+        </view>
+      </view>
+    </view>

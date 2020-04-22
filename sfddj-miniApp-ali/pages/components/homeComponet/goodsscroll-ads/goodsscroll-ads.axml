@@ -1,0 +1,52 @@
+   <import-sjs name='filters' from="../../../wxsFile/public.sjs"/>
+  
+  <!-- 水平滚动产品————商品滚动  已全部更新 -->
+   <!-- a:if='{{item.moduleType == "GOODSSCROLL"}}' -->
+  <view class="goodsscroll-ads">
+    <!-- 上间隔 -->
+    <view a:if="{{item.spacing == 1}}" class='topSpace' style='background-color: {{item.topIntervalColor ? "#" + item.topIntervalColor : "#ffffff"}};'></view>
+    <!-- 内容 -->
+    <view class='otherModeCon {{item.spacing == 1 ? "marBot_20" : ""}}' style='background-color: {{item.backgroundColor ? "#" + item.backgroundColor : "#ffffff"}}'>
+      <!-- 标题 -->
+      <view class="goodsScrollTit">
+        <view class='goodsScrollTit_txt flex_view_row'>
+          <view class="goodsScrollTit_del">{{item.items[0].moduleTitle}}</view>
+          <view a:if="{{item.items[0].timerType == 'DAY_TIMER'}}" class="countDown">
+            <text class="countDown_txt countDown_black">{{countTime.hh}}</text>
+            <text class="countDown_split">/</text>
+            <text class="countDown_txt countDown_black">{{countTime.mm}}</text>
+            <text class="countDown_split">/</text>
+            <text class="countDown_txt countDown_red">{{countTime.ss}}</text>
+          </view>
+        </view>
+      </view>
+      <!-- 商品 -->
+      <scroll-view scroll-x="{{true}}" scroll-with-animation="true" class="width_100 goods-scrollx-view flex_view_row" data-fatherIndex="{{index}}">
+        <block a:for="{{item.groupGoodsVoList}}" a:for-index="idx" a:key="goodsScroll" a:for-item="groupItem">
+          <view class='goodsViewBox'>
+            <view data-url="/pages/shopping/goodsDetail/goodsDetail?goodsSn={{groupItem.goodsSn}}&goodsId={{groupItem.id}}" catchTap="goToPage" data-type="goodsCount" data-index="{{idx}}" data-fatherIndex="{{index}}" data-title="{{item.items[0].moduleTitle}}"  class="posi_re width_260r">
+              <view class="goodsShowImgBox">
+                <image src="{{baseImageUrl}}{{groupItem.goodsDefaultImage}}{{ossImgStyle}}" lazy-load="{{idx > 3 ? true : ''}}" class="width_100 goodsShowImg" mode="widthFix"></image>
+              </view>
+
+              <!--小图标 全赔  -->
+              <image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff1.png" class="littleIcon" a:if="{{filters.strIndexOf(groupItem.afterSaleGuee,'1')}}"></image>
+              <image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff2.png" class="littleIcon" a:elif="{{filters.strIndexOf(groupItem.afterSaleGuee,'2')}}"></image>
+              <image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff3.png" class="littleIcon" a:elif="{{filters.strIndexOf(groupItem.afterSaleGuee,'3')}}"></image>
+              <image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff4.png" class="littleIcon" a:elif="{{filters.strIndexOf(groupItem.afterSaleGuee,'4')}}"></image>
+              <view class="width_100 marTop_15">
+                <view class="goodsName  single-line">{{groupItem.goodsName}}</view>
+                <view class="productName single-line">{{groupItem.productName}}</view>
+                <view class="salePrice single-line">
+                  <text>￥{{groupItem.salePrice}}</text>
+                </view>
+              </view>
+            </view>
+          </view>
+        </block>
+      </scroll-view>
+    </view>
+  </view>
+
+
+  

@@ -31,6 +31,7 @@ Page({
 		popImgData: {},              //弹窗广告数据
     advertsPop: false,          //弹窗广告开关
 
+
     // 瀑布流数据
     waterIndex: 0,                //瀑布流选中索引
     waterFallTitList: [],         //瀑布流标题列表
@@ -39,8 +40,8 @@ Page({
     waterFallTop: 10000,          //瀑布流所在的位置
     waterFallTopInit: 'init',     //判断 全部广告模块 + 顶部轮播 + 四大描述 有没有加载或者是否成功设置好位置
     waterFallGoodsList: [],       //瀑布流商品列表
-    allMaterialList: [],          //瀑布流第一个导航商品列表的banner广告位
-    allMaterialIndex: -1,         //当前瀑布流第一个导航商品列表banner的加载位置
+    allMaterialList: [],          //瀑布流第一个导航商品列表的 banner 数据
+    allMaterialIndex: -1,         //当前瀑布流第一个导航商品列表 第一个banner 的加载位置
     waterFallTitIsTop: false,     //是否置顶瀑布流导航
     isWaterFallLoaded: [],        //判断是否加载完
     isWaterFallLoading: [],       //判断是否在加载中
@@ -69,7 +70,6 @@ Page({
 
     // 生活号
     canUseLife: my.canIUse('lifestyle'),
-    hideLifeStyle: false,             //隐藏关注生活号组件
     
     // 秒杀广告模板数据
     isonLoad: false,
@@ -77,61 +77,47 @@ Page({
 	},
 
 	onLoad: async function(options) {
-    // console.log(app.globalData.systemInfo)
-    var that = this;
+    let that = this;
 		that.data.app = getApp();
-		// 友盟+统计--首页浏览 （如果从推文或者其他方进来并且带广告参数时）
-    var pageOptions = options
-		var globalQuery = Object.assign({}, that.data.app.globalData.query)
-		if (Object.keys(globalQuery).length > 0) {
-			pageOptions = Object.assign(options, globalQuery)
-		} 
-		my.uma.trackEvent('homepage_show', pageOptions);
+    that.allComponent = [];
+
+    that.reportPageOption(options);
 		
-		var wheelPlantingArr = my.getStorageSync({key: 'wheelPlantingArr', }).data;      // 获取缓存首页 banner 数据
-		var advertsArr = my.getStorageSync({key: 'homeAdvertsArr', }).data;             // 获取缓存 首页广告模板  数据			---- 移到组件
-		var homeGoodsList = my.getStorageSync({	key: 'homeGoodsList', }).data;          // 获取缓存 首页商品  数据
-    var placeholder = my.getStorageSync({	key: 'searchTextMax', }).data;          // 获取缓存 首页商品  数据
+		let wheelPlantingArr = my.getStorageSync({key: 'wheelPlantingArr', }).data;      // 获取缓存首页 banner 数据
+		let advertsArr = my.getStorageSync({key: 'homeAdvertsArr', }).data;             // 获取缓存 首页广告模板  数据			---- 移到组件
+    let placeholder = my.getStorageSync({	key: 'searchTextMax', }).data;          // 获取缓存 首页商品  数据
 
 		that.setData({
-      // topContentHeight: that.data.canUseLife ? utils.px2Rpx(56 + 18) : utils.px2Rpx(18),
-      waterFallTitHeight: 124 * that.data.app.globalData.systemInfo.windowWidth / 750,             // 瀑布流导航高度；
+      waterFallTitHeight: 124 * that.data.app.globalData.systemInfo.windowWidth / 750,   // 瀑布流导航高度；
      //如果在瀑布流导航置顶时，设置瀑布流商品的最低高度, 56: 生活号高度，18：定位高度；44：搜索导航高度；62：瀑布流导航高度；
       goodsBoxMinHeight: that.data.app.globalData.systemInfo.windowHeight - (that.data.canUseLife ? 56 + 18 + 44 + 62 : 18 + 44 + 62),
       wheelPlantingArr: wheelPlantingArr ? wheelPlantingArr : [],
 			advertsArr: advertsArr ? advertsArr : [],																																		// ---- 移到组件			
-			homeGoodsList: homeGoodsList ? homeGoodsList : [],
       placeholder: placeholder ? placeholder : '',
       isonLoad: true
 		})
 
-		console.log(that.data.topContentHeight)
-		console.log(that.data.canUseLife)
-
 		that.getWheelPlanting();                                        // 获取 轮播banner 数据
     that.getSearchTextMax();                                        // 获取搜索 placeholder 数据
     that.getAllMaterialData();                                      // 获取第一导航  瀑布流的 banner 数据
-		let isSuccess = await that.getAdvertsModule();                  // 获取广告模板数据											---- 移到组件
-    // isSuccess.type ? this.getTimes('isFirstTime') : '';             // 获取秒杀模板数据											---- 移到组件
+		let isSuccess = await that.getAdvertsModule();                  // 获取广告模板数据											
+    // isSuccess.type ? this.getTimes('isFirstTime') : '';          // 获取秒杀模板数据			---- 移到组件
 
 	},
 
 	onShow: function() {
+    console.log('页面显示')
 		let that = this;
-		console.log('页面显示')
     my.getStorageSync({key: 'isHotStart',}).data ? that.getPop() : '';  // 如果页面是热启动，就请求弹窗广告数据；
-
 		that.getCartNumber();   // 获取购物车数量
     that.initLocation();    // 获取定位数据
     my.hideKeyboard();      // 关闭键盘，有些苹果手机会出现输入搜索去到搜索页返回初始页面时，初始页的键盘没有关闭的问题；
 	
 		that.searchComponent ? that.searchComponent.setData({inputVal: ''}) : '';   					// 如果有搜索组件则清空搜索值
-		that.advertisement && that.data.isCutTimer ? that.advertisement.cutTimeStart() : '';	// 页面 onLoad 则
 
-		
-				console.log(that.advertisement)
-    // that.data.isCutTimer ? that.cutTimeStart() : '';                            // 如果广告模板倒计时有则开始倒计时
-    // !that.data.isonLoad ? that.getTimes('isFirstTime') : '';        // 只是显示并不是创建页面，计算时间并开始倒计时
+    that.checkAllComponent('start');                                  // 页面 onLoad 只会挂载一次组件
+    // that.data.isCutTimer ? that.cutTimeStart() : '';              // 如果广告模板倒计时有则开始普通模板倒计时
+    // !that.data.isonLoad ? that.getTimes('isFirstTime') : '';      // 只是显示并不是创建页面，计算时间并开始秒杀倒计时
 
 		that.setData({         // 回到页面关闭搜索组件
 			isFocus: false,
@@ -143,15 +129,21 @@ Page({
 	 * 页面隐藏
 	 */
 	onHide() {
-		// clearTimeout(this.data.app.globalData.home_spikeTime);
+    let that = this;
+		// clearTimeout(this.data.app.globalData.home_spikeTime);     旧首页秒杀广告
     // this.data.isonLoad = false;
+
+    that.checkAllComponent()
 	},
 
 	/**
 	 *  页面被关闭
 	 */
 	onUnload() {
-		// clearTimeout(this.data.app.globalData.home_spikeTime)
+    let that = this;
+		// clearTimeout(this.data.app.globalData.home_spikeTime)        旧首页秒杀广告
+
+    that.checkAllComponent()
 	},
 
 	/**
@@ -194,13 +186,6 @@ Page({
 		return num;
 	},
 
-  /**
-	 * rpx 转化 px
-	 */
-	toPx(rpx) {
-		return rpx * my.getSystemInfoSync().windowWidth / 750;
-	},
-
 	/**
 	 * 页面滚动
 	 */
@@ -239,7 +224,7 @@ Page({
     let that = this;
     my.createSelectorQuery().select('#js_advert_list').boundingClientRect().exec((res) => {
       let result = res[0] && res[0] != 'null' ? res[0].height ? res[0].height : 0 : ''
-      if (that.data.waterFallTitList.length > 0 && result && (that.data.waterFallTopInit != 'success')) {
+      if ( that.data.waterFallTitList.length > 0 && result && (that.data.waterFallTopInit != 'success') ) {
         that.setData({
           waterFallTop: Math.floor(result),
           waterFallTopInit: 'success'
@@ -279,7 +264,6 @@ Page({
 
   // 瀑布流导航点击
   waterFallChange(e) {
-    console.log('瀑布流点击',e )
     let { index } = e.currentTarget.dataset
     this.setData({
       waterIndex: index
@@ -347,10 +331,10 @@ Page({
 	  *获取全部广告模块
 	*/
 	getAdvertsModule() {
-		var that = this;
-		var token = '';
-		var contentType = '';
-		var data = { showPage: 'HOMEPAGE' }
+		let that = this;
+		let token = '';
+		let contentType = '';
+		let data = { showPage: 'HOMEPAGE' }
 		try {
 			token = my.getStorageSync({ key: constants.StorageConstants.tokenKey }).data ? my.getStorageSync({ key: constants.StorageConstants.tokenKey }).data : '';
 		} catch (e) { }
@@ -367,7 +351,11 @@ Page({
 				success: function(res) {
 					let resRet = res.data.ret;
           let resData= res.data.data;
-					if (resRet.code == '0' && resData) {
+          
+          resData = that.setResult();
+          console.log(resData)
+
+					if ( resRet.code == '0' && resData && resData.length > 0 ) {
 						let newResult = [];
 						for ( var i = 0; i < resData.length; i++ ) {
 							resData[i].items = JSON.parse(resData[i].items);
@@ -390,17 +378,6 @@ Page({
                   console.log('全部广告模板请求成功，开始调用 getWaterFallGoodsList(0, 0)')
                   that.getWaterFallGoodsList(0, 0)
                 }
-
-                // 如果是滚动商品 有倒计时的情况
-                if ( resData[i].moduleType == 'GOODSSCROLL' && resData[i].items[0].timerType == 'DAY_TIMER' ) {
-									that.advertisement && that.data.isCutTimer ? that.advertisement.cutTimeStart() : '';
-                  that.setData({
-                    isCutTimer: true,
-                  })
-									console.log(that.data.isCutTimer)
-                  // 开始倒计时
-                //  that.cutTimeStart()
-                }
 								newResult.push(resData[i]);
 							}
 						}
@@ -414,22 +391,32 @@ Page({
 							advertsArr: newResult,
 							secondKillActivityId: that.data.secondKillActivityId
 						})
+
             console.log('瀑布流导航数据', that.data.waterFallTitList)
             console.log('全部广告模板请求成功，数据---', that.data.advertsArr)
+
+            that.checkAllComponent('start')
+
             var timeout = setTimeout(function() {
               that.getWaterFallSeat();
 							that.getTopContentHeight();
               clearTimeout(timeout)
             }, 800)
+
 						reslove({
 							'type': true,
 							'result': resData
 						});
 					}
 					else {
+            reject({
+              'type': false,
+              'result': err
+            });
 					}
 				},
 				fail: function(err) {
+          that.checkAllComponent('start')         // ----------------------------- 测试用，上线记得删除 -----------
 					reject({
 						'type': false,
 						'result': err
@@ -521,7 +508,9 @@ Page({
 				success: (res) => {
 				},
 			});
+      console.log(that.data.wheelPlantingArr)
 		}, function(err) {
+      console.log(that.data.wheelPlantingArr)
 		}, 'GET')
   },
 
@@ -542,11 +531,10 @@ Page({
 		my.removeStorageSync({
 			key: 'isHotStart',
 		});
-		var that = this;
-		var urlPre = '/m/a';
-		var url = urlPre + constants.InterfaceUrl.HOME_POP;
-		var token = '';
-		var contentType = '';
+		let that = this;
+		let url = '/m/a' + constants.InterfaceUrl.HOME_POP;
+		let token = '';
+		let contentType = '';
 		try {
 			token = my.getStorageSync({ key: constants.StorageConstants.tokenKey }).data ? my.getStorageSync({ key: constants.StorageConstants.tokenKey }).data : '';
 		} catch (e) { }
@@ -560,68 +548,56 @@ Page({
 				"client-channel": "alipay-miniprogram"
 			},
 			success: function(res) {
-				var resData = res.data;
-				var result = resData.data;
-				if (resData.ret.code == '0') {
-					// 如果为收藏有礼的弹窗
-					var canUseCollected = my.canIUse('isCollected');
-					if (!canUseCollected) {
+				let resData = res.data;
+				let result = resData.data;
+				if ( resData.ret.code == '0' ) {
+					let canUseCollected = my.canIUse('isCollected');
+					if ( !canUseCollected ) {
 						my.showToast({
 							content: '您的客户端版本过低，请升级你的客户端',
 							success: (res) => {
 								if (result) {
-									that.setData({
-										popImgData: result
-									})
-									that.judgePop();
+                  that.setPopImgData();
 								}
 							},
 						});
 						return;
-					}
-
-					if (resData.data.appLink == 2) {
+					} else if ( resData.data.appLink == 2 ) {   // 如果为收藏有礼的弹窗
 						my.isCollected({
 							success: (res) => {
 								// console.log('查询收藏成功');
 								if (res.isCollected) {
 									// console.log('收藏了',res.isCollected);
 									return;
-								} else {
+								} else if (result) {
 									// console.log('没有收藏',res.isCollected);
-									if (result) {
-										that.setData({
-											popImgData: result
-										})
-										that.judgePop();
-									}
+                  that.setPopImgData();
 								}
 							},
 							fail: (error) => {
 								// console.log('查询收藏失败');
 								if (result) {
-									that.setData({
-										popImgData: result
-									})
-									that.judgePop();
+                  that.setPopImgData();
 								}
 							}
 						});
-					} else {
-						if (result) {
-							that.setData({
-								popImgData: result
-							})
-							that.judgePop();
-						}
+					} else if (result) {
+              that.setPopImgData();
 					}
 				}
 			},
-
 			fail: function(err) {
 			}
 		})
 	},
+
+  // 设置广告数据并判断广告类型
+  setPopImgData(result) {
+    this.setData({
+      popImgData: result
+    })
+    this.judgePop();
+  },
 
     /**
    * 获取所有瀑布流的 banner，只在第一栏瀑布流显示，排序由高到底，优先显示排序高的，每10个瀑布流商品展示一张 banner;
@@ -632,9 +608,7 @@ Page({
       groupName: '支付宝小程序_首页轮播图'
     }, res => {
       let result = res.data.data ? res.data.data : [];
-      for (let i = 0; i < result.length; i++) {
-        result[i].type = 'advert'
-      }
+      result.forEach(value => { value.type = 'advert' })
       that.setData({
         allMaterialList: Object.assign(that.data.allMaterialList, result)
       })
@@ -643,74 +617,47 @@ Page({
   },
 
 
-
-
   /**
-	  *页面跳转 + 友盟统计上传
+	  *页面跳转类型判断 + 友盟统计上传  type = banner 轮播 type = oneFour 1+4模块 type = oneTwo 1+2模块
 	*/ 
-	goToPage(e) {
-		let that = this;
+	checkJumpType(e) {
     console.log(e)
-		let chInfo = constants.UrlConstants.chInfo;
-		let { linkType, title, type, index, fatherIndex, url } = e.currentTarget.dataset
-		// linkType为2代表跳收藏有礼
-		if (linkType == '2') {
+		let { linkType, title, type, url } = e.currentTarget.dataset
+		
+		if ( linkType == '2' ) {                      // linkType为2代表跳收藏有礼
 			my.uma.trackEvent('homepage_popup_click')
 			my.navigateToMiniProgram({
-				appId: '2018122562686742',//收藏有礼小程序的appid，固定值请勿修改
-				path: url,//收藏有礼跳转地址和参数
+				appId: '2018122562686742',                //收藏有礼小程序的 appid，固定值请勿修改
+				path: url,                                //收藏有礼跳转地址和参数
 				success: (res) => {},
 				fail: (error) => {}
 			});
-		}
-		else {
-			// 友盟+统计--首页浏览
-			// type = banner banner轮播 type = oneFour 1+4模块 type = oneTwo 1+2模块
-			if (type == 'banner') {
-        console.log(e)
-				my.uma.trackEvent('homepage_banner_click', { title: title });
-			}
-			if (type == 'oneFour') {
-				my.uma.trackEvent('homepage_oneFour_click', { index: index });
-			}
-			if (type == 'oneTwo') {
-				my.uma.trackEvent('homepage_oneTwo_click', { index: index });
-			}
-			if (type == 'popup') {
-				my.uma.trackEvent('homepage_popup_click')
-			}
+		}	else if( type == 'banner' ) {
+      	my.uma.trackEvent('homepage_banner_click', { title: title });
+        this.goToPage(e);
+    }
+	},
 
-			// 如果是当家爆款、新品上架、原产好物的统计
-			if(type == 'goodsCount') {
-				let data = {
-					channel_source: 'mini_alipay', supplierName: that.data.advertsArr[fatherIndex].groupGoodsVoList[index].nickName, supplierId: that.data.advertsArr[fatherIndex].groupGoodsVoList[index].supplierId, goodsName: that.data.advertsArr[fatherIndex].groupGoodsVoList[index].goodsName, goodsSn: that.data.advertsArr[fatherIndex].groupGoodsVoList[index].goodsSn, goodsCategoryId: that.data.advertsArr[fatherIndex].groupGoodsVoList[index].goodsCategoryId
-				}
-				// homepage_ddjHotSale , homepage_ddjBestGoods, homepage_ddjNewGoods
-				if (title.indexOf('爆款') > -1) {
-					// that.umaTrackEvent(type, 'homepage_ddjHotSale', data);
-          my.uma.trackEvent('homepage_ddjHotSale', data);
-				}
-				else if(title.indexOf('新品') > -1) {
-					// that.umaTrackEvent(type, 'homepage_ddjNewGoods', data);
-          my.uma.trackEvent('homepage_ddjNewGoods', data);
-				}
-				else if(title.indexOf('原产') > -1) {
-					// that.umaTrackEvent(type, 'homepage_ddjBestGoods', data);
-          my.uma.trackEvent('homepage_ddjBestGoods', data);
-				}
-			}
-
-			if (url.substring(0,4).indexOf('http') > -1) {
+  // 页面跳转
+  goToPage(e) {
+    let chInfo = constants.UrlConstants.chInfo;
+		let { url } = e.currentTarget.dataset;
+	  if ( url.substring(0,4).indexOf('http') > -1 ) {
 				my.call('startApp', { appId: '20000067', param: { url: url, chInfo: chInfo } })
-			}
-			else {
+		}	else {
 				my.navigateTo({
 					url: url
 				});
-			}
 		}
-		that.closePop();
-	},
+		this.closePop();
+  },
+
+  // 友盟+统计--首页浏览 （如果从推文或者其他方进来并且带广告参数时）
+  reportPageOption(options) {    
+		let globalQuery = Object.assign({}, this.data.app.globalData.query);
+    let pageOptions = Object.keys(globalQuery).length > 0 ? Object.assign(options, globalQuery) : options;
+		my.uma.trackEvent('homepage_show', pageOptions);
+  },
 
   /**
 	  *阻止默认事件
@@ -723,45 +670,36 @@ Page({
 	  * 广告弹窗显示逻辑
 	*/
 	judgePop: function() {
-		var popImgData = this.data.popImgData;
-		var popId = popImgData.popId;                         // 广告 id ;
-		var popType = popImgData.popAdvMemoryOpt;             // 广告类型 ;
-		// var popDate = popImgData.popAdvCookieRemainSecond;   // 广告结束时间差 ;
-		var popModify = popImgData.modifyDate;               // 广告修改时间 ;
+    let that = this;
+		let popImgData = this.data.popImgData;
+		let popId = popImgData.popId;                         // 广告 id ;
+		let popType = popImgData.popAdvMemoryOpt;             // 广告类型 ;
+		let popModify = popImgData.modifyDate;               // 广告修改时间 ;
 
-		var storagePopImgData = my.getStorageSync({	key: 'popImgData'}).data;	
+		let storagePopImgData = my.getStorageSync({	key: 'popImgData'}).data;	
 		my.uma.trackEvent('homepage_popup_visibility');     // 友盟+统计--弹窗曝光
 
-		var myDate = new Date()
-		var month = myDate.getMonth() + 1;              //获取当前月份(0-11,0代表1月)
-		var day = myDate.getDate();                     //获取当前日(1-31)
+		let myDate = new Date()
+		let month = myDate.getMonth() + 1;              //获取当前月份(0-11,0代表1月)
+		let day = myDate.getDate();                     //获取当前日(1-31)
 		popImgData.popMonthDay = month + '' + day;
 
-		if (!storagePopImgData) {
-			this.setData({
-				showToast: true
-			});
+		if ( !storagePopImgData ) {
       that.savePopImgData(popImgData);
 		} else {
-			var localPopId = storagePopImgData.popId;                                     //本地缓存 广告id
-			var localPopType = storagePopImgData.popAdvMemoryOpt;                         //本地缓存 广告类型
-			var localPopModify = storagePopImgData.modifyDate;                            //本地缓存 广告修改时间 ;
-			if ((popId != localPopId || popType != localPopType || popModify != localPopModify)) {
-				this.setData({
-					showToast: true
-				});
-        thata.savePopImgData(popImgData);
-			} else if (localPopType == 'EVERY_OPEN_ONCE_SHOW') {
+			let localPopId = storagePopImgData.popId;                                     //本地缓存 广告id
+			let localPopType = storagePopImgData.popAdvMemoryOpt;                         //本地缓存 广告类型
+			let localPopModify = storagePopImgData.modifyDate;                            //本地缓存 广告修改时间 ;
+			if ( (popId != localPopId || popType != localPopType || popModify != localPopModify) ) {
+        that.savePopImgData(popImgData);
+			} else if ( localPopType == 'EVERY_OPEN_ONCE_SHOW' ) {
 				this.setData({
 					showToast: true
 				})
-			} else if (localPopType == 'ONCE_DAY_SHOW') {
-				var localMonthDay = storagePopImgData.popMonthDay;
-				if (popImgData.popMonthDay != localMonthDay) {
-					this.setData({
-						showToast: true
-					});
-          thata.savePopImgData(popImgData);
+			} else if ( localPopType == 'ONCE_DAY_SHOW' ) {
+				let localMonthDay = storagePopImgData.popMonthDay;
+				if ( popImgData.popMonthDay != localMonthDay ) {
+          that.savePopImgData(popImgData);
 				}
 			}
 		}
@@ -769,7 +707,10 @@ Page({
 
   // 缓存广告数据
   savePopImgData(data) {
-    my.setStorageSync({
+    this.setData({
+      showToast: true
+    });
+    my.setStorage({
       key: 'popImgData', 
       data: data,
       success: (res) => {
@@ -812,37 +753,90 @@ Page({
 		 })
 	},
   
-
 	/**
-	  * 存储新版搜索组件实例
+	  * 判断组件实例
 	*/
 	saveRef(ref) {
-
 		switch(ref.props.__tag) {
 			case "search-component":
 				this.searchComponent = ref
 			break;
-			case "advertisement":
-				this.advertisement = ref
+      case "bannertype2-ads":
+        this.saveComponent('bannertype2-ads', ref);
+			break;
+      case "doublegoods-ads":
+      this.saveComponent('doublegoods-ads', ref);
+			break;
+      case "goodsgroup-ads":
+        this.saveComponent('goodsgroup-ads', ref);
+			break;
+      case "goodsscroll-ads":
+        this.saveComponent('goodsscroll-ads', ref);
+			break;
+      case "goodswatefall-ads":
+      this.saveComponent('goodswatefall-ads', ref);
+			break;
+      case "navigation-ads":
+      this.saveComponent('navigation-ads', ref);
+			break;
+      case "navigationmini-ads":
+        this.saveComponent('navigationmini-ads', ref);
+			break;
+      case "onefouradvert-ads":
+        this.saveComponent('onefouradvert-ads', ref);
+			break;
+      case "seckill-ads":
+        this.saveComponent('seckill-ads', ref);
+			break;
+      case "shopwindow-ads":
+        this.saveComponent('shopwindow-ads', ref);
+			break;
+      case "singlegoods-ads":
+        this.saveComponent('singlegoods-ads', ref);
+			break;
+      case "twofouradvert-ads":
+        this.saveComponent('twofouradvert-ads', ref);
 			break;
 			default:
 			break;
 		}
+
+    console.log(ref)
+    console.log(this.allComponent)
   },
-	
+
+  // 组件实例
+  saveComponent(refName, ref) {
+    this.allComponent.push({id: ref.$id, componentName: refName, component: ref})
+  },
+
+  // 查询所有组件内是否包含‘goodsscroll-ads’ 模板且是需要倒计时展示；
+  checkAllComponent(isStart) {
+    this.allComponent.forEach(value => {
+      if( value && value.componentName == 'goodsscroll-ads' && value.component.props.timerType == "DAY_TIMER" ) {
+        isStart ? value.component.cutTimeStart() :  clearTimeout(value.component.data.cutTime_timer);
+        console.log(value.component)
+      }
+    })
+  },
+  
 	/**
 	  * 新版搜索组件开关
 	*/
 	showSearch: function(noGetHistory) {
-		// this.searchComponent.getHistory();
-    console.log('点击搜索')
 		noGetHistory == 'noGetHistory' ? '' : 	this.searchComponent.getHistory();
 		this.setData({
 			isShowSearch: !this.data.isShowSearch,
 			isFocus: !this.data.isFocus,
 		})
-		// this.searchComponent.setIsFocus();
 	},
+
+
+  // --------------------------------------------------  测试用，上线记得删除  ----------------------------------
+  setResult() {
+    let result = [{ "moduleType": "NAVIGATION", "moduleName": "iocn", "items": "[{\"imageUrl\":\"user/admin/20200414/158685747964685318.png\",\"linkType\":\"CUSTOM_LINK\",\"link\":\"https://shop.fx-sf.com/hml/subject_page/399.html\"},{\"imageUrl\":\"user/admin/20200414/158685749481434894.png\",\"linkType\":\"CUSTOM_LINK\",\"link\":\"https://shop.fx-sf.com/hml/subject_page/435.html\"},{\"imageUrl\":\"user/admin/20200414/158685749814141826.png\",\"linkType\":\"CUSTOM_LINK\",\"link\":\"https://shop.fx-sf.com/pages/activities/thematicActivities/thematicActivities?id=201\"},{\"imageUrl\":\"user/admin/20200414/158685750157200170.png\",\"linkType\":\"CUSTOM_LINK\",\"link\":\"https://shop.fx-sf.com/h/personal/signIn\"},{\"imageUrl\":\"user/admin/20200414/158685769324227654.png\",\"linkType\":\"CUSTOM_LINK\",\"link\":\"https://shop.fx-sf.com/myInfo/toMemberSuperDay\"}]", "restrictions": null, "goodsId": null, "spacing": 0, "topIntervalColor": "FFFFFF", "backgroundImg": null, "backgroundColor": "FFFFFF", "groupGoodsVoList": null, "groupBuyGoodsVoList": null, "secondKillModuleVO": null, "goodsGroupId": null, "goodsGroupName": null }, { "moduleType": "TWOFOURADVERT", "moduleName": "2+4", "items": "[{\"imageUrl\":\"user/admin/20200414/158685986675703820.png\",\"linkType\":\"CUSTOM_LINK\",\"link\":\"https://shop.fx-sf.com/hml/subject_page/413.html\"},{\"imageUrl\":\"user/admin/20200414/158685987039223863.png\",\"linkType\":\"CUSTOM_LINK\",\"link\":\" https://shop.fx-sf.com/hml/subject_page/133.html\"},{\"imageUrl\":\"user/admin/20200414/158686012752879523.png\",\"linkType\":\"CUSTOM_LINK\",\"link\":\"https://shop.fx-sf.com/pages/shopping/goodsDetail/goodsDetail?goodsSn=YW8F22BB490A97\"},{\"imageUrl\":\"user/admin/20200414/158686013216396690.png\",\"linkType\":\"CUSTOM_LINK\",\"link\":\"https://shop.fx-sf.com/community/pages/index/index\"},{\"imageUrl\":\"user/admin/20200414/158686013575942872.png\",\"linkType\":\"CUSTOM_LINK\",\"link\":\"https://shop.fx-sf.com/pages/activities/thematicActivities/thematicActivities?id=201\"},{\"imageUrl\":\"user/admin/20200414/158686013930746456.png\",\"linkType\":\"CUSTOM_LINK\",\"link\":\"https://shop.fx-sf.com/pages/activities/thematicActivities/thematicActivities?id=241\"}]", "restrictions": null, "goodsId": null, "spacing": 1, "topIntervalColor": "FFFFFF", "backgroundImg": null, "backgroundColor": "FFFFFF", "groupGoodsVoList": null, "groupBuyGoodsVoList": null, "secondKillModuleVO": null, "goodsGroupId": null, "goodsGroupName": null }, { "moduleType": "BANNER_TYPE_2", "moduleName": "banner", "items": "[{\"imageUrl\":\"user/admin/20200416/158700282694362347.gif\",\"linkType\":\"H5_LINK\",\"link\":\"https://datayi.cn/w/nP2EEjRm\"},{\"imageUrl\":\"user/admin/20200416/158700289604758151.jpg\",\"linkType\":\"H5_LINK\",\"link\":\"https://m.sfddj.com/shop/goods/goodsGroup?groupName=APP首页-肉食天地\"}]", "restrictions": null, "goodsId": null, "spacing": 0, "topIntervalColor": "FFFFFF", "backgroundImg": null, "backgroundColor": "FFFFFF", "groupGoodsVoList": null, "groupBuyGoodsVoList": null, "secondKillModuleVO": null, "goodsGroupId": null, "goodsGroupName": null }, { "moduleType": "GOODS_WATERFALL", "moduleName": "商品瀑布流", "items": "[{\"moduleTitle\":\"国内水果\",\"moduleSubTitle\":\"尝鲜季\",\"goodsType\":\"GOODS_CATEGORY\",\"goodsGroupName\":null,\"goodsCategoryArray\":[\"gnsg\"]},{\"moduleTitle\":\"进口水果\",\"moduleSubTitle\":\"吃点好的\",\"goodsType\":\"GOODS_CATEGORY\",\"goodsGroupName\":null,\"goodsCategoryArray\":[\"jksg\"]},{\"moduleTitle\":\"海鲜水产\",\"moduleSubTitle\":\"深海先锋\",\"goodsType\":\"GOODS_CATEGORY\",\"goodsGroupName\":null,\"goodsCategoryArray\":[\"hxsc\"]},{\"moduleTitle\":\"肉蛋家禽\",\"moduleSubTitle\":\"秋冬囤肉\",\"goodsType\":\"GOODS_CATEGORY\",\"goodsGroupName\":null,\"goodsCategoryArray\":[\"rdjq\"]},{\"moduleTitle\":\"蔬菜食材\",\"moduleSubTitle\":\"新鲜健康\",\"goodsType\":\"GOODS_CATEGORY\",\"goodsGroupName\":null,\"goodsCategoryArray\":[\"scsc\"]}]", "restrictions": null, "goodsId": null, "spacing": 0, "topIntervalColor": "FBF9F9", "backgroundImg": null, "backgroundColor": "FFFFFF", "groupGoodsVoList": null, "groupBuyGoodsVoList": null, "secondKillModuleVO": null, "goodsGroupId": null, "goodsGroupName": null }, { "moduleType": "GOODSSCROLL", "moduleName": "商品滚动", "items": "[{\"moduleTitle\":\"热门活动\",\"timerType\":\"DAY_TIMER\",\"goodsGroupName\":\"热门活动\"}]", "restrictions": null, "goodsId": null, "spacing": 0, "topIntervalColor": "FFFFFF", "backgroundImg": null, "backgroundColor": "FFFFFF", "groupGoodsVoList": [], "groupBuyGoodsVoList": null, "secondKillModuleVO": null, "goodsGroupId": 14, "goodsGroupName": "热门活动" }, { "moduleType": "HEADLINE", "moduleName": "今日头条", "items": "[{\"id\":11144,\"title\":\"【图文】鹿晗的前女友们，看过来！这里有你们喜欢的小狗肉\",\"type\":0,\"goodsSn\":\"YWC07EB76C002D\"},{\"id\":11151,\"title\":\"爱在桃李芬芳时线下活动圆满结束啦！\",\"type\":0,\"goodsSn\":null},{\"id\":11152,\"title\":\"支付宝小程序头条配置\",\"type\":0,\"goodsSn\":\"YW3AEF4AFE05D4\"}]", "restrictions": null, "goodsId": null, "spacing": 0, "topIntervalColor": "FFFFFF", "backgroundImg": null, "backgroundColor": "74F5F9", "groupGoodsVoList": null, "groupBuyGoodsVoList": null, "secondKillModuleVO": null, "goodsGroupId": null, "goodsGroupName": null }, { "moduleType": "GOODSGROUP", "moduleName": "1+N个商品", "items": "[{\"imageUrl\":\"user/admin/20200416/158700282694362347.gif\",\"linkType\":\"H5_LINK\",\"link\":\"https://datayi.cn/w/nP2EEjRm\",\"goodsGroupName\":\"活动商品\"}]", "restrictions": null, "goodsId": null, "spacing": 0, "topIntervalColor": "FFFFFF", "backgroundImg": null, "backgroundColor": "FFFFFF", "groupGoodsVoList": [], "groupBuyGoodsVoList": null, "secondKillModuleVO": null, "goodsGroupId": 12, "goodsGroupName": "活动商品" }, { "moduleType": "GOODSSCROLL", "moduleName": "商品滚动", "items": "[{\"moduleTitle\":\"本周热销\",\"timerType\":\"NO_TIMER\",\"goodsGroupName\":\"本周热销\"}]", "restrictions": null, "goodsId": null, "spacing": 0, "topIntervalColor": "FFFFFF", "backgroundImg": null, "backgroundColor": "FFFFFF", "groupGoodsVoList": [], "groupBuyGoodsVoList": null, "secondKillModuleVO": null, "goodsGroupId": 17, "goodsGroupName": "本周热销" }, { "moduleType": "NAVIGATION_MIN", "moduleName": "1行N个（小）", "items": "[{\"imageUrl\":\"user/admin/20200416/158702135203723807.png\",\"linkType\":\"H5_LINK\",\"link\":\"/pages/home/getCoupon/getCoupon\"},{\"imageUrl\":\"user/admin/20200416/158702236045360476.jpeg\",\"linkType\":\"CUSTOM_LINK\",\"link\":\"https://shop.fx-sf.com/GroupBuying/showList\"},{\"imageUrl\":\"user/admin/20200416/158702254912448942.png\",\"linkType\":\"CUSTOM_LINK\",\"link\":\"https://shop.fx-sf.com/hml/subject_page/206.html\"},{\"imageUrl\":\"user/admin/20200416/158702256537006426.png\",\"linkType\":\"CUSTOM_LINK\",\"link\":\"https://shop.fx-sf.com/static_v4/activity/redPacket/redPacket.html?sign=DDJ0000000010013\"},{\"imageUrl\":\"user/admin/20200416/158702237170291917.png\",\"linkType\":\"CUSTOM_LINK\",\"link\":\"/pages/subPackages/activities/thematicActivites/thematicActivites?id=234\"}]", "restrictions": null, "goodsId": null, "spacing": 0, "topIntervalColor": "FFFFFF", "backgroundImg": null, "backgroundColor": "FFFFFF", "groupGoodsVoList": null, "groupBuyGoodsVoList": null, "secondKillModuleVO": null, "goodsGroupId": null, "goodsGroupName": null }, { "moduleType": "SHOPWINDOW", "moduleName": "1+2", "items": "[{\"imageUrl\":\"user/admin/20200416/158702222323184248.png\",\"linkType\":\"CUSTOM_LINK\",\"link\":\"https://blog.csdn.net/qq_36836336/article/details/84318863\"},{\"imageUrl\":\"user/admin/20200416/158702315898169127.png\",\"linkType\":\"CUSTOM_LINK\",\"link\":\"https://shop.fx-sf.com/shop/goods/view/YW274810048221\"},{\"imageUrl\":\"user/admin/20200416/158702309573102587.png\",\"linkType\":\"CUSTOM_LINK\",\"link\":\"https://shop.fx-sf.com/shop/goods/view/YW278DBCC2278D\"}]", "restrictions": null, "goodsId": null, "spacing": 0, "topIntervalColor": "FFFFFF", "backgroundImg": null, "backgroundColor": "FFFFFF", "groupGoodsVoList": null, "groupBuyGoodsVoList": null, "secondKillModuleVO": null, "goodsGroupId": null, "goodsGroupName": null }, { "moduleType": "DOUBLEGOODS", "moduleName": "一行2个", "items": "[{\"imageUrl\":\"user/admin/20200416/158702185711009428.jpg\",\"linkType\":\"CUSTOM_LINK\",\"link\":\"https://m.sfddj.com/shop/goods/goodsGroup?groupName=APP首页-进口水果\"},{\"imageUrl\":\"user/admin/20200416/158702185086848344.jpg\",\"linkType\":\"CUSTOM_LINK\",\"link\":\"https://m.sfddj.com/shop/goods/goodsGroup?groupName=APP首页-菜蛋食材\"}]", "restrictions": null, "goodsId": null, "spacing": 0, "topIntervalColor": "FFFFFF", "backgroundImg": null, "backgroundColor": "FFFFFF", "groupGoodsVoList": null, "groupBuyGoodsVoList": null, "secondKillModuleVO": null, "goodsGroupId": null, "goodsGroupName": null }, { "moduleType": "BANNER_TYPE_1", "moduleName": "商品轮播", "items": "[{\"moduleTitle\":\"本月新品\",\"goodsGroupName\":\"本月新品\"}]", "restrictions": null, "goodsId": null, "spacing": 0, "topIntervalColor": "FFFFFF", "backgroundImg": null, "backgroundColor": "FFFFFF", "groupGoodsVoList": [], "groupBuyGoodsVoList": null, "secondKillModuleVO": null, "goodsGroupId": 18, "goodsGroupName": "本月新品" }, { "moduleType": "SINGLEGOODS", "moduleName": "一行一个", "items": "[{\"imageUrl\":\"user/admin/20200416/158702185086848344.jpg\",\"linkType\":\"H5_LINK\",\"link\":\"https://shop.fx-sf.com/shop/goods/view/YW066C7058880D\"}]", "restrictions": null, "goodsId": null, "spacing": 0, "topIntervalColor": "FFFFFF", "backgroundImg": null, "backgroundColor": "FFFFFF", "groupGoodsVoList": null, "groupBuyGoodsVoList": null, "secondKillModuleVO": null, "goodsGroupId": null, "goodsGroupName": null }, { "moduleType": "TUANGOU", "moduleName": "拼团", "items": "[{\"moduleTitle\":\"热门拼团\",\"viewMoreUrl\":\"/GroupBuying/showList\",\"tuangouGoodsUrl\":\"8\"}]", "restrictions": null, "goodsId": null, "spacing": 0, "topIntervalColor": "FFFFFF", "backgroundImg": null, "backgroundColor": "FFFFFF", "groupGoodsVoList": null, "groupBuyGoodsVoList": [{ "goodsId": 42779, "goodsSn": "YWB8D0BA0BC7BA", "goodsName": "微信小程序拼团优惠券测试", "salePrice": 9.90000, "salesCount": 20, "goodsLabels": "特价", "htmlPath": "shop/goods/YWB8D0BA0BC7BA.html", "orderList": 100000, "goodsTitle": "额外返现", "goodsDefaultImage": "goods/20190426/155624574734887227.jpg", "tuangouPrices": 5.00000, "productId": 107536, "productName": "2吨", "tuangouCount": 3, "applyUser": 0, "activityId": 1267, "label": "", "labels": [], "firstGueeImagePath": null, "afterSaleGuee": "", "tuangou": true }, { "goodsId": 42940, "goodsSn": "YW76C641AF8C57", "goodsName": "拼团库存回调测试01", "salePrice": 42.00000, "salesCount": 3, "goodsLabels": "限时", "htmlPath": "shop/goods/YW76C641AF8C57.html", "orderList": 100004, "goodsTitle": "额外返现", "goodsDefaultImage": "goods/20190426/155624574734887227.jpg", "tuangouPrices": 7.00000, "productId": 108138, "productName": "苹果", "tuangouCount": 2, "applyUser": 0, "activityId": 1289, "label": "大大的撒大叔大|测试|擦啊啊啊啊", "labels": ["大大的撒大叔大", "测试", "擦啊啊啊啊"], "firstGueeImagePath": "icon_Payoff0.png", "afterSaleGuee": "1,2,3,4", "tuangou": true }, { "goodsId": 42959, "goodsSn": "YWF3FA2361D182", "goodsName": "支付宝小程序物流详情页改版", "salePrice": 1.00000, "salesCount": 1, "goodsLabels": "限时", "htmlPath": "shop/goods/YWF3FA2361D182.html", "orderList": 10001, "goodsTitle": "", "goodsDefaultImage": "goods/20191128/157492035556695150.jpg", "tuangouPrices": 0.10000, "productId": 108307, "productName": "5支", "tuangouCount": 2, "applyUser": 0, "activityId": 1290, "label": "年终大狂欢|年货季|冬季", "labels": ["年终大狂欢", "年货季", "冬季"], "firstGueeImagePath": "icon_Payoff0.png", "afterSaleGuee": "1,3,4", "tuangou": true }, { "goodsId": 42957, "goodsSn": "YW9098600F7EDA", "goodsName": "渠道一达人下单", "salePrice": 1.00000, "salesCount": 2, "goodsLabels": null, "htmlPath": "shop/goods/YW9098600F7EDA.html", "orderList": 10000, "goodsTitle": "", "goodsDefaultImage": "goods/20200309/158372989289816053.jpg", "tuangouPrices": 0.60000, "productId": 108200, "productName": "2", "tuangouCount": 2, "applyUser": 0, "activityId": 1291, "label": "", "labels": [], "firstGueeImagePath": null, "afterSaleGuee": "", "tuangou": true }], "secondKillModuleVO": null, "goodsGroupId": null, "goodsGroupName": null }];
+    return result;
+  },
 
 
 

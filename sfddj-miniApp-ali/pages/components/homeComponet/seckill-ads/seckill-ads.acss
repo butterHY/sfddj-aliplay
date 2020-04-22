@@ -1,0 +1,169 @@
+image {
+  display: block;
+}
+
+.seckill-ads .topSpace {
+  height: 10rpx;
+  width: 100%;
+}
+
+.seckill-ads .otherModeCon {
+  /* margin-bottom: 20rpx; */
+  padding: 0 24rpx 10rpx;
+}
+
+.seckill-ads .marBot_20 {
+  margin-bottom: 20rpx;
+}
+
+.seckill-ads .goodsScrollTit {
+  padding: 14rpx 0 24rpx;
+  justify-content: flex-start;
+  
+}
+
+.seckill-ads .goodsScrollTit_txt {
+  font-weight: 400;
+  font-size: 36rpx;
+  margin-right: 21rpx;
+  line-height: 58rpx;
+  height: 100%;
+  padding: 0 10rpx;
+}
+
+/*弹性布局   */
+/* 做了兼容处理 */
+.seckill-ads .flex_view_row {
+  display: flex;
+  display:-webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  flex-direction: row;
+  box-orient:horizontal;
+  box-direction:normal;
+  -webkit-flex-direction:row;
+}
+
+.seckill-ads .justi_start {
+  justify-content: flex-start;
+}
+
+/* 做了兼容处理 */
+.seckill-ads .justi_around {
+  justify-content: space-around;
+  -webkit-justify-content: space-around;
+  justify-content: space-around;
+  -moz-box-pack: space-around;
+  box-pack: space-around;
+}
+
+/* 倒计时模块样式 */
+
+.seckill-ads .time {
+  justify-content: space-around;
+  width: 200rpx;
+  height: 100%;
+}
+
+.hours {
+  display: inline-block;
+  padding: 20rpx;
+}
+
+.seckill-ads .minutes {
+    display: inline-block;
+    padding: 20rpx;
+}
+
+.seckill-ads .seconds {
+    display: inline-block;
+    padding: 20rpx;
+}
+
+.seckill-ads .title {
+  line-height: 58rpx;
+  height: 100%;
+  padding: 0 10rpx;
+}
+
+.seckill-ads .viewMore {
+  line-height: 58rpx;
+  margin-right: 0;
+}
+
+.seckill-ads .homePop {
+  padding: 60rpx 60rpx;
+  max-width: 400rpx;
+}
+
+.seckill-ads .borRa_5 {
+	border-radius: 5px;
+}
+
+.seckill-ads .cartCount {
+  bottom: 0;
+  left: 50%;
+  width: 50rpx;
+  height: 50rpx;
+  border-radius: 10rpx;
+  background: red;
+  z-index: 9999999999;
+}
+
+.seckill-ads .justi_end {
+  justify-content: flex-end;
+}
+
+.seckill-ads .checkoutMore {
+  justify-content: flex-end;
+  flex: 1;
+  align-items: center;
+}
+
+.seckill-ads .goods-scrollx-view {
+	white-space: nowrap;
+	font-size: 0;
+}
+
+.seckill-ads .goodsViewBox {
+  display: inline-block;
+  padding-right: 20rpx;
+  height: 384rpx;
+}
+
+.seckill-ads .toGoosDetail {
+  position: relative;
+  width: 260rpx;
+}
+
+.seckill-ads .goodsViewBox .goodsShowImg {
+  border-radius: 10rpx;
+  width: 100%;
+}
+
+.seckill-ads .littleIcon {
+  position: absolute;
+  width: 50rpx;
+  height: 50rpx;
+  top: 10rpx;
+  right: 10rpx;
+}
+
+.seckill-ads .activitysPrice {
+  font-size: 32rpx;
+  color: #ff5353;
+  font-weight: 600;
+  text-align: center;
+}
+
+.seckill-ads .marTop_15 {
+  margin-top: 15rpx;
+}
+
+.seckill-ads .salePrice {
+  text-decoration: line-through;
+  text-align: center;
+  font-size: 26rpx;
+  color: #a1a0a0;
+}

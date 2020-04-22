@@ -1,0 +1,80 @@
+image {
+  display: block;
+  width: 100%;
+}
+
+.twoFourModule .topSpace {
+  height: 10rpx;
+  width: 100%;
+}
+
+.twoFourModule .twoFourModuleBox {
+  border-radius: 8rpx;
+  overflow: hidden;
+  padding-top: 10rpx 24rpx 10rpx;
+}
+
+.twoFourModule .twoFourModuleView {
+  border-radius: 16rpx;
+  overflow: hidden;
+  -webkit-box-shadow: 1px 1px 3px #e5e5e5;
+  -moz-shadow: 1px 1px 3px #e5e5e5;
+  box-shadow: 1px 1px 3px #e5e5e5;
+}
+
+.twoFourModule .twoFourAdvertsTop {
+  width: 100%;
+  border-bottom: 1px solid #ececec;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.twoFourModule .flex_view_row {
+  display: flex;
+  display:-webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  flex-direction: row;
+  box-orient:horizontal;
+  box-direction:normal;
+  -webkit-flex-direction:row;
+}
+
+.twoFourModule .twoFourAdvertsLeft {
+  border-right: 1px solid #ececec;
+  box-sizing: border-box;
+}
+
+.twoFourModule .flex_1 {
+  flex: 1;
+}
+
+.twoFourModule .twoFourAdvertsBot {
+  width: 100%;
+  overflow: hidden;
+}
+
+
+
+
+
+
+
+
+
+
+.twoFourModuleView {
+  border-radius: 16rpx;
+  overflow: hidden;
+}
+
+.twoFourModule image {
+  display: block;
+}
+
+.twoFourModuleBox {
+  border-radius: 8rpx;
+  overflow: hidden;
+  padding-top: 10rpx;
+}

@@ -1,0 +1,55 @@
+image {
+  display: block;
+  width: 100%;
+
+}
+
+.shopwindow-ads .topSpace {
+  height: 10rpx;
+  width: 100%;
+}
+
+.shopwindow-ads .otherModeCon {
+  padding: 0 24rpx 10rpx;
+}
+
+.shopwindow-ads .contentView {
+  width: 100%;
+}
+
+.shopwindow-ads .flex_view_row {
+  display: flex;
+  display:-webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  flex-direction: row;
+  box-orient:horizontal;
+  box-direction:normal;
+  -webkit-flex-direction:row;
+}
+
+.shopwindow-ads .contentLeft {
+  width: 50%;
+  margin-right: 5rpx;
+}
+
+.shopwindow-ads .imgView {
+  height: auto; 
+}
+
+.shopwindow-ads .contentRight {
+  display: flex;
+  flex-direction: column;
+  margin-left: 5rpx;
+  flex: 1;
+}
+
+.shopwindow-ads .flex_1 {
+  flex: 1;
+}
+
+.shopwindow-ads .contentRightBot {
+  margin-bottom: 10rpx;
+}
+

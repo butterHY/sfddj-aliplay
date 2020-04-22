@@ -1,0 +1,14 @@
+    <!-- 1行1个 -->
+    <!-- a:if='{{item.moduleType == "SINGLEGOODS"}}' -->
+    <view class="singlegoods">
+      <!-- 上间隔 -->
+      <view a:if="{{item.spacing == 1}}" class='topSpace' style='background-color: {{item.topIntervalColor ? "#" + item.topIntervalColor : "#ffffff"}};'></view>
+      <!-- 内容  -->
+      <view class='otherModeCon {{item.spacing == 1 ? "marBot_20" : ""}}' style='background-color: {{item.backgroundColor ? "#" + item.backgroundColor : "#ffffff"}}'>
+        <view class="width_100">
+          <view data-url="{{item.items[0].link}}" catchTap='goToPage'>
+            <image src="{{baseImageUrl}}{{item.items[0].imageUrl}}" mode="widthFix" class="width_100" />
+          </view>
+        </view>
+      </view>
+    </view>

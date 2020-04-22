@@ -1,0 +1,26 @@
+.bannertype .topSpace {
+  height: 10rpx;
+  width: 100%;
+}
+
+.bannertype .bannerCon {
+  padding: 0 0 10rpx 30rpx;
+}
+
+.bannertype .navigatorView {
+  height: auto;
+}
+
+.bannertype .bannerNav {
+  height: 260rpx;
+  padding: 0 10rpx;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.bannertype .imgView {
+  display: block;
+  width: 100%;
+  border-radius: 15rpx;
+}

@@ -1,0 +1,124 @@
+
+.goodsWaterfall {
+  width: 100%;
+  background: #fcfcfc;
+}
+
+.goodsWaterfall image {
+  display: block;
+}
+
+.goodsWaterfall .topSpace {
+  height: 10rpx;
+  width: 100%;
+}
+
+.goodsWaterfall .waterFallScroll {
+  width: 100%;
+  white-space: nowrap;
+  overflow: auto;
+  font-size: 0;
+  z-index: 1000;
+  white-space: nowrap;
+  display: inline-block;
+}
+
+.goodsWaterfall .opaci_1 {
+  opacity: 1;
+}
+
+.goodsWaterfall .opaci_0 {
+  opacity: 0;
+}
+
+.goodsWaterfall .waterFallTitItem {
+  display: inline-block;
+  padding: 30rpx 0 24rpx 0;
+  overflow: auto;
+}
+
+.goodsWaterfall .titleView {
+  display: flex;
+  display:-webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  flex-direction: column;
+  -webkit-box-orient:vertical;
+  -webkit-box-direction:normal;
+  -moz-box-orient:vertical;
+  -moz-box-direction:normal;
+  -webkit-flex-direction:column;
+  align-items: center;
+}
+
+.goodsWaterfall .waterFallTit {
+  padding: 0 24rpx;
+  color: #666;
+  line-height: 36rpx;
+}
+
+.goodsWaterfall .waterFallSubTit {
+  color: #999;
+  padding: 0 10rpx;
+  border-radius: 45rpx;
+  position: relative;
+  line-height: 32rpx;
+  margin-top: 8rpx;
+}
+
+.goodsWaterfall .waterFallSubTit .subTitAng {
+  display: none;
+  position: absolute;
+}
+
+/* waterFallActiveItem */
+
+.goodsWaterfall .waterFallActiveItem .waterFallTit {
+  color: #00ac57;
+  font-weight: 500;
+}
+
+.goodsWaterfall .waterFallActiveItem .waterFallSubTit {
+  color: #fff;
+  background: -o-linear-gradient(320deg, #00bf51, #00a958);
+  background: linear-gradient(130deg, #00bf51, #00a958);
+}
+
+.goodsWaterfall .waterFallActiveItem .waterFallSubTit .subTitAng {
+  display: block;
+  width: 0;
+  height: 0;
+  border-width: 10rpx;
+  border-style: solid;
+  border-color: #00a958 transparent transparent transparent;
+  bottom: -18rpx;
+}
+
+.goodsWaterfall .flex_view_row {
+  display: flex;
+  display:-webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  flex-direction: row;
+  box-orient:horizontal;
+  box-direction:normal;
+  -webkit-flex-direction:row;
+}
+
+.goodsWaterfall .justi_cen {
+  justify-content: center;
+}
+
+.goodsWaterfall .borderRight_ea {
+    border-right: 1px solid #eaeaea;
+}
+
+.goodsWaterfall .mainTitle {
+  font-size: 32rpx;
+}
+
+.goodsWaterfall .subtitle {
+  font-size: 24rpx;
+}

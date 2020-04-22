@@ -1,0 +1,29 @@
+    <!--广告组3个图  1+2  已全部更新 -->
+    <view class="shopwindow-ads">
+      <!-- 上间隔 -->
+      <view a:if="{{item.spacing == 1}}" class='topSpace' style='background-color: {{item.topIntervalColor ? "#" + item.topIntervalColor : "#ffffff"}};'></view>
+      <!-- 内容 -->
+      <view class='otherModeCon {{item.spacing == 1 ? "marBot_20" : ""}}' style='background-color: {{item.backgroundColor ? "#" + item.backgroundColor : "#ffffff"}}'>
+        <view class="contentView flex_view_row">
+          <!-- 左边 -->
+          <view class="contentLeft">
+            <view class='imgView' catchTap='goToPage' data-type="oneTwo" data-index="0" data-url="{{item.items[0].link}}">
+              <image src="{{baseImageUrl}}{{item.items[0].imageUrl}}" mode="widthFix" />
+            </view>
+          </view>
+          <!-- 右边 -->
+          <view class="contentRight">
+            <view class="flex_1 contentRightBot">
+              <view class="imgView" data-url="{{item.items[1].link}}" catchTap='goToPage' data-type="oneTwo" data-index="1">
+                <image src="{{baseImageUrl}}{{item.items[1].imageUrl}}" mode="widthFix" />
+              </view>
+            </view>
+            <view class="flex_1">
+              <view class="imgView" data-url="{{item.items[2].link}}" catchTap='goToPage' data-type="oneTwo" data-index="2">
+                <image src="{{baseImageUrl}}{{item.items[2].imageUrl}}" mode="widthFix"/>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>

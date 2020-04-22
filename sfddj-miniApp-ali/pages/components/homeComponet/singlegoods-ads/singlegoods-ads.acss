@@ -1,0 +1,16 @@
+image {
+  display: block;
+}
+
+.singlegoods .topSpace {
+  height: 10rpx;
+  width: 100%;
+}
+
+.singlegoods .otherModeCon {
+  padding: 0 24rpx 10rpx;
+}
+
+.singlegoods .width_100 {
+  width: 100%;
+}

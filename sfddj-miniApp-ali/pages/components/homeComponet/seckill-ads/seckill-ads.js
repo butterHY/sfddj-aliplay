@@ -1,84 +1,20 @@
-let sendRequest = require('../../../../utils/sendRequest');
 let constants = require('../../../../utils/constants');
-let stringUtils = require('../../../../utils/stringUtils');
-let utils = require('../../../../utils/util');
-
-import api from '../../../../api/api';
-import http from '../../../../api/http';
 
 Component({
   mixins: [],
   data: {
     baseLocImgUrl: constants.UrlConstants.baseImageLocUrl,
     baseImageUrl: constants.UrlConstants.baseImageUrl,
-    baseUrlOnly: constants.UrlConstants.baseUrlOnly,
-    smallImgArg: '?x-oss-process=style/goods_img_3',
     ossImgStyle: '?x-oss-process=style/goods_img',
   },
-  props: {
-  },
+  props: {},
   didMount() {
-    this.$page.searchComponent = this;
-    this.props.isCutTimer ? this.cutTimeStart() : '';
-    console.log(this.props.isCutTimer)
-
-    // let isSuccess = await that.getAdvertsModule();                   // 获取广告模板数据
-    // isSuccess.type ? this.getTimes('isFirstTime') : '';             // 获取秒杀模板数据
-
-    console.log('广告组件挂上去了')
+    this.$page.seckillAds = this;
   },
   didUpdate() {},
   didUnmount() {},
   methods: {
-
-    // 普通广告模板开始倒计时
-    cutTimeStart(){
-      let that = this;
-      that.cutTimeToday();
-      clearTimeout(that.data.cutTime_timer);
-      that.data.cutTime_timer = setTimeout(function(){
-        that.cutTimeStart()
-      },1000)
-    },
-
-    // 普通广告模板当天倒计时
-    cutTimeToday(){
-      let that = this;
-      let date = new Date();
-      let nowData = '',       // 现在的时间
-          nextDate = '',      // 明天零点时间
-          surplusTime = '',   // 今天剩下的时间
-          hh = '',
-          mm = '',
-          ss = '';
-      date.setMilliseconds(0);
-      nowData = date.getTime();
-      date.setSeconds(0)
-      date.setMinutes(0);
-      date.setHours(0);
-      date.setDate(date.getDate()+1)
-      nextDate = date.getTime();
-      surplusTime = (nextDate-nowData)/1000;
-      if(surplusTime<0){
-        surplusTime=0;
-      }
-      ss = parseInt(surplusTime%60);
-      mm = parseInt(surplusTime/60%60);
-      hh = parseInt(surplusTime/60/60%24);
-
-      that.setData({
-        countTime:{
-          hh: hh<10? '0'+hh : hh,
-          mm: mm<10? '0'+mm : mm,
-          ss: ss<10? '0'+ss : ss
-        }
-      })
-    },
-
-
-
-
-
+    
     /**
 	  *旧首页 -- 秒杀获取倒计时时间
     */
@@ -274,7 +210,6 @@ Component({
         })
       })
     },
-
 
   },
 });

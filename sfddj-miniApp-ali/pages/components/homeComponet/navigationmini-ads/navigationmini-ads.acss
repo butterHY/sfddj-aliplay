@@ -1,0 +1,68 @@
+image {
+  display: block;
+}
+
+.navigation-mini .space {
+  height: 10rpx;
+  width: 100%;
+}
+
+.navigation-mini .otherModeCon {
+  padding: 0 24rpx 10rpx
+}
+
+.navigation-mini .boxShadowView {
+  -webkit-box-shadow: 1px 1px 3px #e5e5e5;
+  -moz-shadow: 1px 1px 3px #e5e5e5;
+  box-shadow: 1px 1px 3px #e5e5e5;
+  border-radius: 16rpx;
+  overflow: hidden;
+}
+
+.navigation-mini .flex_view_row {
+  display: flex;
+  display:-webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  flex-direction: row;
+  box-orient:horizontal;
+  box-direction:normal;
+  -webkit-flex-direction:row;
+}
+
+
+.navigation-mini .swiper-item {
+  height: 100%;
+}
+
+.navigation-mini .imgView {
+  overflow: hidden;
+  height: 100%;
+}
+
+.navigation-mini .width_20 {
+  width: 20%;
+}
+
+.navigation-mini .width_25 {
+  width: 25%;
+}
+
+.navigation-mini .all_100 {
+  height: 100%;
+  width: 100%;
+}
+
+.navigation-mini .imgViewsec {
+  height: 167rpx;
+  width: 20%;
+}
+
+.navigation-mini .width_100 {
+  width: 100%;
+}
+
+.navigation-mini .marBot_20 {
+  margin-bottom: 20rpx;
+}
