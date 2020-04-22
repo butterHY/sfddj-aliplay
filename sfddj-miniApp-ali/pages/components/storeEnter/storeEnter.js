@@ -1,4 +1,4 @@
-import {baseImageUrl} from '/api/api';
+import { baseImageUrl } from '/api/api';
 import locAddr from '/community/service/locAddr.js';
 
 Component({
@@ -6,22 +6,22 @@ Component({
   data: {
     smallImg200: '?x-oss-process=style/goods_webp',   //大当家图片资源域名 
     baseImageUrl: baseImageUrl,
-    aside: '专属于你的附近之精彩', 
+    aside: '专属于你的附近之精彩',
     goodsShow: [],
     storeDis: 0,     // 小店距离
-	show: false,
-	storeShow: {}
-},
+    show: false,
+    storeShow: {}
+  },
   props: {
     // storeShow: ''
   },
-  didMount() { 
+  didMount() {
     // this.setStoreData(); 
   },
   didUpdate() {
     // this.setStoreData(); 
   },
-  didUnmount() {},
+  didUnmount() { },
   methods: {
     // 商铺设置数据
     setStoreData(storeObj = {}, show, _locInfo) {
@@ -30,21 +30,21 @@ Component({
       let goodsShow = this.data.goodsShow;
       let _goodsShow = [];
       let shopGood = storeShow.shopGoodsList ? storeShow.shopGoodsList : [];
-    //   let _locInfo = locAddr.locInfo;
-	//   console.log(locAddr.locInfo)
+      //   let _locInfo = locAddr.locInfo;
+      //   console.log(locAddr.locInfo)
 
       // 计算店铺距离
       let _distance = _this.getDistance(_locInfo.latitude * 1, _locInfo.longitude * 1, storeShow.latitude * 1, storeShow.longitude * 1);
-    //   _this.setData({
-    //     storeDis: _distance
-    //   });
+      //   _this.setData({
+      //     storeDis: _distance
+      //   });
 
       // 防止重复加载
-    //   if (goodsShow && goodsShow.length > 0) {
-    //     if (goodsShow[0].shopId == storeShow.id) return;
-    //   } else {
+      //   if (goodsShow && goodsShow.length > 0) {
+      //     if (goodsShow[0].shopId == storeShow.id) return;
+      //   } else {
 
-	//   }
+      //   }
 
       // console.log('storeShow', storeShow)
       // console.log('goodsShow', goodsShow)
@@ -69,10 +69,10 @@ Component({
       }
 
       this.setData({
-		storeShow,
-		goodsShow: _goodsShow,
-		storeDis: _distance,
-		show: show
+        storeShow,
+        goodsShow: _goodsShow,
+        storeDis: _distance,
+        show: show
       })
 
     },
@@ -86,7 +86,7 @@ Component({
 
     // 进店
     goShop(e) {
-      let shopId = e.target.dataset.shopid; 
+      let shopId = e.target.dataset.shopid;
       my.navigateTo({
         url: '/community/pages/shop/shop?id=' + shopId,
       });
@@ -94,7 +94,7 @@ Component({
 
     // 去详情
     goDetail(e) {
-      let goodsId = e.target.dataset.goodsid;  
+      let goodsId = e.target.dataset.goodsid;
       my.navigateTo({
         url: '/community/pages/goodsDetail/goodsDetail?goodsId=' + goodsId,
       });
@@ -111,7 +111,7 @@ Component({
       lng1 = parseFloat(lng1);
       lat2 = parseFloat(lat2);
       lng2 = parseFloat(lng2);
-	  if(lat1 == lat2 && lng1 == lng2) return 0;
+      if (lat1 == lat2 && lng1 == lng2) return 0;
       var f = this.getRad((lat1 + lat2) / 2);
       var g = this.getRad((lat1 - lat2) / 2);
       var l = this.getRad((lng1 - lng2) / 2);
@@ -134,11 +134,11 @@ Component({
       h2 = (3 * r + 1) / 2 / s;
       s = d * (1 + fl * (h1 * sf * (1 - sg) - h2 * (1 - sf) * sg));
       s = Math.round(s) * 1;
-      if(s > 1000) {
-       s = (s / 1000).toFixed(2) * 1 + 'km';
+      if (s > 1000) {
+        s = (s / 1000).toFixed(2) * 1 + 'km';
       }
       else {
-       s = s + 'm';
+        s = s + 'm';
       }
       return s;
     },
@@ -147,6 +147,6 @@ Component({
       var PI = Math.PI;
       return d * PI / 180.0;
     }
-    
+
   }
 });

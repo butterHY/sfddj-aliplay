@@ -37,3 +37,11 @@
 .am-popup-bottom .closeBtn .am-list-text-wrapper {
     color: #999999;
 }
+
+.am-popup-mask {
+    z-index: 10;
+}
+
+.am-popup-bottom {
+    z-index: 11;
+}

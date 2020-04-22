@@ -45,11 +45,20 @@ function controllPayment({ orderSn, payTime, callBack, failFun }) {
     post(api.O2O_ORDERCONFIRM.queryPayType, { orderSn }, (res) => {
         let result = res.data.data ? res.data.data : {};
         if (result.payFinish) {
-            callBack && typeof callBack === 'function' && callBack();
+            // 成功了，加一个提示
+            my.alert({
+                title: '提示',
+                content: '订单将于付款成功后3小时自动确认，如有问题请及时联系客服确认，感谢您的支持！',
+                buttonText: '我知道了',
+                complete: () => {
+                    callBack && typeof callBack === 'function' && callBack();
+                }
+            });
+            
         }
         else {
             let nowDate = new Date().getTime();
-            // 做一个人10秒的回调查询支付成功，否则视为失败
+            // 做一个10秒的回调查询支付成功，否则视为失败
             if (nowDate - payTime < 10000) {
                 controllPayment(orderSn, payTime, callBack)
             } else {
@@ -85,7 +94,7 @@ export default {
         lng1 = parseFloat(lng1);
         lat2 = parseFloat(lat2);
         lng2 = parseFloat(lng2);
-		if(lat1 == lat2 && lng1 == lng2) return 0 + 'm';
+        if (lat1 == lat2 && lng1 == lng2) return 0 + 'm';
         var f = getRad((lat1 + lat2) / 2);
         var g = getRad((lat1 - lat2) / 2);
         var l = getRad((lng1 - lng2) / 2);
@@ -107,7 +116,7 @@ export default {
         h1 = (3 * r - 1) / 2 / c;
         h2 = (3 * r + 1) / 2 / s;
         s = d * (1 + fl * (h1 * sf * (1 - sg) - h2 * (1 - sf) * sg));
-        if(s > 1000) {
+        if (s > 1000) {
             s = (s / 1000).toFixed(2) + 'km';
         } else {
             s = Math.round(s) + 'm';

@@ -5,6 +5,7 @@
   "usingComponents": {
     "loading-now": "../components/loadingNow/loadingNow",
     "load-fail": "../components/loadFail/loadFail",
-    "community-order": "../components/communityOrderEnter/communityOrderEnter"
+    "community-order": "../components/communityOrderEnter/communityOrderEnter",
+    "store-enter" :  "/pages/components/storeEnter/storeEnter"
   }
 } 

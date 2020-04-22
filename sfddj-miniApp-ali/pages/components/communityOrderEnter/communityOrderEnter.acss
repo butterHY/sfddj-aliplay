@@ -25,3 +25,8 @@
 	position: relative;
 	flex: 1;
 }
+
+.orderListBox .user_orderTypeNum {
+	color: #ff343f;
+	border-color: #ff343f
+}
