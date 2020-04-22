@@ -5,17 +5,19 @@ const dateFmt = require('/utils/dateformat');
 Page({
     data: {
         staticsImageUrl: api.staticsImageUrl,
-		baseImageUrl: api.baseImageUrl,
-		tabList: [{ title: 'o2o订单' }, { title: "拼团订单" }],
-		tabIndex: 0,
-        orderTypeList: ['全部', '待付款', '付款成功', '交易成功', '退款/售后'],
-        orderTypeCode: ['ALL', 'NOPAY', 'PAYFINISH', 'COMMENT', 'AFTERSALE'],       // 获取数据列表的类型
+        baseImageUrl: api.baseImageUrl,
+        tabList: [{ title: 'o2o订单' }, { title: "拼团订单" }],
+        tabIndex: 0,
+        orderTypeList: [['全部', '待付款', '付款成功', '交易成功', '退款/售后'], ['全部', '交易成功', '退款/售后']],
+        // pinOrderTypeList: ['全部', '交易成功', '退款/售后'],
+        orderTypeCode: [['ALL', 'NOPAY', 'PAYFINISH', 'COMMENT', 'AFTERSALE'], [0, 1, 2]],       // 获取数据列表的类型
 
-        typeIndex: 0,
+        typeIndexList: [0, 0],
         orderList: [[], [], [], [], []],       //保存订单数据
-        hasMoreList: [true, true, true, true, true],                      //是否还有下一页
-        isLoadedList: [false, false, false, false, false],            //是否加载过了
-        startList: [0, 0, 0, 0, 0],     //请求开始的索引
+        pinOrderList: [[], [], []],           //拼团订单数据
+        hasMoreList: [[true, true, true, true, true], [true, true, true]],                      //是否还有下一页
+        isLoadedList: [[false, false, false, false, false], [false, false, false]],            //是否加载过了
+        startList: [[0, 0, 0, 0, 0],[0, 0, 0]],     //请求开始的索引
         limit: 10,
         allTimer: null,        //全部订单的定时器
         noPayTimer: null,      //未支付订单的定时器
@@ -23,19 +25,19 @@ Page({
         // allCounting: false,        //全部状态订单是否在使用倒计时
         // noPayCounting: false,      // 未支付状态订单是否在使用倒计时
         isCounting: [false, false, false, false, false],    //对应的订单状态是否在使用倒计时
-		isLoadingList: [false, false, false, false, false],    //是否正在加载
+        isLoadingList: [[false, false, false, false, false], [false, false, false]],    //是否正在加载
     },
     onLoad(options) {
-		let index = options.index ? options.index : 0;
-		this.setData({
-			typeIndex: index
-		})
+        let index = options.index ? options.index : 0;
+        this.setData({
+            typeIndex: index
+        })
         // this.getOrderList(0);
     },
 
-	onShow(){
-		this.getOrderList(0, this.data.orderList[this.data.typeIndex].length)
-	},
+    onShow() {
+        this.getOrderList(0, this.data.orderList[this.data.typeIndex].length)
+    },
 
     onUnload() {
         // 清除定时器
@@ -45,12 +47,14 @@ Page({
 
     //   切换订单状态
     switchType(e) {
-        let { index } = e.target.dataset;
-        if (index != this.data.typeIndex) {
+        let { index, fatherIndex } = e.target.dataset;
+        let { typeIndexList, tabIndex, isLoadedList } = this.data;
+        let setIndexName = 'typeIndexList[' + tabIndex + ']';
+        if (index != typeIndexList[tabIndex]) {
             this.setData({
-                typeIndex: index
+                [setIndexName]: index
             })
-            if (this.data.isLoadedList[index].toString() == 'false') {
+            if (isLoadedList[tabIndex][index].toString() == 'false') {
                 this.getOrderList(0)
             }
         }
@@ -59,63 +63,130 @@ Page({
     // 获取订单列表
     getOrderList(type = '', setLimit) {
         let that = this;
-        let { typeIndex, limit, orderList, isLoadingList } = this.data;
-        let setHasMore = 'hasMoreList[' + typeIndex + ']';
-        let setLoaded = 'isLoadedList[' + typeIndex + ']';
-        let setOrderList = 'orderList[' + typeIndex + ']';
-        let setCountList = 'countList[' + typeIndex + ']';
-        let setLoadingList = 'isLoadingList[' + typeIndex + ']';
-		limit = setLimit && setLimit > 10 ? setLimit + 1 : limit;
+        let { tabIndex, limit, orderList, isLoadingList, typeIndexList } = this.data;
+        tabIndex == 0 ? this.getO2OOrder(type, setLimit) : this.getPinOrder(type, setLimit);
+    },
+
+    getO2OOrder(type = '', setLimit) {
+        let that = this;
+        let { tabIndex, limit, orderList, pinOrderList, isLoadingList, typeIndexList, startList, orderTypeCode } = this.data;
+        let index = typeIndexList[tabIndex];
+        let setHasMore = 'hasMoreList[' + tabIndex + '][' + index +']';
+        let setLoaded = 'isLoadedList[' + tabIndex + '][' + index +']';
+        let setOrderList = tabIndex == 0 ?  'orderList[' + index + ']' : 'pinOrderList[' + index + ']';
+        let setCountList = 'countList[' + index + ']';
+        let setLoadingList = 'isLoadingList[' + tabIndex + '][' + index +']';
+        let nowOrderList = tabIndex == 0 ? orderList[index] : pinOrderList[index];
+        limit = setLimit && setLimit > 10 ? setLimit + 1 : limit;
 
         // 如果type == 0则视为刷新
         if (type.toString() == '0') {
-            let setStart = 'startList[' + typeIndex + ']';
+            let setStart = 'startList[' + tabIndex + '][' + index + ']';
             this.setData({
                 [setStart]: 0,
                 [setHasMore]: true,
-                [setOrderList]: setLimit && setLimit > 0 ? this.data.orderList[typeIndex] : []
+                [setOrderList]: setLimit && setLimit > 0 ? nowOrderList : []
             })
         }
 
-        let start = this.data.startList[typeIndex];
+        let start = startList[tabIndex][index];
         let data = {
             limit,
             start,
-            otoOrderPageEnum: this.data.orderTypeCode[typeIndex]
+            otoOrderPageEnum: orderTypeCode[tabIndex][index]
         };
 
-		if(!isLoadingList[typeIndex]) {
+        if (!isLoadingList[tabIndex][index]) {
 
-			// 加载开关
-			this.setData({
-				[setLoadingList]: true
-			})
-			
-			post(api.O2O_ORDER.getOrderList, data, res => {
-				let result = res.data.data ? res.data.data : [];
-				let handleList = that.handleGoods(result);
-				result = handleList.goodsList;
-				let { countList } = handleList;
-				let newestList = start == 0 ? Object.assign([], result) : orderList[typeIndex].concat(result);
-				let newestCountList = start == 0 ? Object.assign([], countList) : orderList[typeIndex].concat(countList);
-				that.setData({
-					[setHasMore]: result.length >= limit ? true : false,
-					[setLoaded]: true,
-					[setOrderList]: newestList,
-					[setCountList]: newestCountList,
-					[setLoadingList]: false
-				})
-				that.isUseCountDown();
-			}, err => {
-				that.setData({
-					[setHasMore]: false,
-					[setLoaded]: true,
-					[setLoadingList]: false
-				})
-			})
-		}
+            // 加载开关
+            this.setData({
+                [setLoadingList]: true
+            })
 
+            post(api.O2O_ORDER.getOrderList, data, res => {
+                let result = res.data.data ? res.data.data : [];
+                let handleList = that.handleGoods(result);
+                result = handleList.goodsList;
+                let { countList } = handleList;
+                let newestList = start == 0 ? Object.assign([], result) : orderList[index].concat(result);
+                let newestCountList = start == 0 ? Object.assign([], countList) : orderList[index].concat(countList);
+                that.setData({
+                    [setHasMore]: result.length >= limit ? true : false,
+                    [setLoaded]: true,
+                    [setOrderList]: newestList,
+                    [setCountList]: newestCountList,
+                    [setLoadingList]: false
+                })
+                that.isUseCountDown();
+            }, err => {
+                that.setData({
+                    [setHasMore]: false,
+                    [setLoaded]: true,
+                    [setLoadingList]: false
+                })
+            })
+        }
+    },
 
+    getPinOrder(type = '', setLimit) {
+        let that = this;
+        let { tabIndex, limit, orderList, pinOrderList, isLoadingList, typeIndexList, startList, orderTypeCode } = this.data;
+        let index = typeIndexList[1];
+        let setHasMore = 'hasMoreList[1][' + index +']';
+        let setLoaded = 'isLoadedList[1][' + index +']';
+        let setOrderList = tabIndex == 0 ?  'orderList[' + index + ']' : 'pinOrderList[' + index + ']';
+        let setCountList = 'countList[' + index + ']';
+        let setLoadingList = 'isLoadingList[1][' + index +']';
+        let nowOrderList = tabIndex == 0 ? orderList[index] : pinOrderList[index];
+        limit = setLimit && setLimit > 10 ? setLimit + 1 : limit;
+
+        // 如果type == 0则视为刷新
+        if (type.toString() == '0') {
+            let setStart = 'startList[' + tabIndex + '][' + index + ']';
+            this.setData({
+                [setStart]: 0,
+                [setHasMore]: true,
+                [setOrderList]: setLimit && setLimit > 0 ? nowOrderList : []
+            })
+        }
+
+        let start = startList[tabIndex][index];
+        let data = {
+            limit,
+            start,
+            status : orderTypeCode[tabIndex][index]
+        };
+
+        if (!isLoadingList[tabIndex][index]) {
+
+            // 加载开关
+            this.setData({
+                [setLoadingList]: true
+            })
+
+            post(api.O2O_ORDER.getPinOrder, data, res => {
+                let result = res.data.data ? res.data.data : [];
+                let handleList = that.handleGoods(result);
+                result = handleList.goodsList;
+                let { countList } = handleList;
+                let newestList = start == 0 ? Object.assign([], result) : orderList[index].concat(result);
+                let newestCountList = start == 0 ? Object.assign([], countList) : orderList[index].concat(countList);
+                that.setData({
+                    [setHasMore]: result.length >= limit ? true : false,
+                    [setLoaded]: true,
+                    [setOrderList]: newestList,
+                    [setCountList]: newestCountList,
+                    [setLoadingList]: false
+                })
+                // that.isUseCountDown();
+            }, err => {
+                that.setData({
+                    [setHasMore]: false,
+                    [setLoaded]: true,
+                    [setLoadingList]: false
+                })
+            })
+        }
     },
 
     // 判断要不要启用倒计时
@@ -183,12 +254,14 @@ Page({
 
     // 滚动到底部加载更多
     loadMoreList() {
-        let { typeIndex, hasMoreList, orderList, startList } = this.data;
+        let { tabIndex, hasMoreList, orderList, pinOrderList, startList, typeIndexList } = this.data;
+        let index = typeIndexList[tabIndex];
+        let listLen = tabIndex == 0 ? orderList[index].length : pinOrderList[index].length;
         // 如果还有数据则加载更多
-        if (hasMoreList[typeIndex].toString() == 'true') {
-            let setStart = 'startList[' + typeIndex + ']';
+        if (hasMoreList[tabIndex][index].toString() == 'true') {
+            let setStart = 'startList[' + tabIndex + '][' + index + ']';
             this.setData({
-                [setStart]: orderList[typeIndex].length
+                [setStart]: listLen
             })
             this.getOrderList();
         } else {
@@ -276,31 +349,31 @@ Page({
     // 删除订单
     deleteOrder(e) {
         let that = this;
-        let {index, orderSn} = e.currentTarget.dataset;
+        let { index, orderSn } = e.currentTarget.dataset;
         let { typeIndex, orderList } = this.data;
         my.confirm({
             content: '确定要删除该订单吗？',
             // confirmButtonText: '',
             // cancelButtonText,
-          success: (res) => {
-            if(res.confirm) {
-              that.deleteOrderRequest(orderSn, typeIndex, orderList, index);
-            }
-          },
+            success: (res) => {
+                if (res.confirm) {
+                    that.deleteOrderRequest(orderSn, typeIndex, orderList, index);
+                }
+            },
         });
-        
+
     },
 
     // 删除订单请求
-    deleteOrderRequest(orderSn, typeIndex, orderList, index){
-      let that = this;
-      post(api.O2O_ORDER.deleteOrder, { orderSn }, res => {
+    deleteOrderRequest(orderSn, typeIndex, orderList, index) {
+        let that = this;
+        post(api.O2O_ORDER.deleteOrder, { orderSn }, res => {
             let { code, message } = res.data.ret;
             if (code == '0') {
                 my.showToast({
                     content: '删除成功'
                 })
-                orderList[typeIndex].splice(index,1);
+                orderList[typeIndex].splice(index, 1);
                 that.setData({
                     orderList
                 })
@@ -317,10 +390,33 @@ Page({
     },
 
     // 去逛逛跳转
-    toDDJHome(){
-      my.navigateTo({
-        url: '/community/pages/index/index'
-      });
+    toDDJHome() {
+        my.navigateTo({
+            url: '/community/pages/index/index'
+        });
     },
+
+    // tab栏点击
+    handleTabClick(e) {
+        let { index } = e;
+        let { tabIndex } = this.data;
+        if (index != tabIndex) {
+            this.setData({
+                tabIndex: index
+            })
+            // if()
+        }
+    },
+    // 顶部tab栏切换
+    tabChange(e) {
+        let { index } = e;
+        let { tabIndex } = this.data;
+        if (index != tabIndex) {
+            this.setData({
+                tabIndex: index
+            })
+            // if()
+        }
+    }
 
 });

@@ -1,2 +1,2 @@
-export default 'developer'
-// export default 'production'
+// export default 'developer'
+export default 'production'

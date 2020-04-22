@@ -160,6 +160,7 @@ export default {
 		cancelOrder: '/m/oto/otoOrderPay/1.0/cancelOrder',     //取消订单
 		deleteOrder: '/m/oto/otoOrder/1.0/delete',             //删除订单
 		getOrderNum: '/m/oto/otoOrder/1.0/findOrderCount',      //获取各订单状态数量
+		getPinOrder: '/m/oto/otoActivityTuangouRecord/1.0/findTuangouRecordList',                                   //获取社区拼团订单
 	},
 
 	// 地址部分
