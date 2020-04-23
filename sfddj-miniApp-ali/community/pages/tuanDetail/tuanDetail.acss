@@ -1,0 +1,438 @@
+@import '/community/assets/acss/common.acss';
+
+.tuandetail {
+    padding: 18rpx;
+}
+
+.tuandetail_stateinfo {
+    background-color: rgb(244,218,223);
+    border-radius: 16rpx;
+    margin-bottom: 20rpx;
+    font-size: 30rpx;
+    color: rgb(255,0,50);
+    padding: 35rpx 35rpx 35rpx 86rpx;
+    background-repeat: no-repeat;
+    background-position: 30rpx center;
+    background-size: 40rpx;
+}
+
+.tuandetail_stateinfo1 {
+    background-image: url('/community/assets/images/Success.png');
+}
+
+.tuandetail_stateinfo2 {
+    background-image: url('/community/assets/images/fail.png');
+}
+
+.tuandetail_detail {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    background-color: #fff;
+    border-radius: 16rpx;
+}
+
+.tuandetail_detail > view:first-child {
+    width: 225rpx;
+    height: 225rpx;
+    padding: 30rpx;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    background-clip: content-box;
+}
+
+.tuandetail_detail > view:nth-child(2) {
+    flex-grow: 1;
+    min-height: 225rpx;
+    padding: 40rpx 30rpx 30rpx 0;
+    background-repeat: no-repeat;
+    background-position: bottom right;
+    background-size: 107rpx 107rpx;
+    background-origin: content-box;
+}
+
+.tuandetail_detail > view:nth-child(2).tuandetail_state0 {
+    background-image: url('/community/assets/images/waitfor.png');
+}
+
+.tuandetail_detail > view:nth-child(2).tuandetail_state1 {
+    background-image: url('/community/assets/images/End.png');
+}
+
+.tuandetail_tit {
+    font-size: 30rpx;
+    color: rgb(35,35,35);
+}
+
+.tuandetail_members {
+    padding: 20rpx 0 20rpx 38rpx;
+    font-size: 24rpx;
+    color: rgb(255,0,50);
+    background-image: url('/community/assets/images/Assemble.png');
+    background-repeat: no-repeat;
+    background-position: center left;
+    background-size: auto 28rpx;
+}
+
+.tuandetail_price {
+    padding-top: 6rpx;
+}
+
+.tuandetail_price > text:first-child {
+    font-size: 32rpx;
+    color: rgb(255,0,50);
+}
+
+.tuandetail_price > text:nth-child(2) {
+    font-size: 24rpx;
+    color: rgb(153,153,153);
+    margin-left: 10rpx;
+    text-decoration: line-through;
+}
+
+.tuandetail_steps {
+    background-color: #fff;
+    border-radius: 16rpx;
+    padding: 30rpx;
+    margin-top: 20rpx;
+}
+
+.tuandetail_steps_head {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.tuandetail_steps_head > view:first-child {
+    font-size: 32rpx;
+    color: rgb(1, 1, 1);
+    font-family: SourceHanSansCN-Medium;
+    padding-left: 30rpx;
+    position: relative;
+}
+
+.tuandetail_steps_head > view:first-child::before {
+    content: ' ';
+    width: 10rpx;
+    position: absolute;
+    top: -3px;
+    bottom: -3px;
+    left: 0;
+    background-color: rgb(255,0,50);
+    border-radius: 5rpx;
+}
+
+.tuandetail_steps_head > navigator:last-child {
+    font-size: 32rpx;
+    color: rgb(102, 102, 102);
+}
+
+.tuandetail_steps_steps {
+    padding-top: 46rpx;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    counter-reset: step;
+    color: rgb(102, 102, 102);
+    font-size: 26rpx;
+}
+
+.tuandetail_steps_steps > view {
+    padding-left: 58rpx;
+    position: relative;
+    height: 36rpx;
+    line-height: 36rpx;
+}
+
+.tuandetail_steps_steps > view::before {
+    position: absolute;
+    left: 0;
+    top: -3rpx;
+    display: inline-block;
+    counter-increment: step;
+    content: counter(step);
+    width: 36rpx;
+    height: 36rpx;
+    line-height: 36rpx;
+    border-radius: 18rpx;
+    border: 1px solid rgb(102, 102, 102);
+    text-align: center;
+}
+
+.tuandetail_steps_steps > view.active {
+    color: rgb(255,0,50);
+}
+
+.tuandetail_steps_steps > view.active::before {
+    border-color: rgb(255,0,50);
+}
+
+.tuandetail_memberlst {
+    background-color: #fff;
+    border-radius: 18rpx;
+    padding: 50rpx;
+    margin-top: 20rpx;
+}
+
+.tuandetail_memberlst_state {
+    text-align: center;
+    font-size: 30rpx;
+    color: rgb(51,51,51);
+    padding-bottom: 70rpx;
+}
+
+.tuandetail_memberlst_state1 {
+    background-image: url('/community/assets/images/Success1.png');
+    background-repeat: no-repeat;
+    background-position: left center;
+    background-size: 30rpx;
+    padding-left: 42rpx;
+}
+
+.tuandetail_memberlst_lst {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.tuandetail_memberlst_lst > view {
+    width: 90rpx;
+    height: 90rpx;
+    border-radius: 45rpx;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 30rpx 30rpx;
+    background-image: url('/community/assets/images/Addhead.png');
+    border:1px dotted #aaa;
+    position: relative;
+}
+
+.tuandetail_memberlst_lst > view > view {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+.tuandetail_memberlst_lst > view.spot {
+    background-size: 42rpx 6rpx;
+    background-image: url('/community/assets/images/spot1.png');
+}
+
+.tuandetail_memberlst_lst > view:first-child::after {
+    content: '团长';
+    display: inline-block;
+    position: absolute;
+    left: 1rpx;
+    right: 1rpx;
+    bottom: -16rpx;
+    text-align: center;
+    padding: 5rpx;
+    background-color: rgb(255,0,50);
+    color: #fff;
+    font-size: 24rpx;
+    border-radius: 17rpx/50%;
+}
+
+.tuandetail_memberlst_timer {
+    margin-top: 70rpx;
+    text-align: center;
+    font-size: 30rpx;
+    color: rgb(153,153,153);
+}
+
+.tuandetail_memberlst_timer > view {
+    display: inline-block;
+    width: 50rpx;
+    height: 50rpx;
+    line-height: 50rpx;
+    background-color: rgb(255,0,50);
+    color: #fff;
+    font-size: 34rpx;
+    border-radius: 6rpx;
+}
+
+.tuandetail_memberlst_timer > view:first-child {
+    margin-left: 18rpx;
+    margin-right: 12rpx;
+    position: relative;
+}
+
+.tuandetail_memberlst_timer > view:last-child {
+    margin-left: 12rpx;
+    margin-right: 18rpx;
+    position: relative;
+}
+
+.tuandetail_memberlst_timer > view:nth-child(2) {
+    margin: 0 12rpx;
+}
+
+.tuandetail_memberlst_timer > view:first-child::before,
+.tuandetail_memberlst_timer > view:first-child::after,
+.tuandetail_memberlst_timer > view:last-child::before,
+.tuandetail_memberlst_timer > view:last-child::after {
+    content: ' ';
+    position: absolute;
+    width: 6rpx;
+    height: 6rpx;
+    border-radius: 3rpx;
+    background-color:rgb(153,153,153);
+}
+
+.tuandetail_memberlst_timer > view:first-child::before,
+.tuandetail_memberlst_timer > view:first-child::after {
+    right: -15rpx;
+}
+
+.tuandetail_memberlst_timer > view:first-child::before,
+.tuandetail_memberlst_timer > view:last-child::before {
+    top: 15rpx;
+}
+
+.tuandetail_memberlst_timer > view:first-child::after,
+.tuandetail_memberlst_timer > view:last-child::after {
+    bottom: 15rpx;
+}
+
+.tuandetail_memberlst_timer > view:last-child::before,
+.tuandetail_memberlst_timer > view:last-child::after {
+    left: -15rpx;
+}
+
+.tuandetail_ctls {
+    margin-top: 80rpx;
+    padding: 20rpx;
+    text-align: center;
+}
+
+.tuandetail_ctls0 {
+    margin-top: 120rpx;
+}
+
+.tuandetail_ctls1 > navigator {
+    display: inline-block;
+    padding: 26rpx 50rpx;
+    border: 1px solid rgb(255,0,50);
+    border-radius: 38rpx/50%;
+    color: rgb(255,0,50);
+    font-size: 36rpx;
+}
+
+.tuandetail_ctls1 > navigator:not(:first-child) {
+    margin-left: 50rpx;
+}
+
+.tuandetail_ctls1 > navigator:first-child {
+    border-color: rgb(219,219,219);
+    color: rgb(102,102,102);
+}
+
+.tuandetail_ctls_join {
+    width: 100%;
+    padding: 30rpx 0;
+    text-align: center;
+    background-color: rgb(255,0,50);
+    color: #fff;
+    font-size: 36rpx;
+    border-radius: 50rpx/50%;
+}
+
+.tuandetail_popcontent {
+    background-color: #fff;
+    border-top-left-radius: 18rpx;
+    border-top-right-radius: 18rpx;
+}
+
+.tuandetail_popcontent_item {
+    padding: 50rpx 30rpx;
+    display: flex;
+    flex-direction: row;
+}
+
+.tuandetail_popcontent_item > view:first-child {
+    width: 120rpx;
+    height: 120rpx;
+    flex-grow: 0;
+    flex-shrink: 0;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+.tuandetail_popcontent_item > view:last-child {
+    flex-grow: 1;
+    flex-shrink: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10rpx 0 10rpx 28rpx;
+    color: rgb(51,51,51);
+    font-size: 26rpx;
+}
+
+.tuandetail_popprices > text:first-child {
+    font-size: 32rpx;
+    color: rgb(255,0,50);
+}
+
+.tuandetail_popprices > text:nth-child(2) {
+    font-size: 24rpx;
+    color: rgb(153,153,153);
+    margin-left: 10rpx;
+    text-decoration: line-through;
+}
+
+.tuandetail_popcontent_nums {
+    padding: 50rpx 30rpx;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #ededed;
+    color: rgb(51,51,51);
+    font-size: 30rpx;
+}
+
+.tuandetail_popcontent_nums > view:last-child {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+	align-items: center;
+	width: 170rpx;
+}
+
+.tuandetail_popcontent_nums > view:last-child > text {
+    height: 48rpx;
+	width: 48rpx;
+	display: block;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 100% 100%;
+}
+
+.tuandetail_popcontent_nums > view:last-child > text:first-child {
+    background-image: url('/community/assets/images/amountBox/stepper_minus.png');
+}
+
+.tuandetail_popcontent_nums > view:last-child > text:last-child {
+    background-image: url('/community/assets/images/amountBox/stepper_plus.png');
+}
+
+.tuandetail_popcontent_nums > view:last-child > text:nth-child(2) {
+	font-size: 30rpx;
+	text-align: center;
+    height: auto;
+}
+
+.tuandetail_popcontent_btns_confirm {
+    width: 100%;
+    padding: 30rpx 0;
+    text-align: center;
+    background-color: rgb(255,0,50);
+    color: #fff;
+    font-size: 36rpx;
+}

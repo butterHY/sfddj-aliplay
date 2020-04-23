@@ -58,7 +58,13 @@ view > .goodsitem.adjacent:last-child > view {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding-top: 10rpx;
+    padding-top: 12rpx;
+}
+
+.goodsitemcontrol > view:first-child {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
 }
 
 .goodsitemprice {
@@ -75,4 +81,30 @@ view > .goodsitem.adjacent:last-child > view {
 
 .cart {
     transition: 0.15s;
+}
+
+.goodsitem_tuan {
+    width: 116rpx;
+    height: 46rpx;
+    border: 1rpx solid rgb(255, 0, 50);
+    border-radius: 23rpx;
+    font-size: 23rpx;
+    padding: 0px;
+    margin: 0px;
+    line-height: 46rpx;
+    color: rgb(255, 0, 50);
+    text-align: center;
+}
+
+.goodsitem_tuantip {
+    color: rgb(255, 0, 50);
+    font-size: 23rpx;
+    height: 26rpx;
+    line-height: 26rpx;
+    padding-left: 32rpx;
+    margin-top: 12rpx;
+    background-image: url('/community/assets/images/Assemble.png');
+    background-repeat: no-repeat;
+    background-position: center left;
+    background-size: contain;
 }
