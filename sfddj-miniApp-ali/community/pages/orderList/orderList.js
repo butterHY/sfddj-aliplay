@@ -29,16 +29,21 @@ Page({
         orderListNum: [{ count: 0, orderPageEnum: "ALL" }, { count: 0, orderPageEnum: "NOPAY" }, { count: 0, orderPageEnum: "PAYFINISH" }, { count: 0, orderPageEnum: "COMMENT" }, { count: 0, orderPageEnum: "AFTERSALE" }],               //o2o订单状态的数量
     },
     onLoad(options) {
-        let index = options.index ? options.index : 0;
+        let index = options.index ? options.index * 1 : 0;
+        let typeIndex = options.minIndex ? options.minIndex * 1 : 0;
+        let setTypeIndex = 'typeIndexList[' + index + ']';
         this.setData({
-            typeIndex: index
+            tabIndex: index,
+            [setTypeIndex]: typeIndex
         })
         // this.getOrderList(0);
     },
 
     onShow() {
-        this.getOrderList(0, this.data.orderList[this.data.typeIndex].length)
-        this.data.tabIndex == 0 ? this.setComOrderNum() : '';
+        let {tabIndex, typeIndexList, orderList} = this.data;
+        let index = typeIndexList[tabIndex];
+        this.getOrderList(0, this.data.orderList[tabIndex][index].length)
+        tabIndex == 0 ? this.setComOrderNum() : '';
     },
 
     onUnload() {

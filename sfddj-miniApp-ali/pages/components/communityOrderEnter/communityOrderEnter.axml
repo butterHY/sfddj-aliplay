@@ -4,7 +4,7 @@
 	<view class="user_comOrder flex_view_row align_cen posi_re">
 		<view>
 			<text class="font-36 color-323232 fontW_600">社区订单</text></view>
-		<view data-url="/community/pages/orderList/orderList?index=0" class="flex_1 font-24 color32_04 tex_right" onTap="goToTargetPage">
+		<view data-url="/community/pages/orderList/orderList?index=0&minIndex=0" class="flex_1 font-24 color32_04 tex_right" onTap="goToTargetPage">
 			<text class="marRight_15">全部订单</text>
 			<text class="icon-href-right font-22 color32_04"></text>
 		</view>
@@ -14,7 +14,7 @@
 	<view class=" orderListBox flex_view_row marBot_32 justi_between align_cen">
 		<!-- 待付款 -->
 		<block a:for="{{communityOrderList}}">
-			<view data-url="/community/pages/orderList/orderList?index={{index}}" class=" orderListItem" onTap="goToTargetPage">
+			<view data-url="/community/pages/orderList/orderList?index=0&minIndex={{index}}" class=" orderListItem" onTap="goToTargetPage">
 				<image src="{{item.imageUrl}}" class="iconImg"></image>
 				<text class='color-636363 font-24 marTop_20'>{{item.text}}</text>
 				<view a:if="{{orderNumList[index] && orderNumList[index].count > 0 && index > 0}}" class="posi_ab user_orderTypeNum">{{orderNumList[index].count< 100 ? orderNumList[index].count : '...'}}</view>
