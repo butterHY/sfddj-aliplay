@@ -31,13 +31,15 @@
 }
 
 .userListBox .step_list .listTop {} 
-.userListBox .step_list .listTop {} 
 
 .userListBox .step_list .listMain {
-    height: 215rpx; 
+    /* height: 108rpx;
+    max-height: 215rpx;  */
 }
 .userListBox .step_list .listMain .listUl {
-    height: 100%;
+    min-height: 108rpx;
+    max-height: 215rpx; 
+    height: auto;
 }
 
 .userListBox .step_list .listMain .listLi {
@@ -70,32 +72,38 @@
     background-color: #fff1f4; 
 }
 
+.listCell.hasBg .tit_l {
+    max-width: 50%;
+}
+
 .listCell .tit_l {
     flex: 1;
+    max-width: 80%;
     display: flex; 
     justify-content: flex-start;
     align-items : center;
     
 }
 .listCell .tit_l .userImg {
+    display: block;
     height: 64rpx;
     width: 64rpx;
     border-radius: 50%;
-    overflow: hidden; 
+    overflow: hidden;  
 }
 
 .listCell .tit_l .userImg image {
     height: 100%;
     width: 100%;
+    display: block;
 }
 
 .listCell .tit_l .userName {   
     margin-left: 12rpx;
-    max-width: 250rpx;
+    max-width: 80%;
     overflow-x: hidden; 
     text-overflow: ellipsis;
-    white-space: nowrap; 
-    display: block; 
+    white-space: nowrap;  
     font-size: 30rpx;
 }
 

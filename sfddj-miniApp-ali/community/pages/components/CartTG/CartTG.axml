@@ -1,61 +1,71 @@
-<view class="shop_cartbox">
+<view class="shop_cartTG">
     <!-- 控制区域 -->
     <view class="shop_cartcontrol">
-        <view class="shop_cart"> 
-            <view class="iconList">
+        <view class="shop_cart">
+            <view class="iconList" onTap="gotoShop">
                 <text class="iconStyle icon-store1"></text>
                 <text class="name">店铺</text>
             </view>
 
-            <view class="iconList">
-                <am-icon class="iconStyle" type="text"/>
+            <view class="iconList" onTap="gotoOrder">
+                <am-icon class="iconStyle" type="text" />
                 <text class="name">订单</text>
             </view>
 
-            <view class="iconList"> 
-                <am-icon class="iconStyle" type="chat_"/>
+            <view class="iconList" onTap="gotoService">
+                <am-icon class="iconStyle" type="chat_" />
                 <text class="name">客服</text>
-            </view> 
-            
+            </view>
+
         </view>
         <view class="actionBtnBox">
-            <button class="actionBtn btn_left" type="warn-ghost" subtitle="单独购买" shape="capsule" onTap="onShowDetailClick">
-                ￥{{'49.8'}}
-            </button>
-
-            <button class="actionBtn btn_right" type="warn" subtitle="去拼单" shape="capsule" onTap="onShowDetailClick">
-                ￥{{'29.8'}}
-            </button>
+            <view onTap="onShowDetailClick" data-buyType="0">
+                <button class="actionBtn btn_left" type="warn-ghost" subtitle="单独购买" shape="capsule">
+                    ￥{{ goodsSku.salePrice }}
+                </button>
+            </view>
+            <view onTap="onShowDetailClick" data-buyType="1">
+                <button class="actionBtn btn_right" type="warn" subtitle="去拼单" shape="capsule">
+                    ￥{{ goodsSku.tuangouPrice }}
+                </button>
+            </view>
         </view>
 
     </view>
-</view> 
+</view>
 
 <!-- 消息提醒  -->
 <view class="noticeShow">
     <notice show="{{ noticeShow }}" type="{{ normal }}" showIcon="{{false}}">
         {{ actionText }}
-  </notice>
-</view> 
+    </notice>
+</view>
 
 <!-- 弹出层  -->
-<popup class="goodsAction_popup" show="{{ isShowed }}" zIndex="{{ 15 }}" disableScroll="{{ false }}" position="bottom" onClose="onHideClick">
+<popup class="goodsTG_popup" show="{{ isShowed }}" zIndex="{{ 15 }}" disableScroll="{{ false }}" position="bottom"
+    onClose="onHideClick">
     <scroll-view class="cartListShow" scroll-y="{{ true }}">
-        <block a:for="{{ Cart[shopid].cartList }}">
+        <block a:if="{{ goodsSku }}">
             <view class="cartList">
                 <view class="figureImg">
-                    <image src="{{ item.defaultGoodsImage }}" lazy-load="{{ false }}" />
+                    <image src="{{ goodsImg }}" lazy-load="{{ false }}" />
                 </view>
                 <view class="asideInfo">
-                    <view class="priceShow">
-                        <text class="now">
-                            ￥{{ item.discountStatus && item.discountPrice || item.salePrice }}
-                        </text>
-                            <text class="old" a:if="{{ item.discountStatus }}">￥{{ item.salePrice }}</text>
+                    <view class="priceShow"> 
+                        <view hidden="{{ buyType }}">
+                            <text class="now">￥{{ goodsSku.salePrice }}</text> 
+                        </view>
+
+                        <view hidden="{{ !buyType }}">
+                            <text class="now">
+                                ￥{{ goodsSku.tuangouPrice }}
+                            </text>
+                            <text class="old">￥{{ goodsSku.salePrice }}</text>
+                        </view>
                     </view>
 
                     <view class="stock">
-                        <text>库存：{{ 40349 }}份</text>
+                        <text>库存：{{ goodsSku.store }}份</text>
                     </view>
                 </view>
             </view>
@@ -65,15 +75,15 @@
     <view class="buyNum">
         <view>购买数量</view>
         <view class="amountBox">
-            <text class="stepper stepper_minus" onTap="onReduceClick" data-skuid="{{ item.skuId }}">
+            <text class="stepper stepper_minus" onTap="onReduceClick">
             </text>
-            <text class="stepper_val">{{ 1 }}</text>
-                <text class="stepper stepper_plus" onTap="onPlusClick" data-skuid="{{ item.skuId }}">
-                </text>
+            <text class="stepper_val">{{ skuNum }}</text>
+            <text class="stepper stepper_plus" onTap="onPlusClick">
+            </text>
         </view>
     </view>
 
-    <view class="btnShow">
+    <view class="btnShow" onTap="onToPayClick">
         <button type="warn" hover-class="active">确认</button>
     </view>
 </popup>

@@ -1,4 +1,4 @@
-.shop_cartbox {
+.shop_cartTG {
     position: fixed;
     z-index: 10;
     left: 20rpx;
@@ -10,14 +10,14 @@
 }
 
 
-.shop_cartcontrol {
+.shop_cartTG .shop_cartcontrol {
     position: relative;
-    display: flex; 
+    display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.shop_cart {
+.shop_cartTG .shop_cart {
     width: 50%;
     border-radius: 57rpx;
     background-color: #333;
@@ -34,11 +34,11 @@
 
 
 /* 底部操作 */
-.shop_cart .iconList {
-   width: 50rpx;
+.shop_cartTG .shop_cart .iconList {
+    width: 50rpx;
 }
 
-.shop_cart .iconList .iconStyle {
+.shop_cartTG .shop_cart .iconList .iconStyle {
     font-size: 40rpx;
     color: #cdcdcd;
     display: block;
@@ -49,16 +49,16 @@
     color: #cdcdcd;
 }
 
-.shop_cart .iconList .name {  
-	font-size: 24rpx;  
+.shop_cartTG .shop_cart .iconList .name {
+    font-size: 24rpx;
     color: #666666;
-    display: block; 
+    display: block;
     text-align: center;
     margin: 10rpx auto 0;
 }
- 
+
 /* 结算按钮 */
-.shop_cartcontrol .actionBtnBox {
+.shop_cartTG .shop_cartcontrol .actionBtnBox {
     width: 360rpx;
     display: flex;
     flex-direction: row;
@@ -69,28 +69,28 @@
 
 .actionBtnBox .actionBtn {
     width: 180rpx;
-    padding: 6rpx 17rpx; 
+    padding: 6rpx 17rpx;
 }
 
 .actionBtnBox .actionBtn.btn_left {
-    border-bottom-right-radius: 0 ;
+    border-bottom-right-radius: 0;
     border-top-right-radius: 0;
     border-right: 0;
 }
 
 .actionBtnBox .actionBtn.btn_right {
-    border-bottom-left-radius: 0 ;
+    border-bottom-left-radius: 0;
     border-top-left-radius: 0;
     border-left: 0;
 }
 
-.am-button-content {
+.actionBtnBox .am-button-content {
     font-size: 32rpx;
-    line-height: 36rpx;
+    line-height: 32rpx;
     text-align: center;
 }
 
-.am-button-subtitle-subfont {
+.actionBtnBox .am-button-subtitle-subfont {
     font-size: 30rpx;
     line-height: normal;
     opacity: 1;
@@ -98,12 +98,12 @@
 }
 
 
-/* goodsAction_popup */
-.goodsAction_popup {
+/* goodsTG_popup */
+.goodsTG_popup {
     z-index: 6;
 }
 
-.goodsAction_popup .am-popup-bottom {
+.goodsTG_popup .am-popup-bottom {
     height: 566rpx;
     min-height: 566rpx;
     max-height: 80%;
@@ -119,13 +119,13 @@
 
 
 /* 购物车列表 */
-.cartListShow {
+.goodsTG_popup .cartListShow {
     padding: 0 30rpx;
     flex: 1;
     overflow-y: scroll;
 }
 
-.cartList {
+.goodsTG_popup .cartList {
     position: relative;
     display: flex;
     justify-content: left;
@@ -134,7 +134,7 @@
 
 }
 
-.cartList .figureImg {
+goodsTG_popup .cartList .figureImg {
     height: 120rpx;
     width: 120rpx;
     border: 1px solid #e6e6e6;
@@ -142,13 +142,13 @@
     overflow: hidden;
 }
 
-.cartList .figureImg image {
+.goodsTG_popup .cartList .figureImg image {
     display: block;
     height: 100%;
     width: 100%;
 }
 
-.cartList .asideInfo {
+.goodsTG_popup .cartList .asideInfo {
     height: 120rpx;
     flex: 1;
     margin-left: 30rpx;
@@ -158,17 +158,17 @@
     box-sizing: border-box;
 }
 
-.cartList .asideInfo .nameShow {
+.goodsTG_popup .cartList .asideInfo .nameShow {
     font-size: 26rpx;
     margin-bottom: 8rpx;
     flex: 1;
 }
 
-.cartList .asideInfo .tipInfo {
+.goodsTG_popup .cartList .asideInfo .tipInfo {
     margin-bottom: 20rpx;
 }
 
-.cartList .asideInfo .tipInfo .discounts {
+.goodsTG_popup .cartList .asideInfo .tipInfo .discounts {
     color: #ff0032;
     border: 1px solid #ff0032;
     border-radius: 6rpx;
@@ -177,33 +177,34 @@
 
 }
 
-.cartList .asideInfo .priceShow .now {
+.goodsTG_popup .cartList .asideInfo .priceShow .now {
     color: #ff0032;
     font-size: 32rpx;
     margin-right: 5rpx;
 }
 
-.cartList .asideInfo .priceShow .old {
+.goodsTG_popup .cartList .asideInfo .priceShow .old {
     color: #999999;
     font-size: 24rpx;
     text-decoration: line-through;
 }
 
-.cartList .asideInfo .stock {  
-	font-size: 26rpx; 
-	line-height: 30rpx; 
-	color: #333333;
+.goodsTG_popup .cartList .asideInfo .stock {
+    font-size: 26rpx;
+    line-height: 30rpx;
+    color: #333333;
 }
 
 /*  数字操作  */
-.amountBox {
+.goodsTG_popup .amountBox {
+    position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 170rpx;
 }
 
-.amountBox .stepper {
+.goodsTG_popup .amountBox .stepper {
     height: 44rpx;
     width: 44rpx;
     display: block;
@@ -212,15 +213,15 @@
     background-size: 100% 100%;
 }
 
-.amountBox .stepper_minus {
+.goodsTG_popup .amountBox .stepper_minus {
     background-image: url('/community/assets/images/amountBox/stepper_minus.png');
 }
 
-.amountBox .stepper_plus {
+.goodsTG_popup .amountBox .stepper_plus {
     background-image: url('/community/assets/images/amountBox/stepper_plus.png');
 }
 
-.amountBox .stepper_val {
+.goodsTG_popup .amountBox .stepper_val {
     display: block;
     font-size: 30rpx;
     flex: 1;
@@ -231,11 +232,12 @@
 .buyNum {
     display: flex;
     justify-content: space-between;
-	align-items: center;
-	box-sizing: border-box;
+    align-items: center;
+    box-sizing: border-box;
     padding: 44rpx 30rpx 50rpx;
     border-top: 1px solid #e6e6e6;
 }
+
 /* 确定按钮 */
 .btnShow {}
 
@@ -243,12 +245,17 @@
     display: block;
     height: 100rpx;
     background-color: #ff0032;
-    line-height: 100rpx;
     color: #ffffff;
     font-size: 36rpx;
+    border-radius: 0;
 }
+
 .btnShow button.active {
     background-color: #ffa3b6;
+}
+
+.btnShow button .am-button-content {
+    line-height: 50rpx;
 }
 
 

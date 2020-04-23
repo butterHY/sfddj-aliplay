@@ -33,6 +33,8 @@ Component({
       // console.log(this.data.goodsInfo)
     },
 
+
+    // 加入购物车
     addCar(e) {
       if (!this._adding) {
         this._adding = true;
@@ -69,6 +71,15 @@ Component({
           }
         });
       }
-    }
+    },
+
+    // 分享工能
+    share() {
+      const _this = this;
+      my.showSharePanel();
+    },
+    
+    
+
   },
 });

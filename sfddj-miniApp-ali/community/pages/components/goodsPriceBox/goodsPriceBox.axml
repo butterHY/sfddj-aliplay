@@ -1,6 +1,6 @@
 <view class="goodsPriceBox">
   <!-- 正常商品 -->
-  <block a:if="{{ goodsInfo.isTuangou }}">
+  <block a:if="{{ !goodsInfo.isTuangou }}">
     <view class="goodsName">
       <view class="nameShow">
         <text>{{ goodsInfo.title }} {{ defaultSku.iavValue }}</text>
@@ -16,7 +16,7 @@
           <text class="now_price">¥{{ defaultSku.discountPrice }}</text>
           <text class="old_price">¥{{ defaultSku.salePrice }}</text>
         </block>
-      </view> 
+      </view>
       <!-- 加购物车 -->
       <view class="addCarBtn">
         <button size="default" type="warn" onTap="addCar">加入购物车</button>
@@ -27,27 +27,22 @@
 
   <!-- 拼团商品 -->
   <block a:else>
-     <view class="goodsName">
+    <view class="goodsName">
       <view class="nameShow nameShowTG">
-        <text class="name">{{ goodsInfo.title }} {{ defaultSku.iavValue }}小程序编辑器 已被下一级设置覆盖已被下一级设置覆盖已被下一级设置覆盖已被下一级设置覆盖已被下一级设置覆盖</text>
-        <view class="shareBtn">
+        <text class="name">{{ goodsInfo.title }} {{ defaultSku.iavValue }}</text>
+        <view class="shareBtn" onTap="share">
           <text class="iconStyle icon-share"></text>
           <text>分享</text>
         </view>
-      </view> 
+      </view>
     </view>
     <view class="goodsPrice">
       <view class="priceBox">
-        <block a:if="{{ !defaultSku.isDiscount }}">
-          <text class="now_price">¥{{ defaultSku.salePrice }}</text>
-        </block>
-        <block a:else>
-          <text class="now_price">¥{{ defaultSku.discountPrice }}</text>
-          <text class="old_price">¥{{ defaultSku.salePrice }}</text>
-        </block>
-      </view> 
-      <view class="countShow">已拼{{ 3892 }}份 </view>
-       
+        <text class="now_price">¥{{ defaultSku.tuangouPrice }}</text>
+        <text class="old_price">¥{{ defaultSku.salePrice }}</text>
+      </view>
+      <view class="countShow">已拼{{ '未定义' }}份 </view>
+
     </view>
   </block>
 </view>

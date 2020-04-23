@@ -1,6 +1,6 @@
 <view class="userListBox">
   <view class="step_title">
-    <text class="titleName">10人团，10人在拼单，可直接参与</text>
+    <text class="titleName">{{ leader.tuangouCount }}人团，{{ leader.tuangouIng }}人在拼单，可直接参与</text>
     <text class="titleLink" onTap="onModalOpen">查看更多</text>
   </view>
   <view class="step_list">
@@ -8,39 +8,21 @@
       <view class="listCell hasBg">
         <view class="tit_l">
           <view class="userImg">
-            <image src="{{ baseImageUrl }}{{ storeShow.shopLogo }}"/>
+            <image src="{{ baseImageUrl }}{{ leader.memberImagePath }}"/>
           </view>
-          <view class="userName">{{ storeShow.shopName }}</view>
+          <view class="userName">{{ leader.userName }}</view>
         </view>
         <view class="tit_r">
           <view class="timeShow">
-            <view class="countNum">{{ '还差7人' }}</view>
-            <view class="timeCut">剩余19:34:09:56</view>
+            <view class="countNum">还差{{ leader.tuangouIng }}人</view>
+            <view class="timeCut">剩余{{ leader.timer }}</view>
           </view>
           <button class="shop_like">去拼团</button>
         </view>
       </view>
     </view>
     <!-- 拼团用户列表 -->
-    <view class="listMain">
-      <view class="listUl" style="display:none;"> 
-        <block a:for="{{ userList }}">
-          <view class="listLi">
-            <view class="listCell">
-              <view class="tit_l">
-                <view class="userImg">
-                  <image src="{{ baseImageUrl }}{{ item.shopLogo }}"/>
-                </view>
-                <view class="userName">{{ item.shopName }}</view>
-              </view>
-              <view class="tit_r">
-                <view class="letter">已支付</view>
-              </view>
-            </view>
-          </view>
-        </block>
-      </view>
-
+    <view class="listMain"> 
       <swiper class="listUl" 
         disable-touch="{{ true }}"
         vertical="{{ swiperOpt.vertical }}"
@@ -54,9 +36,9 @@
                 <view class="listCell">
                   <view class="tit_l">
                     <view class="userImg">
-                      <image src="{{ baseImageUrl }}{{ item.shopLogo }}"/>
+                      <image src="{{ baseImageUrl }}{{ item.memberImagePath }}"/>
                     </view>
-                    <view class="userName">{{ item.shopName }}</view>
+                    <view class="userName">{{ item.userName }}</view>
                   </view>
                   <view class="tit_r">
                     <view class="letter">已支付</view>
@@ -91,9 +73,9 @@
           <view class="listCell">
             <view class="tit_l">
               <view class="userImg">
-                <image src="{{ baseImageUrl }}{{ item.shopLogo }}"/>
+                <image src="{{ baseImageUrl }}{{ item.memberImagePath }}"/>
               </view>
-              <view class="userName">{{ item.shopName }}</view>
+              <view class="userName">{{ item.userName }}</view>
             </view>
             <view class="tit_r">
               <view class="letter">已支付</view>
