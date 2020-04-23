@@ -13,7 +13,7 @@ Page({
         orderTypeCode: [['ALL', 'NOPAY', 'PAYFINISH', 'COMMENT', 'AFTERSALE'], [0, 1, 2]],       // 获取数据列表的类型
 
         typeIndexList: [0, 0],
-        orderList: [[], [], [], [], []],       //保存订单数据
+        orderList: [[[], [], [], [], []], [[], [], []]],       //保存订单数据
         pinOrderList: [[], [], []],           //拼团订单数据
         hasMoreList: [[true, true, true, true, true], [true, true, true]],                      //是否还有下一页
         isLoadedList: [[false, false, false, false, false], [false, false, false]],            //是否加载过了
@@ -26,6 +26,7 @@ Page({
         // noPayCounting: false,      // 未支付状态订单是否在使用倒计时
         isCounting: [false, false, false, false, false],    //对应的订单状态是否在使用倒计时
         isLoadingList: [[false, false, false, false, false], [false, false, false]],    //是否正在加载
+        orderListNum: [{ count: 0, orderPageEnum: "ALL" }, { count: 0, orderPageEnum: "NOPAY" }, { count: 0, orderPageEnum: "PAYFINISH" }, { count: 0, orderPageEnum: "COMMENT" }, { count: 0, orderPageEnum: "AFTERSALE" }],               //o2o订单状态的数量
     },
     onLoad(options) {
         let index = options.index ? options.index : 0;
@@ -37,6 +38,7 @@ Page({
 
     onShow() {
         this.getOrderList(0, this.data.orderList[this.data.typeIndex].length)
+        this.data.tabIndex == 0 ? this.setComOrderNum() : '';
     },
 
     onUnload() {
@@ -60,6 +62,15 @@ Page({
         }
     },
 
+    setComOrderNum() {
+		post(api.O2O_ORDER.getOrderNum, {}, res => {
+			let result = res.data.data && Object.keys(res.data.data).length > 0 ? res.data.data : [{ count: 0, orderPageEnum: "ALL" }, { count: 0, orderPageEnum: "NOPAY" }, { count: 0, orderPageEnum: "PAYFINISH" }, { count: 0, orderPageEnum: "COMMENT" }, { count: 0, orderPageEnum: "AFTERSALE" }];
+			this.setData({
+				orderNumList: result
+			})
+		}, err => { })
+	},
+
     // 获取订单列表
     getOrderList(type = '', setLimit) {
         let that = this;
@@ -73,10 +84,11 @@ Page({
         let index = typeIndexList[tabIndex];
         let setHasMore = 'hasMoreList[' + tabIndex + '][' + index +']';
         let setLoaded = 'isLoadedList[' + tabIndex + '][' + index +']';
-        let setOrderList = tabIndex == 0 ?  'orderList[' + index + ']' : 'pinOrderList[' + index + ']';
+        let setOrderList = 'orderList[0][' + index + ']';
+        // let setOrderList = tabIndex == 0 ?  'orderList[' + index + ']' : 'pinOrderList[' + index + ']';
         let setCountList = 'countList[' + index + ']';
         let setLoadingList = 'isLoadingList[' + tabIndex + '][' + index +']';
-        let nowOrderList = tabIndex == 0 ? orderList[index] : pinOrderList[index];
+        let nowOrderList = orderList[0][index];
         limit = setLimit && setLimit > 10 ? setLimit + 1 : limit;
 
         // 如果type == 0则视为刷新
@@ -108,8 +120,8 @@ Page({
                 let handleList = that.handleGoods(result);
                 result = handleList.goodsList;
                 let { countList } = handleList;
-                let newestList = start == 0 ? Object.assign([], result) : orderList[index].concat(result);
-                let newestCountList = start == 0 ? Object.assign([], countList) : orderList[index].concat(countList);
+                let newestList = start == 0 ? Object.assign([], result) : orderList[tabIndex][index].concat(result);
+                let newestCountList = start == 0 ? Object.assign([], countList) : orderList[tabIndex][index].concat(countList);
                 that.setData({
                     [setHasMore]: result.length >= limit ? true : false,
                     [setLoaded]: true,
@@ -134,10 +146,11 @@ Page({
         let index = typeIndexList[1];
         let setHasMore = 'hasMoreList[1][' + index +']';
         let setLoaded = 'isLoadedList[1][' + index +']';
-        let setOrderList = tabIndex == 0 ?  'orderList[' + index + ']' : 'pinOrderList[' + index + ']';
+        let setOrderList = 'orderList[1][' + index + ']';
+        // let setOrderList = tabIndex == 0 ?  'orderList[' + index + ']' : 'pinOrderList[' + index + ']';
         let setCountList = 'countList[' + index + ']';
         let setLoadingList = 'isLoadingList[1][' + index +']';
-        let nowOrderList = tabIndex == 0 ? orderList[index] : pinOrderList[index];
+        let nowOrderList = orderList[1][index];
         limit = setLimit && setLimit > 10 ? setLimit + 1 : limit;
 
         // 如果type == 0则视为刷新
@@ -169,7 +182,7 @@ Page({
                 let handleList = that.handleGoods(result);
                 result = handleList.goodsList;
                 let { countList } = handleList;
-                let newestList = start == 0 ? Object.assign([], result) : orderList[index].concat(result);
+                let newestList = start == 0 ? Object.assign([], result) : orderList[tabIndex][index].concat(result);
                 let newestCountList = start == 0 ? Object.assign([], countList) : orderList[index].concat(countList);
                 that.setData({
                     [setHasMore]: result.length >= limit ? true : false,
@@ -256,13 +269,14 @@ Page({
     loadMoreList() {
         let { tabIndex, hasMoreList, orderList, pinOrderList, startList, typeIndexList } = this.data;
         let index = typeIndexList[tabIndex];
-        let listLen = tabIndex == 0 ? orderList[index].length : pinOrderList[index].length;
+        let listLen = orderList[tabIndex][index].length;
         // 如果还有数据则加载更多
         if (hasMoreList[tabIndex][index].toString() == 'true') {
             let setStart = 'startList[' + tabIndex + '][' + index + ']';
             this.setData({
                 [setStart]: listLen
             })
+            console.log(tabIndex,index, listLen, this.data.startList)
             this.getOrderList();
         } else {
             return
@@ -399,12 +413,14 @@ Page({
     // tab栏点击
     handleTabClick(e) {
         let { index } = e;
-        let { tabIndex } = this.data;
+        let { tabIndex, isLoadedList } = this.data;
         if (index != tabIndex) {
             this.setData({
                 tabIndex: index
             })
-            // if()
+            if(isLoadedList[tabIndex][index].toString() == 'false') {
+                this.getOrderList();
+            }
         }
     },
     // 顶部tab栏切换

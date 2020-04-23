@@ -5,7 +5,7 @@ var sendRequest = require('../../utils/sendRequest');
 var utils = require('../../utils/util');
 var app = getApp();
 
-import { api, post} from '/api/http';
+import { api, post } from '/api/http';
 
 Page({
 
@@ -37,7 +37,7 @@ Page({
 	/**
 	 * 生命周期函数--监听页面加载
 	 */
-	onLoad: function(options) {
+	onLoad: function (options) {
 		var that = this;
 		// this.getMemberInfo();
 
@@ -47,7 +47,7 @@ Page({
 		my.uma.trackEvent('myInfoView');
 	},
 
-	bindPhone: function(e) {
+	bindPhone: function (e) {
 		my.navigateTo({
 			url: '/pages/user/bindPhone/bindPhone'
 		});
@@ -56,7 +56,7 @@ Page({
 	/**
 	 * 生命周期函数--监听页面初次渲染完成
 	 */
-	onReady: function() { },
+	onReady: function () { },
 
 	// 判断有无授过权
 	judgeAuthorize() {
@@ -83,7 +83,7 @@ Page({
 	/**
 	 * 生命周期函数--监听页面显示
 	 */
-	onShow: function() {
+	onShow: function () {
 		var that = this;
 		// utils.getNetworkType(this);
 		that.getMemberInfo();
@@ -100,9 +100,9 @@ Page({
 		that.isHasOrder();
 	},
 
-	getMemberInfo: function() {
+	getMemberInfo: function () {
 		var that = this;
-		sendRequest.send(constants.InterfaceUrl.USER_USERINFO, {}, function(res) {
+		sendRequest.send(constants.InterfaceUrl.USER_USERINFO, {}, function (res) {
 			// that.getMaterialPic()  //广告位轮播
 
 			that.getMemberWebCall();
@@ -143,7 +143,7 @@ Page({
 				loadFail: false
 			});
 			if (isMember) {
-				sendRequest.send(constants.InterfaceUrl.ORDER_LIST_COUNT, {}, function(res) {
+				sendRequest.send(constants.InterfaceUrl.ORDER_LIST_COUNT, {}, function (res) {
 					var result = res.data.result;
 					if (result) {
 						that.setData({
@@ -153,11 +153,11 @@ Page({
 							noCommentCount: result.noCommentCount
 						});
 					}
-				}, function(err) {
+				}, function (err) {
 
 				});
 			}
-		}, function(err) {
+		}, function (err) {
 			that.setData({
 				loadFail: true
 			})
@@ -167,39 +167,39 @@ Page({
 	/**
 	* 获取轮播图资源
 	*/
-	getMaterialPic: function() {
+	getMaterialPic: function () {
 		var that = this;
-		sendRequest.send(constants.InterfaceUrl.GET_MATERIALGROUP, { groupName: '个人中心轮播' }, function(res) {
+		sendRequest.send(constants.InterfaceUrl.GET_MATERIALGROUP, { groupName: '个人中心轮播' }, function (res) {
 			that.setData({
 				material: res.data.result.material
 			});
-		}, function(err) {
+		}, function (err) {
 		}, 'GET');
 	},
 
 	/**
 	 * 获取个人资料接口获取联系客服
 	 * */
-	getMemberWebCall: function() {
+	getMemberWebCall: function () {
 		var that = this;
-		sendRequest.send(constants.InterfaceUrl.POST_MEMBER_INFOLIST, {}, function(res) {
+		sendRequest.send(constants.InterfaceUrl.POST_MEMBER_INFOLIST, {}, function (res) {
 			let myInfoData = res.data.result ? res.data.result : {}
 			that.setData({
 				webCallParam: res.data.result.webCallParam ? res.data.result.webCallParam : '',
 				myInfoData: myInfoData
 			});
-		}, function(err) { }, 'POST');
+		}, function (err) { }, 'POST');
 	},
 
 	/**
 	 * 生命周期函数--监听页面卸载
 	 */
-	onUnload: function() { },
+	onUnload: function () { },
 
 	/**
 	 * 页面上拉触底事件的处理函数
 	 */
-	onReachBottom: function() { },
+	onReachBottom: function () { },
 
 	/**
 	 * 用户点击右上角分享
@@ -211,14 +211,14 @@ Page({
 	/**
 	 * 去我的账号，可更换号码
 	 * */
-	goToMyAccount: function(e) {
+	goToMyAccount: function (e) {
 		var phoneNum = e.currentTarget.dataset.myphone;
 		my.navigateTo({
 			url: '/pages/user/bindPhone/changePhoneNum/changePhoneNum?myPhone=' + phoneNum
 		});
 	},
 
-	goToTargetPage: function(e) {
+	goToTargetPage: function (e) {
 		var that = this;
 		var type = e.currentTarget.dataset.type;
 		if (e.currentTarget.dataset.url == '/pages/user/myCoupon/myCoupon') {
@@ -233,7 +233,7 @@ Page({
 			if (that.data.goToUrl != 'pages/user/user') {
 				my.navigateTo({
 					url: that.data.goToUrl
-          // url: `${that.data.goToUrl}?webCallParam=${that.data.webCallParam}`
+					// url: `${that.data.goToUrl}?webCallParam=${that.data.webCallParam}`
 				});
 			} else {
 				return;
@@ -247,20 +247,20 @@ Page({
 	// 	let chInfo = constants.UrlConstants.chInfo
 	// 	my.call('startApp', { appId: '20000067', param: { url: url, chInfo: chInfo } })
 	// },
-  
+
 	// 跳转去原生的优惠券页
 	goToCoupon() {
-			// 友盟+统计--签到页浏览
-			this.umaTrackEvent('coupon')
+		// 友盟+统计--签到页浏览
+		this.umaTrackEvent('coupon')
 		my.navigateTo({ url: './myCoupon/myCoupon' })
 	},
 
 	// 获取手机号
-	getPhoneNumber: function(e) {
+	getPhoneNumber: function (e) {
 		var that = this;
 
 		this.myGetPhone(e);
-		
+
 
 	},
 
@@ -272,7 +272,7 @@ Page({
 				let response = res.response
 				sendRequest.send(constants.InterfaceUrl.USER_BINGMOBILEV4, {
 					response: response,
-				}, function(res) {
+				}, function (res) {
 					try {
 						my.setStorageSync({ key: constants.StorageConstants.tokenKey, data: res.data.result.loginToken });
 						my.setStorageSync({ key: 'user_memId', data: res.data.result.memberId });
@@ -290,17 +290,17 @@ Page({
 					if (that.data.goToUrl == 'pages/user/user') {
 						my.navigateTo({
 							url: 'pages/user/user',
-							success: function(res) {
+							success: function (res) {
 								that.getMemberInfo();
 							},
-							fail: function(res) { }
+							fail: function (res) { }
 						});
 					} else {
 						my.navigateTo({
 							url: that.data.goToUrl
 						});
 					}
-				}, function(res) {
+				}, function (res) {
 					my.showToast({
 						content: res
 					})
@@ -328,7 +328,7 @@ Page({
 	},
 
 	// 获取用户信息，授权 
-	getUserInfo: function(e) {
+	getUserInfo: function (e) {
 		var detail = e.detail;
 		var that = this;
 		if (e.detail.errMsg == "getUserInfo:ok") {
@@ -356,7 +356,7 @@ Page({
 							iv: detail.iv,
 							signature: detail.signature
 						},
-						success: function(res) {
+						success: function (res) {
 							if (res.data.errorCode == '0001') {
 								try {
 									my.setStorageSync({ key: constants.StorageConstants.tokenKey, data: res.data.result.loginToken });
@@ -375,7 +375,7 @@ Page({
 	},
 
 	// 轮播图改变
-	swiperChange: function(e) {
+	swiperChange: function (e) {
 		var current = e.detail.current;
 		var that = this;
 		// that.setData({
@@ -384,7 +384,7 @@ Page({
 		that.setCurrentIndexFn(current);
 	},
 	// 手动调currentIndex
-	setCurrentIndexFn: function(index) {
+	setCurrentIndexFn: function (index) {
 		var that = this;
 		that.setData({
 			currentIndex: index
@@ -394,7 +394,7 @@ Page({
 	/**
 	 * 轮播图跳转
 	 * */
-	goToLink: function(e) {
+	goToLink: function (e) {
 		var isLink = e.currentTarget.dataset.islink;
 		var url = e.currentTarget.dataset.url;
 		var goodsSn = e.currentTarget.dataset.goodssn;
@@ -428,7 +428,7 @@ Page({
 	},
 
 	// 跳去客服网页版
-	goToWebCall: function() {
+	goToWebCall: function () {
 		var that = this;
 		var webCallLink = that.data.webCallParam;
 		// 友盟+统计--签到页浏览
@@ -442,13 +442,13 @@ Page({
 		} catch (e) { }
 		my.navigateTo({
 			// url: '/pages/user/webCallView/webCallView?link=' + webCallLink + '&newMethod=new'
-      url: `/pages/user/helpCenter/helpCenter?webCallParam=${that.data.webCallParam}`
+			url: `/pages/user/helpCenter/helpCenter?webCallParam=${that.data.webCallParam}`
 		});
 	},
 
 	// 跳转去h5的签到页
 	goToH5SignIn() {
-    my.navigateTo({
+		my.navigateTo({
 			url: '/pages/activities/signIn/signIn'
 		});
 		// let signInUrl = constants.UrlConstants.baseUrlOnly + '/h/personal/signIn'
@@ -483,23 +483,23 @@ Page({
 	/**
    * 获取购物车数量
    */
-	getCartNumber: function() {
+	getCartNumber: function () {
 		var app = getApp();
 		app.getCartNumber();
 	},
 
 	// 判断是否有订单
-	isHasOrder(){
+	isHasOrder() {
 		let that = this;
 		let data = {
 			start: 0,
 			limit: 10,
 			otoOrderPageEnum: 'ALL'
 		}
-		if(!this.data.hasList) {
-			
+		if (!this.data.hasList) {
+
 			post(api.O2O_ORDER.getOrderList, data, res => {
-				if(res.data.data && Object.keys(res.data.data).length > 0) {
+				if (res.data.data && Object.keys(res.data.data).length > 0) {
 					that.setComOrderNum();
 					that.setData({
 						hasList: true
@@ -516,13 +516,13 @@ Page({
 	},
 
 	setComOrderNum() {
-			post(api.O2O_ORDER.getOrderNum, {}, res => {
-				let result = res.data.data && Object.keys(res.data.data).length > 0 ? res.data.data : [{count: 0, orderPageEnum: "ALL"}, {count: 0, orderPageEnum: "NOPAY"}, {count: 0, orderPageEnum: "PAYFINISH"}, {count: 0, orderPageEnum: "COMMENT"}, {count: 0, orderPageEnum: "AFTERSALE"}];
-				this.setData({
-					orderNumList: result
-				})
-			}, err => { })
-		},
+		post(api.O2O_ORDER.getOrderNum, {}, res => {
+			let result = res.data.data && Object.keys(res.data.data).length > 0 ? res.data.data : [{ count: 0, orderPageEnum: "ALL" }, { count: 0, orderPageEnum: "NOPAY" }, { count: 0, orderPageEnum: "PAYFINISH" }, { count: 0, orderPageEnum: "COMMENT" }, { count: 0, orderPageEnum: "AFTERSALE" }];
+			this.setData({
+				orderNumList: result
+			})
+		}, err => { })
+	},
 
 
 });
