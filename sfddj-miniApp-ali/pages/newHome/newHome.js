@@ -110,6 +110,14 @@ Page({
 		let isSuccess = await that.getAdvertsModule();                  // 获取广告模板数据											
 		// isSuccess.type ? this.getTimes('isFirstTime') : '';          // 获取秒杀模板数据			---- 移到组件
 
+		// 定位中判断
+		let userLocInfo = getApp().globalData.userLocInfo;
+		if( userLocInfo && Object.keys(userLocInfo).length > 0) {
+			this.setData({
+				isLocationLoad: false
+			})
+		}
+
 	},
 
 	onShow: function () {
@@ -170,6 +178,7 @@ Page({
 				});
 				// 设置缓存并设置全部变量的值 globalData.userLocInfo 
 				app.setLocStorage(_this.data.locInfo, function () {
+					console.log('setLocStorge',app.globalData)
 					_this.locStoreShow();
 				});
 
@@ -240,7 +249,7 @@ Page({
 			}
 		}, (err) => { });
 	},
-	storeEnter(ref) {
+	storeEnterRef(ref) {
 		this.storeEnter = ref;
 	},
 
