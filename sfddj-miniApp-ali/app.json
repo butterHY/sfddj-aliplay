@@ -71,7 +71,8 @@
         "pages/afterSales/afterSales",
         "pages/afterSalesDetail/afterSalesDetail",
         "pages/addressEdit/addressEdit",
-        "pages/goodsDetailTG/goodsDetailTG"
+        "pages/tuanDetail/tuanDetail",
+        "pages/tuanHelper/tuanHelper"
       ]
     }
   ],

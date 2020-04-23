@@ -100,11 +100,17 @@ class Shop extends app.Service {
     // 取指定店铺的商品列表
     getGoodsOfShop(shopId, categoryId, pageIdx, callbackFun) {
         let pageSize = 20;
-        http.get(api.Shop.GETGOODSOFSHOP + shopId, {
-            categoryId: categoryId,
+        let ps = {
             start: pageIdx * pageSize,
             limit: pageSize
-        }, (res) => {
+        };
+        // 取团购商品所传的参数不同
+        if(categoryId == -1) {
+            ps.isTuangou = 1;
+        } else {
+            ps.categoryId = categoryId;
+        }
+        http.get(api.Shop.GETGOODSOFSHOP + shopId, ps, (res) => {
             if(res.data && res.data.data) {
                 res.data.data.forEach((T) => {
                     if(T.goodsImagePath) {
@@ -161,7 +167,37 @@ class Shop extends app.Service {
             }
         }, (err) => {
             if(callbackFun) {
-                callbackFun(err);
+                callbackFun(undefined, err);
+            }
+        });
+    }
+
+
+    // 获取团购活动详情
+    // 用户还未参与团购时用这个方法取得团购信息
+    getTuanGouDetail(activityId, callbackFun) {
+        http.post(api.Shop.TUANGOUDETAIL, {
+            activityId: activityId
+        }, (res) => {
+            if(res && res.data && res.data.data) {
+                if(res.data.data.goodsDefaultImage) {
+                    res.data.data.goodsDefaultImage = JSON.parse(res.data.data.goodsDefaultImage);
+                    res.data.data.goodsDefaultImage = res.data.data.goodsDefaultImage.map((T) => {
+                        return api.baseImageUrl + T;
+                    });
+                }
+                if(res.data.data.tuangouMemberList) {
+                    res.data.data.tuangouMemberList.forEach((T) => {
+                        T.memberImagePath = api.baseImageUrl + T.memberImagePath;
+                    });
+                }
+            }
+            if(callbackFun) {
+                callbackFun(res);
+            }
+        }, (err) => {
+            if(callbackFun) {
+                callbackFun(undefined, err);
             }
         });
     }

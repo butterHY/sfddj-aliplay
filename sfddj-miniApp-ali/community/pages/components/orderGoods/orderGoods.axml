@@ -6,9 +6,9 @@
     <!-- 商品 -->
     <view class="order_goods_list">
         <block a:for="{{goodsList}}">
-            <!-- <block a:if="{{item.store > 0}}"> -->
+            <block a:if="{{item.store > 0}}">
                 <template is="itemOrderGoods" data="{{item, type}}"></template>
-            <!-- </block> -->
+            </block>
         </block>
     </view>
     <!-- 配送费 -->

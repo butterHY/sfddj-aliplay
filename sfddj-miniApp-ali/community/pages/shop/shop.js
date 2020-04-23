@@ -27,6 +27,10 @@ Page({
 
         this.shop.getCategories(this.shopId, (res2) => {
           if(res2 && res2.data && res2.data.data) {
+            if(res.data.data.hadTuangou) {
+              // 如果有设置团购，则需在左侧的类目中加入“社区团购”
+              res2.data.data.splice(0, 0, {id: -1, name: '社区团购'});
+            }
             this.setData({
               'categories': res2.data.data
             });
@@ -77,12 +81,6 @@ Page({
           if(res.data.data.length > 0) {
             this.nextPageIdx++;
             this.$spliceData({items: [this.data.items.length, 0, ...res.data.data]});
-          } else {
-            if(this.nextPageIdx == 0) {
-              this.setData({
-                resultmsg: '未搜索到相关产品~'
-              });
-            }
           }
         }
       });
@@ -121,13 +119,13 @@ Page({
     //   }
     // }
   },
-  onSearchConfirm(e) {
+  onSearchConfirm(e) { // 提交搜索
     if(this.data.shop && this.data.searchVal) {
       my.hideKeyboard();
       this.$spliceData({items: [0]});
       this.setData({
         isSearch: true,
-        selectedCategoryId: -1
+        selectedCategoryId: -99
       }, () => {
         this.setData({
           resultmsg: ''
@@ -149,7 +147,7 @@ Page({
   onSearchClear() {
     this.onSearchCancel();
   },
-  onSearchCancel() {
+  onSearchCancel() { // 取消搜索，展示类目中第一个类目的商品列表
     this.setData({searchVal: ''});
     if(this.data.categories && this.data.categories.length > 0 && this.data.isSearch) {
       this.setData({isSearch: false}, () => {
