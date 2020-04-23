@@ -26,11 +26,16 @@ Page({
         totalPrice: 0,           //总价格
         defaultAddress: {},      //商家配送时的地址
         result: {},
+        recordId: null,        //社区拼团商品购买需要的
+        skuId: null,        //社区拼团商品购买需要的
+        quantity: 1,        //社区拼团商品购买需要的
+        isTuangou: false,     //是否是拼团商品
     },
     onLoad(options) {
-        let { shopid } = options;
-        this.cart = Cart.init(this);
+        let { shopid, recordId, skuId, quantity } = options;
+        // 普通购买
         if (shopid) {
+            this.cart = Cart.init(this);
             this.setData({
                 shopid
             })
@@ -38,6 +43,16 @@ Page({
             this.getCartService(shopid);
 
             this.getOrderData(shopid);
+        } else {
+            if (recordId && skuId) {
+                this.setData({
+                    recordId,
+                    skuId,
+                    quantity,
+                    isTuangou: true
+                })
+                this.getPinOrderData();
+            }
         }
 
     },
@@ -105,12 +120,12 @@ Page({
                             let noneStoreStr = noneStoreList.join('、');
                             my.confirm({
                                 // title: '删除地址',
-                                content:  `${noneStoreStr +  '已售罄，是否继续下单？'}`,
+                                content: `${noneStoreStr + '已售罄，是否继续下单？'}`,
                                 confirmButtonText: '是',
                                 cancelButtonText: '否',
                                 success: (result) => {
                                     if (result.confirm) {
-                                       
+
                                     }
                                     else {
                                         // 取消
@@ -139,6 +154,48 @@ Page({
                 content: err ? err : '很抱歉，暂时无法购买',
                 complete: () => {
                     my.navigateBack({});
+                }
+            })
+        })
+    },
+
+    // 获取拼团商品确认订单数据
+    getPinOrderData() {
+        let { recordId, skuId, quantity } = this.data;
+        let data = {
+            recordId,
+            skuId,
+            quantity
+        }
+        post(api.O2O_ORDERCONFIRM.confirmTuangou, data, res => {
+            console.log('[[getPinOrder--0', res)
+            let result = res.data.data ? res.data.data : {};
+            if (Object.keys(result).length > 0) {
+                let shopCartList = result.items ? result.items : [];
+                shopCartList.forEach((val, i, arr) => {
+                    val.goodsImagePath = this.data.baseImageUrl + val.productImg;
+                    val.salePrice = val.price;
+                    val.name = val.goodsName;
+                    val.skuValue = val.productName;
+                })
+                this.setData({
+                    result: result,
+                    confirmToken: result.confirmToken,    //防止重复提交的token
+                    shopTotalPrice: result.price,
+                    shopCartList: shopCartList,       
+                    shopName: result.name,     // 商家名称
+                    deliveryFee: result.deliveryOutGratis && result.deliveryOutGratis > 0 ? (result.deliveryFee && result.price < result.deliveryOutGratis ? result.deliveryFee : 0) : result.deliveryFee,    // 配送费
+                    deliveryOutGratis: result.deliveryOutGratis ? result.deliveryOutGratis : 0,
+                    totalPrice: result.price,
+
+                })
+            console.log('[[getPinOrder--01111', this.data.shopCartList)
+            }
+        }, err => {
+            my.showToast({
+                content: err,
+                complete: () => {
+                    my.navigateBack();
                 }
             })
         })
@@ -209,7 +266,9 @@ Page({
                         city: defaultAddress.city ? defaultAddress.city : '',
                         district: defaultAddress.area ? defaultAddress.area : '',
                         street: defaultAddress.street ? defaultAddress.street : '',
-                        detail: defaultAddress.locate + defaultAddress.address
+                        detail: defaultAddress.locate + defaultAddress.address,
+                        latitude: defaultAddress.latitude ? defaultAddress.latitude : '',
+                        longitude: defaultAddress.longitude ? defaultAddress.longitude : ''
                     })
                     this.createPayOrder(data);
                 } else {
