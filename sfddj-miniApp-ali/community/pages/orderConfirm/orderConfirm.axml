@@ -24,7 +24,7 @@
             <choose-addr defaultAddress="{{defaultAddress}}" shopId="{{shopid}}"></choose-addr>
         </block>
         <!-- 商品信息 -->
-        <order-goods goodsList="{{shopCartList}}" shopName="{{shopName}}" typeIndex="{{typeIndex}}" shopTotalPrice="{{shopTotalPrice.toFixed(2)}}" deliveryOutGratis="{{deliveryOutGratis}}" deliveryFee="{{deliveryFee}}" totalPrice="{{totalPrice.toFixed(2)}}" result="{{result}}"></order-goods>
+        <order-goods goodsList="{{shopCartList}}" shopName="{{shopName}}" typeIndex="{{typeIndex}}" shopTotalPrice="{{shopTotalPrice.toFixed(2)}}" deliveryOutGratis="{{deliveryOutGratis}}" deliveryFee="{{deliveryFee}}" totalPrice="{{totalPrice.toFixed(2)}}" result="{{result}}" isTuangou="{{isTuangou}}"></order-goods>
         <!-- 应付金额 -->
         <payable-sum totalPrice="{{totalPrice.toFixed(2)}}"></payable-sum>
         <!-- 留言 -->
