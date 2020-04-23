@@ -1,55 +1,39 @@
 <!-- TODO: 这里放最上面的“定位” -->
-<!-- <view class="locationBox">
-	<view class="locCityShow">
-		<view class="cityInfo" onTap="goLocationCity">
-			<view class="city">{{ locInfo.city }}</view>
-			<view class="address">
-				<view class="line"></view>
-				<text class="iconStyle icon-address"></text> 
-				{{ locInfo.streetShow }}
-			</view>
-		</view> 
-	</view>
-</view> -->
+<!--<view class="locationBox"><view class="locCityShow"><view class="cityInfo" onTap="goLocationCity"><view class="city">{{ locInfo.city }}</view><view class="address"><view class="line"></view><text class="iconStyle icon-address"></text> 
+				{{ locInfo.streetShow }}</view></view></view></view> -->
 <!-- 关注公众号组件 和搜索的组件 -->
-<!-- <view>
-  <lifestyle a:if="{{canUseLife}}" publicId='2016071501623328'/>
-  <view class="width_100" style="height: 120rpx;" catchTap="showSearch">
-    <view class="{{!canUseLife || hideLifeStyle ? 'posi_fix' : ''}} width_100" style="top: 0; left: 0; z-index: 100;">
-      <view catchTap="showSearch">
-        <template is="search" data="{{baseLocImgUrl, placeholder, pageType: 'home'}}"></template>  
-      </view>
-    </view>
-  </view>
-</view> -->
+<!--<view><lifestyle a:if="{{canUseLife}}" publicId='2016071501623328'/><view class="width_100" style="height: 120rpx;" catchTap="showSearch"><view class="{{!canUseLife || hideLifeStyle ? 'posi_fix' : ''}} width_100" style="top: 0; left: 0; z-index: 100;"><view catchTap="showSearch"><template is="search" data="{{baseLocImgUrl, placeholder, pageType: 'home'}}"></template></view></view></view></view> -->
 <!-- ----------------------------------  新页面 ------------------------------------------------------------ -->
 <import src="../common/new_adverts"></import>
 <import src="../common/waterFallBanner"></import>
 <import src="../common/item-goods-card"></import>
 <import src="../common/search"></import>
 <import-sjs name="filters" from="../wxsFile/public.sjs"></import-sjs>
-
 <!-- 内容 -->
 <view class="page flex_view_col overHid posi_re" style="padding-top: {{topContentHeight}}rpx;">
   <view id="js_topContent" class="topContent width_100" style="position: fixed; top: 0; left: 0; z-index: 10000; box-sizing:border-box;">
-    <!-- TODO: 这里放最上面的“定位” --> 
-    <view class="locationBox">
-      <view class="locCityShow">
-        <view class="cityInfo" onTap="goLocationCity">
-          <view class="city">{{ locInfo.city }}</view>
-          <view class="address">
-            <view class="line"></view>
-            <text class="iconStyle icon-address"></text> 
-            {{ locInfo.streetShow }}
-          </view>
-        </view> 
+    <!-- TODO: 这里放最上面的“定位” -->
+    <view class="locCityShow">
+      <view a:if="{{ isLocationLoad && !isGetLocation }}" class="cityInfo" onTap="goLocationCity">
+        <text class="city">定位中...</text>
+      </view>
+      <view a:elif="{{isGetLocation && !isLocationLoad}}" class="cityInfo" onTap="goLocationCity">
+        <view class="city">{{ locInfo.city }}</view>
+        <view class="address">
+          <view class="line"></view>
+          <text class="iconStyle icon-address"></text> 
+				{{ locInfo.streetShow }}
+        </view>
+      </view>
+      <view a:else class="cityInfo" onTap="goLocationCity">
+        <text class="city">无法自动获取地址，请手动选择地址</text>
       </view>
     </view>
     <!-- 关注公众号组件 和搜索的组件 -->
     <lifestyle a:if="{{canUseLife}}" publicId='2016071501623328'/>
     <!-- 搜索部分 -->
     <!-- style="position: fixed; top: 0; left: 0; z-index: 10000; box-sizing:border-box;" -->
-    <view class="flex_view_row home_searchBox whiteBack align_cen width_100" >
+    <view class="flex_view_row home_searchBox whiteBack align_cen width_100">
       <!-- 消息 -->
       <navigator url="/pages/user/webView/webView?link={{baseUrlOnly + '/365webcall/messageList'}}" hover-class="none" class="home_message">
         <text class="icon-message_index1 font-42 color-666"></text>
@@ -60,7 +44,7 @@
           <!-- 搜索icon -->
           <text class="icon-search_home marRight_15 font-28 color-c6c6c6"></text>
           <text class="font-26 color-999999">{{placeholder}}</text>
-          <!-- <text class="font-24 color-b5b5b5" decode="{{true}}">&nbsp;[推荐]</text> -->
+          <!--<text class="font-24 color-b5b5b5" decode="{{true}}">&nbsp;[推荐]</text> -->
         </view>
       </view>
       <navigator url="/pages/user/webView/webView?link={{ baseUrlOnly + '/noticeBoard/toNoticeBoard'}}" hover-class="none" class="home_notice">
@@ -70,9 +54,10 @@
   </view>
 
   <navigator url="/pages/activities/lightMember/lightMember">轻会员</navigator>
+  <!--<navigator url="/pages/activities/lightMember/lightMember">轻会员</navigator> -->
   <!-- banner与模块广告和商品列表部分 -->
   <view class="flex_1 overHid posi_re">
-    <view  class="height_100 posi_re">
+    <view class="height_100 posi_re">
       <view>
         <view id="js_advert_list" class="advertPart ">
           <!-- banner -->
@@ -95,26 +80,24 @@
           <view class="width_100">
             <image src="{{baseLocImgUrl}}miniappImg/more/home_describe.png" class="width_100 blockBox" mode="widthFix"></image>
           </view>
-
-
+          <!-- 推荐小店入口 -->
+          <store-enter ref="storeEnterRef"></store-enter>
           <block a:for='{{advertsArr}}' a:key="advertsArr">
-            <goodsscroll-ads a:if="{{item.moduleType == 'GOODSSCROLL'}}" timerType="{{item.items[0].timerType}}"  ref="saveRef" item="{{item}}" onGoToPage="goToPage"></goodsscroll-ads>
+            <goodsscroll-ads a:if="{{item.moduleType == 'GOODSSCROLL'}}" timerType="{{item.items[0].timerType}}" ref="saveRef" item="{{item}}" onGoToPage="goToPage"></goodsscroll-ads>
             <seckill-ads a:if="{{item.moduleType == 'SECONDKILL' && !isLastActivitys && item.secondKillModuleVO}}" ref="saveRef" item="{{item}}" onGoToPage="goToPage"></seckill-ads>
-            <navigationmini-ads  a:if='{{item.moduleType == "NAVIGATION_MIN"}}' ref="saveRef" item="{{item}}" onGoToPage="goToPage"></navigationmini-ads>
+            <navigationmini-ads a:if='{{item.moduleType == "NAVIGATION_MIN"}}' ref="saveRef" item="{{item}}" onGoToPage="goToPage"></navigationmini-ads>
             <shopwindow-ads a:if="{{item.moduleType == 'SHOPWINDOW'}}" ref="saveRef" item="{{item}}" onGoToPage="goToPage"></shopwindow-ads>
             <goodsgroup-ads a:if="{{item.moduleType == 'GOODSGROUP'}}" ref="saveRef" item="{{item}}" onGoToPage="goToPage"></goodsgroup-ads>
-            <onefouradvert-ads a:if="{{item.moduleType == 'ONEFOURADVERT'}}"  ref="saveRef" item="{{item}}" onGoToPage="goToPage"></onefouradvert-ads>
+            <onefouradvert-ads a:if="{{item.moduleType == 'ONEFOURADVERT'}}" ref="saveRef" item="{{item}}" onGoToPage="goToPage"></onefouradvert-ads>
             <bannertype2-ads a:if="{{item.moduleType == 'BANNER_TYPE_2'}}" ref="saveRef" item="{{item}}" onGoToPage="goToPage"></bannertype2-ads>
-            <singlegoods-ads a:if="{{item.moduleType == 'SINGLEGOODS'}}"  ref="saveRef" item="{{item}}" onGoToPage="goToPage"></singlegoods-ads>
-            <navigation-ads a:if="{{item.moduleType == 'NAVIGATION'}}"  ref="saveRef" item="{{item}}" onGoToPage="goToPage"></navigation-ads>
-            <doublegoods-ads a:if="{{item.moduleType == 'DOUBLEGOODS'}}"  ref="saveRef" item="{{item}}" onGoToPage="goToPage"></doublegoods-ads>
+            <singlegoods-ads a:if="{{item.moduleType == 'SINGLEGOODS'}}" ref="saveRef" item="{{item}}" onGoToPage="goToPage"></singlegoods-ads>
+            <navigation-ads a:if="{{item.moduleType == 'NAVIGATION'}}" ref="saveRef" item="{{item}}" onGoToPage="goToPage"></navigation-ads>
+            <doublegoods-ads a:if="{{item.moduleType == 'DOUBLEGOODS'}}" ref="saveRef" item="{{item}}" onGoToPage="goToPage"></doublegoods-ads>
             <twofouradvert-ads a:if="{{item.moduleType == 'TWOFOURADVERT'}}" ref="saveRef" item="{{item}}" onGoToPage="goToPage"></twofouradvert-ads>
-            <goodswatefall-ads a:if="{{item.moduleType == 'GOODS_WATERFALL'}}" ref="saveRef" item="{{item}}" waterIndex="{{waterIndex}}"  onWaterFallChange="waterFallChange" onGoToPage="goToPage"></goodswatefall-ads>
+            <goodswatefall-ads a:if="{{item.moduleType == 'GOODS_WATERFALL'}}" ref="saveRef" item="{{item}}" waterIndex="{{waterIndex}}" onWaterFallChange="waterFallChange" onGoToPage="goToPage"></goodswatefall-ads>
           </block>
-
-          
-          <!-- <template is="new_advertsTem" data="{{advertsArr, baseImageUrl,baseLocImgUrl,ossImgStyle,waterIndex,waterFallTitIsTop,countDown:countTime}}"></template> -->
-            <!-- <advertisement ref="saveRef" advertsArr="{{advertsArr}}" waterIndex="{{waterIndex}}" waterFallTitIsTop="{{waterFallTitIsTop}}" isCutTimer="{{isCutTimer}}"></advertisement> -->
+          <!--<template is="new_advertsTem" data="{{advertsArr, baseImageUrl,baseLocImgUrl,ossImgStyle,waterIndex,waterFallTitIsTop,countDown:countTime}}"></template> -->
+          <!--<advertisement ref="saveRef" advertsArr="{{advertsArr}}" waterIndex="{{waterIndex}}" waterFallTitIsTop="{{waterFallTitIsTop}}" isCutTimer="{{isCutTimer}}"></advertisement> -->
         </view>
         <!-- 瀑布流商品模块 -->
         <view style="min-height: 100%;">

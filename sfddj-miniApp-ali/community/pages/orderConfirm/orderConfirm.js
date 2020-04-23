@@ -95,7 +95,7 @@ Page({
                     val.name = val.goodsName;
                     val.skuValue = val.productName;
                     // val.store && val.store > 0 ? '' : noneStoreList.push(val.goodsName);
-                    if (val.store && val.store <= 0) {
+                    if (val.store <= 0) {
                         noneStoreList.push(val.goodsName);
                         noneStoreIdList.push(val.goodsId);
                     }

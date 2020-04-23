@@ -24,7 +24,7 @@
                     <view class="flex_view_row align_cen justi_between marTop_15">
                         <view class="font-24 color-999999">{{item.createDateStr}}</view>
                         <!-- 倒计时 -->
-                        <view a:if="{{item.orderStatus == 'NOPAY' && countList[index] > 0}}" class="font-24 color-ff0532">剩余{{item.leftTimeStr}}</view>
+                        <view a:if="{{typeIndex == 0 && item.orderStatus == 'NOPAY' && countList[index] > 0}}" class="font-24 color-ff0532">剩余{{item.leftTimeStr}}</view>
                     </view>
                 </view>
             </view>

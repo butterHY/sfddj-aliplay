@@ -123,7 +123,7 @@
 	flex: 1;
     overflow: hidden;
     background-color: #fff;
-    padding: 18rpx 18rpx 18rpx 1px;
+    padding: 18rpx 18rpx 18rpx 0;
     display: flex;
     flex-direction: row;
 	overflow: hidden;
@@ -131,7 +131,7 @@
 }
 
 .shop_categories {
-    width: 176rpx;
+    width: 170rpx;
     padding-right: 30rpx;
     flex-grow: 0;
     flex-shrink: 0;
@@ -169,8 +169,7 @@
 .shop_categories > view > view:nth-child(2) {
     flex-shrink: 1;
     flex-grow: 1;
-    padding: 30rpx;
-    padding-right: 1rpx;
+    padding: 30rpx 0 30rpx 30rpx;
     font-size: 26rpx;
     color: rgb(102,102,102);
 }
