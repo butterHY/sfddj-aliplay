@@ -97,6 +97,9 @@
             <image src="{{baseLocImgUrl}}miniappImg/more/home_describe.png" class="width_100 blockBox" mode="widthFix"></image>
           </view>
 
+          <!-- 推荐小店入口 -->
+			    <store-enter ref="storeEnter"></store-enter>
+
 
           <block a:for='{{advertsArr}}' a:key="advertsArr">
             <goodsscroll-ads a:if="{{item.moduleType == 'GOODSSCROLL'}}" timerType="{{item.items[0].timerType}}"  ref="saveRef" item="{{item}}" onGoToPage="goToPage"></goodsscroll-ads>

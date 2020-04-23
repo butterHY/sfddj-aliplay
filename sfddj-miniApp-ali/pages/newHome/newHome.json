@@ -17,6 +17,7 @@
     "twofouradvert-ads": "../components/homeComponet/twofouradvert-ads/twofouradvert-ads",
     "goodswatefall-ads": "../components/homeComponet/goodswatefall-ads/goodswatefall-ads",
 
-    "popup": "mini-antui/es/popup/index"
+    "popup": "mini-antui/es/popup/index",
+    "store-enter" :  "/pages/components/storeEnter/storeEnter"
   }
 }
