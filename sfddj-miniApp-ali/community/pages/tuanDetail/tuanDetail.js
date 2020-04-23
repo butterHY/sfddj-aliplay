@@ -12,8 +12,8 @@ Page({
       this.cart = Cart.init(this);
       this.shop.getTuanGouDetail(this.id, (res, err) => {
         if(res && res.data && res.data.data) {
-          res.data.data.recordStatus = 1;
-          res.data.data.orderSn = 'abc';
+          // res.data.data.recordStatus = 1;
+          // res.data.data.orderSn = 'abc';
           this.setData({'data': res.data.data}, () => {
             this.timer();
           });
