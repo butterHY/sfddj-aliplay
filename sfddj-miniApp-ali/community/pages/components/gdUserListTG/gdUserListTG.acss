@@ -1,0 +1,175 @@
+.userListBox {
+    background-color: #ffffff;
+    padding-bottom: 30rpx; 
+}
+
+.userListBox .step_title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 35rpx 50rpx; 
+    font-size: 30rpx;  
+}
+
+.userListBox .step_title .titleName { 
+	color: #333333;
+}
+
+.userListBox .step_title .titleLink { 
+	color: #999999;
+}
+
+
+
+/* 列表 */
+.userListBox .step_list {
+    box-sizing: border-box;
+    margin: 0 20rpx;
+    border-radius: 10rpx;
+    border: solid 1px #ffc2cf;
+}
+
+.userListBox .step_list .listTop {} 
+.userListBox .step_list .listTop {} 
+
+.userListBox .step_list .listMain {
+    height: 215rpx; 
+}
+.userListBox .step_list .listMain .listUl {
+    height: 100%;
+}
+
+.userListBox .step_list .listMain .listLi {
+    position: relative;
+}
+
+.userListBox .step_list .listMain .listLi::after {
+    content: ' ';
+    position: absolute;
+    left: 28rpx;
+    right: 28rpx;
+    bottom: 0;
+    background-color: #f3f3f3;
+    height: 1px; 
+} 
+.userListBox .step_list .listMain .listLi:last-child::after {
+    height: 0;
+}
+
+/* 列表详情 */
+.listCell {
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    box-sizing: border-box;
+    padding: 22rpx 28rpx; 
+} 
+
+.listCell.hasBg {
+    background-color: #fff1f4; 
+}
+
+.listCell .tit_l {
+    flex: 1;
+    display: flex; 
+    justify-content: flex-start;
+    align-items : center;
+    
+}
+.listCell .tit_l .userImg {
+    height: 64rpx;
+    width: 64rpx;
+    border-radius: 50%;
+    overflow: hidden; 
+}
+
+.listCell .tit_l .userImg image {
+    height: 100%;
+    width: 100%;
+}
+
+.listCell .tit_l .userName {   
+    margin-left: 12rpx;
+    max-width: 250rpx;
+    overflow-x: hidden; 
+    text-overflow: ellipsis;
+    white-space: nowrap; 
+    display: block; 
+    font-size: 30rpx;
+}
+
+
+.listCell .tit_r {
+    display: flex;  
+    align-items : center;
+}
+
+.listCell .tit_r .timeShow {
+    text-align: right; 
+    margin-right: 12rpx;
+}
+
+.listCell .tit_r .countNum {
+    font-size: 26rpx;   
+	color: #333333;
+    line-height: 36rpx; 
+}
+
+.listCell .tit_r .timeCut {
+    font-size: 22rpx; 
+	color: #999999; 
+}
+
+.listCell .tit_r .shop_like {
+    border-radius: 30px;
+    font-size: 32rpx;
+    padding: 12rpx 18rpx;
+    height: auto;
+    margin: 0px;
+    border: 1px solid #ff0032;
+    background-color: #ff0032;
+    color: #ffffff;
+}
+
+
+.listCell .tit_r .letter {
+    font-size: 30rpx; 
+	color: #ff0032;
+}
+
+
+/* 弹框 */
+.modal_list {}
+
+.modal_list .am-modal-content {
+    padding: 60rpx 0 0;
+}
+
+.modal_list .am-modal-header {
+    text-align: left;
+    font-size: 32rpx; 
+	color: #111111;
+    padding: 0 40rpx;
+}
+
+.modal_list .am-modal-footer {
+    height: auto;
+    line-height: auto;
+}
+.modal_list .modal_footer {
+    height: 70rpx;
+    line-height: 70rpx;
+    font-size: 24rpx;  
+	color: #999999;
+} 
+
+.modal_list .modal_main {
+    padding: 0 22rpx;
+    max-height: 540rpx;
+    overflow-y: scroll;
+}
+
+
+
+

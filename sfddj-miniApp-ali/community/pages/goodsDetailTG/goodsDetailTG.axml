@@ -6,11 +6,27 @@
   <view class="layoutGroup noMarTop" a:if="{{ godosPriceInfo !== null }}">
     <goods-price-box godosPriceInfo="{{ godosPriceInfo }}" ></goods-price-box>
   </view>
+
+  <!-- 拼团列表 -->
+  <view class="layoutGroup" a:if="{{ true }}">
+    <gd-user-list-t-g></gd-user-list-t-g>
+  </view>
+
+  <!-- 店铺进入 -->
+  <view class="layoutGroup" a:if="{{ storeInfo }}">
+    <store-cell storeInfo="{{ storeInfo }}"></store-cell>
+  </view>
+
+
+  <!-- 商家公告 -->
+  <view class="layoutGroup" a:if="{{ storeNotice }}">
+     <store-notify storeNotice="{{ storeNotice }}"></store-notify>
+  </view>
+
   
   <view class="layoutGroup" a:if="{{ goodsInfo !== null }}">
     <goods-intro goodsInfo="{{ goodsInfo }}"></goods-intro>
   </view>
-
-
-  <cart shopid="{{ shopId }}" storeTime="{{ storeTime }}"></cart> 
+  <!-- 底部导航 -->
+  <cart-t-g shopid="{{ shopId }}" storeTime="{{ storeTime }}"></cart-t-g> 
 </view>

@@ -5,11 +5,11 @@ import Cart from '/community/service/cart';
 Component({
   mixins: [],
   data: {
-    goodsInfo: { 
+    goodsInfo: {
       name: '',
       priceShow: '',
       totalSaleCount: '',
-      defaultSku: '', 
+      defaultSku: '',
     }
   },
   props: {
@@ -30,7 +30,7 @@ Component({
         defaultSku: _this.props.godosPriceInfo.shopGoodsSkuList[0]
       })
 
-      console.log(this.data.goodsInfo)
+      // console.log(this.data.goodsInfo)
     },
 
     addCar(e) {

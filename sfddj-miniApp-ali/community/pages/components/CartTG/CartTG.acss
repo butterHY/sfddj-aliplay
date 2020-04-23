@@ -1,0 +1,272 @@
+.shop_cartbox {
+    position: fixed;
+    z-index: 10;
+    left: 20rpx;
+    right: 20rpx;
+    bottom: 30rpx;
+    background-color: #333333;
+    border-radius: 50px;
+    padding: 15rpx 20rpx;
+}
+
+
+.shop_cartcontrol {
+    position: relative;
+    display: flex; 
+    justify-content: space-between;
+    align-items: center;
+}
+
+.shop_cart {
+    width: 50%;
+    border-radius: 57rpx;
+    background-color: #333;
+    color: #fff;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    padding-left: 30rpx;
+    padding-right: 45rpx;
+    box-sizing: border-box;
+}
+
+
+/* 底部操作 */
+.shop_cart .iconList {
+   width: 50rpx;
+}
+
+.shop_cart .iconList .iconStyle {
+    font-size: 40rpx;
+    color: #cdcdcd;
+    display: block;
+    width: 40rpx;
+    height: 40rpx;
+    margin: 0 auto;
+    line-height: 40rpx;
+    color: #cdcdcd;
+}
+
+.shop_cart .iconList .name {  
+	font-size: 24rpx;  
+    color: #666666;
+    display: block; 
+    text-align: center;
+    margin: 10rpx auto 0;
+}
+ 
+/* 结算按钮 */
+.shop_cartcontrol .actionBtnBox {
+    width: 360rpx;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    text-align: right;
+}
+
+.actionBtnBox .actionBtn {
+    width: 180rpx;
+    padding: 6rpx 17rpx; 
+}
+
+.actionBtnBox .actionBtn.btn_left {
+    border-bottom-right-radius: 0 ;
+    border-top-right-radius: 0;
+    border-right: 0;
+}
+
+.actionBtnBox .actionBtn.btn_right {
+    border-bottom-left-radius: 0 ;
+    border-top-left-radius: 0;
+    border-left: 0;
+}
+
+.am-button-content {
+    font-size: 32rpx;
+    line-height: 36rpx;
+    text-align: center;
+}
+
+.am-button-subtitle-subfont {
+    font-size: 30rpx;
+    line-height: normal;
+    opacity: 1;
+    text-align: center;
+}
+
+
+/* goodsAction_popup */
+.goodsAction_popup {
+    z-index: 6;
+}
+
+.goodsAction_popup .am-popup-bottom {
+    height: 566rpx;
+    min-height: 566rpx;
+    max-height: 80%;
+    background-color: #fff;
+    overflow: hidden;
+    padding-top: 30rpx;
+    box-sizing: border-box;
+    border-top-left-radius: 20rpx;
+    border-top-right-radius: 20rpx;
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* 购物车列表 */
+.cartListShow {
+    padding: 0 30rpx;
+    flex: 1;
+    overflow-y: scroll;
+}
+
+.cartList {
+    position: relative;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    margin-bottom: 28rpx;
+
+}
+
+.cartList .figureImg {
+    height: 120rpx;
+    width: 120rpx;
+    border: 1px solid #e6e6e6;
+    border-radius: 16rpx;
+    overflow: hidden;
+}
+
+.cartList .figureImg image {
+    display: block;
+    height: 100%;
+    width: 100%;
+}
+
+.cartList .asideInfo {
+    height: 120rpx;
+    flex: 1;
+    margin-left: 30rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-sizing: border-box;
+}
+
+.cartList .asideInfo .nameShow {
+    font-size: 26rpx;
+    margin-bottom: 8rpx;
+    flex: 1;
+}
+
+.cartList .asideInfo .tipInfo {
+    margin-bottom: 20rpx;
+}
+
+.cartList .asideInfo .tipInfo .discounts {
+    color: #ff0032;
+    border: 1px solid #ff0032;
+    border-radius: 6rpx;
+    padding: 0 8rpx;
+    font-size: 20rpx;
+
+}
+
+.cartList .asideInfo .priceShow .now {
+    color: #ff0032;
+    font-size: 32rpx;
+    margin-right: 5rpx;
+}
+
+.cartList .asideInfo .priceShow .old {
+    color: #999999;
+    font-size: 24rpx;
+    text-decoration: line-through;
+}
+
+.cartList .asideInfo .stock {  
+	font-size: 26rpx; 
+	line-height: 30rpx; 
+	color: #333333;
+}
+
+/*  数字操作  */
+.amountBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 170rpx;
+}
+
+.amountBox .stepper {
+    height: 44rpx;
+    width: 44rpx;
+    display: block;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 100%;
+}
+
+.amountBox .stepper_minus {
+    background-image: url('/community/assets/images/amountBox/stepper_minus.png');
+}
+
+.amountBox .stepper_plus {
+    background-image: url('/community/assets/images/amountBox/stepper_plus.png');
+}
+
+.amountBox .stepper_val {
+    display: block;
+    font-size: 30rpx;
+    flex: 1;
+    text-align: center;
+}
+
+/* 购买数量 */
+.buyNum {
+    display: flex;
+    justify-content: space-between;
+	align-items: center;
+	box-sizing: border-box;
+    padding: 44rpx 30rpx 50rpx;
+    border-top: 1px solid #e6e6e6;
+}
+/* 确定按钮 */
+.btnShow {}
+
+.btnShow button {
+    display: block;
+    height: 100rpx;
+    background-color: #ff0032;
+    line-height: 100rpx;
+    color: #ffffff;
+    font-size: 36rpx;
+}
+.btnShow button.active {
+    background-color: #ffa3b6;
+}
+
+
+/*  通告  */
+.noticeShow {
+    position: fixed;
+    left: 20rpx;
+    bottom: 140rpx;
+    right: 20rpx;
+    z-index: 5;
+}
+
+.noticeShow .am-notice {
+    background-color: #ffe6ea;
+    padding: 5rpx;
+    font-size: 24rpx;
+    color: #ff0532;
+    text-align: center;
+    border-radius: 50px;
+    overflow: hidden;
+}

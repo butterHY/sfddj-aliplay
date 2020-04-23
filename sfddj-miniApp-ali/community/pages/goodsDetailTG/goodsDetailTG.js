@@ -9,6 +9,8 @@ Page({
     skuList: null,
     shopId: '',       // 店铺id
     storeTime: null,  // 店铺营业时间
+    storeInfo: null,
+    storeNotice: '',  // 公告
   },
   onLoad(e) { 
     this.setData({
@@ -52,16 +54,38 @@ Page({
         my.setNavigationBar({ 
           title: _data.title,
         });
+
+        // 获取商品信息
+        _this.getStoreInfo();
       }
 
-    }, (err) => { })
+    }, (err) => {})
   },
+  
+  // 获取商家信息
+  getStoreInfo() {
+    const _this = this;
+    let _shopId = this.data.shopId 
 
+    http.get( api.Shop.GETBYID + _shopId, {}, (res) => { 
+      const _data = res.data.data;
+      const _ret = res.data.ret;
+      if ( _ret.code == '0') {
+      
+        _this.setData({
+          storeInfo: _data,
+          storeNotice: _data.notice
+        })
+      }
+      else {}
+    }, (err)=>{})
+  },
+  
   setPrice(data) {
     const _this = this; 
     let _price = {}; 
     let _goodsImagePath = JSON.parse( data.goodsImagePath );    
-    
+
     // 全部数据
     _price = Object.assign({}, data); 
 

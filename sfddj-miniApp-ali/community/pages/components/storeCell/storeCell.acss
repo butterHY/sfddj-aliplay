@@ -1,0 +1,76 @@
+/* 商家头部信息 */
+
+.storeBanner {
+    padding: 30rpx 50rpx;
+    background-color: #ffffff;
+}
+
+.storeBanner .shop_tit {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box
+}
+
+.storeBanner .shop_tit .tit_l {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.storeBanner .shop_tit .storeImg {
+    width: 82rpx;
+    height: 82rpx;
+    border-radius: 6rpx;
+    overflow: hidden;
+}
+
+.storeBanner .shop_tit .storeImg image {
+    height: 100%;
+    width: 100%;
+}
+
+.storeBanner .shop_tit .storeName {
+    padding-left: 12rpx;
+}
+
+.storeName .shop_info {
+    display: flex;
+    align-items: center;
+}
+
+.storeName .shop_name {
+    font-size: 32rpx;
+    padding-right: 12rpx;
+    max-width: 280rpx;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: block;
+    box-sizing: border-box;
+}
+
+.storeName .shop_distance {
+    color: rgb(153, 153, 153);
+    margin-left: 12rpx;
+    font-size: 26rpx;
+    display: block;
+    margin-top: 8rpx;
+}
+
+.storeName .shop_addr {
+    color: rgb(153, 153, 153);
+    padding-top: 10rpx;
+    font-size: 24rpx;
+}
+
+.storeBanner .shop_like {
+    border-radius: 30px;
+    font-size: 32rpx;
+    padding: 15rpx 25rpx;
+    height: auto;
+    margin: 0px;
+    border: 1px solid #ff0032;
+    color: #ff0032;
+}
