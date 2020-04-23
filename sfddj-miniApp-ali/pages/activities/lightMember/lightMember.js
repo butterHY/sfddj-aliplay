@@ -83,8 +83,11 @@ Page({
                       case "NORMAR":
                         couponVal.couponText = "去使用"
                       break;
-                      // case "USED":
-                      //   couponVal.couponText = "已使用"
+                      case "USED":
+                        couponVal.couponText = "已使用"
+                      break;
+                      case "EXPIRED":
+                        couponVal.couponText = "已过期"
                       break;
                       default:
                       break;
@@ -109,9 +112,9 @@ Page({
               loadComplete: true,
               loadFail: false,
               thematicAds: resData,
-              headData: resData.classify == "已注册" ? resData.modules.find(value => value.moduleType == "REGISTERED") : resData.modules.find(value => value.moduleType == "UNREGISTERED"),
+              headData: resData.classify == "REGISTERED" ? resData.modules.find(value => value.moduleType == "REGISTERED") : resData.modules.find(value => value.moduleType == "UNREGISTERED"),
               openingButtonData: that.data.openingButtonData,
-              isLightMember: resData.classify == "已注册" ? true : false,
+              isLightMember: resData.classify == "REGISTERED" ? true : false,
             })
             console.log('广告请求成功， 是否是轻会员', that.data.isLightMember)
             console.log('广告请求成功， 广告数据', that.data.thematicAds)
@@ -213,9 +216,12 @@ Page({
           case "NORMAR":
             resData[0].couponText = "去使用"
           break;
-          // case "USED":
-          //   resData[0].couponText = "已使用"
-          // break;
+          case "USED":
+            resData[0].couponText = "已使用"
+          break;
+          case "EXPIRED":
+            resData[0].couponText = "已过期"
+          break;
           default:
           break;
         }

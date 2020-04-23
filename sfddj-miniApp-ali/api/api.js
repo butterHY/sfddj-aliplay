@@ -180,7 +180,6 @@ export default {
 
   HOME: {
     ADVERTS_MOUDULE: '/m/a/moduleAdvert/1.1/getModuleAdvert', //获取全部广告模块
-    ALL_MATERIAL: '/m/a/material/1.0/listMaterialByName',     //获取首页底部所有banner位数据
   },
 
 }

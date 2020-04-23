@@ -31,7 +31,6 @@
 
 <!-- 内容 -->
 <view class="page flex_view_col overHid posi_re" style="padding-top: {{topContentHeight}}rpx;">
-
   <view id="js_topContent" class="topContent width_100" style="position: fixed; top: 0; left: 0; z-index: 10000; box-sizing:border-box;">
     <!-- TODO: 这里放最上面的“定位” --> 
     <view class="locationBox">
@@ -70,7 +69,7 @@
     </view>
   </view>
 
-  <!-- <navigator url="/pages/activities/lightMember/lightMember">轻会员</navigator> -->
+  <navigator url="/pages/activities/lightMember/lightMember">轻会员</navigator>
   <!-- banner与模块广告和商品列表部分 -->
   <view class="flex_1 overHid posi_re">
     <view  class="height_100 posi_re">
@@ -155,6 +154,7 @@
         </view>
       </view>
     </view>
+
     <!-- 瀑布流固定导航  wx:if="{{waterFallTitIsTop && waterFallTitList.length > 0}}" -->
     <view class="width_100 waterFallTitFixed {{waterFallTitIsTop && waterFallTitList.length > 0 ? 'show' : ''}}" style="top: {{topContentHeight}}rpx;">
       <!-- 瀑布流标题 -->
@@ -179,6 +179,7 @@
         </scroll-view>
       </view>
     </view>
+    
   </view>
   <!-- 置顶按钮 -->
   <view class="flex_view_row align_cen justi_cen goTopBox {{isShowGoTop ? 'show' : ''}}" catchTap="goToTop">

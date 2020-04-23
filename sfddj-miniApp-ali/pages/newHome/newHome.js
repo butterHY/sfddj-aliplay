@@ -24,7 +24,6 @@ Page({
     isShowGoTop: false,           //是否要显示返回顶部按钮
 
     // banner数据
-    bannerList: [],              //banner的列表
     currentIndex: 0,             //banner的位置
 
     // 弹窗广告数据
@@ -88,7 +87,7 @@ Page({
     let placeholder = my.getStorageSync({	key: 'searchTextMax', }).data;          // 获取缓存 首页商品  数据
 
 		that.setData({
-      waterFallTitHeight: 124 * that.data.app.globalData.systemInfo.windowWidth / 750,   // 瀑布流导航高度；
+      waterFallTitHeight: 130 * that.data.app.globalData.systemInfo.windowWidth / 750,   // 瀑布流导航高度；
      //如果在瀑布流导航置顶时，设置瀑布流商品的最低高度, 56: 生活号高度，18：定位高度；44：搜索导航高度；62：瀑布流导航高度；
       goodsBoxMinHeight: that.data.app.globalData.systemInfo.windowHeight - (that.data.canUseLife ? 56 + 18 + 44 + 62 : 18 + 44 + 62),
       wheelPlantingArr: wheelPlantingArr ? wheelPlantingArr : [],
@@ -249,9 +248,8 @@ Page({
     // 页面上拉加载更多瀑布流商品 loadWaterFallGoods
   onReachBottom() {
     let that = this;
-    console.log('上拉加载', '瀑布流导航数据',that.data.waterFallTitList)
     let { waterIndex, waterFallGoodsList, isWaterFallLoaded } = this.data
-    console.log('此时的导航 index', waterIndex, '此时各个正在加载状态', isWaterFallLoaded, '此时各个瀑布流数据', waterFallGoodsList)
+    console.log('上拉加载', '此时的导航 index', waterIndex, '此时各个导航是否没有更多', isWaterFallLoaded, '此时各个瀑布流数据', waterFallGoodsList)
     if ( !isWaterFallLoaded[waterIndex] && isWaterFallLoaded.length > 0 ) {
       let setWaterFallStart = 'waterStartList[' + waterIndex + ']'
       this.setData({
@@ -352,7 +350,7 @@ Page({
 					let resRet = res.data.ret;
           let resData= res.data.data;
           
-          resData = that.setResult();
+          // resData = that.setResult();
           console.log(resData)
 
 					if ( resRet.code == '0' && resData && resData.length > 0 ) {
@@ -392,9 +390,6 @@ Page({
 							secondKillActivityId: that.data.secondKillActivityId
 						})
 
-            console.log('瀑布流导航数据', that.data.waterFallTitList)
-            console.log('全部广告模板请求成功，数据---', that.data.advertsArr)
-
             that.checkAllComponent('start')
 
             var timeout = setTimeout(function() {
@@ -416,7 +411,7 @@ Page({
 					}
 				},
 				fail: function(err) {
-          that.checkAllComponent('start')         // ----------------------------- 测试用，上线记得删除 -----------
+          // that.checkAllComponent('start')         // ----------------------------- 测试用，上线记得删除 -----------
 					reject({
 						'type': false,
 						'result': err
@@ -451,7 +446,7 @@ Page({
       that.setData({
         [setWaterLoadingName]: true
       })
-      console.log('请求瀑布流商品 type', type,'当前导航对应的参数---',data,'整条瀑布流导航',waterFallTitList)
+    console.log('请求瀑布流商品 type', type, '此时各个正在加载状态', that.data.isWaterFallLoading, '当前导航对应的参数---',data,'整条瀑布流导航',waterFallTitList)
       http.post(api.GOODS.WATERFALL, data, res => {
         console.log('当前导航对应的返回的数据---',res);
         let result = res.data.data ? res.data.data : [];
@@ -497,6 +492,7 @@ Page({
    * */
   getWheelPlanting() {
 		let that = this;
+			// HOME_BANNER_LIST: '/home/getMaterialGroup',   //首页banner接口  
 		sendRequest.send(constants.InterfaceUrl.HOME_BANNER_LIST, { groupName: '支付宝小程序_首页轮播图' }, function(res) {
       let result = res.data.result;
       that.setData({
@@ -557,7 +553,7 @@ Page({
 							content: '您的客户端版本过低，请升级你的客户端',
 							success: (res) => {
 								if (result) {
-                  that.setPopImgData();
+                  that.setPopImgData(result);
 								}
 							},
 						});
@@ -571,18 +567,18 @@ Page({
 									return;
 								} else if (result) {
 									// console.log('没有收藏',res.isCollected);
-                  that.setPopImgData();
+                  that.setPopImgData(result);
 								}
 							},
 							fail: (error) => {
 								// console.log('查询收藏失败');
 								if (result) {
-                  that.setPopImgData();
+                  that.setPopImgData(result);
 								}
 							}
 						});
 					} else if (result) {
-              that.setPopImgData();
+              that.setPopImgData(result);
 					}
 				}
 			},
@@ -604,8 +600,10 @@ Page({
    * */
   getAllMaterialData() {
     let that = this;
-    http.get(api.HOME.ALL_MATERIAL, {
-      groupName: '支付宝小程序_首页轮播图'
+		// 支付宝小程序瀑布流广告banner
+		// '/m/a/material/1.0/listMaterialByName'  '/m/a/material/1.0/listMaterialByName', //获取首页底部所有banner位数据
+    http.get(api.GOODSDETAIL.LISTMATERIALBYNAME, {
+      groupName: '支付宝小程序瀑布流广告banner'
     }, res => {
       let result = res.data.data ? res.data.data : [];
       result.forEach(value => { value.type = 'advert' })
@@ -672,6 +670,7 @@ Page({
 	judgePop: function() {
     let that = this;
 		let popImgData = this.data.popImgData;
+		console.log(this.data.popImgData)
 		let popId = popImgData.popId;                         // 广告 id ;
 		let popType = popImgData.popAdvMemoryOpt;             // 广告类型 ;
 		let popModify = popImgData.modifyDate;               // 广告修改时间 ;
@@ -800,9 +799,6 @@ Page({
 			default:
 			break;
 		}
-
-    console.log(ref)
-    console.log(this.allComponent)
   },
 
   // 组件实例
