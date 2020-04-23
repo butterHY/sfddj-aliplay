@@ -50,6 +50,8 @@
   </view>
 
 
-  <!-- 购物车 -->
-  <cart shopid="{{shop.id}}" storeTime="{{ storeTime }}"></cart>
+  <block a:if="{{selectedCategoryId !== undefined && selectedCategoryId != -1}}">
+    <!-- 购物车 -->
+    <cart shopid="{{shop.id}}" storeTime="{{ storeTime }}"></cart>
+  </block>
 </view>

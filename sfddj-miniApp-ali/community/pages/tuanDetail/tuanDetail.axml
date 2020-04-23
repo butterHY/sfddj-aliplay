@@ -1,0 +1,100 @@
+<view class="tuandetail">
+  <!-- 结果提示语 -->
+  <view a:if="{{(data.recordStatus == 0 && data.orderSn) || data.recordStatus == 2}}" class="tuandetail_stateinfo tuandetail_stateinfo{{data.orderSn ? '1' : '2'}}">
+    <block a:if="{{data.recordStatus == 0 && data.orderSn}}">参团成功，赶紧邀请好友一起下单拼起来！</block>
+    <block a:else>很遗憾，参团人数未满，拼团失败~</block>
+  </view>
+  <!-- 结果提示语END -->
+  <view class="tuandetail_detail">
+    <view style="background-image:url({{data.goodsDefaultImage[0]}})"></view>
+    <view class="tuandetail_state{{data.recordStatus == 0 ? 0 : 1}}">
+      <view class="tuandetail_tit">{{data.goodsName}}</view>
+      <view class="tuandetail_members">有{{data.tuangouMemberList.length}}人正在拼团</view>
+      <view class="tuandetail_price">
+        <text>￥{{data.tuangouSkuList && data.tuangouSkuList[0] && data.tuangouSkuList[0].tuangouPrice.toFixed(2)}}</text>
+        <text a:if="{{data.tuangouSkuList && data.tuangouSkuList[0] && data.tuangouSkuList[0].salePrice}}">￥{{data.tuangouSkuList[0].salePrice.toFixed(2)}}</text>
+      </view>
+    </view>
+  </view>
+  <view a:if="{{data.recordStatus != 1}}" class="tuandetail_steps">
+    <view class="tuandetail_steps_head">
+      <view>拼团玩法</view>
+      <navigator url="../tuanHelper/tuanHelper">规则说明</navigator>
+    </view>
+    <view class="tuandetail_steps_steps">
+      <view class="active">团长开团</view>
+      <view class="{{data.orderSn ? 'active' : ''}}">邀请好友</view>
+      <view>人满成团</view>
+    </view>
+  </view>
+  <view class="tuandetail_memberlst">
+    <view a:if="{{data.recordStatus != 2}}" class="tuandetail_memberlst_state">
+      <text a:if="{{data.recordStatus == 0}}">还差{{data.tuangouCount - data.tuangouMemberList.length || 0}}人，赶紧{{data.orderSn ? '邀请好友' : ''}}来参团吧~</text>
+      <text a:elif="{{data.recordStatus == 1}}" class="tuandetail_memberlst_state1">拼单成功</text>
+    </view>
+    <view class="tuandetail_memberlst_lst">
+      <view a:for="{{data.tuangouMemberList}}" a:if="{{index < (data.recordStatus == 1 ? (data.tuangouMemberList.length > 5 ? 2 : 5) : 5)}}">
+        <view style="background-image:url({{item.memberImagePath}})"></view>
+      </view>
+      <block a:if="{{data.recordStatus == 1}}">
+        <block a:if="{{data.tuangouMemberList.length > 5}}">
+          <view class="spot"></view>
+          <view a:for="{{data.tuangouMemberList}}" a:if="{{index >= 2 && index <= 4}}">
+            <view style="background-image:url({{item.memberImagePath}})"></view>
+          </view>
+        </block>
+      </block>
+      <block a:else>
+        <view a:for="{{[0, 1, 2, 3, 4]}}" a:if="{{index < 5 - data.tuangouMemberList.length}}"></view>
+      </block>
+    </view>
+    <view a:if="{{data.recordStatus != 1}}" class="tuandetail_memberlst_timer">
+      <block a:if="{{data.recordStatus == 0}}">
+        剩余
+        <view>{{((h || 0) + '').padStart(2, '0')}}</view>
+        <view>{{((m || 0) + '').padStart(2, '0')}}</view>
+        <view>{{((s || 0) + '').padStart(2, '0')}}</view>
+        结束
+      </block>
+      <block a:elif="{{data.recordStatus == 2}}">
+        拼团结束
+      </block>
+    </view>
+  </view>
+  <view class="tuandetail_ctls tuandetail_ctls{{data.recordStatus}}">
+    <block a:if="{{data.recordStatus == 0}}">
+      <button a:if="{{data.orderSn}}" open-type="share" class="tuandetail_ctls_join">邀请好友</button>
+      <view a:else class="tuandetail_ctls_join" onTap="onJoinClick">我要参团</view>
+    </block>
+    <block a:elif="{{data.recordStatus == 1}}">
+      <navigator a:if="{{data.orderSn}}" url="../orderDetail/orderDetail?orderSn={{data.orderSn}}">查看订单</navigator>
+      <navigator url="../index/index">返回首页</navigator>
+    </block>
+  </view>
+</view>
+
+<popup show="{{showPop}}" onClose="onPopClose">
+    <view class="tuandetail_popcontent">
+      <view class="tuandetail_popcontent_item">
+        <view style="background-image:url({{data.goodsDefaultImage[0]}})"></view>
+        <view>
+          <view class="tuandetail_popprices">
+            <text>￥{{data.tuangouSkuList && data.tuangouSkuList[0] && data.tuangouSkuList[0].tuangouPrice.toFixed(2)}}</text>
+            <text a:if="{{data.tuangouSkuList && data.tuangouSkuList[0] && data.tuangouSkuList[0].salePrice}}">￥{{data.tuangouSkuList[0].salePrice.toFixed(2)}}</text>
+          </view>
+          <view>库存：{{data.tuangouSkuList[0].store}}份</view>
+        </view>
+      </view>
+      <view class="tuandetail_popcontent_nums">
+        <view>购买数量</view>
+        <view>
+          <text onTap="onReduceClick"></text>
+          <text>{{buyNum}}</text>
+          <text onTap="onPlusClick"></text>
+        </view>
+      </view>
+      <view class="tuandetail_popcontent_btns">
+        <view class="tuandetail_popcontent_btns_confirm" onTap="onJoinSubmit">确认</view>
+      </view>
+    </view>
+  </popup>

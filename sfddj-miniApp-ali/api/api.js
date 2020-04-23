@@ -124,6 +124,7 @@ export default {
 		GETCATEGORIES: '/m/oto/otoShopCategory/list/', // 取指定店铺的所有商品类别
 		GETGOODSOFSHOP: '/m/oto/otoShopGoods/list/', // 获取指定店铺的商品列表
 		LIKE: '/m/oto/otoShopAttention/1.0/attention', // 关注店铺
+		TUANGOUDETAIL: '/m/oto/otoActivityTuangou/1.0/tuangouDetail', // 获取团购详情
 	},
 
 	// O2O商家店铺购物车
@@ -150,6 +151,8 @@ export default {
 		createPayOrder: '/m/oto/otoOrderPay/1.0/order',     //获取订单编码
 		payNow: '/m/oto/otoOrderPay/1.0/payOrder',           //去支付
 		queryPayType: '/m/oto/otoOrderPay/1.0/payQuery',       //检测是否支付成功的
+		confirmTuangou: '/m/oto/otoOrderPay/1.0/confirmTuangou', // 确认团购订单
+		nowBuy: '/m/oto/otoOrderPay/1.0/nowBuy', // 立即购买
 	},
 
 	//O2O订单部分

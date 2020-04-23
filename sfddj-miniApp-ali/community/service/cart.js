@@ -271,6 +271,63 @@ class Cart extends getApp().Service {
             }
         }
     }
+
+
+
+
+    // 团购
+
+
+    // 确认团购订单
+    confirmTuangou(tuangouDetail, n, callbackFun) {
+        if(tuangouDetail.tuangouSkuList && tuangouDetail.tuangouSkuList.length > 0) {
+            http.post(api.O2O_ORDERCONFIRM.confirmTuangou, {
+                recordId: tuangouDetail.recordId,
+                skuId: tuangouDetail.tuangouSkuList[0].id,
+                quantity: n
+            }, (res) => {
+                if(res.data && res.data.ret && res.data.ret.code == 0) {
+                    if(callbackFun) {
+                        callbackFun(res);
+                    }
+                } else {
+                    if(callbackFun) {
+                        callbackFun(undefined, '发生错误的了');
+                    }
+                }
+            }, (err) => {
+                if(callbackFun) {
+                    callbackFun(undefined, err);
+                }
+            });
+        } else {
+            callbackFun(undefined, '发生错误了');
+        }
+    }
+
+
+    // 立即购买
+    nowBuy(skuId, n, callbackFun) {
+        http.post(api.O2O_ORDERCONFIRM.nowBuy, {
+            skuId: skuId,
+            quantity: n
+        }, (res) => {
+            if(res.data && res.data.ret && res.data.ret.code == 0) {
+                console.log('gggggggg', res);
+                if(callbackFun) {
+                    callbackFun(res);
+                }
+            } else {
+                if(callbackFun) {
+                    callbackFun(undefined, '发生错误的了');
+                }
+            }
+        }, (err) => {
+            if(callbackFun) {
+                callbackFun(undefined, err);
+            }
+        });
+    }
 }
 
 export default Cart;

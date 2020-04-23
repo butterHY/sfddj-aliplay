@@ -1,0 +1,8 @@
+{
+    "defaultTitle": "商品详情",
+    "titleBarColor": "#ffffff",
+    "allowsBounceVertical": "NO",
+    "usingComponents":{
+        "popup": "mini-ali-ui/es/popup/index"
+    }
+}

@@ -36,7 +36,7 @@ Component({
         my.navigateTo({ url: '../goodsDetail/goodsDetail?goodsId=' + e.target.dataset.id });
       }
     },
-    onCartClick() {
+    onCartClick() { // 点击“加购物车”
       if(this.props.canclick && this.props.data) {
         if(this.props.data.shopGoodsSkuList) {
           this.setData({

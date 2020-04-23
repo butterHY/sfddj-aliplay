@@ -59,7 +59,7 @@
         "pages/index/index",
         "pages/shop/shop",
         "pages/alphabetCity/alphabetCity",
-        "pages/addressLoc/addressLoc", 
+        "pages/addressLoc/addressLoc",
         "pages/goodsDetail/goodsDetail",
         "pages/orderDetail/orderDetail",
         "pages/orderConfirm/orderConfirm",
@@ -67,7 +67,9 @@
         "pages/orderList/orderList",
         "pages/afterSales/afterSales",
         "pages/afterSalesDetail/afterSalesDetail",
-        "pages/addressEdit/addressEdit"
+        "pages/addressEdit/addressEdit",
+        "pages/tuanDetail/tuanDetail",
+        "pages/tuanHelper/tuanHelper"
       ]
     }
   ],
