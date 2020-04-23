@@ -1,0 +1,22 @@
+{
+  "titleBarColor": "#ffffff",
+  "pullRefresh": true,
+  "usingComponents": {
+    "search-component": "../components/search-component/search-component",
+
+    "goodsscroll-ads": "../components/homeComponet/goodsscroll-ads/goodsscroll-ads",
+    "seckill-ads": "../components/homeComponet/seckill-ads/seckill-ads",
+    "navigationmini-ads": "../components/homeComponet/navigationmini-ads/navigationmini-ads",
+    "shopwindow-ads": "../components/homeComponet/shopwindow-ads/shopwindow-ads",
+    "goodsgroup-ads": "../components/homeComponet/goodsgroup-ads/goodsgroup-ads",
+    "onefouradvert-ads": "../components/homeComponet/onefouradvert-ads/onefouradvert-ads",
+    "singlegoods-ads": "../components/homeComponet/singlegoods-ads/singlegoods-ads",
+    "bannertype2-ads": "../components/homeComponet/bannertype2-ads/bannertype2-ads",
+    "navigation-ads": "../components/homeComponet/navigation-ads/navigation-ads",
+    "doublegoods-ads": "../components/homeComponet/doublegoods-ads/doublegoods-ads",
+    "twofouradvert-ads": "../components/homeComponet/twofouradvert-ads/twofouradvert-ads",
+    "goodswatefall-ads": "../components/homeComponet/goodswatefall-ads/goodswatefall-ads",
+
+    "popup": "mini-antui/es/popup/index"
+  }
+}

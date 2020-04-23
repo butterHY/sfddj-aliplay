@@ -1,4 +1,4 @@
-<!--首页搜索热词模板-->
+<!--首页搜索 热词和搜索记录 模板-->
 <template name="hotWords">
    <view  class="flex_view_col" style="width:100%;height:100%;background-color: rgba(0,0,0,0.5);z-index:9000;position:fixed; top: {{top}}"  a:if="{{show}}"  touchStart='touchReturn'  touchMove="touchReturn" touchEnd="touchReturn" onTap="touchReturn" > 
      <!-- catchTap='handleBlur' -->

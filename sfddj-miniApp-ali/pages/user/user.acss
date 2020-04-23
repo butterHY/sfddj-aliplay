@@ -133,6 +133,7 @@ page {
 	right: 26rpx;
 	line-height: 33rpx;
 	background-color: #fff;
+	text-align: center;
 }
 
 .user_myHome_tit {

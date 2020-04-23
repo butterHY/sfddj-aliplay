@@ -1,0 +1,28 @@
+    <import-sjs name='filters' from="../../../wxsFile/public.sjs"/>
+    
+    <!-- 1行N个 ++ 大 -->
+     <!-- a:if='{{item.moduleType == "NAVIGATION"}}' -->
+    <view class="navigation">
+      <!-- 上间隔 -->
+      <view a:if="{{item.spacing == 1}}" class='topSpace' style='background-color: {{item.topIntervalColor ? "#" + item.topIntervalColor : "#ffffff"}};'></view>
+      <!-- 内容 -->
+      <view class='otherModeCon {{item.spacing == 1 ? "marBot_20" : ""}}' style='background: {{item.backgroundColor ? "#" + item.backgroundColor : "#ffffff"}};{{item.backgroundImg ? "url("+ baseImageUrl + item.backgroundImg+") no-repeat; background-size: 100% 100%;" : ""}}'>
+        <swiper class="swiperView" indicator-dots="{{item.items.length > 5 ? 'true' : ''}}" style='height: {{item.items.length > 4 ? "214rpx" : "160rpx"}}' indicator-active-color='rgba(255,83,83.1)' display-multiple-items='5' autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}"
+          data-fatherIndex="{{index}}" onChange="adsSwiper">
+          <swiper-item class="flex_view_row height_100">
+            <block a:for="{{item.items}}" a:for-index="idx" a:for-item="itemsValue" a:key="navigation">
+              <view a:if='{{idx< 5}}' data-url="{{itemsValue.link}}" catchTap='goToPage' class='{{item.items.length > 4 ? "width_20" : "width_25"}} height_100 overHid'>
+                <image src="{{baseImageUrl}}{{itemsValue.imageUrl}}" class="all_100 mavigationImage" />
+              </view>
+            </block>
+          </swiper-item>
+          <swiper-item a:if='{{item.items.length > 5}}' class="flex_view_row">
+            <block a:for="{{item.items}}" a:for-index="idx" a:for-item="itemsValue" a:key="navigation">
+              <view style='height: 214rpx;' a:if='{{idx > 4}}' data-url="{{itemsValue.link}}" catchTap='goToPage' class='width_20'>
+                <image src="{{baseImageUrl}}{{itemsValue.imageUrl}}" mode="widthFix" class="mavigationImage"/>
+              </view>
+            </block>
+          </swiper-item>
+        </swiper>
+      </view>
+    </view>

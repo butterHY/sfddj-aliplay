@@ -1,0 +1,31 @@
+    <import-sjs name='filters' from="../../../wxsFile/public.sjs"/>
+
+   <!-- 2+4广告模块 -->
+    <!-- a:if="{{item.moduleType == 'TWOFOURADVERT'}}"  -->
+    <view class="twoFourModule">
+      <!-- 上间隔 -->
+      <view a:if="{{item.spacing == 1}}" class='topSpace' style='background-color: {{item.topIntervalColor ? "#" + item.topIntervalColor : "#ffffff"}};'></view>
+      <!-- 内容 -->
+      <view class='twoFourModuleBox' style='background-color: {{item.backgroundColor ? "#" + item.backgroundColor : "#ffffff"}}'>
+        <view class="twoFourModuleView">
+          <view class="flex_view_row twoFourAdvertsTop">
+            <view data-url="{{item.items[0].link}}" catchTap='goToPage'  class="flex_1 twoFourAdvertsLeft">
+              <image a:if="{{item.items[0].imageUrl && !filters.strIndexOf(item.items[0].imageUrl,'http')}}" src="{{baseImageUrl}}{{item.items[0].imageUrl}}" mode="widthFix" />
+              <image a:elif="{{item.items[0].imageUrl && filters.strIndexOf(item.items[0].imageUrl,'http')}}" src="{{item.items[0].imageUrl}}" mode="widthFix" />
+            </view>
+            <view data-url="{{item.items[1].link}}" catchTap='goToPage' class="flex_1  flex_view_row">
+              <image a:if="{{item.items[1].imageUrl && !filters.strIndexOf(item.items[1].imageUrl,'http')}}" src="{{baseImageUrl}}{{item.items[1].imageUrl}}" mode="widthFix" />
+              <image a:elif="{{item.items[1].imageUrl && filters.strIndexOf(item.items[1].imageUrl,'http')}}" src="{{item.items[1].imageUrl}}" mode="widthFix" />
+            </view>
+          </view>
+          <view class="flex_view_row twoFourAdvertsBot">
+            <block a:for="{{item.items}}" a:key="TWOFOURADVERT" a:for-item="twoFourItem">
+              <view a:if="{{index > 1}}" data-url="{{twoFourItem.link}}" catchTap='goToPage'  class="flex_1 {{index < item.items.length - 1 ? 'twoFourAdvertsLeft' : ''}} flex_view_row">
+                <image a:if="{{twoFourItem.imageUrl && !filters.strIndexOf(twoFourItem.imageUrl,'http')}}" src="{{baseImageUrl}}{{twoFourItem.imageUrl}}" mode="widthFix" />
+                <image a:elif="{{twoFourItem.imageUrl && filters.strIndexOf(twoFourItem.imageUrl,'http')}}" src="{{twoFourItem.imageUrl}}" mode="widthFix" />
+              </view>
+            </block>
+          </view>
+        </view>
+      </view>
+    </view>

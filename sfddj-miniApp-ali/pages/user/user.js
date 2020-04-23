@@ -30,7 +30,8 @@ Page({
 		// autoplay: true,
 		// duration: 500,
 		// currentIndex: 0,
-		hasList: false
+		hasList: false,
+		orderNumList: [0, 0, 0, 0, 0]
 	},
 
 	/**
@@ -499,6 +500,7 @@ Page({
 			
 			post(api.O2O_ORDER.getOrderList, data, res => {
 				if(res.data.data && Object.keys(res.data.data).length > 0) {
+					that.setComOrderNum();
 					that.setData({
 						hasList: true
 					})
@@ -508,8 +510,19 @@ Page({
 					hasList: false
 				})
 			})
+		} else {
+			that.setComOrderNum();
 		}
 	},
+
+	setComOrderNum() {
+			post(api.O2O_ORDER.getOrderNum, {}, res => {
+				let result = res.data.data && Object.keys(res.data.data).length > 0 ? res.data.data : [{count: 0, orderPageEnum: "ALL"}, {count: 0, orderPageEnum: "NOPAY"}, {count: 0, orderPageEnum: "PAYFINISH"}, {count: 0, orderPageEnum: "COMMENT"}, {count: 0, orderPageEnum: "AFTERSALE"}];
+				this.setData({
+					orderNumList: result
+				})
+			}, err => { })
+		},
 
 
 });

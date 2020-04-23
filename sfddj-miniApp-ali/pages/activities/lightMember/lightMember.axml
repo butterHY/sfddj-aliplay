@@ -10,7 +10,7 @@
   </load-fail>
 </view>
 
-<view a:else class="page {{!isLightMember ? 'activity' : ''}}">
+<scroll-view a:else class="page {{!isLightMember ? 'activity' : ''}}" scroll-y="true">
   <view class="heade" style="background-image: url({{baseImageUrl + headData.backgroundImg}}) ;background-size: 100% 100%;">
     <view class="headMessage" style="background-image: url({{baseImageUrl + headData.parseItem[0].titleImageUrl}}) ;background-size: 100% 100%;">
       <view class="userPersonal" >
@@ -29,7 +29,52 @@
         </view>
         <view  class="administration font-26 tex_center font-weight-600">
           <!-- data-url="{{headData.parseItem[0].activityLink}}" -->
-          <view catchTap="{{isLightMember ? 'goToLightMember' : 'isShowRule'}}">
+          <!-- catchTap="{{isLightMember ? 'goToLightMember' : 'isShowRule'}}" -->
+          <view  a:if="{{isLightMember}}" catchTap="goToLightMember">
+            <image class="administration" mode="scaleToFill" src="{{baseImageUrl + headData.parseItem[0].activityImageUrl}}"/>
+          </view>
+        </view>
+      </view>
+      <view a:if="{{isLightMember}}" class="userEquity font-weight-600 tex_center">
+        <view class="existEquity flex_1 single-line ">
+          <view class="existDay {{isLightMember ? 'font-38' : 'font-56'}}  single-line">{{headData.gmtSign}}天</view>
+          <view class="font-26 {{isLightMember ? 'marTop_20' : 'marTop_10'}} single-line">你已享受会员权益</view>
+        </view>
+        <view  class="cumulativeEquity flex_1 single-line">
+          <view class="existMoney font-38 single-line">{{headData.totalDiscountAmount}}元</view>
+          <view class="font-26 marTop_20 single-line">累计已省</view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <block a:for="{{thematicAds.modules}}" a:key="thematicAds">
+    <template is="thematicItem" data="{{item, fatherIndex: index, baseImageUrl, baseLocImgUrl, ossImgStyle, countHour, countMinute, countSecond,banRightMargin, isLightMember, user_memId}}"></template>
+  </block>
+  <view a:if="{{!isLightMember}}" class="openingButton posi_fix">
+    <view class="openingBox all_100 flex_view_row tex_center" style="background-image: url({{baseImageUrl + openingButtonData.parseItem[0].imageUrl}}) ;background-size: 100% 100%;" catchTap="goToLightMember">
+    </view>
+  </view>
+</scroll-view>
+
+<!-- <view a:else class="page {{!isLightMember ? 'activity' : ''}}">
+  <view class="heade" style="background-image: url({{baseImageUrl + headData.backgroundImg}}) ;background-size: 100% 100%;">
+    <view class="headMessage" style="background-image: url({{baseImageUrl + headData.parseItem[0].titleImageUrl}}) ;background-size: 100% 100%;">
+      <view class="userPersonal" >
+        <view class="userNameAndRul ">
+          <view class="headImg">
+            <image class="headImg" mode="scaleToFill" src="{{headData.headImage ? baseImageUrl + headData.headImage : baseLocImgUrl + 'miniappImg/icon/icon_default_head.jpg'}}"/>
+          </view>
+          <view class="nameBox  font-weight-600">
+            <view class="name single-line font-38 ">{{headData.nikeName ? headData.nikeName : '--'}}</view>
+            
+            <view a:if="{{isLightMember}}" class="lightMemberDate font-26">
+              {{headData.gmtUnSign}}到期
+              <image class="iconImg " mode="scaleToFill" src="{{baseImageUrl + headData.parseItem[0].iconImageUrl}}"  catchTap="isShowRule"></image >
+            </view>
+          </view>
+        </view>
+        <view  class="administration font-26 tex_center font-weight-600">
+          <view  a:if="{{isLightMember}}" catchTap="goToLightMember">
             <image class="administration" mode="scaleToFill" src="{{baseImageUrl + headData.parseItem[0].activityImageUrl}}"/>
           </view>
         </view>
@@ -53,7 +98,7 @@
     <view class="openingBox all_100 flex_view_row tex_center" style="background-image: url({{baseImageUrl + openingButtonData.parseItem[0].imageUrl}}) ;background-size: 100% 100%;" catchTap="goToLightMember">
     </view>
   </view>
-</view>
+</view> -->
 
 <!-- <view class="openingButton posi_ab">
   <view class="openingBox all_100 flex_view_row tex_center" style="background: black" catchTap="goToLightMember">

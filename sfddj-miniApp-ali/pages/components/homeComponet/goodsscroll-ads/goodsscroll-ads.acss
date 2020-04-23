@@ -1,0 +1,162 @@
+image {
+  display: block;
+}
+
+.goodsscroll-ads .topSpace {
+  height: 10rpx;
+  width: 100%;
+}
+
+.goodsscroll-ads .otherModeCon {
+  /* margin-bottom: 20rpx; */
+  padding: 0 24rpx 10rpx;
+}
+
+.goodsscroll-ads .marBot_20 {
+  margin-bottom: 20rpx;
+}
+
+.goodsscroll-ads .goodsScrollTit {
+  padding: 14rpx 0 24rpx;
+}
+
+.goodsscroll-ads .goodsScrollTit_txt {
+  font-weight: 400;
+  font-size: 36rpx;
+  margin-right: 21rpx;
+  /* height: 40rpx; */
+}
+
+/*弹性布局   */
+/* 做了兼容处理 */
+.goodsscroll-ads .flex_view_row {
+  display: flex;
+  display:-webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  flex-direction: row;
+  box-orient:horizontal;
+  box-direction:normal;
+  -webkit-flex-direction:row;
+}
+
+.goodsscroll-ads .goodsScrollTit_del{
+  max-width: 490rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 倒计时 */
+.goodsscroll-ads .countDown{
+  margin-left: 20rpx;
+}
+
+.goodsscroll-ads .countDown_txt{
+  height: 36rpx;
+  width: 48rpx;
+  font-size: 24rpx;
+  line-height: 36rpx;
+  display: inline-block;
+  text-align: center;
+  color: #ffffff;
+  vertical-align: top;
+  /* margin-top: 10rpx; */
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 100% 100%;
+}
+
+.goodsscroll-ads .countDown_split{
+  font-size: 28rpx;
+  line-height: 36rpx;
+  color: #ff5353;
+  font-weight: bold;
+  display: inline-block;
+  vertical-align: top;
+  /* margin-top: 10rpx; */
+}
+
+.goodsscroll-ads .countDown_black{
+  background-image: url('https://img.sfddj.com/miniappImg/bg/timeBg-black.png');
+}
+
+.goodsscroll-ads .countDown_red{
+  background-image: url('https://img.sfddj.com/miniappImg/bg/timeBg-red.png');
+}
+
+.goodsscroll-ads .width_100 {
+  width: 100%;
+}
+
+.goodsscroll-ads .goods-scrollx-view {
+	white-space: nowrap;
+	font-size: 0;
+}
+
+
+.goodsscroll-ads .goodsViewBox {
+  display: inline-block;
+  padding-right: 20rpx;
+  height: 384rpx;
+}
+
+.goodsscroll-ads .goodsViewBox .goodsShowImgBox {
+  height: 260rpx;
+  width: 100%;
+  /* background-image: url('/image/loadImg.jpg');
+  background-size: 100% 100%;
+  background-repeat: no-repeat; */
+  background:#f3f5fa;
+  border-radius: 10rpx;
+  overflow:hidden;
+}
+
+.goodsscroll-ads .goodsViewBox .goodsShowImg {
+  display: block;
+  border-radius: 10rpx;
+}
+
+.goodsscroll-ads .posi_re {
+  position: relative;
+}
+
+.goodsscroll-ads .width_260r {
+  width: 260rpx;
+}
+
+.goodsscroll-ads .littleIcon {
+  position: absolute;
+  width: 50rpx;
+  height: 50rpx;
+  top: 10rpx;
+  right: 10rpx;
+}
+
+.goodsscroll-ads .marTop_15 {
+  margin-top: 15rpx;
+}
+
+
+.goodsscroll-ads .single-line {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.goodsscroll-ads .goodsName {
+  font-size: 30rpx;
+}
+
+.goodsscroll-ads .productName {
+  font-size: 26rpx;
+  color: #a1a0a0;
+  margin-top: 5rpx;
+}
+
+.goodsscroll-ads .salePrice {
+  font-size: 32rpx;
+  color: #ff5353;
+  font-weight: 600;
+}

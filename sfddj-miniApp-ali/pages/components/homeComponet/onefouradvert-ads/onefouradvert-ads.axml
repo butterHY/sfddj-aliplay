@@ -1,0 +1,38 @@
+    <import-sjs name='filters' from="../../../wxsFile/public.sjs"/>
+    
+    <!--1+ 4 模块  -->
+    <!-- a:if='{{item.moduleType == "ONEFOURADVERT"}}' -->
+    <view class="onefouradvert">
+      <!-- 上间隔 -->
+      <view a:if="{{item.spacing == 1}}" class='topSpace' style='background-color: {{item.topIntervalColor ? "#" + item.topIntervalColor : "#ffffff"}};'></view>
+      <!-- 内容 -->
+      <view class="flex_view_row otherModeCon {{item.spacing == 1 ? 'marBot_20' : ''}}" style='background-color: {{item.backgroundColor ? "#" + item.backgroundColor : "#ffffff"}}'>
+        <!-- 左边1 个 -->
+        <view class="oneFourLeft">
+          <view data-url="{{item.items[0].link}}" catchTap='goToPage' data-type="oneFour" data-index="0" class="height_auto">
+            <image src="{{baseImageUrl}}{{item.items[0].imageUrl}}" mode="widthFix" />
+          </view>
+        </view>
+        <!-- 右边 -->
+        <view class="oneFourRight">
+          <!-- 上面 -->
+          <view class="oneFourRight-t flex_1 flex_view_row">
+            <view data-url="{{item.items[1].link}}" catchTap='goToPage' data-type="oneFour" data-index="1" class="imgView-r">
+              <image src="{{baseImageUrl}}{{item.items[1].imageUrl}}" mode="widthFix" />
+            </view>
+            <view data-url="{{item.items[2].link}}" catchTap='goToPage' data-type="oneFour" data-index="2" class="imgView-l">
+              <image src="{{baseImageUrl}}{{item.items[2].imageUrl}}" mode="widthFix" />
+            </view>
+          </view>
+          <!-- 下面 -->
+          <view class="flex_1 flex_view_row">
+            <view data-url="{{item.items[3].link}}" catchTap='goToPage' data-type="oneFour" data-index="3" class="imgView-r">
+              <image src="{{baseImageUrl}}{{item.items[3].imageUrl}}" mode="widthFix" />
+            </view>
+            <view data-url="{{item.items[4].link}}" catchTap='goToPage' data-type="oneFour" data-index="4" class="imgView-l">
+              <image src="{{baseImageUrl}}{{item.items[4].imageUrl}}" mode="widthFix" />
+            </view>>
+          </view>
+        </view>
+      </view>
+    </view>

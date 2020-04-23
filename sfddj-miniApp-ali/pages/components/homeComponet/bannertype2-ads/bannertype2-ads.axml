@@ -1,0 +1,20 @@
+    <import-sjs name='filters' from="../../../wxsFile/public.sjs"/>
+    
+    <!--图片滚动轮播 -->
+    <!-- a:if='{{item.moduleType == "BANNER_TYPE_2"}}' -->
+    <view class="bannertype">
+      <!-- 上间隔 -->
+      <view a:if="{{item.spacing == 1}}" class='topSpace' style='background-color: {{item.topIntervalColor ? "#" + item.topIntervalColor : "#ffffff"}};'></view>
+      <!-- 内容 -->
+      <view class='bannerCon' style='background-color: {{item.backgroundColor ? "#" + item.backgroundColor : "#ffffff"}}'>
+        <swiper indicator-dots="{{indicatorDots}}" autoplay="true" interval="3000" duration="1000" circular="true">
+          <block a:for="{{item.items}}" a:for-index="idx" a:key="bannerType2">
+            <swiper-item>
+              <view class="navigatorView" data-url="{{item.link}}"  catchTap='goToPage' hover-class="bannerNav">
+                <image src="{{baseImageUrl}}{{item.imageUrl}}" class="imgView" mode="widthFix" />
+              </view>
+            </swiper-item>
+          </block>
+        </swiper>
+      </view>
+    </view>

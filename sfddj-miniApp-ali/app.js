@@ -17,7 +17,6 @@ App({
 
 	onLaunch: function (options) {
 		// uma.init(UrlConstants.umaAppKey, my);   // 务必填入已注册的appKey，不然将无法统计	（友盟小程序应用引入不需要此操作）
-		console.log(UrlConstants.umaAppKey)
 		if (options.query) {
 			this.globalData.query = options.query
 		}

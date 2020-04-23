@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/newHome/newHome",
     "pages/home/home",
     "pages/category/category",
     "pages/cart/cart",
@@ -52,6 +53,7 @@
     "pages/user/zcWebView/zcWebView",
     "pages/user/historyOrder/orderDetail/reUploadId/reUploadId",
     "pages/home/oldHome/oldHome"
+    
   ],
   "subPackages": [
     {
@@ -83,7 +85,7 @@
     "backgroundColor": "#ffffff",
     "items": [
       {
-        "pagePath": "pages/home/home",
+        "pagePath": "pages/newHome/newHome",
         "icon": "image/icon_home_normal.png",
         "activeIcon": "image/icon_home_selected.png",
         "name": "首页"

@@ -1,0 +1,40 @@
+image {
+  display: block;
+  width: 100%;
+}
+
+.doublegoods .topSpace {
+  height: 10rpx;
+  width: 100%;
+}
+
+.doublegoods .otherModeCon {
+  padding: 0 24rpx 10rpx;
+}
+
+.doublegoods .marBot_20 {
+  margin-bottom: 20rpx;
+}
+
+.doublegoods .contentView {
+  display: flex;
+  display:-webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  flex-direction: row;
+  box-orient:horizontal;
+  box-direction:normal;
+  -webkit-flex-direction:row;
+  width: 100%;
+}
+
+.doublegoods .imgView-l {
+  flex: 1;
+  margin-left: 5rpx
+}
+
+.doublegoods .imgView-r {
+  flex: 1;
+  margin-right: 5rpx;
+}

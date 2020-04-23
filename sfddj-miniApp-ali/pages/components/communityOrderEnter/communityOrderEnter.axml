@@ -17,7 +17,7 @@
 			<view data-url="/community/pages/orderList/orderList?index={{index}}" class=" orderListItem" onTap="goToTargetPage">
 				<image src="{{item.imageUrl}}" class="iconImg"></image>
 				<text class='color-636363 font-24 marTop_20'>{{item.text}}</text>
-				<!--<view class="font-20 posi_ab user_orderTypeNum" a:if="{{nopayCount > 0}}">{{nopayCount< 100 ? nopayCount : '...'}}</view> -->
+				<view a:if="{{orderNumList[index] && orderNumList[index].count > 0 && index > 0}}" class="posi_ab user_orderTypeNum">{{orderNumList[index].count< 100 ? orderNumList[index].count : '...'}}</view>
 				<button class="btnStyle gpnBtn zIndex100" open-type="getAuthorize" onGetAuthorize="getPhoneNumber" scope='phoneNumber' onError="onAuthError" a:if="{{!isMember}}"></button>
 			</view>
 		</block>

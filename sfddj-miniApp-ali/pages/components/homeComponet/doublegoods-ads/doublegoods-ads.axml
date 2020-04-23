@@ -1,0 +1,20 @@
+    <import-sjs name='filters' from="../../../wxsFile/public.sjs"/>
+    
+    <!-- 1行2个 -->
+    <!-- a:if='{{item.moduleType == "DOUBLEGOODS"}}' -->
+
+    <view class="doublegoods">
+      <!-- 上间隔 -->
+      <view a:if="{{item.spacing == 1}}" class='topSpace' style='background-color: {{item.topIntervalColor ? "#" + item.topIntervalColor : "#ffffff"}};'></view>
+      <!-- 内容 -->
+      <view class='otherModeCon {{item.spacing == 1 ? "marBot_20" : ""}}' style='background-color: {{item.backgroundColor ? "#" + item.backgroundColor : "#ffffff"}}'>
+        <view class="contentView">
+          <view data-url="{{item.items[0].link}}" catchTap='goToPage' class="imgView-r">
+            <image src="{{baseImageUrl}}{{item.items[0].imageUrl}}" mode="widthFix"/>
+          </view>
+          <view data-url="{{item.items[1].link}}" catchTap='goToPage' class="imgView-l">
+            <image src="{{baseImageUrl}}{{item.items[1].imageUrl}}" mode="widthFix"/>
+          </view>
+        </view>
+      </view>
+    </view>
