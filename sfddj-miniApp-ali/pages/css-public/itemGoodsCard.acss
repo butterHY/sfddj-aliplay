@@ -219,6 +219,7 @@
 }
 
 .homeGoods {
+  line-height: 26rpx;
   font-size: 24rpx;
   margin-top: 4rpx;
 }
