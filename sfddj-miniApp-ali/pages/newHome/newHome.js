@@ -261,14 +261,17 @@ Page({
 		let waterFallTopInit = this.data.waterFallTopInit;
 		let waterFallTop = this.data.waterFallTop;
 		//防止统计位置不准确，重新再算一次
-		if (this.data.waterFallTitList.length > 0) {
-			this.getWaterFallSeat()
-		}
+		// if (this.data.waterFallTitList.length > 0) {
+		// 	this.getWaterFallSeat()
+		// }
+    console.log(scrollTop,this.data.waterFallTop,that.data.waterFallTitHeight )
 
-		// 显示返回顶部按钮
-		this.setData({
-			isShowGoTop: scrollTop > that.data.app.globalData.systemInfo.windowHeight / 2 ? true : false
-		})
+    // 显示返回顶部按钮
+    if( that.data.app.globalData.systemInfo.windowHeight / 2 && !that.data.scrollTop ) {
+      this.setData({
+        isShowGoTop: true
+      })
+    }    
 
 		if (waterFallTopInit == 'success') {
 			if (scrollTop >= (this.data.waterFallTop - that.data.waterFallTitHeight) && !this.data.waterFallTitIsTop) {
@@ -290,7 +293,7 @@ Page({
 		let that = this;
 		my.createSelectorQuery().select('#js_advert_list').boundingClientRect().exec((res) => {
 			let result = res[0] && res[0] != 'null' ? res[0].height ? res[0].height : 0 : ''
-			if (that.data.waterFallTitList.length > 0 && result && (that.data.waterFallTopInit != 'success')) {
+			if (that.data.waterFallTitList.length > 0 && result ) {
 				that.setData({
 					waterFallTop: Math.floor(result),
 					waterFallTopInit: 'success'
@@ -443,6 +446,15 @@ Page({
 									console.log('全部广告模板请求成功，开始调用 getWaterFallGoodsList(0, 0)')
 									that.getWaterFallGoodsList(0, 0)
 								}
+                console.log(resData[i].moduleType)
+                // if( resData[i].moduleType == "NAVIGATION" ) {
+                  // console.log(resData[i]);
+                  
+                  // resData[i].items[6] = resData[i].items[5];
+                  // resData[i].items.push(resData[i].items[5]);
+                  // https://img.sfddj.com/user/admin/20191210/157597432626109971.png
+                // }
+
 								newResult.push(resData[i]);
 							}
 						}
@@ -457,13 +469,8 @@ Page({
 							secondKillActivityId: that.data.secondKillActivityId
 						})
 
-            that.checkAllComponent('start')
-
-						var timeout = setTimeout(function () {
-							that.getWaterFallSeat();
-							that.getTopContentHeight();
-							clearTimeout(timeout)
-						}, 800)
+            that.checkAllComponent('start');
+            that.checkElementHeight();
 
 						reslove({
 							'type': true,
@@ -571,6 +578,7 @@ Page({
 				success: (res) => {
 				},
 			});
+      that.getWaterFallSeat();
 			console.log(that.data.wheelPlantingArr)
 		}, function (err) {
 			console.log(that.data.wheelPlantingArr)
@@ -613,6 +621,7 @@ Page({
 			success: function (res) {
 				let resData = res.data;
 				let result = resData.data;
+        that.checkElementHeight();
 				if (resData.ret.code == '0') {
 					let canUseCollected = my.canIUse('isCollected');
 					if (!canUseCollected) {
@@ -678,6 +687,7 @@ Page({
       that.setData({
         allMaterialList: Object.assign(that.data.allMaterialList, result)
       })
+      that.checkElementHeight();
       console.log('瀑布流banner数据', that.data.allMaterialList)
     }, err => {})
   },
@@ -820,6 +830,16 @@ Page({
 		}, (err) => {
 		})
 	},
+
+  // 查询节点高度
+  checkElementHeight() {
+    let that = this;
+    let timeout = setTimeout(function () {
+      that.getWaterFallSeat();
+      that.getTopContentHeight();
+      clearTimeout(timeout)
+    }, 800)
+  },
 
 	/**
 	  * 判断组件实例

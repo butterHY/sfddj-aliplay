@@ -12,14 +12,14 @@
           <swiper-item class="flex_view_row height_100">
             <block a:for="{{item.items}}" a:for-index="idx" a:for-item="itemsValue" a:key="navigation">
               <view a:if='{{idx< 5}}' data-url="{{itemsValue.link}}" catchTap='goToPage' class='{{item.items.length > 4 ? "width_20" : "width_25"}} height_100 overHid'>
-                <image src="{{baseImageUrl}}{{itemsValue.imageUrl}}" class="all_100 mavigationImage" />
+                <image src="{{baseImageUrl}}{{itemsValue.imageUrl}}" class="all_100" />
               </view>
             </block>
           </swiper-item>
           <swiper-item a:if='{{item.items.length > 5}}' class="flex_view_row">
             <block a:for="{{item.items}}" a:for-index="idx" a:for-item="itemsValue" a:key="navigation">
               <view style='height: 214rpx;' a:if='{{idx > 4}}' data-url="{{itemsValue.link}}" catchTap='goToPage' class='width_20'>
-                <image src="{{baseImageUrl}}{{itemsValue.imageUrl}}" mode="widthFix" class="mavigationImage"/>
+                <image src="{{baseImageUrl}}{{itemsValue.imageUrl}}" mode="widthFix" class="all_100"/>
               </view>
             </block>
           </swiper-item>

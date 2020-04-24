@@ -4,7 +4,8 @@
     <view class="goodsWaterfall">
       <!-- 上间隔 -->
       <view a:if="{{item.spacing == 1}}" class='topSpace' style='background-color: {{item.topIntervalColor ? "#" + item.topIntervalColor : "#ffffff"}};'></view>
-      <scroll-view class="waterFallScroll {{!waterFallTitIsTop ? 'opaci_1' : 'opaci_0'}}" scroll-x="{{true}}" scroll-with-animation="{{true}}" scroll-into-view="{{'waterFall' + waterIndex}}" style="{{item.backgroundColor ? 'background-color: #' + item.backgroundColor + ';' : ''}}">
+      <!-- {{!waterFallTitIsTop ? 'opaci_1' : 'opaci_0'}} -->
+      <scroll-view class="waterFallScroll" scroll-x="{{true}}" scroll-with-animation="{{true}}" scroll-into-view="{{'waterFall' + waterIndex}}" style="{{item.backgroundColor ? 'background-color: #' + item.backgroundColor + ';' : ''}}">
         <block a:for="{{item.items}}" a:for-item="waterFallItem" a:for-index="waterFallIndex" a:key="waterFallItem">
           <view id="{{'waterFall' + waterFallIndex}}" class="waterFallTitItem" data-index="{{waterFallIndex}}" catchTap="waterFallChange">
             <view class="titleView {{waterIndex == waterFallIndex ? 'waterFallActiveItem' : ''}}" data-index="{{waterFallIndex}}">
