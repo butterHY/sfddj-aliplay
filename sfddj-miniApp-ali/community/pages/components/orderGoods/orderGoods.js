@@ -22,6 +22,7 @@ Component({
         totalPrice: 0,
         type: '',
         result: {},
+        orderDetail: false
     },
     didMount() {
         // this.setData({

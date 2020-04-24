@@ -50,11 +50,18 @@ function controllPayment({ orderSn, payTime, callBack, failFun }) {
                 title: '提示',
                 content: '订单将于付款成功后3小时自动确认，如有问题请及时联系客服确认，感谢您的支持！',
                 buttonText: '我知道了',
-                complete: () => {
+                success: () => {
+                    callBack && typeof callBack === 'function' && callBack();
+                },
+                fail: () => {
+                    callBack && typeof callBack === 'function' && callBack();
+                },
+                // ios没有进去
+                complete: function () {
                     callBack && typeof callBack === 'function' && callBack();
                 }
             });
-            
+
         }
         else {
             let nowDate = new Date().getTime();
