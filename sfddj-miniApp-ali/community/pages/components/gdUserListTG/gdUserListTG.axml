@@ -1,5 +1,5 @@
 <view class="userListBox">
-  <view class="step_title">
+  <view class="step_title"> 
     <text class="titleName">{{ leader.tuangouCount }}人团，{{ leader.tuangouIng }}人在拼单，可直接参与</text>
     <text class="titleLink" onTap="onModalOpen">查看更多</text>
   </view>
@@ -17,7 +17,7 @@
             <view class="countNum">还差{{ leader.tuangouIng }}人</view>
             <view class="timeCut">剩余{{ leader.timer }}</view>
           </view>
-          <button class="shop_like">去拼团</button>
+          <button class="shop_like" onTap="gotoTuanGou">去拼团</button>
         </view>
       </view>
     </view>
