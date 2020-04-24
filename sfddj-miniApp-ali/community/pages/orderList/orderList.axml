@@ -25,7 +25,7 @@
 							<block a:if="{{orderList[tabListIndex][index].length > 0 || !isLoadedList[tabListIndex][index]}}">
 								<view a:if="{{typeIndexList[tabListIndex] == index}}" class="">
 									<block a:for="{{orderList[tabListIndex][index]}}" a:for-index="listIndex" a:for-item="listItem" a:for-index="listIndex">
-										<template is="itemOrderList" data="{{item: listItem, index: listIndex, countList: tabListIndex == 0 ? countList[typeIndexList[tabListIndex]] : [], baseImageUrl, staticsImageUrl, typeIndex: tabListIndex}}"></template>
+										<template is="itemOrderList" data="{{item: listItem, index: listIndex, countList: tabListIndex == 0 ? countList[typeIndexList[tabListIndex]] : [], baseImageUrl, staticsImageUrl, typeIndex: tabIndex}}"></template>
 									</block>
 									<!-- 加载更多 -->
 									<view>

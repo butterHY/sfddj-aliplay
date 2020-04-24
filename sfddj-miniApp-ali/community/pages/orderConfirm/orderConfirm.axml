@@ -55,12 +55,10 @@
                 </view>
             </view>
         </view>
-
         <!-- 门店自提提示 -->
         <view a:if="{{typeIndex == 0}}" class="color-ff0532 font-28 tex_center padTB_20">
-          <text>请到门店自提哦~</text>
+            <text>请到门店自提哦~</text>
         </view>
-
     </view>
     <!-- 底部去支付 -->
     <view class="footer">
@@ -75,3 +73,9 @@
         </view>
     </view>
 </view>
+
+<!-- 由于用my.alert在ios上的success和complete都没触发，只能改一种方法实现 -->
+<modal show="{{orderModalOpened}}" onModalClick="onModalClick">
+    <view style="margin: 20px 0 10px 0;">订单将于付款成功后3小时自动确认，如有问题请及时联系客服确认，感谢您的支持！</view>
+    <view slot="footer">我知道了</view>
+</modal>
