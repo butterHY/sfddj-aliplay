@@ -321,7 +321,6 @@ class Cart extends getApp().Service {
             quantity: n
         }, (res) => {
             if(res.data && res.data.ret && res.data.ret.code == 0) {
-                console.log('gggggggg', res);
                 if(callbackFun) {
                     callbackFun(res);
                 }
