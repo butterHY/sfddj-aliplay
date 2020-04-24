@@ -10,7 +10,7 @@
   <block a:if="{{ goodsData.isTuangou }}">
     <!-- 拼团列表 -->
     <view class="layoutGroup" a:if="{{ userListTG.length > 0 }}">
-      <gd-user-list-t-g userListTG="{{ userListTG }}" nowTime="{{ nowTime }}"></gd-user-list-t-g>
+      <gd-user-list-t-g userListTG="{{ userListTG }}" nowTime="{{ nowTime }}" ref="refGoBack"></gd-user-list-t-g> 
     </view>
 
     <!-- 店铺进入 -->

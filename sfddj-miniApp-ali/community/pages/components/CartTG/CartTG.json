@@ -3,7 +3,6 @@
     "usingComponents": {
         "button": "mini-ali-ui/es/button/index",
         "popup": "mini-ali-ui/es/popup/index",
-        "notice": "mini-ali-ui/es/notice/index",
-        "am-icon": "mini-ali-ui/es/am-icon/index"
+        "notice": "mini-ali-ui/es/notice/index" 
     }
 }

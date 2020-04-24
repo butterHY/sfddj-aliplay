@@ -8,12 +8,12 @@
             </view>
 
             <view class="iconList" onTap="gotoOrder">
-                <am-icon class="iconStyle" type="text" />
+                <text class="iconStyle iconImg_order"></text>
                 <text class="name">订单</text>
             </view>
 
             <view class="iconList" onTap="gotoService">
-                <am-icon class="iconStyle" type="chat_" />
+                <text class="iconStyle iconImg_help"></text>
                 <text class="name">客服</text>
             </view>
 

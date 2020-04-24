@@ -39,7 +39,7 @@
 }
 
 .shop_cartTG .shop_cart .iconList .iconStyle {
-    font-size: 40rpx;
+    font-size: 44rpx;
     color: #cdcdcd;
     display: block;
     width: 40rpx;
@@ -47,6 +47,11 @@
     margin: 0 auto;
     line-height: 40rpx;
     color: #cdcdcd;
+
+    display: block;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
 }
 
 .shop_cartTG .shop_cart .iconList .name {
@@ -56,6 +61,16 @@
     text-align: center;
     margin: 10rpx auto 0;
 }
+
+.shop_cartTG .shop_cart .iconList .iconImg_order {
+    background-image: url(/community/assets/images/iconImg_order.png); 
+}
+
+.shop_cartTG .shop_cart .iconList .iconImg_help {
+    background-image: url(/community/assets/images/iconImg_help.png); 
+}
+
+
 
 /* 结算按钮 */
 .shop_cartTG .shop_cartcontrol .actionBtnBox {
