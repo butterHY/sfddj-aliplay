@@ -55,10 +55,6 @@ Page({
   onUnload() {
     this.unloaded = true;
   },
-  // 点击了“规则说明”
-  onRegulationClick() {
-
-  },
   onJoinClick() {
     if(this.data.data.recordStatus == 0 && !this.data.data.orderSn) {
       // “我要参团”，弹出购买数量框
@@ -93,20 +89,25 @@ Page({
     }
   },
   onJoinSubmit() { // 确认参团，提交购买数量
-    if(this.data.data.recordStatus == 0 && !this.data.data.orderSn && !this._eving) {
-      this._eving = true;
-      this.cart.confirmTuangou(this.data.data, this.data.buyNum, (re, err) => {
-        if(re && re.data && re.data.data) {
-          my.redirectTo({
-            url: '../orderConfirm/orderConfirm?shopid=' + re.data.data.shopId + '&recordid=' + re.data.data.tuangouRecordId + '&activityid=' + re.data.data.tuangouActivityId
-          });
-        } else if(err) {
-          my.alert({
-            title: '提示',
-            content: err
-          });
-          this._eving = false;
-        }
+    if(this.data.data.recordStatus == 0 && !this.data.data.orderSn
+      && this.data.data.tuangouSkuList && this.data.data.tuangouSkuList.length > 0) {
+      // this._eving = true;
+      // this.cart.confirmTuangou(this.data.data, this.data.buyNum, (re, err) => {
+      //   if(re && re.data && re.data.data) {
+      //     my.redirectTo({
+      //       url: '../orderConfirm/orderConfirm?shopid=' + re.data.data.shopId + '&recordid=' + re.data.data.tuangouRecordId + '&activityid=' + re.data.data.tuangouActivityId
+      //     });
+      //   } else if(err) {
+      //     my.alert({
+      //       title: '提示',
+      //       content: err
+      //     });
+      //     this._eving = false;
+      //   }
+      // });
+
+      my.redirectTo({
+        url: '../orderConfirm/orderConfirm?recordid=' + this.data.data.recordId + '&activityid=' + this.id + '&skuid=' + this.data.data.tuangouSkuList[0].id + '&quantity=' + this.data.buyNum
       });
     }
   },

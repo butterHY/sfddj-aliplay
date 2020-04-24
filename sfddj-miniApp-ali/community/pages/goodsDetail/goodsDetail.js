@@ -55,11 +55,11 @@ Page({
           goodsImagePath: _goodsImagePath,
           goodsInfo: _goodsInfo,
           skuList: _skuList,
-          shopId: _data.shopId,
           nowTime: _data.nowTime,
           storeTime: _storeTime,
+          shopId: _data.shopId,
           userListTG: _data.tuangouActivityList
-        }); 
+        });
         // 设置标题
         my.setNavigationBar({ 
           title: _data.title,

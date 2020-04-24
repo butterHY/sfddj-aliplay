@@ -1,0 +1,6 @@
+<view class="notifyBox">
+  <view class="notify_title">{{ title }}</view>
+  <view class="notify_main">
+    {{ notice }}
+  </view>
+</view>

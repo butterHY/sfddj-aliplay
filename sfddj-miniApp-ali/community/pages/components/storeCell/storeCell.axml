@@ -1,0 +1,19 @@
+<!-- 店铺 -->
+<view class="storeBanner">
+  <view class="shop_tit" onTap="goShop">
+    <view class="tit_l">
+      <view class="storeImg">
+        <image src="{{ baseImageUrl }}{{ storeShow.shopLogo }}"/>
+      </view>
+      <view class="storeName">
+        <view class="shop_info">
+          <text class="shop_name">{{ storeShow.shopName }}</text>
+        </view>
+        <view class="shop_addr">{{ storeShow.address }}</view>
+      </view>
+    </view>
+    <view class="tit_r">
+      <button class="shop_like" >进店逛逛</button>
+    </view>
+  </view>
+</view>

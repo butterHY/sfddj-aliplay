@@ -17,13 +17,14 @@ Component({
   didMount() {
     this.selfName = 'cart';
     this.cart = Cart.init(this);
-    if(this.props.shopid) {
+  },
+  didUpdate(prevProps, prevData) {
+    if(this.props.shopid && this.props.shopid != this.shopId) {
+      this.shopId = this.props.shopid;
       this.cart.gets(this.props.shopid, (res) => {
         this.storeClosed();
       });
     }
-  },
-  didUpdate(prevProps, prevData) {
     if(this.props.shopid && prevData.Cart && prevData.Cart[this.props.shopid]
       && this.data.Cart && this.data.Cart[this.props.shopid]) {
       if(prevData.Cart[this.props.shopid].cnt != this.data.Cart[this.props.shopid].cnt) {

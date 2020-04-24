@@ -1,0 +1,30 @@
+
+.notifyBox {
+    position: relative;
+    background-color: #fff;
+    box-sizing: border-box;
+    padding: 60rpx 20rpx 30rpx;
+}
+
+.notify_title {
+    border-radius: 25px;
+    padding: 15rpx 45rpx;
+    background-color: #ff0032;
+    color: #ffffff;
+    font-size: 32rpx;
+    width: auto;
+    position: absolute;
+    left: 50%;
+    top: 30rpx;
+    -webkit-transform: translate(-50%,0);
+    transform: translate(-50%,0);
+}
+
+.notify_main {
+    border-radius: 10rpx;
+	border: solid 1px #ffc2cf;
+    padding: 60rpx 32rpx 30rpx; 
+    font-size: 28rpx; 
+	line-height: 40rpx; 
+	color: #666666;
+}
