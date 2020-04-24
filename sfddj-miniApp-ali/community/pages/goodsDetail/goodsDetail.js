@@ -8,12 +8,12 @@ Page({
     godosPriceInfo: null,
     goodsInfo: null,
     skuList: null,
-    shopId: '',       // 店铺id
-    storeTime: null,  // 店铺营业时间
-    nowTime: 0,    // 服务器当前时间
+    shopId: '',           // 店铺id
+    storeTime: null,      // 店铺营业时间
+    nowTime: 0,           // 服务器当前时间
     storeInfo: null,
-    storeNotice: '',  // 公告
-    userListTG:[]   // 团购列表
+    storeNotice: '',      // 公告
+    userListTG:[],        // 团购列表 
   },
   onLoad(e) { 
     this.setData({
@@ -22,10 +22,21 @@ Page({
     this.getGoodsInfo();
   },
 
-  onHide() {
-    console.log('hide')
+  onShow() {
+    // console.log('show')
+    if ( this.timerTG ) {
+      this.timerTG.initCutTime(true);
+    } 
   },
 
+  onHide() {
+    // console.log('hide') 
+    if ( this.timerTG ) {
+      this.timerTG.initCutTime(false);
+    } 
+     
+  },
+ 
   getGoodsInfo() {
     const _this = this;
     const mydata = this.data;
@@ -126,5 +137,13 @@ Page({
       success: function() {},
     };
   },
+
+  // 传递值 控制定时器
+  refGoBack(ref) {
+    // console.log('父级---', ref)
+    this.timerTG = ref;
+    // 设置活动id给组件
+    this.timerTG.data.activityId = this.data.goodsData.activityId
+  } 
 
 });

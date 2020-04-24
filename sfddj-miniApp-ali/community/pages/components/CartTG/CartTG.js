@@ -149,7 +149,7 @@ Component({
 
       let _actionText = '';
       let _showOff = false;
-      let _startTime = this.FormatDateTime(storeTime.startBusinessTime, 'minMinute', '-');
+      let _startTime = this.FormatDateTime(storeTime.startBusinessTime);
 
       let nowTime = storeTime.nowTime || Date.now();
 
@@ -196,7 +196,7 @@ Component({
       }
       // 最小到秒
       else {
-        return y + _sep + m + _sep + d + ' ' + h + ':' + minute + ':' + seconds;
+        return h + ':' + minute;
       }
     },
 
