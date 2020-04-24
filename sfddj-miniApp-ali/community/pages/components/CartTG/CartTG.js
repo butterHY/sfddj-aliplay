@@ -13,7 +13,7 @@ Component({
     goodsSku: '',
     goodsImg: '',
     skuNum: 1,
-    buyType: 0,  // 0 单独购买 1 拼团
+    buyType: '0', // 0 单独购买 1 拼团
 
   },
   props: {
@@ -33,8 +33,8 @@ Component({
       let _goodsImagePath = JSON.parse(goodsData.goodsImagePath);
 
       this.selfName = 'cart';
-      // this.cart = Cart.init('cart', this);
-      console.log(goodsData)
+      this.cart = Cart.init(this);
+      // console.log(goodsData)
 
       this.setData({
         goodsSku: goodsData.shopGoodsSkuList[0],
@@ -42,25 +42,36 @@ Component({
       })
     },
 
-    onShowDetailClick(e) { 
-      let _buyType = e.target.dataset.buyType;
-      this.setData({
-        isShowed: !this.data.isShowed,
-        buyType: _buyType * 1
-      }) 
+    // 购买按钮点击操作
+    onShowDetailClick(e) {
+      let _buyType = e.target.dataset.buyType; 
+      if ( _buyType == '0' ) {
+        // 单独购买点击
+        this.setData({
+          isShowed: !this.data.isShowed
+        })
+      }
+      else {
+        // 拼单点击 
+        let activityId = this.props.goodsData.activityId;
+        my.navigateTo({
+          url: `/community/pages/tuanDetail/tuanDetail?id=${activityId}`
+        })
+      }
+      
     },
 
     onHideClick() {
       this.setData({
         isShowed: false,
-      }); 
+      });
     },
 
-
+    // 减少
     onReduceClick(e) {
-      let _skuNum = this.data.skuNum; 
-      if(_skuNum <= 1) {
-        my.showToast({ 
+      let _skuNum = this.data.skuNum;
+      if (_skuNum <= 1) {
+        my.showToast({
           content: '已经最少数量！',
           duration: 2500,
         });
@@ -70,14 +81,15 @@ Component({
         this.setData({
           skuNum: _skuNum
         })
-      } 
+      }
     },
 
+    //增加
     onPlusClick(e) {
-      let _skuNum = this.data.skuNum; 
+      let _skuNum = this.data.skuNum;
       let _goodsSku = this.data.goodsSku;
-      if(_skuNum >= _goodsSku.store) {
-        my.showToast({ 
+      if (_skuNum >= _goodsSku.store) {
+        my.showToast({
           content: '已经最大数量！',
           duration: 2500,
         });
@@ -90,9 +102,10 @@ Component({
       }
     },
 
+    // 购买
     onToPayClick() {
       const _this = this;
-      let _buyType = this.data.buyType;
+      
       if (this.data.isDisabled) {
         my.showToast({
           type: 'none',
@@ -102,25 +115,30 @@ Component({
         return
       }
 
-      if ( _buyType * 1 ) {
-        // 拼单
-        console.log('拼单')
-      }
-      else {
+      let _buyType = this.data.buyType;
+      let _skuId = this.data.goodsSku.id; // SKU ID
+      let _skuNum = this.data.skuNum; // 购买数量 
+
+      if ( _buyType == '0' ) { 
         // 单独购买
-        console.log('单独购买')
-      }
+        // console.log('单独购买') 
 
+        this.cart.nowBuy(_skuId, _skuNum, (res, err) => {
+          const _data = res.data.data;
+          const _ret = res.data.ret
+          if (_ret.code == '0') {
 
+            this.setData({
+              isShowed: false,
+            }, () => {
+              my.navigateTo({ 
+                url: `../orderConfirm/orderConfirm?shopid=${_data.shopId}`
+              })
+            })
 
-
-
-
-      // this.cart.filter(this.props.shopid);
-      // let obj = this.cart.$get(this.props.shopid + '');
-      // if (obj.cnt) {
-      //   my.navigateTo({ url: (this.props.nextPath || '../orderConfirm/orderConfirm') + '?shopid=' + this.props.shopid });
-      // }
+          }
+        })
+      }  
     },
 
     // 店铺打烊时间控制
