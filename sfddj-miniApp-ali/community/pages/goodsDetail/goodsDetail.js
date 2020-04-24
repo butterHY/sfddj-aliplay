@@ -13,7 +13,7 @@ Page({
     nowTime: 0,    // 服务器当前时间
     storeInfo: null,
     storeNotice: '',  // 公告
-    TGListShow:[]   // 团购列表
+    userListTG:[]   // 团购列表
   },
   onLoad(e) { 
     this.setData({
