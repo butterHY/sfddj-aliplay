@@ -4,8 +4,8 @@
   <view class="topRankTit">
     <view class="topRankTitBox">
       <view class="topRankTitText">
-        <!-- 将社区专属改成附近的店 0421 zhang -->
-        <text>附近的店</text>
+        <!-- 将社区专属改成附近的店 0421 zhang 将附近的店改成一小时达 -->
+        <text>一小时达</text>
       </view>
     </view>
     <view class="more" onTap="moreShop">
