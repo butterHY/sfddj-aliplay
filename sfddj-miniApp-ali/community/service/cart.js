@@ -194,7 +194,13 @@ class Cart extends getApp().Service {
                                     salePrice: item.salePrice,
                                     iavValue: item.skuValue
                                 }]
-                            }, skuId, addNum, callbackFun);
+                            }, skuId, addNum, (re) => {
+                                if(callbackFun) {
+                                    setTimeout(() => {
+                                        callbackFun(re);
+                                    }, 200);
+                                }
+                            });
                         } else {
                             if(callbackFun) {
                                 callbackFun(undefined);
@@ -211,13 +217,15 @@ class Cart extends getApp().Service {
                                     this.$set({
                                         [`${shopId}.cartList[${idx}].quantity`]: newNum,
                                         [`${shopId}.cnt`]: shop.cnt + addNum,
-                                        [`${shopId}.salePrice`]: shop.salePrice + item.salePrice * addNum,
-                                        [`${shopId}.discountPrice`]: shop.discountPrice + (item.discountStatus ? item.discountPrice : item.salePrice) * addNum
+                                        [`${shopId}.salePrice`]: Math.abs(shop.salePrice + item.salePrice * addNum),
+                                        [`${shopId}.discountPrice`]: Math.abs(shop.discountPrice + (item.discountStatus ? item.discountPrice : item.salePrice) * addNum)
                                     }, (T) => {
                                         return T.selfName == 'cart' && T.props.shopid == shopId;
                                     });
                                     if(callbackFun) {
-                                        callbackFun(shop);
+                                        setTimeout(() => {
+                                            callbackFun(shop);
+                                        }, 200);
                                     }
                                 } else {
                                     if(callbackFun) {
