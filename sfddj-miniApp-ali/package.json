@@ -2,7 +2,7 @@
   "dependencies": {
     "alipay-miniapp-service": "^0.1.1",
     "echarts": "^4.2.1",
-    "mini-ali-ui": "^1.0.6",
+    "mini-ali-ui": "^1.0.8",
     "mini-antui": "^0.4.34",
     "regenerator": "^0.14.2",
     "umtrack-alipay": "^2.2.2-0",

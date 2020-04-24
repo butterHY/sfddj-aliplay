@@ -1,0 +1,89 @@
+<view class="shop_cartTG">
+    <!-- 控制区域 -->
+    <view class="shop_cartcontrol">
+        <view class="shop_cart">
+            <view class="iconList" onTap="gotoShop">
+                <text class="iconStyle icon-store1"></text>
+                <text class="name">店铺</text>
+            </view>
+
+            <view class="iconList" onTap="gotoOrder">
+                <text class="iconStyle iconImg_order"></text>
+                <text class="name">订单</text>
+            </view>
+
+            <view class="iconList" onTap="gotoService">
+                <text class="iconStyle iconImg_help"></text>
+                <text class="name">客服</text>
+            </view>
+
+        </view>
+        <view class="actionBtnBox">
+            <view onTap="onShowDetailClick" data-buyType="0">
+                <button class="actionBtn btn_left" type="warn-ghost" subtitle="单独购买" shape="capsule">
+                    ￥{{ goodsSku.salePrice }}
+                </button>
+            </view>
+            <view onTap="onShowDetailClick" data-buyType="1">
+                <button class="actionBtn btn_right" type="warn" subtitle="去拼单" shape="capsule">
+                    ￥{{ goodsSku.tuangouPrice }}
+                </button>
+            </view>
+        </view>
+
+    </view>
+</view>
+
+<!-- 消息提醒  -->
+<view class="noticeShow">
+    <notice show="{{ noticeShow }}" type="{{ normal }}" showIcon="{{false}}">
+        {{ actionText }}
+    </notice>
+</view>
+
+<!-- 弹出层  -->
+<popup class="goodsTG_popup" show="{{ isShowed }}" zIndex="{{ 15 }}" disableScroll="{{ false }}" position="bottom"
+    onClose="onHideClick">
+    <scroll-view class="cartListShow" scroll-y="{{ true }}">
+        <block a:if="{{ goodsSku }}">
+            <view class="cartList">
+                <view class="figureImg">
+                    <image src="{{ goodsImg }}" lazy-load="{{ false }}" />
+                </view>
+                <view class="asideInfo">
+                    <view class="priceShow"> 
+                        <view hidden="{{ buyType*1 }}">
+                            <text class="now">￥{{ (goodsSku.salePrice * skuNum).toFixed(2) }}</text> 
+                        </view>
+
+                        <!-- <view hidden="{{ !buyType*1 }}">
+                            <text class="now">
+                                ￥{{ (goodsSku.tuangouPrice * skuNum).toFixed(2) }}
+                            </text>
+                            <text class="old">￥{{ (goodsSku.salePrice * skuNum).toFixed(2) }}</text>
+                        </view> -->
+                    </view>
+
+                    <view class="stock">
+                        <text>库存：{{ goodsSku.store }}份</text>
+                    </view>
+                </view>
+            </view>
+        </block>
+    </scroll-view>
+
+    <view class="buyNum">
+        <view>购买数量</view>
+        <view class="amountBox">
+            <text class="stepper stepper_minus" onTap="onReduceClick">
+            </text>
+            <text class="stepper_val">{{ skuNum }}</text>
+            <text class="stepper stepper_plus" onTap="onPlusClick">
+            </text>
+        </view>
+    </view>
+
+    <view class="btnShow" onTap="onToPayClick">
+        <button type="warn" hover-class="active">确认</button>
+    </view>
+</popup>

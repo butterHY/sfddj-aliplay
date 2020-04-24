@@ -30,7 +30,7 @@ class Shop extends app.Service {
             });
         }
         if(shop.businessTime) {
-            let ary = shop.businessTime.split('~');
+            let ary = shop.businessTime.split('-');
             if(ary.length == 2) {
                 let timeStart = ary[0],
                     timeEnd = ary[1];

@@ -1,0 +1,8 @@
+{
+    "component": true,
+    "usingComponents": {
+        "button": "mini-ali-ui/es/button/index",
+        "popup": "mini-ali-ui/es/popup/index",
+        "notice": "mini-ali-ui/es/notice/index" 
+    }
+}

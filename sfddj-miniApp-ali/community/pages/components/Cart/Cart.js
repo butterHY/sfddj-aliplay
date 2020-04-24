@@ -19,12 +19,12 @@ Component({
     this.cart = Cart.init(this);
   },
   didUpdate(prevProps, prevData) {
-    if(!prevProps.shopid && this.props.shopid) {
+    if(this.props.shopid && this.props.shopid != this.shopId) {
+      this.shopId = this.props.shopid;
       this.cart.gets(this.props.shopid, (res) => {
         this.storeClosed();
       });
     }
-    
     if(this.props.shopid && prevData.Cart && prevData.Cart[this.props.shopid]
       && this.data.Cart && this.data.Cart[this.props.shopid]) {
       if(prevData.Cart[this.props.shopid].cnt != this.data.Cart[this.props.shopid].cnt) {
@@ -135,7 +135,7 @@ Component({
 
       let _actionText = '';
       let _showOff = false;
-      let _startTime = this.FormatDateTime( storeTime.startBusinessTime, 'minMinute', '-' );
+      let _startTime = this.FormatDateTime( storeTime.startBusinessTime );
 
       let nowTime = storeTime.nowTime || Date.now(); 
 
@@ -182,7 +182,7 @@ Component({
       }
       // 最小到秒
       else {
-          return y + _sep + m + _sep + d + ' ' + h + ':' + minute + ':' + seconds;
+          return h + ':' + minute;
       }
     }
   },
