@@ -17,6 +17,7 @@ Page({
         typeIndex: 0,
         loadComplete: false,       //是否加载完成 
         loadFail: false,           //是否加载失败
+        orderModalOpened: false
     },
     onLoad(options) {
         let { orderSn } = options;
@@ -25,8 +26,8 @@ Page({
         })
 
     },
-    onShow(){
-      
+    onShow() {
+
         this.getOrderDetail();
     },
 
@@ -65,7 +66,7 @@ Page({
                 loadComplete: true,
                 loadFail: true
             })
-         })
+        })
     },
 
     // 设置商品信息
@@ -182,10 +183,9 @@ Page({
             orderSn,
             tradeNo,
             callBack: () => {
-                my.showToast({
-                    content: '支付成功'
+                this.setData({
+                    orderModalOpened: true
                 })
-                that.getOrderDetail()
             },
             failFun: () => {
                 my.showToast({
@@ -200,22 +200,32 @@ Page({
         })
     },
 
-	// 复制订单号
-	copyOrderSn() {
-		my.setClipboard({
-			text: this.data.orderSn,
-			success: function(res) {
-				my.getClipboard({
-					success: ({ text }) => {
-						my.showToast({
-							content: '订单号复制成功',
-							type: 'success'
-						})
-					}
-				});
-			}
-		});
-	},
+    // 复制订单号
+    copyOrderSn() {
+        my.setClipboard({
+            text: this.data.orderSn,
+            success: function (res) {
+                my.getClipboard({
+                    success: ({ text }) => {
+                        my.showToast({
+                            content: '订单号复制成功',
+                            type: 'success'
+                        })
+                    }
+                });
+            }
+        });
+    },
 
+    // 超3小时提示，点我知道
+    onModalClick() {
+        my.showToast({
+            content: '支付成功'
+        })
+        this.setData({
+            orderModalOpened: false
+        })
+        this.getOrderDetail()
+    },
 
 });
