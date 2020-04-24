@@ -7,7 +7,7 @@
     <view class="order_goods_list">
         <block a:for="{{goodsList}}">
             <!-- isTuangou 防止拼团商品的接口没返回库存 -->
-            <block a:if="{{item.store > 0 || isTuangou}}">
+            <block a:if="{{item.store > 0 || isTuangou || type == 'orderDetail'}}">
                 <template is="itemOrderGoods" data="{{item, type}}"></template>
             </block>
         </block>
