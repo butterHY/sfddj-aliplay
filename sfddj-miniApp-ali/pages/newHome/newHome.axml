@@ -11,7 +11,7 @@
 <import-sjs name="filters" from="../wxsFile/public.sjs"></import-sjs>
 <!-- 内容 -->
 <view class="page flex_view_col overHid posi_re" style="padding-top: {{topContentHeight}}rpx;">
-  <view id="js_topContent" class="topContent width_100" style="position: fixed; top: 0; left: 0; z-index: 10000; box-sizing:border-box;">
+  <view id="js_topContent" class="topContent width_100" style="position: absolute; top: 0; left: 0; z-index: 10000; box-sizing:border-box;">
     <!-- TODO: 这里放最上面的“定位” -->
     <view class="locCityShow">
       <view a:if="{{ isLocationLoad && !isGetLocation }}" class="cityInfo" onTap="goLocationCity">
@@ -53,7 +53,7 @@
     </view>
   </view>
 
-  <navigator url="/pages/activities/lightMember/lightMember">轻会员</navigator>
+  <!-- <navigator url="/pages/activities/lightMember/lightMember">轻会员</navigator> -->
   <!--<navigator url="/pages/activities/lightMember/lightMember">轻会员</navigator> -->
   <!-- banner与模块广告和商品列表部分 -->
   <view class="flex_1 overHid posi_re">
