@@ -1,0 +1,90 @@
+<view class="userListBox">
+  <view class="step_title">
+    <text class="titleName">{{ leader.tuangouCount }}人团，{{ leader.tuangouIng }}人在拼单，可直接参与</text>
+    <text class="titleLink" onTap="onModalOpen">查看更多</text>
+  </view>
+  <view class="step_list">
+    <view class="listTop">
+      <view class="listCell hasBg">
+        <view class="tit_l">
+          <view class="userImg">
+            <image src="{{ baseImageUrl }}{{ leader.memberImagePath }}"/>
+          </view>
+          <view class="userName">{{ leader.userName }}</view>
+        </view>
+        <view class="tit_r">
+          <view class="timeShow">
+            <view class="countNum">还差{{ leader.tuangouIng }}人</view>
+            <view class="timeCut">剩余{{ leader.timer }}</view>
+          </view>
+          <button class="shop_like">去拼团</button>
+        </view>
+      </view>
+    </view>
+    <!-- 拼团用户列表 -->
+    <view class="listMain"> 
+      <swiper class="listUl" 
+        disable-touch="{{ true }}"
+        vertical="{{ swiperOpt.vertical }}"
+        autoplay="{{ swiperOpt.autoplay }}" 
+        circular="{{ swiperOpt.circular }}">
+
+        <block a:for="{{ swiperList }}" a:for-index="idx" a:for-item="itemlist" a:key="idx">
+          <swiper-item key="swiper-item-{{ idx }}">
+            <block a:for="{{ itemlist.list }}" a:key="index">
+              <view class="listLi">
+                <view class="listCell">
+                  <view class="tit_l">
+                    <view class="userImg">
+                      <image src="{{ baseImageUrl }}{{ item.memberImagePath }}"/>
+                    </view>
+                    <view class="userName">{{ item.userName }}</view>
+                  </view>
+                  <view class="tit_r">
+                    <view class="letter">已支付</view>
+                  </view>
+                </view>
+              </view>
+            </block>
+          </swiper-item>
+        </block>
+      </swiper>
+
+
+    </view>
+ 
+
+  </view>
+
+  <!-- 拼团用户弹出层 -->
+  <modal className="modal_list"
+		show="{{ listShowOff }}"
+    zIndex="50" 
+		onModalClose="onModalClose"
+    disableScroll="{{ true }}"
+    showClose="{{true}}">
+    <view slot="header">
+      <text>正在拼团</text>
+    </view>
+		<view class="modal_main">
+       
+      <block a:for="{{ userList }}">
+        <view class="listLi">
+          <view class="listCell">
+            <view class="tit_l">
+              <view class="userImg">
+                <image src="{{ baseImageUrl }}{{ item.memberImagePath }}"/>
+              </view>
+              <view class="userName">{{ item.userName }}</view>
+            </view>
+            <view class="tit_r">
+              <view class="letter">已支付</view>
+            </view>
+          </view>
+        </view>
+      </block>
+ 
+    </view>
+		<view slot="footer" class="modal_footer">仅显示10个正在拼团的人</view>
+	</modal>
+</view> 

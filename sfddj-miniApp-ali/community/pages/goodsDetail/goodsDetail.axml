@@ -1,16 +1,42 @@
-<view class="goodsDetailBox"> 
+<view class="goodsDetailBox">
   <view class="swiperShow" a:if="{{ goodsImagePath.length > 0 }}">
     <goods-swiper-box goodsImagePath="{{ goodsImagePath }}"></goods-swiper-box>
   </view>
 
   <view class="layoutGroup noMarTop" a:if="{{ godosPriceInfo !== null }}">
-    <goods-price-box godosPriceInfo="{{ godosPriceInfo }}" ></goods-price-box>
+    <goods-price-box godosPriceInfo="{{ godosPriceInfo }}"></goods-price-box>
   </view>
-  
+
+  <block a:if="{{ goodsData.isTuangou }}">
+    <!-- 拼团列表 -->
+    <view class="layoutGroup" a:if="{{ userListTG.length > 0 }}">
+      <gd-user-list-t-g userListTG="{{ userListTG }}" nowTime="{{ nowTime }}"></gd-user-list-t-g>
+    </view>
+
+    <!-- 店铺进入 -->
+    <view class="layoutGroup" a:if="{{ storeInfo }}">
+      <store-cell storeInfo="{{ storeInfo }}"></store-cell>
+    </view>
+
+
+    <!-- 商家公告 -->
+    <view class="layoutGroup" a:if="{{ storeNotice }}">
+      <store-notify storeNotice="{{ storeNotice }}"></store-notify>
+    </view>
+
+  </block>
+
+
   <view class="layoutGroup" a:if="{{ goodsInfo !== null }}">
     <goods-intro goodsInfo="{{ goodsInfo }}"></goods-intro>
   </view>
 
+  <block a:if="{{ !goodsData.isTuangou }}">
+    <cart shopid="{{ shopId }}" storeTime="{{ storeTime }}"></cart>
+  </block>
 
-  <cart shopid="{{ shopId }}" storeTime="{{ storeTime }}"></cart> 
+  <block a:if="{{ goodsData.isTuangou }}">
+    <cart-t-g a:if="{{ goodsData }}" goodsData="{{ goodsData }}" storeTime="{{ storeTime }}"></cart-t-g> 
+  </block>
+
 </view>

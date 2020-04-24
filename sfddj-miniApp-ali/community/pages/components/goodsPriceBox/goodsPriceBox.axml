@@ -1,26 +1,48 @@
 <view class="goodsPriceBox">
-  <view class="goodsName">
-    <view class="nameShow">
-      <text>{{ goodsInfo.name }} {{ goodsInfo.skuData.iavValue }}</text>
+  <!-- 正常商品 -->
+  <block a:if="{{ !goodsInfo.isTuangou }}">
+    <view class="goodsName">
+      <view class="nameShow">
+        <text>{{ goodsInfo.title }} {{ defaultSku.iavValue }}</text>
+      </view>
+      <!--<view class="nameTip"><text>月售{{ goodsInfo.monthSaleCount }}份</text></view> -->
     </view>
-    <!-- <view class="nameTip">
-      <text>月售{{ goodsInfo.monthSaleCount }}份</text>
-    </view> -->
-  </view>
-  <view class="goodsPrice">
-    <view class="priceBox">
-      <block a:if="{{ !goodsInfo.skuData.isDiscount }}">
-        <text class="now_price">¥{{ goodsInfo.skuData.salePrice }}</text> 
-      </block>
-      
-      <block a:else>
-        <text class="now_price">¥{{ goodsInfo.skuData.discountPrice }}</text> 
-        <text class="old_price">¥{{ goodsInfo.skuData.salePrice }}</text>
-      </block>
-      
+    <view class="goodsPrice">
+      <view class="priceBox">
+        <block a:if="{{ !defaultSku.isDiscount }}">
+          <text class="now_price">¥{{ defaultSku.salePrice }}</text>
+        </block>
+        <block a:else>
+          <text class="now_price">¥{{ defaultSku.discountPrice }}</text>
+          <text class="old_price">¥{{ defaultSku.salePrice }}</text>
+        </block>
+      </view>
+      <!-- 加购物车 -->
+      <view class="addCarBtn">
+        <button size="default" type="warn" onTap="addCar">加入购物车</button>
+      </view>
     </view>
-    <view class="addCarBtn">
-      <button size="default"  type="warn" onTap="addCar" >加入购物车</button>
+  </block>
+
+
+  <!-- 拼团商品 -->
+  <block a:else>
+    <view class="goodsName">
+      <view class="nameShow nameShowTG">
+        <text class="name">{{ goodsInfo.title }} {{ defaultSku.iavValue }}</text>
+        <view class="shareBtn" onTap="share">
+          <text class="iconStyle icon-share"></text>
+          <text>分享</text>
+        </view>
+      </view>
     </view>
-  </view>
+    <view class="goodsPrice">
+      <view class="priceBox">
+        <text class="now_price">¥{{ defaultSku.tuangouPrice }}</text>
+        <text class="old_price">¥{{ defaultSku.salePrice }}</text>
+      </view>
+      <view class="countShow">已拼{{ '未定义' }}份 </view>
+
+    </view>
+  </block>
 </view>
