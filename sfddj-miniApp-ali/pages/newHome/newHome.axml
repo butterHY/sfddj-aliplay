@@ -11,7 +11,7 @@
 <import-sjs name="filters" from="../wxsFile/public.sjs"></import-sjs>
 <!-- 内容 -->
 <view class="page flex_view_col overHid posi_re" style="padding-top: {{topContentHeight}}rpx;">
-  <view id="js_topContent" class="topContent width_100" style="position: fixed; top: 0; left: 0; z-index: 10000; box-sizing:border-box;">
+  <view id="js_topContent" class="topContent width_100" style="position: fixed; top: 0; left: 0; z-index: 9000; box-sizing:border-box;">
     <!-- TODO: 这里放最上面的“定位” -->
     <view class="locCityShow">
       <view a:if="{{ isLocationLoad && !isGetLocation }}" class="cityInfo" onTap="goLocationCity">
@@ -43,7 +43,7 @@
         <view class="flex_view_row align_cen marLeft_30">
           <!-- 搜索icon -->
           <text class="icon-search_home marRight_15 font-28 color-c6c6c6"></text>
-          <text class="font-26 color-999999">我是 1.0{{placeholder}}</text>
+          <text class="font-26 color-999999">{{placeholder}}</text>
           <!--<text class="font-24 color-b5b5b5" decode="{{true}}">&nbsp;[推荐]</text> -->
         </view>
       </view>

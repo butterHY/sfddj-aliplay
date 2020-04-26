@@ -19,7 +19,7 @@
           <swiper-item a:if='{{item.items.length > 5}}' class="flex_view_row">
             <block a:for="{{item.items}}" a:for-index="idx" a:for-item="itemsValue" a:key="navigation">
               <view style='height: 214rpx;' a:if='{{idx > 4}}' data-url="{{itemsValue.link}}" catchTap='goToPage' class='width_20'>
-                <image src="{{baseImageUrl}}{{itemsValue.imageUrl}}" mode="widthFix" class="all_100"/>
+                <image src="{{baseImageUrl}}{{itemsValue.imageUrl}}" class="all_100"/>
               </view>
             </block>
           </swiper-item>
