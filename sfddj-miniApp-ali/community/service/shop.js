@@ -188,7 +188,9 @@ class Shop extends app.Service {
                 }
                 if(res.data.data.tuangouMemberList) {
                     res.data.data.tuangouMemberList.forEach((T) => {
-                        T.memberImagePath = api.baseImageUrl + T.memberImagePath;
+                        if(!T.memberImagePath.startsWith('http://') && !T.memberImagePath.startsWith('https://')) {
+                            T.memberImagePath = api.baseImageUrl + T.memberImagePath;
+                        }
                     });
                 }
             }
