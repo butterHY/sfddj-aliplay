@@ -1,4 +1,4 @@
-import { baseImageUrl } from '/api/api';
+import { baseImageUrl, defaultAvatar } from '/api/api';
 import locAddr from '/community/service/locAddr.js';
 
 Component({
@@ -10,7 +10,8 @@ Component({
     goodsShow: [],
     storeDis: 0,     // 小店距离
     show: false,
-    storeShow: {}
+    storeShow: {},
+    defaultAvatar,      //默认头像
   },
   props: {
     // storeShow: ''

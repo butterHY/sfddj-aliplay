@@ -1,10 +1,12 @@
 import {getDistance} from '/community/assets/common';
 import Shop from '/community/service/shop';
+import {defaultAvatar} from '/api/api';
 
 Page({
   data: {
     searchVal: '',
-    items: []
+    items: [],
+    defaultAvatar,        //默认头像
   },
   onLoad(options) {
     this.shop = Shop.init(this);

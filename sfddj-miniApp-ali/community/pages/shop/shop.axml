@@ -3,7 +3,7 @@
     <view a:if="{{msg}}" class="shop_msg">{{msg}}</view>
     <view class="shop_tit">
       <view>
-        <view style="background-image:url({{shop.shopLogo}})"></view>
+        <view style="background-image:url({{shop.shopLogo ? shop.shopLogo : defaultAvatar}})"></view>
         <view>
           <view>
             <text class="shop_name">{{shop.shopName}}</text>
