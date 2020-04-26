@@ -3,7 +3,7 @@
     <view a:if="{{msg}}" class="shop_msg">{{msg}}</view>
     <view class="shop_tit">
       <view>
-        <view style="background-image:url({{shop.shopLogo}})"></view>
+        <view style="background-image:url({{shop.shopLogo ? shop.shopLogo : defaultAvatar}})"></view>
         <view>
           <view>
             <text class="shop_name">{{shop.shopName}}</text>
@@ -26,12 +26,12 @@
   </view>
 
   <view class="shop_goods">
-    <scroll-view scroll-y="{{true}}" a:if="{{!isSearch}}" class="shop_categories">
+    <view a:if="{{!isSearch}}" class="shop_categories">
       <view a:for="{{categories}}" a:key="*this" class="{{item.id == selectedCategoryId ? 'actived' : ''}}" data-id="{{item.id}}" onTap="onCategoryClick">
         <view><view></view></view>
         <view>{{item.name}}</view>
       </view>
-    </scroll-view>
+    </view>
     <view class="shop_goodsitems">
       <view a:if="{{!isSearch}}" class="shop_selectedcategoryname">{{selectedCategoryName}}</view>
       <view class="shop_goodslist">

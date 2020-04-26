@@ -7,6 +7,7 @@ function getRad(d) {
 
 // 调起支付
 function tradePay({ orderSn, tradeNo, callBack, failFun, errorFun }) {
+    my.hideLoading();
     my.tradePay({
         tradeNO: tradeNo,
         success: function (res) {
@@ -45,22 +46,37 @@ function controllPayment({ orderSn, payTime, callBack, failFun }) {
     post(api.O2O_ORDERCONFIRM.queryPayType, { orderSn }, (res) => {
         let result = res.data.data ? res.data.data : {};
         if (result.payFinish) {
+            my.hideLoading();
+            callBack && typeof callBack === 'function' && callBack();
             // 成功了，加一个提示
-            my.alert({
-                title: '提示',
-                content: '订单将于付款成功后3小时自动确认，如有问题请及时联系客服确认，感谢您的支持！',
-                buttonText: '我知道了',
-                success: () => {
-                    callBack && typeof callBack === 'function' && callBack();
-                },
-                fail: () => {
-                    callBack && typeof callBack === 'function' && callBack();
-                },
-                // ios没有进去
-                complete: function () {
-                    callBack && typeof callBack === 'function' && callBack();
-                }
-            });
+            // my.alert({
+            //     title: '提示',
+            //     content: '订单将于付款成功后3小时自动确认，如有问题请及时联系客服确认，感谢您的支持！',
+            //     buttonText: '我知道了',
+            //     success: () => {
+            //         console.log(']]]---success')
+            //         callBack && typeof callBack === 'function' && callBack();
+            //     }
+            // });
+
+            // my.alert({
+            //     title: '提示',
+            //     content: '订单将于付款成功后3小时自动确认，如有问题请及时联系客服确认，感谢您的支持！',
+            //     buttonText: '我知道了',
+            //     success: () => {
+            //         console.log('success--alert', callBack)
+            //         callBack && typeof callBack === 'function' && callBack();
+            //     },
+            //     fail: () => {
+            //         console.log('fail--alert', callBack)
+            //         callBack && typeof callBack === 'function' && callBack();
+            //     },
+            //     // ios没有进去
+            //     complete: function () {
+            //         console.log('complete--alert', callBack)
+            //         callBack && typeof callBack === 'function' && callBack();
+            //     }
+            // });
 
         }
         else {

@@ -11,7 +11,7 @@
 <import-sjs name="filters" from="../wxsFile/public.sjs"></import-sjs>
 <!-- 内容 -->
 <view class="page flex_view_col overHid posi_re" style="padding-top: {{topContentHeight}}rpx;">
-  <view id="js_topContent" class="topContent width_100" style="position: absolute; top: 0; left: 0; z-index: 10000; box-sizing:border-box;">
+  <view id="js_topContent" class="topContent width_100" style="position: fixed; top: 0; left: 0; z-index: 9000; box-sizing:border-box;">
     <!-- TODO: 这里放最上面的“定位” -->
     <view class="locCityShow">
       <view a:if="{{ isLocationLoad && !isGetLocation }}" class="cityInfo" onTap="goLocationCity">
@@ -30,14 +30,14 @@
       </view>
     </view>
     <!-- 关注公众号组件 和搜索的组件 -->
-    <lifestyle a:if="{{canUseLife}}" publicId='2016071501623328'/>
+    <lifestyle a:if="{{canUseLife && env == 'production'}}" publicId='2016071501623328'/>
     <!-- 搜索部分 -->
     <!-- style="position: fixed; top: 0; left: 0; z-index: 10000; box-sizing:border-box;" -->
     <view class="flex_view_row home_searchBox whiteBack align_cen width_100">
       <!-- 消息 -->
-      <navigator url="/pages/user/webView/webView?link={{baseUrlOnly + '/365webcall/messageList'}}" hover-class="none" class="home_message">
+      <view  data-url="{{baseUrlOnly + '/365webcall/messageList'}}" class="home_message" catchTap="goToPage">
         <text class="icon-message_index1 font-42 color-666"></text>
-      </navigator>
+      </view>
       <!-- 搜索框 -->
       <view class="flex_1 home_search_bar flex_view_row align_cen justi_start" catchTap="showSearch">
         <view class="flex_view_row align_cen marLeft_30">
@@ -53,7 +53,7 @@
     </view>
   </view>
 
-  <!-- <navigator url="/pages/activities/lightMember/lightMember">轻会员</navigator> -->
+
   <!--<navigator url="/pages/activities/lightMember/lightMember">轻会员</navigator> -->
   <!-- banner与模块广告和商品列表部分 -->
   <view class="flex_1 overHid posi_re">
@@ -77,7 +77,7 @@
             </view>
           </view>
           <!-- 固定的一个四大描述 -->
-          <view class="width_100">
+          <view class="home_describe">
             <image src="{{baseLocImgUrl}}miniappImg/more/home_describe.png" class="width_100 blockBox" mode="widthFix"></image>
           </view>
           <!-- 推荐小店入口 -->

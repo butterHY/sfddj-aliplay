@@ -30,6 +30,8 @@ Page({
         skuId: null,        //社区拼团商品购买需要的
         quantity: 1,        //社区拼团商品购买需要的
         isTuangou: false,     //是否是拼团商品
+        orderModalOpened: false,    //订单3小时后确认提示
+        orderSn: '',
     },
     onLoad(options) {
         let { shopid, recordId, skuId, quantity } = options;
@@ -52,6 +54,14 @@ Page({
                     isTuangou: true
                 })
                 this.getPinOrderData();
+            } else if (skuId) {
+                this.setData({
+                    recordId,
+                    skuId,
+                    quantity: quantity ? quantity : 1,
+                    isTuangou: true
+                })
+                this.getPinAloneData();
             }
         }
 
@@ -128,7 +138,8 @@ Page({
 
                                     }
                                     else {
-                                        // 取消
+                                        // 取消，就返回上一页
+                                        my.navigateBack();
                                     }
                                 },
 
@@ -168,7 +179,6 @@ Page({
             quantity
         }
         post(api.O2O_ORDERCONFIRM.confirmTuangou, data, res => {
-            console.log('[[getPinOrder--0', res)
             let result = res.data.data ? res.data.data : {};
             if (Object.keys(result).length > 0) {
                 let shopCartList = result.items ? result.items : [];
@@ -182,14 +192,55 @@ Page({
                     result: result,
                     confirmToken: result.confirmToken,    //防止重复提交的token
                     shopTotalPrice: result.price,
-                    shopCartList: shopCartList,       
+                    shopCartList: shopCartList,
                     shopName: result.name,     // 商家名称
                     deliveryFee: result.deliveryOutGratis && result.deliveryOutGratis > 0 ? (result.deliveryFee && result.price < result.deliveryOutGratis ? result.deliveryFee : 0) : result.deliveryFee,    // 配送费
                     deliveryOutGratis: result.deliveryOutGratis ? result.deliveryOutGratis : 0,
                     totalPrice: result.price,
+                    shopid: result.shopId
+                })
+                console.log('[[getPinOrder--01111', this.data.shopCartList)
+            }
+        }, err => {
+            my.showToast({
+                content: err,
+                complete: () => {
+                    my.navigateBack();
+                }
+            })
+        })
+    },
+
+    // 拼团商品的单独购买
+    getPinAloneData() {
+        let { skuId, quantity } = this.data;
+        let data = {
+            skuId,
+            quantity
+        }
+        post(api.O2O_ORDERCONFIRM.nowBuy, data, res => {
+            let result = res.data.data ? res.data.data : {};
+            if (Object.keys(result).length > 0) {
+                let shopCartList = result.items ? result.items : [];
+                shopCartList.forEach((val, i, arr) => {
+                    val.goodsImagePath = this.data.baseImageUrl + val.productImg;
+                    val.salePrice = val.price;
+                    val.name = val.goodsName;
+                    val.skuValue = val.productName;
+                })
+                this.setData({
+                    result: result,
+                    confirmToken: result.confirmToken,    //防止重复提交的token
+                    shopTotalPrice: result.price,
+                    shopCartList: shopCartList,
+                    shopName: result.name,     // 商家名称
+                    deliveryFee: result.deliveryOutGratis && result.deliveryOutGratis > 0 ? (result.deliveryFee && result.price < result.deliveryOutGratis ? result.deliveryFee : 0) : result.deliveryFee,    // 配送费
+                    deliveryOutGratis: result.deliveryOutGratis ? result.deliveryOutGratis : 0,
+                    totalPrice: result.price,
+                    shopid: result.shopId
 
                 })
-            console.log('[[getPinOrder--01111', this.data.shopCartList)
+                console.log('[[getPinOrder--01111', this.data.shopCartList)
             }
         }, err => {
             my.showToast({
@@ -297,16 +348,23 @@ Page({
                     orderSn,
                     tradeNo,
                     clearShopCart: () => {
-                        this.cart.clear(this.data.shopid, (res) => {
-                        });
+                        if (!this.data.isTuangou) {
+
+                            this.cart.clear(this.data.shopid, (res) => {
+                            });
+                        }
                     },
                     callBack: () => {
-                        that.cancelSwitch();
-                        my.showToast({
-                            content: '支付成功'
-                        });
-                        my.redirectTo({
-                            url: '/community/pages/orderDetail/orderDetail?orderSn=' + orderSn
+                        // that.cancelSwitch();
+                        // my.showToast({
+                        //     content: '支付成功'
+                        // });
+                        // my.redirectTo({
+                        //     url: '/community/pages/orderDetail/orderDetail?orderSn=' + orderSn
+                        // })
+                        this.setData({
+                            orderModalOpened: true,
+                            orderSn
                         })
                     },
                     failFun: () => {
@@ -332,8 +390,13 @@ Page({
             my.showToast({
                 content: err
             })
-            // 重新更新下token
-            that.getOrderData(that.data.shopid);
+            if (!this.data.isTuangou) {
+
+                // 重新更新下token
+                that.getOrderData(that.data.shopid);
+            } else {
+                my.navigateBack();
+            }
         })
     },
 
@@ -464,6 +527,17 @@ Page({
         // let selfInfo = Object.assign({},e)
         this.setData({
             selfInfo: Object.assign({}, e)
+        })
+    },
+
+    // 超3小时提示，点我知道
+    onModalClick() {
+        this.cancelSwitch();
+        my.showToast({
+            content: '支付成功'
+        });
+        my.redirectTo({
+            url: '/community/pages/orderDetail/orderDetail?orderSn=' + this.data.orderSn
         })
     },
 

@@ -209,12 +209,13 @@ Page({
 
     // 判断要不要启用倒计时
     isUseCountDown() {
-        let { typeIndex, isCounting, countList } = this.data;
-        let setCounting = 'isCounting[' + typeIndex + ']';
-        if (typeIndex < 2) {
-            if (!isCounting[typeIndex]) {
+        let { isCounting, countList, typeIndexList, tabIndex } = this.data;
+        let index = typeIndexList[tabIndex];
+        let setCounting = 'isCounting[0]';
+        if (index < 2) {
+            if (!isCounting[index]) {
                 // 先查看是否需要用倒计时的
-                let needCount = countList[typeIndex].some((item, i, arr) => {
+                let needCount = countList[index].some((item, i, arr) => {
                     return item > 0
                 })
                 if (needCount) {
@@ -222,7 +223,7 @@ Page({
                         [setCounting]: true
                     })
 
-                    typeIndex == 0 ? this.allCountDown() : this.noPayCountDown();
+                    index == 0 ? this.allCountDown() : this.noPayCountDown();
                 } else {
                     return;
                 }
@@ -293,9 +294,9 @@ Page({
     allCountDown() {
         let that = this;
         let { countList, orderList, allTimer } = this.data;
-        let allOrderList = orderList[0];
+        let allOrderList = orderList[0][0];
         let allCountList = countList[0];
-        let setOrderList = 'orderList[0]';
+        let setOrderList = 'orderList[0][0]';
         let setCountList = 'countList[0]';
         allCountList.forEach((item, i, arr) => {
             if (item > 0) {
@@ -312,7 +313,7 @@ Page({
             }
         })
         this.setData({
-            'orderList[0]': allOrderList
+            'orderList[0][0]': allOrderList
         })
         clearTimeout(this.data.allTimer);
         this.data.allTimer = setTimeout(function () {
@@ -331,7 +332,7 @@ Page({
     noPayCountDown() {
         let that = this;
         let { countList, orderList, noPayTimer } = this.data;
-        let noPayOrderList = orderList[1];
+        let noPayOrderList = orderList[0][1];
         let noPayCountList = countList[1];
         // let setOrderList = 'orderList[' + 0 + ']';
         let setCountList = 'countList[1]';
@@ -350,7 +351,7 @@ Page({
             }
         })
         this.setData({
-            'orderList[1]': noPayOrderList
+            'orderList[0][1]': noPayOrderList
         })
         clearTimeout(this.data.noPayTimer);
         this.data.noPayTimer = setTimeout(function () {

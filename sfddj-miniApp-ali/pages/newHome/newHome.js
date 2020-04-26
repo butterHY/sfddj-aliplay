@@ -1,5 +1,6 @@
 import _ from 'underscore'
 import locAddr from '/community/service/locAddr.js';
+
 //获取应用实例不要写在页面外面，会出问题；
 
 let sendRequest = require('../../utils/sendRequest');
@@ -9,6 +10,7 @@ let utils = require('../../utils/util');
 
 
 import api from '../../api/api';
+import env from '../../api/env';
 import http from '../../api/http';
 
 
@@ -94,9 +96,10 @@ Page({
 		let placeholder = my.getStorageSync({ key: 'searchTextMax', }).data;          // 获取缓存 首页商品  数据
 
 		that.setData({
+      topContentHeight: env == 'production' ? (27.6 + 44 +56) * 750 / that.data.app.globalData.systemInfo.windowWidth  : (27.6 + 44) * 750 / that.data.app.globalData.systemInfo.windowWidth,            // 生产环境显示生活号；
       waterFallTitHeight: 130 * that.data.app.globalData.systemInfo.windowWidth / 750,   // 瀑布流导航高度；
-     //如果在瀑布流导航置顶时，设置瀑布流商品的最低高度, 56: 生活号高度，18：定位高度；44：搜索导航高度；62：瀑布流导航高度；
-      goodsBoxMinHeight: that.data.app.globalData.systemInfo.windowHeight - (that.data.canUseLife ? 56 + 18 + 44 + 62 : 18 + 44 + 62),
+     //如果在瀑布流导航置顶时，设置瀑布流商品的最低高度, 56: 生活号高度，27.6：定位高度；44：搜索导航高度；62：瀑布流导航高度；
+      goodsBoxMinHeight: that.data.app.globalData.systemInfo.windowHeight - (that.data.canUseLife && env == 'production' ? 56 + 27.6 + 44 + 62 : 27.6 + 44 + 62),
       wheelPlantingArr: wheelPlantingArr ? wheelPlantingArr : [],
 			advertsArr: advertsArr ? advertsArr : [],																																		// ---- 移到组件			
 			placeholder: placeholder ? placeholder : '',
@@ -120,7 +123,7 @@ Page({
 	},
 
 	onShow: function () {
-		console.log('页面显示')
+		// console.log('页面显示')
 		let that = this;
 		my.getStorageSync({ key: 'isHotStart', }).data ? that.getPop() : '';  // 如果页面是热启动，就请求弹窗广告数据；
 		that.getCartNumber();   // 获取购物车数量
@@ -177,7 +180,7 @@ Page({
 				});
 				// 设置缓存并设置全部变量的值 globalData.userLocInfo 
 				app.setLocStorage(_this.data.locInfo, function () {
-					console.log('setLocStorge',app.globalData)
+					// console.log('setLocStorge',app.globalData)
 					_this.locStoreShow();
 				});
 
@@ -236,6 +239,8 @@ Page({
 			if (_data.length > 0) {
 				_show = true;
 				_store = Object.assign({}, _data[0]);
+				// 友盟埋点--社区入口曝光量
+				my.uma.trackEvent('homepage_O2O_enter', { shopName: _store.shopName, shopId: _store.id });
 			}
 			_this.setData({
 				'o2oStore.show': _show,
@@ -261,14 +266,17 @@ Page({
 		let waterFallTopInit = this.data.waterFallTopInit;
 		let waterFallTop = this.data.waterFallTop;
 		//防止统计位置不准确，重新再算一次
-		if (this.data.waterFallTitList.length > 0) {
-			this.getWaterFallSeat()
-		}
+		// if (this.data.waterFallTitList.length > 0) {
+		// 	this.getWaterFallSeat()
+		// }
+    // console.log(scrollTop,this.data.waterFallTop,that.data.waterFallTitHeight )
 
-		// 显示返回顶部按钮
-		this.setData({
-			isShowGoTop: scrollTop > that.data.app.globalData.systemInfo.windowHeight / 2 ? true : false
-		})
+    // 显示返回顶部按钮
+    if( that.data.app.globalData.systemInfo.windowHeight / 2 && !that.data.scrollTop ) {
+      this.setData({
+        isShowGoTop: true
+      })
+    }    
 
 		if (waterFallTopInit == 'success') {
 			if (scrollTop >= (this.data.waterFallTop - that.data.waterFallTitHeight) && !this.data.waterFallTitIsTop) {
@@ -290,7 +298,7 @@ Page({
 		let that = this;
 		my.createSelectorQuery().select('#js_advert_list').boundingClientRect().exec((res) => {
 			let result = res[0] && res[0] != 'null' ? res[0].height ? res[0].height : 0 : ''
-			if (that.data.waterFallTitList.length > 0 && result && (that.data.waterFallTopInit != 'success')) {
+			if (that.data.waterFallTitList.length > 0 && result ) {
 				that.setData({
 					waterFallTop: Math.floor(result),
 					waterFallTopInit: 'success'
@@ -316,7 +324,7 @@ Page({
   onReachBottom() {
     let that = this;
     let { waterIndex, waterFallGoodsList, isWaterFallLoaded } = this.data
-    console.log('上拉加载', '此时的导航 index', waterIndex, '此时各个导航是否没有更多', isWaterFallLoaded, '此时各个瀑布流数据', waterFallGoodsList)
+    // console.log('上拉加载', '此时的导航 index', waterIndex, '此时各个导航是否没有更多', isWaterFallLoaded, '此时各个瀑布流数据', waterFallGoodsList)
     if ( !isWaterFallLoaded[waterIndex] && isWaterFallLoaded.length > 0 ) {
       let setWaterFallStart = 'waterStartList[' + waterIndex + ']'
       this.setData({
@@ -368,7 +376,7 @@ Page({
 	* 下拉刷新
 	*/
 	onPullDownRefresh() {
-		console.log('下拉刷新重新请求数据')
+		// console.log('下拉刷新重新请求数据')
 		clearTimeout(this.data.app.globalData.home_spikeTime);	// 清除定时器    
 		this.getAdvertsModule();   // 获取广告模块资源
 		this.setData({
@@ -418,7 +426,7 @@ Page({
           let resData= res.data.data;
           
           // resData = that.setResult();
-          console.log(resData)
+          // console.log(resData)
 
 					if (resRet.code == '0' && resData && resData.length > 0) {
 						let newResult = [];
@@ -440,9 +448,23 @@ Page({
 										waterLimitList: new Array(resData[i].items.length).fill(10),
 										waterFallListIndex: i
 									})
-									console.log('全部广告模板请求成功，开始调用 getWaterFallGoodsList(0, 0)')
+									// console.log('全部广告模板请求成功，开始调用 getWaterFallGoodsList(0, 0)')
 									that.getWaterFallGoodsList(0, 0)
 								}
+
+                if( resData[i].moduleType == "NAVIGATION" ) {
+                  // console.log(resData[i]);
+                  resData[i].items.push({
+                    imageUrl:"user/admin/20200424/158772400863802553.jpg",
+                    link:"/pages/activities/lightMember/lightMember",
+                    linkType : "CUSTOM_LINK"
+                  });
+
+                  // resData[i].items[5] = resData[i].items[4];
+                  // resData[i].items.push(resData[i].items[5]);
+                  // https://img.sfddj.com/user/admin/20191210/157597432626109971.png
+                }
+
 								newResult.push(resData[i]);
 							}
 						}
@@ -457,13 +479,8 @@ Page({
 							secondKillActivityId: that.data.secondKillActivityId
 						})
 
-            that.checkAllComponent('start')
-
-						var timeout = setTimeout(function () {
-							that.getWaterFallSeat();
-							that.getTopContentHeight();
-							clearTimeout(timeout)
-						}, 800)
+            that.checkAllComponent('start');
+            that.checkElementHeight();
 
 						reslove({
 							'type': true,
@@ -513,9 +530,9 @@ Page({
       that.setData({
         [setWaterLoadingName]: true
       })
-    console.log('请求瀑布流商品 type', type, '此时各个正在加载状态', that.data.isWaterFallLoading, '当前导航对应的参数---',data,'整条瀑布流导航',waterFallTitList)
+    // console.log('请求瀑布流商品 type', type, '此时各个正在加载状态', that.data.isWaterFallLoading, '当前导航对应的参数---',data,'整条瀑布流导航',waterFallTitList)
       http.post(api.GOODS.WATERFALL, data, res => {
-        console.log('当前导航对应的返回的数据---',res);
+        // console.log('当前导航对应的返回的数据---',res);
         let result = res.data.data ? res.data.data : [];
         let setListName = 'waterFallGoodsList[' + waterIndex + ']'
         let setLoadedName = 'isWaterFallLoaded[' + waterIndex + ']'
@@ -539,17 +556,17 @@ Page({
           allMaterialIndex: that.data.allMaterialIndex
         })
 
-				type == 0 ? that.getTopContentHeight() : '';
-				console.log('当前导航渲染的商品', wholeGoodsList, '是否没有更多？', that.data.isWaterFallLoaded, '本次请求是否还在继续', that.data.isWaterFallLoading, '是否是第一次？', that.data.isWaterFallFirst)
+				// type == 0 ? that.getTopContentHeight() : '';
+				// console.log('当前导航渲染的商品', wholeGoodsList, '是否没有更多？', that.data.isWaterFallLoaded, '本次请求是否还在继续', that.data.isWaterFallLoading, '是否是第一次？', that.data.isWaterFallFirst)
 			}, err => {
-				console.log('当前导航请求的数据报错', err)
+				// console.log('当前导航请求的数据报错', err)
 				let setLoadedName = 'isWaterFallLoaded[' + waterIndex + ']'
 				let setLoadingName = 'isWaterFallLoading[' + waterIndex + ']'
 				that.setData({
 					[setLoadedName]: false,
 					[setLoadingName]: false,
 				})
-				console.log('是否没有更多？', that.data.isWaterFallLoaded, '本次请求是否还在继续', that.data.isWaterFallLoading)
+				// console.log('是否没有更多？', that.data.isWaterFallLoaded, '本次请求是否还在继续', that.data.isWaterFallLoading)
 			})
 		}
 	},
@@ -571,9 +588,10 @@ Page({
 				success: (res) => {
 				},
 			});
-			console.log(that.data.wheelPlantingArr)
+      that.getWaterFallSeat();
+			// console.log(that.data.wheelPlantingArr)
 		}, function (err) {
-			console.log(that.data.wheelPlantingArr)
+			// console.log(that.data.wheelPlantingArr)
 		}, 'GET')
 	},
 
@@ -613,6 +631,7 @@ Page({
 			success: function (res) {
 				let resData = res.data;
 				let result = resData.data;
+        that.checkElementHeight();
 				if (resData.ret.code == '0') {
 					let canUseCollected = my.canIUse('isCollected');
 					if (!canUseCollected) {
@@ -678,7 +697,8 @@ Page({
       that.setData({
         allMaterialList: Object.assign(that.data.allMaterialList, result)
       })
-      console.log('瀑布流banner数据', that.data.allMaterialList)
+      that.checkElementHeight();
+      // console.log('瀑布流banner数据', that.data.allMaterialList)
     }, err => {})
   },
 
@@ -688,7 +708,7 @@ Page({
 	  *页面跳转类型判断 + 友盟统计上传  type = banner 轮播 type = oneFour 1+4模块 type = oneTwo 1+2模块
 	*/
 	checkJumpType(e) {
-		console.log(e)
+		// console.log(e)
 		let { linkType, title, type, url } = e.currentTarget.dataset
 
 		if (linkType == '2') {                      // linkType为2代表跳收藏有礼
@@ -739,7 +759,7 @@ Page({
 	judgePop: function () {
 		let that = this;
 		let popImgData = this.data.popImgData;
-		console.log(this.data.popImgData)
+		// console.log(this.data.popImgData)
 		let popId = popImgData.popId;                         // 广告 id ;
 		let popType = popImgData.popAdvMemoryOpt;             // 广告类型 ;
 		let popModify = popImgData.modifyDate;               // 广告修改时间 ;
@@ -821,6 +841,16 @@ Page({
 		})
 	},
 
+  // 查询节点高度
+  checkElementHeight() {
+    let that = this;
+    let timeout = setTimeout(function () {
+      that.getWaterFallSeat();
+      // that.getTopContentHeight();
+      clearTimeout(timeout)
+    }, 800)
+  },
+
 	/**
 	  * 判断组件实例
 	*/
@@ -880,7 +910,7 @@ Page({
     this.allComponent.forEach(value => {
       if( value && value.componentName == 'goodsscroll-ads' && value.component.props.timerType == "DAY_TIMER" ) {
         isStart ? value.component.cutTimeStart() :  clearTimeout(value.component.data.cutTime_timer);
-        console.log(value.component)
+        // console.log(value.component)
       }
     })
   },

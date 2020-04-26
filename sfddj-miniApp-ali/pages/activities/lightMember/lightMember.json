@@ -1,5 +1,4 @@
 {   
-    "pullRefresh": true,
     "usingComponents": { 
     "popup": "mini-antui/es/popup/index",
     "loading-now": "../../components/loadingNow/loadingNow",

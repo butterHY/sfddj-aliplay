@@ -4,8 +4,8 @@
   <view class="topRankTit">
     <view class="topRankTitBox">
       <view class="topRankTitText">
-        <!-- 将社区专属改成附近的店 0421 zhang -->
-        <text>附近的店</text>
+        <!-- 将社区专属改成附近的店 0421 zhang 将附近的店改成一小时达 -->
+        <text>一小时达</text>
       </view>
     </view>
     <view class="more" onTap="moreShop">
@@ -22,7 +22,8 @@
     <view class="shop_tit">
       <view class="tit_l">
         <view class="storeImg">
-          <image src="{{ baseImageUrl }}{{ storeShow.shopLogo }}"/>
+          <image a:if="{{ storeShow.shopLogo }}" src="{{ baseImageUrl }}{{ storeShow.shopLogo }}"/>
+          <image a:else class="all_100" src="{{defaultAvatar}}"/>
         </view>
         <view class="storeName">
           <view class="shop_info">
@@ -39,7 +40,7 @@
   </view>
   <view class="goodsListShow">
     <block a:for="{{ goodsShow }}" a:key="{{ index }}">
-      <view class="goodsListBox" onTap="goDetail" data-goodsid="{{ item.goodsId }}">
+      <view class="goodsListBox" onTap="goDetail" data-shopId="{{storeShow.id}}" data-goodsId="{{ item.goodsId }}">
         <!--<template is="itemStoreGoodsCard" data="{{ ...item, smallImg200, baseImageUrl }}"></template> -->
         <view class="goodsCard">
           <view class="goodsImgArea">

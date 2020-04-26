@@ -5,7 +5,7 @@
     <view a:if="{{item.moduleType == 'TITLE'}}">
       <block a:for="{{item.parseItem}}" a:key="titleMes" a:for-item="titleItem">
         <!-- 标题 -文字 -->
-        <view a:if="{{titleItem.titleType == 0}}" class="titleMes_set titleMesText js_titleMes_set width_100" style="background: #{{item.backgroundColor}};">
+        <view a:if="{{titleItem.titleType == 0}}" class="titleMes_set titleMesText js_titleMes_set width_100" style="background: #{{item.backgroundColor}}; {{pageType == 'lightMember' ? 'padding-bottom: 30rpx;' : ''}}">
           <view style="color: #{{titleItem.fontColor}}; font-size: {{filters.toFix(titleItem.fontSize * 2)}}rpx; text-align: {{titleItem.titlePosition}}">{{titleItem.moduleTitle}}</view>
         </view>
         <!-- 标题-图片 -->
@@ -416,7 +416,6 @@
                   <view class="couponButtonText">{{couponItem.couponText}}</view>
                 </view>
               </view>
-
             </view>
           </view>
         </view>

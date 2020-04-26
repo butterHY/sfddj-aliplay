@@ -1,9 +1,12 @@
 // 店铺组件
 // 可用在店铺列表中的某一项
+import { defaultAvatar } from '/api/api';
 
 Component({
   mixins: [],
-  data: {},
+  data: {
+    defaultAvatar,     //默认头像
+  },
   props: {},
   didMount() {},
   didUpdate() {},
