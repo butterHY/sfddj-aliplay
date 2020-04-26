@@ -26,7 +26,6 @@ Component({
 		//   this.isHasOrder();
 	},
 	didUpdate() {
-		console.log(this.props.orderNumList)
 		//   this.setData({
 		// 	  isMember: this.props.isMember
 		//   })
