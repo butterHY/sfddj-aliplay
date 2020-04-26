@@ -25,7 +25,7 @@ Component({
   didUpdate(prevProps, prevData) {
 
   },
-  didUnmount() {},
+  didUnmount() { },
 
   methods: {
     init() {
@@ -44,8 +44,8 @@ Component({
 
     // 购买按钮点击操作
     onShowDetailClick(e) {
-      let _buyType = e.target.dataset.buyType; 
-      if ( _buyType == '0' ) {
+      let _buyType = e.target.dataset.buyType;
+      if (_buyType == '0') {
         // 单独购买点击
         this.setData({
           isShowed: !this.data.isShowed
@@ -58,7 +58,7 @@ Component({
           url: `/community/pages/tuanDetail/tuanDetail?id=${activityId}`
         })
       }
-      
+
     },
 
     onHideClick() {
@@ -105,7 +105,7 @@ Component({
     // 购买
     onToPayClick() {
       const _this = this;
-      
+
       if (this.data.isDisabled) {
         my.showToast({
           type: 'none',
@@ -119,26 +119,29 @@ Component({
       let _skuId = this.data.goodsSku.id; // SKU ID
       let _skuNum = this.data.skuNum; // 购买数量 
 
-      if ( _buyType == '0' ) { 
+      if (_buyType == '0') {
         // 单独购买
         // console.log('单独购买') 
 
-        this.cart.nowBuy(_skuId, _skuNum, (res, err) => {
-          const _data = res.data.data;
-          const _ret = res.data.ret
-          if (_ret.code == '0') {
+        // this.cart.nowBuy(_skuId, _skuNum, (res, err) => {
+        //   const _data = res.data.data;
+        //   const _ret = res.data.ret
+        //   if (_ret.code == '0') {
 
-            this.setData({
-              isShowed: false,
-            }, () => {
-              my.navigateTo({ 
-                url: `../orderConfirm/orderConfirm?shopid=${_data.shopId}`
-              })
-            })
+        //     this.setData({
+        //       isShowed: false,
+        //     }, () => {
+        //       my.navigateTo({ 
+        //         url: `../orderConfirm/orderConfirm?shopid=${_data.shopId}`
+        //       })
+        //     })
 
-          }
+        //   }
+        // })
+        my.navigateTo({
+          url: `../orderConfirm/orderConfirm?skuId=${_skuId}&quantity=${_skuNum}`
         })
-      }  
+      }
     },
 
     // 店铺打烊时间控制

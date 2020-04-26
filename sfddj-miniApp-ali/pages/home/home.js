@@ -266,6 +266,8 @@ Page({
 			if (_data.length > 0) {
 				_show = true;
 				_store = Object.assign({}, _data[0]);
+				// 友盟埋点--社区入口曝光量 
+				my.uma.trackEvent('homepage_O2O_enter', { shopName: _store.shopName, shopId: _store.id });
 			}
 			_this.setData({
 				'o2oStore.show': _show,

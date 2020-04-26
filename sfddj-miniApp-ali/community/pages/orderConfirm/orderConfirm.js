@@ -54,13 +54,14 @@ Page({
                     isTuangou: true
                 })
                 this.getPinOrderData();
-            } else if(skuId) {
+            } else if (skuId) {
                 this.setData({
                     recordId,
                     skuId,
                     quantity: quantity ? quantity : 1,
                     isTuangou: true
                 })
+                this.getPinAloneData();
             }
         }
 
@@ -196,7 +197,7 @@ Page({
                     deliveryFee: result.deliveryOutGratis && result.deliveryOutGratis > 0 ? (result.deliveryFee && result.price < result.deliveryOutGratis ? result.deliveryFee : 0) : result.deliveryFee,    // 配送费
                     deliveryOutGratis: result.deliveryOutGratis ? result.deliveryOutGratis : 0,
                     totalPrice: result.price,
-
+                    shopid: result.shopId
                 })
                 console.log('[[getPinOrder--01111', this.data.shopCartList)
             }
@@ -236,6 +237,7 @@ Page({
                     deliveryFee: result.deliveryOutGratis && result.deliveryOutGratis > 0 ? (result.deliveryFee && result.price < result.deliveryOutGratis ? result.deliveryFee : 0) : result.deliveryFee,    // 配送费
                     deliveryOutGratis: result.deliveryOutGratis ? result.deliveryOutGratis : 0,
                     totalPrice: result.price,
+                    shopid: result.shopId
 
                 })
                 console.log('[[getPinOrder--01111', this.data.shopCartList)
@@ -346,8 +348,11 @@ Page({
                     orderSn,
                     tradeNo,
                     clearShopCart: () => {
-                        this.cart.clear(this.data.shopid, (res) => {
-                        });
+                        if (!this.data.isTuangou) {
+
+                            this.cart.clear(this.data.shopid, (res) => {
+                            });
+                        }
                     },
                     callBack: () => {
                         // that.cancelSwitch();
@@ -385,8 +390,13 @@ Page({
             my.showToast({
                 content: err
             })
-            // 重新更新下token
-            that.getOrderData(that.data.shopid);
+            if (!this.data.isTuangou) {
+
+                // 重新更新下token
+                that.getOrderData(that.data.shopid);
+            } else {
+                my.navigateBack();
+            }
         })
     },
 
