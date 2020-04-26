@@ -81,6 +81,10 @@ Page({
           if(res.data.data.length > 0) {
             this.nextPageIdx++;
             this.$spliceData({items: [this.data.items.length, 0, ...res.data.data]});
+          } else {
+            this.setData({
+              resultmsg: '未搜索到相关产品~'
+            });
           }
         }
       });
