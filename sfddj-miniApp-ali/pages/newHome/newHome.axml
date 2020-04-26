@@ -30,7 +30,7 @@
       </view>
     </view>
     <!-- 关注公众号组件 和搜索的组件 -->
-    <lifestyle a:if="{{canUseLife}}" publicId='2016071501623328'/>
+    <lifestyle a:if="{{canUseLife && env == 'production'}}" publicId='2016071501623328'/>
     <!-- 搜索部分 -->
     <!-- style="position: fixed; top: 0; left: 0; z-index: 10000; box-sizing:border-box;" -->
     <view class="flex_view_row home_searchBox whiteBack align_cen width_100">
@@ -53,7 +53,7 @@
     </view>
   </view>
 
-  <navigator url="/pages/activities/lightMember/lightMember">轻会员</navigator>
+
   <!--<navigator url="/pages/activities/lightMember/lightMember">轻会员</navigator> -->
   <!-- banner与模块广告和商品列表部分 -->
   <view class="flex_1 overHid posi_re">

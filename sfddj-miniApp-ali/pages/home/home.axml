@@ -46,6 +46,7 @@
 			</view>
 		</view>
 	</view>
+  <navigator url="/pages/activities/lightMember/lightMember">轻会员</navigator>
 	<!-- 搜索热词和历史记录膜层 -->
 	<!-- <template is="hotWords" data="{{show:show,baseLocImgUrl,hotWords:hotWords,searchWords:searchWords,top: (canUseLife && !hideLifeStyle) ? hotWordTop-2 + 'px' : '120rpx'}}"></template> -->
 	<view class="flex_1 width_100 overHid">

@@ -1,5 +1,6 @@
 import _ from 'underscore'
 import locAddr from '/community/service/locAddr.js';
+
 //获取应用实例不要写在页面外面，会出问题；
 
 let sendRequest = require('../../utils/sendRequest');
@@ -9,6 +10,7 @@ let utils = require('../../utils/util');
 
 
 import api from '../../api/api';
+import env from '../../api/env';
 import http from '../../api/http';
 
 
@@ -94,9 +96,10 @@ Page({
 		let placeholder = my.getStorageSync({ key: 'searchTextMax', }).data;          // 获取缓存 首页商品  数据
 
 		that.setData({
+      topContentHeight: env == 'production' ? (27.6 + 44 +56) * 750 / that.data.app.globalData.systemInfo.windowWidth  : (27.6 + 44) * 750 / that.data.app.globalData.systemInfo.windowWidth,            // 生产环境显示生活号；
       waterFallTitHeight: 130 * that.data.app.globalData.systemInfo.windowWidth / 750,   // 瀑布流导航高度；
-     //如果在瀑布流导航置顶时，设置瀑布流商品的最低高度, 56: 生活号高度，18：定位高度；44：搜索导航高度；62：瀑布流导航高度；
-      goodsBoxMinHeight: that.data.app.globalData.systemInfo.windowHeight - (that.data.canUseLife ? 56 + 18 + 44 + 62 : 18 + 44 + 62),
+     //如果在瀑布流导航置顶时，设置瀑布流商品的最低高度, 56: 生活号高度，27.6：定位高度；44：搜索导航高度；62：瀑布流导航高度；
+      goodsBoxMinHeight: that.data.app.globalData.systemInfo.windowHeight - (that.data.canUseLife && env == 'production' ? 56 + 27.6 + 44 + 62 : 27.6 + 44 + 62),
       wheelPlantingArr: wheelPlantingArr ? wheelPlantingArr : [],
 			advertsArr: advertsArr ? advertsArr : [],																																		// ---- 移到组件			
 			placeholder: placeholder ? placeholder : '',
@@ -551,7 +554,7 @@ Page({
           allMaterialIndex: that.data.allMaterialIndex
         })
 
-				type == 0 ? that.getTopContentHeight() : '';
+				// type == 0 ? that.getTopContentHeight() : '';
 				// console.log('当前导航渲染的商品', wholeGoodsList, '是否没有更多？', that.data.isWaterFallLoaded, '本次请求是否还在继续', that.data.isWaterFallLoading, '是否是第一次？', that.data.isWaterFallFirst)
 			}, err => {
 				// console.log('当前导航请求的数据报错', err)
@@ -841,7 +844,7 @@ Page({
     let that = this;
     let timeout = setTimeout(function () {
       that.getWaterFallSeat();
-      that.getTopContentHeight();
+      // that.getTopContentHeight();
       clearTimeout(timeout)
     }, 800)
   },

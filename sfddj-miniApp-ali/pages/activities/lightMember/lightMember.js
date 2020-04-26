@@ -31,17 +31,11 @@ Page({
       this.setData({
         user_memId: user_memId == 'null' || user_memId == null || user_memId == 'undefined' || user_memId == undefined ? '默认是会员' : user_memId
       })
-
-      // this.setData({
-      //   user_memId: 0
-      // })
-      console.log(this.data.user_memId)
     } catch (e) { }
   },
 
   // 轻会员点击去使用没有走 onShow
   onShow: async function(options) {
-    console.log('页面重新显示， onShow')
     let returnBack = await this.getAdvertisingModule();
     returnBack.type == "SUCCESS" ? this.getEasyMemberInfo() : '';
   },
@@ -115,10 +109,8 @@ Page({
               headData: resData.classify == "REGISTERED" ? resData.modules.find(value => value.moduleType == "REGISTERED") : resData.modules.find(value => value.moduleType == "UNREGISTERED"),
               openingButtonData: that.data.openingButtonData,
               isLightMember: resData.classify == "REGISTERED" ? true : false,
+              // 
             })
-            console.log('广告请求成功， 是否是轻会员', that.data.isLightMember)
-            console.log('广告请求成功， 广告数据', that.data.thematicAds)
-            console.log('广告请求成功， 头部数据', that.data.headData)
             reslove({
               type: 'SUCCESS'
             })
@@ -167,7 +159,6 @@ Page({
   // 轻会员跳转
   goToLightMember() {
     let that = this;
-    console.log(that.data.thematicAds.lightMemberId)
     my.navigateToMiniService({
       serviceId: "2019072365974237", // 插件id,固定值勿改
       servicePage: "pages/hz-enjoy/main/index", // 插件页面地址,固定值勿改
@@ -176,10 +167,8 @@ Page({
         "alipay.huabei.hz-enjoy.partnerId": "2088421251942323",
       },
       success: (res) => {
-        console.log('打开成功', res)
       },
       fail: (res) => {
-        console.log('打开失败', res)
       },
       complete: (res) => {},
     });
@@ -191,7 +180,6 @@ Page({
   getCoupon: function(e) {
     // 如果没有开通轻会员应先弹窗提示不请求接口
     let that = this;
-    console.log(e)
     if( !that.data.isLightMember ) {
       my.showToast({
         content: '注册成为轻会员才可以领取！',
@@ -204,8 +192,6 @@ Page({
     let fatherIndex = e.currentTarget.dataset.fatherIndex;
 
     https.post(api.GOODSDETAIL.GOODS_DETAIL_DRAWCOUPON, { ruleSign }, function(res) {
-      console.log(res)
-      console.log(that.data.thematicAds.modules[fatherIndex].parseItem[index]);
       let resData = res.data.data;
       resData[0].id = resData[0].couponId;
       if (resData && resData.length > 0) {
@@ -235,10 +221,8 @@ Page({
         that.setData({
           thematicAds: that.data.thematicAds
         })
-        console.log(that.data.thematicAds)
       }
     }, function(err) {
-      console.log(err)
       my.showToast({
         content: err,
         duration: 2000,
@@ -250,13 +234,10 @@ Page({
    * 去使用按钮
    * */
   toUseCoupon(e) {
-    console.log(e)
     let linkType = e.currentTarget.dataset.linkType;
     let couponId = e.currentTarget.dataset.couponid;
     let useLink = e.currentTarget.dataset.uselink;
     // linkType 0跳转uselink, 1跳转商城首页， 2跳转优惠券可使用商品列表
-
-    console.log(linkType, couponId, useLink, e)
     if (linkType == 0) {
       my.navigateTo({
         url: useLink
@@ -286,7 +267,6 @@ Page({
         that.setData({
           headData: that.data.headData
         })
-        console.log('请求 getEasyMemberInfo 后的 headData', that.data.headData)
       }
     }, function(res) {
     })
@@ -296,7 +276,6 @@ Page({
   getGmtUnSign() {
     let that = this;
     https.post(api.LIGHTMEMBER.AGREEMENTQUERY, { outSignNo: that.data.thematicAds.lightMemberId }, (res) => {
-      console.log('请求到期时间 成功',res)
       let resRet = res.data.ret;
       let resData = res.data.data;
      if( resRet.code == '0' && resRet.message == "SUCCESS" && resData ) {
@@ -305,17 +284,13 @@ Page({
           headData: that.data.headData
         })
       }
-      console.log('请求到期时间成功重新修改  headData',res)
     },(res) => {
-      console.log('请求到期时间 报错',res)
     })
   },
 
   // 获取手机号
   getPhoneNumber: function(e) {
     let that = this;
-    console.log('获取手机号')
-    console.log(this.data.user_memId)
     my.getPhoneNumber({
       success: (res) => {
         let response = res.response
@@ -329,7 +304,7 @@ Page({
             } catch (e) {
               my.setStorage({ key: 'user_memId', data: res.data.result.memberId });
             }
-            console.log('获取成功设置成功1', res.data.result.loginToken, res.data.result.memberId)
+            // console.log('获取成功设置成功1', res.data.result.loginToken, res.data.result.memberId)
           }
           else { }
 
@@ -340,7 +315,7 @@ Page({
             user_memId: res.data.result ? res.data.result.memberId : '默认会员'
           })
 
-          console.log('获取成功设置成功2', that.data.user_memId)
+          // console.log('获取成功设置成功2', that.data.user_memId)
         }, function(res, resData) {
           // '1013',为该用户已绑定手机号；
           var resData = resData ? resData : {}
@@ -349,13 +324,13 @@ Page({
               user_memId: '默认会员'
             })
             my.setStorage({ key: 'user_memId', data: '默认会员' });
-            console.log('获取成功设置失败1', that.data.user_memId) 
+            // console.log('获取成功设置失败1', that.data.user_memId) 
           } else {
             my.showToast({
               content: res,
               duration: 2000,
             })
-            console.log('获取成功设置失败2', that.data.user_memId) 
+            // console.log('获取成功设置失败2', that.data.user_memId) 
           }
         });
       },
@@ -363,7 +338,7 @@ Page({
         my.navigateTo({
           url: '/pages/user/bindPhone/bindPhone'
         });
-        console.log('获取失败', that.data.user_memId) 
+        // console.log('获取失败', that.data.user_memId) 
       },
     });
   },
