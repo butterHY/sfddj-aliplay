@@ -107,7 +107,7 @@ Page({
       // });
 
       my.redirectTo({
-        url: '../orderConfirm/orderConfirm?recordid=' + this.data.data.recordId + '&activityid=' + this.id + '&skuid=' + this.data.data.tuangouSkuList[0].id + '&quantity=' + this.data.buyNum
+        url: '../orderConfirm/orderConfirm?recordId=' + this.data.data.recordId + '&activityId=' + this.id + '&skuId=' + this.data.data.tuangouSkuList[0].id + '&quantity=' + this.data.buyNum
       });
     }
   },
