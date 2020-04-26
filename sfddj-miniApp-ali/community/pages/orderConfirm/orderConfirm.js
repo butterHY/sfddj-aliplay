@@ -30,11 +30,13 @@ Page({
         skuId: null,        //社区拼团商品购买需要的
         quantity: 1,        //社区拼团商品购买需要的
         isTuangou: false,     //是否是拼团商品
+        tuangouGoods: false,   //是否是团购的商品
         orderModalOpened: false,    //订单3小时后确认提示
         orderSn: '',
+        activityId: '',
     },
     onLoad(options) {
-        let { shopid, recordId, skuId, quantity } = options;
+        let { shopid, recordId, skuId, quantity, activityId } = options;
         // 普通购买
         if (shopid) {
             this.cart = Cart.init(this);
@@ -51,7 +53,9 @@ Page({
                     recordId,
                     skuId,
                     quantity,
-                    isTuangou: true
+                    isTuangou: true,
+                    tuangouGoods: true,
+                    activityId
                 })
                 this.getPinOrderData();
             } else if (skuId) {
@@ -59,7 +63,7 @@ Page({
                     recordId,
                     skuId,
                     quantity: quantity ? quantity : 1,
-                    isTuangou: true
+                    tuangouGoods: true
                 })
                 this.getPinAloneData();
             }
@@ -199,7 +203,6 @@ Page({
                     totalPrice: result.price,
                     shopid: result.shopId
                 })
-                console.log('[[getPinOrder--01111', this.data.shopCartList)
             }
         }, err => {
             my.showToast({
@@ -240,7 +243,6 @@ Page({
                     shopid: result.shopId
 
                 })
-                console.log('[[getPinOrder--01111', this.data.shopCartList)
             }
         }, err => {
             my.showToast({
@@ -348,7 +350,7 @@ Page({
                     orderSn,
                     tradeNo,
                     clearShopCart: () => {
-                        if (!this.data.isTuangou) {
+                        if (!this.data.tuangouGoods) {
 
                             this.cart.clear(this.data.shopid, (res) => {
                             });
@@ -390,7 +392,7 @@ Page({
             my.showToast({
                 content: err
             })
-            if (!this.data.isTuangou) {
+            if (!this.data.tuangouGoods) {
 
                 // 重新更新下token
                 that.getOrderData(that.data.shopid);
@@ -536,8 +538,12 @@ Page({
         my.showToast({
             content: '支付成功'
         });
+        let url = '/community/pages/orderDetail/orderDetail?orderSn=' + this.data.orderSn;
+        if(this.data.isTuangou) {
+            url = `/community/pages/tuanDetail/tuanDetail?activityId=${this.data.activityId}`
+        }
         my.redirectTo({
-            url: '/community/pages/orderDetail/orderDetail?orderSn=' + this.data.orderSn
+            url
         })
     },
 
