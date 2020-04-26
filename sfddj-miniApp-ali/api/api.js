@@ -17,6 +17,7 @@ export default {
 	mapKey: env === 'production' ? '' : '2ceddac70ce9cc37325dec6398e5a4c7',
 	lifestyleId: env === 'production' ? '2014051200005722' : '2014070200006769',
 	provinceLevelMunicipalityCode: ['010', '020', '021', '022', '023', '400'], // 直辖市座机区号:北京市、上海市、天津市、重庆市
+	defaultAvatar: 'https://img.sfddj.com/miniappImg/icon/icon_default_head.jpeg',       //默认头像，大当家logo
 
 	// 接口
 	// v1.1.0

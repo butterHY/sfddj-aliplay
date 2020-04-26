@@ -22,7 +22,8 @@
     <view class="shop_tit">
       <view class="tit_l">
         <view class="storeImg">
-          <image src="{{ baseImageUrl }}{{ storeShow.shopLogo }}"/>
+          <image a:if="{{ storeShow.shopLogo }}" src="{{ baseImageUrl }}{{ storeShow.shopLogo }}"/>
+          <image a:else class="all_100" src="{{defaultAvatar}}"/>
         </view>
         <view class="storeName">
           <view class="shop_info">
@@ -39,7 +40,7 @@
   </view>
   <view class="goodsListShow">
     <block a:for="{{ goodsShow }}" a:key="{{ index }}">
-      <view class="goodsListBox" onTap="goDetail" data-goodsid="{{ item.goodsId }}">
+      <view class="goodsListBox" onTap="goDetail" data-shopId="{{storeShow.id}}" data-goodsId="{{ item.goodsId }}">
         <!--<template is="itemStoreGoodsCard" data="{{ ...item, smallImg200, baseImageUrl }}"></template> -->
         <view class="goodsCard">
           <view class="goodsImgArea">

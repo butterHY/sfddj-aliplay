@@ -138,7 +138,7 @@
     padding-bottom: 180rpx;
 	height: 100%;
 	box-sizing: border-box;
-    /* overflow-y: scroll; */
+    overflow-y: scroll;
 }
 
 .shop_categories > view {

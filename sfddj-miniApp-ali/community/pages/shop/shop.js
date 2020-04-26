@@ -1,10 +1,12 @@
 import {getDistance} from '/community/assets/common';
 import Shop from '/community/service/shop';
+import {defaultAvatar} from '/api/api';
 
 Page({
   data: {
     searchVal: '',
-    items: []
+    items: [],
+    defaultAvatar,        //默认头像
   },
   onLoad(options) {
     this.shop = Shop.init(this);
@@ -81,6 +83,10 @@ Page({
           if(res.data.data.length > 0) {
             this.nextPageIdx++;
             this.$spliceData({items: [this.data.items.length, 0, ...res.data.data]});
+          } else if(this.nextPageIdx == 0) {
+            this.setData({
+              resultmsg: '未搜索到相关产品~'
+            });
           }
         }
       });

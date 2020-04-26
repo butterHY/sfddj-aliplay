@@ -7,6 +7,7 @@ function getRad(d) {
 
 // 调起支付
 function tradePay({ orderSn, tradeNo, callBack, failFun, errorFun }) {
+    my.hideLoading();
     my.tradePay({
         tradeNO: tradeNo,
         success: function (res) {
