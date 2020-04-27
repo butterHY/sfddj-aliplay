@@ -33,8 +33,14 @@ Page({
     // console.log('hide') 
     if ( this.timerTG ) {
       this.timerTG.initCutTime(false);
-    } 
-     
+    }  
+  },
+
+  onUnload() {
+    // console.log('onUnload') 
+    if ( this.timerTG ) {
+      this.timerTG.initCutTime(false);
+    }  
   },
  
   getGoodsInfo() {

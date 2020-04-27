@@ -47,7 +47,7 @@
       <view class="lableName">详细地址</view>
       <view class="textareaBox">
         <textarea data-field="optAddr.address" value="{{ optAddr.address }}"
-          auto-height show-count="{{ false }}" placeholder="{{ street_placeholder }}" onInput="onInputDetail" />
+          auto-height show-count="{{ false }}" placeholder="{{ street_placeholder }}" maxlength="{{100}}" onInput="onInputDetail" />
       </view>
     </view>
   </view>

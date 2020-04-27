@@ -107,7 +107,7 @@ Component({
         // 填写个人信息确定
         writeComplete() {
             // 先判断有没有填写姓名
-            if (!this.data.userName) {
+            if (!this.data.userName.trim()) {
                 my.showToast({
                     content: '请填写您的姓名'
                 });
@@ -122,7 +122,7 @@ Component({
                 return;
             }
 
-            let completeUserName = this.data.sexualIndex < 2 ? this.data.userName + this.data.sexualList[this.data.sexualIndex].text : this.data.userName;
+            let completeUserName = this.data.sexualIndex < 2 ? this.data.userName.trim() + this.data.sexualList[this.data.sexualIndex].text : this.data.userName.trim();
             let shipperMobile = this.data.userMobile;
             let checkPhone = this.checkAddrMesStatus()
             if(checkPhone) {
