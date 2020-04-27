@@ -11,8 +11,8 @@
       <view class="tuandetail_tit">{{data.goodsName}}</view>
       <view class="tuandetail_members">有{{data.tuangouMemberList.length}}人正在拼团</view>
       <view class="tuandetail_price">
-        <text>￥{{data.tuangouSkuList && data.tuangouSkuList[0] && data.tuangouSkuList[0].tuangouPrice.toFixed(2)}}</text>
-        <text a:if="{{data.tuangouSkuList && data.tuangouSkuList[0] && data.tuangouSkuList[0].salePrice}}">￥{{data.tuangouSkuList[0].salePrice.toFixed(2)}}</text>
+        <text>¥{{data.tuangouSkuList && data.tuangouSkuList[0] && data.tuangouSkuList[0].tuangouPrice.toFixed(2)}}</text>
+        <text a:if="{{data.tuangouSkuList && data.tuangouSkuList[0] && data.tuangouSkuList[0].salePrice}}">¥{{data.tuangouSkuList[0].salePrice.toFixed(2)}}</text>
       </view>
     </view>
   </view>
@@ -79,8 +79,8 @@
         <view style="background-image:url({{data.goodsDefaultImage[0]}})"></view>
         <view>
           <view class="tuandetail_popprices">
-            <text>￥{{data.tuangouSkuList && data.tuangouSkuList[0] && data.tuangouSkuList[0].tuangouPrice.toFixed(2)}}</text>
-            <text a:if="{{data.tuangouSkuList && data.tuangouSkuList[0] && data.tuangouSkuList[0].salePrice}}">￥{{data.tuangouSkuList[0].salePrice.toFixed(2)}}</text>
+            <text>¥{{data.tuangouSkuList && data.tuangouSkuList[0] && data.tuangouSkuList[0].tuangouPrice.toFixed(2)}}</text>
+            <text a:if="{{data.tuangouSkuList && data.tuangouSkuList[0] && data.tuangouSkuList[0].salePrice}}">¥{{data.tuangouSkuList[0].salePrice.toFixed(2)}}</text>
           </view>
           <view>库存：{{data.tuangouSkuList[0].store}}份</view>
         </view>

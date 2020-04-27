@@ -169,7 +169,7 @@
 .shop_categories > view > view:nth-child(2) {
     flex-shrink: 1;
     flex-grow: 1;
-    padding: 30rpx 0 30rpx 30rpx;
+    padding: 30rpx 0 30rpx 28rpx;
     font-size: 26rpx;
     color: rgb(102,102,102);
 }
@@ -196,6 +196,10 @@
 .shop_goodsitems > view:nth-child(2) {
     flex-shrink: 1;
     flex-grow: 1;
+}
+
+.shop_goodslist > scroll-view {
+    padding-bottom: 80rpx;
 }
 
 

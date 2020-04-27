@@ -6,8 +6,8 @@
       <view a:if="{{data.isTuangou}}" class="goodsitem_tuantip">有{{data.curMemberCount || 0}}人在拼团</view>
       <view class="goodsitemcontrol">
         <view>
-          <text class="goodsitemprice">￥{{data.isTuangou ? data.shopGoodsSkuList[0].tuangouPrice : (data.shopGoodsSkuList[0].isDiscount ? data.shopGoodsSkuList[0].discountPrice : data.shopGoodsSkuList[0].salePrice)}}</text>
-          <text class="goodsitemsprice" a:if="{{data.isTuangou || data.shopGoodsSkuList[0].isDiscount}}">￥{{data.shopGoodsSkuList[0].salePrice}}</text>
+          <text class="goodsitemprice">¥{{data.isTuangou ? data.shopGoodsSkuList[0].tuangouPrice : (data.shopGoodsSkuList[0].isDiscount ? data.shopGoodsSkuList[0].discountPrice : data.shopGoodsSkuList[0].salePrice)}}</text>
+          <text class="goodsitemsprice" a:if="{{data.isTuangou || data.shopGoodsSkuList[0].isDiscount}}">¥{{data.shopGoodsSkuList[0].salePrice}}</text>
         </view>
         <view>
           <view a:if="{{data.isTuangou}}" class="goodsitem_tuan" catchTap="onTap" data-id="{{data.id}}">去拼团</view>

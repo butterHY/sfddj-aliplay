@@ -1,5 +1,5 @@
 <!-- 应付金额 -->
 <view class="payableBox flex_view_row align_cen justi_between">
     <view class="payableTit">{{type == 'success' ? '实付金额' : '应付金额'}}</view>
-    <view class="payableSum">￥{{totalPrice}}</view>
+    <view class="payableSum">¥{{totalPrice}}</view>
 </view>
