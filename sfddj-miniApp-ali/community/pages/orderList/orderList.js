@@ -85,7 +85,7 @@ Page({
 
     getO2OOrder(type = '', setLimit) {
         let that = this;
-        let { tabIndex, limit, orderList, pinOrderList, isLoadingList, typeIndexList, startList, orderTypeCode } = this.data;
+        let { tabIndex, limit, orderList, pinOrderList, isLoadingList, typeIndexList, startList, orderTypeCode, countList } = this.data;
         let index = typeIndexList[tabIndex];
         let setHasMore = 'hasMoreList[' + tabIndex + '][' + index +']';
         let setLoaded = 'isLoadedList[' + tabIndex + '][' + index +']';
@@ -126,7 +126,7 @@ Page({
                 result = handleList.goodsList;
                 let { countList } = handleList;
                 let newestList = start == 0 ? Object.assign([], result) : orderList[tabIndex][index].concat(result);
-                let newestCountList = start == 0 ? Object.assign([], countList) : orderList[tabIndex][index].concat(countList);
+                let newestCountList = start == 0 ? Object.assign([], countList) : countList[index].concat(countList);
                 that.setData({
                     [setHasMore]: result.length >= limit ? true : false,
                     [setLoaded]: true,
