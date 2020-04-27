@@ -110,9 +110,7 @@
 		<!-- 标题 -->
 		<view class="orderInfoTit">留言</view>
 		<!-- 内容 -->
-		<view class="font-28 color-333 padBot_30">
-			<text>{{result.memo}}</text>
-		</view >
+		<view class="userMemo">{{result.memo}}</view >
 	</view>
 	<!-- 订单信息 -->
 	<view class="orderInfo">

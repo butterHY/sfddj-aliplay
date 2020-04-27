@@ -32,7 +32,11 @@
             <!-- 标题 -->
             <view class="userMessage_tit">买家留言</view>
             <!-- 写留言 -->
-            <multi-liner data-field="memo" placeholder="给卖家留言，最多60字哦～" type="text" value="{{memo}}" onInput="userMesInput" last="{{true}}" controlled="{{controlled}}" maxlength="60" show-count="{{false}}"></multi-liner>
+			<block a:if="{{!orderModalOpened}}">
+				<multi-liner data-field="memo" placeholder="给卖家留言，最多60字哦～" type="text" value="{{memo}}" onInput="userMesInput" last="{{true}}" controlled="{{controlled}}" maxlength="60" show-count="{{false}}"></multi-liner>
+			</block>
+            
+			<view a:else class="memoText">{{memo}}</view>
         </view>
         <!-- 发票 -->
         <view class="order_invoice">
@@ -65,8 +69,8 @@
         <view class="payNowBox">
             <!-- 价格 -->
             <view class="payNowPriceBox">
-                <view class="payNowPrice">￥{{totalPrice.toFixed(2)}}</view>
-                <view a:if="{{result.originalPrice && result.originalPrice > 0 && result.originalPrice > totalPrice}}" class="discountPrice">￥{{result.originalPrice.toFixed(2)}}</view>
+                <view class="payNowPrice">¥{{totalPrice.toFixed(2)}}</view>
+                <view a:if="{{result.originalPrice && result.originalPrice > 0 && result.originalPrice > totalPrice}}" class="discountPrice">¥{{result.originalPrice.toFixed(2)}}</view>
             </view>
             <!-- 去结算按钮 -->
             <view class="payNowBtn" onTap="submitPay">去结算</view>

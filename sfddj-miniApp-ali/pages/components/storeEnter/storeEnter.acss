@@ -19,7 +19,7 @@
 
 .topRankTitText {  
   color: #333333;
-  font-size: 32rpx;
+  font-size: 36rpx;
   font-family: "SourceHanSansCN-Medium"; 
 }
 

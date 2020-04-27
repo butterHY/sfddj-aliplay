@@ -21,12 +21,12 @@
         <view class="actionBtnBox">
             <view onTap="onShowDetailClick" data-buyType="0">
                 <button class="actionBtn btn_left" type="warn-ghost" subtitle="单独购买" shape="capsule">
-                    ￥{{ goodsSku.salePrice }}
+                    ¥{{ goodsSku.salePrice }}
                 </button>
             </view>
             <view onTap="onShowDetailClick" data-buyType="1">
                 <button class="actionBtn btn_right" type="warn" subtitle="去拼单" shape="capsule">
-                    ￥{{ goodsSku.tuangouPrice }}
+                    ¥{{ goodsSku.tuangouPrice }}
                 </button>
             </view>
         </view>
@@ -53,14 +53,14 @@
                 <view class="asideInfo">
                     <view class="priceShow"> 
                         <view hidden="{{ buyType*1 }}">
-                            <text class="now">￥{{ (goodsSku.salePrice * skuNum).toFixed(2) }}</text> 
+                            <text class="now">¥{{ (goodsSku.salePrice * skuNum).toFixed(2) }}</text> 
                         </view>
 
                         <!-- <view hidden="{{ !buyType*1 }}">
                             <text class="now">
-                                ￥{{ (goodsSku.tuangouPrice * skuNum).toFixed(2) }}
+                                ¥{{ (goodsSku.tuangouPrice * skuNum).toFixed(2) }}
                             </text>
-                            <text class="old">￥{{ (goodsSku.salePrice * skuNum).toFixed(2) }}</text>
+                            <text class="old">¥{{ (goodsSku.salePrice * skuNum).toFixed(2) }}</text>
                         </view> -->
                     </view>
 
