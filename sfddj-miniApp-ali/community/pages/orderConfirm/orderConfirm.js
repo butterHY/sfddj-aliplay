@@ -117,7 +117,9 @@ Page({
             if (Object.keys(result).length > 0) {
                 let shopCartList = result.items;
                 let noneStoreList = [];   //没有库存
-                let noneStoreIdList = []
+                let noneStoreIdList = [];
+				let deliveryFee = result.deliveryOutGratis && result.deliveryOutGratis > 0 ? (result.deliveryFee && result.price < result.deliveryOutGratis ? result.deliveryFee : 0) : result.deliveryFee ;
+				let totalPrice = this.data.totalPrice > 0 && this.data.totalPrice == result.price ? this.data.totalPrice : result.price;
                 shopCartList.forEach((val, i, arr) => {
                     val.goodsImagePath = this.data.baseImageUrl + val.productImg;
                     val.salePrice = val.price;
@@ -159,9 +161,9 @@ Page({
                     // shopCartList: this.data.shopCartList.length > 0  ? this.data.shopCartList : shopCartList,
                     shopCartList: this.data.shopTotalPrice <= 0 || result.price != this.data.shopTotalPrice || shopCartList.length != this.data.shopCartList ? shopCartList : this.data.shopCartList,       //如果service里算的价格跟接口返回的不一样，或者service的价格没设置到，则要重新加一下商品列表。
                     shopName: result.name,     // 商家名称
-                    deliveryFee: result.deliveryOutGratis && result.deliveryOutGratis > 0 ? (result.deliveryFee && result.price < result.deliveryOutGratis ? result.deliveryFee : 0) : result.deliveryFee,    // 配送费
+                    deliveryFee,    // 配送费
                     deliveryOutGratis: result.deliveryOutGratis ? result.deliveryOutGratis : 0,
-                    totalPrice: this.data.totalPrice > 0 && this.data.totalPrice == result.price ? this.data.totalPrice : result.price
+                    totalPrice: this.data.typeIndex == 1 ? deliveryFee + totalPrice : totalPrice,
                 })
             }
         }, err => {
