@@ -21,11 +21,11 @@
             <view a:if="{{deliveryOutGratis > 0 && deliveryFee > 0}}" class="deliveryFee_term">(订单满{{deliveryOutGratis}}元，免配送费)</view>
         </view>
         <!-- 配送费金额 -->
-        <view class="deliveryFee_sum">￥{{deliveryFee}}</view>
+        <view class="deliveryFee_sum">¥{{deliveryFee}}</view>
     </view>
     <!--商品小计  -->
     <view class="order_goods_sum">
         <text>小计：</text>
-        <text>￥{{totalPrice}}</text>
+        <text>¥{{totalPrice}}</text>
     </view>
 </view>

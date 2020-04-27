@@ -39,7 +39,7 @@
                     <view class="">等{{item.orderItemList.length}}件商品</view>
                 </view>
                 <!-- 商品 -->
-                <view class="font-26 color-333">￥{{item.totalFee}}</view>
+                <view class="font-26 color-333">¥{{item.totalFee}}</view>
             </view>
         </navigator>
         <!-- 底部按钮 -->

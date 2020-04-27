@@ -12,9 +12,9 @@
           </view>
           <view class="priceBox">
             <block a:if="{{Cart[shopid].cartList.length}}">
-              <text class="now">￥{{ Cart[shopid].discountPrice.toFixed(2) }}</text> 
+              <text class="now">¥{{ Cart[shopid].discountPrice.toFixed(2) }}</text> 
               <text class="old" 
-                a:if={{ Cart[shopid].discountPrice != Cart[shopid].salePrice }}>￥{{ Cart[shopid].salePrice.toFixed(2) }}</text>
+                a:if={{ Cart[shopid].discountPrice.toFixed(2) != Cart[shopid].salePrice.toFixed(2) }}>¥{{ Cart[shopid].salePrice.toFixed(2) }}</text>
             </block>
             
             <block a:else>
@@ -63,8 +63,8 @@
             <text class="discounts">特价 限1份</text>
           </view> -->
           <view class="priceShow">
-            <text class="now">￥{{ item.discountStatus && item.discountPrice || item.salePrice }}</text>
-            <text class="old" a:if="{{item.discountStatus}}">￥{{ item.salePrice }}</text>
+            <text class="now">¥{{ item.discountStatus && item.discountPrice || item.salePrice }}</text>
+            <text class="old" a:if="{{item.discountStatus}}">¥{{ item.salePrice }}</text>
           </view> 
         </view> 
  
