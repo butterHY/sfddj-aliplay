@@ -299,7 +299,7 @@ Page({
 	onScroll(e) {
 		let that = this;
 		let { scrollTop } = e.detail;
-    console.log(scrollTop, that.data.waterFallTop, that.data.waterFallTitHeight)
+    // console.log(scrollTop, that.data.waterFallTop, that.data.waterFallTitHeight)
 		let waterFallTopInit = this.data.waterFallTopInit;
 		let waterFallTop = this.data.waterFallTop;
 		//防止统计位置不准确，重新再算一次
@@ -341,7 +341,7 @@ Page({
 	// 获取全部广告模块 + 顶部轮播 + 四大描述的高度
 	getWaterFallSeat() {
 		let that = this;
-    console.log(that.data.getWaterFallCount)
+    // console.log(that.data.getWaterFallCount)
 		my.createSelectorQuery().select('#js_advert_list').boundingClientRect().exec((res) => {
 			let result = res[0] && res[0] != 'null' ? res[0].height ? res[0].height : 0 : ''
 			if (that.data.waterFallTitList.length > 0 && result ) {
