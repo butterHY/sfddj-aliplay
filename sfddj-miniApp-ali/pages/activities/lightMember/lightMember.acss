@@ -170,7 +170,7 @@
 
 /* 未注册轻会员样式 */
 .activity {
-  padding-bottom: 106rpx;
+  padding-bottom: 166rpx;
 }
 
 .activity .userPersonal {

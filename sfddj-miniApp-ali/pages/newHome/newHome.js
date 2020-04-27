@@ -1,5 +1,5 @@
 import _ from 'underscore'
-import locAddr from '/community/service/locAddr.js';
+import locAddr from '/community/service/locAddr.js'
 
 //获取应用实例不要写在页面外面，会出问题；
 
@@ -171,8 +171,9 @@ Page({
 		const _this = this;
 		let app = getApp();
 		let userLocInfo = app.globalData.userLocInfo;
+		console.log(userLocInfo)
 		if (this.jsonNull(userLocInfo) == 0) {
-			// console.log('重新定位')
+			console.log('重新定位')
 			locAddr.location((res) => {
 				_this.setData({
 					locInfo: res,
@@ -213,6 +214,7 @@ Page({
 	 */
 	jsonNull(json) {
 		let num = 0;
+		console.log(json)
 		for (let i in json) {
 			num++;
 		}
