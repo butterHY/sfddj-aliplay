@@ -9,8 +9,8 @@
 <import src="../common/item-goods-card"></import>
 <import src="../common/search"></import>
 <import-sjs name="filters" from="../wxsFile/public.sjs"></import-sjs>
-<!-- 内容 -->
-<view class="page flex_view_col overHid posi_re" style="padding-top: {{topContentHeight}}rpx;">
+<!-- 内容 posi_re overHid flex_view_col-->
+<scroll-view  class="page  " style="padding-top: {{topContentHeight}}rpx;" scroll-y="true" onScroll="onScroll" onScrollToLower="scrollToLower" scroll-top="{{pageScrollTop}}">
   <view id="js_topContent" class="topContent width_100" style="position: fixed; top: 0; left: 0; z-index: 9000; box-sizing:border-box;">
     <!-- TODO: 这里放最上面的“定位” -->
     <view class="locCityShow">
@@ -52,11 +52,9 @@
       </navigator>
     </view>
   </view>
-
-
   <!--<navigator url="/pages/activities/lightMember/lightMember">轻会员</navigator> -->
-  <!-- banner与模块广告和商品列表部分 -->
-  <view class="flex_1 overHid posi_re">
+  <!-- banner与模块广告和商品列表部分 flex_1-->
+  <view class=" overHid posi_re">
     <view class="height_100 posi_re">
       <view>
         <view id="js_advert_list" class="advertPart ">
@@ -168,7 +166,12 @@
   <view class="flex_view_row align_cen justi_cen goTopBox {{isShowGoTop ? 'show' : ''}}" catchTap="goToTop">
     <text class="icon-goTop_home font-44 color-999999"></text>
   </view>
-</view>
+
+  <!-- 新版搜索热词和历史记录膜层 -->
+  <view class="index_search {{isShowSearch ? 'show' : ''}}" style=" {{  isShowSearch ? 'position:absolute;' : 'position:fixed;' }}" disable-scroll="{{isShowSearch ? true : false}}">
+    <search-component ref="saveRef" onShowSearch="showSearch" isFocus="{{isFocus}}" placeholderVal="{{placeholder}}" pageType="home"></search-component>
+  </view>
+</scroll-view>
 <!-- toast弹窗 -->
 <view a:if="{{showToast}}" class="mark flex_view_col align_cen justi_cen">
   <view class="toastView_wb" style="background-color:rgba(0, 0, 0, 0);">
@@ -180,7 +183,5 @@
     </view>
   </view>
 </view>
-<!-- 新版搜索热词和历史记录膜层 -->
-<view class="index_search {{isShowSearch ? 'show' : ''}}" style=" {{  isShowSearch ? 'position:absolute;' : 'position:fixed;' }}" disable-scroll="{{isShowSearch ? true : false}}">
-  <search-component ref="saveRef" onShowSearch="showSearch" isFocus="{{isFocus}}" placeholderVal="{{placeholder}}" pageType="home"></search-component>
-</view>
+
+

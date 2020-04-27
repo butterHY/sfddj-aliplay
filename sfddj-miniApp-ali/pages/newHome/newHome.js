@@ -23,7 +23,8 @@ Page({
 		baseUrlOnly: constants.UrlConstants.baseUrlOnly,
 		smallImgArg: '?x-oss-process=style/goods_img_3',
 		ossImgStyle: '?x-oss-process=style/goods_img',
-		isShowGoTop: false,           //是否要显示返回顶部按钮
+		isShowGoTop: false,           // 是否要显示返回顶部按钮
+    getWaterFallCount: 0,          // 滚动页面时计算获取多少次 getWaterFallSeat 的高度；
 
     // banner数据
     currentIndex: 0,             //banner的位置
@@ -96,7 +97,7 @@ Page({
 		let placeholder = my.getStorageSync({ key: 'searchTextMax', }).data;          // 获取缓存 首页商品  数据
 
 		that.setData({
-      topContentHeight: env == 'production' ? (27.6 + 44 +56) * 750 / that.data.app.globalData.systemInfo.windowWidth  : (27.6 + 44) * 750 / that.data.app.globalData.systemInfo.windowWidth,            // 生产环境显示生活号；
+      // topContentHeight: (env == 'production' && that.data.canUseLife) ? (25 + 44 +56) * 750 / that.data.app.globalData.systemInfo.windowWidth  : (25 + 44) * 750 / that.data.app.globalData.systemInfo.windowWidth,  // 生产环境显示生活号；
       waterFallTitHeight: 130 * that.data.app.globalData.systemInfo.windowWidth / 750,   // 瀑布流导航高度；
      //如果在瀑布流导航置顶时，设置瀑布流商品的最低高度, 56: 生活号高度，27.6：定位高度；44：搜索导航高度；62：瀑布流导航高度；
       goodsBoxMinHeight: that.data.app.globalData.systemInfo.windowHeight - (that.data.canUseLife && env == 'production' ? 56 + 27.6 + 44 + 62 : 27.6 + 44 + 62),
@@ -257,26 +258,70 @@ Page({
 		this.storeEnter = ref;
 	},
 
-	/**
-	 * 页面滚动
+  	/**
+	 * 页面滚动     onPageScroll
 	 */
-	onPageScroll(e) {
+	// onPageScroll(e) {
+	// 	let that = this;
+	// 	let { scrollTop } = e;
+	// 	let waterFallTopInit = this.data.waterFallTopInit;
+	// 	let waterFallTop = this.data.waterFallTop;
+	// 	//防止统计位置不准确，重新再算一次
+	// 	if ( this.data.waterFallTitList.length > 0 && that.data.getWaterFallCount <= 12 ) {
+	// 		this.checkElementHeight();
+	// 	}
+  //   // console.log(scrollTop,this.data.waterFallTop,that.data.waterFallTitHeight )
+
+  //   // 显示返回顶部按钮
+  //     this.setData({
+  //       isShowGoTop: scrollTop >= that.data.app.globalData.systemInfo.windowHeight / 2 ? true : false
+  //     })
+      
+
+	// 	if (waterFallTopInit == 'success') {
+	// 		if (scrollTop >= (this.data.waterFallTop - that.data.waterFallTitHeight) && !this.data.waterFallTitIsTop) {
+	// 			that.setData({
+	// 				waterFallTitIsTop: true
+	// 			})
+	// 		} else if (scrollTop < (this.data.waterFallTop - that.data.waterFallTitHeight) && this.data.waterFallTitIsTop) {
+	// 			that.setData({
+	// 				waterFallTitIsTop: false
+	// 			})
+	// 		}
+	// 	} else {
+	// 		that.getWaterFallSeat()
+	// 	}
+	// },
+
+	/**
+	 * 页面滚动     onPageScroll
+	 */
+	onScroll(e) {
 		let that = this;
-		let { scrollTop } = e;
+		let { scrollTop } = e.detail;
+    console.log(scrollTop, that.data.waterFallTop, that.data.waterFallTitHeight)
 		let waterFallTopInit = this.data.waterFallTopInit;
 		let waterFallTop = this.data.waterFallTop;
 		//防止统计位置不准确，重新再算一次
-		// if (this.data.waterFallTitList.length > 0) {
-		// 	this.getWaterFallSeat()
-		// }
+		if ( this.data.waterFallTitList.length > 0 && that.data.getWaterFallCount <= 10 ) {
+			this.checkElementHeight();
+		}
     // console.log(scrollTop,this.data.waterFallTop,that.data.waterFallTitHeight )
 
     // 显示返回顶部按钮
-    if( that.data.app.globalData.systemInfo.windowHeight / 2 && !that.data.scrollTop ) {
+    if( scrollTop >= that.data.app.globalData.systemInfo.windowHeight / 2 && !that.data.isShowGoTop ) {
       this.setData({
-        isShowGoTop: true
+        isShowGoTop: true,
       })
-    }    
+      
+    } else if ( scrollTop < that.data.app.globalData.systemInfo.windowHeight / 2  && that.data.isShowGoTop ) {
+      this.setData({
+        isShowGoTop: false,
+        pageScrollTop: null
+      })
+    }
+
+      
 
 		if (waterFallTopInit == 'success') {
 			if (scrollTop >= (this.data.waterFallTop - that.data.waterFallTitHeight) && !this.data.waterFallTitIsTop) {
@@ -296,6 +341,7 @@ Page({
 	// 获取全部广告模块 + 顶部轮播 + 四大描述的高度
 	getWaterFallSeat() {
 		let that = this;
+    console.log(that.data.getWaterFallCount)
 		my.createSelectorQuery().select('#js_advert_list').boundingClientRect().exec((res) => {
 			let result = res[0] && res[0] != 'null' ? res[0].height ? res[0].height : 0 : ''
 			if (that.data.waterFallTitList.length > 0 && result ) {
@@ -320,8 +366,22 @@ Page({
 
 
 
-    // 页面上拉加载更多瀑布流商品 loadWaterFallGoods
-  onReachBottom() {
+    // 页面上拉加载更多瀑布流商品 loadWaterFallGoods       onReachBottom
+  // onReachBottom() {
+  //   let that = this;
+  //   let { waterIndex, waterFallGoodsList, isWaterFallLoaded } = this.data
+  //   // console.log('上拉加载', '此时的导航 index', waterIndex, '此时各个导航是否没有更多', isWaterFallLoaded, '此时各个瀑布流数据', waterFallGoodsList)
+  //   if ( !isWaterFallLoaded[waterIndex] && isWaterFallLoaded.length > 0 ) {
+  //     let setWaterFallStart = 'waterStartList[' + waterIndex + ']'
+  //     this.setData({
+  //       [setWaterFallStart]: waterFallGoodsList.length > 0 ? waterFallGoodsList[waterIndex].length : 0
+  //     })
+  //     this.getWaterFallGoodsList(1, waterIndex)
+  //   }
+  // },
+
+    // 页面上拉加载更多瀑布流商品 loadWaterFallGoods       onReachBottom
+  scrollToLower() {
     let that = this;
     let { waterIndex, waterFallGoodsList, isWaterFallLoaded } = this.data
     // console.log('上拉加载', '此时的导航 index', waterIndex, '此时各个导航是否没有更多', isWaterFallLoaded, '此时各个瀑布流数据', waterFallGoodsList)
@@ -348,9 +408,13 @@ Page({
 
   // 回到顶部
   goToTop() {
-    my.pageScrollTo({
-      scrollTop: 0,
-      duration: 300
+    // my.pageScrollTo({
+    //   scrollTop: 0,
+    //   duration: 300
+    // })
+
+    this.setData({
+      pageScrollTop: 0.001
     })
   },
 
@@ -459,10 +523,6 @@ Page({
                     link:"/pages/activities/lightMember/lightMember",
                     linkType : "CUSTOM_LINK"
                   });
-
-                  // resData[i].items[5] = resData[i].items[4];
-                  // resData[i].items.push(resData[i].items[5]);
-                  // https://img.sfddj.com/user/admin/20191210/157597432626109971.png
                 }
 
 								newResult.push(resData[i]);
@@ -556,7 +616,7 @@ Page({
           allMaterialIndex: that.data.allMaterialIndex
         })
 
-				// type == 0 ? that.getTopContentHeight() : '';
+				type == 0 ? that.checkElementHeight() : '';
 				// console.log('当前导航渲染的商品', wholeGoodsList, '是否没有更多？', that.data.isWaterFallLoaded, '本次请求是否还在继续', that.data.isWaterFallLoading, '是否是第一次？', that.data.isWaterFallFirst)
 			}, err => {
 				// console.log('当前导航请求的数据报错', err)
@@ -588,7 +648,7 @@ Page({
 				success: (res) => {
 				},
 			});
-      that.getWaterFallSeat();
+      that.checkElementHeight();
 			// console.log(that.data.wheelPlantingArr)
 		}, function (err) {
 			// console.log(that.data.wheelPlantingArr)
@@ -844,9 +904,10 @@ Page({
   // 查询节点高度
   checkElementHeight() {
     let that = this;
+    that.data.getWaterFallCount += 1;
     let timeout = setTimeout(function () {
       that.getWaterFallSeat();
-      // that.getTopContentHeight();
+      that.getTopContentHeight();
       clearTimeout(timeout)
     }, 800)
   },

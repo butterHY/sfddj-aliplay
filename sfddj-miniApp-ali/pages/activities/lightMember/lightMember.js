@@ -111,6 +111,7 @@ Page({
               isLightMember: resData.classify == "REGISTERED" ? true : false,
               // 
             })
+            console.log(that.data.thematicAds)
             reslove({
               type: 'SUCCESS'
             })
