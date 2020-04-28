@@ -1,77 +1,63 @@
-// import 'regenerator';
 import _ from 'underscore'
-import locAddr from '/community/service/locAddr.js';
-import api from '../../api/api';
-import http from '../../api/http';
-//获取应用实例
-let app = getApp();
+import locAddr from '/community/service/locAddr.js'
+
+//获取应用实例不要写在页面外面，会出问题；
+
 let sendRequest = require('../../utils/sendRequest');
 let constants = require('../../utils/constants');
-let baseImageUrl = constants.UrlConstants.baseImageUrl;
 let stringUtils = require('../../utils/stringUtils');
 let utils = require('../../utils/util');
-let windowWidth = my.getSystemInfoSync().windowWidth;
-let windowHeight = my.getSystemInfoSync().windowHeight;
+
+
+import api from '../../api/api';
+import env from '../../api/env';
+import http from '../../api/http';
 
 
 Page({
 	data: {
-		homeGoodsList: [],
-		show: false,
-		hotWords: [],
-		placeholder: '',
-		scrollTop: false,
-		start: 0, //分页查询起点
-		limit: 10, //分页大小
-		hasMore: true,
-		isLoadMore: false,
-		showDialog1: false,
-		showDialog2: false,
-		showDialog3: false,
-		sendCodeText: '发送验证码',
-		disabled: false,
+		// 公共数据
+		app: null,
 		baseLocImgUrl: constants.UrlConstants.baseImageLocUrl,
+		baseImageUrl: constants.UrlConstants.baseImageUrl,
+		baseUrlOnly: constants.UrlConstants.baseUrlOnly,
+		smallImgArg: '?x-oss-process=style/goods_img_3',
 		ossImgStyle: '?x-oss-process=style/goods_img',
-		ossImgStyle3: '?x-oss-process=style/goods_img_3',
-		hasCoupon: false,
-		isBind: false,
-		baseImageUrl: baseImageUrl,
-		current: 1,
-		materialArr: [],
-		advertsArr: [],
-		searValue: '',
-		hours: '00',
-		minute: '00',
-		second: '00',
-		nowTime: null,
-		startTime: null,
-		endTime: null,
-		isonLoad: false,
-		secondKillActivityId: null,     // 请求活动的 id 
-		isLastActivitys: false,         // 是否是最后一场活动
-		isActivitysStart: null,         // 活动是否开始了
-		timeDifferences: null,           // 现在时间和活动开始时间的时间差
-		showToast: false,                //弹窗控制按钮
-		popImgData: {},                //弹窗广告数据
-		isHotStart: false,               //小程序是否是“热启动”
-		adsShowParam: [],                     //广告模块上报数据纪录
-		bannerShowParam: [],                  //banner部分上报数据纪录
-		groupShowParam: [],                 //商品组部分上报数据纪录
-		floatVal: 50,                     //上报范围的误差数
-		searchHeight: 0,                 //搜索部分的高度
-		bannerHeight: 0,                 //banner部分的高度
-		bannerNonGoods: false,            //判断banner列表中是否没有要上报的数据
-		pageScrollTop: 0,                    //页面滚动高度
-		windowHeight: windowHeight,         //页面高度
-		isCollected: false,
-		canUseLife: my.canIUse('lifestyle'),
-		hideLifeStyle: false,             //隐藏关注生活号组件
-		hotWordTop: (windowWidth * 120 / 750) + 56,
+		isShowGoTop: false,           // 是否要显示返回顶部按钮
+    getWaterFallCount: 0,          // 滚动页面时计算获取多少次 getWaterFallSeat 的高度；
 
-		isShowSearch: false,								// 新版搜索组件显示开关
-		isFocus: false,											// 新版搜索组件焦点开关
-		searchComponent: null,							// 新版搜索组件实例
+    // banner数据
+    currentIndex: 0,             //banner的位置
 
+		// 弹窗广告数据
+		popImgData: {},              //弹窗广告数据
+		advertsPop: false,          //弹窗广告开关
+
+
+		// 瀑布流数据
+		waterIndex: 0,                //瀑布流选中索引
+		waterFallTitList: [],         //瀑布流标题列表
+		waterStartList: [],           //瀑布流商品加载开始位置
+		waterLimitList: [],           //瀑布流商品加载的条数
+		waterFallTop: 10000,          //瀑布流所在的位置
+		waterFallTopInit: 'init',     //判断 全部广告模块 + 顶部轮播 + 四大描述 有没有加载或者是否成功设置好位置
+		waterFallGoodsList: [],       //瀑布流商品列表
+		allMaterialList: [],          //瀑布流第一个导航商品列表的 banner 数据
+		allMaterialIndex: -1,         //当前瀑布流第一个导航商品列表 第一个banner 的加载位置
+		waterFallTitIsTop: false,     //是否置顶瀑布流导航
+		isWaterFallLoaded: [],        //判断是否加载完
+		isWaterFallLoading: [],       //判断是否在加载中
+		isWaterFallFirst: [],         //是否是第一次加载
+		waterFallListIndex: null,     //瀑布流导航所在的索引
+
+
+		//新版搜索的数据
+		placeholder: '',              // 搜索组件隐藏词
+		isShowSearch: false,					// 新版搜索组件显示开关
+		isFocus: false,								// 新版搜索组件焦点开关
+		searchComponent: null,				// 新版搜索组件实例
+
+		// 定位数据
 		locInfo: {
 			loading: false,
 			longitude: '',
@@ -81,8 +67,14 @@ Page({
 			addressJson: {},
 			pois: [],
 			streetShow: '',
-			streetLoc: '', 
+			streetLoc: '',
 		},
+
+		// 生活号
+		canUseLife: my.canIUse('lifestyle'),
+
+		// 秒杀广告模板数据
+		isonLoad: false,
 
 		o2oStore: {
 			show: false,
@@ -90,122 +82,96 @@ Page({
 		},
 		isGetLocation: false,
 		isLocationLoad: true,       //是否正在定位
+
 	},
 
-	onLoad: async function(options) {
-		var pageOptions = options
-		// 如果从推文或者其他方进来并且带广告参数时
-		var globalQuery = Object.assign({}, app.globalData.query)
+	onLoad: async function (options) {
+		let that = this;
+		that.data.app = getApp();
+		that.allComponent = [];
 
-		if (Object.keys(globalQuery).length > 0) {
-			pageOptions = Object.assign(options, globalQuery)
-		}
-		// 友盟+统计--首页浏览
-		my.uma.trackEvent('homepage_show', pageOptions);
-		var that = this;
+		that.reportPageOption(options);
 
+		let wheelPlantingArr = my.getStorageSync({ key: 'wheelPlantingArr', }).data;      // 获取缓存首页 banner 数据
+		let advertsArr = my.getStorageSync({ key: 'homeAdvertsArr', }).data;             // 获取缓存 首页广告模板  数据			---- 移到组件
+		let placeholder = my.getStorageSync({ key: 'searchTextMax', }).data;          // 获取缓存 首页商品  数据
 
-		var materialArr = my.getStorageSync({
-			key: 'homeMaterial', // 缓存数据的key
-		}).data;
+		that.setData({
+      // topContentHeight: (env == 'production' && that.data.canUseLife) ? (25 + 44 +56) * 750 / that.data.app.globalData.systemInfo.windowWidth  : (25 + 44) * 750 / that.data.app.globalData.systemInfo.windowWidth,  // 生产环境显示生活号；
+      waterFallTitHeight: 130 * that.data.app.globalData.systemInfo.windowWidth / 750,   // 瀑布流导航高度；
+     //如果在瀑布流导航置顶时，设置瀑布流商品的最低高度, 56: 生活号高度，27.6：定位高度；44：搜索导航高度；62：瀑布流导航高度；
+      goodsBoxMinHeight: that.data.app.globalData.systemInfo.windowHeight - (that.data.canUseLife && env == 'production' ? 56 + 27.6 + 44 + 62 : 27.6 + 44 + 62),
+      wheelPlantingArr: wheelPlantingArr ? wheelPlantingArr : [],
+			advertsArr: advertsArr ? advertsArr : [],																																		// ---- 移到组件			
+			placeholder: placeholder ? placeholder : '',
+			isonLoad: true
+		})
 
-		var advertsArr = my.getStorageSync({
-			key: 'homeAdvertsArr', // 缓存数据的key
-		}).data;
-
-		var homeGoodsList = my.getStorageSync({
-			key: 'homeGoodsList', // 缓存数据的key
-		}).data;
+		that.getWheelPlanting();                                        // 获取 轮播banner 数据
+		that.getSearchTextMax();                                        // 获取搜索 placeholder 数据
+		that.getAllMaterialData();                                      // 获取第一导航  瀑布流的 banner 数据
+		let isSuccess = await that.getAdvertsModule();                  // 获取广告模板数据											
+		// isSuccess.type ? this.getTimes('isFirstTime') : '';          // 获取秒杀模板数据			---- 移到组件
 
 		// 定位中判断
-		let userLocInfo = app.globalData.userLocInfo;
+		let userLocInfo = getApp().globalData.userLocInfo;
 		if( userLocInfo && Object.keys(userLocInfo).length > 0) {
 			this.setData({
 				isLocationLoad: false
 			})
 		}
 
-		that.setData({
-			materialArr: materialArr ? materialArr : [],
-			advertsArr: advertsArr ? advertsArr : [],
-			homeGoodsList: homeGoodsList ? homeGoodsList : [],
-			isonLoad: true
-		})
-
-		that.getMaterial();
-		// that.getAllPintuanProduct(0);
-		that.data.isonLoad = await that.getAdvertsModule();
-
-		if (that.data.isonLoad.type) {
-			// 请求成功并结束而且创建了页面，开始倒计时   , 发版需要，注释了
-			this.getTimes('isFirstTime');
-		}
-
-		
-		that.getSearchTextMax()
 	},
 
-	onShow: function() {
-		var that = this;
-		// 每次页面显示判断是否是热启动，如果是就请求数据；
-		var isHotStart = my.getStorageSync({
-			key: 'isHotStart',
-		}).data;
-		if (isHotStart) {
-			this.getPop();
-		};
+	onShow: function () {
+		// console.log('页面显示')
+		let that = this;
+		my.getStorageSync({ key: 'isHotStart', }).data ? that.getPop() : '';  // 如果页面是热启动，就请求弹窗广告数据；
+		that.getCartNumber();   // 获取购物车数量
+		that.initLocation();    // 获取定位数据
+		my.hideKeyboard();      // 关闭键盘，有些苹果手机会出现输入搜索去到搜索页返回初始页面时，初始页的键盘没有关闭的问题；
 
-		this.initLocation();
+		that.searchComponent ? that.searchComponent.setData({ inputVal: '' }) : '';   					// 如果有搜索组件则清空搜索值
 
-		// 只是显示并不是创建页面，计算时间并开始倒计时  , 发版需要，注释了
-		// if (!this.data.isonLoad) {
-		// 	this.getTimes('isFirstTime');
-		// }
+		that.checkAllComponent('start');                                  // 页面 onLoad 只会挂载一次组件
+		// that.data.isCutTimer ? that.cutTimeStart() : '';              // 如果广告模板倒计时有则开始普通模板倒计时
+		// !that.data.isonLoad ? that.getTimes('isFirstTime') : '';      // 只是显示并不是创建页面，计算时间并开始秒杀倒计时
 
-		// 获取购物车数量
-		that.getCartNumber();
-		// 关闭键盘，有些苹果手机会出现输入搜索去到搜索页返回初始页面时，初始页的键盘没有关闭的问题；
-		my.hideKeyboard();
-
-		// 回到页面关闭搜索组件
-		this.setData({
-			placeholder: my.getStorageSync({key: 'searchTextMax'}).data,
+		that.setData({         // 回到页面关闭搜索组件
 			isFocus: false,
 			isShowSearch: false,
 		});
-		if( that.searchComponent ) {
-			that.searchComponent.setData({inputVal: ''});
-			// that.searchComponent.getHistory();
-			// that.searchComponent.data.pageType = 'home';
-		}
 	},
 
-	onReady() {
-
-		// 初始化模块滚动高度
-		// this.setModuleScrollTop();
-
-	},
-
-	// 页面隐藏
+  /**
+	 * 页面隐藏
+	 */
 	onHide() {
-		clearTimeout(getApp().globalData.home_spikeTime);
-		this.setData({
-			isonLoad: false
-		})
+		let that = this;
+		// clearTimeout(this.data.app.globalData.home_spikeTime);     旧首页秒杀广告
+		// this.data.isonLoad = false;
+
+		that.checkAllComponent()
 	},
 
-	// 页面被关闭
+	/**
+	 *  页面被关闭
+	 */
 	onUnload() {
-		clearTimeout(getApp().globalData.home_spikeTime)
+		let that = this;
+		// clearTimeout(this.data.app.globalData.home_spikeTime)        旧首页秒杀广告
+
+		that.checkAllComponent()
 	},
 
-	// 定位初始化
+	/**
+	 *  定位初始化
+	 */
 	initLocation() {
 		const _this = this;
+		let app = getApp();
 		let userLocInfo = app.globalData.userLocInfo;
 		if (this.jsonNull(userLocInfo) == 0) {
-			// console.log('重新定位')
 			locAddr.location((res) => {
 				_this.setData({
 					locInfo: res,
@@ -213,11 +179,11 @@ Page({
 					isLocationLoad: false,
 				});
 				// 设置缓存并设置全部变量的值 globalData.userLocInfo 
-				app.setLocStorage(_this.data.locInfo, function() {
+				app.setLocStorage(_this.data.locInfo, function () {
 					_this.locStoreShow();
 				});
-				
-			}, ()=> {
+
+			}, () => {
 				// 定位失败
 				_this.setData({
 					isGetLocation: false,
@@ -233,12 +199,16 @@ Page({
 		}
 	},
 
-	// 跳转页面
+	/**
+	 * 跳转页面
+	 */
 	goLocationCity() {
 		my.navigateTo({ url: '/community/pages/addressLoc/addressLoc' });
 	},
 
-	// 检测json是否为空
+  /**
+	 * 检测json是否为空
+	 */
 	jsonNull(json) {
 		let num = 0;
 		for (let i in json) {
@@ -247,11 +217,12 @@ Page({
 		return num;
 	},
 
+
+
 	// 定位显示小店
 	locStoreShow() {
 		const _this = this;
-		let _locInfo = this.data.locInfo; 
-		// console.log('locStoreShow', _locInfo)
+		let _locInfo = this.data.locInfo;
 
 		http.get(api.Shop.SEARCH, {
 			longitude: _locInfo.longitude,
@@ -266,7 +237,7 @@ Page({
 			if (_data.length > 0) {
 				_show = true;
 				_store = Object.assign({}, _data[0]);
-				// 友盟埋点--社区入口曝光量 
+				// 友盟埋点--社区入口曝光量
 				my.uma.trackEvent('homepage_O2O_enter', { shopName: _store.shopName, shopId: _store.id });
 			}
 			_this.setData({
@@ -278,472 +249,184 @@ Page({
 
 				this.storeEnter.setStoreData(_store, _show, _locInfo)
 			}
-		}, (err) => {});
+		}, (err) => { });
 	},
-	storeEnter(ref){
+	storeEnterRef(ref) {
 		this.storeEnter = ref;
 	},
 
-	// 初始化模块广告的滚动高度
-	setModuleScrollTop(result) {
+  	/**
+	 * 页面滚动     onPageScroll
+	 */
+	// onPageScroll(e) {
+	// 	let that = this;
+	// 	let { scrollTop } = e;
+	// 	let waterFallTopInit = this.data.waterFallTopInit;
+	// 	let waterFallTop = this.data.waterFallTop;
+	// 	//防止统计位置不准确，重新再算一次
+	// 	if ( this.data.waterFallTitList.length > 0 && that.data.getWaterFallCount <= 12 ) {
+	// 		this.checkElementHeight();
+	// 	}
+  //   // console.log(scrollTop,this.data.waterFallTop,that.data.waterFallTitHeight )
+
+  //   // 显示返回顶部按钮
+  //     this.setData({
+  //       isShowGoTop: scrollTop >= that.data.app.globalData.systemInfo.windowHeight / 2 ? true : false
+  //     })
+      
+
+	// 	if (waterFallTopInit == 'success') {
+	// 		if (scrollTop >= (this.data.waterFallTop - that.data.waterFallTitHeight) && !this.data.waterFallTitIsTop) {
+	// 			that.setData({
+	// 				waterFallTitIsTop: true
+	// 			})
+	// 		} else if (scrollTop < (this.data.waterFallTop - that.data.waterFallTitHeight) && this.data.waterFallTitIsTop) {
+	// 			that.setData({
+	// 				waterFallTitIsTop: false
+	// 			})
+	// 		}
+	// 	} else {
+	// 		that.getWaterFallSeat()
+	// 	}
+	// },
+
+	/**
+	 * 页面滚动     onPageScroll
+	 */
+	onScroll(e) {
 		let that = this;
-		let { materialArr, advertsArr, homeGoodsList } = this.data;
-		let initTopHeight = materialArr.length > 0 ? this.toPx(300) : 0;    //搜索+banner的高度
-		let uploadOnceData = [];
-		// 保存搜索框的高度
-		my.createSelectorQuery().select('.js_homeSearch').boundingClientRect().exec(res => {
-			if (res[0]) {
+		let { scrollTop } = e.detail;
+    // console.log(scrollTop, that.data.waterFallTop, that.data.waterFallTitHeight)
+		let waterFallTopInit = this.data.waterFallTopInit;
+		let waterFallTop = this.data.waterFallTop;
+		//防止统计位置不准确，重新再算一次
+		if ( this.data.waterFallTitList.length > 0 && that.data.getWaterFallCount <= 10 ) {
+			this.checkElementHeight();
+		}
+    // console.log(scrollTop,this.data.waterFallTop,that.data.waterFallTitHeight )
+
+    // 显示返回顶部按钮
+    if( scrollTop >= that.data.app.globalData.systemInfo.windowHeight / 2 && !that.data.isShowGoTop ) {
+      this.setData({
+        isShowGoTop: true,
+      })
+      
+    } else if ( scrollTop < that.data.app.globalData.systemInfo.windowHeight / 2  && that.data.isShowGoTop ) {
+      this.setData({
+        isShowGoTop: false,
+        pageScrollTop: null
+      })
+    }
+
+      
+
+		if (waterFallTopInit == 'success') {
+			if (scrollTop >= (this.data.waterFallTop - that.data.waterFallTitHeight) && !this.data.waterFallTitIsTop) {
 				that.setData({
-					searchHeight: res[0].height
+					waterFallTitIsTop: true
+				})
+			} else if (scrollTop < (this.data.waterFallTop - that.data.waterFallTitHeight) && this.data.waterFallTitIsTop) {
+				that.setData({
+					waterFallTitIsTop: false
+				})
+			}
+		} else {
+			that.getWaterFallSeat()
+		}
+	},
+
+	// 获取全部广告模块 + 顶部轮播 + 四大描述的高度
+	getWaterFallSeat() {
+		let that = this;
+    // console.log(that.data.getWaterFallCount)
+		my.createSelectorQuery().select('#js_advert_list').boundingClientRect().exec((res) => {
+			let result = res[0] && res[0] != 'null' ? res[0].height ? res[0].height : 0 : ''
+			if (that.data.waterFallTitList.length > 0 && result ) {
+				that.setData({
+					waterFallTop: Math.floor(result),
+					waterFallTopInit: 'success'
 				})
 			}
 		})
-		// 保存banner的高度
-		my.createSelectorQuery().select('.js_banner').boundingClientRect().exec(res => {
-			if (res[0]) {
-				that.setData({
-					bannerHeight: res[0].height
-				})
-			}
-
-		})
-
-		// 判断模块广告有没有数据
-		if (advertsArr && Object.keys(advertsArr).length > 0) {
-			for (let i = 0; i < advertsArr.length; i++) {
-				let item = advertsArr[i];
-				let lastTop = initTopHeight;   //保存上面部分的高度
-				// 如果是第一个广告模块，所需要的滚动高度只是上面搜索+banner部分的高度
-				if (i == 0) {
-					lastTop = initTopHeight;
-					advertsArr[i].scrollTop = lastTop;
-					let advertsArrSet = "advertsArr[" + i + "].scrollTop";   //更新数据
-					that.setData({
-						[advertsArrSet]: lastTop
-					})
-					// 筛选有没有可上报的数据
-					uploadOnceData.push({ isLoadComplete: false, loadIndex: i });
-				}
-				else {
-					let lastItem = advertsArr[i - 1];
-					lastTop = (lastItem.scrollTop && lastItem.scrollTop) > 0 ? lastItem.scrollTop : lastTop;
-
-					let className = '.advertsIndex' + (i - 1);    //获取模块类名
-					// let goodsClass = '.js_goodsBox' + i;
-					let navHeight = 0;   //用来保存上一个模块的滚动高度
-
-					my.createSelectorQuery().select(className).boundingClientRect().exec(res => {
-						navHeight = res[0].height + lastItem.scrollTop;
-						advertsArr[i].scrollTop = advertsArr[i - 1].spacing == 1 ? this.toPx(20) + navHeight : navHeight; //设置此模块的滚动高度
-
-						// 保存最后一个广告模块的滚动高度+高度
-						if (i == advertsArr.length - 1) {
-							let lastModuleClass = '.advertsIndex' + i;
-							my.createSelectorQuery().select(lastModuleClass).boundingClientRect().exec(res => {
-								that.setData({
-									lastModuleScrollTop: (res[0].height + advertsArr[i].scrollTop - 40)
-								})
-							})
-						}
-
-						let advertsArrSet = "advertsArr[" + i + "].scrollTop";     //更新数据
-						that.setData({
-							[advertsArrSet]: advertsArr[i].scrollTop
-						})
-						// 如果在可视区域内则筛选可上报的数据
-						if (advertsArr[i].scrollTop < my.getSystemInfoSync().windowHeight) {
-							uploadOnceData.push({ isLoadComplete: false, loadIndex: i });
-						}
-						else {
-							if (i == (advertsArr.length - 1)) {
-								that.uploadOnce(uploadOnceData, 1);
-							}
-						}
-					});
-				}
-			}
-		}
-		else {
-			let homeGoodsListData = [];
-			// 如果banner的第一张图跳转的是商品详情的，要上报数据
-			if (this.data.materialArr && Object.keys(this.data.materialArr).length > 0) {
-				if (this.data.materialArr[0].url.includes('/shopping/goodsDetail/goodsDetail')) {
-					let goodsSn = this.data.materialArr[0].url.split('=')[1];
-					homeGoodsListData.push({ goodsSn: goodsSn })
-				}
-			}
-			// 如果广告模块没有数据，则一开始显示的是商品列表的数据，需要上报
-			if (homeGoodsList && Object.keys(homeGoodsList).length > 0) {
-				for (let i = 0; i < homeGoodsList.length; i++) {
-					let goodsClass = '.js_goodsListGood_' + i;
-					if (!homeGoodsList[i].isLoaded) {
-						my.createSelectorQuery().select(goodsClass).boundingClientRect().exec(res => {
-							let result = res[0];
-							if (result && result != 'null' && result != 'undefined') {
-								if (result.top < (windowHeight - that.data.searchHeight) && result.bottom > (that.data.searchHeight + that.data.floatVal) && result.left >= 0 && (result.right - that.data.floatVal) < windowWidth) {
-									let goodsSn = homeGoodsList[i].goodsSn;
-									let setAdsLoad = "homeGoodsList[" + i + "].isLoaded"; //更新此元素已加载完
-									homeGoodsListData.push({ goodsSn: goodsSn });      //保存能上报的数据
-									that.setData({
-										[setAdsLoad]: true
-									})
-
-									// 如果一次性已加载完则上传数据,只能实时判断,如果先保存会造成混乱,有可能重复上传
-									if (i == (homeGoodsList.length - 1)) {
-										if (homeGoodsListData && Object.keys(homeGoodsListData).length > 0) {
-											utils.uploadClickData_da('rec_show', homeGoodsListData)
-										}
-									}
-								}
-								else {
-									// 如果一次性已加载完则上传数据,只能实时判断,如果先保存会造成混乱,有可能重复上传
-									if (i == (homeGoodsList.length - 1)) {
-										if (homeGoodsListData && Object.keys(homeGoodsListData).length > 0) {
-											utils.uploadClickData_da('rec_show', homeGoodsListData)
-										}
-									}
-								}
-							}
-							else {
-								// 如果一次性已加载完则上传数据,只能实时判断,如果先保存会造成混乱,有可能重复上传
-								if (i == (homeGoodsList.length - 1)) {
-									if (homeGoodsListData && Object.keys(homeGoodsListData).length > 0) {
-										utils.uploadClickData_da('rec_show', homeGoodsListData)
-									}
-								}
-							}
-						});
-					}
-					else {
-						// 如果一次性已加载完则上传数据,只能实时判断,如果先保存会造成混乱,有可能重复上传
-						if (i == (homeGoodsList.length - 1)) {
-							if (homeGoodsListData && Object.keys(homeGoodsListData).length > 0) {
-								utils.uploadClickData_da('rec_show', homeGoodsListData)
-							}
-						}
-					}
-				}
-			}
-			// 如果连商品列表都没有，也要看看有没有要上传的
-			else {
-				if (homeGoodsListData && Object.keys(homeGoodsListData).length > 0) {
-					utils.uploadClickData_da('rec_show', homeGoodsListData)
-				}
-			}
-		}
 	},
 
-	// rpx 转化 px
-	toPx(rpx) {
-		return rpx * my.getSystemInfoSync().windowWidth / 750;
-	},
+	// 获取顶部，定位 + 生活号 + 搜索 的高度
+  getTopContentHeight() {
+    let that = this;
+    my.createSelectorQuery().select('#js_topContent').boundingClientRect().exec((res) => {
+      let result = res[0] && res[0] != 'null' ? res[0].height ? res[0].height : 0 : 0
+        that.setData({
+          topContentHeight: Math.floor(result) * (750 / that.data.app.globalData.systemInfo.windowWidth),
+        })
+    })
+  },
 
 
-	// 获取所有商品 type： 0:刷新 1:下拉加载            ---- 已没有使用；
-	getAllPintuanProduct(type) {
-		this.setData({
-			isLoadMore: true
-		});
-		var that = this;
-		sendRequest.send(constants.InterfaceUrl.HOME_GROUPGOODS_LIST,
-			// constants.InterfaceUrl.GET_ALL_GOODS,
-			{
-				groupName: 'H5首页-热销排行',
-				start: this.data.start,
-				limit: this.data.limit
-			}, function(res) {
-				var isLoadMore = false;
-				my.stopPullDownRefresh();
-				var result = res.data.result;
-				var hasMore = false;
-				var homeGoodsList = that.data.homeGoodsList;
-				if (result && result.length == that.data.limit) {
-					hasMore = true;
-				}
-				if (type == 0) {
-					homeGoodsList = result;
-				} else {
-					homeGoodsList = homeGoodsList.concat(result);
-				}
-				// 缓存数据w
-				my.setStorage({
-					key: 'homeGoodsList', // 缓存数据的key
-					data: homeGoodsList, // 要缓存的数据
-					success: (res) => {
-					},
-				});
-				that.setData({
-					homeGoodsList: homeGoodsList,
-					hasMore: hasMore,
-					isLoadMore: isLoadMore
-				});
 
-			}, function(err) {
-				my.stopPullDownRefresh();
-				that.setData({
-					isLoadMore: false
-				});
-			}, 'GET', true);
-	},
+    // 页面上拉加载更多瀑布流商品 loadWaterFallGoods       onReachBottom
+  // onReachBottom() {
+  //   let that = this;
+  //   let { waterIndex, waterFallGoodsList, isWaterFallLoaded } = this.data
+  //   // console.log('上拉加载', '此时的导航 index', waterIndex, '此时各个导航是否没有更多', isWaterFallLoaded, '此时各个瀑布流数据', waterFallGoodsList)
+  //   if ( !isWaterFallLoaded[waterIndex] && isWaterFallLoaded.length > 0 ) {
+  //     let setWaterFallStart = 'waterStartList[' + waterIndex + ']'
+  //     this.setData({
+  //       [setWaterFallStart]: waterFallGoodsList.length > 0 ? waterFallGoodsList[waterIndex].length : 0
+  //     })
+  //     this.getWaterFallGoodsList(1, waterIndex)
+  //   }
+  // },
 
-  // 获取数据，判断生活号的位置;
-	onPageScroll: _.debounce(function(e) {
-		let { scrollTop } = e
-		if (scrollTop > 56) {
-			this.setData({
-				hideLifeStyle: true
-			})
-		}
-		else {
-			this.setData({
-				hideLifeStyle: false
-			})
-		}
-	}, 300),
+    // 页面上拉加载更多瀑布流商品 loadWaterFallGoods       onReachBottom
+  scrollToLower() {
+    let that = this;
+    let { waterIndex, waterFallGoodsList, isWaterFallLoaded } = this.data
+    // console.log('上拉加载', '此时的导航 index', waterIndex, '此时各个导航是否没有更多', isWaterFallLoaded, '此时各个瀑布流数据', waterFallGoodsList)
+    if ( !isWaterFallLoaded[waterIndex] && isWaterFallLoaded.length > 0 ) {
+      let setWaterFallStart = 'waterStartList[' + waterIndex + ']'
+      this.setData({
+        [setWaterFallStart]: waterFallGoodsList.length > 0 ? waterFallGoodsList[waterIndex].length : 0
+      })
+      this.getWaterFallGoodsList(1, waterIndex)
+    }
+  },
 
 
-  // onPageScroll 事件的旧方法                         -----   已没有使用；
-	_onPageScroll: _.debounce(function(obj) {
-		let { scrollTop } = obj;
-		let { advertsArr } = this.data;
-		this.setData({
-			stopBannerSwiper: scrollTop > (advertsArr && Object.keys(advertsArr).length > 0 ? advertsArr[0].scrollTop : 0) ? true : false,
-			pageScrollTop: scrollTop
-		})
+  // 瀑布流导航点击
+  waterFallChange(e) {
+    let { index } = e.currentTarget.dataset
+    this.setData({
+      waterIndex: index
+    })
+    if (this.data.isWaterFallFirst[index]) {
+      this.getWaterFallGoodsList(0, index)
+    }
+  },
 
-		if (scrollTop < (this.data.lastModuleScrollTop - windowHeight / 2)) {
-			let uploadIndex = []
-			advertsArr.findIndex((item, index, arr) => {
-				if (scrollTop < item.scrollTop && item.scrollTop < (windowHeight - this.data.searchHeight - 40 + scrollTop)) {
-					uploadIndex.push({ isLoadComplete: false, loadIndex: index })
-				}
-			})
-			// 上传达观数据
-			this.uploadOnce(uploadIndex);
-		}
-		else {
-			this.goodsListUpload();
-		}
-	}, 300),
+  // 回到顶部
+  goToTop() {
+    // my.pageScrollTo({
+    //   scrollTop: 0,
+    //   duration: 300
+    // })
 
-  //         原有旧的达官统计方法，                     -----  已没有使用；
-	// 滚动一次统一上传一次上报的数据  adsArr--广告模块的数据，i---当前广告模块的索引， loadOnceArr---一次性可视区内的数据, uploadData---一次性要上传的商品数据, isLoadCompleteOnce -----一次性加载是否完成
-	uploadOnce(loadIndexArr, type = 0) {
-		// let loadIndexArr = loadIndexArr;
-		let that = this;
-		let adsArr = this.data.advertsArr;
-		let uploadData = [];
-		let isLoadCompleteOnce = false;
-
-		// 如果type=1则是刚开始进来页面时，要算算banner中有没有要上报的数据
-		if (type == 1) {
-			// 如果banner的第一张图跳转的是商品详情的，要上报数据
-			if (this.data.materialArr && Object.keys(this.data.materialArr).length > 0) {
-				if (this.data.materialArr[0].url.includes('/shopping/goodsDetail/goodsDetail')) {
-					let goodsSn = this.data.materialArr[0].url.split('=')[1];
-					uploadData.push({ goodsSn: goodsSn })
-				}
-			}
-		}
-
-		for (let index = 0; index < loadIndexArr.length; index++) {
-			let i = loadIndexArr[index].loadIndex;
-			let groupGoodsVoList = adsArr[i].moduleType == 'SECONDKILL' ? (adsArr[i].secondKillModuleVO && adsArr[i].secondKillModuleVO != 'null' && adsArr[i].secondKillModuleVO != 'undefined' ? adsArr[i].secondKillModuleVO.secondKillGoods : []) : (adsArr[i].groupGoodsVoList && adsArr[i].groupGoodsVoList != 'null' && adsArr[i].groupGoodsVoList != 'undefined' ? adsArr[i].groupGoodsVoList : []);     //保存商品的列表 
-
-			// 循环查找可上传的商品数据
-			for (let [j, adsItem] of adsArr[i].items.entries()) {
-				let newGoodsClass = '.js_adsGoods' + i + '_' + j;      //是跳商品详情的且不是商品列表中的
-
-				if (!adsItem.isLoaded) {
-					// 获取所在的区域模块内可上传商品数据
-					my.createSelectorQuery().selectAll(newGoodsClass).boundingClientRect().exec(res => {
-						let result = res[0];
-						// 如果查询到有结果才能进行位置判断 
-						if (result && result != 'null') {
-							// 如果符合此判断的商品数据才能上报jsxClosingElement
-							if (result[0].top < (windowHeight - that.data.searchHeight) && result[0].bottom > (that.data.searchHeight + that.data.floatVal) && result[0].left >= 0 && (result[0].right - that.data.floatVal) < windowWidth) {
-								// 截取商品编码
-								let goodsSn = adsItem.link.split('=')[1];
-								let setAdsLoad = "advertsArr[" + i + "].items[" + j + "].isLoaded";   //更新此元素已加载完
-								uploadData.push({ goodsSn: goodsSn });      //保存能上报的数据
-								that.setData({
-									[setAdsLoad]: true
-								})
-
-								// 如果一次性已加载完则上传数据,只能实时判断,如果先保存会造成混乱,有可能重复上传
-								if (i == loadIndexArr[loadIndexArr.length - 1].loadIndex && j == (adsArr[i].items.length - 1) && groupGoodsVoList.length == 0) {
-									if (uploadData && Object.keys(uploadData).length > 0) {
-										utils.uploadClickData_da('rec_show', uploadData)
-									}
-								}
-
-							}
-							else {
-								// 如果一次性已加载完则上传数据,只能实时判断,如果先保存会造成混乱,有可能重复上传
-								if (i == loadIndexArr[loadIndexArr.length - 1].loadIndex && j == (adsArr[i].items.length - 1) && groupGoodsVoList.length == 0) {
-									if (uploadData && Object.keys(uploadData).length > 0) {
-										utils.uploadClickData_da('rec_show', uploadData)
-									}
-								}
-							}
-						}
-						else {
-							// 如果一次性已加载完则上传数据,只能实时判断,如果先保存会造成混乱,有可能重复上传
-							if (i == loadIndexArr[loadIndexArr.length - 1].loadIndex && j == (adsArr[i].items.length - 1) && groupGoodsVoList.length == 0) {
-								if (uploadData && Object.keys(uploadData).length > 0) {
-									utils.uploadClickData_da('rec_show', uploadData)
-								}
-							}
-						}
-					});
-				}
-				else {
-					// 如果一次性已加载完则上传数据,只能实时判断,如果先保存会造成混乱,有可能重复上传
-					if (i == loadIndexArr[loadIndexArr.length - 1].loadIndex && j == (adsArr[i].items.length - 1) && groupGoodsVoList.length == 0) {
-						if (uploadData && Object.keys(uploadData).length > 0) {
-							utils.uploadClickData_da('rec_show', uploadData)
-						}
-					}
-				}
-
-			}
-
-			// 如果有商品列表，则要查询
-			if (groupGoodsVoList && groupGoodsVoList != 'null' && groupGoodsVoList != 'undefined') {
-				// 循环查询符合条件的商品列表中的商品
-				for (let [k, goodsItem] of groupGoodsVoList.entries()) {
-					// 只有这个类名的商品才能上传
-					let newGoodsClass = '.js_adsGoodsList' + i + '_' + k;
-
-					if (!goodsItem.isLoaded) {
-						my.createSelectorQuery().selectAll(newGoodsClass).boundingClientRect().exec(res => {
-							let result = res[0];
-							if (result && result != 'null') {
-								// 如果符合此判断的商品数据才能上报
-								if (result[0].top < (windowHeight - that.data.searchHeight) && result[0].bottom > (that.data.searchHeight + that.data.floatVal) && result[0].left >= 0 && (result[0].right - that.data.floatVal) < windowWidth) {
-									let goodsSn = goodsItem.goodsSn;
-									let setAdsLoad = adsArr[i].moduleType == 'SECONDKILL' ? "advertsArr[" + i + "].secondKillModuleVO.secondKillGoods.[" + k + "].isLoaded" : "advertsArr[" + i + "].groupGoodsVoList[" + k + "].isLoaded"; //更新此元素已加载完
-									uploadData.push({ goodsSn: goodsSn });      //保存能上报的数据
-									that.setData({
-										[setAdsLoad]: true
-									})
-
-									// 如果一次性已加载完则上传数据
-									if (i == loadIndexArr[loadIndexArr.length - 1].loadIndex && k == (groupGoodsVoList.length - 1)) {
-										if (uploadData && Object.keys(uploadData).length > 0) {
-											utils.uploadClickData_da('rec_show', uploadData)
-										}
-									}
-								}
-								else {
-									// 如果一次性已加载完则上传数据,只能实时判断,如果先保存会造成混乱,有可能重复上传
-									if (i == loadIndexArr[loadIndexArr.length - 1].loadIndex && k == (groupGoodsVoList.length - 1)) {
-										if (uploadData && Object.keys(uploadData).length > 0) {
-											utils.uploadClickData_da('rec_show', uploadData)
-										}
-									}
-								}
-							}
-							else {
-								// 如果一次性已加载完则上传数据,只能实时判断,如果先保存会造成混乱,有可能重复上传
-								if (i == loadIndexArr[loadIndexArr.length - 1].loadIndex && k == (groupGoodsVoList.length - 1)) {
-									if (uploadData && Object.keys(uploadData).length > 0) {
-										utils.uploadClickData_da('rec_show', uploadData)
-									}
-								}
-							}
-						})
-					}
-					else {
-						// 如果一次性已加载完则上传数据,只能实时判断,如果先保存会造成混乱,有可能重复上传
-						if (i == loadIndexArr[loadIndexArr.length - 1].loadIndex && k == (groupGoodsVoList.length - 1)) {
-							if (uploadData && Object.keys(uploadData).length > 0) {
-								utils.uploadClickData_da('rec_show', uploadData)
-							}
-						}
-					}
-
-				}
-			}
-
-		}
-
-	},
-
-	// 底部商品列表数据上报筛选 ， 原有旧的达官统计方法     --------  已没有使用；
-	goodsListUpload() {
-		let that = this;
-		let { homeGoodsList } = this.data;
-		let goodsListLoadData = [];
-
-		for (let i = 0; i < homeGoodsList.length; i++) {
-			let goodsClass = '.js_goodsListGood_' + i;
-			if (!homeGoodsList[i].isLoaded) {
-				my.createSelectorQuery().select(goodsClass).boundingClientRect().exec(res => {
-					let result = res[0];
-					if (result && result != 'null' && result != 'undefined') {
-						if (result.top < (windowHeight - that.data.searchHeight) && result.bottom > (that.data.searchHeight + that.data.floatVal) && result.left >= 0 && (result.right - that.data.floatVal) < windowWidth) {
-							let goodsSn = homeGoodsList[i].goodsSn;
-							let setAdsLoad = "homeGoodsList[" + i + "].isLoaded"; //更新此元素已加载完
-							goodsListLoadData.push({ goodsSn: goodsSn });      //保存能上报的数据
-							that.setData({
-								[setAdsLoad]: true
-							})
-
-							// 如果一次性已加载完则上传数据,只能实时判断,如果先保存会造成混乱,有可能重复上传
-							if (i == (homeGoodsList.length - 1)) {
-								if (goodsListLoadData && Object.keys(goodsListLoadData).length > 0) {
-									utils.uploadClickData_da('rec_show', goodsListLoadData)
-								}
-							}
-						}
-						else {
-							// 如果一次性已加载完则上传数据,只能实时判断,如果先保存会造成混乱,有可能重复上传
-							if (i == (homeGoodsList.length - 1)) {
-								if (goodsListLoadData && Object.keys(goodsListLoadData).length > 0) {
-									utils.uploadClickData_da('rec_show', goodsListLoadData)
-								}
-							}
-						}
-					}
-					else {
-						// 如果一次性已加载完则上传数据,只能实时判断,如果先保存会造成混乱,有可能重复上传
-						if (i == (homeGoodsList.length - 1)) {
-							if (goodsListLoadData && Object.keys(goodsListLoadData).length > 0) {
-								utils.uploadClickData_da('rec_show', goodsListLoadData)
-							}
-						}
-					}
-				});
-			}
-			else {
-				// 如果一次性已加载完则上传数据,只能实时判断,如果先保存会造成混乱,有可能重复上传
-				if (i == (homeGoodsList.length - 1)) {
-					if (goodsListLoadData && Object.keys(goodsListLoadData).length > 0) {
-						utils.uploadClickData_da('rec_show', goodsListLoadData)
-					}
-				}
-			}
-		}
-	},
+    this.setData({
+      pageScrollTop: 0.001
+    })
+  },
 
 	/**
 	 * 添加购物车
 	 */
-	addCart: function(e) {
+	addCart: function (e) {
 		let that = this;
 		let productId = e.currentTarget.dataset.pid;
-
-		sendRequest.send(constants.InterfaceUrl.SHOP_ADD_CART, { pId: productId, quantity: '1' }, function(res) {
-
-			// 达观数据上报
-			// utils.uploadClickData_da('cart', [{ productId, actionNum: '1' }])
-
+		sendRequest.send(constants.InterfaceUrl.SHOP_ADD_CART, { pId: productId, quantity: '1' }, function (res) {
 			my.showToast({
 				content: '添加购物车成功'
 			});
 			that.getCartNumber();
-		}, function(res) {
+		}, function (res) {
 			my.showToast({
 				content: res
 			})
@@ -751,278 +434,245 @@ Page({
 	},
 
 	/**
-	* 清除搜索历史    	-------		搜索改版
-	*/
-	// clearHist: function() {
-	// 	try {
-	// 		my.setStorageSync({ key: nstants.StorageConstants.searchWordsKey, data: [] });
-	// 	} catch (e) { }
-	// },
-	
-
-	/**
 	* 下拉刷新
 	*/
-	onPullDownRefresh: function() {
+	onPullDownRefresh() {
+		// console.log('下拉刷新重新请求数据')
+		clearTimeout(this.data.app.globalData.home_spikeTime);	// 清除定时器    
+		this.getAdvertsModule();   // 获取广告模块资源
 		this.setData({
-			start: 0
-		});
-		// 清除定时器
-		getApp().globalData.home_spikeTime = null;
-		this.getMaterial();
-		this.getAdvertsModule();
-		// this.getAllPintuanProduct(0);
-	},
-
-
-  // 原有旧的方法，              -------    没看到有被调用
-	bannerType2: function(e) {
-		var that = this;
-		var current = e.detail.current;
-
-		that.setData({
-			current: current
+			allMaterialIndex: -1
 		})
-		// that.set
+		let timer = setTimeout(function () {
+			clearTimeout(timer)
+			my.stopPullDownRefresh();
+		}, 1000)
 	},
 
-	/**
-	* 页面上拉触底事件的处理函数      -------    已没有使用
+
+  /**
+	  *分享页面
 	*/
-	onReachBottom: function() {
-		// if (this.data.hasMore) {
-		// 	this.setData({
-		// 		start: this.data.homeGoodsList.length
-		// 	});
-		// 	this.getAllPintuanProduct(1);
-		// }
-	},
-	//   scrollToLower: function() {
-	//     if (this.data.hasMore) {
-	//       this.setData({
-	//         start: this.data.homeGoodsList.length
-	//       });
-	//       this.getAllPintuanProduct(1);
-	//     }
-	//   },
-
-	// 分享页面
-	onShareAppMessage: function(res) {
+	onShareAppMessage: function (res) {
 		return {
-			title: '年丰大当家-生鲜电商平台',
+			title: '顺丰大当家-顺丰旗下电商平台',
 			path: '/pages/home/home'
 		};
 	},
 
-	/**
-	 * 广告模块
-	 * */
+
+  /**
+	  *获取全部广告模块
+	*/
 	getAdvertsModule() {
-		var that = this;
-		var urlPre = '/m/a';
-		var url = urlPre + '/moduleAdvert/1.1/getModuleAdvert';
-		var token = '';
-		var contentType = '';
-		var data = { showPage: 'HOMEPAGE' }
-
-		// data: {
-		// 			channel: 'ALIPAY_MINIAPP',
-		// 			sceneName: 'HOME',
-		// 			sceneParam: 'MINI_ALIPAY'
-		// 		}
-
+		let that = this;
+		let token = '';
+		let contentType = '';
+		let data = { showPage: 'HOMEPAGE' }
 		try {
 			token = my.getStorageSync({ key: constants.StorageConstants.tokenKey }).data ? my.getStorageSync({ key: constants.StorageConstants.tokenKey }).data : '';
 		} catch (e) { }
-
 		return new Promise((reslove, reject) => {
-
 			my.httpRequest({
-				url: constants.UrlConstants.baseUrlOnly + url,
+				url: constants.UrlConstants.baseUrlOnly + api.HOME.ADVERTS_MOUDULE,
 				method: 'GET',
 				data: data,
-
 				headers: {
 					'token': token ? token : '',
 					"content-type": contentType ? contentType : "application/x-www-form-urlencoded",
 					"client-channel": "alipay-miniprogram"
 				},
-				success: function(res) {
-					var resData = res.data;
-					if (resData.ret && resData.ret.code == '0') {
-						let result = resData.data;
-						let spliceArr = [];
-						let newResult = [];
+				success: function (res) {
+					let resRet = res.data.ret;
+          let resData= res.data.data;
+          
+          // resData = that.setResult();
+          // console.log(resData)
 
-						for (var i = 0; i < result.length; i++) {
-							result[i].items = JSON.parse(result[i].items);
+					if (resRet.code == '0' && resData && resData.length > 0) {
+						let newResult = [];
+						for (var i = 0; i < resData.length; i++) {
+							resData[i].items = JSON.parse(resData[i].items);
 							// 为了避免运营乱配，删除一些不能显示的
-							if (result[i].moduleType != 'BANNER_TYPE_1' && result[i].moduleType != 'HEADLINE' && result[i].moduleType != 'TUANGOU') {
-								if (result[i].moduleType == "SECONDKILL") {
-									that.data.secondKillActivityId = result[i].items[0].secondKillActivityId;
+							if (resData[i].moduleType != 'BANNER_TYPE_1' && resData[i].moduleType != 'HEADLINE' && resData[i].moduleType != 'TUANGOU') {
+								if (resData[i].moduleType == "SECONDKILL") {
+									that.data.secondKillActivityId = resData[i].items[0].secondKillActivityId;
 								}
-								newResult.push(result[i]);
+								if (resData[i].moduleType == 'GOODS_WATERFALL') {
+									that.setData({
+										waterFallTitList: resData[i].items,
+										waterFallGoodsList: new Array(resData[i].items.length).fill([]),
+										isWaterFallLoaded: new Array(resData[i].items.length).fill(false),
+										isWaterFallLoading: new Array(resData[i].items.length).fill(false),
+										isWaterFallFirst: new Array(resData[i].items.length).fill(true),
+										waterStartList: new Array(resData[i].items.length).fill(0),
+										waterLimitList: new Array(resData[i].items.length).fill(10),
+										waterFallListIndex: i
+									})
+									// console.log('全部广告模板请求成功，开始调用 getWaterFallGoodsList(0, 0)')
+									that.getWaterFallGoodsList(0, 0)
+								}
+
+                if( resData[i].moduleType == "NAVIGATION" ) {
+                  // console.log(resData[i]);
+                  resData[i].items.push({
+                    imageUrl:"user/admin/20200424/158772400863802553.jpg",
+                    link:"/pages/activities/lightMember/lightMember",
+                    linkType : "CUSTOM_LINK"
+                  });
+                }
+
+								newResult.push(resData[i]);
 							}
 						}
-
-
-						// 缓存数据
+						// 缓存广告模板数据
 						my.setStorage({
-							key: 'homeAdvertsArr', // 缓存数据的key
-							data: newResult, // 要缓存的数据
-							success: (res) => {
-
-							},
+							key: 'homeAdvertsArr',
+							data: newResult,
+							success: (res) => { },
 						});
 						that.setData({
 							advertsArr: newResult,
 							secondKillActivityId: that.data.secondKillActivityId
-
 						})
 
-						// that.setModuleScrollTop();
+            that.checkAllComponent('start');
+            that.checkElementHeight();
 
 						reslove({
 							'type': true,
-							'result': result
+							'result': resData
 						});
-
 					}
 					else {
-						// that.setModuleScrollTop();
+						reject({
+							'type': false,
+							'result': err
+						});
 					}
 				},
-
 				fail: function(err) {
-					// that.setModuleScrollTop();
+          // that.checkAllComponent('start')         // ----------------------------- 测试用，上线记得删除 -----------
 					reject({
 						'type': false,
 						'result': err
 					});
 				}
 			})
-
 		})
-
 	},
 
-	/**
-	 * 获取单独的秒杀广告数据
-	 * */
-	getSpikeModule() {
-		var that = this;
-		var urlPre = '/m/a';
-		var url = urlPre + '/moduleAdvert/1.0/getSecKillAdvert';
-		var token = '';
-		var contentType = '';
-		try {
-			token = my.getStorageSync({ key: constants.StorageConstants.tokenKey }).data ? my.getStorageSync({ key: constants.StorageConstants.tokenKey }).data : '';
-		} catch (e) { }
-		return new Promise((reslove, reject) => {
-			my.httpRequest({
-				url: constants.UrlConstants.baseUrlOnly + url,
-				method: 'GET',
-				data: {
-					// channel: 'ALIPAY_MINIAPP',
-					activitysId: that.data.secondKillActivityId
-				},
-				headers: {
-					'token': token ? token : '',
-					"content-type": contentType ? contentType : "application/x-www-form-urlencoded",
-					"client-channel": "alipay-miniprogram"
-				},
-				success: function(res) {
-					var resData = res.data;
-					if (resData.ret.code == '0') {
-						var result = resData.data;
-						var index = null;
-						var spikeArr = [];
-						for (var i = 0; i < that.data.advertsArr.length; i++) {
-							if (that.data.advertsArr[i].moduleType == "SECONDKILL") {
+  // 获取瀑布流商品数据
+  getWaterFallGoodsList(type, waterIndex) {
+    let that = this;
+    let setWaterLoadingName = 'isWaterFallLoading[' + waterIndex + ']'
+    let setWaterLimitName = 'waterLimitList[' + waterIndex + ']'
 
-								spikeArr = JSON.parse(JSON.stringify(that.data.advertsArr[i]));
-								spikeArr.secondKillModuleVO = result;
-								index = i;
+    // 如果是第一个则需要加入banner资源
+    if (waterIndex == 0) {
+      that.setData({
+        [setWaterLimitName]: (that.data.allMaterialList.length > 0 && that.data.allMaterialIndex < that.data.allMaterialList.length -1) ? 9 : 10
+      })
+    }
 
-								that.data.advertsArr[i] = spikeArr;
+    let waterFallTitList = Object.assign([], that.data.waterFallTitList)
+    let goodsContents = waterFallTitList[waterIndex].goodsContents;
+    let data = {} //要传的数据
+    data.start = that.data.waterStartList[waterIndex]
+    data.limit = that.data.waterLimitList[waterIndex]
+    data.queryType = waterFallTitList[waterIndex].goodsType == 'GOODS_GROUP' ? 0 : 1;
+    data.goodsContents = waterFallTitList[waterIndex].goodsType == 'GOODS_GROUP' ? waterFallTitList[waterIndex].goodsGroupName : waterFallTitList[waterIndex].goodsCategoryArray
+    // 防止滚动重复
+    if (!that.data.isWaterFallLoading[waterIndex]) {
+      that.setData({
+        [setWaterLoadingName]: true
+      })
+    // console.log('请求瀑布流商品 type', type, '此时各个正在加载状态', that.data.isWaterFallLoading, '当前导航对应的参数---',data,'整条瀑布流导航',waterFallTitList)
+      http.post(api.GOODS.WATERFALL, data, res => {
+        // console.log('当前导航对应的返回的数据---',res);
+        let result = res.data.data ? res.data.data : [];
+        let setListName = 'waterFallGoodsList[' + waterIndex + ']'
+        let setLoadedName = 'isWaterFallLoaded[' + waterIndex + ']'
+        let setLoadingName = 'isWaterFallLoading[' + waterIndex + ']'
+        let setFirstName = 'isWaterFallFirst[' + waterIndex + ']'
+        let lastGoodsList = Object.assign([], that.data.waterFallGoodsList[waterIndex]);
+        let randomCount = type == 0 ? 0 : ((Math.floor(Math.random() * 10 + 1)) % 2) == 0 ? 0 : 1
+        if (waterIndex == 0) {
+          if (that.data.allMaterialList.length > 0 && that.data.allMaterialIndex < that.data.allMaterialList.length -1) {
+            ++that.data.allMaterialIndex
+            result.splice(randomCount, 0, that.data.allMaterialList[that.data.allMaterialIndex])
+          }
+        }
+        let wholeGoodsList = []
+        wholeGoodsList = type == 0 ? result : lastGoodsList.concat(result)
+        that.setData({
+          [setListName]: wholeGoodsList,
+          [setLoadedName]: result.length >= that.data.waterLimitList[waterIndex] ? false : true,
+          [setLoadingName]: false,
+          [setFirstName]: false,
+          allMaterialIndex: that.data.allMaterialIndex
+        })
 
-								var nowTime = new Date();
-								var endTime = that.data.advertsArr[i].secondKillModuleVO.endDate;
-								var startTime = that.data.advertsArr[i].secondKillModuleVO.startDate;
-								nowTime = nowTime.getTime();
-								startTime = new Date(startTime).getTime();
-								endTime = new Date(endTime).getTime();
-								var timeDifferences = (startTime - nowTime) / 1000;
-								if (startTime > nowTime) {
-									that.data.isActivitysStart = '活动还未开始';
-								};
-								that.setData({
-									advertsArr: that.data.advertsArr,
-									nowTime: nowTime,
-									startTime: startTime,
-									endTime: endTime,
-									timeDifferences: timeDifferences,
-									isActivitysStart: that.data.isActivitysStart
-								})
-
-							}
-						}
-						// 缓存数据
-						my.setStorage({
-							key: 'homeAdvertsArr', // 缓存数据的key
-							data: that.data.advertsArr, // 要缓存的数据
-							success: (res) => {
-
-							},
-						});
-						reslove({
-							'type': true,
-							'result': result
-						});
-					}
-				},
-				fail: function(err) {
-					reject({
-						'type': false,
-						'result': err
-					});
-				}
+				type == 0 ? that.checkElementHeight() : '';
+				// console.log('当前导航渲染的商品', wholeGoodsList, '是否没有更多？', that.data.isWaterFallLoaded, '本次请求是否还在继续', that.data.isWaterFallLoading, '是否是第一次？', that.data.isWaterFallFirst)
+			}, err => {
+				// console.log('当前导航请求的数据报错', err)
+				let setLoadedName = 'isWaterFallLoaded[' + waterIndex + ']'
+				let setLoadingName = 'isWaterFallLoading[' + waterIndex + ']'
+				that.setData({
+					[setLoadedName]: false,
+					[setLoadingName]: false,
+				})
+				// console.log('是否没有更多？', that.data.isWaterFallLoaded, '本次请求是否还在继续', that.data.isWaterFallLoading)
 			})
-
-		})
+		}
 	},
 
 	/**
-   * 获取banner数据
-   * */
-	getMaterial() {
-		var that = this;
+ * 获取首页轮播 getWheelPlanting
+ * */
+	getWheelPlanting() {
+		let that = this;
+			// HOME_BANNER_LIST: '/home/getMaterialGroup',   //首页banner接口  
 		sendRequest.send(constants.InterfaceUrl.HOME_BANNER_LIST, { groupName: '支付宝小程序_首页轮播图' }, function(res) {
-			// if(res.data.errorCode == '0001')
-			var result = res.data.result;
+      let result = res.data.result;
+      that.setData({
+				wheelPlantingArr: result.material ? result.material : []
+			})
 			my.setStorage({
-				key: 'homeMaterial', // 缓存数据的key
+				key: 'wheelPlantingArr', // 缓存数据的key
 				data: result.material, // 要缓存的数据
 				success: (res) => {
 				},
 			});
-			that.setData({
-				materialArr: result.material ? result.material : []
-			})
-		}, function(err) {
-		}, 'GET', true)
+      that.checkElementHeight();
+			// console.log(that.data.wheelPlantingArr)
+		}, function (err) {
+			// console.log(that.data.wheelPlantingArr)
+		}, 'GET')
 	},
 
-  // 获取弹窗数据
+	// 轮播滚动时触发
+	bannerListChange(e) {
+		let { current, source } = e.detail;
+		if (source === 'autoplay' || source === 'touch') {
+			this.setData({
+				currentIndex: current
+			})
+		}
+	},
+
+  /**
+	  *获取弹窗广告数据
+	*/
 	getPop() {
 		my.removeStorageSync({
 			key: 'isHotStart',
 		});
-		var that = this;
-		var urlPre = '/m/a';
-		var url = urlPre + constants.InterfaceUrl.HOME_POP;
-		var token = '';
-		var contentType = '';
+		let that = this;
+		let url = '/m/a' + constants.InterfaceUrl.HOME_POP;
+		let token = '';
+		let contentType = '';
 		try {
 			token = my.getStorageSync({ key: constants.StorageConstants.tokenKey }).data ? my.getStorageSync({ key: constants.StorageConstants.tokenKey }).data : '';
 		} catch (e) { }
@@ -1035,714 +685,198 @@ Page({
 				"content-type": contentType ? contentType : "application/x-www-form-urlencoded",
 				"client-channel": "alipay-miniprogram"
 			},
-			success: function(res) {
-				var resData = res.data;
-				var result = resData.data;
+			success: function (res) {
+				let resData = res.data;
+				let result = resData.data;
+        that.checkElementHeight();
 				if (resData.ret.code == '0') {
-					// 如果为收藏有礼的弹窗
-					var canUseCollected = my.canIUse('isCollected');
+					let canUseCollected = my.canIUse('isCollected');
 					if (!canUseCollected) {
 						my.showToast({
 							content: '您的客户端版本过低，请升级你的客户端',
 							success: (res) => {
 								if (result) {
-									that.setData({
-										popImgData: result
-									})
-									that.judgePop();
+                  that.setPopImgData(result);
 								}
 							},
 						});
 						return;
-					}
-
-					if (resData.data.appLink == 2) {
+					} else if (resData.data.appLink == 2) {   // 如果为收藏有礼的弹窗
 						my.isCollected({
 							success: (res) => {
 								// console.log('查询收藏成功');
 								if (res.isCollected) {
 									// console.log('收藏了',res.isCollected);
 									return;
-								} else {
+								} else if (result) {
 									// console.log('没有收藏',res.isCollected);
-									if (result) {
-										that.setData({
-											popImgData: result
-										})
-										that.judgePop();
-									}
+                  that.setPopImgData(result);
 								}
 							},
 							fail: (error) => {
 								// console.log('查询收藏失败');
 								if (result) {
-									that.setData({
-										popImgData: result
-									})
-									that.judgePop();
+                  that.setPopImgData(result);
 								}
 							}
 						});
-					} else {
-						if (result) {
-							that.setData({
-								popImgData: result
-							})
-							that.judgePop();
-						}
+					} else if (result) {
+              that.setPopImgData(result);
 					}
 				}
 			},
-
-			fail: function(err) {
+			fail: function (err) {
 			}
 		})
 	},
 
-  // 页面跳转
-	goToPage: function(e) {
-		let that = this;
-		let url = e.currentTarget.dataset.url;
-		let chInfo = constants.UrlConstants.chInfo;
-		let { linkType, title, type, index, fatherIndex } = e.currentTarget.dataset
-		// let { title, type, index } = e.currentTarget.dataset
 
-		// linkType为2代表跳收藏有礼
-		if (linkType == '2') {
+  // 设置广告数据并判断广告类型
+  setPopImgData(result) {
+    this.setData({
+      popImgData: result
+    })
+    this.judgePop();
+  },
 
+    /**
+   * 获取所有瀑布流的 banner，只在第一栏瀑布流显示，排序由高到底，优先显示排序高的，每10个瀑布流商品展示一张 banner;
+   * */
+  getAllMaterialData() {
+    let that = this;
+		// 支付宝小程序瀑布流广告banner
+		// '/m/a/material/1.0/listMaterialByName'  '/m/a/material/1.0/listMaterialByName', //获取首页底部所有banner位数据
+    http.get(api.GOODSDETAIL.LISTMATERIALBYNAME, {
+      groupName: '支付宝小程序瀑布流广告banner'
+    }, res => {
+      let result = res.data.data ? res.data.data : [];
+      result.forEach(value => { value.type = 'advert' })
+      that.setData({
+        allMaterialList: Object.assign(that.data.allMaterialList, result)
+      })
+      that.checkElementHeight();
+      // console.log('瀑布流banner数据', that.data.allMaterialList)
+    }, err => {})
+  },
+
+
+
+  /**
+	  *页面跳转类型判断 + 友盟统计上传  type = banner 轮播 type = oneFour 1+4模块 type = oneTwo 1+2模块
+	*/
+	checkJumpType(e) {
+		// console.log(e)
+		let { linkType, title, type, url } = e.currentTarget.dataset
+
+		if (linkType == '2') {                      // linkType为2代表跳收藏有礼
 			my.uma.trackEvent('homepage_popup_click')
 			my.navigateToMiniProgram({
-				appId: '2018122562686742',//收藏有礼小程序的appid，固定值请勿修改
-				path: url,//收藏有礼跳转地址和参数
-				success: (res) => {
-					// 跳转成功
-					// my.alert({ content: 'success' });
-				},
-				fail: (error) => {
-					// 跳转失败
-					// my.alert({ content: 'fail' });
-				}
+				appId: '2018122562686742',                //收藏有礼小程序的 appid，固定值请勿修改
+				path: url,                                //收藏有礼跳转地址和参数
+				success: (res) => { },
+				fail: (error) => { }
 			});
+		} else if (type == 'banner') {
+			my.uma.trackEvent('homepage_banner_click', { title: title });
+			this.goToPage(e);
 		}
-		else {
-			// 友盟+统计--首页浏览
-			// type = banner banner轮播 type = oneFour 1+4模块 type = oneTwo 1+2模块
-			if (type == 'banner') {
-				my.uma.trackEvent('homepage_banner_click', { title: title });
-			}
-			if (type == 'oneFour') {
-				my.uma.trackEvent('homepage_oneFour_click', { index: index });
-			}
-			if (type == 'oneTwo') {
-				my.uma.trackEvent('homepage_oneTwo_click', { index: index });
-			}
-
-			if (type == 'popup') {
-				my.uma.trackEvent('homepage_popup_click')
-			}
-
-			// 如果是当家爆款、新品上架、原产好物的统计
-			if(type == 'goodsCount') {
-				let data = {
-					channel_source: 'mini_alipay', supplierName: that.data.advertsArr[fatherIndex].groupGoodsVoList[index].nickName, supplierId: that.data.advertsArr[fatherIndex].groupGoodsVoList[index].supplierId, goodsName: that.data.advertsArr[fatherIndex].groupGoodsVoList[index].goodsName, goodsSn: that.data.advertsArr[fatherIndex].groupGoodsVoList[index].goodsSn, goodsCategoryId: that.data.advertsArr[fatherIndex].groupGoodsVoList[index].goodsCategoryId
-				}
-				// homepage_ddjHotSale , homepage_ddjBestGoods, homepage_ddjNewGoods
-				if (title.indexOf('爆款') > -1) {
-					// that.umaTrackEvent(type, 'homepage_ddjHotSale', data);
-          my.uma.trackEvent('homepage_ddjHotSale', data);
-				}
-				else if(title.indexOf('新品') > -1) {
-					// that.umaTrackEvent(type, 'homepage_ddjNewGoods', data);
-          my.uma.trackEvent('homepage_ddjNewGoods', data);
-				}
-				else if(title.indexOf('原产') > -1) {
-					// that.umaTrackEvent(type, 'homepage_ddjBestGoods', data);
-          my.uma.trackEvent('homepage_ddjBestGoods', data);
-				}
-			}
-
-			if (url.substring(0,4).indexOf('http') > -1) {
-				my.call('startApp', { appId: '20000067', param: { url: url, chInfo: chInfo } })
-			}
-			else {
-
-				my.navigateTo({
-					url: url
-				});
-			}
-		}
-
-
-		that.closePop();
-
 	},
 
+	// 页面跳转
+	goToPage(e) {
+		let chInfo = constants.UrlConstants.chInfo;
+		let { url } = e.currentTarget.dataset;
+		if (url.substring(0, 4).indexOf('http') > -1) {
+			my.call('startApp', { appId: '20000067', param: { url: url, chInfo: chInfo } })
+		} else {
+			my.navigateTo({
+				url: url
+			});
+		}
+		this.closePop();
+	},
 
-	// 搜索模块，敲击键盘完成去到搜索页  	-------		搜索改版
-	// goToSearchPage(keyWord, type) {
-	// 	if (keyWord && keyWord.trim()) {
-	// 		// 达观数据上报
-	// 		// utils.uploadClickData_da('search', [{ keyword: keyWord }])
+	// 友盟+统计--首页浏览 （如果从推文或者其他方进来并且带广告参数时）
+	reportPageOption(options) {
+		let globalQuery = Object.assign({}, this.data.app.globalData.query);
+		let pageOptions = Object.keys(globalQuery).length > 0 ? Object.assign(options, globalQuery) : options;
+		my.uma.trackEvent('homepage_show', pageOptions);
+	},
 
-	// 		// 友盟+ 统计  输入框输入探索
-	// 		this.umaTrackEvent(type, keyWord)
-
-	// 		my.navigateTo({
-	// 			url: '/pages/home/searchResult/searchResult?keyWord=' + keyWord
-	// 		});
-	// 	}
-	// },
-
-	// 键盘输入回车后去到搜索页	-------		搜索改版
-	// handleConfirm: function(event) {
-	// 	this.goToSearchPage(event.detail.value, 'searchValue');
-	// },
-
-	// 失去焦点后保持现有的值为输入值，并且关闭热词	-------		搜索改版
-	// changeValue: function(event) {
-	// 	var that = this;
-	// 	this.setData({
-	// 		searchValue: event.detail.value
-	// 	})
-
-	// 	setTimeout(function() {
-	// 		that.setData({
-	// 			show: false
-	// 		})
-	// 	}, 500)
-	// },
-
-	// 点击放大镜进行搜索，	-------		搜索改版
-	// searchGoods: function() {
-	// 	this.goToSearchPage(this.data.searchValue, 'searchValue');
-	// },
-
-	// 选择搜索记录或热词  -------		搜索改版
-	// chooseWord: function(event) {
-	// 	let { type } = event.currentTarget.dataset
-	// 	this.goToSearchPage(event.currentTarget.dataset.word, type);
-	// },
-
-	// 清除搜索记录		  	-------		搜索改版
-	// clearHist: function() {
-	// 	try {
-	// 		my.setStorageSync({
-	// 			key: constants.StorageConstants.searchWordsKey, // 缓存数据的key
-	// 			data: [], // 要缓存的数据
-	// 		});
-	// 	} catch (e) { }
-	// },
-
-	// 点击热词弹窗 == 关闭热词弹窗  -------		搜索改版
-	// handleBlur: function(e) {
-	// 	this.setData({
-	// 		show: false
-	// 	});
-	// },
-
-	// 阻止默认事件
+  /**
+	  *阻止默认事件
+	*/
 	touchReturn() {
 		return;
 	},
 
-	// 获取焦点事件，	-------		搜索改版
-	// handleFocus: function() {
-	// 	var that = this;
-	// 	// 友盟+统计--首页搜索点击
-	// 	my.uma.trackEvent('homepage_searchClick');
+  /**
+	  * 广告弹窗显示逻辑
+	*/
+	judgePop: function () {
+		let that = this;
+		let popImgData = this.data.popImgData;
+		// console.log(this.data.popImgData)
+		let popId = popImgData.popId;                         // 广告 id ;
+		let popType = popImgData.popAdvMemoryOpt;             // 广告类型 ;
+		let popModify = popImgData.modifyDate;               // 广告修改时间 ;
 
-	// 	sendRequest.send(constants.InterfaceUrl.HOT_WORD, {}, function(res) {
-	// 		that.setData({
-	// 			hotWords: res.data.result
-	// 		});
-	// 	}, function(err) {
-	// 	}, 'GET');
-	// 	try {
-	// 		var searchWords = my.getStorageSync({
-	// 			key: constants.StorageConstants.searchWordsKey, // 缓存数据的key
-	// 		}).data;
-	// 		that.setData({
-	// 			searchWords: searchWords,
-	// 			show: true
-	// 		});
-	// 	} catch (e) { }
-	// },
+		let storagePopImgData = my.getStorageSync({ key: 'popImgData' }).data;
+		my.uma.trackEvent('homepage_popup_visibility');     // 友盟+统计--弹窗曝光
 
-	// 友盟+ 统计 --搜索
-	
-	// umaTrackEvent(type, keyWord, eventName,data) {
-
-	// 	var keyWord = keyWord
-
-	// 	if (type == 'searcHotWord') {
-	// 		// 友盟+统计--首页搜索热词点击
-	// 		my.uma.trackEvent('homepage_searchHotWord', { keyWord: keyWord });
-	// 	}
-	// 	else if (type == 'searchHist') {
-
-	// 		// 友盟+统计--首页搜索历史点击
-	// 		my.uma.trackEvent('homepage_searchHist', { keyWord: keyWord });
-	// 	}
-	// 	else if (type == 'searchValue') {
-	// 		// 友盟+统计--首页搜索输入
-	// 		my.uma.trackEvent('homepage_searchValue', { keyWord: keyWord });
-
-	// 	}
-	// 	else if (type == 'goodsCount'){
-	// 		// 友盟+统计--广告模块当家爆款/原产好物/新品上架  --- eventName = homepage_ddjHotSale , homepage_ddjBestGoods, homepage_ddjNewGoods
-	// 		my.uma.trackEvent(eventName, data);
-	// 	}
-
-	// },
-
-	// 秒杀活动获取倒计时时间
-	getTimes: async function(isFirstTime) {
-		var nowTime = new Date();
-		var starTime = '';
-		var endTime = '';
-		var isLastActivitys = '';
-		var index = '';
-
-		for (var i = 0; i < this.data.advertsArr.length; i++) {
-			if (this.data.advertsArr[i].moduleType == "SECONDKILL" && this.data.advertsArr[i].secondKillModuleVO) {
-				index = i;
-				starTime = this.data.advertsArr[i].secondKillModuleVO.startDate;
-				endTime = this.data.advertsArr[i].secondKillModuleVO.endDate;
-				isLastActivitys = this.data.advertsArr[i].secondKillModuleVO.isLastActivitys;
-			}
-		}
-		if (!this.data.advertsArr[index] || !(this.data.advertsArr[index].secondKillModuleVO)) {
-			return;
-		}
-
-
-		starTime = new Date(starTime).getTime();
-		endTime = new Date(endTime).getTime();
-		nowTime = nowTime.getTime();
-
-
-		// (starTime - nowTime) / 1000 >= 1 这么判断会多出 几百毫秒，导致活动开始倒计时的时间差是以整数开始的, 如 07：00 而不是 06：59
-		if (nowTime < starTime) {
-			this.setData({
-				isActivitysStart: '活动还未开始',
-			})
-			this.notYetStarted(starTime);
-			return;
-		};
-
-		var timeDifference = endTime - nowTime;
-		var s1 = (timeDifference / 1000) % 60;
-		s1 = Math.floor((timeDifference / 1000) % 60);
-
-		var m1 = Math.floor((timeDifference / 1000 / 60) % 60);
-		var h1 = Math.floor((timeDifference / 1000 / 60 / 60));
-
-		var s = s1 <= 0 ? '00' : (s1 < 10 ? '0' + s1 : s1);
-		var m = m1 <= 0 ? '00' : (m1 < 10 ? '0' + m1 : m1);
-		var h = h1 <= 0 ? '00' : (h1 < 10 ? '0' + h1 : h1);
-
-		this.setData({
-			hours: h,
-			minute: m,
-			second: s
-		})
-
-
-		// if (nowTime - endTime >= 0)，这样判断在活动的最后一秒里，零点几秒，页面已经显示为 00：00：00 了，但这时没有重新请求数据，而是在 1秒后，再计算一次，这一次是 -秒，才重新请求
-		if ((timeDifference / 1000) < 1) {
-			clearTimeout(getApp().globalData.home_spikeTime);
-			this.setData({
-				isLastActivitys: isLastActivitys
-			});
-			if (!isLastActivitys) {
-				// 请求单独的秒杀广告模块的数据
-				var sendRequest = await this.getSpikeModule();
-
-				if (sendRequest.type && (this.data.startTime <= this.data.nowTime) && ((this.data.endTime - this.data.nowTime) / 1000 <= 1)) {
-					this.getTimes();
-				} else if (sendRequest.type && (this.data.startTime <= this.data.nowTime) && ((this.data.endTime - this.data.nowTime) / 1000 > 1)) { // this.data.timeDifferences < 1    这么判断有时会多出 几百毫秒，导致活动开始倒计时的时间差是以整数开始的, 如 07：00 而不是 06：59
-					this.getTimes();
-					this.countDown();
-					// this.data.timeDifferences >= 1   
-				} else if (sendRequest.type && (this.data.startTime > this.data.nowTime)) {
-					// 如果是活动还未开始，创建倒计时但不 setData ，直到活动开始则开始渲染 DOM
-					this.notYetStarted(this.data.startTime);
-				}
-			}
-		} else if (isFirstTime) {
-			this.countDown();
-		}
-
-	},
-
-	// 秒杀活动倒计时
-	countDown: function(starTime) {
-		clearTimeout(getApp().globalData.home_spikeTime);
-		var that = this;
-		clearTimeout(getApp().globalData.home_spikeTime);
-		getApp().globalData.home_spikeTime = setInterval(
-			function() {
-				that.getTimes()
-			}, 1000);
-	},
-
-  // 如果是秒杀活动还未开始，创建倒计时但不 setData ，直到活动开始则开始渲染 DOM
-	notYetStarted: function(starTime) {
-		clearTimeout(getApp().globalData.home_spikeTime);
-		var that = this;
-		if (starTime) {
-			getApp().globalData.home_spikeTime = setInterval(
-				function() {
-					var nowTime = new Date();
-					nowTime = nowTime.getTime();
-					// (starTime - nowTime) / 1000 < 1 这么判断会多出 几百毫秒，导致活动开始倒计时的时间差是以整数开始的, 如 07：00 而不是 06：59
-					if (starTime <= nowTime) {
-						that.setData({
-							isActivitysStart: null
-						})
-						that.getTimes('isFirstTime')
-					};
-				}, 1000);
-		}
-	},
-
-	// 判断弹窗广告类型用作显示条件
-	judgePop: function() {
-		// console.log('显示弹窗')
-		var popImgData = this.data.popImgData;
-		var popId = popImgData.popId;                         // 广告 id ;
-		var popType = popImgData.popAdvMemoryOpt;             // 广告类型 ;
-		// var popDate = popImgData.popAdvCookieRemainSecond;   // 广告结束时间差 ;
-		var popModify = popImgData.modifyDate;               // 广告修改时间 ;
-
-		var storagePopImgData = my.getStorageSync({
-			key: 'popImgData',
-		}).data;
-
-		var myDate = new Date()
-		var month = myDate.getMonth() + 1; //获取当前月份(0-11,0代表1月)
-		var day = myDate.getDate(); //获取当前日(1-31)
+		let myDate = new Date()
+		let month = myDate.getMonth() + 1;              //获取当前月份(0-11,0代表1月)
+		let day = myDate.getDate();                     //获取当前日(1-31)
 		popImgData.popMonthDay = month + '' + day;
 
 		if (!storagePopImgData) {
-			this.setData({
-				showToast: true
-			});
-			// 友盟+统计--弹窗曝光
-			my.uma.trackEvent('homepage_popup_visibility');
-			my.setStorageSync({
-				key: 'popImgData', // 缓存数据的key
-				data: popImgData, // 要缓存的数据
-				success: (res) => {
-				},
-			});
+			that.savePopImgData(popImgData);
 		} else {
-			var localPopId = storagePopImgData.popId;                                     //本地缓存 广告id
-			var localPopType = storagePopImgData.popAdvMemoryOpt;                         //本地缓存 广告类型
-			// var localPopDate = new Date(storagePopImgData.popAdvCookieRemainSecond).getTime();
-			var localPopModify = storagePopImgData.modifyDate;                            //本地缓存 广告修改时间 ;
+			let localPopId = storagePopImgData.popId;                                     //本地缓存 广告id
+			let localPopType = storagePopImgData.popAdvMemoryOpt;                         //本地缓存 广告类型
+			let localPopModify = storagePopImgData.modifyDate;                            //本地缓存 广告修改时间 ;
 			if ((popId != localPopId || popType != localPopType || popModify != localPopModify)) {
-				this.setData({
-					showToast: true
-				});
-				// 友盟+统计--弹窗曝光
-				my.uma.trackEvent('homepage_popup_visibility');
-				my.setStorageSync({
-					key: 'popImgData', // 缓存数据的key
-					data: popImgData, // 要缓存的数据
-					success: (res) => {
-					},
-				});
+				that.savePopImgData(popImgData);
 			} else if (localPopType == 'EVERY_OPEN_ONCE_SHOW') {
 				this.setData({
 					showToast: true
 				})
-				// 友盟+统计--弹窗曝光
-				my.uma.trackEvent('homepage_popup_visibility');
 			} else if (localPopType == 'ONCE_DAY_SHOW') {
-				var localMonthDay = storagePopImgData.popMonthDay;
+				let localMonthDay = storagePopImgData.popMonthDay;
 				if (popImgData.popMonthDay != localMonthDay) {
-					this.setData({
-						showToast: true
-					});
-					// 友盟+统计--弹窗曝光
-					my.uma.trackEvent('homepage_popup_visibility');
-					my.setStorageSync({
-						key: 'popImgData', // 缓存数据的key
-						data: popImgData, // 要缓存的数据
-						success: (res) => {
-						},
-					});
+					that.savePopImgData(popImgData);
 				}
 			}
 		}
 	},
 
-  // 关闭弹窗
-	closePop: function() {
+	// 缓存广告数据
+	savePopImgData(data) {
+		this.setData({
+			showToast: true
+		});
+		my.setStorage({
+			key: 'popImgData',
+			data: data,
+			success: (res) => {
+			},
+		})
+	},
+
+	/**
+	  * 关闭广告弹窗
+	*/
+	closePop: function () {
 		this.setData({
 			showToast: false
 		})
 	},
 
 	/**
-	* 空函数                  -------    已没有使用
-	*/
-	adSkipper: function() {
-	},
-
-	/**
-	* 达官统计方法            -------    已没有使用
-	*/
-	bannerSwiper(e) {
-		// let that = this;
-		// let { materialArr } = this.data;
-		// let bannerUploadData = [];
-		// let bannerNonGoods = true;
-
-		// for (let i = 0; i < materialArr.length; i++) {
-		// 	let goodsClass = '.js_bannerGoods_' + i;
-		// 	if (!materialArr[i].isLoaded) {
-		// 		my.createSelectorQuery().select(goodsClass).boundingClientRect().exec(res => {
-		// 			let result = res[0];
-		// 			if (result && result != 'null' && result != 'undefined') {
-
-		// 				// 如果符合此判断的商品数据才能上报
-		// 				if (result.top < (windowHeight - that.data.searchHeight) && result.bottom > (that.data.searchHeight + that.data.floatVal) && result.left >= 0 && (result.right - that.data.floatVal) < windowWidth) {
-		// 					// bannerNonGoods = true;
-		// 					let goodsSn = materialArr[i].url.split('=')[1];
-		// 					let setAdsLoad = "materialArr[" + i + "].isLoaded"; //更新此元素已加载完
-		// 					bannerUploadData.push({ goodsSn: goodsSn });      //保存能上报的数据
-		// 					that.setData({
-		// 						[setAdsLoad]: true
-		// 					})
-
-		// 					// 如果一次性已加载完则上传数据
-		// 					if (i == (materialArr.length - 1)) {
-		// 						if (bannerUploadData && Object.keys(bannerUploadData).length > 0) {
-		// 							utils.uploadClickData_da('rec_show', bannerUploadData)
-		// 						}
-		// 						// bannerNonGoods = 
-
-		// 					}
-		// 				}
-
-		// 				else {
-		// 					bannerNonGoods = false;    //如果存在这个类名则认为是有上报的数据
-		// 					// 如果一次性已加载完则上传数据
-		// 					if (i == (materialArr.length - 1)) {
-		// 						if (bannerUploadData && Object.keys(bannerUploadData).length > 0) {
-		// 							utils.uploadClickData_da('rec_show', bannerUploadData)
-		// 						}
-		// 					}
-		// 				}
-		// 			}
-		// 			else {
-		// 				let setAdsLoad = "materialArr[" + i + "].isLoaded"; //更新此元素已加载完
-		// 				that.setData({
-		// 					[setAdsLoad]: true
-		// 				})
-
-		// 				// 如果一次性已加载完则上传数据
-		// 				if (i == (materialArr.length - 1)) {
-		// 					// 如果都没有可上报的数据，则不再执行swiper改变的方法
-		// 					if (bannerNonGoods) {
-		// 						that.setData({
-		// 							bannerNonGoods: bannerNonGoods
-		// 						})
-		// 					}
-		// 					if (bannerUploadData && Object.keys(bannerUploadData).length > 0) {
-		// 						utils.uploadClickData_da('rec_show', bannerUploadData)
-		// 					}
-		// 				}
-		// 			}
-		// 		});
-		// 	}
-		// 	else {
-
-		// 		// 如果一次性已加载完则上传数据
-		// 		if (i == (materialArr.length - 1)) {
-		// 			if (bannerUploadData && Object.keys(bannerUploadData).length > 0) {
-		// 				utils.uploadClickData_da('rec_show', bannerUploadData)
-		// 			}
-		// 			// 如果都没有可上报的数据，则不再执行swiper改变的方法
-		// 			if (bannerNonGoods) {
-		// 				that.setData({
-		// 					bannerNonGoods: bannerNonGoods
-		// 				})
-		// 			}
-		// 		}
-		// 	}
-		// }
-
-
-	},
-
-
-	// 横向商品滚动方法,       -------    已没有使用
-	scrollGoods: _.debounce(function(e) {
-		// let that = this;
-		// let { fatherIndex } = e.currentTarget.dataset;
-		// let adsArr = this.data.advertsArr[fatherIndex].moduleType == "SECONDKILL" ? (this.data.advertsArr[fatherIndex].secondKillModuleVO.secondKillGoods ? this.data.advertsArr[fatherIndex].secondKillModuleVO.secondKillGoods : []) : (this.data.advertsArr[fatherIndex].groupGoodsVoList ? this.data.advertsArr[fatherIndex].groupGoodsVoList : []);
-		// let uploadData = [];
-
-		// 需要筛选要上报的商品
-		// let goodsClass
-		// for (let i = 0; i < adsArr.length; i++) {
-		// 	let items = adsArr[i];
-		// 	let goodsClass = '.js_adsGoodsList' + fatherIndex + '_' + i;
-		// 	if (!items.isLoaded) {
-		// 		my.createSelectorQuery().selectAll(goodsClass).boundingClientRect().exec(res => {
-		// 			let result = res[0];
-		// 			if (result && result != 'null') {
-		// 				// 如果符合此判断的商品数据才能上报
-		// 				if (result[0].top < (windowHeight - that.data.searchHeight) && result[0].bottom > (that.data.searchHeight + that.data.floatVal) && result[0].left >= 0 && (result[0].right - that.data.floatVal) < windowWidth) {
-		// 					let goodsSn = items.goodsSn;
-		// 					let setAdsLoad = this.data.advertsArr[fatherIndex].moduleType == "SECONDKILL" ? "advertsArr[" + fatherIndex + "].secondKillModuleVO.secondKillGoods[" + i + "].isLoaded" : "advertsArr[" + fatherIndex + "].groupGoodsVoList[" + i + "].isLoaded"; //更新此元素已加载完
-		// 					uploadData.push({ goodsSn: goodsSn });      //保存能上报的数据
-		// 					that.setData({
-		// 						[setAdsLoad]: true
-		// 					})
-
-		// 					// 如果一次性已加载完则上传数据
-		// 					if (i == (adsArr.length - 1)) {
-		// 						if (uploadData && Object.keys(uploadData).length > 0) {
-		// 							utils.uploadClickData_da('rec_show', uploadData)
-		// 						}
-		// 					}
-		// 				}
-		// 				else {
-		// 					// 如果一次性已加载完则上传数据
-		// 					if (i == (adsArr.length - 1)) {
-		// 						if (uploadData && Object.keys(uploadData).length > 0) {
-		// 							utils.uploadClickData_da('rec_show', uploadData)
-		// 						}
-		// 					}
-		// 				}
-		// 			}
-		// 			else {
-		// 				// 如果一次性已加载完则上传数据
-		// 				// 如果一次性已加载完则上传数据
-		// 				if (i == (adsArr.length - 1)) {
-
-		// 					if (uploadData && Object.keys(uploadData).length > 0) {
-		// 						utils.uploadClickData_da('rec_show', uploadData)
-		// 					}
-		// 				}
-		// 			}
-		// 		})
-		// 	}
-		// 	else {
-		// 		// 如果一次性已加载完则上传数据
-		// 		if (i == (adsArr.length - 1)) {
-
-		// 			if (uploadData && Object.keys(uploadData).length > 0) {
-		// 				utils.uploadClickData_da('rec_show', uploadData)
-		// 			}
-		// 		}
-		// 	}
-
-		// 关闭弹窗
-		// }
-
-
-	}, 300),
-
-	// 广告模块swiper         -------    已没有使用
-	adsSwiper(e) {
-		// let that = this;
-		// let { fatherIndex, type } = e.currentTarget.dataset;
-		// let adsItem = this.data.advertsArr[fatherIndex].items;
-		// let adsSwiperData = [];
-		// let nonGoods = true;    //用于判断图片滚动轮播
-
-		// for (let i = 0; i < adsItem.length; i++) {
-		// 	let goodsClass = '.js_adsGoods' + fatherIndex + '_' + i;
-		// 	if (!adsItem[i].isLoaded) {
-		// 		my.createSelectorQuery().select(goodsClass).boundingClientRect().exec(res => {
-		// 			let result = res[0];
-		// 			if (result && result != 'null' && result != 'undefined') {
-
-		// 				// 如果符合此判断的商品数据才能上报
-		// 				if (result.top < (windowHeight - that.data.searchHeight) && result.bottom > (that.data.searchHeight + that.data.floatVal) && result.left >= 0 && (result.right - that.data.floatVal) < windowWidth) {
-		// 					// bannerNonGoods = true;
-		// 					let goodsSn = adsItem[i].link.split('=')[1];
-		// 					let setAdsLoad = "advertsArr[" + fatherIndex + "].items[" + i + "].isLoaded"; //更新此元素已加载完
-		// 					adsSwiperData.push({ goodsSn: goodsSn });      //保存能上报的数据
-		// 					that.setData({
-		// 						[setAdsLoad]: true
-		// 					})
-
-		// 					// 如果一次性已加载完则上传数据
-		// 					if (i == (adsItem.length - 1)) {
-		// 						if (adsSwiperData && Object.keys(adsSwiperData).length > 0) {
-		// 							utils.uploadClickData_da('rec_show', adsSwiperData)
-		// 						}
-		// 						// bannerNonGoods = 
-
-		// 					}
-		// 				}
-
-		// 				else {
-		// 					nonGoods = false;    //如果存在这个类名则认为是有上报的数据
-		// 					// 如果一次性已加载完则上传数据
-		// 					if (i == (adsItem.length - 1)) {
-		// 						if (adsSwiperData && Object.keys(adsSwiperData).length > 0) {
-		// 							utils.uploadClickData_da('rec_show', adsSwiperData)
-		// 						}
-		// 					}
-		// 				}
-		// 			}
-		// 			else {
-		// 				let setAdsLoad = "advertsArr[" + fatherIndex + "].items[" + i + "].isLoaded"; //更新此元素已加载完
-		// 				that.setData({
-		// 					[setAdsLoad]: true
-		// 				})
-		// 				// 如果一次性已加载完则上传数据
-		// 				if (i == (adsItem.length - 1)) {
-		// 					// 如果都没有可上报的数据，则不再执行swiper改变的方法
-		// 					if (nonGoods && type == 'autoplay') {
-		// 						let setItem = "advertsArr[" + fatherIndex + "].nonGoods"
-		// 						that.setData({
-		// 							[setItem]: true
-		// 						})
-		// 					}
-		// 					if (adsSwiperData && Object.keys(adsSwiperData).length > 0) {
-		// 						utils.uploadClickData_da('rec_show', adsSwiperData)
-		// 					}
-		// 				}
-		// 			}
-		// 		});
-		// 	}
-		// 	else {
-		// 		// 如果一次性已加载完则上传数据
-		// 		if (i == (adsItem.length - 1)) {
-		// 			// 如果都没有可上报的数据，则不再执行swiper改变的方法
-		// 			if (nonGoods && type == 'autoplay') {
-		// 				let setItem = "advertsArr[" + fatherIndex + "].nonGoods";
-		// 				that.setData({
-		// 					[setItem]: true
-		// 				})
-		// 			}
-		// 			if (adsSwiperData && Object.keys(adsSwiperData).length > 0) {
-		// 				utils.uploadClickData_da('rec_show', adsSwiperData)
-		// 			}
-
-		// 			// bannerNonGoods = 
-
-		// 		}
-		// 	}
-
-		// }
-
-	},
-
-	/**
 	   * 获取购物车数量
 	*/
-	getCartNumber: function() {
-		var app = getApp();
-		app.getCartNumber();
+	getCartNumber: function () {
+		this.data.app.getCartNumber();
 	},
 
 	/**
@@ -1750,38 +884,111 @@ Page({
 	*/
 	getSearchTextMax() {
 		let that = this;
-		 http.get( api.search.SEARCHTEXTMAX, {}, (res) => {
-			 let resData = res.data;
-			if(resData.ret.code == "0" && resData.ret.message == "SUCCESS" && resData.data && resData.data.name) {
+		http.get(api.search.SEARCHTEXTMAX, {}, (res) => {
+			let resData = res.data;
+			if (resData.ret.code == "0" && resData.ret.message == "SUCCESS" && resData.data && resData.data.name) {
 				try {
-					my.setStorageSync({ key: constants.StorageConstants.searchTextMax, data: resData.data.name});
+					my.setStorageSync({ key: constants.StorageConstants.searchTextMax, data: resData.data.name });
 				} catch (e) { }
 				that.setData({
 					placeholder: resData.data.name
 				})
 			}
-		 }, (err) => {
-		 })
+		}, (err) => {
+		})
 	},
 
+  // 查询节点高度
+  checkElementHeight() {
+    let that = this;
+    that.data.getWaterFallCount += 1;
+    let timeout = setTimeout(function () {
+      that.getWaterFallSeat();
+      that.getTopContentHeight();
+      clearTimeout(timeout)
+    }, 800)
+  },
+
 	/**
-	  * 存储新版搜索组件实例
+	  * 判断组件实例
 	*/
 	saveRef(ref) {
-    this.searchComponent = ref;
+		switch (ref.props.__tag) {
+			case "search-component":
+				this.searchComponent = ref
+				break;
+			case "bannertype2-ads":
+				this.saveComponent('bannertype2-ads', ref);
+				break;
+			case "doublegoods-ads":
+				this.saveComponent('doublegoods-ads', ref);
+				break;
+			case "goodsgroup-ads":
+				this.saveComponent('goodsgroup-ads', ref);
+				break;
+			case "goodsscroll-ads":
+				this.saveComponent('goodsscroll-ads', ref);
+				break;
+			case "goodswatefall-ads":
+				this.saveComponent('goodswatefall-ads', ref);
+				break;
+			case "navigation-ads":
+				this.saveComponent('navigation-ads', ref);
+				break;
+			case "navigationmini-ads":
+				this.saveComponent('navigationmini-ads', ref);
+				break;
+			case "onefouradvert-ads":
+				this.saveComponent('onefouradvert-ads', ref);
+				break;
+			case "seckill-ads":
+				this.saveComponent('seckill-ads', ref);
+				break;
+			case "shopwindow-ads":
+				this.saveComponent('shopwindow-ads', ref);
+				break;
+			case "singlegoods-ads":
+				this.saveComponent('singlegoods-ads', ref);
+				break;
+			case "twofouradvert-ads":
+				this.saveComponent('twofouradvert-ads', ref);
+				break;
+			default:
+				break;
+		}
   },
-	
+
+  // 组件实例
+  saveComponent(refName, ref) {
+    this.allComponent.push({id: ref.$id, componentName: refName, component: ref})
+  },
+
+  // 查询所有组件内是否包含‘goodsscroll-ads’ 模板且是需要倒计时展示；
+  checkAllComponent(isStart) {
+    this.allComponent.forEach(value => {
+      if( value && value.componentName == 'goodsscroll-ads' && value.component.props.timerType == "DAY_TIMER" ) {
+        isStart ? value.component.cutTimeStart() :  clearTimeout(value.component.data.cutTime_timer);
+        // console.log(value.component)
+      }
+    })
+  },
+  
 	/**
 	  * 新版搜索组件开关
 	*/
-	showSearch: function(noGetHistory) {
-		// this.searchComponent.getHistory();
-		noGetHistory == 'noGetHistory' ? '' : 	this.searchComponent.getHistory();
+	showSearch: function (noGetHistory) {
+		noGetHistory == 'noGetHistory' ? '' : this.searchComponent.getHistory();
 		this.setData({
 			isShowSearch: !this.data.isShowSearch,
 			isFocus: !this.data.isFocus,
 		})
-		// this.searchComponent.setIsFocus();
+	},
+
+
+	// --------------------------------------------------  测试用，上线记得删除  ----------------------------------
+	setResult() {
+		let result = [{ "moduleType": "NAVIGATION", "moduleName": "iocn", "items": "[{\"imageUrl\":\"user/admin/20200414/158685747964685318.png\",\"linkType\":\"CUSTOM_LINK\",\"link\":\"https://shop.fx-sf.com/hml/subject_page/399.html\"},{\"imageUrl\":\"user/admin/20200414/158685749481434894.png\",\"linkType\":\"CUSTOM_LINK\",\"link\":\"https://shop.fx-sf.com/hml/subject_page/435.html\"},{\"imageUrl\":\"user/admin/20200414/158685749814141826.png\",\"linkType\":\"CUSTOM_LINK\",\"link\":\"https://shop.fx-sf.com/pages/activities/thematicActivities/thematicActivities?id=201\"},{\"imageUrl\":\"user/admin/20200414/158685750157200170.png\",\"linkType\":\"CUSTOM_LINK\",\"link\":\"https://shop.fx-sf.com/h/personal/signIn\"},{\"imageUrl\":\"user/admin/20200414/158685769324227654.png\",\"linkType\":\"CUSTOM_LINK\",\"link\":\"https://shop.fx-sf.com/myInfo/toMemberSuperDay\"}]", "restrictions": null, "goodsId": null, "spacing": 0, "topIntervalColor": "FFFFFF", "backgroundImg": null, "backgroundColor": "FFFFFF", "groupGoodsVoList": null, "groupBuyGoodsVoList": null, "secondKillModuleVO": null, "goodsGroupId": null, "goodsGroupName": null }, { "moduleType": "TWOFOURADVERT", "moduleName": "2+4", "items": "[{\"imageUrl\":\"user/admin/20200414/158685986675703820.png\",\"linkType\":\"CUSTOM_LINK\",\"link\":\"https://shop.fx-sf.com/hml/subject_page/413.html\"},{\"imageUrl\":\"user/admin/20200414/158685987039223863.png\",\"linkType\":\"CUSTOM_LINK\",\"link\":\" https://shop.fx-sf.com/hml/subject_page/133.html\"},{\"imageUrl\":\"user/admin/20200414/158686012752879523.png\",\"linkType\":\"CUSTOM_LINK\",\"link\":\"https://shop.fx-sf.com/pages/shopping/goodsDetail/goodsDetail?goodsSn=YW8F22BB490A97\"},{\"imageUrl\":\"user/admin/20200414/158686013216396690.png\",\"linkType\":\"CUSTOM_LINK\",\"link\":\"https://shop.fx-sf.com/community/pages/index/index\"},{\"imageUrl\":\"user/admin/20200414/158686013575942872.png\",\"linkType\":\"CUSTOM_LINK\",\"link\":\"https://shop.fx-sf.com/pages/activities/thematicActivities/thematicActivities?id=201\"},{\"imageUrl\":\"user/admin/20200414/158686013930746456.png\",\"linkType\":\"CUSTOM_LINK\",\"link\":\"https://shop.fx-sf.com/pages/activities/thematicActivities/thematicActivities?id=241\"}]", "restrictions": null, "goodsId": null, "spacing": 1, "topIntervalColor": "FFFFFF", "backgroundImg": null, "backgroundColor": "FFFFFF", "groupGoodsVoList": null, "groupBuyGoodsVoList": null, "secondKillModuleVO": null, "goodsGroupId": null, "goodsGroupName": null }, { "moduleType": "BANNER_TYPE_2", "moduleName": "banner", "items": "[{\"imageUrl\":\"user/admin/20200416/158700282694362347.gif\",\"linkType\":\"H5_LINK\",\"link\":\"https://datayi.cn/w/nP2EEjRm\"},{\"imageUrl\":\"user/admin/20200416/158700289604758151.jpg\",\"linkType\":\"H5_LINK\",\"link\":\"https://m.sfddj.com/shop/goods/goodsGroup?groupName=APP首页-肉食天地\"}]", "restrictions": null, "goodsId": null, "spacing": 0, "topIntervalColor": "FFFFFF", "backgroundImg": null, "backgroundColor": "FFFFFF", "groupGoodsVoList": null, "groupBuyGoodsVoList": null, "secondKillModuleVO": null, "goodsGroupId": null, "goodsGroupName": null }, { "moduleType": "GOODS_WATERFALL", "moduleName": "商品瀑布流", "items": "[{\"moduleTitle\":\"国内水果\",\"moduleSubTitle\":\"尝鲜季\",\"goodsType\":\"GOODS_CATEGORY\",\"goodsGroupName\":null,\"goodsCategoryArray\":[\"gnsg\"]},{\"moduleTitle\":\"进口水果\",\"moduleSubTitle\":\"吃点好的\",\"goodsType\":\"GOODS_CATEGORY\",\"goodsGroupName\":null,\"goodsCategoryArray\":[\"jksg\"]},{\"moduleTitle\":\"海鲜水产\",\"moduleSubTitle\":\"深海先锋\",\"goodsType\":\"GOODS_CATEGORY\",\"goodsGroupName\":null,\"goodsCategoryArray\":[\"hxsc\"]},{\"moduleTitle\":\"肉蛋家禽\",\"moduleSubTitle\":\"秋冬囤肉\",\"goodsType\":\"GOODS_CATEGORY\",\"goodsGroupName\":null,\"goodsCategoryArray\":[\"rdjq\"]},{\"moduleTitle\":\"蔬菜食材\",\"moduleSubTitle\":\"新鲜健康\",\"goodsType\":\"GOODS_CATEGORY\",\"goodsGroupName\":null,\"goodsCategoryArray\":[\"scsc\"]}]", "restrictions": null, "goodsId": null, "spacing": 0, "topIntervalColor": "FBF9F9", "backgroundImg": null, "backgroundColor": "FFFFFF", "groupGoodsVoList": null, "groupBuyGoodsVoList": null, "secondKillModuleVO": null, "goodsGroupId": null, "goodsGroupName": null }, { "moduleType": "GOODSSCROLL", "moduleName": "商品滚动", "items": "[{\"moduleTitle\":\"热门活动\",\"timerType\":\"DAY_TIMER\",\"goodsGroupName\":\"热门活动\"}]", "restrictions": null, "goodsId": null, "spacing": 0, "topIntervalColor": "FFFFFF", "backgroundImg": null, "backgroundColor": "FFFFFF", "groupGoodsVoList": [], "groupBuyGoodsVoList": null, "secondKillModuleVO": null, "goodsGroupId": 14, "goodsGroupName": "热门活动" }, { "moduleType": "HEADLINE", "moduleName": "今日头条", "items": "[{\"id\":11144,\"title\":\"【图文】鹿晗的前女友们，看过来！这里有你们喜欢的小狗肉\",\"type\":0,\"goodsSn\":\"YWC07EB76C002D\"},{\"id\":11151,\"title\":\"爱在桃李芬芳时线下活动圆满结束啦！\",\"type\":0,\"goodsSn\":null},{\"id\":11152,\"title\":\"支付宝小程序头条配置\",\"type\":0,\"goodsSn\":\"YW3AEF4AFE05D4\"}]", "restrictions": null, "goodsId": null, "spacing": 0, "topIntervalColor": "FFFFFF", "backgroundImg": null, "backgroundColor": "74F5F9", "groupGoodsVoList": null, "groupBuyGoodsVoList": null, "secondKillModuleVO": null, "goodsGroupId": null, "goodsGroupName": null }, { "moduleType": "GOODSGROUP", "moduleName": "1+N个商品", "items": "[{\"imageUrl\":\"user/admin/20200416/158700282694362347.gif\",\"linkType\":\"H5_LINK\",\"link\":\"https://datayi.cn/w/nP2EEjRm\",\"goodsGroupName\":\"活动商品\"}]", "restrictions": null, "goodsId": null, "spacing": 0, "topIntervalColor": "FFFFFF", "backgroundImg": null, "backgroundColor": "FFFFFF", "groupGoodsVoList": [], "groupBuyGoodsVoList": null, "secondKillModuleVO": null, "goodsGroupId": 12, "goodsGroupName": "活动商品" }, { "moduleType": "GOODSSCROLL", "moduleName": "商品滚动", "items": "[{\"moduleTitle\":\"本周热销\",\"timerType\":\"NO_TIMER\",\"goodsGroupName\":\"本周热销\"}]", "restrictions": null, "goodsId": null, "spacing": 0, "topIntervalColor": "FFFFFF", "backgroundImg": null, "backgroundColor": "FFFFFF", "groupGoodsVoList": [], "groupBuyGoodsVoList": null, "secondKillModuleVO": null, "goodsGroupId": 17, "goodsGroupName": "本周热销" }, { "moduleType": "NAVIGATION_MIN", "moduleName": "1行N个（小）", "items": "[{\"imageUrl\":\"user/admin/20200416/158702135203723807.png\",\"linkType\":\"H5_LINK\",\"link\":\"/pages/home/getCoupon/getCoupon\"},{\"imageUrl\":\"user/admin/20200416/158702236045360476.jpeg\",\"linkType\":\"CUSTOM_LINK\",\"link\":\"https://shop.fx-sf.com/GroupBuying/showList\"},{\"imageUrl\":\"user/admin/20200416/158702254912448942.png\",\"linkType\":\"CUSTOM_LINK\",\"link\":\"https://shop.fx-sf.com/hml/subject_page/206.html\"},{\"imageUrl\":\"user/admin/20200416/158702256537006426.png\",\"linkType\":\"CUSTOM_LINK\",\"link\":\"https://shop.fx-sf.com/static_v4/activity/redPacket/redPacket.html?sign=DDJ0000000010013\"},{\"imageUrl\":\"user/admin/20200416/158702237170291917.png\",\"linkType\":\"CUSTOM_LINK\",\"link\":\"/pages/subPackages/activities/thematicActivites/thematicActivites?id=234\"}]", "restrictions": null, "goodsId": null, "spacing": 0, "topIntervalColor": "FFFFFF", "backgroundImg": null, "backgroundColor": "FFFFFF", "groupGoodsVoList": null, "groupBuyGoodsVoList": null, "secondKillModuleVO": null, "goodsGroupId": null, "goodsGroupName": null }, { "moduleType": "SHOPWINDOW", "moduleName": "1+2", "items": "[{\"imageUrl\":\"user/admin/20200416/158702222323184248.png\",\"linkType\":\"CUSTOM_LINK\",\"link\":\"https://blog.csdn.net/qq_36836336/article/details/84318863\"},{\"imageUrl\":\"user/admin/20200416/158702315898169127.png\",\"linkType\":\"CUSTOM_LINK\",\"link\":\"https://shop.fx-sf.com/shop/goods/view/YW274810048221\"},{\"imageUrl\":\"user/admin/20200416/158702309573102587.png\",\"linkType\":\"CUSTOM_LINK\",\"link\":\"https://shop.fx-sf.com/shop/goods/view/YW278DBCC2278D\"}]", "restrictions": null, "goodsId": null, "spacing": 0, "topIntervalColor": "FFFFFF", "backgroundImg": null, "backgroundColor": "FFFFFF", "groupGoodsVoList": null, "groupBuyGoodsVoList": null, "secondKillModuleVO": null, "goodsGroupId": null, "goodsGroupName": null }, { "moduleType": "DOUBLEGOODS", "moduleName": "一行2个", "items": "[{\"imageUrl\":\"user/admin/20200416/158702185711009428.jpg\",\"linkType\":\"CUSTOM_LINK\",\"link\":\"https://m.sfddj.com/shop/goods/goodsGroup?groupName=APP首页-进口水果\"},{\"imageUrl\":\"user/admin/20200416/158702185086848344.jpg\",\"linkType\":\"CUSTOM_LINK\",\"link\":\"https://m.sfddj.com/shop/goods/goodsGroup?groupName=APP首页-菜蛋食材\"}]", "restrictions": null, "goodsId": null, "spacing": 0, "topIntervalColor": "FFFFFF", "backgroundImg": null, "backgroundColor": "FFFFFF", "groupGoodsVoList": null, "groupBuyGoodsVoList": null, "secondKillModuleVO": null, "goodsGroupId": null, "goodsGroupName": null }, { "moduleType": "BANNER_TYPE_1", "moduleName": "商品轮播", "items": "[{\"moduleTitle\":\"本月新品\",\"goodsGroupName\":\"本月新品\"}]", "restrictions": null, "goodsId": null, "spacing": 0, "topIntervalColor": "FFFFFF", "backgroundImg": null, "backgroundColor": "FFFFFF", "groupGoodsVoList": [], "groupBuyGoodsVoList": null, "secondKillModuleVO": null, "goodsGroupId": 18, "goodsGroupName": "本月新品" }, { "moduleType": "SINGLEGOODS", "moduleName": "一行一个", "items": "[{\"imageUrl\":\"user/admin/20200416/158702185086848344.jpg\",\"linkType\":\"H5_LINK\",\"link\":\"https://shop.fx-sf.com/shop/goods/view/YW066C7058880D\"}]", "restrictions": null, "goodsId": null, "spacing": 0, "topIntervalColor": "FFFFFF", "backgroundImg": null, "backgroundColor": "FFFFFF", "groupGoodsVoList": null, "groupBuyGoodsVoList": null, "secondKillModuleVO": null, "goodsGroupId": null, "goodsGroupName": null }, { "moduleType": "TUANGOU", "moduleName": "拼团", "items": "[{\"moduleTitle\":\"热门拼团\",\"viewMoreUrl\":\"/GroupBuying/showList\",\"tuangouGoodsUrl\":\"8\"}]", "restrictions": null, "goodsId": null, "spacing": 0, "topIntervalColor": "FFFFFF", "backgroundImg": null, "backgroundColor": "FFFFFF", "groupGoodsVoList": null, "groupBuyGoodsVoList": [{ "goodsId": 42779, "goodsSn": "YWB8D0BA0BC7BA", "goodsName": "微信小程序拼团优惠券测试", "salePrice": 9.90000, "salesCount": 20, "goodsLabels": "特价", "htmlPath": "shop/goods/YWB8D0BA0BC7BA.html", "orderList": 100000, "goodsTitle": "额外返现", "goodsDefaultImage": "goods/20190426/155624574734887227.jpg", "tuangouPrices": 5.00000, "productId": 107536, "productName": "2吨", "tuangouCount": 3, "applyUser": 0, "activityId": 1267, "label": "", "labels": [], "firstGueeImagePath": null, "afterSaleGuee": "", "tuangou": true }, { "goodsId": 42940, "goodsSn": "YW76C641AF8C57", "goodsName": "拼团库存回调测试01", "salePrice": 42.00000, "salesCount": 3, "goodsLabels": "限时", "htmlPath": "shop/goods/YW76C641AF8C57.html", "orderList": 100004, "goodsTitle": "额外返现", "goodsDefaultImage": "goods/20190426/155624574734887227.jpg", "tuangouPrices": 7.00000, "productId": 108138, "productName": "苹果", "tuangouCount": 2, "applyUser": 0, "activityId": 1289, "label": "大大的撒大叔大|测试|擦啊啊啊啊", "labels": ["大大的撒大叔大", "测试", "擦啊啊啊啊"], "firstGueeImagePath": "icon_Payoff0.png", "afterSaleGuee": "1,2,3,4", "tuangou": true }, { "goodsId": 42959, "goodsSn": "YWF3FA2361D182", "goodsName": "支付宝小程序物流详情页改版", "salePrice": 1.00000, "salesCount": 1, "goodsLabels": "限时", "htmlPath": "shop/goods/YWF3FA2361D182.html", "orderList": 10001, "goodsTitle": "", "goodsDefaultImage": "goods/20191128/157492035556695150.jpg", "tuangouPrices": 0.10000, "productId": 108307, "productName": "5支", "tuangouCount": 2, "applyUser": 0, "activityId": 1290, "label": "年终大狂欢|年货季|冬季", "labels": ["年终大狂欢", "年货季", "冬季"], "firstGueeImagePath": "icon_Payoff0.png", "afterSaleGuee": "1,3,4", "tuangou": true }, { "goodsId": 42957, "goodsSn": "YW9098600F7EDA", "goodsName": "渠道一达人下单", "salePrice": 1.00000, "salesCount": 2, "goodsLabels": null, "htmlPath": "shop/goods/YW9098600F7EDA.html", "orderList": 10000, "goodsTitle": "", "goodsDefaultImage": "goods/20200309/158372989289816053.jpg", "tuangouPrices": 0.60000, "productId": 108200, "productName": "2", "tuangouCount": 2, "applyUser": 0, "activityId": 1291, "label": "", "labels": [], "firstGueeImagePath": null, "afterSaleGuee": "", "tuangou": true }], "secondKillModuleVO": null, "goodsGroupId": null, "goodsGroupName": null }];
+		return result;
 	},
 
 

@@ -1,154 +1,181 @@
-<!--index.wxml-->
-<import src="../common/item-pintuan"/>
-<import src="../common/adverts"/>
-<import-sjs name="filters" from="../wxsFile/public.sjs"/>
-<!-- 旧的搜索模版和热词模版-->
-<!-- <import src="../common/home-search"/> -->
-<!-- <import src="../common/home-hotWords"/>  -->
-<!-- 新的搜索模块 -->
-<import src="../common/search"/>
-
-<view class="locationBox" hidden="{{ !isLocationLoad && !isGetLocation }}">
-	<!-- TODO: 这里放最上面的“定位” --> 
-	<view class="locCityShow">
-		<view a:if="{{ isLocationLoad && !isGetLocation }}" class="cityInfo"
-			onTap="goLocationCity">
-			<text class="city">定位中...</text>
-		</view>
-
-		<view a:elif="{{isGetLocation && !isLocationLoad}}" class="cityInfo" onTap="goLocationCity">
-			<view class="city">{{ locInfo.city }}</view>
-			<view class="address">
-				<view class="line"></view>
-				<text class="iconStyle icon-address"></text> 
+<import src="../common/new_adverts"></import>
+<import src="../common/waterFallBanner"></import>
+<import src="../common/item-goods-card"></import>
+<import src="../common/search"></import>
+<import-sjs name="filters" from="../wxsFile/public.sjs"></import-sjs>
+<!-- 内容 posi_re overHid flex_view_col-->
+<scroll-view  class="page  " style="padding-top: {{topContentHeight}}rpx;" scroll-y="true" onScroll="onScroll" onScrollToLower="scrollToLower" scroll-top="{{pageScrollTop}}">
+  <view id="js_topContent" class="topContent width_100" style="position: fixed; top: 0; left: 0; z-index: 9000; box-sizing:border-box;">
+    <!-- TODO: 这里放最上面的“定位” -->
+    <view class="locCityShow">
+      <view a:if="{{ isLocationLoad && !isGetLocation }}" class="cityInfo" onTap="goLocationCity">
+        <text class="city">定位中...</text>
+      </view>
+      <view a:elif="{{isGetLocation && !isLocationLoad}}" class="cityInfo" onTap="goLocationCity">
+        <view class="city">{{ locInfo.city }}</view>
+        <view class="address">
+          <view class="line"></view>
+          <text class="iconStyle icon-address"></text> 
 				{{ locInfo.streetShow }}
-			</view>
-		</view> 
-		
-		<view a:else class="cityInfo" onTap="goLocationCity">
-			<text class="city">无法自动获取地址，请手动选择地址</text>
-		</view>
-	</view>
-</view>
-
-<view a:if="{{true}}" class="width_100 flex_view_col posi_re" style="{{ isShowSearch || showToast ? 'height: 100vh; overflow-y: scroll;' : '' }}" disable-scroll="{{isShowSearch || show || showToast ? true : false}}">
-	<!-- <favorite type="tips" bottom="0rpx">收藏小程序，下次使用更方便</favorite> -->
-	<!-- 搜索模块 -->
-	<!-- 关注公众号组件 和搜索的组件 -->
-	<view>
-		<lifestyle a:if="{{canUseLife}}" publicId='2016071501623328'/>
-		<view class="width_100" style="height: 120rpx;" catchTap="showSearch">
-			<view class="{{!canUseLife || hideLifeStyle ? 'posi_fix' : ''}} width_100" style="top: 0; left: 0; z-index: 100;">
-				<!-- <template is="home-search" data="{{baseLocImgUrl, inputVal}}"></template> -->
-        <view catchTap="showSearch">
-          <template is="search" data="{{baseLocImgUrl, placeholder, pageType: 'home'}}"></template>  
         </view>
-			</view>
-		</view>
-	</view>
-  <navigator url="/pages/activities/lightMember/lightMember">轻会员</navigator>
-	<!-- 搜索热词和历史记录膜层 -->
-	<!-- <template is="hotWords" data="{{show:show,baseLocImgUrl,hotWords:hotWords,searchWords:searchWords,top: (canUseLife && !hideLifeStyle) ? hotWordTop-2 + 'px' : '120rpx'}}"></template> -->
-	<view class="flex_1 width_100 overHid">
-		<scroll-view class="all_100" scroll-y="{{true}}">
-			<!-- 首页轮播 -->
-			<!-- class="margin_top_120" -->
-			<view a:if='{{ materialArr && materialArr.length > 0}}' class="flex_view_col width_100 js_banner">
-				<swiper class="whiteBack width_100" indicator-dots="{{materialArr.length > 1 ? 'true' : ''}}" indicator-color='rgba(255,255,255,.8)' indicator-active-color='#ff5353' autoplay="{{materialArr.length > 1 ? 'true' : ''}}" interval="{{materialArr.length > 1 ? '3000' : ''}}" circular="{{materialArr.length > 1 ? 'true' : ''}}" acceleration='true' onChange="{{stopBannerSwiper || bannerNonGoods ? '' : 'bannerSwiper'}}">
-					<block a:for="{{materialArr}}">
-						<swiper-item class="width_100">
-							<view data-url="{{item.url}}" data-title="{{item.title}}" data-type="banner" class="width_100 height_300r backImg {{(filters.isGoodsLink(item.url) && !item.isLoaded) ? 'js_bannerGoods_' + index : ''}}" onTap="goToPage">
-								<image src="{{baseImageUrl}}{{item.imageUrl}}" class="all_100" lazy-load="{{true}}"/>
-							</view>
-						</swiper-item>
-					</block>
-				</swiper>
-			</view>
+      </view>
+      <view a:else class="cityInfo" onTap="goLocationCity">
+        <text class="city">无法自动获取地址，请手动选择地址</text>
+      </view>
+    </view>
+    <!-- 关注公众号组件 和搜索的组件 -->
+    <lifestyle a:if="{{canUseLife && env == 'production'}}" publicId='2016071501623328'/>
+    <!-- 搜索部分 -->
+    <!-- style="position: fixed; top: 0; left: 0; z-index: 10000; box-sizing:border-box;" -->
+    <view class="flex_view_row home_searchBox whiteBack align_cen width_100">
+      <!-- 消息 -->
+      <view  data-url="{{baseUrlOnly + '/365webcall/messageList'}}" class="home_message" catchTap="goToPage">
+        <text class="icon-message_index1 font-42 color-666"></text>
+      </view>
+      <!-- 搜索框 -->
+      <view class="flex_1 home_search_bar flex_view_row align_cen justi_start" catchTap="showSearch">
+        <view class="flex_view_row align_cen marLeft_30">
+          <!-- 搜索icon -->
+          <text class="icon-search_home marRight_15 font-28 color-c6c6c6"></text>
+          <text class="font-26 color-999999">{{placeholder}}</text>
+          <!--<text class="font-24 color-b5b5b5" decode="{{true}}">&nbsp;[推荐]</text> -->
+        </view>
+      </view>
+      <navigator url="/pages/user/webView/webView?link={{ baseUrlOnly + '/noticeBoard/toNoticeBoard'}}" hover-class="none" class="home_notice">
+        <text class="icon-notice_home font-40 color-666"></text>
+      </navigator>
+    </view>
+  </view>
+  <!--<navigator url="/pages/activities/lightMember/lightMember">轻会员</navigator> -->
+  <!-- banner与模块广告和商品列表部分 flex_1-->
+  <view class=" overHid posi_re">
+    <view class="height_100 posi_re">
+      <view>
+        <view id="js_advert_list" class="advertPart ">
+          <!-- banner -->
+          <view a:if="{{wheelPlantingArr && wheelPlantingArr.length > 0}}" class="bannerListBox posi_re">
+            <swiper class="width_100 bannerListSwiper" onChange="bannerListChange" circular="{{wheelPlantingArr && wheelPlantingArr.length > 1 ? 'true' : ''}}" current="{{currentIndex}}" autoplay="true" interval="3000">
+              <swiper-item a:for="{{wheelPlantingArr}}" a:key="indexBanner" class="all_100">
+                <view hover-class="none" class="all_100 homeSliderNav" data-type="banner" data-title="{{item.title}}" data-index="{{index}}" data-url="{{item.url}}" onTap="checkJumpType">
+                  <image src="{{item.imageUrl && !filters.strIndexOf(item.imageUrl,'http') ? baseImageUrl+item.imageUrl : item.imageUrl}}" class="all_100 borRa_16r"></image>
+                </view>
+              </swiper-item>
+            </swiper>
+            <!-- 自定义的指示点 -->
+            <view a:if="{{wheelPlantingArr.length > 1}}" class="posi_ab flex_view_row" style="bottom: 7%; left: 50%; transform: translate(-50%, 0)">
+              <block a:for="{{wheelPlantingArr}}" a:key="bannerDot">
+                <view class="bannerList_dot {{currentIndex == index ? 'active' : ''}}"></view>
+              </block>
+            </view>
+          </view>
+          <!-- 固定的一个四大描述 -->
+          <view class="home_describe">
+            <image src="{{baseLocImgUrl}}miniappImg/more/home_describe.png" class="width_100 blockBox" mode="widthFix"></image>
+          </view>
+          <!-- 推荐小店入口 -->
+          <store-enter ref="storeEnterRef"></store-enter>
+          <block a:for='{{advertsArr}}' a:key="advertsArr">
+            <goodsscroll-ads a:if="{{item.moduleType == 'GOODSSCROLL'}}" timerType="{{item.items[0].timerType}}" ref="saveRef" item="{{item}}" onGoToPage="goToPage"></goodsscroll-ads>
+            <seckill-ads a:if="{{item.moduleType == 'SECONDKILL' && !isLastActivitys && item.secondKillModuleVO}}" ref="saveRef" item="{{item}}" onGoToPage="goToPage"></seckill-ads>
+            <navigationmini-ads a:if='{{item.moduleType == "NAVIGATION_MIN"}}' ref="saveRef" item="{{item}}" onGoToPage="goToPage"></navigationmini-ads>
+            <shopwindow-ads a:if="{{item.moduleType == 'SHOPWINDOW'}}" ref="saveRef" item="{{item}}" onGoToPage="goToPage"></shopwindow-ads>
+            <goodsgroup-ads a:if="{{item.moduleType == 'GOODSGROUP'}}" ref="saveRef" item="{{item}}" onGoToPage="goToPage"></goodsgroup-ads>
+            <onefouradvert-ads a:if="{{item.moduleType == 'ONEFOURADVERT'}}" ref="saveRef" item="{{item}}" onGoToPage="goToPage"></onefouradvert-ads>
+            <bannertype2-ads a:if="{{item.moduleType == 'BANNER_TYPE_2'}}" ref="saveRef" item="{{item}}" onGoToPage="goToPage"></bannertype2-ads>
+            <singlegoods-ads a:if="{{item.moduleType == 'SINGLEGOODS'}}" ref="saveRef" item="{{item}}" onGoToPage="goToPage"></singlegoods-ads>
+            <navigation-ads a:if="{{item.moduleType == 'NAVIGATION'}}" ref="saveRef" item="{{item}}" onGoToPage="goToPage"></navigation-ads>
+            <doublegoods-ads a:if="{{item.moduleType == 'DOUBLEGOODS'}}" ref="saveRef" item="{{item}}" onGoToPage="goToPage"></doublegoods-ads>
+            <twofouradvert-ads a:if="{{item.moduleType == 'TWOFOURADVERT'}}" ref="saveRef" item="{{item}}" onGoToPage="goToPage"></twofouradvert-ads>
+            <goodswatefall-ads a:if="{{item.moduleType == 'GOODS_WATERFALL'}}" ref="saveRef" item="{{item}}" waterIndex="{{waterIndex}}" onWaterFallChange="waterFallChange" onGoToPage="goToPage"></goodswatefall-ads>
+          </block>
+          <!--<template is="new_advertsTem" data="{{advertsArr, baseImageUrl,baseLocImgUrl,ossImgStyle,waterIndex,waterFallTitIsTop,countDown:countTime}}"></template> -->
+          <!--<advertisement ref="saveRef" advertsArr="{{advertsArr}}" waterIndex="{{waterIndex}}" waterFallTitIsTop="{{waterFallTitIsTop}}" isCutTimer="{{isCutTimer}}"></advertisement> -->
+        </view>
+        <!-- 瀑布流商品模块 -->
+        <view style="min-height: 100%;">
+          <block a:for="{{waterFallGoodsList}}" a:key="waterFallGoodsList">
+            <view a:if="{{waterIndex == index}}" style="{{waterIndex == index ? 'min-height: ' + goodsBoxMinHeight + 'px;' : ''}}">
+              <view class="waterFallGoodsList">
+                <view class="waterFallGoodsView padL_24r">
+                  <block a:for="{{waterFallGoodsList[index]}}" a:for-item="goodsItem" a:for-index="goodsIndex" a:key="itemIndex">
+                    <block a:if="{{goodsItem.type == 'advert'}}">
+                      <template a:if="{{goodsIndex % 2 == 0}}" is="waterFallBannerItem" data="{{...goodsItem,baseImageUrl,left: true,index: goodsIndex}}"></template>
+                    </block>
+                    <block a:else>
+                      <template a:if="{{goodsIndex % 2 == 0}}" is="itemGoodsCard" data="{{...goodsItem,left:true,baseImageUrl,baseLocImgUrl,smallImgArg,type:'newGuessLike',pageType: 'home'}}"></template>
+                    </block>
+                  </block>
+                </view>
+                <view class="waterFallGoodsView padR_24r">
+                  <block a:for="{{waterFallGoodsList[index]}}" a:for-item="goodsItem" a:for-index="goodsIndex" a:key="itemIndex2">
+                    <block a:if="{{goodsItem.type == 'advert'}}">
+                      <template a:if="{{goodsIndex % 2 != 0}}" is="waterFallBannerItem" data="{{...goodsItem,baseImageUrl,left: false,index: goodsIndex}}"></template>
+                    </block>
+                    <block a:else>
+                      <template a:if="{{goodsIndex % 2 != 0}}" is="itemGoodsCard" data="{{...goodsItem,left:false,baseImageUrl,baseLocImgUrl,smallImgArg,type:'newGuessLike',pageType: 'home'}}"></template>
+                    </block>
+                  </block>
+                </view>
+              </view>
+              <!-- 加载中 -->
+              <view a:if="{{isWaterFallLoading[index]}}" class="flex_view_row color-a1a0a0 font-32 marTop_20 align_cen justi_cen">
+                <image src="{{baseLocImgUrl}}miniappImg/loading/loading.gif" class="loading_gif"></image>
+                <text>加载中</text>
+              </view>
+              <!-- 没有更多 -->
+              <view a:if="{{isWaterFallLoaded[index]}}" class="flex_view_row color-a1a0a0 font-32 marTop_20 align_cen justi_cen">没有更多了</view>
+            </view>
+          </block>
+        </view>
+      </view>
+    </view>
 
-			<!-- 推荐小店入口 -->
-			<!-- <block a:if="{{ o2oStore.show }}">  storeShow="{{ o2oStore.store }}" -->
-			<store-enter ref="storeEnter"></store-enter>
-			<!-- </block> -->
+    <!-- 瀑布流固定导航  wx:if="{{waterFallTitIsTop && waterFallTitList.length > 0}}" -->
+    <view class="width_100 waterFallTitFixed {{waterFallTitIsTop && waterFallTitList.length > 0 ? 'show' : ''}}" style="top: {{topContentHeight}}rpx;">
+      <!-- 瀑布流标题 -->
+      <view class="width_100">
+        <scroll-view class="waterFallScroll" scroll-x="{{true}}" scroll-with-animation="{{true}}" scroll-into-view="{{'waterFall' + waterIndex}}" style="{{advertsArr[waterFallListIndex].backgroundColor ? 'background-color: #' + advertsArr[waterFallListIndex].backgroundColor + ';' : ''}}">
+          <block a:for="{{waterFallTitList}}" a:for-item="waterFallItem" a:for-index="waterFallIndex" a:key="waterFallItem">
+            <view id="{{'waterFall' + waterFallIndex}}" class="waterFallTitItem" data-index="{{waterFallIndex}}" catchTap="waterFallChange">
+              <view class="flex_view_col align_cen {{waterIndex == waterFallIndex ? 'waterFallActiveItem' : ''}}" data-index="{{waterFallIndex}}">
+                <!-- 主标题 -->
+                <view class="waterFallTit flex_view_row {{waterFallIndex < waterFallTitList.length - 1 ? 'borderRight_ea' : ''}}">
+                  <text class="font-32">{{waterFallItem.moduleTitle}}</text>
+                </view>
+                <!-- 副标题 -->
+                <view class="flex_view_row justi_cen waterFallSubTit">
+                  <text class="font-24">{{waterFallItem.moduleSubTitle}}</text>
+                  <!-- 选中的三角 -->
+                  <view class="subTitAng"></view>
+                </view>
+              </view>
+            </view>
+          </block>
+        </scroll-view>
+      </view>
+    </view>
+    
+  </view>
+  <!-- 置顶按钮 -->
+  <view class="flex_view_row align_cen justi_cen goTopBox {{isShowGoTop ? 'show' : ''}}" catchTap="goToTop">
+    <text class="icon-goTop_home font-44 color-999999"></text>
+  </view>
 
-      <!-- 不知道为啥这么写，如果没有轮播数据为啥要添加 margin_top_120 ？ class="{{!materialArr || materialArr.length == 0 ? 'margin_top_120' : ''}}" -->
-			<view>
-				<template a:if='{{advertsArr && advertsArr.length > 0}}' is='advertsTem' data='{{advertsArr: advertsArr,baseImageUrl: baseImageUrl,baseLocImgUrl: baseLocImgUrl,current: current,ossImgStyle, hours: hours, minute: minute, second: second, isLastActivitys: isLastActivitys, isActivitysStart: isActivitysStart,pageScrollTop,windowHeight}}' ></template>
-			</view>
-			<!-- 页面主要部分 -->
-			<view class="home_contain whiteBack js_columGoods {{(!materialArr || materialArr.length == 0) && (!advertsArr || advertsArr.length == 0) ? 'margin_top_120' : ''}}">
-				<!--拼团商品列表-->
-				<view class="pintuan_view flex_view_row flex_wrap {{homeGoodsList.length}}">
-					<block a:for="{{homeGoodsList}}" a:for-item="item" a:key="index">
-						<navigator url="/pages/shopping/goodsDetail/goodsDetail?goodsSn={{item.goodsSn}}" class="columnGoods whiteBack {{!item.isLoaded ? 'js_goodsListGood_' + index : '' }}" hover-class="none">
-							<view class="oneGoodsList posi_re" style='{{index % 2 != 0 ? "padding: 26rpx 0 26rpx 20rpx;" : "padding: 26rpx 20rpx 26rpx 0; border-right: solid #e6e6e6 2rpx;"}}'>
-								<image class="goodsColumnImg" src="{{baseImageUrl}}{{item.showImage}}" mode="widthFix">
-								</image>
-								<!--小图标 全赔  -->
-								<image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff1.png" class="allCompensation posi_ab goodsColumn_liIcon" style="{{index % 2 == 0 ? 'right: 30rpx;' : 'right: 10rpx;'}}" a:if="{{filters.strIndexOf(item.afterSaleGuee,'1')}}">
-								</image>
-								<image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff2.png" class="allCompensation posi_ab goodsColumn_liIcon" style="{{index % 2 == 0 ? 'right: 30rpx;' : 'right: 10rpx;'}}" a:elif="{{filters.strIndexOf(item.afterSaleGuee,'2')}}">
-								</image>
-								<image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff3.png" class="allCompensation posi_ab goodsColumn_liIcon" style="{{index % 2 == 0 ? 'right: 30rpx;' : 'right: 10rpx;'}}" a:elif="{{filters.strIndexOf(item.afterSaleGuee,'3')}}">
-								</image>
-								<image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff4.png?version=2.0" class="allCompensation posi_ab goodsColumn_liIcon" style="{{index % 2 == 0 ? 'right: 30rpx;' : 'right: 10rpx;'}}" a:elif="{{filters.strIndexOf(item.afterSaleGuee,'4')}}">
-								</image>
-								<view class="goodsColumn_bot">
-									<view class="single-line flex_view_col">
-										<text class="font-28 color-323232 single-line-text">{{item.name}}
-										</text>
-										<text class="marTop_10 font-24 color-bbbbbb single-line-text">{{item.productName}}
-										</text>
-									</view>
-									<view class="goodsColumn_price">
-										<text class="font-32 color-ff5353">¥{{item.salePrice}}
-										</text>
-										<text data-pid="{{item.productId}}" class="alipay_catch_img goodsColumn_cart" a:if="{{!hiddenCart}}" catchTap="{{!cannotAdd ? 'addCart' : ''}}">
-											<image class="all_100" src="{{baseLocImgUrl}}miniappImg/icon/icon_redCart.png"/>
-										</text>
-									</view>
-								</view>
-							</view>
-						</navigator>
-					</block>
-					<!--<template is="itemPintuan" data="{{...goodsItem,baseImageUrl,baseLocImgUrl}}"></template> -->
-				</view>
-				<!--加载数据进度条-->
-				<view class="loading_view" a:if="{{isLoadMore}}">
-					<image src="{{baseLocImgUrl}}miniappImg/loading/loading.gif" class="loading_gif">
-					</image>
-				</view>
-				<!--没有更多-->
-				<view class="loading_view font-24 color-b1b6bb" a:if="{{!hasMore && !isLoadMore}}">      没有更多了
-				</view>
-			</view>
-		</scroll-view>
-	</view>
-</view>
-<!--toast弹窗-->
-<view class="mark flex_view_col align_cen justi_cen" a:if="{{showToast}}">
-	<view class="toastView_wb" style="background-color:rgba(0, 0, 0, 0);">
-		<!-- catchtouchmove="move" -->
-		<view class="posi_ab" style="right: 0; top: 0;" catchTap="closePop">
-			<icon type="clear" size="25" color="rgba(255,255,255,0.3)"/>
-			<!-- color="skyblue" -->
-		</view>
-		<view class="toastView_wb_con font-26 homePop" data-url="{{popImgData.link}}" data-type="popup" data-linkType="{{popImgData.appLink}}" catchTap="goToPage">
-			<!-- <navigator url="/pages/shopping/goodsDetail/goodsDetail?goodsSn={{}}" hover-class="none"> -->
-			<image src="{{baseImageUrl}}{{popImgData.popImgPath}}" mode="widthFix" class="width_100"/>
-			<!--</navigator> -->
-		</view>
-	</view>
-</view>
-
-
-<!-- 新版搜索热词和历史记录膜层 -->
-<!-- <popup show="{{isShowSearch}}" position="right" zIndex="9000" disableScroll={{false}} mask="{{false}}">
-	<search-component  ref="saveRef" onShowSearch="showSearch" isFocus="{{isFocus}}" placeholderVal="{{placeholder}}" pageType="home"></search-component>
-</popup> -->
-
-	<!-- 新版搜索热词和历史记录膜层 -->
-<view class="index_search {{isShowSearch ? 'show' : ''}}" style=" {{  isShowSearch ? 'position:absolute;' : 'position:fixed;' }}" disable-scroll="{{isShowSearch ? true : false}}">
-	<search-component  ref="saveRef" onShowSearch="showSearch" isFocus="{{isFocus}}" placeholderVal="{{placeholder}}" pageType="home"></search-component>
+  <!-- 新版搜索热词和历史记录膜层 -->
+  <view class="index_search {{isShowSearch ? 'show' : ''}}" style=" {{  isShowSearch ? 'position:absolute;' : 'position:fixed;' }}" disable-scroll="{{isShowSearch ? true : false}}">
+    <search-component ref="saveRef" onShowSearch="showSearch" isFocus="{{isFocus}}" placeholderVal="{{placeholder}}" pageType="home"></search-component>
+  </view>
+</scroll-view>
+<!-- toast弹窗 -->
+<view a:if="{{showToast}}" class="mark flex_view_col align_cen justi_cen">
+  <view class="toastView_wb" style="background-color:rgba(0, 0, 0, 0);">
+    <view class="posi_ab" style="right: 0; top: 0;" catchTap="closePop">
+      <icon type="clear" size="25" color="rgba(255,255,255,0.3)"></icon>
+    </view>
+    <view class="toastView_wb_con font-26 homePop" data-url="{{popImgData.link}}" data-type="popup" data-linkType="{{popImgData.appLink}}" catchTap="checkJumpType">
+      <image src="{{baseImageUrl}}{{popImgData.popImgPath}}" mode="widthFix" class="width_100"></image>
+    </view>
+  </view>
 </view>
 
 

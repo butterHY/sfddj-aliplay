@@ -1,3 +1,5 @@
+// <!-- 首页 navigation-mini 组件 -->
+
 let constants = require('../../../../utils/constants');
 
 Component({

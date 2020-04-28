@@ -1,5 +1,6 @@
-    <!-- 1行1个 -->
+    <!-- 首页 1行1个 组件 -->
     <!-- a:if='{{item.moduleType == "SINGLEGOODS"}}' -->
+
     <view class="singlegoods">
       <!-- 上间隔 -->
       <view a:if="{{item.spacing == 1}}" class='topSpace' style='background-color: {{item.topIntervalColor ? "#" + item.topIntervalColor : "#ffffff"}};'></view>

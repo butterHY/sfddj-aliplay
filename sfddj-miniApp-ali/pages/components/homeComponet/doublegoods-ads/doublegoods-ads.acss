@@ -1,3 +1,5 @@
+/* <!-- 首页1行2个组件 --> */
+
 image {
   display: block;
   width: 100%;

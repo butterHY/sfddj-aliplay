@@ -1,6 +1,7 @@
 
     <!-- a:if="{{item.moduleType == 'GOODS_WATERFALL'}}"  -->
-    <!-- 瀑布流标题 -->
+    <!-- 首页 瀑布流标题 组件 -->
+    
     <view class="goodsWaterfall">
       <!-- 上间隔 -->
       <view a:if="{{item.spacing == 1}}" class='topSpace' style='background-color: {{item.topIntervalColor ? "#" + item.topIntervalColor : "#ffffff"}};'></view>

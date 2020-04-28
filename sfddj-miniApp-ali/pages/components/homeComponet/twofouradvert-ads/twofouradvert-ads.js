@@ -1,3 +1,5 @@
+//  <!-- 首页 2+4广告 组件 -->
+
 let constants = require('../../../../utils/constants');
 
 Component({

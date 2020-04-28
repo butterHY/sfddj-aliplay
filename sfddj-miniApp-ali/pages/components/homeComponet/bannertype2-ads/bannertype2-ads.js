@@ -1,3 +1,5 @@
+// <!-- 首页图片滚动轮播 -->
+
 let constants = require('../../../../utils/constants');
 
 Component({

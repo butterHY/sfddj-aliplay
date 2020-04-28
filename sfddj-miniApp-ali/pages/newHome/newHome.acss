@@ -348,7 +348,6 @@
 	margin: 0 10rpx; 
 }
 
-
 .locCityShow .titleInfo {
 	font-size: 24rpx;
 	color: #999999;

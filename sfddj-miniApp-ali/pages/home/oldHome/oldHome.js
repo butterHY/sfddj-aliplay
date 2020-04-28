@@ -1,4 +1,4 @@
-// import 'regenerator';
+
 import _ from 'underscore'
 import locAddr from '/community/service/locAddr.js';
 //获取应用实例
@@ -13,6 +13,7 @@ let windowHeight = my.getSystemInfoSync().windowHeight;
 
 import api from '../../../api/api';
 import http from '../../../api/http';
+
 
 
 Page({
@@ -88,7 +89,9 @@ Page({
 		o2oStore: {
 			show: false,
 			store: null,
-		}
+		},
+		isGetLocation: false,
+		isLocationLoad: true,       //是否正在定位
 	},
 
 	onLoad: async function(options) {
@@ -101,7 +104,6 @@ Page({
 		}
 		// 友盟+统计--首页浏览
 		my.uma.trackEvent('homepage_show', pageOptions);
-    console.log(pageOptions)
 		var that = this;
 
 
@@ -117,7 +119,13 @@ Page({
 			key: 'homeGoodsList', // 缓存数据的key
 		}).data;
 
-
+		// 定位中判断
+		let userLocInfo = app.globalData.userLocInfo;
+		if( userLocInfo && Object.keys(userLocInfo).length > 0) {
+			this.setData({
+				isLocationLoad: false
+			})
+		}
 
 		that.setData({
 			materialArr: materialArr ? materialArr : [],
@@ -202,11 +210,21 @@ Page({
 			// console.log('重新定位')
 			locAddr.location((res) => {
 				_this.setData({
-					locInfo: res
+					locInfo: res,
+					isGetLocation: true,
+					isLocationLoad: false,
 				});
 				// 设置缓存并设置全部变量的值 globalData.userLocInfo 
-				app.setLocStorage(_this.data.locInfo);
-				_this.locStoreShow();
+				app.setLocStorage(_this.data.locInfo, function() {
+					_this.locStoreShow();
+				});
+				
+			}, ()=> {
+				// 定位失败
+				_this.setData({
+					isGetLocation: false,
+					isLocationLoad: false,
+				});
 			});
 		}
 		else {
@@ -231,32 +249,42 @@ Page({
 		return num;
 	},
 
-
-	// 初始化模块广告的滚动高度  ， 原来旧的达官统计方法， ----- 已没有使用；
 	// 定位显示小店
 	locStoreShow() {
-			const _this = this; 
-			const _locInfo = locAddr.locInfo; 
-			http.get(api.Shop.SEARCH, {
-							longitude: _locInfo.longitude,
-							latitude: _locInfo.latitude,
-							start: 0,
-							limit: 1, 
-					},(res)=> {
-						let _data = res.data.data; 
-						if (_data.length > 0) {
-							_this.setData({
-									'o2oStore.show': true,
-									'o2oStore.store': Object.assign({}, _data[0])
-							}) 
-							
-						} 
-					}, (err)=> {
-							 
-				});
-    },
+		const _this = this;
+		let _locInfo = this.data.locInfo; 
+		// console.log('locStoreShow', _locInfo)
 
+		http.get(api.Shop.SEARCH, {
+			longitude: _locInfo.longitude,
+			latitude: _locInfo.latitude,
+			start: 0,
+			limit: 1,
+			goodsCount: 3,     //返回商店商品数量的，在首页的入口需要展示3个，最多只能传10
+		}, (res) => {
+			let _data = res.data.data;
+			let _show = false;
+			let _store = [];
+			if (_data.length > 0) {
+				_show = true;
+				_store = Object.assign({}, _data[0]);
+				// 友盟埋点--社区入口曝光量 
+				my.uma.trackEvent('homepage_O2O_enter', { shopName: _store.shopName, shopId: _store.id });
+			}
+			_this.setData({
+				'o2oStore.show': _show,
+				'o2oStore.store': _store
+			})
+			// 更新社区入口组件
+			if (this.storeEnter) {
 
+				this.storeEnter.setStoreData(_store, _show, _locInfo)
+			}
+		}, (err) => {});
+	},
+	storeEnter(ref){
+		this.storeEnter = ref;
+	},
 
 	// 初始化模块广告的滚动高度
 	setModuleScrollTop(result) {
@@ -723,15 +751,6 @@ Page({
 			})
 		});
 	},
-
-	/**
-	* 清除搜索历史    	-------		搜索改版
-	*/
-	// clearHist: function() {
-	// 	try {
-	// 		my.setStorageSync({ key: nstants.StorageConstants.searchWordsKey, data: [] });
-	// 	} catch (e) { }
-	// },
 	
 
 	/**
@@ -771,14 +790,6 @@ Page({
 		// 	this.getAllPintuanProduct(1);
 		// }
 	},
-	//   scrollToLower: function() {
-	//     if (this.data.hasMore) {
-	//       this.setData({
-	//         start: this.data.homeGoodsList.length
-	//       });
-	//       this.getAllPintuanProduct(1);
-	//     }
-	//   },
 
 	// 分享页面
 	onShareAppMessage: function(res) {
@@ -823,7 +834,7 @@ Page({
 				},
 				success: function(res) {
 					var resData = res.data;
-					if (resData.ret.code == '0') {
+					if (resData.ret && resData.ret.code == '0') {
 						let result = resData.data;
 						let spliceArr = [];
 						let newResult = [];
@@ -1151,123 +1162,11 @@ Page({
 
 	},
 
-
-	// 搜索模块，敲击键盘完成去到搜索页  	-------		搜索改版
-	// goToSearchPage(keyWord, type) {
-	// 	if (keyWord && keyWord.trim()) {
-	// 		// 达观数据上报
-	// 		// utils.uploadClickData_da('search', [{ keyword: keyWord }])
-
-	// 		// 友盟+ 统计  输入框输入探索
-	// 		this.umaTrackEvent(type, keyWord)
-
-	// 		my.navigateTo({
-	// 			url: '/pages/home/searchResult/searchResult?keyWord=' + keyWord
-	// 		});
-	// 	}
-	// },
-
-	// 键盘输入回车后去到搜索页	-------		搜索改版
-	// handleConfirm: function(event) {
-	// 	this.goToSearchPage(event.detail.value, 'searchValue');
-	// },
-
-	// 失去焦点后保持现有的值为输入值，并且关闭热词	-------		搜索改版
-	// changeValue: function(event) {
-	// 	var that = this;
-	// 	this.setData({
-	// 		searchValue: event.detail.value
-	// 	})
-
-	// 	setTimeout(function() {
-	// 		that.setData({
-	// 			show: false
-	// 		})
-	// 	}, 500)
-	// },
-
-	// 点击放大镜进行搜索，	-------		搜索改版
-	// searchGoods: function() {
-	// 	this.goToSearchPage(this.data.searchValue, 'searchValue');
-	// },
-
-	// 选择搜索记录或热词  -------		搜索改版
-	// chooseWord: function(event) {
-	// 	let { type } = event.currentTarget.dataset
-	// 	this.goToSearchPage(event.currentTarget.dataset.word, type);
-	// },
-
-	// 清除搜索记录		  	-------		搜索改版
-	// clearHist: function() {
-	// 	try {
-	// 		my.setStorageSync({
-	// 			key: constants.StorageConstants.searchWordsKey, // 缓存数据的key
-	// 			data: [], // 要缓存的数据
-	// 		});
-	// 	} catch (e) { }
-	// },
-
-	// 点击热词弹窗 == 关闭热词弹窗  -------		搜索改版
-	// handleBlur: function(e) {
-	// 	this.setData({
-	// 		show: false
-	// 	});
-	// },
-
 	// 阻止默认事件
 	touchReturn() {
 		return;
 	},
 
-	// 获取焦点事件，	-------		搜索改版
-	// handleFocus: function() {
-	// 	var that = this;
-	// 	// 友盟+统计--首页搜索点击
-	// 	my.uma.trackEvent('homepage_searchClick');
-
-	// 	sendRequest.send(constants.InterfaceUrl.HOT_WORD, {}, function(res) {
-	// 		that.setData({
-	// 			hotWords: res.data.result
-	// 		});
-	// 	}, function(err) {
-	// 	}, 'GET');
-	// 	try {
-	// 		var searchWords = my.getStorageSync({
-	// 			key: constants.StorageConstants.searchWordsKey, // 缓存数据的key
-	// 		}).data;
-	// 		that.setData({
-	// 			searchWords: searchWords,
-	// 			show: true
-	// 		});
-	// 	} catch (e) { }
-	// },
-
-	// 友盟+ 统计 --搜索
-	
-	// umaTrackEvent(type, keyWord, eventName,data) {
-
-	// 	var keyWord = keyWord
-
-	// 	if (type == 'searcHotWord') {
-	// 		// 友盟+统计--首页搜索热词点击
-	// 		my.uma.trackEvent('homepage_searchHotWord', { keyWord: keyWord });
-	// 	}
-	// 	else if (type == 'searchHist') {
-
-	// 		// 友盟+统计--首页搜索历史点击
-	// 		my.uma.trackEvent('homepage_searchHist', { keyWord: keyWord });
-	// 	}
-	// 	else if (type == 'searchValue') {
-	// 		// 友盟+统计--首页搜索输入
-	// 		my.uma.trackEvent('homepage_searchValue', { keyWord: keyWord });
-
-	// 	}
-	// 	else if (type == 'goodsCount'){
-	// 		// 友盟+统计--广告模块当家爆款/原产好物/新品上架  --- eventName = homepage_ddjHotSale , homepage_ddjBestGoods, homepage_ddjNewGoods
-	// 		my.uma.trackEvent(eventName, data);
-	// 	}
-
-	// },
 
 	// 秒杀活动获取倒计时时间
 	getTimes: async function(isFirstTime) {
@@ -1749,14 +1648,14 @@ Page({
 	  * 新版搜索组件开关
 	*/
 	showSearch: function(noGetHistory) {
-		// this.searchComponent.getHistory();
 		noGetHistory == 'noGetHistory' ? '' : 	this.searchComponent.getHistory();
 		this.setData({
 			isShowSearch: !this.data.isShowSearch,
 			isFocus: !this.data.isFocus,
 		})
-		// this.searchComponent.setIsFocus();
 	},
+
+
 
 
 

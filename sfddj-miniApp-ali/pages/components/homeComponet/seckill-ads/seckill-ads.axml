@@ -1,7 +1,8 @@
    <import-sjs name='filters' from="../../../wxsFile/public.sjs"/>
 
-  <!--秒杀广告模块 水平滚动产品————商品滚动  -->
+  <!-- 首页  秒杀广告 组件 水平滚动产品————商品滚动  -->
   <!-- a:if='{{item.moduleType == "SECONDKILL" && !isLastActivitys && item.secondKillModuleVO}}' -->
+
   <view class="seckill-ads adsView">
     <!-- 上间隔 -->
     <view a:if="{{item.spacing == 1}}" class='topSpace' style='background-color: {{item.topIntervalColor ? "#" + item.topIntervalColor : "#ffffff"}};'></view>

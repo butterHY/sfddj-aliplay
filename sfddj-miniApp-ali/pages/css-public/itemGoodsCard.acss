@@ -28,7 +28,6 @@
   background: #f3f5fa;
 } */
 
-
 .itemGoodsCard .goodsImg {
   text-align: center;
   position: relative;

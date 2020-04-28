@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/newHome/newHome",
     "pages/home/home",
+    "pages/newHome/newHome",
     "pages/category/category",
     "pages/cart/cart",
     "pages/user/user",
@@ -86,7 +86,7 @@
     "backgroundColor": "#ffffff",
     "items": [
       {
-        "pagePath": "pages/newHome/newHome",
+        "pagePath": "pages/home/home",
         "icon": "image/icon_home_normal.png",
         "activeIcon": "image/icon_home_selected.png",
         "name": "首页"

@@ -1,3 +1,5 @@
+// <!-- 首页1行2个组件 -->
+
 let constants = require('../../../../utils/constants');
 
 Component({

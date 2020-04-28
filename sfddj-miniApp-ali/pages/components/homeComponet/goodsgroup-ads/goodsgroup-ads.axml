@@ -1,7 +1,8 @@
     <import-sjs name='filters' from="../../../wxsFile/public.sjs"/>
 
-    <!--广告图+商品滚动 —————— 1+商品  已全部更新 -->
+    <!-- 首页 广告图+商品滚动 —————— 1+商品 组件 -->
     <!-- a:if='{{item.moduleType == "GOODSGROUP"}}' -->
+
     <view class="goodsgroup">
       <!-- 上间隔 -->
       <view a:if="{{item.spacing == 1}}" class='topSpace' style='background-color: {{item.topIntervalColor ? "#" + item.topIntervalColor : "#ffffff"}};'></view>

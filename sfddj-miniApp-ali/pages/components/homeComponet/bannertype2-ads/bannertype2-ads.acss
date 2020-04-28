@@ -1,3 +1,5 @@
+/* 首页 item.moduleType == "BANNER_TYPE_2" 样式 */
+
 .bannertype .topSpace {
   height: 10rpx;
   width: 100%;

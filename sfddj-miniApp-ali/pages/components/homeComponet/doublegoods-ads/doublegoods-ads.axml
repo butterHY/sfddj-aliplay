@@ -1,6 +1,6 @@
     <import-sjs name='filters' from="../../../wxsFile/public.sjs"/>
     
-    <!-- 1行2个 -->
+    <!-- 首页1行2个组件 -->
     <!-- a:if='{{item.moduleType == "DOUBLEGOODS"}}' -->
 
     <view class="doublegoods">

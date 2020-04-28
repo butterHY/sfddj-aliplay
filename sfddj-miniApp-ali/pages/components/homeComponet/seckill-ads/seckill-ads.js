@@ -1,3 +1,5 @@
+// <!-- 首页  秒杀广告 组件 水平滚动产品————商品滚动  -->
+
 let constants = require('../../../../utils/constants');
 
 Component({

@@ -1,7 +1,8 @@
     <import-sjs name='filters' from="../../../wxsFile/public.sjs"/>
     
-    <!-- 1行N个 ++ 大 -->
+    <!-- 首页 1行N个 ++ 大 组件 -->
      <!-- a:if='{{item.moduleType == "NAVIGATION"}}' -->
+
     <view class="navigation">
       <!-- 上间隔 -->
       <view a:if="{{item.spacing == 1}}" class='topSpace' style='background-color: {{item.topIntervalColor ? "#" + item.topIntervalColor : "#ffffff"}};'></view>

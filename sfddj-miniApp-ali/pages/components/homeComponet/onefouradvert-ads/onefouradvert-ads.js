@@ -1,5 +1,6 @@
-let constants = require('../../../../utils/constants');
+// <!-- 首页 1+ 4 模块 组件 -->
 
+let constants = require('../../../../utils/constants');
 
 Component({
   mixins: [],

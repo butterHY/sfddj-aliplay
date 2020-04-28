@@ -175,8 +175,6 @@
 }
 
 .waterFallScroll {
-  /* display: flex; */
-  /* flex-direction: row; */
   width: 100%;
   white-space: nowrap;
   overflow: auto;
@@ -269,7 +267,6 @@
   font-weight: bold;
   display: inline-block;
   vertical-align: top;
-  /* margin-top: 10rpx; */
 }
 
 .countDown_black{

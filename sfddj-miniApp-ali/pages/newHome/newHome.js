@@ -171,9 +171,7 @@ Page({
 		const _this = this;
 		let app = getApp();
 		let userLocInfo = app.globalData.userLocInfo;
-		console.log(userLocInfo)
 		if (this.jsonNull(userLocInfo) == 0) {
-			console.log('重新定位')
 			locAddr.location((res) => {
 				_this.setData({
 					locInfo: res,
@@ -182,7 +180,6 @@ Page({
 				});
 				// 设置缓存并设置全部变量的值 globalData.userLocInfo 
 				app.setLocStorage(_this.data.locInfo, function () {
-					// console.log('setLocStorge',app.globalData)
 					_this.locStoreShow();
 				});
 
@@ -214,7 +211,6 @@ Page({
 	 */
 	jsonNull(json) {
 		let num = 0;
-		console.log(json)
 		for (let i in json) {
 			num++;
 		}
@@ -227,7 +223,6 @@ Page({
 	locStoreShow() {
 		const _this = this;
 		let _locInfo = this.data.locInfo;
-		// console.log('locStoreShow', _locInfo)
 
 		http.get(api.Shop.SEARCH, {
 			longitude: _locInfo.longitude,

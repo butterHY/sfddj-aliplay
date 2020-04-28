@@ -1,3 +1,5 @@
+// <!-- 首页 广告图+商品滚动 —————— 1+商品 组件 -->
+
 let constants = require('../../../../utils/constants');
 
 Component({

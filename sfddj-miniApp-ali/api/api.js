@@ -183,7 +183,7 @@ export default {
 	},
 
   HOME: {
-    ADVERTS_MOUDULE: '/m/a/moduleAdvert/1.1/getModuleAdvert', //获取全部广告模块
+    ADVERTS_MOUDULE: '/m/a/moduleAdvert/1.1/getModuleAdvert',   //获取全部广告模块
   },
 
 }

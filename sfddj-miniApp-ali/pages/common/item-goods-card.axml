@@ -26,7 +26,8 @@
         </view>
       </view>
     </view>
-    <!---->
+
+    <!-- 下面是 "新猜你喜欢样式" 兼容 "首页瀑布流商品样式" 兼容 "旧猜你喜欢样式"  -->
     <navigator a:else url="{{tuangou ? '/pages/home/grouping/grouping?goodsSn=' + goodsSn : '/pages/shopping/goodsDetail/goodsDetail?goodsSn=' + goodsSn}}" class="{{type == 'newGuessLike' ? 'guessLikeGoods' : 'itemGoodsCard borBox'}}" hover-class='none' style="{{left ? 'padding:10rpx 10rpx 10rpx 0':'padding:10rpx 0 10rpx 10rpx'}};">
       <view class="{{type == 'newGuessLike' ? 'all_100 boxShadow guessLikeView' : ' goodsArea'}}" style="{{pageType == 'home' ? 'border-radius: 16rpx' : ''}}">
         <view  class="{{type == 'newGuessLike' ? 'guessLikeImgBox' : 'goodsImg'}}" style="{{type == 'newGuessLike' ? 'border-bottom: 0;' : ''}}">
