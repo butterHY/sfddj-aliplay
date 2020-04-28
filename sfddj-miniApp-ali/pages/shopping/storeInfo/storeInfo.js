@@ -64,12 +64,6 @@ Page({
       this.getSupplierDetail(options.supplierId)
       // 判断是否关注店铺
       this.getAttentionStatus();
-      // 获取轮播图
-      this.getBanner();
-      // 获取优惠券列表
-      this.getCouponList();
-      // 获取商家推荐数据
-      this.getIntroData();
     }
   },
 
@@ -135,11 +129,106 @@ Page({
         supplierDetail: result,
         supplierDetailJSON: JSON.stringify(result)
       })
+      if(result.supplierSubjectPage){
+        // 加载专题页
+        that.getSpecialSubjectDat();
+      }else{
+        // 获取轮播图
+        that.getBanner();
+        // 获取优惠券列表
+        that.getCouponList();
+        // 获取商家推荐数据
+        that.getIntroData();
+      }
     }, err => {
 
     })
 
   },
+
+  
+  // 获取商家专题页面
+  getSpecialSubjectDat(){
+    let that = this
+    let data = {
+      supplierId: this.data.supplierId
+    }
+    http.get(api.SUPPLIER.SPECIAL_SUBJECT, data, res => {
+        let result = res.data.data ? res.data.data : {}
+        let hasCountDown = false
+
+      // 模块数据--转换数据
+      if (result.pageModuleList) {
+        if (Object.keys(result.pageModuleList).length > 0) {
+          for (let i = 0; i < result.pageModuleList.length; i++) {
+            let item = result.pageModuleList[i];
+            if(item.groupGoodsVoList){
+              item.goodsMinVOList = item.groupGoodsVoList;
+            }
+            item.parseItem = JSON.parse(item.items);
+            // 添加专题页面的标识
+            if(item.parseItem && item.parseItem.length>0){
+              for(let j=0;j< item.parseItem.length;j++){
+                let el = item.parseItem[j];
+                el.pageType='specialPage'
+              }
+            }
+            // 如果是商品滚动模块且有倒计时
+            if (item.moduleType == 'GOODSSCROLL') {
+              hasCountDown = item.parseItem[0].timerType == 'DAY_TIMER' || hasCountDown ? true : false
+            }
+          }
+        }
+      }
+
+      that.setData({
+        thematicAds: result,
+        hasCountDown,
+
+        banRightMargin: utils.rpx2Px(30),
+      })
+      if (hasCountDown) {
+        that.CutDataTime()
+      }
+    }, err => {})
+  },
+  // 当天倒计时
+  cutTimeToday: function () {
+    var date = new Date();
+    date.setMilliseconds(0);
+
+    var nowDate = date.getTime();
+    date.setHours(0);
+    date.setMinutes(0);
+    date.setSeconds(0);
+    date.setDate(date.getDate() + 1);
+    var nextDay = date.getTime();
+    var diffTime = (nextDay - nowDate) / 1000;
+    return diffTime
+  },
+
+  // 倒计时
+  CutDataTime: function () {
+    let that = this;
+    let ss = that.cutTimeToday() % 60;
+    let mm = ((that.cutTimeToday() - ss) / 60) % 60;
+    let hh = (that.cutTimeToday() - that.cutTimeToday() % 3600) / 3600;
+    ss = ss < 10 ? ('0' + ss) : ss;
+    mm = mm < 10 ? ('0' + mm) : mm;
+    hh = hh < 10 ? ('0' + hh) : hh;
+
+    this.setData({
+      countSecond: ss,
+      countMinute: mm,
+      countHour: hh
+    })
+
+    clearTimeout(that.time_CutTime);
+    that.time_CutTime = setTimeout(function () {
+      that.CutDataTime()
+    }, 1000);
+  },
+
 
   /**
   * 搜索组件获取 placeholder value
@@ -196,7 +285,33 @@ Page({
     let that = this;
     let url = e.currentTarget.dataset.url;
     let chInfo = constants.UrlConstants.chInfo;
-    if (url.substring(0,4).indexOf('http') > -1) {
+    let pageType = e.currentTarget.dataset.page;
+    let linkType = e.currentTarget.dataset.linkType;
+
+    if(!url)return // 如果连接不存在就不执行下边代码
+    if(pageType && pageType=='specialPage'){  // 专题页面
+      if(linkType == 'GOODS_LINK'){  // 跳转商详页 如url:YW8E860E24B893
+        my.navigateTo({
+          url: '/pages/shopping/goodsDetail/goodsDetail?goodsSn='+url, 
+        })
+      }
+      else if(linkType == 'H5_LINK'){  // 跳转自定义链接 如url:https://itsm.sfddj.com/h/index/
+      
+        my.call('startApp', { appId: '20000067', param: { url: url, chInfo: chInfo } })
+      }
+      else if(linkType == 'CUSTOM_LINK'){ // 跳转自定义页面 如 url:180
+        let customUrl = api.baseUrl + '/hml/supplier_subject_page/' + url+'.html'
+
+        my.call('startApp', { appId: '20000067', param: { url: customUrl, chInfo: chInfo } })
+      }
+      else{
+        url = url.replace('pages/', 'pages/subPackages/')
+          my.navigateTo({
+            url: url, //路径必须跟app.json一致
+          })
+      }
+    }
+    else if (url.substring(0,4).indexOf('http') > -1) {
       my.call('startApp', { appId: '20000067', param: { url: url, chInfo: chInfo } })
     }
     else {
@@ -205,6 +320,24 @@ Page({
       });
     }
 
+  },
+
+  // 获取专题页优惠券
+  getSpecialCoupon(e){
+    let that = this;
+    let couponSign = e.currentTarget.dataset.couponSign;
+    let data = {
+      ruleSign: couponSign
+    }
+    http.post(api.SUPPLIER.DRAW_COUPON, data, res => {
+      let result = res.data.data ? res.data.data : []
+      if (result.length > 0) {
+        // 弹窗
+        my.showToast({content: '领取成功'});
+      }
+    }, err => {
+      my.showToast({content: err});
+    })
   },
 
   /**
