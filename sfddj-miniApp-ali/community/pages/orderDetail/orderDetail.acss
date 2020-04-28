@@ -1,157 +1,153 @@
-
-
 .color-ff0532 {
-    color: #ff0532;
+	color: #ff0532;
 }
 
 .color-333 {
-    color: #333333;
+	color: #333333;
 }
 
 .marTop_12 {
-    margin-top: 12rpx;
+	margin-top: 12rpx;
 }
 
 .commuOrderDetail {
-    width: 100%;
-    box-sizing: border-box;
-    padding: 20rpx 20rpx;
-    background-color: #f9f9f9;
-    font-family: "SourceHanSansCN";
+	width: 100%;
+	box-sizing: border-box;
+	padding: 20rpx 20rpx;
+	background-color: #f9f9f9;
+	font-family: "SourceHanSansCN";
 }
 
 .orderStatusBox {
-    width: 100%;
-    /* margin-top: 20rpx; */
-    background-color: #fff;
-    border-radius: 10rpx;
-    box-sizing: border-box;
-    padding: 0 30rpx;
+	width: 100%;
+	/* margin-top: 20rpx; */
+	background-color: #fff;
+	border-radius: 10rpx;
+	box-sizing: border-box;
+	padding: 0 30rpx;
 }
 
 .orderStatus {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    height: 182rpx;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	height: 182rpx;
 }
 
 .orderStatusItem {
-    color: #333333;
-    font-size: 36rpx;
+	color: #333333;
+	font-size: 36rpx;
 }
 
 .orderStatusTip {
-    font-size: 26rpx;
-    color: #999999;
-    margin-top: 26rpx;
+	font-size: 26rpx;
+	color: #999999;
+	margin-top: 26rpx;
 }
 
 .orderStatusIcon_img {
-    width: 160rpx;
-    height: 126rpx;
+	width: 160rpx;
+	height: 126rpx;
 }
 
 .orderAddrInfo {
-    padding: 30rpx 0;
-    border-top: 1px dashed #e6e6e6;
+	padding: 30rpx 0;
+	border-top: 1px dashed #e6e6e6;
 }
 
 .orderAddr {
-    display: flex;
-    flex-direction: row;
-    margin-top: 20rpx;
-    line-height: 34rpx;
+	display: flex;
+	flex-direction: row;
+	margin-top: 20rpx;
+	line-height: 34rpx;
 }
 
 .shopIcon {
-    width: 38rpx;
-    height: 34rpx;
+	width: 38rpx;
+	height: 34rpx;
 }
 
 .orderStatusBtnBox {
-    border-top: 1px solid #e6e6e6;
-    padding: 20rpx 0;
-} 
+	border-top: 1px solid #e6e6e6;
+	padding: 20rpx 0;
+}
 
 .orderStatusBtn {
-    width: 176rpx;
-    height: 58rpx;
-    line-height: 60rpx;
-    border: 1px solid #999;
-    text-align: center;
-    color: #333333;
-    font-size: 30rpx;
-    margin-left: 56rpx;
-    border-radius: 45px;
-    box-sizing: border-box;
+	width: 176rpx;
+	height: 58rpx;
+	line-height: 60rpx;
+	border: 1px solid #999;
+	text-align: center;
+	color: #333333;
+	font-size: 30rpx;
+	margin-left: 56rpx;
+	border-radius: 45px;
+	box-sizing: border-box;
 }
 
 .cancelOrderBtn {
-    margin-left: 0;
+	margin-left: 0;
 }
 
 .toPayBtn {
-    border-color: #ff0532;
-    color: #ff0532;
+	border-color: #ff0532;
+	color: #ff0532;
 }
 
 .orderInfo {
-    width: 100%;
-    box-sizing: border-box;
-    padding: 0 30rpx 20rpx;
-    background-color: #fff;
-    border-radius: 10rpx;
-    margin-top: 20rpx;
+	width: 100%;
+	box-sizing: border-box;
+	padding: 0 30rpx 20rpx;
+	background-color: #fff;
+	border-radius: 10rpx;
+	margin-top: 20rpx;
 }
 
 .orderInfo_con {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding-bottom: 16rpx;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	padding-bottom: 16rpx;
 }
 
 .orderInfoTit {
-    padding: 30rpx 0 18rpx;
-    font-size: 30rpx;
-    color: #333333;
-    font-weight: 600;
+	padding: 30rpx 0 18rpx;
+	font-size: 30rpx;
+	color: #333333;
+	font-weight: 600;
 }
 
 .orderInfo_des, .orderInfo_mes {
-    font-size: 28rpx;
-    color: #666666;
-    line-height: 56rpx;
+	font-size: 28rpx;
+	color: #666666;
+	line-height: 56rpx;
 }
 
 .orderInfo_mes {
-    margin-left: 84rpx;
+	margin-left: 84rpx;
 }
 
 .padBot_30 {
-  padding-bottom: 30rpx;
+	padding-bottom: 30rpx;
 }
 
-.orderInfo_mes > view , .orderInfo_des > view {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+.orderInfo_mes>view, .orderInfo_des>view {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
-
-
 
 .afterDetail_item {
-    margin-bottom: 20rpx;
-    line-height: 34rpx;
-    font-size: 28rpx;
-    display: flex;
+	margin-bottom: 20rpx;
+	line-height: 34rpx;
+	font-size: 28rpx;
+	display: flex;
 	position: relative;
 }
 
 .afterDetail_item:last-child {
-    margin-bottom: 0;
+	margin-bottom: 0;
 }
 
 .orderInfoItem_txt {
@@ -161,10 +157,11 @@
 }
 
 .marLeft_60 {
-    margin-left: 60rpx;
+	margin-left: 60rpx;
 }
 
 /* 复制按钮 */
+
 .copyBtn {
 	position: absolute;
 	width: 80rpx;
@@ -178,4 +175,11 @@
 	box-sizing: border-box;
 	right: 0;
 	top: -2rpx;
+}
+
+.userMemo {
+	font-size: 28rpx;
+	color: #333;
+	padding-bottom: 30rpx;
+	word-wrap:break-word;
 }

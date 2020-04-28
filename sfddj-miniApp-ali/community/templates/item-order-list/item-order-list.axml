@@ -1,7 +1,7 @@
 <template name="itemOrderList">
     <view class="itemOrderList">
         <!-- 头部商品信息 -->
-        <navigator url="/community/pages/orderDetail/orderDetail?orderSn={{item.orderSn}}" hover-class="none" class="flex_view_col orderListInfo">
+        <navigator url="{{item.linkUrl}}" hover-class="none" class="flex_view_col orderListInfo">
             <!-- 上部分 -->
             <view class="flex_view_row align_cen orderListInfo_top">
                 <view class="orderList_goodsImg">

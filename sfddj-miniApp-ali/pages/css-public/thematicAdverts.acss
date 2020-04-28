@@ -43,10 +43,22 @@
   background: linear-gradient(135deg, #f97d7b, #fd4764);
 }
 
-.verpromotionHot .iconHot {
+.verpromotionHot .iconHotBot {
   display: block;
   width: 34rpx;
   height: 12rpx;
+}
+
+
+.promotionHotIcon{
+  background-color: #ff2746;
+  color: #FFFFFF;
+  font-size: 24rpx;
+  display: inline-block;
+  border-radius: 5px;
+  line-height: 1.5;
+  padding: 0 3rpx;
+  margin-right: 5rpx;
 }
 
 .lineH_40r {
@@ -195,7 +207,7 @@
   height: 80rpx;
 }
 
-.lineH_2 {
+.lineH_2m {
   line-height: 2;
 }
 
@@ -488,3 +500,26 @@
 }
 
 
+/* 2+4模块 */
+.twoAndFourTop{
+  margin-bottom: 2px;
+}
+.twoAndFourTop .twoArea:first-child{
+  margin-right: 2px;
+}
+
+.twoAndFourTop .twoArea:last-child{
+  margin-left: 2px;
+}
+
+.twoAndFourbot .fourArea{
+  margin: 0 2px;
+}
+
+.twoAndFourbot .fourArea:first-child{
+  margin: 0 2px 0 0;
+}
+
+.twoAndFourbot .fourArea:last-child{
+  margin: 0 0 0 2px;
+}

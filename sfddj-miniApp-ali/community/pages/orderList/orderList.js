@@ -184,16 +184,13 @@ Page({
 
             post(api.O2O_ORDER.getPinOrder, data, res => {
                 let result = res.data.data ? res.data.data : [];
-                let handleList = that.handleGoods(result);
+                let handleList = that.handleTuanGoods(result);
                 result = handleList.goodsList;
-                let { countList } = handleList;
                 let newestList = start == 0 ? Object.assign([], result) : orderList[tabIndex][index].concat(result);
-                let newestCountList = start == 0 ? Object.assign([], countList) : orderList[index].concat(countList);
                 that.setData({
                     [setHasMore]: result.length >= limit ? true : false,
                     [setLoaded]: true,
                     [setOrderList]: newestList,
-                    [setCountList]: newestCountList,
                     [setLoadingList]: false
                 })
                 // that.isUseCountDown();
@@ -245,13 +242,33 @@ Page({
             // 转换订单创建时间
             val.createDateStr = dateFmt.DateFormat.format(new Date(val.createDate), 'yyyy-MM-dd hh:mm');
 
-
             val.createDate + 900000 - now > 0 ? countList.push(val.createDate + 900000 - now) : countList.push(0);
 
+			val.linkUrl = `/community/pages/orderDetail/orderDetail?orderSn=${val.orderSn}`;
 
 
         })
         return { goodsList, countList };
+    },
+
+    // 处理拼团订单商品信息
+    handleTuanGoods(list) {
+        let that = this;
+        let defaultImg = "https://img.sfddj.com/miniappImg/icon/icon_default_head.jpg";
+        let goodsList = list && Object.keys(list).length > 0 ? list : [];
+        let now = new Date().getTime();
+        goodsList.forEach((val, i, arr) => {
+            // 转换订单状态中文
+            val.orderStatusStr = that.handleTuanStatus(val.recordStatus);
+            // 转换订单创建时间
+            val.createDateStr = dateFmt.DateFormat.format(new Date(val.recordCreateTime), 'yyyy-MM-dd hh:mm');
+
+			val.totalFee = val.paidAmount;   //订单总价
+
+			val.linkUrl = val.recordStatus == 1 ? `/community/pages/orderDetail/orderDetail?orderSn=${val.orderSn}` : `/community/pages/tuanDetail/tuanDetail?recordId=${val.recordId}`;
+
+        })
+        return { goodsList };
     },
 
     // 处理订单的状态
@@ -268,6 +285,21 @@ Page({
                 break;
             default:
                 return '支付成功'
+        }
+    },
+
+    // 处理拼团订单的状态
+    handleTuanStatus(orderStatus) {
+        switch (orderStatus) {
+            case 0:
+                return '待成团'
+                break;
+            case 1:
+                return '团购成功'
+                break;
+            case 2:
+                return '团购失败'
+                break;
         }
     },
 

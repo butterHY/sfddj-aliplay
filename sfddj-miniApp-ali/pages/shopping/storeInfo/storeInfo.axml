@@ -2,6 +2,7 @@
 <import src="/pages/common/item-goods-column.axml" />
 <import src="/pages/common/store_desc.axml" />
 <import src="/pages/common/item-goods-card.axml" />
+<import src="/pages/common/thematicAdverts.axml"/> 
 <!--搜索框-->
 <import src="/pages/common/search"/>
 <!-- <import src="/pages/common/item-goods-scrollx.axml"/> -->
@@ -53,106 +54,115 @@
 
   <!-- 店铺首页--普通 -->
   <view a:if="{{tabIndex == 0}}" class="">
-    <view a:if="{{bannerList.length>0 || supplierCouponList.length > 0 || introList.length>0}}">
-      <!-- banner -->
-      <view class="storeBanner" a:if="{{bannerList && bannerList.length>0}}">
-        <block>
-          <template is="swiperItem" data="{{swiperList: bannerList,baseImageUrl:baseImageUrl,radius:'20rpx',height:bannerHeight+'rpx'}}"></template>
+  <!--专题首页--->
+    <block a:if="{{supplierDetail.supplierSubjectPage}}">
+        <block a:for="{{thematicAds.pageModuleList}}" a:key="thematicAds">
+            <template is="thematicItem" data="{{item, baseImageUrl, baseLocImgUrl, ossImgStyle:smallImgArg, countHour, countMinute, countSecond,banRightMargin}}"></template>
         </block>
-      </view>
-      
-      <!-- 优惠券部分 -->
-      <view a:if="{{supplierCouponList.length > 0}}" class="storeCoupon width_100">
-        <!-- 标题 -->
-        <view class="storeCouponTit">
-          <text>优惠券</text>
+    </block>
+    <block a:else>
+      <view a:if="{{bannerList.length>0 || supplierCouponList.length > 0 || introList.length>0}}">
+        <!-- banner -->
+        <view class="storeBanner" a:if="{{bannerList && bannerList.length>0}}">
+          <block>
+            <template is="swiperItem" data="{{swiperList: bannerList,baseImageUrl:baseImageUrl,radius:'20rpx',height:bannerHeight+'rpx'}}"></template>
+          </block>
         </view>
-        <!-- 优惠券列表 -->
-        <view class="width_100">
-          <scroll-view scroll-x="{{true}}" class="width_100 flex_view_row couponListScroll">
-            <view>
-              <block a:for="{{supplierCouponList}}" a:key="supplierCouponList">
-                <view class="sellerCon sellerConNew js_sellerCon" couponId="${coupon.id}">
-                  <view class="conpon_po flex_view_row">
-                    <view class="conpon_saveArea flex_1 flex_view_col align_cen justi_cen">
-                      <view class="coupon_price flex_view_col" style="width: 100%;">
-                        <view class="coupon_value flex_view_row">
-                          <text class="conpon_dollar">￥<text class="conpon_num">{{item.costPrice}}</text></text>
+        
+        <!-- 优惠券部分 -->
+        <view a:if="{{supplierCouponList.length > 0}}" class="storeCoupon width_100">
+          <!-- 标题 -->
+          <view class="storeCouponTit">
+            <text>优惠券</text>
+          </view>
+          <!-- 优惠券列表 -->
+          <view class="width_100">
+            <scroll-view scroll-x="{{true}}" class="width_100 flex_view_row couponListScroll">
+              <view>
+                <block a:for="{{supplierCouponList}}" a:key="supplierCouponList">
+                  <view class="sellerCon sellerConNew js_sellerCon" couponId="${coupon.id}">
+                    <view class="conpon_po flex_view_row">
+                      <view class="conpon_saveArea flex_1 flex_view_col align_cen justi_cen">
+                        <view class="coupon_price flex_view_col" style="width: 100%;">
+                          <view class="coupon_value flex_view_row">
+                            <text class="conpon_dollar">￥<text class="conpon_num">{{item.costPrice}}</text></text>
 
+                          </view>
+                        </view>
+
+                        <view class="coupon_des" style="width: 100%;">
+                          <view class="conpon_term">
+                            满{{item.needPrice}}减{{item.costPrice}}</view>
+                        </view>
+
+
+                      </view>
+                      <view class="coupon_receiveArea flex_view_row justi_cen align_cen js_unreceive" data-sign="{{item.ruleSign}}" catchTap="drawCoupon">
+                        <view class="conpon_receive js_unreceive flex_view_col align_cen justi_cen">
+                          <view>立</view>
+                          <view>即</view>
+                          <view>领</view>
+                          <view>取</view>
+                        </view>
+                        <!-- 中间的分隔-->
+                        <view class="conpon_bg">
+                          <view class="topCircle"></view>
+                          <view class="middleLine"></view>
+                          <view class="bottomCircle"></view>
                         </view>
                       </view>
 
-                      <view class="coupon_des" style="width: 100%;">
-                        <view class="conpon_term">
-                          满{{item.needPrice}}减{{item.costPrice}}</view>
-                      </view>
-
-
                     </view>
-                    <view class="coupon_receiveArea flex_view_row justi_cen align_cen js_unreceive" data-sign="{{item.ruleSign}}" catchTap="drawCoupon">
-                      <view class="conpon_receive js_unreceive flex_view_col align_cen justi_cen">
-                        <view>立</view>
-                        <view>即</view>
-                        <view>领</view>
-                        <view>取</view>
-                      </view>
-                      <!-- 中间的分隔-->
-                      <view class="conpon_bg">
-                        <view class="topCircle"></view>
-                        <view class="middleLine"></view>
-                        <view class="bottomCircle"></view>
-                      </view>
-                    </view>
-
                   </view>
-                </view>
+                </block>
+              </view>
+
+            </scroll-view>
+          </view>
+        </view>
+
+        <!-- 商品列表 -->
+        <view class="supplierGoods whiteBack" a:if="{{introList && introList.length>0}}">
+          <!-- 标题 -->
+          <view class="storeCouponTit">
+            <text>商家推荐</text>
+          </view>
+          <!-- 商品列表 -->
+          <view class="suppplierGoodsList flex_view_row width_100">
+            <!-- 左边 -->
+            <view class="introGoods">
+              <!-- 商品列表 -->
+              <block a:for="{{introList}}" a:if="{{index % 2 == 0}}" a:key="itemIndexLeft">
+                <template is="itemGoodsCard" data="{{...item,left:true,baseImageUrl:baseImageUrl,type:'normal',baseLocImgUrl,smallImgArg}}"></template>
               </block>
             </view>
-
-          </scroll-view>
-        </view>
-      </view>
-
-      <!-- 商品列表 -->
-      <view class="supplierGoods whiteBack" a:if="{{introList && introList.length>0}}">
-        <!-- 标题 -->
-        <view class="storeCouponTit">
-          <text>商家推荐</text>
-        </view>
-        <!-- 商品列表 -->
-        <view class="suppplierGoodsList flex_view_row width_100">
-          <!-- 左边 -->
-          <view class="introGoods">
-            <!-- 商品列表 -->
-            <block a:for="{{introList}}" a:if="{{index % 2 == 0}}" a:key="itemIndexLeft">
-              <template is="itemGoodsCard" data="{{...item,left:true,baseImageUrl:baseImageUrl,type:'normal',baseLocImgUrl,smallImgArg}}"></template>
-            </block>
+            <!-- 右边 -->
+            <view class="introGoods">
+              <!-- 商品列表 -->
+              <block a:for="{{introList}}" a:if="{{index % 2 != 0}}" a:key="itemIndexRight">
+                <template is="itemGoodsCard" data="{{...item,left:false,baseImageUrl:baseImageUrl,type:'normal',baseLocImgUrl,smallImgArg}}"></template>
+              </block>
+            </view>
           </view>
-          <!-- 右边 -->
-          <view class="introGoods">
-            <!-- 商品列表 -->
-            <block a:for="{{introList}}" a:if="{{index % 2 != 0}}" a:key="itemIndexRight">
-              <template is="itemGoodsCard" data="{{...item,left:false,baseImageUrl:baseImageUrl,type:'normal',baseLocImgUrl,smallImgArg}}"></template>
-            </block>
+          <!--加载数据进度条-->
+          <view a:if="{{introContinue}}" class='loading_view'>
+            <image src='{{baseLocImgUrl}}miniappImg/loading/loading.gif' class='loading_gif'></image>
+            <text>加载中</text>
+          </view>
+
+          <!--没有更多-->
+          <view a:if="{{!introContinue}}" class='loading_view font-26 color-323232'>
+            没有更多了
           </view>
         </view>
-        <!--加载数据进度条-->
-        <view a:if="{{introContinue}}" class='loading_view'>
-          <image src='{{baseLocImgUrl}}miniappImg/loading/loading.gif' class='loading_gif'></image>
-          <text>加载中</text>
-        </view>
-
-        <!--没有更多-->
-        <view a:if="{{!introContinue}}" class='loading_view font-26 color-323232'>
-          没有更多了
-        </view>
       </view>
-    </view>
-    <view a:elif="{{bannerList.length<=0 && supplierCouponList.length<=0 && introList.length<=0 && storeAdsLoad && storeCouponLoad && storeCommendLoad}}" class="errorPage flex_view_col align_cen">
-      <image src="{{baseLocImgUrl}}miniappImg/loading/loadingpage_nodata.png" class="" mode="widthFix">
-      </image> 
-      <text class="">店铺正在升级中，敬请期待~</text>
-    </view>
+      <view a:elif="{{bannerList.length<=0 && supplierCouponList.length<=0 && introList.length<=0 && storeAdsLoad && storeCouponLoad && storeCommendLoad}}" class="errorPage flex_view_col align_cen">
+        <image src="{{baseLocImgUrl}}miniappImg/loading/loadingpage_nodata.png" class="" mode="widthFix">
+        </image> 
+        <text class="">店铺正在升级中，敬请期待~</text>
+      </view>
+    </block>
+    
   </view>
 
   <!-- 店铺全部商品页面 -->

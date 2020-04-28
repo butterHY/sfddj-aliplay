@@ -81,7 +81,7 @@ Component({
     // 更多
     moreShop() {
       // 友盟埋点--社区入口点击量, type为stoerList是进入社区店铺列表
-      my.uma.trackEvent('homepage_O2O_enter', { type: 'storeList' });
+      my.uma.trackEvent('homepage_O2O_click', { type: 'storeList' });
       my.navigateTo({
         url: '/community/pages/index/index',
       });
@@ -91,7 +91,7 @@ Component({
     goShop(e) {
       let shopId = e.target.dataset.shopid;
       // 友盟埋点--社区入口点击量, type为stoerList是进入社区店铺列表， store是进入店铺， goodsDetail是进入商品详情, shopId是店铺id
-      my.uma.trackEvent('homepage_O2O_enter', { type: 'store', shopId: shopId });
+      my.uma.trackEvent('homepage_O2O_click', { type: 'store', shopId: shopId });
       my.navigateTo({
         url: '/community/pages/shop/shop?id=' + shopId,
       });
@@ -101,7 +101,7 @@ Component({
     goDetail(e) {
       let {goodsId, shopId } = e.target.dataset;
       // 友盟埋点--社区入口点击量, type为stoerList是进入社区店铺列表， store是进入店铺， goodsDetail是进入商品详情, shopId是店铺id, goodsId为商品id
-      my.uma.trackEvent('homepage_O2O_enter', { type: 'goodsDetail', shopId, goodsId });
+      my.uma.trackEvent('homepage_O2O_click', { type: 'goodsDetail', shopId, goodsId });
       my.navigateTo({
         url: '/community/pages/goodsDetail/goodsDetail?goodsId=' + goodsId,
       });
