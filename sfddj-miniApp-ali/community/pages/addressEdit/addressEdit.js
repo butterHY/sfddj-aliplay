@@ -26,6 +26,8 @@ Page({
       address: '',
       locate: ''
     },
+
+    saveTapOff: false,   // 保存按钮次数控制
   },
   onLoad(e) {
     this.init(e);
@@ -96,7 +98,7 @@ Page({
         content: '保存成功',
         duration: 2000,
         success: () => {
-          my.navigateBack();
+          my.navigateBack(); 
         },
       });
     })
@@ -111,7 +113,7 @@ Page({
         content: '保存成功',
         duration: 2000,
         success: () => {
-          my.navigateBack();
+          my.navigateBack(); 
         },
       });
     })
@@ -149,6 +151,7 @@ Page({
     });
   },
 
+
   // 上传数据
   postAddress(isDefault, fn) {
     const _this = this;
@@ -166,7 +169,7 @@ Page({
         if (fn) fn();
       }
     }, (err) => {
-      //   保存失败
+      // 保存失败
       my.showToast({
         content: err
       });
@@ -214,6 +217,12 @@ Page({
     const _this = this;
     const reg = /^(1[2|3|4|5|6|7|8|9])[\d]{9}$/;   // 验证手机号码没有空格
     let _optAddr = this.data.optAddr;
+    let saveTapOff = this.data.saveTapOff;
+    
+    // 控制多次点击
+    if (saveTapOff)  return;
+    
+    _this.data.saveTapOff = true;
 
     // 联系人
     if (_optAddr.fullName.trim() == '' || !_optAddr.fullName) {
@@ -267,6 +276,7 @@ Page({
     }
 
     _this.postAddress(isTrue, function () {
+      // _this.data.saveTapOff = false;
       if (fn) fn();
     });
 

@@ -227,7 +227,9 @@ Page({
 		}
 		else {
 			_this.setData({
-				locInfo: userLocInfo
+				locInfo: userLocInfo,
+				isGetLocation: true,
+				isLocationLoad: false,
 			})
 			_this.locStoreShow();
 		}
