@@ -33,6 +33,10 @@ Page({
     this.init(e);
   },
 
+  onShow() {
+    this.data.saveTapOff = false;
+  },
+
   init(data) {
     const _this = this;
     const mydata = this.data;
