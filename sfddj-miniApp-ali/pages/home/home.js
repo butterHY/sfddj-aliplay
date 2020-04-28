@@ -497,10 +497,10 @@ Page({
 						for (var i = 0; i < resData.length; i++) {
 							resData[i].items = JSON.parse(resData[i].items);
 							// 为了避免运营乱配，删除一些不能显示的
-							if (resData[i].moduleType != 'BANNER_TYPE_1' && resData[i].moduleType != 'HEADLINE' && resData[i].moduleType != 'TUANGOU') {
-								if (resData[i].moduleType == "SECONDKILL") {
-									that.data.secondKillActivityId = resData[i].items[0].secondKillActivityId;
-								}
+							if ( resData[i].moduleType != 'BANNER_TYPE_1' && resData[i].moduleType != 'HEADLINE' && resData[i].moduleType != 'TUANGOU'  && resData[i].moduleType != "SECONDKILL" ) {
+								// if (resData[i].moduleType == "SECONDKILL") {
+								// 	that.data.secondKillActivityId = resData[i].items[0].secondKillActivityId;
+								// }
 								if (resData[i].moduleType == 'GOODS_WATERFALL') {
 									that.setData({
 										waterFallTitList: resData[i].items,
@@ -527,7 +527,7 @@ Page({
 						});
 						that.setData({
 							advertsArr: newResult,
-							secondKillActivityId: that.data.secondKillActivityId
+							// secondKillActivityId: that.data.secondKillActivityId
 						})
 
             that.checkAllComponent('start');
