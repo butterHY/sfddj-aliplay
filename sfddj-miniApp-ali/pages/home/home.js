@@ -113,6 +113,7 @@ Page({
 		let isSuccess = await that.getAdvertsModule();                  // 获取广告模板数据											
 		// isSuccess.type ? this.getTimes('isFirstTime') : '';          // 获取秒杀模板数据			---- 移到组件
 
+
 		// 定位中判断
 		let userLocInfo = getApp().globalData.userLocInfo;
 		if( userLocInfo && Object.keys(userLocInfo).length > 0) {
@@ -514,15 +515,6 @@ Page({
 									// console.log('全部广告模板请求成功，开始调用 getWaterFallGoodsList(0, 0)')
 									that.getWaterFallGoodsList(0, 0)
 								}
-
-                if( resData[i].moduleType == "NAVIGATION" ) {
-                  // console.log(resData[i]);
-                  resData[i].items.push({
-                    imageUrl:"user/admin/20200424/158772400863802553.jpg",
-                    link:"/pages/activities/lightMember/lightMember",
-                    linkType : "CUSTOM_LINK"
-                  });
-                }
 
 								newResult.push(resData[i]);
 							}

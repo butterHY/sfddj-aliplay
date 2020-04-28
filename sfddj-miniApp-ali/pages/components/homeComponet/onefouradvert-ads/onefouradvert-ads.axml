@@ -11,7 +11,7 @@
         <!-- 左边1 个 -->
         <view class="oneFourLeft">
           <view data-url="{{item.items[0].link}}" catchTap='goToPage' data-type="oneFour" data-index="0" class="height_auto">
-            <image src="{{baseImageUrl}}{{item.items[0].imageUrl}}" mode="widthFix" />
+            <image src="{{baseImageUrl}}{{item.items[0].imageUrl}}" />
           </view>
         </view>
         <!-- 右边 -->
@@ -19,21 +19,24 @@
           <!-- 上面 -->
           <view class="oneFourRight-t flex_1 flex_view_row">
             <view data-url="{{item.items[1].link}}" catchTap='goToPage' data-type="oneFour" data-index="1" class="imgView-r">
-              <image src="{{baseImageUrl}}{{item.items[1].imageUrl}}" mode="widthFix" />
+              <image src="{{baseImageUrl}}{{item.items[1].imageUrl}}"  class="all_100"/>
             </view>
             <view data-url="{{item.items[2].link}}" catchTap='goToPage' data-type="oneFour" data-index="2" class="imgView-l">
-              <image src="{{baseImageUrl}}{{item.items[2].imageUrl}}" mode="widthFix" />
+              <image src="{{baseImageUrl}}{{item.items[2].imageUrl}}" class="all_100"/>
             </view>
           </view>
           <!-- 下面 -->
           <view class="flex_1 flex_view_row">
             <view data-url="{{item.items[3].link}}" catchTap='goToPage' data-type="oneFour" data-index="3" class="imgView-r">
-              <image src="{{baseImageUrl}}{{item.items[3].imageUrl}}" mode="widthFix" />
+              <image src="{{baseImageUrl}}{{item.items[3].imageUrl}}"  class="all_100"/>
             </view>
             <view data-url="{{item.items[4].link}}" catchTap='goToPage' data-type="oneFour" data-index="4" class="imgView-l">
-              <image src="{{baseImageUrl}}{{item.items[4].imageUrl}}" mode="widthFix" />
-            </view>>
+              <image src="{{baseImageUrl}}{{item.items[4].imageUrl}}" class="all_100"/>
+            </view>
           </view>
         </view>
       </view>
     </view>
+
+
+ 

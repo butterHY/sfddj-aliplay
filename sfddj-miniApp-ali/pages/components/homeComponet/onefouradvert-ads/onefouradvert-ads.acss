@@ -41,6 +41,7 @@ image {
 
 .onefouradvert .oneFourRight {
   display: flex;
+  flex: 1;
   display:-webkit-box;
   display: -moz-box;
   display: -ms-flexbox;

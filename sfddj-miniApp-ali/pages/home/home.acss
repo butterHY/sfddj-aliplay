@@ -99,7 +99,7 @@
 }
 
 .home_describe {
-  background: #fff;
+  /* background: #fff; */
 }
 
 .bannerListSwiper {

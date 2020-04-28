@@ -9,11 +9,15 @@ Component({
   },
   props: {
     onGoToPage: (data) => console.log(data),
+    
+  },
+  onInit() {
   },
   didMount() {
     this.$page.navigationAds = this;
   },
-  didUpdate() {},
+  didUpdate() {
+  },
   didUnmount() {},
   methods: {
     goToPage(e) {
