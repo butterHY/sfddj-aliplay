@@ -127,27 +127,35 @@ Page({
   },
   onSearchConfirm(e) { // 提交搜索
     if(this.data.shop && this.data.searchVal) {
-      my.hideKeyboard();
-      this.$spliceData({items: [0]});
-      this.setData({
-        isSearch: true,
-        selectedCategoryId: -99
-      }, () => {
+      let searchVal = this.data.searchVal.replace(/%/g, '');
+      if(searchVal) {
+        my.hideKeyboard();
+        this.$spliceData({items: [0]});
         this.setData({
-          resultmsg: ''
-        });
-        this.shop.searchGoodsOfShop(this.shopId, this.data.searchVal, (res) => {
-          if(res && res.data && res.data.data) {
-            if(res.data.data.length > 0) {
-              this.$spliceData({items: [0, 0, ...res.data.data]});
-            } else {
-              this.setData({
-                resultmsg: '未搜索到相关产品~'
-              });
+          isSearch: true,
+          selectedCategoryId: -99,
+          searchVal: searchVal
+        }, () => {
+          this.setData({
+            resultmsg: ''
+          });
+          this.shop.searchGoodsOfShop(this.shopId, this.data.searchVal, (res) => {
+            if(res && res.data && res.data.data) {
+              if(res.data.data.length > 0) {
+                this.$spliceData({items: [0, 0, ...res.data.data]});
+              } else {
+                this.setData({
+                  resultmsg: '未搜索到相关产品~'
+                });
+              }
             }
-          }
+          });
         });
-      });
+      } else {
+        this.setData({
+          searchVal: searchVal
+        });
+      }
     }
   },
   onSearchClear() {
