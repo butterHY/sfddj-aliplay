@@ -137,7 +137,7 @@ Page({
         locInfo: res
       });
       // 设置缓存并设置全部变量的值 globalData.userLocInfo 
-      myApp.setLocStorage(_this.data.locInfo);
+      myApp.setLocStorage(res);
     });
 
     clearTimeout(_timer);

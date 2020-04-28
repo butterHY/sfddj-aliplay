@@ -151,6 +151,7 @@ App({
 	setLocStorage(data, fn) {
 		const _this = this;
 		// console.log('locAddr-setLocStorage', data )
+		data = {...data};
 		_this.globalData.userLocInfo = data;
 		if (fn) fn();
 		my.setStorage({
