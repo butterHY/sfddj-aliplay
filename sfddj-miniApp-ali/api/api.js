@@ -99,6 +99,8 @@ export default {
 		'SUPPPLIER_CATE_GOODS': '/m/g/1.0/category/supplierCategoryGoods',        //商家分类下的商品
 		'XN_CUSTOMER': '/m/c/m/customer/service/1.0/xnCustomer',                  //联系商家
 		'SEARCH_TEXT_MAX': '/m/g/1.0/search/1.0/supplier/searchTextMax',          // 搜索框内默认的词
+		'SPECIAL_SUBJECT': '/m/a/supplierSubjectPage/1.0/getSupplierFirstSubjectPage',//专题页面
+    'DRAW_COUPON': '/m/o/coupon/1.0/drawCoupon',                              // 领取优惠券接口
 	},
 
 	THEMATIC: {

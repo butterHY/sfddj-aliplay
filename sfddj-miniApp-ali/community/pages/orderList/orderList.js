@@ -92,6 +92,7 @@ Page({
         let setOrderList = 'orderList[0][' + index + ']';
         // let setOrderList = tabIndex == 0 ?  'orderList[' + index + ']' : 'pinOrderList[' + index + ']';
         let setCountList = 'countList[' + index + ']';
+        let setIsCounting = 'isCounting[0]';
         let setLoadingList = 'isLoadingList[' + tabIndex + '][' + index +']';
         let nowOrderList = orderList[0][index];
         limit = setLimit && setLimit > 10 ? setLimit + 1 : limit;
@@ -124,15 +125,17 @@ Page({
                 let result = res.data.data ? res.data.data : [];
                 let handleList = that.handleGoods(result);
                 result = handleList.goodsList;
-                let { countList } = handleList;
+                let { newCountList } = handleList;
                 let newestList = start == 0 ? Object.assign([], result) : orderList[tabIndex][index].concat(result);
-                let newestCountList = start == 0 ? Object.assign([], countList) : countList[index].concat(countList);
+                let newestCountList = start == 0 ? Object.assign([], newCountList) : countList[index].concat(newCountList);
+                index == 0 ? clearTimeout(this.data.allTimer) : clearTimeout(this.data.noPayTimer);
                 that.setData({
                     [setHasMore]: result.length >= limit ? true : false,
                     [setLoaded]: true,
                     [setOrderList]: newestList,
                     [setCountList]: newestCountList,
-                    [setLoadingList]: false
+                    [setLoadingList]: false,
+                    [setIsCounting]: false
                 })
                 that.isUseCountDown();
             }, err => {
@@ -233,7 +236,7 @@ Page({
         let that = this;
         let defaultImg = "https://img.sfddj.com/miniappImg/icon/icon_default_head.jpg";
         let goodsList = list && Object.keys(list).length > 0 ? list : [];
-        let countList = [];    //定时器列表
+        let newCountList = [];    //定时器列表
         let now = new Date().getTime();
         goodsList.forEach((val, i, arr) => {
             val.goodsImagePath = val.orderItemList[0] && Object.keys(val.orderItemList[0]).length > 0 ? val.orderItemList[0].goodsImagePath ? api.baseImageUrl + val.orderItemList[0].goodsImagePath : defaultImg : defaultImg;
@@ -242,13 +245,13 @@ Page({
             // 转换订单创建时间
             val.createDateStr = dateFmt.DateFormat.format(new Date(val.createDate), 'yyyy-MM-dd hh:mm');
 
-            val.createDate + 900000 - now > 0 ? countList.push(val.createDate + 900000 - now) : countList.push(0);
+            val.createDate + 900000 - now > 0 ? newCountList.push(val.createDate + 900000 - now) : newCountList.push(0);
 
 			val.linkUrl = `/community/pages/orderDetail/orderDetail?orderSn=${val.orderSn}`;
 
 
         })
-        return { goodsList, countList };
+        return { goodsList, newCountList };
     },
 
     // 处理拼团订单商品信息
@@ -314,7 +317,6 @@ Page({
             this.setData({
                 [setStart]: listLen
             })
-            console.log(tabIndex,index, listLen, this.data.startList)
             this.getOrderList();
         } else {
             return

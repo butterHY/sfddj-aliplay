@@ -27,13 +27,13 @@
                   <!-- 标签 -->
                   <view a:if="{{goodsListItem.goodsLabel}}" class="verpromotionHot flex_view_col">
                     <text class="verPromotionHot_txt">{{goodsListItem.goodsLabel}}</text>
-                    <image mode="widthFix" src="https://img.sfddj.com/miniappImg/more/hotIcon.png" class="width_100"/>
+                    <image mode="widthFix" src="https://img.sfddj.com/miniappImg/more/hotIcon.png" class="width_100 iconHotBot"/>
                   </view>
                 </view>
                 <!-- 商品信息 -->
                 <view class="width_100 goodsPriceInfo">
                   <!-- 商品名称 -->
-                  <view class="single-line font-30 lineH_40r">{{goodsListItem.goodsName}}</view>
+                  <view class="single-line font-30 lineH_40r"><text class="promotionHotIcon" a:if="{{goodsListItem.goodsLabel}}">{{goodsListItem.goodsLabel}}</text>{{goodsListItem.goodsName}}</view>
                   <!-- 副标题 -->
                   <view class="smallFont-tip">{{goodsListItem.goodsName}}</view>
                   <!-- 价格 -->
@@ -57,12 +57,12 @@
                   <!-- 标签 -->
                   <view a:if="{{goodsListItem.goodsLabel}}" class="verpromotionHot flex_view_col">
                     <text class="verPromotionHot_txt">{{goodsListItem.goodsLabel}}</text>
-                    <image mode="widthFix" src="https://img.sfddj.com/miniappImg/more/hotIcon.png" class="width_100"/>
+                    <image mode="widthFix" src="https://img.sfddj.com/miniappImg/more/hotIcon.png" class="width_100 iconHotBot"/>
                   </view>
                 </view>
                 <view style="display:flex; flex-direction:column;justify-content:space-between;position:absolute;top:10rpx;left:240rpx;bottom:10rpx;right:10rpx;">
                   <view class="single-line flex_view_col">
-                    <view class="font-30 color-323232 single-line">{{goodsListItem.goodsName}}</view>
+                    <view class="font-30 color-323232 single-line"><text class="promotionHotIcon" a:if="{{goodsListItem.goodsLabel}}">{{goodsListItem.goodsLabel}}</text>{{goodsListItem.goodsName}}</view>
                     <view a:if="{{goodsListItem.goodsTitle}}" style="display:block;margin-top:10rpx;" class="font-26 color-bbbbbb single-line">{{goodsListItem.goodsTitle}}</view>
                   </view>
                   <view style="max-width:350rpx" class="font-30 font-weight-500 single-line color-bbbbbb flex_view_row algin_cen">
@@ -87,12 +87,12 @@
                     <!-- 标签 -->
                     <view a:if="{{goodsListItem.goodsLabel}}" class="verpromotionHot flex_view_col">
                       <text class="verPromotionHot_txt">{{goodsListItem.goodsLabel}}</text>
-                      <image src="https://img.sfddj.com/miniappImg/more/hotIcon.png" class="blockBox iconHot"/>
+                      <image src="https://img.sfddj.com/miniappImg/more/hotIcon.png" class="blockBox iconHotBot"/>
                     </view>
                   </view>
                   <view class="goodsInfo height_176r notAtHome">
                     <view class='single-line flex_view_col height_80r'>
-                      <text class='font-26 color-323232 single-line-text lineH_2'>{{goodsListItem.goodsName}}</text>
+                      <text class='font-26 color-323232 single-line-text lineH_2m'><text class="promotionHotIcon" a:if="{{goodsListItem.goodsLabel}}">{{goodsListItem.goodsLabel}}</text>{{goodsListItem.goodsName}}</text>
                       <text class='font-26 color-bbbbbb single-line-text goods_productName'>{{goodsListItem.productName}}</text>
                     </view>
                     <view class="goodsPriceBox">
@@ -112,12 +112,12 @@
                     <!-- 标签 -->
                     <view a:if="{{goodsListItem.goodsLabel}}" class="verpromotionHot flex_view_col">
                       <text class="verPromotionHot_txt">{{goodsListItem.goodsLabel}}</text>
-                      <image mode="widthFix" src="https://img.sfddj.com/miniappImg/more/hotIcon.png" class="width_100 blockBox"/>
+                      <image mode="widthFix" src="https://img.sfddj.com/miniappImg/more/hotIcon.png" class="width_100 iconHotBot"/>
                     </view>
                   </view>
                   <view class="goodsInfo height_176r notAtHome">
                     <view class='single-line flex_view_col height_80r'>
-                      <text class='font-26 color-323232 single-line-text lineH_2'>{{goodsListItem.goodsName}}</text>
+                      <text class='font-26 color-323232 single-line-text lineH_2m'><text class="promotionHotIcon" a:if="{{goodsListItem.goodsLabel}}">{{goodsListItem.goodsLabel}}</text>{{goodsListItem.goodsName}}</text>
                       <text class='font-26 color-bbbbbb single-line-text goods_productName'>{{goodsListItem.productName}}</text>
                     </view>
                     <view class="goodsPriceBox">
@@ -138,7 +138,7 @@
       <!-- 图片内容 -->
       <block a:for="{{item.parseItem}}" a:for-item="oneAdsItem">
         <view class='oneAds_con {{item.spacing == 1 ? "marBot_20" : ""}}' style="background: #{{item.backgroundColor}};">
-          <view class="width_100" data-url="{{oneAdsItem.link}}" onTap="goToPage">
+          <view class="width_100" data-url="{{oneAdsItem.link}}" onTap="goToPage" data-page="{{oneAdsItem.pageType}}" data-linkType="{{oneAdsItem.linkType}}">
             <image mode="widthFix" src="{{baseImageUrl + oneAdsItem.imageUrl}}" class="width_100 blockBox"/>
           </view>
         </view>
@@ -152,11 +152,11 @@
       <view class="oneAds_con flex_view_row {{item.spacing == 1 ? 'marBot_20' : ''}}" style="background: #{{item.backgroundColor ? item.backgroundColor : 'FFFFFF'}};">
         <!-- 左边 width: 50%;-->
         <view class="flex_1" style="padding-right: 5rpx; box-sizing: border-box;">
-          <image data-url="{{item.parseItem[0].link}}" onTap="goToPage" mode="widthFix" src="{{baseImageUrl + item.parseItem[0].imageUrl}}" class="width_100 blockBox"/>
+          <image data-url="{{item.parseItem[0].link}}" onTap="goToPage" data-page="{{item.parseItem[0].pageType}}" data-linkType="{{item.parseItem[0].linkType}}" mode="widthFix" src="{{baseImageUrl + item.parseItem[0].imageUrl}}" class="width_100 blockBox"/>
         </view>
         <!-- 右边  width: 50%;-->
         <view class="flex_1" style="padding-left: 5rpx; box-sizing: border-box;">
-          <image data-url="{{item.parseItem[1].link}}" onTap="goToPage" mode="widthFix" src="{{baseImageUrl + item.parseItem[1].imageUrl}}" class="width_100 blockBox"/>
+          <image data-url="{{item.parseItem[1].link}}" onTap="goToPage" data-page="{{item.parseItem[1].pageType}}" data-linkType="{{item.parseItem[1].linkType}}" mode="widthFix" src="{{baseImageUrl + item.parseItem[1].imageUrl}}" class="width_100 blockBox"/>
         </view>
       </view>
     </view>
@@ -169,7 +169,7 @@
         <view class="width_100 flex_view_row">
           <!-- 左边 -->
           <view class="width_50 marRight_5">
-            <view open-type="navigate" class='height_auto' onTap='goToPage' data-type="oneTwo" data-index="0" data-url="{{item.parseItem[0].link}}">
+            <view open-type="navigate" class='height_auto' onTap='goToPage' data-page="{{item.parseItem[0].pageType}}" data-linkType="{{item.parseItem[0].linkType}}" data-type="oneTwo" data-index="0" data-url="{{item.parseItem[0].link}}">
               <!-- {{baseImageUrl}}{{item.items[0].imageUrl}} -->
               <image src="{{baseImageUrl + item.parseItem[0].imageUrl}}" mode="widthFix" class="width_100" />
             </view>
@@ -177,13 +177,13 @@
           <!-- 右边 -->
           <view class="flex_1 marLeft_5 flex_view_col">
             <view class="flex_1 marBot_10">
-              <view class="height_auto" data-url="{{item.parseItem[1].link}}" onTap='goToPage' data-type="oneTwo" data-index="1" open-type='navigate' hover-class="none">
+              <view class="height_auto" data-url="{{item.parseItem[1].link}}" onTap='goToPage' data-page="{{item.parseItem[1].pageType}}" data-linkType="{{item.parseItem[1].linkType}}" data-type="oneTwo" data-index="1" open-type='navigate' hover-class="none">
                 <!-- {{baseImageUrl}}{{item.items[1].imageUrl}} -->
                 <image src="{{baseImageUrl + item.parseItem[1].imageUrl}}" mode="widthFix" class="width_100" />
               </view>
             </view>
             <view class="flex_1">
-              <view class="height_auto" data-url="{{item.parseItem[2].link}}" onTap='goToPage' data-type="oneTwo" data-index="2" open-type='navigate' hover-class="none">
+              <view class="height_auto" data-url="{{item.parseItem[2].link}}" onTap='goToPage' data-page="{{item.parseItem[2].pageType}}" data-linkType="{{item.parseItem[2].linkType}}" data-type="oneTwo" data-index="2" open-type='navigate' hover-class="none">
                 <!-- {{baseImageUrl}}{{item.items[2].imageUrl}} -->
                 <image src="{{baseImageUrl + item.parseItem[2].imageUrl}}" mode="widthFix" class="width_100" />
               </view>
@@ -200,7 +200,7 @@
       <view class="flex_view_row oneAds_con {{item.spacing == 1 ? 'marBot_20' : ''}}" style='background-color: {{item.backgroundColor ? "#" + item.backgroundColor : "#ffffff"}}'>
         <!-- 左边1 个 -->
         <view class="oneFourLeft">
-          <view data-url="{{item.parseItem[0].link}}" onTap='goToPage' data-type="oneFour" data-index="0" open-type='navigate' hover-class="none" class="height_auto">
+          <view data-url="{{item.parseItem[0].link}}" onTap='goToPage' data-page="{{item.parseItem[0].pageType}}" data-linkType="{{item.parseItem[0].linkType}}" data-type="oneFour" data-index="0" open-type='navigate' hover-class="none" class="height_auto">
             <!-- {{baseImageUrl}}{{item.items[0].imageUrl}} -->
             <image src="{{baseImageUrl + item.parseItem[0].imageUrl}}" mode="widthFix" class="width_100"/>
           </view>
@@ -210,13 +210,13 @@
           <!-- 上面 -->
           <view class="flex_1 flex_view_row marBot_6">
             <!--<view class="flex_1 marRight_3"> -->
-            <view data-url="{{item.parseItem[1].link}}" onTap='goToPage' data-type="oneFour" data-index="1" open-type="navigate" hover-class="none" class="height_auto flex_1 marRight_3">
+            <view data-url="{{item.parseItem[1].link}}" onTap='goToPage' data-page="{{item.parseItem[1].pageType}}" data-linkType="{{item.parseItem[1].linkType}}" data-type="oneFour" data-index="1" open-type="navigate" hover-class="none" class="height_auto flex_1 marRight_3">
               <!-- {{baseImageUrl}}{{item.items[1].imageUrl}} -->
               <image src="{{baseImageUrl + item.parseItem[1].imageUrl}}" mode="widthFix" class="width_100" />
             </view>
             <!--</view> -->
             <!--<view class="flex_1" style='margin-left: 3rpx;'> -->
-            <view data-url="{{item.parseItem[2].link}}" onTap='goToPage' data-type="oneFour" data-index="2" open-type="navigate" hover-class="none" class="height_auto flex_1 marLeft_3">
+            <view data-url="{{item.parseItem[2].link}}" onTap='goToPage' data-page="{{item.parseItem[2].pageType}}" data-linkType="{{item.parseItem[2].linkType}}" data-type="oneFour" data-index="2" open-type="navigate" hover-class="none" class="height_auto flex_1 marLeft_3">
               <!-- {{baseImageUrl}}{{item.items[2].imageUrl}} -->
               <image src="{{baseImageUrl + item.parseItem[2].imageUrl}}" mode="widthFix" class="width_100" />
             </view>
@@ -225,13 +225,13 @@
           <!-- 下面 -->
           <view class="flex_1 flex_view_row">
             <!--<view class="flex_1" style='margin-right: 3rpx;'> -->
-            <view data-url="{{item.parseItem[3].link}}" onTap='goToPage' data-type="oneFour" data-index="3" open-type="navigate" hover-class="none" class="height_auto flex_1 marRight_3">
+            <view data-url="{{item.parseItem[3].link}}" onTap='goToPage' data-page="{{item.parseItem[3].pageType}}" data-linkType="{{item.parseItem[3].linkType}}" data-type="oneFour" data-index="3" open-type="navigate" hover-class="none" class="height_auto flex_1 marRight_3">
               <!-- {{baseImageUrl}}{{item.items[3].imageUrl}} -->
               <image src="{{baseImageUrl + item.parseItem[3].imageUrl}}" mode="widthFix" class="width_100" />
             </view>
             <!--</view> -->
             <!--<view class="flex_1" style='margin-left: 3rpx;'> -->
-            <view data-url="{{item.parseItem[4].link}}" onTap='goToPage' data-type="oneFour" data-index="4" open-type="navigate" hover-class="none" class="height_auto flex_1 marLeft_3">
+            <view data-url="{{item.parseItem[4].link}}" onTap='goToPage' data-page="{{item.parseItem[4].pageType}}" data-linkType="{{item.parseItem[4].linkType}}" data-type="oneFour" data-index="4" open-type="navigate" hover-class="none" class="height_auto flex_1 marLeft_3">
               <!-- {{baseImageUrl}}{{item.items[4].imageUrl}} -->
               <image src="{{baseImageUrl + item.parseItem[4].imageUrl}}" mode="widthFix" class="width_100" />
             </view>
@@ -270,7 +270,7 @@
                     <!-- 标签 -->
                     <view a:if="{{groupItem.goodsLabel}}" class="verpromotionHot flex_view_col">
                       <text class="verPromotionHot_txt">{{groupItem.goodsLabel}}</text>
-                      <image mode="widthFix" src="https://img.sfddj.com/miniappImg/more/hotIcon.png" class="width_100"/>
+                      <image mode="widthFix" src="https://img.sfddj.com/miniappImg/more/hotIcon.png" class="width_100 iconHotBot"/>
                     </view>
                   </view>
                   <!--小图标 全赔  -->
@@ -279,7 +279,7 @@
                   <image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff3.png" class=" posi_ab littleIcon" a:elif="{{filters.strIndexOf(groupItem.afterSaleGuee,'3')}}"></image>
                   <image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff4.png" class=" posi_ab littleIcon" a:elif="{{filters.strIndexOf(groupItem.afterSaleGuee,'4')}}"></image>
                   <view class="width_100 marTop_15 padRL_10">
-                    <view class="font-30 single-line width_100">{{groupItem.goodsName}}</view>
+                    <view class="font-30 single-line width_100"><text class="promotionHotIcon" a:if="{{goodsListItem.goodsLabel}}">{{goodsListItem.goodsLabel}}</text>{{groupItem.goodsName}}</view>
                     <view class="font-26 color-a1a0a0 single-line width_100 marTop_5">{{groupItem.productName}}</view>
                     <view class="font-32 color-ff5353 single-line width_100 font-weight-600">￥{{groupItem.salePrice}}</view>
                   </view>
@@ -299,14 +299,14 @@
         <swiper class="" indicator-dots="{{item.parseItem.length > 5 ? 'true' : ''}}" indicator-active-color='rgba(255,83,83.1)' interval="{{interval}}" duration="{{duration}}" data-fatherIndex="{{index}}" onChange="adsSwiper">
           <swiper-item class="flex_view_row">
             <block a:for="{{item.parseItem}}" a:for-index="idx" a:for-item="adsItem">
-              <view a:if='{{idx< 5}}' data-url="{{adsItem.link}}" onTap='goToPage' open-type="navigate" hover-class="none" class='{{item.parseItem.length > 4 ? "width_20" : "width_25"}}' style='height: {{item.parseItem.length > 4 ? "167rpx" : "187rpx"}}'>
+              <view a:if='{{idx< 5}}' data-url="{{adsItem.link}}" onTap='goToPage' data-page="{{adsItem.pageType}}" data-linkType="{{adsItem.linkType}}" open-type="navigate" hover-class="none" class='{{item.parseItem.length > 4 ? "width_20" : "width_25"}}' style='height: {{item.parseItem.length > 4 ? "167rpx" : "187rpx"}}'>
                 <image src="{{baseImageUrl}}{{adsItem.imageUrl}}" class="all_100" />
               </view>
             </block>
           </swiper-item>
           <swiper-item a:if='{{item.parseItem.length > 5}}' class="flex_view_row">
             <block a:for="{{item.parseItem}}" a:for-index="idx" a:for-item="adsItem">
-              <view style='height: 167rpx;' a:if='{{idx > 4}}' data-url="{{adsItem.link}}" onTap='goToPage' open-type="navigate" hover-class="none" class='width_20'>
+              <view style='height: 167rpx;' a:if='{{idx > 4}}' data-url="{{adsItem.link}}" onTap='goToPage' data-page="{{adsItem.pageType}}" data-linkType="{{adsItem.linkType}}" open-type="navigate" hover-class="none" class='width_20'>
                 <image src="{{baseImageUrl}}{{adsItem.imageUrl}}" class="all_100" />
               </view>
             </block>
@@ -323,14 +323,14 @@
         <swiper indicator-dots="{{item.parseItem.length > 5 ? 'true' : ''}}" indicator-active-color='rgba(255,83,83.1)' autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" display-multiple-items='5' data-fatherIndex="{{index}}" onChange="adsSwiper">
           <swiper-item class="flex_view_row">
             <block a:for="{{item.parseItem}}" a:for-index="idx" a:for-item="adsItem">
-              <view a:if='{{idx< 5}}' data-url="{{adsItem.link}}" onTap='goToPage' open-type="navigate" hover-class="none" class='{{item.parseItem.length > 4 ? "width_20" : "width_25"}}' style='height: {{item.parseItem.length > 4 ? "167rpx" : "214rpx"}}'>
+              <view a:if='{{idx< 5}}' data-url="{{adsItem.link}}" onTap='goToPage' data-page="{{adsItem.pageType}}" data-linkType="{{adsItem.linkType}}" open-type="navigate" hover-class="none" class='{{item.parseItem.length > 4 ? "width_20" : "width_25"}}' style='height: {{item.parseItem.length > 4 ? "167rpx" : "214rpx"}}'>
                 <image src="{{baseImageUrl}}{{adsItem.imageUrl}}" class="all_100" />
               </view>
             </block>
           </swiper-item>
           <swiper-item a:if='{{item.parseItem.length > 5}}' class="flex_view_row">
             <block a:for="{{item.parseItem}}" a:for-index="idx" a:for-item="adsItem">
-              <view style='height: 167rpx;' a:if='{{idx > 4}}' data-url="{{adsItem.link}}" onTap='goToPage' open-type="navigate" hover-class="none" class='width_20'>
+              <view style='height: 167rpx;' a:if='{{idx > 4}}' data-url="{{adsItem.link}}" onTap='goToPage' data-page="{{adsItem.pageType}}" data-linkType="{{adsItem.linkType}}" open-type="navigate" hover-class="none" class='width_20'>
                 <image src="{{baseImageUrl}}{{adsItem.imageUrl}}" class="all_100" />
               </view>
             </block>
@@ -346,7 +346,7 @@
       <view class='goodsAndAdCon {{item.spacing == 1 ? "marBot_20" : ""}}' style='background-color: {{item.backgroundColor ? "#" + item.backgroundColor : "#ffffff"}}'>
         <!-- 1个图 -->
         <view>
-          <view data-url="{{item.parseItem[0].link}}" onTap='goToPage' open-type="navigate" hover-class="none" class="width_100 height_auto">
+          <view data-url="{{item.parseItem[0].link}}" onTap='goToPage' data-page="{{item.parseItem[0].pageType}}" data-linkType="{{item.parseItem[0].linkType}}" open-type="navigate" hover-class="none" class="width_100 height_auto">
             <image src="{{baseImageUrl}}{{item.parseItem[0].imageUrl}}" mode="widthFix" class="width_100" />
           </view>
         </view>
@@ -361,7 +361,7 @@
                     <!-- 标签 -->
                     <view a:if="{{groupItem.goodsLabel}}" class="verpromotionHot flex_view_col">
                       <text class="verPromotionHot_txt">{{groupItem.goodsLabel}}</text>
-                      <image mode="widthFix" src="https://img.sfddj.com/miniappImg/more/hotIcon.png" class="width_100"/>
+                      <image mode="widthFix" src="https://img.sfddj.com/miniappImg/more/hotIcon.png" class="width_100 iconHotBot"/>
                     </view>
                   </view>
                   <!--小图标 全赔  -->
@@ -370,7 +370,7 @@
                   <image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff3.png" class=" posi_ab littleIcon" a:elif="{{filters.strIndexOf(groupItem.afterSaleGuee,'3')}}"></image>
                   <image src="{{baseLocImgUrl}}miniappImg/icon/icon_Payoff4.png" class=" posi_ab littleIcon" a:elif="{{filters.strIndexOf(groupItem.afterSaleGuee,'4')}}"></image>
                   <view class="width_100 marTop_15 padRL_10">
-                    <view class="font-30 item-goods-scrollx-text width_100">{{groupItem.goodsName}}</view>
+                    <view class="font-30 item-goods-scrollx-text width_100"><text class="promotionHotIcon" a:if="{{goodsListItem.goodsLabel}}">{{goodsListItem.goodsLabel}}</text>{{groupItem.goodsName}}</view>
                     <view class="font-26 color-a1a0a0 item-goods-scrollx-text width_100 marTop_5">{{groupItem.productName}}</view>
                     <view class="font-32 color-ff5353 item-goods-scrollx-text width_100 font-weight-600">￥{{groupItem.salePrice}}</view>
                   </view>
@@ -390,7 +390,7 @@
         <swiper style="heigth: 260rpx;" indicator-dots="{{indicatorDots}}" next-margin="{{banRightMargin}}px" autoplay="{{true}}" interval="3000" duration="1000" circular="true" data-type="autoplay" data-fatherIndex="{{index}}">
           <block a:for="{{item.parseItem}}" a:for-index="idx" a:for-item="bannerItem">
             <swiper-item class="bannerSwiper">
-              <view class="bannerSwiper" data-url="{{bannerItem.link}}" open-type="navigate" onTap='goToPage' hover-class="width_100 bannerNav">
+              <view class="bannerSwiper" data-url="{{bannerItem.link}}" open-type="navigate" onTap='goToPage' data-page="{{bannerItem.pageType}}" data-linkType="{{bannerItem.linkType}}" hover-class="width_100 bannerNav">
                 <image src="{{baseImageUrl}}{{bannerItem.imageUrl}}" class="width_100 bannerSwiper"/>
               </view>
             </swiper-item>
@@ -420,5 +420,75 @@
           </view>
         </view>
     </view>
+
+    <!--2+4模块-->
+    <view a:if='{{item.moduleType == "TWOFOURADVERT"}}'>
+      <view class="ads_space" style="background: #{{item.topIntervalColor}}"></view>
+      <!-- 内容 -->
+      <view class="flex_view_col oneAds_con {{item.spacing == 1 ? 'marBot_20' : ''}}" style='background-color: {{item.backgroundColor ? "#" + item.backgroundColor : "#ffffff"}}'>
+        <!-- 上边2个 -->
+        <view class="flex_1 flex_view_row width_100 twoAndFourTop">
+          <view a:if="{{index<=1}}" a:for="{{item.parseItem}}" a:key="twoAndFourTop" a:for-item="topItem" data-url="{{topItem.link}}" onTap="goToPage" data-page="{{topItem.pageType}}" data-linkType="{{topItem.linkType}}" data-type="twoFour" data-index="{{index}}" open-type="navigate" hover-class="none" class="height_auto flex_1 twoArea"> 
+            <image src="{{baseImageUrl + topItem.imageUrl}}" mode="widthFix" class="width_100" />
+          </view>
+        </view>
+        <!-- 下边4个 -->
+        <view class=" flex_view_row width_100 twoAndFourbot">
+          <view a:if="{{index>1}}" a:for="{{item.parseItem}}" a:key="twoAndFourBot" a:for-item="adsItem" data-url="{{adsItem.link}}" onTap="goToPage" data-page="{{adsItem.pageType}}" data-linkType="{{adsItem.linkType}}" data-type="twoFour" data-index="{{index}}" open-type="navigate" hover-class="none" class="height_auto flex_1 fourArea"> 
+            <image src="{{baseImageUrl + adsItem.imageUrl}}" mode="widthFix" class="width_100" />
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 专题页优惠券模块 -->
+    <view a:if='{{item.moduleType == "COUPON"}}'>
+      <view class="ads_space" style="background: #{{item.topIntervalColor}}"></view>
+      <!-- 内容 -->
+      <view class="oneAds_con {{item.spacing == 1 ? 'marBot_20' : ''}}" style='background-color: {{item.backgroundColor ? "#" + item.backgroundColor : "#ffffff"}}'>
+        <!-- 一张优惠券 -->
+        <block a:if="{{item.parseItem.length==1}}" a:for="{{item.parseItem}}" a:key="oneAds" a:for-item="oneAdsItem">
+          <view class='oneAds_con {{item.spacing == 1 ? "marBot_20" : ""}}' style="background: #{{item.backgroundColor}};">
+            <view class="width_100" onTap="getSpecialCoupon" data-couponSign="{{oneAdsItem.couponSign}}">
+              <image mode="widthFix" src="{{baseImageUrl + oneAdsItem.imageUrl}}" class="width_100 blockBox"/>
+            </view>
+          </view>
+        </block>
+        <!-- 两张优惠券 -->
+        <view class="width_100 flex_view_row" a:if="{{item.parseItem.length==2}}">
+          <!-- 左边 width: 50%;-->
+          <view class="flex_1" style="padding-right: 5rpx; box-sizing: border-box;">
+            <image onTap="getSpecialCoupon" data-couponSign="{{item.parseItem[0].couponSign}}" mode="widthFix" src="{{baseImageUrl + item.parseItem[0].imageUrl}}" class="width_100 blockBox"/>
+          </view>
+          <!-- 右边 -->
+          <view class="flex_1" style="padding-left: 5rpx; box-sizing: border-box;">
+            <image onTap="getSpecialCoupon" data-couponSign="{{item.parseItem[1].couponSign}}" mode="widthFix" src="{{baseImageUrl + item.parseItem[1].imageUrl}}" class="width_100 blockBox"/>
+          </view>
+        </view>
+        <!-- 三张优惠券 -->
+        <view class="width_100 flex_view_row" a:if="{{item.parseItem.length==3}}">
+          <!-- 左边 -->
+          <view class="width_50 marRight_5">
+            <view open-type="navigate" class='height_auto' onTap='getSpecialCoupon' data-couponSign="{{item.parseItem[0].couponSign}}" data-type="oneTwo" data-index="0">
+              <image src="{{baseImageUrl + item.parseItem[0].imageUrl}}" mode="widthFix" class="width_100" />
+            </view>
+          </view>
+          <!-- 右边 -->
+          <view class="flex_1 marLeft_5 flex_view_col">
+            <view class="flex_1 marBot_10">
+              <view class="height_auto" onTap='getSpecialCoupon' data-couponSign="{{item.parseItem[1].couponSign}}" data-type="oneTwo" data-index="1" open-type='navigate' hover-class="none">
+                <image src="{{baseImageUrl + item.parseItem[1].imageUrl}}" mode="widthFix" class="width_100" />
+              </view>
+            </view>
+            <view class="flex_1">
+              <view class="height_auto" onTap='getSpecialCoupon' data-couponSign="{{item.parseItem[2].couponSign}}" data-type="oneTwo" data-index="2" open-type='navigate' hover-class="none">
+                <image src="{{baseImageUrl + item.parseItem[2].imageUrl}}" mode="widthFix" class="width_100" />
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
   </view>
 </template>

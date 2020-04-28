@@ -171,7 +171,9 @@ Page({
 		const _this = this;
 		let app = getApp();
 		let userLocInfo = app.globalData.userLocInfo;
+
 		if (this.jsonNull(userLocInfo) == 0) {
+
 			locAddr.location((res) => {
 				_this.setData({
 					locInfo: res,
@@ -193,7 +195,9 @@ Page({
 		}
 		else {
 			_this.setData({
-				locInfo: userLocInfo
+				locInfo: userLocInfo,
+				isGetLocation: true,
+				isLocationLoad: false,
 			})
 			_this.locStoreShow();
 		}
@@ -210,7 +214,9 @@ Page({
 	 * 检测json是否为空
 	 */
 	jsonNull(json) {
+
 		let num = 0;
+
 		for (let i in json) {
 			num++;
 		}

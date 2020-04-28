@@ -17,7 +17,8 @@ Page({
         typeIndex: 0,
         loadComplete: false,       //是否加载完成 
         loadFail: false,           //是否加载失败
-        orderModalOpened: false
+        orderModalOpened: false,
+        timeStatus: 'end',         //默认是订单时间超过3小时
     },
     onLoad(options) {
         let { orderSn } = options;
@@ -55,6 +56,8 @@ Page({
                 that.noPayCount(result.createDate);
             }
             this.setGoodsInfo(result);
+            // 判断显不显示退款按钮
+            this.isShowAfterSale(result);
             this.setData({
                 result,
                 goodsList: result.items,
@@ -107,6 +110,32 @@ Page({
         }
     },
 
+    // 判断是否显示要显示退款按钮
+    isShowAfterSale(result) {
+        // 如果是还没配送的, 但已付款的
+        if (result.orderStatus == 'PAYFINISH') {
+            let timeStatus = this.timeSpan(result.createDate);
+            this.setData({
+                timeStatus
+            })
+        }
+    },
+
+    // 判断现在的时间与订单时间的差距
+    timeSpan(createDate) {
+        let nowTime = new Date().getTime();
+        let withinTenMins = createDate + 600000;   // 10分钟内的时间
+        let within3hours = createDate + 10800000;   // 3小时内的时间
+        // 10分钟内可系统退款
+        if (nowTime < withinTenMins) {
+            return 'tenMins';
+        } else if (nowTime < within3hours) {  //3小时内未配送可申请退款
+            return '3Hours';
+        } else {
+            return 'end';
+        }
+    },
+
     //倒计时
     countDown() {
         let that = this;
@@ -155,8 +184,21 @@ Page({
 
     // 退款
     returnTap() {
+        let { createDate } = this.data.result;
         this.confirmPop({
             content: '确认申请退款吗？', callback: () => {
+                let timeStatus = this.timeSpan(createDate);
+                // 可系统直接退款
+                if(timeStatus == 'tenMins') {
+
+                } else if(timeStatus == '3Hours') {   //跳去申请售后页
+                    
+                } else {
+                    // 不能退款，提示；
+                    my.showToast({
+                        content: '暂无法退款，可联系商家'
+                    })
+                }
             }
         })
     },

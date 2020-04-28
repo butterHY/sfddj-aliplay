@@ -99,14 +99,30 @@ Page({
       my.call('startApp', { appId: '20000067', param: { url: url, chInfo: chInfo } })
     }
     else {
+      if (this.isTabPageUrl(url)) {
+        my.switchTab({
+          url: url
+        });
+      } else {
 
-      my.navigateTo({
-        url: url
-      });
+        my.navigateTo({
+          url: url
+        });
+      }
     }
 
 
 
+  },
+
+  // 判断是否是四个tab页
+  isTabPageUrl(link = '') {
+    let url = link;
+    if (url.indexOf('pages/home/home') > -1 || url.indexOf('pages/category/category') > -1 || url.indexOf('pages/cart/cart') > -1 || url.indexOf('pages/user/user') > -1) {
+      return true;
+    } else {
+      return false
+    }
   },
 
 

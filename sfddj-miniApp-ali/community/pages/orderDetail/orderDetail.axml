@@ -98,7 +98,7 @@
 				<view class="toPayBtn orderStatusBtn" data-orderSn="{{orderSn}}" data-tradeNo="{{result.tradeNo}}" onTap="toPayNow">去支付</view>
 			</block>
 			<!-- 退款  --第一期先不做 -->
-			<!--<view a:if="{{result.orderStatus == 'PAYFINISH'}}" class="returnBtn orderStatusBtn" onTap="returnTap">退款</view> -->
+			<view a:if="{{result.orderStatus == 'PAYFINISH' && timeStatus != 'end'}}" class="returnBtn orderStatusBtn" onTap="returnTap">退款</view>
 		</view>
 	</view>
 	<!-- 商品信息 -->
