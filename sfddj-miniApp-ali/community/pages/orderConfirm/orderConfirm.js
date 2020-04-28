@@ -34,6 +34,7 @@ Page({
         orderModalOpened: false,    //订单3小时后确认提示
         orderSn: '',
         activityId: '',
+        isShowSaleout: false,       //是否提醒过已售罄
     },
     onLoad(options) {
         let { shopid, recordId, skuId, quantity, activityId } = options;
@@ -120,6 +121,7 @@ Page({
                 let noneStoreIdList = [];
 				let deliveryFee = result.deliveryOutGratis && result.deliveryOutGratis > 0 ? (result.deliveryFee && result.price < result.deliveryOutGratis ? result.deliveryFee : 0) : result.deliveryFee ;
 				let totalPrice = this.data.totalPrice > 0 && this.data.totalPrice == result.price ? this.data.totalPrice : result.price;
+                let shopTotalPrice = this.data.shopTotalPrice > 0 && result.price == this.data.shopTotalPrice ? this.data.shopTotalPrice : result.price;
                 shopCartList.forEach((val, i, arr) => {
                     val.goodsImagePath = this.data.baseImageUrl + val.productImg;
                     val.salePrice = val.price;
@@ -132,7 +134,7 @@ Page({
                     }
                     // 如果是最后一个
                     if (i == shopCartList.length - 1) {
-                        if (noneStoreList.length > 0) {
+                        if (noneStoreList.length > 0 && !this.data.isShowSaleout) {
                             let noneStoreStr = noneStoreList.join('、');
                             my.confirm({
                                 // title: '删除地址',
@@ -140,6 +142,9 @@ Page({
                                 confirmButtonText: '是',
                                 cancelButtonText: '否',
                                 success: (result) => {
+                                    that.setData({
+                                        isShowSaleout: true
+                                    })
                                     if (result.confirm) {
 
                                     }
@@ -157,7 +162,7 @@ Page({
                 this.setData({
                     result: result,
                     confirmToken: result.confirmToken,    //防止重复提交的token
-                    shopTotalPrice: this.data.shopTotalPrice > 0 && result.price == this.data.shopTotalPrice ? this.data.shopTotalPrice : result.price,
+                    shopTotalPrice: this.data.typeIndex == 1 ? deliveryFee + shopTotalPrice : shopTotalPrice,
                     // shopCartList: this.data.shopCartList.length > 0  ? this.data.shopCartList : shopCartList,
                     shopCartList: this.data.shopTotalPrice <= 0 || result.price != this.data.shopTotalPrice || shopCartList.length != this.data.shopCartList ? shopCartList : this.data.shopCartList,       //如果service里算的价格跟接口返回的不一样，或者service的价格没设置到，则要重新加一下商品列表。
                     shopName: result.name,     // 商家名称
