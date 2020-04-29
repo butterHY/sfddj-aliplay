@@ -350,7 +350,7 @@
   margin-top: 18rpx;
 }
 
-.promotionHotIcon{
+.promotionHotIcon {
     background-color: #ff2746;
     color: #fff;
     font-size: 22rpx;
@@ -360,3 +360,4 @@
     padding: 7rpx;
     margin-right: 7rpx;
 }
+

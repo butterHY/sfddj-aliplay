@@ -68,8 +68,8 @@
 
 
         <view class="{{type == 'newGuessLike' ? 'guessLikeDescribe' : 'goodsInfo height_176r notAtHome'}} {{type == 'normal'? 'normalTextHeiht' : ''}}" style="{{pageType == 'home' ? 'border-radius: 0 0 16rpx 16rpx;' : ''}}">
-          <view class="{{type == 'newGuessLike' ? 'guessLikeGoodsName single-line2' : 'single-line flex_view_col height_80r'}} {{type == 'normal'?'normalDel':''}}" style="{{pageType == 'home' ? 'line-height: 0;' : ''}}">
-            <text class="{{type == 'newGuessLike' ? 'single-line2' : 'font-26 color-323232 single-line-text lineH_2'}} {{type == 'normal'?'normalTit twoLineShow lineH_40r':''}}" style="{{pageType == 'home' ? 'line-height: 40rpx;' : ''}}">
+          <view class="{{type == 'newGuessLike' ? 'guessLikeGoodsName single-line-2' : 'single-line flex_view_col height_80r'}} {{type == 'normal'?'normalDel':''}}" style="{{pageType == 'home' ? 'line-height: 0;' : ''}}">
+            <text class="{{type == 'newGuessLike' ? 'single-line-2' : 'font-26 color-323232 single-line-text lineH_2'}} {{type == 'normal'?'normalTit twoLineShow lineH_40r':''}}" style="{{pageType == 'home' ? 'line-height: 40rpx;' : ''}}">
               <text a:if="{{type == 'normal' && goodsLabel}}" class="promotionHotIcon">{{goodsLabel}}</text>
               {{name ? name : goodsName}}
             </text>
