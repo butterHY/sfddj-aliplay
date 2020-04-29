@@ -100,3 +100,35 @@
     border-color: #ff0532;
     color: #ff0532;
 }
+
+.imageListBox {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    flex: 1;
+    color: #333333;
+    margin-left: 60rpx;
+}
+
+.afterImageList {
+    width: 152rpx; 
+    height: 152rpx; 
+    border-radius: 8rpx; 
+    background-color: #f3f3f3;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    margin-left: 12rpx;
+    margin-top: 12rpx;
+}
+
+
+.imageListBox .afterImageList:nth-child(3n+1), .imageListBox .afterImageList:nth-child(1) {
+    margin-left: 0;
+}
+
+.imageListBox .afterImageList:nth-child(1), .imageListBox .afterImageList:nth-child(2), .imageListBox .afterImageList:nth-child(3) {
+    margin-top: 0;
+}

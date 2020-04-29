@@ -113,19 +113,39 @@ Page({
     // 判断是否显示要显示退款按钮
     isShowAfterSale(result) {
         // 如果是还没配送的, 但已付款的
-        if (result.orderStatus == 'PAYFINISH') {
-            let timeStatus = this.timeSpan(result.createDate);
-            this.setData({
-                timeStatus
-            })
-        }
+        // if (result.orderStatus == 'PAYFINISH') {
+        let timeStatus = this.timeSpan(result);
+        this.setData({
+            timeStatus
+        })
+        // }
     },
 
     // 判断现在的时间与订单时间的差距
-    timeSpan(createDate) {
+    timeSpan(result) {
         let nowTime = new Date().getTime();
-        let withinTenMins = createDate + 600000;   // 10分钟内的时间
-        let within3hours = createDate + 10800000;   // 3小时内的时间
+        let withinTenMins = result.createDate + 600000;   // 10分钟内的时间
+        let within3hours = result.createDate + 10800000;   // 3小时内的时间
+        // 如果是自提的，就按时间，10分钟内可系统退款，3小时内可申请退款，要商家同意；
+        // 如果是商家配送的，就按配送状态，商家点配送中之前都可系统退款；交易完成前可申请退款，要商家同意
+        if (result.deliveryType == 'SELF') {
+            // 10分钟内可系统退款
+            if (nowTime < withinTenMins) {
+                return 'tenMins';
+            } else if (nowTime < within3hours) {  //3小时内未配送可申请退款
+                return '3Hours';
+            } else {
+                return 'end';
+            }
+        } else {
+            if (result.orderStatus == 'PAYFINISH') {
+                return 'tenMins';
+            } else if (result.orderStatus == 'DELIVERYING') {
+                return '3Hours';
+            } else {
+                return 'end';
+            }
+        }
         // 10分钟内可系统退款
         if (nowTime < withinTenMins) {
             return 'tenMins';
@@ -201,8 +221,8 @@ Page({
     },
 
     handleRefund({ tenFn, hoursFn }) {
-        let { createDate } = this.data.result;
-        let timeStatus = this.timeSpan(createDate);
+        let { result } = this.data;
+        let timeStatus = this.timeSpan(result);
         // 可系统直接退款
         if (timeStatus == 'tenMins') {
             tenFn && typeof tenFn === 'function' && tenFn()

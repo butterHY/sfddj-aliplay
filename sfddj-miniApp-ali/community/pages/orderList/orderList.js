@@ -268,7 +268,7 @@ Page({
 
 			val.totalFee = val.paidAmount;   //订单总价
 
-			val.linkUrl = val.recordStatus == 1 ? `/community/pages/orderDetail/orderDetail?orderSn=${val.orderSn}` : `/community/pages/tuanDetail/tuanDetail?recordId=${val.recordId}`;
+			val.linkUrl = val.recordStatus == 1 ? `/community/pages/orderDetail/orderDetail?orderSn=${val.orderSn}` : `/community/pages/tuanDetail/tuanDetail?id=${val.recordId}`;
 
         })
         return { goodsList };

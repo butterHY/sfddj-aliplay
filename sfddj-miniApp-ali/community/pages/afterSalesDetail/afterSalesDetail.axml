@@ -60,15 +60,20 @@
             <!-- 售后凭证 -->
             <view class="afterDetail_item">
                 <view class="color-999999">售后凭证</view>
-                <view class="flex_1 color-333 marLeft_60"></view>
+                <view class="imageListBox">
+                    <block a:if="{{imageList.length > 0}}" a:for="{{imageList}}">
+                        <view class="afterImageList" data-index="{{index}}" onTap="previewImg">
+                            <image class="all_100" src=""/>
+                        </view>
+                    </block>
+                </view>
             </view>
         </view>
     </view>
-
     <!-- 底部按钮 -->
     <view class="bottomBtn">
         <!-- 联系客服 -->
-        <contacts  contactsTel="18823451312"></contacts>
+        <contacts contactsTel="18823451312"></contacts>
         <!-- 修改申请 -->
         <view class="orderStatusBtn">修改申请</view>
         <!-- 取消申请 -->
