@@ -46,6 +46,11 @@
 	margin-top: 26rpx;
 }
 
+.orderStatusTip.warnType {
+	color: #ff0532;
+	font-size: 28rpx;
+}
+
 .orderStatusIcon_img {
 	width: 160rpx;
 	height: 126rpx;

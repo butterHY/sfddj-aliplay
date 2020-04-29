@@ -41,7 +41,6 @@ Page({
         };
         get(api.O2O_ORDER.getAfterData, data, res => {
             let result = res.data.data ? res.data.data : {};
-            console.log(result, res)
             if (Object.keys(result).length > 0) {
                 this.setData({
                     refundObj: result,
@@ -258,7 +257,6 @@ Page({
         let data = { imgUrl: imgUrl }
         let { imageList } = this.data;
         post(api.DELETE_IMAGE, data, function (res) {
-            //console.log(res)
             if (res.data) {
                 my.showToast({
                     content: '删除成功'
