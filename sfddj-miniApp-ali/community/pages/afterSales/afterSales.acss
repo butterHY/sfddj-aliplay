@@ -120,3 +120,20 @@
     border-radius: 0;
     padding: 16rpx;
 }
+
+.uploadBtn {
+    width: 204rpx; 
+    height: 204rpx; 
+    border-radius: 10rpx; 
+    background-color: #f3f3f3;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.uploadBtn .tipText {
+    font-size: 40rpx;
+    color: #999999;
+    text-align: center;
+}

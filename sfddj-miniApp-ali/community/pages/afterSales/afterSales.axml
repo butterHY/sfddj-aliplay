@@ -33,9 +33,9 @@
         <view class="afterSalesTit">上传凭证</view>
         <!-- 输入框 -->
         <view class="flex_view_row">
-            <view class="flex_view_col align_cen justi_cen" style="width: 204rpx; height: 204rpx; border-radius: 10rpx; background-color: #f3f3f3;">
+            <view class="uploadBtn">
                 <view class="flex_view_col">
-                    <text class="icon-camera color-999999 tex_center" style="font-size: 40rpx;"></text>
+                    <text class="icon-camera tipText"></text>
                     <view class="font-20 color-999999 marTop_20">上传凭证(最多9张)</view>
                 </view>
             </view>
