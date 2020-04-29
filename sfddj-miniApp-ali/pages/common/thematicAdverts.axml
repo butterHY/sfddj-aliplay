@@ -294,8 +294,8 @@
     <view  a:if='{{item.moduleType == "NAVIGATION_MIN"}}'>
       <!-- 灰色间条 a:if="{{item.spacing == 1}}"-->
       <view class="ads_space" style="background: #{{item.topIntervalColor ? item.topIntervalColor : 'FFFFFF'}};"></view>
-      <!-- 内容 -->
-      <view class='{{item.parseItem.length > 5 ? "navigateCon" : "otherModeCon"}} {{item.spacing == 1 ? "marBot_20" : ""}}' style='background-color: {{item.backgroundColor ? "#" + item.backgroundColor : "#ffffff"}};{{item.backgroundImg ? "background: url("+ baseImageUrl + item.backgroundImg+") no-repeat; background-size: 100% 100%;" : ""}}'>
+      <!-- 内容 {{item.parseItem.length > 5 ? "navigateCon" : "otherModeCon"}} -->
+      <view class='{{item.spacing == 1 ? "marBot_20" : ""}}' style='background-color: {{item.backgroundColor ? "#" + item.backgroundColor : "#ffffff"}};{{item.backgroundImg ? "background: url("+ baseImageUrl + item.backgroundImg+") no-repeat; background-size: 100% 100%;" : ""}}'>
         <swiper class="" indicator-dots="{{item.parseItem.length > 5 ? 'true' : ''}}" indicator-active-color='rgba(255,83,83.1)' interval="{{interval}}" duration="{{duration}}" data-fatherIndex="{{index}}" onChange="adsSwiper">
           <swiper-item class="flex_view_row">
             <block a:for="{{item.parseItem}}" a:for-index="idx" a:for-item="adsItem">
@@ -318,8 +318,8 @@
     <view a:if='{{item.moduleType == "NAVIGATION"}}'>
        <!-- 灰色间条 a:if="{{item.spacing == 1}}"-->
       <view class="ads_space" style="background: #{{item.topIntervalColor ? item.topIntervalColor : 'FFFFFF'}};"></view>
-      <!-- 内容 -->
-      <view class='{{item.parseItem.length > 5 ? "navigateCon" : "otherModeCon"}} {{item.spacing == 1 ? "marBot_20" : ""}}' style='background-color: {{item.backgroundColor ? "#" + item.backgroundColor : "#ffffff"}};{{item.backgroundImg ? "background: url("+ baseImageUrl + item.backgroundImg+") no-repeat; background-size: 100% 100%;" : ""}}'>
+      <!-- 内容 {{item.parseItem.length > 5 ? "navigateCon" : "otherModeCon"}} -->
+      <view class='{{item.spacing == 1 ? "marBot_20" : ""}}' style='background-color: {{item.backgroundColor ? "#" + item.backgroundColor : "#ffffff"}};{{item.backgroundImg ? "background: url("+ baseImageUrl + item.backgroundImg+") no-repeat; background-size: 100% 100%;" : ""}}'>
         <swiper indicator-dots="{{item.parseItem.length > 5 ? 'true' : ''}}" indicator-active-color='rgba(255,83,83.1)' autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" display-multiple-items='5' data-fatherIndex="{{index}}" onChange="adsSwiper">
           <swiper-item class="flex_view_row">
             <block a:for="{{item.parseItem}}" a:for-index="idx" a:for-item="adsItem">
@@ -448,10 +448,8 @@
       <view class="oneAds_con {{item.spacing == 1 ? 'marBot_20' : ''}}" style='background-color: {{item.backgroundColor ? "#" + item.backgroundColor : "#ffffff"}}'>
         <!-- 一张优惠券 -->
         <block a:if="{{item.parseItem.length==1}}" a:for="{{item.parseItem}}" a:key="oneAds" a:for-item="oneAdsItem">
-          <view class='oneAds_con {{item.spacing == 1 ? "marBot_20" : ""}}' style="background: #{{item.backgroundColor}};">
-            <view class="width_100" onTap="getSpecialCoupon" data-couponSign="{{oneAdsItem.couponSign}}">
-              <image mode="widthFix" src="{{baseImageUrl + oneAdsItem.imageUrl}}" class="width_100 blockBox"/>
-            </view>
+          <view class="width_100" onTap="getSpecialCoupon" data-couponSign="{{oneAdsItem.couponSign}}">
+            <image mode="widthFix" src="{{baseImageUrl + oneAdsItem.imageUrl}}" class="width_100 blockBox"/>
           </view>
         </block>
         <!-- 两张优惠券 -->

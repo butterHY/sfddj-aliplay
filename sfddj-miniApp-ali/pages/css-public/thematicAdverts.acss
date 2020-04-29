@@ -237,7 +237,7 @@
 }
 
 .oneAds_con {
-  padding: 0 30rpx 0rpx;
+  padding: 0 30rpx 10rpx;
   box-sizing: border-box;
   background: #FFFFFF;
 }
