@@ -120,10 +120,10 @@
         </view>
       </view>
     </view>
-    <!--<block a:if="{{hasList}}">   	 -->
-    <!-- 社区订单 -->
-    <community-order orderNumList="{{orderNumList}}" isMember="{{isMember}}"  onGetPhoneNumber="commuGetPhoneNumber"></community-order>
-    <!--</block> -->
+    <block a:if="{{hasList}}">
+      <!-- 社区订单 -->
+      <community-order orderNumList="{{orderNumList}}" isMember="{{isMember}}" onGetPhoneNumber="commuGetPhoneNumber"></community-order>
+    </block>
     <!-- 我的服务 -->
     <view>
       <!-- 标题 -->
