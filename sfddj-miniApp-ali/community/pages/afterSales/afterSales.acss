@@ -121,19 +121,40 @@
     padding: 16rpx;
 }
 
+.imageList {
+    flex-wrap: wrap;
+}
+
 .uploadBtn {
-    width: 204rpx; 
-    height: 204rpx; 
+    width: 202rpx; 
+    height: 202rpx; 
     border-radius: 10rpx; 
     background-color: #f3f3f3;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
+    margin-left: 20rpx;
+    margin-top: 20rpx;
 }
 
 .uploadBtn .tipText {
     font-size: 40rpx;
     color: #999999;
     text-align: center;
+}
+
+.afterSalesTit .tipText {
+    font-size: 22rpx;
+    color: #414141;
+    margin-left: 20rpx;
+}
+
+.imageList .uploadBtn:nth-child(3n+1), .imageList .uploadBtn:nth-child(1) {
+    margin-left: 0;
+}
+
+.imageList .uploadBtn:nth-child(1), .imageList .uploadBtn:nth-child(2), .imageList .uploadBtn:nth-child(3) {
+    margin-top: 0;
 }

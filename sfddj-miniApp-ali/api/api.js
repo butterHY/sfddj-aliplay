@@ -167,6 +167,9 @@ export default {
 		deleteOrder: '/m/oto/otoOrder/1.0/delete',             //删除订单
 		getOrderNum: '/m/oto/otoOrder/1.0/findOrderCount',      //获取各订单状态数量
 		getPinOrder: '/m/oto/otoActivityTuangouRecord/1.0/findTuangouRecordList',                                   //获取社区拼团订单
+		getAfterData: '/m/oto/otoOrderRefund/1.0/getOrderParam',  //获取申请退款数据
+		refundOrder: '/m/oto/otoOrderRefund/1.0/refundOrder',      //申请退款
+		systemRefund: '/m/oto/otoOrderRefund/1.0/refundOrderNow',    //系统直接退款
 	},
 
 	// 地址部分
