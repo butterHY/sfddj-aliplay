@@ -278,11 +278,4 @@ Page({
             })
         })
     },
-
-    // 去售后详情页
-    toAfterDetail(){
-        my.navigateTo({
-          url: `/community/pages/afterSalesDetail/afterSalesDetail?orderSn=${orderSn}`
-        });
-    },
 });
