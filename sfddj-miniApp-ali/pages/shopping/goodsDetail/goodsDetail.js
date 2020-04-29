@@ -1238,8 +1238,9 @@ Page({
   // 自定义分享
   onShareAppMessage: function(e) {
     var that = this;
+    // "【顺丰包邮】" + 
     return {
-      title: "【顺丰包邮】" + '【￥' + that.data.goods.defaultPrice + '】' + that.data.goods.goodsName,
+      title: '【￥' + that.data.goods.defaultPrice + '】' + that.data.goods.goodsName,
       path: '/pages/shopping/goodsDetail/goodsDetail?goodsSn=' + that.data.goodsSn + '&goodsId=' + that.data.goodsId
     };
   },
