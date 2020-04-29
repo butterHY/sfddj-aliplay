@@ -252,6 +252,10 @@
   padding: 0 30rpx 0rpx;
 }
 
+.adsMain{
+  padding-bottom: 10rpx;
+}
+
 .goodsAndAdCon {
   padding: 0 30rpx;
 }
