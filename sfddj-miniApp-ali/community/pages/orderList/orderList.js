@@ -286,6 +286,9 @@ Page({
             case 'FINISHED':
                 return '交易成功'
                 break;
+            case 'CLOSE':
+                return '已关闭'
+                break;
             default:
                 return '支付成功'
         }

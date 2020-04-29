@@ -8,14 +8,14 @@
     <view class="afterSalesItem">
         <view class="flex_1 font-30 color-333 font-weight-500">退款金额</view>
         <view class="flex_1 font-30 color-666 tex_right">
-            <input placeholder="" class="all_100 tex_right" value="{{refoundSum}}" />
+            <view class="all_100 tex_right">{{refundObj.refundFee ? refundObj.refundFee : 0}}</view>
         </view>
     </view>
     <!-- 联系手机-->
     <view class="afterSalesItem">
         <view class="flex_1 font-30 color-333 font-weight-500">联系手机</view>
         <view class="flex_1 font-30 color-666 tex_right">
-            <input placeholder="18888888888" value="{{contactMobile}}" class="all_100 tex_right color-666" />
+            <input placeholder="请输入手机号码" data-field="contactMobile" value="{{contactMobile}}" class="all_100 tex_right color-666" onInput="phoneInput" />
         </view>
     </view>
     <!-- 问题描述 -->
@@ -30,15 +30,23 @@
     <!-- 上传凭证 -->
     <view class="afterSalesItem_col">
         <!-- 标题 -->
-        <view class="afterSalesTit">上传凭证</view>
+        <view class="afterSalesTit">上传凭证 <text class="tipText">(最多9张，长按可删除)</text></view>
         <!-- 输入框 -->
-        <view class="flex_view_row">
-            <view class="flex_view_col align_cen justi_cen" style="width: 204rpx; height: 204rpx; border-radius: 10rpx; background-color: #f3f3f3;">
-                <view class="flex_view_col">
-                    <text class="icon-camera color-999999 tex_center" style="font-size: 40rpx;"></text>
-                    <view class="font-20 color-999999 marTop_20">上传凭证(最多9张)</view>
+        <view class="flex_view_row imageList">
+            <!-- 图片列表 -->
+            <block a:if="{{imageList.length > 0}}" a:for="{{imageList}}">
+                <view class="uploadBtn" onLongTap="deleteImage" data-index="{{index}}">
+                    <image class="all_100" src="{{baseImageUrl}}{{item}}">
                 </view>
-            </view>
+            </block>
+            <block a:if="{{imageList.length < 9}}">
+                <view class="uploadBtn" onTap="uploadImage">
+                    <view class="flex_view_col">
+                        <text class="icon-camera tipText"></text>
+                        <view class="font-20 color-999999 marTop_20">上传凭证(最多9张)</view>
+                    </view>
+                </view>
+            </block>
         </view>
     </view>
     <!-- 底部提交按钮 -->
@@ -52,7 +60,7 @@
         <view class="reasonTit">申请原因</view>
         <!-- 原因列表 -->
         <scroll-view scroll-y="{{true}}" class="flex_1" style="height: 500rpx;">
-            <view a:for="{{reasonList}}">
+            <view a:for="{{refundObj.refundReasons}}">
                 <list-item class="{{reasonIndex == index ? 'activeTab' : ''}}" arrow="{{false}}" index="{{index}}" onClick="tapReason">{{item}}</list-item>
             </view>
         </scroll-view>

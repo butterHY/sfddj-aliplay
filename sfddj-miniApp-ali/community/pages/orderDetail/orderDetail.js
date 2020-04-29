@@ -8,7 +8,6 @@ Page({
     data: {
         staticsImageUrl: api.staticsImageUrl,
         baseImageUrl: api.baseImageUrl,
-        contactsTel: 18882341312,
         goodsList: [],
         orderSn: '',
         leftTimes: 0,
@@ -19,6 +18,7 @@ Page({
         loadFail: false,           //是否加载失败
         orderModalOpened: false,
         timeStatus: 'end',         //默认是订单时间超过3小时
+        isSubmiting: false,       //是否正在提交的开关
     },
     onLoad(options) {
         let { orderSn } = options;
@@ -184,24 +184,69 @@ Page({
 
     // 退款
     returnTap() {
-        let { createDate } = this.data.result;
         this.confirmPop({
             content: '确认申请退款吗？', callback: () => {
-                let timeStatus = this.timeSpan(createDate);
-                // 可系统直接退款
-                if(timeStatus == 'tenMins') {
-
-                } else if(timeStatus == '3Hours') {   //跳去申请售后页
-                    
-                } else {
-                    // 不能退款，提示；
-                    my.showToast({
-                        content: '暂无法退款，可联系商家'
-                    })
-                }
+                this.handleRefund({
+                    tenFn: () => {
+                        this.systemRefund();
+                    },
+                    hoursFn: () => {
+                        my.navigateTo({
+                            url: `/community/pages/afterSales/afterSales?orderSn=${this.data.orderSn}`
+                        });
+                    }
+                })
             }
         })
     },
+
+    handleRefund({ tenFn, hoursFn }) {
+        let { createDate } = this.data.result;
+        let timeStatus = this.timeSpan(createDate);
+        // 可系统直接退款
+        if (timeStatus == 'tenMins') {
+            tenFn && typeof tenFn === 'function' && tenFn()
+        } else if (timeStatus == '3Hours') {   //跳去申请售后页
+            hoursFn && typeof hoursFn === 'function' && hoursFn()
+        } else {
+            // 不能退款，提示；
+            my.showToast({
+                content: '暂无法退款，可联系商家'
+            })
+        }
+    },
+
+    // 系统直接退款
+    systemRefund() {
+        let data = { orderSn: this.data.orderSn };
+        if (!this.data.isSubmiting) {
+            // 设开关
+            this.setData({
+                isSubmiting: true
+            })
+            post(api.O2O_ORDER.systemRefund, data, res => {
+                // 开开关
+                this.setData({
+                    isSubmiting: false
+                })
+                if (res.data.ret && res.data.ret.code == '0') {
+                    my.showToast({
+                        content: '退款成功'
+                    })
+                    this.getOrderDetail();
+                }
+            }, err => {
+                // 设开关
+                this.setData({
+                    isSubmiting: false
+                })
+                my.showToast({
+                    content: err
+                })
+            })
+        }
+    },
+
 
     //确认弹窗
     confirmPop({ content = '', confirmButtonText = '确认', cancelButtonText = '取消', callback = function () { } }) {
@@ -268,6 +313,14 @@ Page({
             orderModalOpened: false
         })
         this.getOrderDetail()
+    },
+
+    // 去售后详情页
+    toAfterDetail() {
+        let { orderSn } = this.data;
+        my.navigateTo({
+            url: `/community/pages/afterSalesDetail/afterSalesDetail?orderSn=${orderSn}`
+        });
     },
 
 });
