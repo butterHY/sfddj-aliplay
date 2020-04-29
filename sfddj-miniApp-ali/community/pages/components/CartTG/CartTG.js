@@ -204,7 +204,7 @@ Component({
     },
 
     gotoShop() {
-      const _shopId = this.props.shopid;
+      const _shopId = this.props.goodsData.shopId;
       my.navigateTo({
         url: '/community/pages/shop/shop?id=' + _shopId
       })
