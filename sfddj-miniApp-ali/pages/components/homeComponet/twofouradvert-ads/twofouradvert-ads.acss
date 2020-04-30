@@ -13,7 +13,7 @@ image {
 .twoFourModule .twoFourModuleBox {
   border-radius: 8rpx;
   overflow: hidden;
-  padding-top: 10rpx 24rpx 10rpx;
+  padding: 10rpx 24rpx 10rpx;
 }
 
 .twoFourModule .twoFourModuleView {
