@@ -26,7 +26,7 @@ Component({
   didUnmount() {},
   methods: {
 
-    handleTels(tels){
+    handleTels(tels = ''){
       let telsList = tels.split(',');
       return telsList;
       // console.log('[[[',telsList)

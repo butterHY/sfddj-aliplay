@@ -170,6 +170,7 @@ export default {
 		getAfterData: '/m/oto/otoOrderRefund/1.0/getOrderParam',  //获取申请退款数据
 		refundOrder: '/m/oto/otoOrderRefund/1.0/refundOrder',      //申请退款
 		systemRefund: '/m/oto/otoOrderRefund/1.0/refundOrderNow',    //系统直接退款
+		refundOrderResult: '/m/oto/otoOrderRefund/1.0/refundOrderResult',      //退款详情
 	},
 
 	// 地址部分
