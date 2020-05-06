@@ -360,15 +360,17 @@ Page({
   goToWebCall: function () {
     let that = this
     let webCallLink = that.data.webCallParam
+    let uname = that.data.myInfoData? that.data.myInfoData : '匿名'
 
     try {
-      my.setStorageSync('webCallLink', webCallLink)
-      my.navigateTo({
-        url: '/pages/user/webCallView/webCallView?link=' + webCallLink + '&newMethod=new',
-      })
-    } catch (e) {
-
-    }
+			my.setStorageSync({
+				key: 'webCallLink', // 缓存数据的key
+				data: webCallLink, // 要缓存的数据
+			});
+    } catch (e) {}
+    my.navigateTo({
+      url: '/pages/user/zcWebView/zcWebView?uname=' + uname ,
+    })
 
   },
 
