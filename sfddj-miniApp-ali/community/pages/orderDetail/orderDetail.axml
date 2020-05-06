@@ -100,9 +100,9 @@
 				<view class="toPayBtn orderStatusBtn" data-orderSn="{{orderSn}}" data-tradeNo="{{result.tradeNo}}" onTap="toPayNow">去支付</view>
 			</block>
 			<!-- 退款详情  -->
-			<view a:if="{{result.orderStatus == 'AFTERSALE'}}" class="returnBtn orderStatusBtn" onTap="toAfterDetail">售后详情</view>
+			<view a:if="{{result.orderStatus == 'AFTERSALE' || result.orderStatus == 'CLOSE'}}" class="returnBtn orderStatusBtn toPayBtn" onTap="toAfterDetail">处理结果</view>
 			<!-- 退款 第一期先不做 -->
-			<view a:if="{{timeStatus != 'end' && result.orderStatus != 'AFTERSALE'}}" class="returnBtn orderStatusBtn" onTap="returnTap">退款</view>
+			<view a:if="{{timeStatus != 'end' && result.orderStatus != 'AFTERSALE' && result.orderStatus != 'CLOSE'}}" class="returnBtn orderStatusBtn" onTap="returnTap">退款</view>
 		</view>
 	</view>
 	<!-- 商品信息 -->

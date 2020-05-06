@@ -21,10 +21,10 @@
     <!-- 问题描述 -->
     <view class="afterSalesItem_col">
         <!-- 标题 -->
-        <view class="afterSalesTit">问题描述</view>
+        <view class="afterSalesTit">问题描述 <text class="tipText">(10字以上)</text></view>
         <!-- 输入框 -->
         <view class="">
-            <multi-liner data-field="problemMes" onInput="problemInput" placeholder="问题描述（选填）" type="text" value="{{problemMes}}" last="{{true}}" controlled="{{controlled}}" maxlength="60" show-count="{{false}}"></multi-liner>
+            <multi-liner data-field="problemMes" onInput="problemInput" placeholder="问题描述" type="text" value="{{problemMes}}" last="{{true}}" controlled="{{controlled}}" maxlength="200" show-count="{{false}}"></multi-liner>
         </view>
     </view>
     <!-- 上传凭证 -->

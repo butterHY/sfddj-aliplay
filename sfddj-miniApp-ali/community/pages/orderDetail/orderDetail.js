@@ -129,6 +129,8 @@ Page({
         // 如果是自提的，就按时间，10分钟内可系统退款，3小时内可申请退款，要商家同意；
         // 如果是商家配送的，就按配送状态，商家点配送中之前都可系统退款；交易完成前可申请退款，要商家同意
         if (result.deliveryType == 'SELF') {
+            // if (result.orderStatus == 'PAYFINISH') {
+
             // 10分钟内可系统退款
             if (nowTime < withinTenMins) {
                 return 'tenMins';
@@ -137,6 +139,7 @@ Page({
             } else {
                 return 'end';
             }
+            // }
         } else {
             if (result.orderStatus == 'PAYFINISH') {
                 return 'tenMins';

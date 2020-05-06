@@ -166,7 +166,8 @@ Page({
     // 提交申请
     submit() {
         let checkPhone = this.checkAddrMesStatus();
-        if (!this.data.reasonItem) {
+        let { reasonItem , problemMes } = this.data;
+        if (!reasonItem) {
             my.showToast({
                 content: '请选择申请原因'
             })
@@ -174,6 +175,13 @@ Page({
         }
         if (checkPhone) {
             return;
+        }
+
+        if(!problemMes || problemMes.length < 10) {
+            my.showToast({
+                content: '请正确填写问题描述'
+            })
+            return
         }
 
         this.submitRefund();
