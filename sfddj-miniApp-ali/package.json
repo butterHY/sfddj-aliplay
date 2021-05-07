@@ -6,7 +6,7 @@
     "mini-antui": "^0.4.34",
     "regenerator": "^0.14.2",
     "umtrack-alipay": "^2.2.2-0",
-    "underscore": "^1.9.1"
+    "underscore": "^1.12.1"
   },
   "devDependencies": {},
   "name": "sfddj-miniapp-ali",
